@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.KeyVault
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedHsmData.DeserializeManagedHsmData(document.RootElement);
-            return new ManagedHsmResource(_client, data);
+            return new ManagedHsmResource(_client, data, data.Id);
         }
 
         async ValueTask<ManagedHsmResource> IOperationSource<ManagedHsmResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedHsmData.DeserializeManagedHsmData(document.RootElement);
-            return new ManagedHsmResource(_client, data);
+            return new ManagedHsmResource(_client, data, data.Id);
         }
     }
 }

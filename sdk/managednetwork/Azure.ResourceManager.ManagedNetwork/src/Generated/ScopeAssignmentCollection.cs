@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             try
             {
                 var response = await _scopeAssignmentRestClient.CreateOrUpdateAsync(Id, scopeAssignmentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkArmOperation<ScopeAssignmentResource>(Response.FromValue(new ScopeAssignmentResource(Client, response), response.GetRawResponse()));
+                var operation = new ManagedNetworkArmOperation<ScopeAssignmentResource>(Response.FromValue(new ScopeAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             try
             {
                 var response = _scopeAssignmentRestClient.CreateOrUpdate(Id, scopeAssignmentName, data, cancellationToken);
-                var operation = new ManagedNetworkArmOperation<ScopeAssignmentResource>(Response.FromValue(new ScopeAssignmentResource(Client, response), response.GetRawResponse()));
+                var operation = new ManagedNetworkArmOperation<ScopeAssignmentResource>(Response.FromValue(new ScopeAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 var response = await _scopeAssignmentRestClient.GetAsync(Id, scopeAssignmentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ScopeAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ScopeAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 var response = _scopeAssignmentRestClient.Get(Id, scopeAssignmentName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ScopeAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ScopeAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scopeAssignmentRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scopeAssignmentRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScopeAssignmentResource(Client, ScopeAssignmentData.DeserializeScopeAssignmentData(e)), _scopeAssignmentClientDiagnostics, Pipeline, "ScopeAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ScopeAssignmentData.DeserializeScopeAssignmentData(e); return new ScopeAssignmentResource(Client, data, data.Id); }, _scopeAssignmentClientDiagnostics, Pipeline, "ScopeAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scopeAssignmentRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scopeAssignmentRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScopeAssignmentResource(Client, ScopeAssignmentData.DeserializeScopeAssignmentData(e)), _scopeAssignmentClientDiagnostics, Pipeline, "ScopeAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ScopeAssignmentData.DeserializeScopeAssignmentData(e); return new ScopeAssignmentResource(Client, data, data.Id); }, _scopeAssignmentClientDiagnostics, Pipeline, "ScopeAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

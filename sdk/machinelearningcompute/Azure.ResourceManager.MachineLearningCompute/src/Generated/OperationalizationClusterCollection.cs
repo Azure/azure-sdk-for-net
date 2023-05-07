@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 var response = await _operationalizationClusterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OperationalizationClusterResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OperationalizationClusterResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 var response = _operationalizationClusterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OperationalizationClusterResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OperationalizationClusterResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalizationClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _operationalizationClusterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OperationalizationClusterResource(Client, OperationalizationClusterData.DeserializeOperationalizationClusterData(e)), _operationalizationClusterClientDiagnostics, Pipeline, "OperationalizationClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = OperationalizationClusterData.DeserializeOperationalizationClusterData(e); return new OperationalizationClusterResource(Client, data, data.Id); }, _operationalizationClusterClientDiagnostics, Pipeline, "OperationalizationClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalizationClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _operationalizationClusterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OperationalizationClusterResource(Client, OperationalizationClusterData.DeserializeOperationalizationClusterData(e)), _operationalizationClusterClientDiagnostics, Pipeline, "OperationalizationClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = OperationalizationClusterData.DeserializeOperationalizationClusterData(e); return new OperationalizationClusterResource(Client, data, data.Id); }, _operationalizationClusterClientDiagnostics, Pipeline, "OperationalizationClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

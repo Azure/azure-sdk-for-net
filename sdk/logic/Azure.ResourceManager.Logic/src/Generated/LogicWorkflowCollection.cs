@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = await _logicWorkflowWorkflowsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, workflowName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new LogicArmOperation<LogicWorkflowResource>(Response.FromValue(new LogicWorkflowResource(Client, response), response.GetRawResponse()));
+                var operation = new LogicArmOperation<LogicWorkflowResource>(Response.FromValue(new LogicWorkflowResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = _logicWorkflowWorkflowsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, workflowName, data, cancellationToken);
-                var operation = new LogicArmOperation<LogicWorkflowResource>(Response.FromValue(new LogicWorkflowResource(Client, response), response.GetRawResponse()));
+                var operation = new LogicArmOperation<LogicWorkflowResource>(Response.FromValue(new LogicWorkflowResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Logic
                 var response = await _logicWorkflowWorkflowsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workflowName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogicWorkflowResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogicWorkflowResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Logic
                 var response = _logicWorkflowWorkflowsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workflowName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogicWorkflowResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogicWorkflowResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowWorkflowsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logicWorkflowWorkflowsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowResource(Client, LogicWorkflowData.DeserializeLogicWorkflowData(e)), _logicWorkflowWorkflowsClientDiagnostics, Pipeline, "LogicWorkflowCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = LogicWorkflowData.DeserializeLogicWorkflowData(e); return new LogicWorkflowResource(Client, data, data.Id); }, _logicWorkflowWorkflowsClientDiagnostics, Pipeline, "LogicWorkflowCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowWorkflowsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logicWorkflowWorkflowsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowResource(Client, LogicWorkflowData.DeserializeLogicWorkflowData(e)), _logicWorkflowWorkflowsClientDiagnostics, Pipeline, "LogicWorkflowCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = LogicWorkflowData.DeserializeLogicWorkflowData(e); return new LogicWorkflowResource(Client, data, data.Id); }, _logicWorkflowWorkflowsClientDiagnostics, Pipeline, "LogicWorkflowCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

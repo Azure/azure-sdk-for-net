@@ -46,7 +46,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <summary> Initializes a new instance of the <see cref = "KubernetesClusterExtensionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal KubernetesClusterExtensionResource(ArmClient client, KubernetesClusterExtensionData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal KubernetesClusterExtensionResource(ArmClient client, KubernetesClusterExtensionData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 var response = await _kubernetesClusterExtensionExtensionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new KubernetesClusterExtensionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KubernetesClusterExtensionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 var response = _kubernetesClusterExtensionExtensionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new KubernetesClusterExtensionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KubernetesClusterExtensionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

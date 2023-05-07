@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.IotHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IotHubDescriptionIotHubResourceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotHubDescriptionIotHubResourceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotHubDescriptionResource(Client, IotHubDescriptionData.DeserializeIotHubDescriptionData(e)), IotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotHubDescriptions", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = IotHubDescriptionData.DeserializeIotHubDescriptionData(e); return new IotHubDescriptionResource(Client, data, data.Id); }, IotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotHubDescriptions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.IotHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IotHubDescriptionIotHubResourceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotHubDescriptionIotHubResourceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotHubDescriptionResource(Client, IotHubDescriptionData.DeserializeIotHubDescriptionData(e)), IotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotHubDescriptions", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = IotHubDescriptionData.DeserializeIotHubDescriptionData(e); return new IotHubDescriptionResource(Client, data, data.Id); }, IotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotHubDescriptions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

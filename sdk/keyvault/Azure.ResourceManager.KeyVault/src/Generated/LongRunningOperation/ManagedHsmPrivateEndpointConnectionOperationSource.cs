@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.KeyVault
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedHsmPrivateEndpointConnectionData.DeserializeManagedHsmPrivateEndpointConnectionData(document.RootElement);
-            return new ManagedHsmPrivateEndpointConnectionResource(_client, data);
+            return new ManagedHsmPrivateEndpointConnectionResource(_client, data, data.Id);
         }
 
         async ValueTask<ManagedHsmPrivateEndpointConnectionResource> IOperationSource<ManagedHsmPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedHsmPrivateEndpointConnectionData.DeserializeManagedHsmPrivateEndpointConnectionData(document.RootElement);
-            return new ManagedHsmPrivateEndpointConnectionResource(_client, data);
+            return new ManagedHsmPrivateEndpointConnectionResource(_client, data, data.Id);
         }
     }
 }

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic
                 var response = await _logicWorkflowTriggerHistoryWorkflowTriggerHistoriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, historyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogicWorkflowTriggerHistoryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogicWorkflowTriggerHistoryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Logic
                 var response = _logicWorkflowTriggerHistoryWorkflowTriggerHistoriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, historyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogicWorkflowTriggerHistoryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogicWorkflowTriggerHistoryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowTriggerHistoryWorkflowTriggerHistoriesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logicWorkflowTriggerHistoryWorkflowTriggerHistoriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowTriggerHistoryResource(Client, LogicWorkflowTriggerHistoryData.DeserializeLogicWorkflowTriggerHistoryData(e)), _logicWorkflowTriggerHistoryWorkflowTriggerHistoriesClientDiagnostics, Pipeline, "LogicWorkflowTriggerHistoryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = LogicWorkflowTriggerHistoryData.DeserializeLogicWorkflowTriggerHistoryData(e); return new LogicWorkflowTriggerHistoryResource(Client, data, data.Id); }, _logicWorkflowTriggerHistoryWorkflowTriggerHistoriesClientDiagnostics, Pipeline, "LogicWorkflowTriggerHistoryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowTriggerHistoryWorkflowTriggerHistoriesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logicWorkflowTriggerHistoryWorkflowTriggerHistoriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowTriggerHistoryResource(Client, LogicWorkflowTriggerHistoryData.DeserializeLogicWorkflowTriggerHistoryData(e)), _logicWorkflowTriggerHistoryWorkflowTriggerHistoriesClientDiagnostics, Pipeline, "LogicWorkflowTriggerHistoryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = LogicWorkflowTriggerHistoryData.DeserializeLogicWorkflowTriggerHistoryData(e); return new LogicWorkflowTriggerHistoryResource(Client, data, data.Id); }, _logicWorkflowTriggerHistoryWorkflowTriggerHistoriesClientDiagnostics, Pipeline, "LogicWorkflowTriggerHistoryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

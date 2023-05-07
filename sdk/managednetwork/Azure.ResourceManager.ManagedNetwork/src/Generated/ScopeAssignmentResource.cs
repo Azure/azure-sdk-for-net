@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <summary> Initializes a new instance of the <see cref = "ScopeAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ScopeAssignmentResource(ArmClient client, ScopeAssignmentData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal ScopeAssignmentResource(ArmClient client, ScopeAssignmentData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 var response = await _scopeAssignmentRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ScopeAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ScopeAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 var response = _scopeAssignmentRestClient.Get(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ScopeAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ScopeAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             try
             {
                 var response = await _scopeAssignmentRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkArmOperation<ScopeAssignmentResource>(Response.FromValue(new ScopeAssignmentResource(Client, response), response.GetRawResponse()));
+                var operation = new ManagedNetworkArmOperation<ScopeAssignmentResource>(Response.FromValue(new ScopeAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,7 +283,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             try
             {
                 var response = _scopeAssignmentRestClient.CreateOrUpdate(Id.Parent, Id.Name, data, cancellationToken);
-                var operation = new ManagedNetworkArmOperation<ScopeAssignmentResource>(Response.FromValue(new ScopeAssignmentResource(Client, response), response.GetRawResponse()));
+                var operation = new ManagedNetworkArmOperation<ScopeAssignmentResource>(Response.FromValue(new ScopeAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

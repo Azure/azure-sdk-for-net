@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.IotCentral
                 var response = await _iotCentralPrivateLinkResourcePrivateLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IotCentralPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IotCentralPrivateLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.IotCentral
                 var response = _iotCentralPrivateLinkResourcePrivateLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IotCentralPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IotCentralPrivateLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.IotCentral
         public virtual AsyncPageable<IotCentralPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotCentralPrivateLinkResourcePrivateLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new IotCentralPrivateLinkResource(Client, IotCentralPrivateLinkResourceData.DeserializeIotCentralPrivateLinkResourceData(e)), _iotCentralPrivateLinkResourcePrivateLinksClientDiagnostics, Pipeline, "IotCentralPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = IotCentralPrivateLinkResourceData.DeserializeIotCentralPrivateLinkResourceData(e); return new IotCentralPrivateLinkResource(Client, data, data.Id); }, _iotCentralPrivateLinkResourcePrivateLinksClientDiagnostics, Pipeline, "IotCentralPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.IotCentral
         public virtual Pageable<IotCentralPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotCentralPrivateLinkResourcePrivateLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new IotCentralPrivateLinkResource(Client, IotCentralPrivateLinkResourceData.DeserializeIotCentralPrivateLinkResourceData(e)), _iotCentralPrivateLinkResourcePrivateLinksClientDiagnostics, Pipeline, "IotCentralPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = IotCentralPrivateLinkResourceData.DeserializeIotCentralPrivateLinkResourceData(e); return new IotCentralPrivateLinkResource(Client, data, data.Id); }, _iotCentralPrivateLinkResourcePrivateLinksClientDiagnostics, Pipeline, "IotCentralPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

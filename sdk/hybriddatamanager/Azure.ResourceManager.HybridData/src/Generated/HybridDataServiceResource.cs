@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.HybridData
         /// <summary> Initializes a new instance of the <see cref = "HybridDataServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal HybridDataServiceResource(ArmClient client, HybridDataServiceData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal HybridDataServiceResource(ArmClient client, HybridDataServiceData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.HybridData
                 var response = await _hybridDataServiceDataServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridDataServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridDataServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +200,7 @@ namespace Azure.ResourceManager.HybridData
                 var response = _hybridDataServiceDataServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridDataServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridDataServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.HybridData
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataJobJobsRestClient.CreateListByDataServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataJobJobsRestClient.CreateListByDataServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridDataJobResource(Client, HybridDataJobData.DeserializeHybridDataJobData(e)), _hybridDataJobJobsClientDiagnostics, Pipeline, "HybridDataServiceResource.GetJobs", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = HybridDataJobData.DeserializeHybridDataJobData(e); return new HybridDataJobResource(Client, data, data.Id); }, _hybridDataJobJobsClientDiagnostics, Pipeline, "HybridDataServiceResource.GetJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +252,7 @@ namespace Azure.ResourceManager.HybridData
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataJobJobsRestClient.CreateListByDataServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataJobJobsRestClient.CreateListByDataServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridDataJobResource(Client, HybridDataJobData.DeserializeHybridDataJobData(e)), _hybridDataJobJobsClientDiagnostics, Pipeline, "HybridDataServiceResource.GetJobs", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = HybridDataJobData.DeserializeHybridDataJobData(e); return new HybridDataJobResource(Client, data, data.Id); }, _hybridDataJobJobsClientDiagnostics, Pipeline, "HybridDataServiceResource.GetJobs", "value", "nextLink", cancellationToken);
         }
     }
 }

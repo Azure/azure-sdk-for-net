@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic
                 var response = await _logicWorkflowRunActionWorkflowRunActionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, actionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogicWorkflowRunActionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogicWorkflowRunActionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Logic
                 var response = _logicWorkflowRunActionWorkflowRunActionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, actionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogicWorkflowRunActionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogicWorkflowRunActionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowRunActionWorkflowRunActionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logicWorkflowRunActionWorkflowRunActionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowRunActionResource(Client, LogicWorkflowRunActionData.DeserializeLogicWorkflowRunActionData(e)), _logicWorkflowRunActionWorkflowRunActionsClientDiagnostics, Pipeline, "LogicWorkflowRunActionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = LogicWorkflowRunActionData.DeserializeLogicWorkflowRunActionData(e); return new LogicWorkflowRunActionResource(Client, data, data.Id); }, _logicWorkflowRunActionWorkflowRunActionsClientDiagnostics, Pipeline, "LogicWorkflowRunActionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowRunActionWorkflowRunActionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logicWorkflowRunActionWorkflowRunActionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowRunActionResource(Client, LogicWorkflowRunActionData.DeserializeLogicWorkflowRunActionData(e)), _logicWorkflowRunActionWorkflowRunActionsClientDiagnostics, Pipeline, "LogicWorkflowRunActionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = LogicWorkflowRunActionData.DeserializeLogicWorkflowRunActionData(e); return new LogicWorkflowRunActionResource(Client, data, data.Id); }, _logicWorkflowRunActionWorkflowRunActionsClientDiagnostics, Pipeline, "LogicWorkflowRunActionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

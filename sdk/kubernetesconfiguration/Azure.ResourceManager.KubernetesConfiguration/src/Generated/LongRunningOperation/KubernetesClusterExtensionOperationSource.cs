@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = KubernetesClusterExtensionData.DeserializeKubernetesClusterExtensionData(document.RootElement);
-            return new KubernetesClusterExtensionResource(_client, data);
+            return new KubernetesClusterExtensionResource(_client, data, data.Id);
         }
 
         async ValueTask<KubernetesClusterExtensionResource> IOperationSource<KubernetesClusterExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = KubernetesClusterExtensionData.DeserializeKubernetesClusterExtensionData(document.RootElement);
-            return new KubernetesClusterExtensionResource(_client, data);
+            return new KubernetesClusterExtensionResource(_client, data, data.Id);
         }
     }
 }

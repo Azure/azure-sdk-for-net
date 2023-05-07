@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.LabServices
                 var response = await _labPlanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, labPlanName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LabPlanResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LabPlanResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.LabServices
                 var response = _labPlanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, labPlanName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LabPlanResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LabPlanResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.LabServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _labPlanRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labPlanRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LabPlanResource(Client, LabPlanData.DeserializeLabPlanData(e)), _labPlanClientDiagnostics, Pipeline, "LabPlanCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = LabPlanData.DeserializeLabPlanData(e); return new LabPlanResource(Client, data, data.Id); }, _labPlanClientDiagnostics, Pipeline, "LabPlanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.LabServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _labPlanRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labPlanRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LabPlanResource(Client, LabPlanData.DeserializeLabPlanData(e)), _labPlanClientDiagnostics, Pipeline, "LabPlanCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = LabPlanData.DeserializeLabPlanData(e); return new LabPlanResource(Client, data, data.Id); }, _labPlanClientDiagnostics, Pipeline, "LabPlanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

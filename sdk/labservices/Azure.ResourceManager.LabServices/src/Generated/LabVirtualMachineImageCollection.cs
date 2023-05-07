@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.LabServices
             try
             {
                 var response = await _labVirtualMachineImageImagesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new LabServicesArmOperation<LabVirtualMachineImageResource>(Response.FromValue(new LabVirtualMachineImageResource(Client, response), response.GetRawResponse()));
+                var operation = new LabServicesArmOperation<LabVirtualMachineImageResource>(Response.FromValue(new LabVirtualMachineImageResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.LabServices
             try
             {
                 var response = _labVirtualMachineImageImagesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, data, cancellationToken);
-                var operation = new LabServicesArmOperation<LabVirtualMachineImageResource>(Response.FromValue(new LabVirtualMachineImageResource(Client, response), response.GetRawResponse()));
+                var operation = new LabServicesArmOperation<LabVirtualMachineImageResource>(Response.FromValue(new LabVirtualMachineImageResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.LabServices
                 var response = await _labVirtualMachineImageImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LabVirtualMachineImageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LabVirtualMachineImageResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.LabServices
                 var response = _labVirtualMachineImageImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LabVirtualMachineImageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LabVirtualMachineImageResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.LabServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _labVirtualMachineImageImagesRestClient.CreateListByLabPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labVirtualMachineImageImagesRestClient.CreateListByLabPlanNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LabVirtualMachineImageResource(Client, LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(e)), _labVirtualMachineImageImagesClientDiagnostics, Pipeline, "LabVirtualMachineImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(e); return new LabVirtualMachineImageResource(Client, data, data.Id); }, _labVirtualMachineImageImagesClientDiagnostics, Pipeline, "LabVirtualMachineImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.LabServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _labVirtualMachineImageImagesRestClient.CreateListByLabPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labVirtualMachineImageImagesRestClient.CreateListByLabPlanNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LabVirtualMachineImageResource(Client, LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(e)), _labVirtualMachineImageImagesClientDiagnostics, Pipeline, "LabVirtualMachineImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(e); return new LabVirtualMachineImageResource(Client, data, data.Id); }, _labVirtualMachineImageImagesClientDiagnostics, Pipeline, "LabVirtualMachineImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

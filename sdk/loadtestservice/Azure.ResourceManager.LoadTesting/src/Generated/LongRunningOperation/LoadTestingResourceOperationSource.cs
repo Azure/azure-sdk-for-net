@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.LoadTesting
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = LoadTestingResourceData.DeserializeLoadTestingResourceData(document.RootElement);
-            return new LoadTestingResource(_client, data);
+            return new LoadTestingResource(_client, data, data.Id);
         }
 
         async ValueTask<LoadTestingResource> IOperationSource<LoadTestingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = LoadTestingResourceData.DeserializeLoadTestingResourceData(document.RootElement);
-            return new LoadTestingResource(_client, data);
+            return new LoadTestingResource(_client, data, data.Id);
         }
     }
 }

@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Initializes a new instance of the <see cref = "PrivateStoreResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PrivateStoreResource(ArmClient client, PrivateStoreData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal PrivateStoreResource(ArmClient client, PrivateStoreData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -268,7 +269,7 @@ namespace Azure.ResourceManager.Marketplace
                 var response = await _privateStoreRestClient.GetAsync(Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateStoreResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -300,7 +301,7 @@ namespace Azure.ResourceManager.Marketplace
                 var response = _privateStoreRestClient.Get(Guid.Parse(Id.Name), cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateStoreResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

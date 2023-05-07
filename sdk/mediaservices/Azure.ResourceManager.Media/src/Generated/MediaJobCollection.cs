@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _mediaJobJobsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<MediaJobResource>(Response.FromValue(new MediaJobResource(Client, response), response.GetRawResponse()));
+                var operation = new MediaArmOperation<MediaJobResource>(Response.FromValue(new MediaJobResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _mediaJobJobsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, data, cancellationToken);
-                var operation = new MediaArmOperation<MediaJobResource>(Response.FromValue(new MediaJobResource(Client, response), response.GetRawResponse()));
+                var operation = new MediaArmOperation<MediaJobResource>(Response.FromValue(new MediaJobResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Media
                 var response = await _mediaJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MediaJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MediaJobResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Media
                 var response = _mediaJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MediaJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MediaJobResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaJobJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaJobJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MediaJobResource(Client, MediaJobData.DeserializeMediaJobData(e)), _mediaJobJobsClientDiagnostics, Pipeline, "MediaJobCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = MediaJobData.DeserializeMediaJobData(e); return new MediaJobResource(Client, data, data.Id); }, _mediaJobJobsClientDiagnostics, Pipeline, "MediaJobCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaJobJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaJobJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MediaJobResource(Client, MediaJobData.DeserializeMediaJobData(e)), _mediaJobJobsClientDiagnostics, Pipeline, "MediaJobCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = MediaJobData.DeserializeMediaJobData(e); return new MediaJobResource(Client, data, data.Id); }, _mediaJobJobsClientDiagnostics, Pipeline, "MediaJobCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>

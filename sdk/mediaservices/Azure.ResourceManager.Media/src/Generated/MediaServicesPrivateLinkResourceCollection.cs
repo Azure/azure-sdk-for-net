@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Media
                 var response = await _mediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MediaServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MediaServicesPrivateLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Media
                 var response = _mediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MediaServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MediaServicesPrivateLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Media
         public virtual AsyncPageable<MediaServicesPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MediaServicesPrivateLinkResource(Client, MediaServicesPrivateLinkResourceData.DeserializeMediaServicesPrivateLinkResourceData(e)), _mediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "MediaServicesPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = MediaServicesPrivateLinkResourceData.DeserializeMediaServicesPrivateLinkResourceData(e); return new MediaServicesPrivateLinkResource(Client, data, data.Id); }, _mediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "MediaServicesPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Media
         public virtual Pageable<MediaServicesPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MediaServicesPrivateLinkResource(Client, MediaServicesPrivateLinkResourceData.DeserializeMediaServicesPrivateLinkResourceData(e)), _mediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "MediaServicesPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = MediaServicesPrivateLinkResourceData.DeserializeMediaServicesPrivateLinkResourceData(e); return new MediaServicesPrivateLinkResource(Client, data, data.Id); }, _mediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "MediaServicesPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

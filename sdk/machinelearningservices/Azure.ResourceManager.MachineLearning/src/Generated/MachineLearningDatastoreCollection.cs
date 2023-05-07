@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _machineLearningDatastoreDatastoresRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, skipValidation, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningDatastoreResource>(Response.FromValue(new MachineLearningDatastoreResource(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningArmOperation<MachineLearningDatastoreResource>(Response.FromValue(new MachineLearningDatastoreResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _machineLearningDatastoreDatastoresRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, skipValidation, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningDatastoreResource>(Response.FromValue(new MachineLearningDatastoreResource(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningArmOperation<MachineLearningDatastoreResource>(Response.FromValue(new MachineLearningDatastoreResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.MachineLearning
                 var response = await _machineLearningDatastoreDatastoresRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MachineLearningDatastoreResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningDatastoreResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.MachineLearning
                 var response = _machineLearningDatastoreDatastoresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MachineLearningDatastoreResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningDatastoreResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.MachineLearning
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningDatastoreDatastoresRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Count, options.IsDefault, options.Names, options.SearchText, options.OrderBy, options.OrderByAsc);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningDatastoreDatastoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Count, options.IsDefault, options.Names, options.SearchText, options.OrderBy, options.OrderByAsc);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningDatastoreResource(Client, MachineLearningDatastoreData.DeserializeMachineLearningDatastoreData(e)), _machineLearningDatastoreDatastoresClientDiagnostics, Pipeline, "MachineLearningDatastoreCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = MachineLearningDatastoreData.DeserializeMachineLearningDatastoreData(e); return new MachineLearningDatastoreResource(Client, data, data.Id); }, _machineLearningDatastoreDatastoresClientDiagnostics, Pipeline, "MachineLearningDatastoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.MachineLearning
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningDatastoreDatastoresRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Count, options.IsDefault, options.Names, options.SearchText, options.OrderBy, options.OrderByAsc);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningDatastoreDatastoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Count, options.IsDefault, options.Names, options.SearchText, options.OrderBy, options.OrderByAsc);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningDatastoreResource(Client, MachineLearningDatastoreData.DeserializeMachineLearningDatastoreData(e)), _machineLearningDatastoreDatastoresClientDiagnostics, Pipeline, "MachineLearningDatastoreCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = MachineLearningDatastoreData.DeserializeMachineLearningDatastoreData(e); return new MachineLearningDatastoreResource(Client, data, data.Id); }, _machineLearningDatastoreDatastoresClientDiagnostics, Pipeline, "MachineLearningDatastoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

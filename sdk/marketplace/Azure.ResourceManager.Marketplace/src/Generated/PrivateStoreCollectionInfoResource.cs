@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Initializes a new instance of the <see cref = "PrivateStoreCollectionInfoResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PrivateStoreCollectionInfoResource(ArmClient client, PrivateStoreCollectionInfoData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal PrivateStoreCollectionInfoResource(ArmClient client, PrivateStoreCollectionInfoData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.Marketplace
                 var response = await _privateStoreCollectionInfoPrivateStoreCollectionRestClient.GetAsync(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -195,7 +196,7 @@ namespace Azure.ResourceManager.Marketplace
                 var response = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.Get(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -298,7 +299,7 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = await _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateOrUpdateAsync(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), info, cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation<PrivateStoreCollectionInfoResource>(Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response), response.GetRawResponse()));
+                var operation = new MarketplaceArmOperation<PrivateStoreCollectionInfoResource>(Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -336,7 +337,7 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateOrUpdate(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), info, cancellationToken);
-                var operation = new MarketplaceArmOperation<PrivateStoreCollectionInfoResource>(Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response), response.GetRawResponse()));
+                var operation = new MarketplaceArmOperation<PrivateStoreCollectionInfoResource>(Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -431,7 +432,7 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = await _privateStoreCollectionInfoPrivateStoreCollectionRestClient.ApproveAllItemsAsync(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -461,7 +462,7 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.ApproveAllItems(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken);
-                return Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -491,7 +492,7 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = await _privateStoreCollectionInfoPrivateStoreCollectionRestClient.DisableApproveAllItemsAsync(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -521,7 +522,7 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.DisableApproveAllItems(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken);
-                return Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

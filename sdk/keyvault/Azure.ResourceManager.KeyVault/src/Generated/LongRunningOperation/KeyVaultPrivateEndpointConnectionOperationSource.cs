@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.KeyVault
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = KeyVaultPrivateEndpointConnectionData.DeserializeKeyVaultPrivateEndpointConnectionData(document.RootElement);
-            return new KeyVaultPrivateEndpointConnectionResource(_client, data);
+            return new KeyVaultPrivateEndpointConnectionResource(_client, data, data.Id);
         }
 
         async ValueTask<KeyVaultPrivateEndpointConnectionResource> IOperationSource<KeyVaultPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = KeyVaultPrivateEndpointConnectionData.DeserializeKeyVaultPrivateEndpointConnectionData(document.RootElement);
-            return new KeyVaultPrivateEndpointConnectionResource(_client, data);
+            return new KeyVaultPrivateEndpointConnectionResource(_client, data, data.Id);
         }
     }
 }

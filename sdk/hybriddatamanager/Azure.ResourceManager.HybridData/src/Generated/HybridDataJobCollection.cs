@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HybridData
                 var response = await _hybridDataJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobId, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridDataJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridDataJobResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HybridData
                 var response = _hybridDataJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobId, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridDataJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridDataJobResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HybridData
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataJobJobsRestClient.CreateListByJobDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataJobJobsRestClient.CreateListByJobDefinitionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridDataJobResource(Client, HybridDataJobData.DeserializeHybridDataJobData(e)), _hybridDataJobJobsClientDiagnostics, Pipeline, "HybridDataJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = HybridDataJobData.DeserializeHybridDataJobData(e); return new HybridDataJobResource(Client, data, data.Id); }, _hybridDataJobJobsClientDiagnostics, Pipeline, "HybridDataJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.HybridData
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataJobJobsRestClient.CreateListByJobDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataJobJobsRestClient.CreateListByJobDefinitionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridDataJobResource(Client, HybridDataJobData.DeserializeHybridDataJobData(e)), _hybridDataJobJobsClientDiagnostics, Pipeline, "HybridDataJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = HybridDataJobData.DeserializeHybridDataJobData(e); return new HybridDataJobResource(Client, data, data.Id); }, _hybridDataJobJobsClientDiagnostics, Pipeline, "HybridDataJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.IotHub
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = IotHubDescriptionData.DeserializeIotHubDescriptionData(document.RootElement);
-            return new IotHubDescriptionResource(_client, data);
+            return new IotHubDescriptionResource(_client, data, data.Id);
         }
 
         async ValueTask<IotHubDescriptionResource> IOperationSource<IotHubDescriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = IotHubDescriptionData.DeserializeIotHubDescriptionData(document.RootElement);
-            return new IotHubDescriptionResource(_client, data);
+            return new IotHubDescriptionResource(_client, data, data.Id);
         }
     }
 }

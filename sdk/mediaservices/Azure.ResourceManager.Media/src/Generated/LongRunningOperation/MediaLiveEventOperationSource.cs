@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Media
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MediaLiveEventData.DeserializeMediaLiveEventData(document.RootElement);
-            return new MediaLiveEventResource(_client, data);
+            return new MediaLiveEventResource(_client, data, data.Id);
         }
 
         async ValueTask<MediaLiveEventResource> IOperationSource<MediaLiveEventResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MediaLiveEventData.DeserializeMediaLiveEventData(document.RootElement);
-            return new MediaLiveEventResource(_client, data);
+            return new MediaLiveEventResource(_client, data, data.Id);
         }
     }
 }

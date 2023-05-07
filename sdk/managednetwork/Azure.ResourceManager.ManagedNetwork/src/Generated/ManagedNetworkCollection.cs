@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             try
             {
                 var response = await _managedNetworkRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, managedNetworkName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkArmOperation<ManagedNetworkResource>(Response.FromValue(new ManagedNetworkResource(Client, response), response.GetRawResponse()));
+                var operation = new ManagedNetworkArmOperation<ManagedNetworkResource>(Response.FromValue(new ManagedNetworkResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             try
             {
                 var response = _managedNetworkRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, managedNetworkName, data, cancellationToken);
-                var operation = new ManagedNetworkArmOperation<ManagedNetworkResource>(Response.FromValue(new ManagedNetworkResource(Client, response), response.GetRawResponse()));
+                var operation = new ManagedNetworkArmOperation<ManagedNetworkResource>(Response.FromValue(new ManagedNetworkResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 var response = await _managedNetworkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, managedNetworkName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedNetworkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedNetworkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 var response = _managedNetworkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, managedNetworkName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedNetworkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedNetworkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedNetworkRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedNetworkRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, skiptoken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkResource(Client, ManagedNetworkData.DeserializeManagedNetworkData(e)), _managedNetworkClientDiagnostics, Pipeline, "ManagedNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ManagedNetworkData.DeserializeManagedNetworkData(e); return new ManagedNetworkResource(Client, data, data.Id); }, _managedNetworkClientDiagnostics, Pipeline, "ManagedNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedNetworkRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedNetworkRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, skiptoken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkResource(Client, ManagedNetworkData.DeserializeManagedNetworkData(e)), _managedNetworkClientDiagnostics, Pipeline, "ManagedNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ManagedNetworkData.DeserializeManagedNetworkData(e); return new ManagedNetworkResource(Client, data, data.Id); }, _managedNetworkClientDiagnostics, Pipeline, "ManagedNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

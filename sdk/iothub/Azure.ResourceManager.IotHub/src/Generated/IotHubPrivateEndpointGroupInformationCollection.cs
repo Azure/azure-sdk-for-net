@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.IotHub
                 var response = await _iotHubPrivateEndpointGroupInformationPrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IotHubPrivateEndpointGroupInformationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IotHubPrivateEndpointGroupInformationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.IotHub
                 var response = _iotHubPrivateEndpointGroupInformationPrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IotHubPrivateEndpointGroupInformationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IotHubPrivateEndpointGroupInformationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.IotHub
         public virtual AsyncPageable<IotHubPrivateEndpointGroupInformationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubPrivateEndpointGroupInformationPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new IotHubPrivateEndpointGroupInformationResource(Client, IotHubPrivateEndpointGroupInformationData.DeserializeIotHubPrivateEndpointGroupInformationData(e)), _iotHubPrivateEndpointGroupInformationPrivateLinkResourcesClientDiagnostics, Pipeline, "IotHubPrivateEndpointGroupInformationCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = IotHubPrivateEndpointGroupInformationData.DeserializeIotHubPrivateEndpointGroupInformationData(e); return new IotHubPrivateEndpointGroupInformationResource(Client, data, data.Id); }, _iotHubPrivateEndpointGroupInformationPrivateLinkResourcesClientDiagnostics, Pipeline, "IotHubPrivateEndpointGroupInformationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.IotHub
         public virtual Pageable<IotHubPrivateEndpointGroupInformationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubPrivateEndpointGroupInformationPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new IotHubPrivateEndpointGroupInformationResource(Client, IotHubPrivateEndpointGroupInformationData.DeserializeIotHubPrivateEndpointGroupInformationData(e)), _iotHubPrivateEndpointGroupInformationPrivateLinkResourcesClientDiagnostics, Pipeline, "IotHubPrivateEndpointGroupInformationCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = IotHubPrivateEndpointGroupInformationData.DeserializeIotHubPrivateEndpointGroupInformationData(e); return new IotHubPrivateEndpointGroupInformationResource(Client, data, data.Id); }, _iotHubPrivateEndpointGroupInformationPrivateLinkResourcesClientDiagnostics, Pipeline, "IotHubPrivateEndpointGroupInformationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

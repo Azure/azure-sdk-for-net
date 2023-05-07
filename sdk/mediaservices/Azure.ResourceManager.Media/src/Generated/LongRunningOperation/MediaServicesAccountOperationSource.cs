@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Media
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MediaServicesAccountData.DeserializeMediaServicesAccountData(document.RootElement);
-            return new MediaServicesAccountResource(_client, data);
+            return new MediaServicesAccountResource(_client, data, data.Id);
         }
 
         async ValueTask<MediaServicesAccountResource> IOperationSource<MediaServicesAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MediaServicesAccountData.DeserializeMediaServicesAccountData(document.RootElement);
-            return new MediaServicesAccountResource(_client, data);
+            return new MediaServicesAccountResource(_client, data, data.Id);
         }
     }
 }

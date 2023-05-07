@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ManagedServices
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedServicesRegistrationAssignmentData.DeserializeManagedServicesRegistrationAssignmentData(document.RootElement);
-            return new ManagedServicesRegistrationAssignmentResource(_client, data);
+            return new ManagedServicesRegistrationAssignmentResource(_client, data, data.Id);
         }
 
         async ValueTask<ManagedServicesRegistrationAssignmentResource> IOperationSource<ManagedServicesRegistrationAssignmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedServicesRegistrationAssignmentData.DeserializeManagedServicesRegistrationAssignmentData(document.RootElement);
-            return new ManagedServicesRegistrationAssignmentResource(_client, data);
+            return new ManagedServicesRegistrationAssignmentResource(_client, data, data.Id);
         }
     }
 }

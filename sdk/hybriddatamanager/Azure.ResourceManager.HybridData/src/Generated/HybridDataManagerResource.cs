@@ -50,7 +50,8 @@ namespace Azure.ResourceManager.HybridData
         /// <summary> Initializes a new instance of the <see cref = "HybridDataManagerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal HybridDataManagerResource(ArmClient client, HybridDataManagerData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal HybridDataManagerResource(ArmClient client, HybridDataManagerData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -334,7 +335,7 @@ namespace Azure.ResourceManager.HybridData
                 var response = await _hybridDataManagerDataManagersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridDataManagerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridDataManagerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -366,7 +367,7 @@ namespace Azure.ResourceManager.HybridData
                 var response = _hybridDataManagerDataManagersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridDataManagerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridDataManagerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -541,7 +542,7 @@ namespace Azure.ResourceManager.HybridData
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataJobDefinitionJobDefinitionsRestClient.CreateListByDataManagerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataJobDefinitionJobDefinitionsRestClient.CreateListByDataManagerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridDataJobDefinitionResource(Client, HybridDataJobDefinitionData.DeserializeHybridDataJobDefinitionData(e)), _hybridDataJobDefinitionJobDefinitionsClientDiagnostics, Pipeline, "HybridDataManagerResource.GetJobDefinitions", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = HybridDataJobDefinitionData.DeserializeHybridDataJobDefinitionData(e); return new HybridDataJobDefinitionResource(Client, data, data.Id); }, _hybridDataJobDefinitionJobDefinitionsClientDiagnostics, Pipeline, "HybridDataManagerResource.GetJobDefinitions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -564,7 +565,7 @@ namespace Azure.ResourceManager.HybridData
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataJobDefinitionJobDefinitionsRestClient.CreateListByDataManagerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataJobDefinitionJobDefinitionsRestClient.CreateListByDataManagerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridDataJobDefinitionResource(Client, HybridDataJobDefinitionData.DeserializeHybridDataJobDefinitionData(e)), _hybridDataJobDefinitionJobDefinitionsClientDiagnostics, Pipeline, "HybridDataManagerResource.GetJobDefinitions", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = HybridDataJobDefinitionData.DeserializeHybridDataJobDefinitionData(e); return new HybridDataJobDefinitionResource(Client, data, data.Id); }, _hybridDataJobDefinitionJobDefinitionsClientDiagnostics, Pipeline, "HybridDataManagerResource.GetJobDefinitions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -587,7 +588,7 @@ namespace Azure.ResourceManager.HybridData
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataJobJobsRestClient.CreateListByDataManagerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataJobJobsRestClient.CreateListByDataManagerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridDataJobResource(Client, HybridDataJobData.DeserializeHybridDataJobData(e)), _hybridDataJobJobsClientDiagnostics, Pipeline, "HybridDataManagerResource.GetJobs", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = HybridDataJobData.DeserializeHybridDataJobData(e); return new HybridDataJobResource(Client, data, data.Id); }, _hybridDataJobJobsClientDiagnostics, Pipeline, "HybridDataManagerResource.GetJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -610,7 +611,7 @@ namespace Azure.ResourceManager.HybridData
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataJobJobsRestClient.CreateListByDataManagerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataJobJobsRestClient.CreateListByDataManagerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridDataJobResource(Client, HybridDataJobData.DeserializeHybridDataJobData(e)), _hybridDataJobJobsClientDiagnostics, Pipeline, "HybridDataManagerResource.GetJobs", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = HybridDataJobData.DeserializeHybridDataJobData(e); return new HybridDataJobResource(Client, data, data.Id); }, _hybridDataJobJobsClientDiagnostics, Pipeline, "HybridDataManagerResource.GetJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -645,7 +646,7 @@ namespace Azure.ResourceManager.HybridData
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _hybridDataManagerDataManagersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new HybridDataManagerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new HybridDataManagerResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -699,7 +700,7 @@ namespace Azure.ResourceManager.HybridData
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _hybridDataManagerDataManagersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new HybridDataManagerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new HybridDataManagerResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -752,7 +753,7 @@ namespace Azure.ResourceManager.HybridData
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _hybridDataManagerDataManagersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new HybridDataManagerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new HybridDataManagerResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -801,7 +802,7 @@ namespace Azure.ResourceManager.HybridData
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _hybridDataManagerDataManagersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new HybridDataManagerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new HybridDataManagerResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -849,7 +850,7 @@ namespace Azure.ResourceManager.HybridData
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _hybridDataManagerDataManagersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new HybridDataManagerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new HybridDataManagerResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -901,7 +902,7 @@ namespace Azure.ResourceManager.HybridData
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _hybridDataManagerDataManagersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new HybridDataManagerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new HybridDataManagerResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {

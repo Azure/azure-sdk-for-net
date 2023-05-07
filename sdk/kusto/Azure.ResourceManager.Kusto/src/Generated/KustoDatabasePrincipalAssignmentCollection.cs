@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Kusto
                 var response = await _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, principalAssignmentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new KustoDatabasePrincipalAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KustoDatabasePrincipalAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Kusto
                 var response = _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, principalAssignmentName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new KustoDatabasePrincipalAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KustoDatabasePrincipalAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual AsyncPageable<KustoDatabasePrincipalAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoDatabasePrincipalAssignmentResource(Client, KustoDatabasePrincipalAssignmentData.DeserializeKustoDatabasePrincipalAssignmentData(e)), _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsClientDiagnostics, Pipeline, "KustoDatabasePrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = KustoDatabasePrincipalAssignmentData.DeserializeKustoDatabasePrincipalAssignmentData(e); return new KustoDatabasePrincipalAssignmentResource(Client, data, data.Id); }, _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsClientDiagnostics, Pipeline, "KustoDatabasePrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual Pageable<KustoDatabasePrincipalAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoDatabasePrincipalAssignmentResource(Client, KustoDatabasePrincipalAssignmentData.DeserializeKustoDatabasePrincipalAssignmentData(e)), _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsClientDiagnostics, Pipeline, "KustoDatabasePrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = KustoDatabasePrincipalAssignmentData.DeserializeKustoDatabasePrincipalAssignmentData(e); return new KustoDatabasePrincipalAssignmentResource(Client, data, data.Id); }, _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsClientDiagnostics, Pipeline, "KustoDatabasePrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

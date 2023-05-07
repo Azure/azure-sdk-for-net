@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Kusto
                 var response = await _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedDatabaseConfigurationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new KustoAttachedDatabaseConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KustoAttachedDatabaseConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Kusto
                 var response = _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedDatabaseConfigurationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new KustoAttachedDatabaseConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KustoAttachedDatabaseConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual AsyncPageable<KustoAttachedDatabaseConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoAttachedDatabaseConfigurationResource(Client, KustoAttachedDatabaseConfigurationData.DeserializeKustoAttachedDatabaseConfigurationData(e)), _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, "KustoAttachedDatabaseConfigurationCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = KustoAttachedDatabaseConfigurationData.DeserializeKustoAttachedDatabaseConfigurationData(e); return new KustoAttachedDatabaseConfigurationResource(Client, data, data.Id); }, _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, "KustoAttachedDatabaseConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual Pageable<KustoAttachedDatabaseConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoAttachedDatabaseConfigurationResource(Client, KustoAttachedDatabaseConfigurationData.DeserializeKustoAttachedDatabaseConfigurationData(e)), _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, "KustoAttachedDatabaseConfigurationCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = KustoAttachedDatabaseConfigurationData.DeserializeKustoAttachedDatabaseConfigurationData(e); return new KustoAttachedDatabaseConfigurationResource(Client, data, data.Id); }, _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, "KustoAttachedDatabaseConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ManagementPartner
             try
             {
                 var response = await _partnerResponsePartnerRestClient.CreateAsync(partnerId, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagementPartnerArmOperation<PartnerResponseResource>(Response.FromValue(new PartnerResponseResource(Client, response), response.GetRawResponse()));
+                var operation = new ManagementPartnerArmOperation<PartnerResponseResource>(Response.FromValue(new PartnerResponseResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ManagementPartner
             try
             {
                 var response = _partnerResponsePartnerRestClient.Create(partnerId, cancellationToken);
-                var operation = new ManagementPartnerArmOperation<PartnerResponseResource>(Response.FromValue(new PartnerResponseResource(Client, response), response.GetRawResponse()));
+                var operation = new ManagementPartnerArmOperation<PartnerResponseResource>(Response.FromValue(new PartnerResponseResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ManagementPartner
                 var response = await _partnerResponsePartnerRestClient.GetAsync(partnerId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PartnerResponseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PartnerResponseResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ManagementPartner
                 var response = _partnerResponsePartnerRestClient.Get(partnerId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PartnerResponseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PartnerResponseResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

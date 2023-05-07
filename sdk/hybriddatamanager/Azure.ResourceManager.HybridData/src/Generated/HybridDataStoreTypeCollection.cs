@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridData
                 var response = await _hybridDataStoreTypeDataStoreTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataStoreTypeName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridDataStoreTypeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridDataStoreTypeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.HybridData
                 var response = _hybridDataStoreTypeDataStoreTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataStoreTypeName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridDataStoreTypeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridDataStoreTypeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.HybridData
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataStoreTypeDataStoreTypesRestClient.CreateListByDataManagerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataStoreTypeDataStoreTypesRestClient.CreateListByDataManagerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridDataStoreTypeResource(Client, HybridDataStoreTypeData.DeserializeHybridDataStoreTypeData(e)), _hybridDataStoreTypeDataStoreTypesClientDiagnostics, Pipeline, "HybridDataStoreTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = HybridDataStoreTypeData.DeserializeHybridDataStoreTypeData(e); return new HybridDataStoreTypeResource(Client, data, data.Id); }, _hybridDataStoreTypeDataStoreTypesClientDiagnostics, Pipeline, "HybridDataStoreTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.HybridData
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataStoreTypeDataStoreTypesRestClient.CreateListByDataManagerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataStoreTypeDataStoreTypesRestClient.CreateListByDataManagerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridDataStoreTypeResource(Client, HybridDataStoreTypeData.DeserializeHybridDataStoreTypeData(e)), _hybridDataStoreTypeDataStoreTypesClientDiagnostics, Pipeline, "HybridDataStoreTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = HybridDataStoreTypeData.DeserializeHybridDataStoreTypeData(e); return new HybridDataStoreTypeResource(Client, data, data.Id); }, _hybridDataStoreTypeDataStoreTypesClientDiagnostics, Pipeline, "HybridDataStoreTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

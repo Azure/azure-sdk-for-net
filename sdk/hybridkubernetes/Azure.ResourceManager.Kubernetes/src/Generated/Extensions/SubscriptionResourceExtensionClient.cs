@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Kubernetes
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConnectedClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConnectedClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConnectedClusterResource(Client, ConnectedClusterData.DeserializeConnectedClusterData(e)), ConnectedClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConnectedClusters", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ConnectedClusterData.DeserializeConnectedClusterData(e); return new ConnectedClusterResource(Client, data, data.Id); }, ConnectedClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConnectedClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Kubernetes
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConnectedClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConnectedClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConnectedClusterResource(Client, ConnectedClusterData.DeserializeConnectedClusterData(e)), ConnectedClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConnectedClusters", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ConnectedClusterData.DeserializeConnectedClusterData(e); return new ConnectedClusterResource(Client, data, data.Id); }, ConnectedClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConnectedClusters", "value", "nextLink", cancellationToken);
         }
     }
 }

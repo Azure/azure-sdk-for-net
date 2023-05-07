@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.MachineLearning
                 var response = await _machineLearningComputeComputeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MachineLearningComputeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningComputeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.MachineLearning
                 var response = _machineLearningComputeComputeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MachineLearningComputeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningComputeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningComputeComputeRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningComputeComputeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningComputeResource(Client, MachineLearningComputeData.DeserializeMachineLearningComputeData(e)), _machineLearningComputeComputeClientDiagnostics, Pipeline, "MachineLearningComputeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = MachineLearningComputeData.DeserializeMachineLearningComputeData(e); return new MachineLearningComputeResource(Client, data, data.Id); }, _machineLearningComputeComputeClientDiagnostics, Pipeline, "MachineLearningComputeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningComputeComputeRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningComputeComputeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningComputeResource(Client, MachineLearningComputeData.DeserializeMachineLearningComputeData(e)), _machineLearningComputeComputeClientDiagnostics, Pipeline, "MachineLearningComputeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = MachineLearningComputeData.DeserializeMachineLearningComputeData(e); return new MachineLearningComputeResource(Client, data, data.Id); }, _machineLearningComputeComputeClientDiagnostics, Pipeline, "MachineLearningComputeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UserAssignedIdentityRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UserAssignedIdentityRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new UserAssignedIdentityResource(Client, UserAssignedIdentityData.DeserializeUserAssignedIdentityData(e)), UserAssignedIdentityClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUserAssignedIdentities", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = UserAssignedIdentityData.DeserializeUserAssignedIdentityData(e); return new UserAssignedIdentityResource(Client, data, data.Id); }, UserAssignedIdentityClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUserAssignedIdentities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UserAssignedIdentityRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UserAssignedIdentityRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new UserAssignedIdentityResource(Client, UserAssignedIdentityData.DeserializeUserAssignedIdentityData(e)), UserAssignedIdentityClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUserAssignedIdentities", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = UserAssignedIdentityData.DeserializeUserAssignedIdentityData(e); return new UserAssignedIdentityResource(Client, data, data.Id); }, UserAssignedIdentityClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUserAssignedIdentities", "value", "nextLink", cancellationToken);
         }
     }
 }

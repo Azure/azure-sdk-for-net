@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Kusto
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = KustoDatabaseData.DeserializeKustoDatabaseData(document.RootElement);
-            return new KustoDatabaseResource(_client, data);
+            return new KustoDatabaseResource(_client, data, data.Id);
         }
 
         async ValueTask<KustoDatabaseResource> IOperationSource<KustoDatabaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = KustoDatabaseData.DeserializeKustoDatabaseData(document.RootElement);
-            return new KustoDatabaseResource(_client, data);
+            return new KustoDatabaseResource(_client, data, data.Id);
         }
     }
 }

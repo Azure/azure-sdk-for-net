@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.IotHub
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = IotHubPrivateEndpointConnectionData.DeserializeIotHubPrivateEndpointConnectionData(document.RootElement);
-            return new IotHubPrivateEndpointConnectionResource(_client, data);
+            return new IotHubPrivateEndpointConnectionResource(_client, data, data.Id);
         }
 
         async ValueTask<IotHubPrivateEndpointConnectionResource> IOperationSource<IotHubPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = IotHubPrivateEndpointConnectionData.DeserializeIotHubPrivateEndpointConnectionData(document.RootElement);
-            return new IotHubPrivateEndpointConnectionResource(_client, data);
+            return new IotHubPrivateEndpointConnectionResource(_client, data, data.Id);
         }
     }
 }

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Logic
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = IntegrationServiceEnvironmentData.DeserializeIntegrationServiceEnvironmentData(document.RootElement);
-            return new IntegrationServiceEnvironmentResource(_client, data);
+            return new IntegrationServiceEnvironmentResource(_client, data, data.Id);
         }
 
         async ValueTask<IntegrationServiceEnvironmentResource> IOperationSource<IntegrationServiceEnvironmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = IntegrationServiceEnvironmentData.DeserializeIntegrationServiceEnvironmentData(document.RootElement);
-            return new IntegrationServiceEnvironmentResource(_client, data);
+            return new IntegrationServiceEnvironmentResource(_client, data, data.Id);
         }
     }
 }

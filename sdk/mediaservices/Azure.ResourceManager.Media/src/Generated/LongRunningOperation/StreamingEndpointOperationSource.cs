@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Media
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = StreamingEndpointData.DeserializeStreamingEndpointData(document.RootElement);
-            return new StreamingEndpointResource(_client, data);
+            return new StreamingEndpointResource(_client, data, data.Id);
         }
 
         async ValueTask<StreamingEndpointResource> IOperationSource<StreamingEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = StreamingEndpointData.DeserializeStreamingEndpointData(document.RootElement);
-            return new StreamingEndpointResource(_client, data);
+            return new StreamingEndpointResource(_client, data, data.Id);
         }
     }
 }

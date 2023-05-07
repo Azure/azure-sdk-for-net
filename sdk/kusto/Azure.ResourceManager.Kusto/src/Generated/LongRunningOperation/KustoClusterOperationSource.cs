@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Kusto
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = KustoClusterData.DeserializeKustoClusterData(document.RootElement);
-            return new KustoClusterResource(_client, data);
+            return new KustoClusterResource(_client, data, data.Id);
         }
 
         async ValueTask<KustoClusterResource> IOperationSource<KustoClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = KustoClusterData.DeserializeKustoClusterData(document.RootElement);
-            return new KustoClusterResource(_client, data);
+            return new KustoClusterResource(_client, data, data.Id);
         }
     }
 }

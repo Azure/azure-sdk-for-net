@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Logic
         /// <summary> Initializes a new instance of the <see cref = "LogicWorkflowRunResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal LogicWorkflowRunResource(ArmClient client, LogicWorkflowRunData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal LogicWorkflowRunResource(ArmClient client, LogicWorkflowRunData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -215,7 +216,7 @@ namespace Azure.ResourceManager.Logic
                 var response = await _logicWorkflowRunWorkflowRunsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogicWorkflowRunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogicWorkflowRunResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -247,7 +248,7 @@ namespace Azure.ResourceManager.Logic
                 var response = _logicWorkflowRunWorkflowRunsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogicWorkflowRunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogicWorkflowRunResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

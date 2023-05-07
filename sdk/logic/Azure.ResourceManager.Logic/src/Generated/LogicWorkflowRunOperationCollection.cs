@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Logic
                 var response = await _logicWorkflowRunOperationWorkflowRunOperationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogicWorkflowRunOperationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogicWorkflowRunOperationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Logic
                 var response = _logicWorkflowRunOperationWorkflowRunOperationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogicWorkflowRunOperationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogicWorkflowRunOperationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

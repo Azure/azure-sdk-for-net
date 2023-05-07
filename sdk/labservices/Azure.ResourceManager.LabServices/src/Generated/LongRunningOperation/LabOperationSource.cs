@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.LabServices
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = LabData.DeserializeLabData(document.RootElement);
-            return new LabResource(_client, data);
+            return new LabResource(_client, data, data.Id);
         }
 
         async ValueTask<LabResource> IOperationSource<LabResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = LabData.DeserializeLabData(document.RootElement);
-            return new LabResource(_client, data);
+            return new LabResource(_client, data, data.Id);
         }
     }
 }

@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Initializes a new instance of the <see cref = "PrivateStoreOfferResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PrivateStoreOfferResource(ArmClient client, PrivateStoreOfferData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal PrivateStoreOfferResource(ArmClient client, PrivateStoreOfferData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Marketplace
                 var response = await _privateStoreOfferPrivateStoreCollectionOfferRestClient.GetAsync(Guid.Parse(Id.Parent.Parent.Name), Guid.Parse(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateStoreOfferResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreOfferResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Marketplace
                 var response = _privateStoreOfferPrivateStoreCollectionOfferRestClient.Get(Guid.Parse(Id.Parent.Parent.Name), Guid.Parse(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateStoreOfferResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreOfferResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -245,7 +246,7 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = await _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateOrUpdateAsync(Guid.Parse(Id.Parent.Parent.Name), Guid.Parse(Id.Parent.Name), Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation<PrivateStoreOfferResource>(Response.FromValue(new PrivateStoreOfferResource(Client, response), response.GetRawResponse()));
+                var operation = new MarketplaceArmOperation<PrivateStoreOfferResource>(Response.FromValue(new PrivateStoreOfferResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,7 +284,7 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateOrUpdate(Guid.Parse(Id.Parent.Parent.Name), Guid.Parse(Id.Parent.Name), Id.Name, data, cancellationToken);
-                var operation = new MarketplaceArmOperation<PrivateStoreOfferResource>(Response.FromValue(new PrivateStoreOfferResource(Client, response), response.GetRawResponse()));
+                var operation = new MarketplaceArmOperation<PrivateStoreOfferResource>(Response.FromValue(new PrivateStoreOfferResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -317,7 +318,7 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = await _privateStoreOfferPrivateStoreCollectionOfferRestClient.UpsertOfferWithMultiContextAsync(Guid.Parse(Id.Parent.Parent.Name), Guid.Parse(Id.Parent.Name), Id.Name, content, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PrivateStoreOfferResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreOfferResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -348,7 +349,7 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = _privateStoreOfferPrivateStoreCollectionOfferRestClient.UpsertOfferWithMultiContext(Guid.Parse(Id.Parent.Parent.Name), Guid.Parse(Id.Parent.Name), Id.Name, content, cancellationToken);
-                return Response.FromValue(new PrivateStoreOfferResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreOfferResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

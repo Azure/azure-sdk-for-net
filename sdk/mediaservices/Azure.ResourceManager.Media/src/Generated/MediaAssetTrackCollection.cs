@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Media
                 var response = await _mediaAssetTrackTracksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, trackName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MediaAssetTrackResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MediaAssetTrackResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Media
                 var response = _mediaAssetTrackTracksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, trackName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MediaAssetTrackResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MediaAssetTrackResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Media
         public virtual AsyncPageable<MediaAssetTrackResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetTrackTracksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MediaAssetTrackResource(Client, MediaAssetTrackData.DeserializeMediaAssetTrackData(e)), _mediaAssetTrackTracksClientDiagnostics, Pipeline, "MediaAssetTrackCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = MediaAssetTrackData.DeserializeMediaAssetTrackData(e); return new MediaAssetTrackResource(Client, data, data.Id); }, _mediaAssetTrackTracksClientDiagnostics, Pipeline, "MediaAssetTrackCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Media
         public virtual Pageable<MediaAssetTrackResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetTrackTracksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MediaAssetTrackResource(Client, MediaAssetTrackData.DeserializeMediaAssetTrackData(e)), _mediaAssetTrackTracksClientDiagnostics, Pipeline, "MediaAssetTrackCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = MediaAssetTrackData.DeserializeMediaAssetTrackData(e); return new MediaAssetTrackResource(Client, data, data.Id); }, _mediaAssetTrackTracksClientDiagnostics, Pipeline, "MediaAssetTrackCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

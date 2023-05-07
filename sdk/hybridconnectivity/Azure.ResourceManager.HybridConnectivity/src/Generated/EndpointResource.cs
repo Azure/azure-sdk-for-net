@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <summary> Initializes a new instance of the <see cref = "EndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal EndpointResource(ArmClient client, EndpointResourceData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal EndpointResource(ArmClient client, EndpointResourceData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 var response = await _endpointResourceEndpointsRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EndpointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 var response = _endpointResourceEndpointsRestClient.Get(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EndpointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             try
             {
                 var response = await _endpointResourceEndpointsRestClient.UpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EndpointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -278,7 +279,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             try
             {
                 var response = _endpointResourceEndpointsRestClient.Update(Id.Parent, Id.Name, data, cancellationToken);
-                return Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EndpointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

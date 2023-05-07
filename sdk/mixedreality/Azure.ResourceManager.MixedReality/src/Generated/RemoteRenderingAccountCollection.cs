@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MixedReality
             try
             {
                 var response = await _remoteRenderingAccountRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MixedRealityArmOperation<RemoteRenderingAccountResource>(Response.FromValue(new RemoteRenderingAccountResource(Client, response), response.GetRawResponse()));
+                var operation = new MixedRealityArmOperation<RemoteRenderingAccountResource>(Response.FromValue(new RemoteRenderingAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MixedReality
             try
             {
                 var response = _remoteRenderingAccountRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, accountName, data, cancellationToken);
-                var operation = new MixedRealityArmOperation<RemoteRenderingAccountResource>(Response.FromValue(new RemoteRenderingAccountResource(Client, response), response.GetRawResponse()));
+                var operation = new MixedRealityArmOperation<RemoteRenderingAccountResource>(Response.FromValue(new RemoteRenderingAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.MixedReality
                 var response = await _remoteRenderingAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RemoteRenderingAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RemoteRenderingAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.MixedReality
                 var response = _remoteRenderingAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RemoteRenderingAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RemoteRenderingAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MixedReality
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _remoteRenderingAccountRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _remoteRenderingAccountRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RemoteRenderingAccountResource(Client, RemoteRenderingAccountData.DeserializeRemoteRenderingAccountData(e)), _remoteRenderingAccountClientDiagnostics, Pipeline, "RemoteRenderingAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = RemoteRenderingAccountData.DeserializeRemoteRenderingAccountData(e); return new RemoteRenderingAccountResource(Client, data, data.Id); }, _remoteRenderingAccountClientDiagnostics, Pipeline, "RemoteRenderingAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.MixedReality
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _remoteRenderingAccountRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _remoteRenderingAccountRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RemoteRenderingAccountResource(Client, RemoteRenderingAccountData.DeserializeRemoteRenderingAccountData(e)), _remoteRenderingAccountClientDiagnostics, Pipeline, "RemoteRenderingAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = RemoteRenderingAccountData.DeserializeRemoteRenderingAccountData(e); return new RemoteRenderingAccountResource(Client, data, data.Id); }, _remoteRenderingAccountClientDiagnostics, Pipeline, "RemoteRenderingAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

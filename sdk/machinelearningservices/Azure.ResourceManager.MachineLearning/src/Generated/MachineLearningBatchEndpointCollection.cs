@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.MachineLearning
                 var response = await _machineLearningBatchEndpointBatchEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MachineLearningBatchEndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningBatchEndpointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.MachineLearning
                 var response = _machineLearningBatchEndpointBatchEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MachineLearningBatchEndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningBatchEndpointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningBatchEndpointBatchEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, count, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningBatchEndpointBatchEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, count, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningBatchEndpointResource(Client, MachineLearningBatchEndpointData.DeserializeMachineLearningBatchEndpointData(e)), _machineLearningBatchEndpointBatchEndpointsClientDiagnostics, Pipeline, "MachineLearningBatchEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = MachineLearningBatchEndpointData.DeserializeMachineLearningBatchEndpointData(e); return new MachineLearningBatchEndpointResource(Client, data, data.Id); }, _machineLearningBatchEndpointBatchEndpointsClientDiagnostics, Pipeline, "MachineLearningBatchEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningBatchEndpointBatchEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, count, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningBatchEndpointBatchEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, count, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningBatchEndpointResource(Client, MachineLearningBatchEndpointData.DeserializeMachineLearningBatchEndpointData(e)), _machineLearningBatchEndpointBatchEndpointsClientDiagnostics, Pipeline, "MachineLearningBatchEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = MachineLearningBatchEndpointData.DeserializeMachineLearningBatchEndpointData(e); return new MachineLearningBatchEndpointResource(Client, data, data.Id); }, _machineLearningBatchEndpointBatchEndpointsClientDiagnostics, Pipeline, "MachineLearningBatchEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

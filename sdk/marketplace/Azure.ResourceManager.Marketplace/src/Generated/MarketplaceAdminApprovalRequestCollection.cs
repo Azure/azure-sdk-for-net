@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = await _marketplaceAdminApprovalRequestPrivateStoreRestClient.UpdateAdminRequestApprovalAsync(Guid.Parse(Id.Name), adminRequestApprovalId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource>(Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response), response.GetRawResponse()));
+                var operation = new MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource>(Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = _marketplaceAdminApprovalRequestPrivateStoreRestClient.UpdateAdminRequestApproval(Guid.Parse(Id.Name), adminRequestApprovalId, data, cancellationToken);
-                var operation = new MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource>(Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response), response.GetRawResponse()));
+                var operation = new MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource>(Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Marketplace
                 var response = await _marketplaceAdminApprovalRequestPrivateStoreRestClient.GetAdminRequestApprovalAsync(Guid.Parse(Id.Name), adminRequestApprovalId, publisherId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Marketplace
                 var response = _marketplaceAdminApprovalRequestPrivateStoreRestClient.GetAdminRequestApproval(Guid.Parse(Id.Name), adminRequestApprovalId, publisherId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual AsyncPageable<MarketplaceAdminApprovalRequestResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _marketplaceAdminApprovalRequestPrivateStoreRestClient.CreateAdminRequestApprovalsListRequest(Guid.Parse(Id.Name));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MarketplaceAdminApprovalRequestResource(Client, MarketplaceAdminApprovalRequestData.DeserializeMarketplaceAdminApprovalRequestData(e)), _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics, Pipeline, "MarketplaceAdminApprovalRequestCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = MarketplaceAdminApprovalRequestData.DeserializeMarketplaceAdminApprovalRequestData(e); return new MarketplaceAdminApprovalRequestResource(Client, data, data.Id); }, _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics, Pipeline, "MarketplaceAdminApprovalRequestCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Pageable<MarketplaceAdminApprovalRequestResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _marketplaceAdminApprovalRequestPrivateStoreRestClient.CreateAdminRequestApprovalsListRequest(Guid.Parse(Id.Name));
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MarketplaceAdminApprovalRequestResource(Client, MarketplaceAdminApprovalRequestData.DeserializeMarketplaceAdminApprovalRequestData(e)), _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics, Pipeline, "MarketplaceAdminApprovalRequestCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = MarketplaceAdminApprovalRequestData.DeserializeMarketplaceAdminApprovalRequestData(e); return new MarketplaceAdminApprovalRequestResource(Client, data, data.Id); }, _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics, Pipeline, "MarketplaceAdminApprovalRequestCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

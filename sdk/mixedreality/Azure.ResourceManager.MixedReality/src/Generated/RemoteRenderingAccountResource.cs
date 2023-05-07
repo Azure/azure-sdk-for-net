@@ -46,7 +46,8 @@ namespace Azure.ResourceManager.MixedReality
         /// <summary> Initializes a new instance of the <see cref = "RemoteRenderingAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RemoteRenderingAccountResource(ArmClient client, RemoteRenderingAccountData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal RemoteRenderingAccountResource(ArmClient client, RemoteRenderingAccountData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.MixedReality
                 var response = await _remoteRenderingAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RemoteRenderingAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RemoteRenderingAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.MixedReality
                 var response = _remoteRenderingAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RemoteRenderingAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RemoteRenderingAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -246,7 +247,7 @@ namespace Azure.ResourceManager.MixedReality
             try
             {
                 var response = await _remoteRenderingAccountRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new RemoteRenderingAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RemoteRenderingAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -280,7 +281,7 @@ namespace Azure.ResourceManager.MixedReality
             try
             {
                 var response = _remoteRenderingAccountRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                return Response.FromValue(new RemoteRenderingAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RemoteRenderingAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -449,7 +450,7 @@ namespace Azure.ResourceManager.MixedReality
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _remoteRenderingAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new RemoteRenderingAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new RemoteRenderingAccountResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -503,7 +504,7 @@ namespace Azure.ResourceManager.MixedReality
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _remoteRenderingAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new RemoteRenderingAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new RemoteRenderingAccountResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -556,7 +557,7 @@ namespace Azure.ResourceManager.MixedReality
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _remoteRenderingAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new RemoteRenderingAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new RemoteRenderingAccountResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -605,7 +606,7 @@ namespace Azure.ResourceManager.MixedReality
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _remoteRenderingAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new RemoteRenderingAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new RemoteRenderingAccountResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -653,7 +654,7 @@ namespace Azure.ResourceManager.MixedReality
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _remoteRenderingAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new RemoteRenderingAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new RemoteRenderingAccountResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -705,7 +706,7 @@ namespace Azure.ResourceManager.MixedReality
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _remoteRenderingAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new RemoteRenderingAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new RemoteRenderingAccountResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {

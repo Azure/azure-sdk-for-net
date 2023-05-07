@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             try
             {
                 var response = await _marketplaceAgreementTermMarketplaceAgreementsRestClient.CreateAsync(Id.SubscriptionId, offerType, publisherId, offerId, planId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceOrderingArmOperation<MarketplaceAgreementTermResource>(Response.FromValue(new MarketplaceAgreementTermResource(Client, response), response.GetRawResponse()));
+                var operation = new MarketplaceOrderingArmOperation<MarketplaceAgreementTermResource>(Response.FromValue(new MarketplaceAgreementTermResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             try
             {
                 var response = _marketplaceAgreementTermMarketplaceAgreementsRestClient.Create(Id.SubscriptionId, offerType, publisherId, offerId, planId, data, cancellationToken);
-                var operation = new MarketplaceOrderingArmOperation<MarketplaceAgreementTermResource>(Response.FromValue(new MarketplaceAgreementTermResource(Client, response), response.GetRawResponse()));
+                var operation = new MarketplaceOrderingArmOperation<MarketplaceAgreementTermResource>(Response.FromValue(new MarketplaceAgreementTermResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 var response = await _marketplaceAgreementTermMarketplaceAgreementsRestClient.GetAsync(Id.SubscriptionId, offerType, publisherId, offerId, planId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MarketplaceAgreementTermResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MarketplaceAgreementTermResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 var response = _marketplaceAgreementTermMarketplaceAgreementsRestClient.Get(Id.SubscriptionId, offerType, publisherId, offerId, planId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MarketplaceAgreementTermResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MarketplaceAgreementTermResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

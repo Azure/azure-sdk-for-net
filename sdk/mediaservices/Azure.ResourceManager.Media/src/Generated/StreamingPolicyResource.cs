@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Media
         /// <summary> Initializes a new instance of the <see cref = "StreamingPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal StreamingPolicyResource(ArmClient client, StreamingPolicyData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal StreamingPolicyResource(ArmClient client, StreamingPolicyData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Media
                 var response = await _streamingPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StreamingPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StreamingPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Media
                 var response = _streamingPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StreamingPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StreamingPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _streamingPolicyRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<StreamingPolicyResource>(Response.FromValue(new StreamingPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new MediaArmOperation<StreamingPolicyResource>(Response.FromValue(new StreamingPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,7 +283,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _streamingPolicyRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new MediaArmOperation<StreamingPolicyResource>(Response.FromValue(new StreamingPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new MediaArmOperation<StreamingPolicyResource>(Response.FromValue(new StreamingPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

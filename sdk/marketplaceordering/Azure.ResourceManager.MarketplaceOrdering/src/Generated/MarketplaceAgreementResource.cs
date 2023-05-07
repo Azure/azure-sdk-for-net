@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <summary> Initializes a new instance of the <see cref = "MarketplaceAgreementResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MarketplaceAgreementResource(ArmClient client, MarketplaceAgreementTermData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal MarketplaceAgreementResource(ArmClient client, MarketplaceAgreementTermData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 var response = await _marketplaceAgreementRestClient.GetAgreementAsync(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MarketplaceAgreementResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MarketplaceAgreementResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 var response = _marketplaceAgreementRestClient.GetAgreement(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MarketplaceAgreementResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MarketplaceAgreementResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -172,7 +173,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             try
             {
                 var response = await _marketplaceAgreementRestClient.SignAsync(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new MarketplaceAgreementResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MarketplaceAgreementResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,7 +203,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             try
             {
                 var response = _marketplaceAgreementRestClient.Sign(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new MarketplaceAgreementResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MarketplaceAgreementResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -232,7 +233,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             try
             {
                 var response = await _marketplaceAgreementRestClient.CancelAsync(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new MarketplaceAgreementResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MarketplaceAgreementResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -262,7 +263,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             try
             {
                 var response = _marketplaceAgreementRestClient.Cancel(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new MarketplaceAgreementResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MarketplaceAgreementResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

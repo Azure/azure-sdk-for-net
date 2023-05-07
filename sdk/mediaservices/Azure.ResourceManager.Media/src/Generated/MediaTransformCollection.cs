@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _mediaTransformTransformsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<MediaTransformResource>(Response.FromValue(new MediaTransformResource(Client, response), response.GetRawResponse()));
+                var operation = new MediaArmOperation<MediaTransformResource>(Response.FromValue(new MediaTransformResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _mediaTransformTransformsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformName, data, cancellationToken);
-                var operation = new MediaArmOperation<MediaTransformResource>(Response.FromValue(new MediaTransformResource(Client, response), response.GetRawResponse()));
+                var operation = new MediaArmOperation<MediaTransformResource>(Response.FromValue(new MediaTransformResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Media
                 var response = await _mediaTransformTransformsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MediaTransformResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MediaTransformResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Media
                 var response = _mediaTransformTransformsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MediaTransformResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MediaTransformResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaTransformTransformsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaTransformTransformsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MediaTransformResource(Client, MediaTransformData.DeserializeMediaTransformData(e)), _mediaTransformTransformsClientDiagnostics, Pipeline, "MediaTransformCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = MediaTransformData.DeserializeMediaTransformData(e); return new MediaTransformResource(Client, data, data.Id); }, _mediaTransformTransformsClientDiagnostics, Pipeline, "MediaTransformCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaTransformTransformsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaTransformTransformsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MediaTransformResource(Client, MediaTransformData.DeserializeMediaTransformData(e)), _mediaTransformTransformsClientDiagnostics, Pipeline, "MediaTransformCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = MediaTransformData.DeserializeMediaTransformData(e); return new MediaTransformResource(Client, data, data.Id); }, _mediaTransformTransformsClientDiagnostics, Pipeline, "MediaTransformCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>

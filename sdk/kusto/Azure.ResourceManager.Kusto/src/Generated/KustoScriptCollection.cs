@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Kusto
                 var response = await _kustoScriptScriptsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new KustoScriptResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KustoScriptResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Kusto
                 var response = _kustoScriptScriptsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new KustoScriptResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KustoScriptResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual AsyncPageable<KustoScriptResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoScriptScriptsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoScriptResource(Client, KustoScriptData.DeserializeKustoScriptData(e)), _kustoScriptScriptsClientDiagnostics, Pipeline, "KustoScriptCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = KustoScriptData.DeserializeKustoScriptData(e); return new KustoScriptResource(Client, data, data.Id); }, _kustoScriptScriptsClientDiagnostics, Pipeline, "KustoScriptCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual Pageable<KustoScriptResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoScriptScriptsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoScriptResource(Client, KustoScriptData.DeserializeKustoScriptData(e)), _kustoScriptScriptsClientDiagnostics, Pipeline, "KustoScriptCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = KustoScriptData.DeserializeKustoScriptData(e); return new KustoScriptResource(Client, data, data.Id); }, _kustoScriptScriptsClientDiagnostics, Pipeline, "KustoScriptCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

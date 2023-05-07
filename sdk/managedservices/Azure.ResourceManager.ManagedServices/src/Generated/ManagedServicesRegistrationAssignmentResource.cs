@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.ManagedServices
         /// <summary> Initializes a new instance of the <see cref = "ManagedServicesRegistrationAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagedServicesRegistrationAssignmentResource(ArmClient client, ManagedServicesRegistrationAssignmentData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal ManagedServicesRegistrationAssignmentResource(ArmClient client, ManagedServicesRegistrationAssignmentData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ManagedServices
                 var response = await _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.GetAsync(Id.Parent, Id.Name, expandRegistrationDefinition, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedServicesRegistrationAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedServicesRegistrationAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.ManagedServices
                 var response = _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.Get(Id.Parent, Id.Name, expandRegistrationDefinition, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedServicesRegistrationAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedServicesRegistrationAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

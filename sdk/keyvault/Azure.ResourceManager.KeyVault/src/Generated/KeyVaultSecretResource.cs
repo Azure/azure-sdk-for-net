@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Initializes a new instance of the <see cref = "KeyVaultSecretResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal KeyVaultSecretResource(ArmClient client, KeyVaultSecretData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal KeyVaultSecretResource(ArmClient client, KeyVaultSecretData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.KeyVault
                 var response = await _keyVaultSecretSecretsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new KeyVaultSecretResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KeyVaultSecretResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.KeyVault
                 var response = _keyVaultSecretSecretsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new KeyVaultSecretResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KeyVaultSecretResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -176,7 +177,7 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = await _keyVaultSecretSecretsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new KeyVaultSecretResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KeyVaultSecretResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -210,7 +211,7 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = _keyVaultSecretSecretsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new KeyVaultSecretResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KeyVaultSecretResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

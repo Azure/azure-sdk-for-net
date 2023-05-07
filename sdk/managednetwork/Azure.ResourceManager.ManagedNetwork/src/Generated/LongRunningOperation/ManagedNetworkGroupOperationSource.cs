@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedNetworkGroupData.DeserializeManagedNetworkGroupData(document.RootElement);
-            return new ManagedNetworkGroupResource(_client, data);
+            return new ManagedNetworkGroupResource(_client, data, data.Id);
         }
 
         async ValueTask<ManagedNetworkGroupResource> IOperationSource<ManagedNetworkGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedNetworkGroupData.DeserializeManagedNetworkGroupData(document.RootElement);
-            return new ManagedNetworkGroupResource(_client, data);
+            return new ManagedNetworkGroupResource(_client, data, data.Id);
         }
     }
 }

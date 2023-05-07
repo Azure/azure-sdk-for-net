@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _streamingLocatorRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, streamingLocatorName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<StreamingLocatorResource>(Response.FromValue(new StreamingLocatorResource(Client, response), response.GetRawResponse()));
+                var operation = new MediaArmOperation<StreamingLocatorResource>(Response.FromValue(new StreamingLocatorResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _streamingLocatorRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, streamingLocatorName, data, cancellationToken);
-                var operation = new MediaArmOperation<StreamingLocatorResource>(Response.FromValue(new StreamingLocatorResource(Client, response), response.GetRawResponse()));
+                var operation = new MediaArmOperation<StreamingLocatorResource>(Response.FromValue(new StreamingLocatorResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Media
                 var response = await _streamingLocatorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, streamingLocatorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StreamingLocatorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StreamingLocatorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Media
                 var response = _streamingLocatorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, streamingLocatorName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StreamingLocatorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StreamingLocatorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingLocatorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingLocatorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamingLocatorResource(Client, StreamingLocatorData.DeserializeStreamingLocatorData(e)), _streamingLocatorClientDiagnostics, Pipeline, "StreamingLocatorCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = StreamingLocatorData.DeserializeStreamingLocatorData(e); return new StreamingLocatorResource(Client, data, data.Id); }, _streamingLocatorClientDiagnostics, Pipeline, "StreamingLocatorCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingLocatorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingLocatorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamingLocatorResource(Client, StreamingLocatorData.DeserializeStreamingLocatorData(e)), _streamingLocatorClientDiagnostics, Pipeline, "StreamingLocatorCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = StreamingLocatorData.DeserializeStreamingLocatorData(e); return new StreamingLocatorResource(Client, data, data.Id); }, _streamingLocatorClientDiagnostics, Pipeline, "StreamingLocatorCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>

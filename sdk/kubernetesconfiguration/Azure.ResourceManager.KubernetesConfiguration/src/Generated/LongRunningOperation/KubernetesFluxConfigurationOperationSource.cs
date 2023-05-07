@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = KubernetesFluxConfigurationData.DeserializeKubernetesFluxConfigurationData(document.RootElement);
-            return new KubernetesFluxConfigurationResource(_client, data);
+            return new KubernetesFluxConfigurationResource(_client, data, data.Id);
         }
 
         async ValueTask<KubernetesFluxConfigurationResource> IOperationSource<KubernetesFluxConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = KubernetesFluxConfigurationData.DeserializeKubernetesFluxConfigurationData(document.RootElement);
-            return new KubernetesFluxConfigurationResource(_client, data);
+            return new KubernetesFluxConfigurationResource(_client, data, data.Id);
         }
     }
 }

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.LabServices
             try
             {
                 var response = await _labServicesScheduleSchedulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new LabServicesArmOperation<LabServicesScheduleResource>(Response.FromValue(new LabServicesScheduleResource(Client, response), response.GetRawResponse()));
+                var operation = new LabServicesArmOperation<LabServicesScheduleResource>(Response.FromValue(new LabServicesScheduleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.LabServices
             try
             {
                 var response = _labServicesScheduleSchedulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, data, cancellationToken);
-                var operation = new LabServicesArmOperation<LabServicesScheduleResource>(Response.FromValue(new LabServicesScheduleResource(Client, response), response.GetRawResponse()));
+                var operation = new LabServicesArmOperation<LabServicesScheduleResource>(Response.FromValue(new LabServicesScheduleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.LabServices
                 var response = await _labServicesScheduleSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LabServicesScheduleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LabServicesScheduleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.LabServices
                 var response = _labServicesScheduleSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LabServicesScheduleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LabServicesScheduleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.LabServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _labServicesScheduleSchedulesRestClient.CreateListByLabRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labServicesScheduleSchedulesRestClient.CreateListByLabNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LabServicesScheduleResource(Client, LabServicesScheduleData.DeserializeLabServicesScheduleData(e)), _labServicesScheduleSchedulesClientDiagnostics, Pipeline, "LabServicesScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = LabServicesScheduleData.DeserializeLabServicesScheduleData(e); return new LabServicesScheduleResource(Client, data, data.Id); }, _labServicesScheduleSchedulesClientDiagnostics, Pipeline, "LabServicesScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.LabServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _labServicesScheduleSchedulesRestClient.CreateListByLabRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labServicesScheduleSchedulesRestClient.CreateListByLabNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LabServicesScheduleResource(Client, LabServicesScheduleData.DeserializeLabServicesScheduleData(e)), _labServicesScheduleSchedulesClientDiagnostics, Pipeline, "LabServicesScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = LabServicesScheduleData.DeserializeLabServicesScheduleData(e); return new LabServicesScheduleResource(Client, data, data.Id); }, _labServicesScheduleSchedulesClientDiagnostics, Pipeline, "LabServicesScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

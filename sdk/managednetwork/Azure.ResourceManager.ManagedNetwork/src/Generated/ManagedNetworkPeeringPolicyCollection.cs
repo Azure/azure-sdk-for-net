@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 var response = await _managedNetworkPeeringPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkPeeringPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedNetworkPeeringPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedNetworkPeeringPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 var response = _managedNetworkPeeringPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkPeeringPolicyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedNetworkPeeringPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedNetworkPeeringPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedNetworkPeeringPolicyRestClient.CreateListByManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedNetworkPeeringPolicyRestClient.CreateListByManagedNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkPeeringPolicyResource(Client, ManagedNetworkPeeringPolicyData.DeserializeManagedNetworkPeeringPolicyData(e)), _managedNetworkPeeringPolicyClientDiagnostics, Pipeline, "ManagedNetworkPeeringPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ManagedNetworkPeeringPolicyData.DeserializeManagedNetworkPeeringPolicyData(e); return new ManagedNetworkPeeringPolicyResource(Client, data, data.Id); }, _managedNetworkPeeringPolicyClientDiagnostics, Pipeline, "ManagedNetworkPeeringPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedNetworkPeeringPolicyRestClient.CreateListByManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedNetworkPeeringPolicyRestClient.CreateListByManagedNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkPeeringPolicyResource(Client, ManagedNetworkPeeringPolicyData.DeserializeManagedNetworkPeeringPolicyData(e)), _managedNetworkPeeringPolicyClientDiagnostics, Pipeline, "ManagedNetworkPeeringPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ManagedNetworkPeeringPolicyData.DeserializeManagedNetworkPeeringPolicyData(e); return new ManagedNetworkPeeringPolicyResource(Client, data, data.Id); }, _managedNetworkPeeringPolicyClientDiagnostics, Pipeline, "ManagedNetworkPeeringPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

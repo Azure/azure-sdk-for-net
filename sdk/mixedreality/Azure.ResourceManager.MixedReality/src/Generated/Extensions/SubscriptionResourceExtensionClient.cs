@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MixedReality
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SpatialAnchorsAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SpatialAnchorsAccountRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SpatialAnchorsAccountResource(Client, SpatialAnchorsAccountData.DeserializeSpatialAnchorsAccountData(e)), SpatialAnchorsAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSpatialAnchorsAccounts", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SpatialAnchorsAccountData.DeserializeSpatialAnchorsAccountData(e); return new SpatialAnchorsAccountResource(Client, data, data.Id); }, SpatialAnchorsAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSpatialAnchorsAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MixedReality
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SpatialAnchorsAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SpatialAnchorsAccountRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SpatialAnchorsAccountResource(Client, SpatialAnchorsAccountData.DeserializeSpatialAnchorsAccountData(e)), SpatialAnchorsAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSpatialAnchorsAccounts", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SpatialAnchorsAccountData.DeserializeSpatialAnchorsAccountData(e); return new SpatialAnchorsAccountResource(Client, data, data.Id); }, SpatialAnchorsAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSpatialAnchorsAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.MixedReality
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RemoteRenderingAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RemoteRenderingAccountRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RemoteRenderingAccountResource(Client, RemoteRenderingAccountData.DeserializeRemoteRenderingAccountData(e)), RemoteRenderingAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRemoteRenderingAccounts", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = RemoteRenderingAccountData.DeserializeRemoteRenderingAccountData(e); return new RemoteRenderingAccountResource(Client, data, data.Id); }, RemoteRenderingAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRemoteRenderingAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.MixedReality
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RemoteRenderingAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RemoteRenderingAccountRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RemoteRenderingAccountResource(Client, RemoteRenderingAccountData.DeserializeRemoteRenderingAccountData(e)), RemoteRenderingAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRemoteRenderingAccounts", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = RemoteRenderingAccountData.DeserializeRemoteRenderingAccountData(e); return new RemoteRenderingAccountResource(Client, data, data.Id); }, RemoteRenderingAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRemoteRenderingAccounts", "value", "nextLink", cancellationToken);
         }
     }
 }

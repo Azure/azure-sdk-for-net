@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.IotCentral
                 var response = await _iotCentralAppAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IotCentralAppResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IotCentralAppResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.IotCentral
                 var response = _iotCentralAppAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IotCentralAppResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IotCentralAppResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.IotCentral
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotCentralAppAppsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotCentralAppAppsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotCentralAppResource(Client, IotCentralAppData.DeserializeIotCentralAppData(e)), _iotCentralAppAppsClientDiagnostics, Pipeline, "IotCentralAppCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = IotCentralAppData.DeserializeIotCentralAppData(e); return new IotCentralAppResource(Client, data, data.Id); }, _iotCentralAppAppsClientDiagnostics, Pipeline, "IotCentralAppCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.IotCentral
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotCentralAppAppsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotCentralAppAppsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotCentralAppResource(Client, IotCentralAppData.DeserializeIotCentralAppData(e)), _iotCentralAppAppsClientDiagnostics, Pipeline, "IotCentralAppCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = IotCentralAppData.DeserializeIotCentralAppData(e); return new IotCentralAppResource(Client, data, data.Id); }, _iotCentralAppAppsClientDiagnostics, Pipeline, "IotCentralAppCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

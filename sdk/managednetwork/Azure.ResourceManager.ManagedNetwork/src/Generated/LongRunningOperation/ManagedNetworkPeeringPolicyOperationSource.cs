@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedNetworkPeeringPolicyData.DeserializeManagedNetworkPeeringPolicyData(document.RootElement);
-            return new ManagedNetworkPeeringPolicyResource(_client, data);
+            return new ManagedNetworkPeeringPolicyResource(_client, data, data.Id);
         }
 
         async ValueTask<ManagedNetworkPeeringPolicyResource> IOperationSource<ManagedNetworkPeeringPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedNetworkPeeringPolicyData.DeserializeManagedNetworkPeeringPolicyData(document.RootElement);
-            return new ManagedNetworkPeeringPolicyResource(_client, data);
+            return new ManagedNetworkPeeringPolicyResource(_client, data, data.Id);
         }
     }
 }

@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ManagedServices
                 var response = await _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.GetAsync(Id, registrationAssignmentId, expandRegistrationDefinition, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedServicesRegistrationAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedServicesRegistrationAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ManagedServices
                 var response = _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.Get(Id, registrationAssignmentId, expandRegistrationDefinition, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedServicesRegistrationAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedServicesRegistrationAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ManagedServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateListRequest(Id, expandRegistrationDefinition, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateListNextPageRequest(nextLink, Id, expandRegistrationDefinition, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedServicesRegistrationAssignmentResource(Client, ManagedServicesRegistrationAssignmentData.DeserializeManagedServicesRegistrationAssignmentData(e)), _managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics, Pipeline, "ManagedServicesRegistrationAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ManagedServicesRegistrationAssignmentData.DeserializeManagedServicesRegistrationAssignmentData(e); return new ManagedServicesRegistrationAssignmentResource(Client, data, data.Id); }, _managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics, Pipeline, "ManagedServicesRegistrationAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ManagedServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateListRequest(Id, expandRegistrationDefinition, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateListNextPageRequest(nextLink, Id, expandRegistrationDefinition, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedServicesRegistrationAssignmentResource(Client, ManagedServicesRegistrationAssignmentData.DeserializeManagedServicesRegistrationAssignmentData(e)), _managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics, Pipeline, "ManagedServicesRegistrationAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ManagedServicesRegistrationAssignmentData.DeserializeManagedServicesRegistrationAssignmentData(e); return new ManagedServicesRegistrationAssignmentResource(Client, data, data.Id); }, _managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics, Pipeline, "ManagedServicesRegistrationAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

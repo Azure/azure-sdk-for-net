@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <summary> Initializes a new instance of the <see cref = "PartnerResponseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PartnerResponseResource(ArmClient client, PartnerResponseData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal PartnerResponseResource(ArmClient client, PartnerResponseData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ManagementPartner
                 var response = await _partnerResponsePartnerRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PartnerResponseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PartnerResponseResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.ManagementPartner
                 var response = _partnerResponsePartnerRestClient.Get(Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PartnerResponseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PartnerResponseResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -240,7 +241,7 @@ namespace Azure.ResourceManager.ManagementPartner
             try
             {
                 var response = await _partnerResponsePartnerRestClient.UpdateAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PartnerResponseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PartnerResponseResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -270,7 +271,7 @@ namespace Azure.ResourceManager.ManagementPartner
             try
             {
                 var response = _partnerResponsePartnerRestClient.Update(Id.Name, cancellationToken);
-                return Response.FromValue(new PartnerResponseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PartnerResponseResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

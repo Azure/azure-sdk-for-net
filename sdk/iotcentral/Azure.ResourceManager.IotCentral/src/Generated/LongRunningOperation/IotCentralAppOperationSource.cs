@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.IotCentral
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = IotCentralAppData.DeserializeIotCentralAppData(document.RootElement);
-            return new IotCentralAppResource(_client, data);
+            return new IotCentralAppResource(_client, data, data.Id);
         }
 
         async ValueTask<IotCentralAppResource> IOperationSource<IotCentralAppResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = IotCentralAppData.DeserializeIotCentralAppData(document.RootElement);
-            return new IotCentralAppResource(_client, data);
+            return new IotCentralAppResource(_client, data, data.Id);
         }
     }
 }

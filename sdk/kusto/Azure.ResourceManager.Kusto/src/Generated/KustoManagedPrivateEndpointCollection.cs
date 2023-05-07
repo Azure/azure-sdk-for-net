@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Kusto
                 var response = await _kustoManagedPrivateEndpointManagedPrivateEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new KustoManagedPrivateEndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KustoManagedPrivateEndpointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Kusto
                 var response = _kustoManagedPrivateEndpointManagedPrivateEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new KustoManagedPrivateEndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KustoManagedPrivateEndpointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual AsyncPageable<KustoManagedPrivateEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoManagedPrivateEndpointManagedPrivateEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoManagedPrivateEndpointResource(Client, KustoManagedPrivateEndpointData.DeserializeKustoManagedPrivateEndpointData(e)), _kustoManagedPrivateEndpointManagedPrivateEndpointsClientDiagnostics, Pipeline, "KustoManagedPrivateEndpointCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = KustoManagedPrivateEndpointData.DeserializeKustoManagedPrivateEndpointData(e); return new KustoManagedPrivateEndpointResource(Client, data, data.Id); }, _kustoManagedPrivateEndpointManagedPrivateEndpointsClientDiagnostics, Pipeline, "KustoManagedPrivateEndpointCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual Pageable<KustoManagedPrivateEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoManagedPrivateEndpointManagedPrivateEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoManagedPrivateEndpointResource(Client, KustoManagedPrivateEndpointData.DeserializeKustoManagedPrivateEndpointData(e)), _kustoManagedPrivateEndpointManagedPrivateEndpointsClientDiagnostics, Pipeline, "KustoManagedPrivateEndpointCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = KustoManagedPrivateEndpointData.DeserializeKustoManagedPrivateEndpointData(e); return new KustoManagedPrivateEndpointResource(Client, data, data.Id); }, _kustoManagedPrivateEndpointManagedPrivateEndpointsClientDiagnostics, Pipeline, "KustoManagedPrivateEndpointCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

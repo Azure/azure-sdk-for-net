@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.HybridData
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = HybridDataStoreData.DeserializeHybridDataStoreData(document.RootElement);
-            return new HybridDataStoreResource(_client, data);
+            return new HybridDataStoreResource(_client, data, data.Id);
         }
 
         async ValueTask<HybridDataStoreResource> IOperationSource<HybridDataStoreResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = HybridDataStoreData.DeserializeHybridDataStoreData(document.RootElement);
-            return new HybridDataStoreResource(_client, data);
+            return new HybridDataStoreResource(_client, data, data.Id);
         }
     }
 }

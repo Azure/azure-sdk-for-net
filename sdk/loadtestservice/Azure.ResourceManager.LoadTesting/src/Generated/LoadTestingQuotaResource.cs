@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.LoadTesting
         /// <summary> Initializes a new instance of the <see cref = "LoadTestingQuotaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal LoadTestingQuotaResource(ArmClient client, LoadTestingQuotaData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal LoadTestingQuotaResource(ArmClient client, LoadTestingQuotaData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.LoadTesting
                 var response = await _loadTestingQuotaQuotasRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LoadTestingQuotaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LoadTestingQuotaResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.LoadTesting
                 var response = _loadTestingQuotaQuotasRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LoadTestingQuotaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LoadTestingQuotaResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

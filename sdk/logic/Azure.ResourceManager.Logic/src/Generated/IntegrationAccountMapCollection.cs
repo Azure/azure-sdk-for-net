@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = await _integrationAccountMapRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mapName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new LogicArmOperation<IntegrationAccountMapResource>(Response.FromValue(new IntegrationAccountMapResource(Client, response), response.GetRawResponse()));
+                var operation = new LogicArmOperation<IntegrationAccountMapResource>(Response.FromValue(new IntegrationAccountMapResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = _integrationAccountMapRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mapName, data, cancellationToken);
-                var operation = new LogicArmOperation<IntegrationAccountMapResource>(Response.FromValue(new IntegrationAccountMapResource(Client, response), response.GetRawResponse()));
+                var operation = new LogicArmOperation<IntegrationAccountMapResource>(Response.FromValue(new IntegrationAccountMapResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Logic
                 var response = await _integrationAccountMapRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mapName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IntegrationAccountMapResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IntegrationAccountMapResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Logic
                 var response = _integrationAccountMapRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mapName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IntegrationAccountMapResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IntegrationAccountMapResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountMapRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _integrationAccountMapRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountMapResource(Client, IntegrationAccountMapData.DeserializeIntegrationAccountMapData(e)), _integrationAccountMapClientDiagnostics, Pipeline, "IntegrationAccountMapCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = IntegrationAccountMapData.DeserializeIntegrationAccountMapData(e); return new IntegrationAccountMapResource(Client, data, data.Id); }, _integrationAccountMapClientDiagnostics, Pipeline, "IntegrationAccountMapCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountMapRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _integrationAccountMapRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountMapResource(Client, IntegrationAccountMapData.DeserializeIntegrationAccountMapData(e)), _integrationAccountMapClientDiagnostics, Pipeline, "IntegrationAccountMapCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = IntegrationAccountMapData.DeserializeIntegrationAccountMapData(e); return new IntegrationAccountMapResource(Client, data, data.Id); }, _integrationAccountMapClientDiagnostics, Pipeline, "IntegrationAccountMapCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

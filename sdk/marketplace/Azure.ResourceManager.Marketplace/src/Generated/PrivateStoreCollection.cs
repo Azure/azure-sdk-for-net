@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Marketplace
                 var response = await _privateStoreRestClient.GetAsync(privateStoreId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateStoreResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Marketplace
                 var response = _privateStoreRestClient.Get(privateStoreId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateStoreResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateListRequest(useCache);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateStoreRestClient.CreateListNextPageRequest(nextLink, useCache);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PrivateStoreResource(Client, PrivateStoreData.DeserializePrivateStoreData(e)), _privateStoreClientDiagnostics, Pipeline, "PrivateStoreCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PrivateStoreData.DeserializePrivateStoreData(e); return new PrivateStoreResource(Client, data, data.Id); }, _privateStoreClientDiagnostics, Pipeline, "PrivateStoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateListRequest(useCache);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateStoreRestClient.CreateListNextPageRequest(nextLink, useCache);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrivateStoreResource(Client, PrivateStoreData.DeserializePrivateStoreData(e)), _privateStoreClientDiagnostics, Pipeline, "PrivateStoreCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PrivateStoreData.DeserializePrivateStoreData(e); return new PrivateStoreResource(Client, data, data.Id); }, _privateStoreClientDiagnostics, Pipeline, "PrivateStoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

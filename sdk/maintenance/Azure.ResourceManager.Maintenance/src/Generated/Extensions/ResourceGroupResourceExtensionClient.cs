@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Maintenance
             try
             {
                 var response = await MaintenanceApplyUpdateApplyUpdatesRestClient.GetParentAsync(Id.SubscriptionId, Id.ResourceGroupName, options.ProviderName, options.ResourceParentType, options.ResourceParentName, options.ResourceType, options.ResourceName, options.ApplyUpdateName, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Maintenance
             try
             {
                 var response = MaintenanceApplyUpdateApplyUpdatesRestClient.GetParent(Id.SubscriptionId, Id.ResourceGroupName, options.ProviderName, options.ResourceParentType, options.ResourceParentName, options.ResourceType, options.ResourceName, options.ApplyUpdateName, cancellationToken);
-                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Maintenance
             try
             {
                 var response = await MaintenanceApplyUpdateApplyUpdatesRestClient.CreateOrUpdateParentAsync(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Maintenance
             try
             {
                 var response = MaintenanceApplyUpdateApplyUpdatesRestClient.CreateOrUpdateParent(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
-                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Maintenance
             try
             {
                 var response = await MaintenanceApplyUpdateApplyUpdatesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Maintenance
             try
             {
                 var response = MaintenanceApplyUpdateApplyUpdatesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName, cancellationToken);
-                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.Maintenance
         public virtual AsyncPageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdatesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplyUpdateForResourceGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MaintenanceApplyUpdateResource(Client, MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(e)), ApplyUpdateForResourceGroupClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetMaintenanceApplyUpdates", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(e); return new MaintenanceApplyUpdateResource(Client, data, data.Id); }, ApplyUpdateForResourceGroupClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetMaintenanceApplyUpdates", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.Maintenance
         public virtual Pageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdates(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplyUpdateForResourceGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MaintenanceApplyUpdateResource(Client, MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(e)), ApplyUpdateForResourceGroupClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetMaintenanceApplyUpdates", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(e); return new MaintenanceApplyUpdateResource(Client, data, data.Id); }, ApplyUpdateForResourceGroupClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetMaintenanceApplyUpdates", "value", null, cancellationToken);
         }
 
         /// <summary>

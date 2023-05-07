@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             try
             {
                 var response = await _endpointResourceEndpointsRestClient.CreateOrUpdateAsync(Id, endpointName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridConnectivityArmOperation<EndpointResource>(Response.FromValue(new EndpointResource(Client, response), response.GetRawResponse()));
+                var operation = new HybridConnectivityArmOperation<EndpointResource>(Response.FromValue(new EndpointResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             try
             {
                 var response = _endpointResourceEndpointsRestClient.CreateOrUpdate(Id, endpointName, data, cancellationToken);
-                var operation = new HybridConnectivityArmOperation<EndpointResource>(Response.FromValue(new EndpointResource(Client, response), response.GetRawResponse()));
+                var operation = new HybridConnectivityArmOperation<EndpointResource>(Response.FromValue(new EndpointResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 var response = await _endpointResourceEndpointsRestClient.GetAsync(Id, endpointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EndpointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 var response = _endpointResourceEndpointsRestClient.Get(Id, endpointName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EndpointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _endpointResourceEndpointsRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _endpointResourceEndpointsRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EndpointResource(Client, EndpointResourceData.DeserializeEndpointResourceData(e)), _endpointResourceEndpointsClientDiagnostics, Pipeline, "EndpointResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = EndpointResourceData.DeserializeEndpointResourceData(e); return new EndpointResource(Client, data, data.Id); }, _endpointResourceEndpointsClientDiagnostics, Pipeline, "EndpointResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _endpointResourceEndpointsRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _endpointResourceEndpointsRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EndpointResource(Client, EndpointResourceData.DeserializeEndpointResourceData(e)), _endpointResourceEndpointsClientDiagnostics, Pipeline, "EndpointResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = EndpointResourceData.DeserializeEndpointResourceData(e); return new EndpointResource(Client, data, data.Id); }, _endpointResourceEndpointsClientDiagnostics, Pipeline, "EndpointResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

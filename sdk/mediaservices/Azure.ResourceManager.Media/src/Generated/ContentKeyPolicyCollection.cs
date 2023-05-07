@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _contentKeyPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentKeyPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<ContentKeyPolicyResource>(Response.FromValue(new ContentKeyPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new MediaArmOperation<ContentKeyPolicyResource>(Response.FromValue(new ContentKeyPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _contentKeyPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentKeyPolicyName, data, cancellationToken);
-                var operation = new MediaArmOperation<ContentKeyPolicyResource>(Response.FromValue(new ContentKeyPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new MediaArmOperation<ContentKeyPolicyResource>(Response.FromValue(new ContentKeyPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Media
                 var response = await _contentKeyPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentKeyPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContentKeyPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContentKeyPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Media
                 var response = _contentKeyPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentKeyPolicyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContentKeyPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContentKeyPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _contentKeyPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _contentKeyPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContentKeyPolicyResource(Client, ContentKeyPolicyData.DeserializeContentKeyPolicyData(e)), _contentKeyPolicyClientDiagnostics, Pipeline, "ContentKeyPolicyCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ContentKeyPolicyData.DeserializeContentKeyPolicyData(e); return new ContentKeyPolicyResource(Client, data, data.Id); }, _contentKeyPolicyClientDiagnostics, Pipeline, "ContentKeyPolicyCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _contentKeyPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _contentKeyPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContentKeyPolicyResource(Client, ContentKeyPolicyData.DeserializeContentKeyPolicyData(e)), _contentKeyPolicyClientDiagnostics, Pipeline, "ContentKeyPolicyCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ContentKeyPolicyData.DeserializeContentKeyPolicyData(e); return new ContentKeyPolicyResource(Client, data, data.Id); }, _contentKeyPolicyClientDiagnostics, Pipeline, "ContentKeyPolicyCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>

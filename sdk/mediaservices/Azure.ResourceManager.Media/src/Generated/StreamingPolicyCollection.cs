@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _streamingPolicyRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, streamingPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<StreamingPolicyResource>(Response.FromValue(new StreamingPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new MediaArmOperation<StreamingPolicyResource>(Response.FromValue(new StreamingPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _streamingPolicyRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, streamingPolicyName, data, cancellationToken);
-                var operation = new MediaArmOperation<StreamingPolicyResource>(Response.FromValue(new StreamingPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new MediaArmOperation<StreamingPolicyResource>(Response.FromValue(new StreamingPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Media
                 var response = await _streamingPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, streamingPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StreamingPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StreamingPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Media
                 var response = _streamingPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, streamingPolicyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StreamingPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StreamingPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamingPolicyResource(Client, StreamingPolicyData.DeserializeStreamingPolicyData(e)), _streamingPolicyClientDiagnostics, Pipeline, "StreamingPolicyCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = StreamingPolicyData.DeserializeStreamingPolicyData(e); return new StreamingPolicyResource(Client, data, data.Id); }, _streamingPolicyClientDiagnostics, Pipeline, "StreamingPolicyCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamingPolicyResource(Client, StreamingPolicyData.DeserializeStreamingPolicyData(e)), _streamingPolicyClientDiagnostics, Pipeline, "StreamingPolicyCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = StreamingPolicyData.DeserializeStreamingPolicyData(e); return new StreamingPolicyResource(Client, data, data.Id); }, _streamingPolicyClientDiagnostics, Pipeline, "StreamingPolicyCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>

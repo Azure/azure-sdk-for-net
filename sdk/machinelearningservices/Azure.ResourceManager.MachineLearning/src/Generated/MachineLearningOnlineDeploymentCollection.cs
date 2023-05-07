@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.MachineLearning
                 var response = await _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MachineLearningOnlineDeploymentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningOnlineDeploymentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.MachineLearning
                 var response = _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MachineLearningOnlineDeploymentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningOnlineDeploymentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningOnlineDeploymentResource(Client, MachineLearningOnlineDeploymentData.DeserializeMachineLearningOnlineDeploymentData(e)), _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics, Pipeline, "MachineLearningOnlineDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = MachineLearningOnlineDeploymentData.DeserializeMachineLearningOnlineDeploymentData(e); return new MachineLearningOnlineDeploymentResource(Client, data, data.Id); }, _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics, Pipeline, "MachineLearningOnlineDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningOnlineDeploymentResource(Client, MachineLearningOnlineDeploymentData.DeserializeMachineLearningOnlineDeploymentData(e)), _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics, Pipeline, "MachineLearningOnlineDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = MachineLearningOnlineDeploymentData.DeserializeMachineLearningOnlineDeploymentData(e); return new MachineLearningOnlineDeploymentResource(Client, data, data.Id); }, _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics, Pipeline, "MachineLearningOnlineDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

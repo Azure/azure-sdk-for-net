@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.LoadTesting
                 var response = await _loadTestingQuotaQuotasRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), quotaBucketName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LoadTestingQuotaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LoadTestingQuotaResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.LoadTesting
                 var response = _loadTestingQuotaQuotasRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), quotaBucketName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LoadTestingQuotaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LoadTestingQuotaResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _loadTestingQuotaQuotasRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _loadTestingQuotaQuotasRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LoadTestingQuotaResource(Client, LoadTestingQuotaData.DeserializeLoadTestingQuotaData(e)), _loadTestingQuotaQuotasClientDiagnostics, Pipeline, "LoadTestingQuotaCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = LoadTestingQuotaData.DeserializeLoadTestingQuotaData(e); return new LoadTestingQuotaResource(Client, data, data.Id); }, _loadTestingQuotaQuotasClientDiagnostics, Pipeline, "LoadTestingQuotaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _loadTestingQuotaQuotasRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _loadTestingQuotaQuotasRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LoadTestingQuotaResource(Client, LoadTestingQuotaData.DeserializeLoadTestingQuotaData(e)), _loadTestingQuotaQuotasClientDiagnostics, Pipeline, "LoadTestingQuotaCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = LoadTestingQuotaData.DeserializeLoadTestingQuotaData(e); return new LoadTestingQuotaResource(Client, data, data.Id); }, _loadTestingQuotaQuotasClientDiagnostics, Pipeline, "LoadTestingQuotaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

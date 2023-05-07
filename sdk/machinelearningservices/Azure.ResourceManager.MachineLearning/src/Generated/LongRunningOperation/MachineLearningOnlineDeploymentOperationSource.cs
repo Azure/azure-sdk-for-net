@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.MachineLearning
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MachineLearningOnlineDeploymentData.DeserializeMachineLearningOnlineDeploymentData(document.RootElement);
-            return new MachineLearningOnlineDeploymentResource(_client, data);
+            return new MachineLearningOnlineDeploymentResource(_client, data, data.Id);
         }
 
         async ValueTask<MachineLearningOnlineDeploymentResource> IOperationSource<MachineLearningOnlineDeploymentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MachineLearningOnlineDeploymentData.DeserializeMachineLearningOnlineDeploymentData(document.RootElement);
-            return new MachineLearningOnlineDeploymentResource(_client, data);
+            return new MachineLearningOnlineDeploymentResource(_client, data, data.Id);
         }
     }
 }

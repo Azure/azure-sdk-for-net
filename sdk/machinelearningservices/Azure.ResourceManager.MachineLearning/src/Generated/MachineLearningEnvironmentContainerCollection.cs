@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _machineLearningEnvironmentContainerEnvironmentContainersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningEnvironmentContainerResource>(Response.FromValue(new MachineLearningEnvironmentContainerResource(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningArmOperation<MachineLearningEnvironmentContainerResource>(Response.FromValue(new MachineLearningEnvironmentContainerResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _machineLearningEnvironmentContainerEnvironmentContainersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningEnvironmentContainerResource>(Response.FromValue(new MachineLearningEnvironmentContainerResource(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningArmOperation<MachineLearningEnvironmentContainerResource>(Response.FromValue(new MachineLearningEnvironmentContainerResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.MachineLearning
                 var response = await _machineLearningEnvironmentContainerEnvironmentContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MachineLearningEnvironmentContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningEnvironmentContainerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.MachineLearning
                 var response = _machineLearningEnvironmentContainerEnvironmentContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MachineLearningEnvironmentContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningEnvironmentContainerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningEnvironmentContainerEnvironmentContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, listViewType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningEnvironmentContainerEnvironmentContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, listViewType);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningEnvironmentContainerResource(Client, MachineLearningEnvironmentContainerData.DeserializeMachineLearningEnvironmentContainerData(e)), _machineLearningEnvironmentContainerEnvironmentContainersClientDiagnostics, Pipeline, "MachineLearningEnvironmentContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = MachineLearningEnvironmentContainerData.DeserializeMachineLearningEnvironmentContainerData(e); return new MachineLearningEnvironmentContainerResource(Client, data, data.Id); }, _machineLearningEnvironmentContainerEnvironmentContainersClientDiagnostics, Pipeline, "MachineLearningEnvironmentContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningEnvironmentContainerEnvironmentContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, listViewType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningEnvironmentContainerEnvironmentContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, listViewType);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningEnvironmentContainerResource(Client, MachineLearningEnvironmentContainerData.DeserializeMachineLearningEnvironmentContainerData(e)), _machineLearningEnvironmentContainerEnvironmentContainersClientDiagnostics, Pipeline, "MachineLearningEnvironmentContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = MachineLearningEnvironmentContainerData.DeserializeMachineLearningEnvironmentContainerData(e); return new MachineLearningEnvironmentContainerResource(Client, data, data.Id); }, _machineLearningEnvironmentContainerEnvironmentContainersClientDiagnostics, Pipeline, "MachineLearningEnvironmentContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

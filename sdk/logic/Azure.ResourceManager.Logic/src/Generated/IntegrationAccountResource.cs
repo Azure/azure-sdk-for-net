@@ -46,7 +46,8 @@ namespace Azure.ResourceManager.Logic
         /// <summary> Initializes a new instance of the <see cref = "IntegrationAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal IntegrationAccountResource(ArmClient client, IntegrationAccountData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal IntegrationAccountResource(ArmClient client, IntegrationAccountData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -536,7 +537,7 @@ namespace Azure.ResourceManager.Logic
                 var response = await _integrationAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IntegrationAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IntegrationAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -568,7 +569,7 @@ namespace Azure.ResourceManager.Logic
                 var response = _integrationAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IntegrationAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IntegrationAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -670,7 +671,7 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = await _integrationAccountRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new IntegrationAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IntegrationAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -704,7 +705,7 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = _integrationAccountRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                return Response.FromValue(new IntegrationAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IntegrationAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -924,7 +925,7 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = await _integrationAccountRestClient.RegenerateAccessKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new IntegrationAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IntegrationAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -958,7 +959,7 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = _integrationAccountRestClient.RegenerateAccessKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                return Response.FromValue(new IntegrationAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IntegrationAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -999,7 +1000,7 @@ namespace Azure.ResourceManager.Logic
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _integrationAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new IntegrationAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new IntegrationAccountResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -1053,7 +1054,7 @@ namespace Azure.ResourceManager.Logic
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _integrationAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new IntegrationAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new IntegrationAccountResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -1106,7 +1107,7 @@ namespace Azure.ResourceManager.Logic
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _integrationAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new IntegrationAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new IntegrationAccountResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -1155,7 +1156,7 @@ namespace Azure.ResourceManager.Logic
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _integrationAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new IntegrationAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new IntegrationAccountResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -1203,7 +1204,7 @@ namespace Azure.ResourceManager.Logic
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _integrationAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new IntegrationAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new IntegrationAccountResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -1255,7 +1256,7 @@ namespace Azure.ResourceManager.Logic
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _integrationAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new IntegrationAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new IntegrationAccountResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {

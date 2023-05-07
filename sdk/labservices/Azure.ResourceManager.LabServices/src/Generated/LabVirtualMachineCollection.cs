@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.LabServices
                 var response = await _labVirtualMachineVirtualMachinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualMachineName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LabVirtualMachineResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LabVirtualMachineResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.LabServices
                 var response = _labVirtualMachineVirtualMachinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualMachineName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LabVirtualMachineResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LabVirtualMachineResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.LabServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _labVirtualMachineVirtualMachinesRestClient.CreateListByLabRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labVirtualMachineVirtualMachinesRestClient.CreateListByLabNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LabVirtualMachineResource(Client, LabVirtualMachineData.DeserializeLabVirtualMachineData(e)), _labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "LabVirtualMachineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = LabVirtualMachineData.DeserializeLabVirtualMachineData(e); return new LabVirtualMachineResource(Client, data, data.Id); }, _labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "LabVirtualMachineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.LabServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _labVirtualMachineVirtualMachinesRestClient.CreateListByLabRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labVirtualMachineVirtualMachinesRestClient.CreateListByLabNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LabVirtualMachineResource(Client, LabVirtualMachineData.DeserializeLabVirtualMachineData(e)), _labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "LabVirtualMachineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = LabVirtualMachineData.DeserializeLabVirtualMachineData(e); return new LabVirtualMachineResource(Client, data, data.Id); }, _labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "LabVirtualMachineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

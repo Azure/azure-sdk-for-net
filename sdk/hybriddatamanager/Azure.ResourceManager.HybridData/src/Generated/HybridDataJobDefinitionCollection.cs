@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.HybridData
                 var response = await _hybridDataJobDefinitionJobDefinitionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridDataJobDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridDataJobDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.HybridData
                 var response = _hybridDataJobDefinitionJobDefinitionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridDataJobDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridDataJobDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.HybridData
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataJobDefinitionJobDefinitionsRestClient.CreateListByDataServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataJobDefinitionJobDefinitionsRestClient.CreateListByDataServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridDataJobDefinitionResource(Client, HybridDataJobDefinitionData.DeserializeHybridDataJobDefinitionData(e)), _hybridDataJobDefinitionJobDefinitionsClientDiagnostics, Pipeline, "HybridDataJobDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = HybridDataJobDefinitionData.DeserializeHybridDataJobDefinitionData(e); return new HybridDataJobDefinitionResource(Client, data, data.Id); }, _hybridDataJobDefinitionJobDefinitionsClientDiagnostics, Pipeline, "HybridDataJobDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.HybridData
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataJobDefinitionJobDefinitionsRestClient.CreateListByDataServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataJobDefinitionJobDefinitionsRestClient.CreateListByDataServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridDataJobDefinitionResource(Client, HybridDataJobDefinitionData.DeserializeHybridDataJobDefinitionData(e)), _hybridDataJobDefinitionJobDefinitionsClientDiagnostics, Pipeline, "HybridDataJobDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = HybridDataJobDefinitionData.DeserializeHybridDataJobDefinitionData(e); return new HybridDataJobDefinitionResource(Client, data, data.Id); }, _hybridDataJobDefinitionJobDefinitionsClientDiagnostics, Pipeline, "HybridDataJobDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

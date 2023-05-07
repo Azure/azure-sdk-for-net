@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = await _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateOrUpdateAsync(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), offerId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation<PrivateStoreOfferResource>(Response.FromValue(new PrivateStoreOfferResource(Client, response), response.GetRawResponse()));
+                var operation = new MarketplaceArmOperation<PrivateStoreOfferResource>(Response.FromValue(new PrivateStoreOfferResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateOrUpdate(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), offerId, data, cancellationToken);
-                var operation = new MarketplaceArmOperation<PrivateStoreOfferResource>(Response.FromValue(new PrivateStoreOfferResource(Client, response), response.GetRawResponse()));
+                var operation = new MarketplaceArmOperation<PrivateStoreOfferResource>(Response.FromValue(new PrivateStoreOfferResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Marketplace
                 var response = await _privateStoreOfferPrivateStoreCollectionOfferRestClient.GetAsync(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), offerId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateStoreOfferResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreOfferResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Marketplace
                 var response = _privateStoreOfferPrivateStoreCollectionOfferRestClient.Get(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), offerId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateStoreOfferResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreOfferResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListNextPageRequest(nextLink, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PrivateStoreOfferResource(Client, PrivateStoreOfferData.DeserializePrivateStoreOfferData(e)), _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreOfferCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PrivateStoreOfferData.DeserializePrivateStoreOfferData(e); return new PrivateStoreOfferResource(Client, data, data.Id); }, _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreOfferCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListNextPageRequest(nextLink, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrivateStoreOfferResource(Client, PrivateStoreOfferData.DeserializePrivateStoreOfferData(e)), _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreOfferCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PrivateStoreOfferData.DeserializePrivateStoreOfferData(e); return new PrivateStoreOfferResource(Client, data, data.Id); }, _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreOfferCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MixedReality
             try
             {
                 var response = await _spatialAnchorsAccountRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MixedRealityArmOperation<SpatialAnchorsAccountResource>(Response.FromValue(new SpatialAnchorsAccountResource(Client, response), response.GetRawResponse()));
+                var operation = new MixedRealityArmOperation<SpatialAnchorsAccountResource>(Response.FromValue(new SpatialAnchorsAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MixedReality
             try
             {
                 var response = _spatialAnchorsAccountRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, accountName, data, cancellationToken);
-                var operation = new MixedRealityArmOperation<SpatialAnchorsAccountResource>(Response.FromValue(new SpatialAnchorsAccountResource(Client, response), response.GetRawResponse()));
+                var operation = new MixedRealityArmOperation<SpatialAnchorsAccountResource>(Response.FromValue(new SpatialAnchorsAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.MixedReality
                 var response = await _spatialAnchorsAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SpatialAnchorsAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SpatialAnchorsAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.MixedReality
                 var response = _spatialAnchorsAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SpatialAnchorsAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SpatialAnchorsAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MixedReality
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _spatialAnchorsAccountRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _spatialAnchorsAccountRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SpatialAnchorsAccountResource(Client, SpatialAnchorsAccountData.DeserializeSpatialAnchorsAccountData(e)), _spatialAnchorsAccountClientDiagnostics, Pipeline, "SpatialAnchorsAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SpatialAnchorsAccountData.DeserializeSpatialAnchorsAccountData(e); return new SpatialAnchorsAccountResource(Client, data, data.Id); }, _spatialAnchorsAccountClientDiagnostics, Pipeline, "SpatialAnchorsAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.MixedReality
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _spatialAnchorsAccountRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _spatialAnchorsAccountRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SpatialAnchorsAccountResource(Client, SpatialAnchorsAccountData.DeserializeSpatialAnchorsAccountData(e)), _spatialAnchorsAccountClientDiagnostics, Pipeline, "SpatialAnchorsAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SpatialAnchorsAccountData.DeserializeSpatialAnchorsAccountData(e); return new SpatialAnchorsAccountResource(Client, data, data.Id); }, _spatialAnchorsAccountClientDiagnostics, Pipeline, "SpatialAnchorsAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

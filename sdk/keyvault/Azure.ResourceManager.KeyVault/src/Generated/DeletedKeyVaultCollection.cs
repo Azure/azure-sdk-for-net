@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.KeyVault
                 var response = await _deletedKeyVaultVaultsRestClient.GetDeletedAsync(Id.SubscriptionId, location, vaultName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeletedKeyVaultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedKeyVaultResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.KeyVault
                 var response = _deletedKeyVaultVaultsRestClient.GetDeleted(Id.SubscriptionId, location, vaultName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeletedKeyVaultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedKeyVaultResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

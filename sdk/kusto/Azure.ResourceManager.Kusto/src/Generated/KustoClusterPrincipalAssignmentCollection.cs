@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Kusto
                 var response = await _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new KustoClusterPrincipalAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KustoClusterPrincipalAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Kusto
                 var response = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, principalAssignmentName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new KustoClusterPrincipalAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KustoClusterPrincipalAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual AsyncPageable<KustoClusterPrincipalAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoClusterPrincipalAssignmentResource(Client, KustoClusterPrincipalAssignmentData.DeserializeKustoClusterPrincipalAssignmentData(e)), _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics, Pipeline, "KustoClusterPrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = KustoClusterPrincipalAssignmentData.DeserializeKustoClusterPrincipalAssignmentData(e); return new KustoClusterPrincipalAssignmentResource(Client, data, data.Id); }, _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics, Pipeline, "KustoClusterPrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual Pageable<KustoClusterPrincipalAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoClusterPrincipalAssignmentResource(Client, KustoClusterPrincipalAssignmentData.DeserializeKustoClusterPrincipalAssignmentData(e)), _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics, Pipeline, "KustoClusterPrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = KustoClusterPrincipalAssignmentData.DeserializeKustoClusterPrincipalAssignmentData(e); return new KustoClusterPrincipalAssignmentResource(Client, data, data.Id); }, _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics, Pipeline, "KustoClusterPrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

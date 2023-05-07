@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = await _integrationAccountBatchConfigurationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, batchConfigurationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new LogicArmOperation<IntegrationAccountBatchConfigurationResource>(Response.FromValue(new IntegrationAccountBatchConfigurationResource(Client, response), response.GetRawResponse()));
+                var operation = new LogicArmOperation<IntegrationAccountBatchConfigurationResource>(Response.FromValue(new IntegrationAccountBatchConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = _integrationAccountBatchConfigurationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, batchConfigurationName, data, cancellationToken);
-                var operation = new LogicArmOperation<IntegrationAccountBatchConfigurationResource>(Response.FromValue(new IntegrationAccountBatchConfigurationResource(Client, response), response.GetRawResponse()));
+                var operation = new LogicArmOperation<IntegrationAccountBatchConfigurationResource>(Response.FromValue(new IntegrationAccountBatchConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Logic
                 var response = await _integrationAccountBatchConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, batchConfigurationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IntegrationAccountBatchConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IntegrationAccountBatchConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Logic
                 var response = _integrationAccountBatchConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, batchConfigurationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IntegrationAccountBatchConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IntegrationAccountBatchConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Logic
         public virtual AsyncPageable<IntegrationAccountBatchConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountBatchConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new IntegrationAccountBatchConfigurationResource(Client, IntegrationAccountBatchConfigurationData.DeserializeIntegrationAccountBatchConfigurationData(e)), _integrationAccountBatchConfigurationClientDiagnostics, Pipeline, "IntegrationAccountBatchConfigurationCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = IntegrationAccountBatchConfigurationData.DeserializeIntegrationAccountBatchConfigurationData(e); return new IntegrationAccountBatchConfigurationResource(Client, data, data.Id); }, _integrationAccountBatchConfigurationClientDiagnostics, Pipeline, "IntegrationAccountBatchConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Logic
         public virtual Pageable<IntegrationAccountBatchConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountBatchConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new IntegrationAccountBatchConfigurationResource(Client, IntegrationAccountBatchConfigurationData.DeserializeIntegrationAccountBatchConfigurationData(e)), _integrationAccountBatchConfigurationClientDiagnostics, Pipeline, "IntegrationAccountBatchConfigurationCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = IntegrationAccountBatchConfigurationData.DeserializeIntegrationAccountBatchConfigurationData(e); return new IntegrationAccountBatchConfigurationResource(Client, data, data.Id); }, _integrationAccountBatchConfigurationClientDiagnostics, Pipeline, "IntegrationAccountBatchConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
