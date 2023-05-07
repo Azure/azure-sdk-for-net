@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Billing
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = BillingSubscriptionAliasData.DeserializeBillingSubscriptionAliasData(document.RootElement);
-            return new BillingSubscriptionAliasResource(_client, data);
+            return new BillingSubscriptionAliasResource(_client, data, data.Id);
         }
 
         async ValueTask<BillingSubscriptionAliasResource> IOperationSource<BillingSubscriptionAliasResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = BillingSubscriptionAliasData.DeserializeBillingSubscriptionAliasData(document.RootElement);
-            return new BillingSubscriptionAliasResource(_client, data);
+            return new BillingSubscriptionAliasResource(_client, data, data.Id);
         }
     }
 }

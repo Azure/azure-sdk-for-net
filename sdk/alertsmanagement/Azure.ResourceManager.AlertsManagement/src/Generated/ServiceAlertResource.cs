@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <summary> Initializes a new instance of the <see cref = "ServiceAlertResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ServiceAlertResource(ArmClient client, ServiceAlertData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal ServiceAlertResource(ArmClient client, ServiceAlertData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 var response = await _serviceAlertAlertsRestClient.GetByIdAsync(Id.SubscriptionId, Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceAlertResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceAlertResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 var response = _serviceAlertAlertsRestClient.GetById(Id.SubscriptionId, Guid.Parse(Id.Name), cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceAlertResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceAlertResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.AlertsManagement
             try
             {
                 var response = await _serviceAlertAlertsRestClient.ChangeStateAsync(Id.SubscriptionId, Guid.Parse(Id.Name), newState, comment, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ServiceAlertResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceAlertResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -207,7 +208,7 @@ namespace Azure.ResourceManager.AlertsManagement
             try
             {
                 var response = _serviceAlertAlertsRestClient.ChangeState(Id.SubscriptionId, Guid.Parse(Id.Name), newState, comment, cancellationToken);
-                return Response.FromValue(new ServiceAlertResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceAlertResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

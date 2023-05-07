@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ApiManagement
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ApiManagementPrivateEndpointConnectionData.DeserializeApiManagementPrivateEndpointConnectionData(document.RootElement);
-            return new ApiManagementPrivateEndpointConnectionResource(_client, data);
+            return new ApiManagementPrivateEndpointConnectionResource(_client, data, data.Id);
         }
 
         async ValueTask<ApiManagementPrivateEndpointConnectionResource> IOperationSource<ApiManagementPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ApiManagementPrivateEndpointConnectionData.DeserializeApiManagementPrivateEndpointConnectionData(document.RootElement);
-            return new ApiManagementPrivateEndpointConnectionResource(_client, data);
+            return new ApiManagementPrivateEndpointConnectionResource(_client, data, data.Id);
         }
     }
 }

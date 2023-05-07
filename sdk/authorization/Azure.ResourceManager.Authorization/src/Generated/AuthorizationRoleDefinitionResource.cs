@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> Initializes a new instance of the <see cref = "AuthorizationRoleDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AuthorizationRoleDefinitionResource(ArmClient client, AuthorizationRoleDefinitionData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal AuthorizationRoleDefinitionResource(ArmClient client, AuthorizationRoleDefinitionData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Authorization
                 var response = await _authorizationRoleDefinitionRoleDefinitionsRestClient.GetAsync(Id.Parent, new ResourceIdentifier(Id.Name), cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Authorization
                 var response = _authorizationRoleDefinitionRoleDefinitionsRestClient.Get(Id.Parent, new ResourceIdentifier(Id.Name), cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -172,7 +173,7 @@ namespace Azure.ResourceManager.Authorization
             try
             {
                 var response = await _authorizationRoleDefinitionRoleDefinitionsRestClient.DeleteAsync(Id.Parent, new ResourceIdentifier(Id.Name), cancellationToken).ConfigureAwait(false);
-                var operation = new AuthorizationArmOperation<AuthorizationRoleDefinitionResource>(Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response), response.GetRawResponse()));
+                var operation = new AuthorizationArmOperation<AuthorizationRoleDefinitionResource>(Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,7 +207,7 @@ namespace Azure.ResourceManager.Authorization
             try
             {
                 var response = _authorizationRoleDefinitionRoleDefinitionsRestClient.Delete(Id.Parent, new ResourceIdentifier(Id.Name), cancellationToken);
-                var operation = new AuthorizationArmOperation<AuthorizationRoleDefinitionResource>(Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response), response.GetRawResponse()));
+                var operation = new AuthorizationArmOperation<AuthorizationRoleDefinitionResource>(Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.Authorization
             try
             {
                 var response = await _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateOrUpdateAsync(Id.Parent, new ResourceIdentifier(Id.Name), data, cancellationToken).ConfigureAwait(false);
-                var operation = new AuthorizationArmOperation<AuthorizationRoleDefinitionResource>(Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response), response.GetRawResponse()));
+                var operation = new AuthorizationArmOperation<AuthorizationRoleDefinitionResource>(Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,7 +283,7 @@ namespace Azure.ResourceManager.Authorization
             try
             {
                 var response = _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateOrUpdate(Id.Parent, new ResourceIdentifier(Id.Name), data, cancellationToken);
-                var operation = new AuthorizationArmOperation<AuthorizationRoleDefinitionResource>(Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response), response.GetRawResponse()));
+                var operation = new AuthorizationArmOperation<AuthorizationRoleDefinitionResource>(Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

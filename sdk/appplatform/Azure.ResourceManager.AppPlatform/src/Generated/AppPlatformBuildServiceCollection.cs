@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform
                 var response = await _appPlatformBuildServiceBuildServiceRestClient.GetBuildServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, buildServiceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppPlatformBuildServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppPlatformBuildServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppPlatform
                 var response = _appPlatformBuildServiceBuildServiceRestClient.GetBuildService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, buildServiceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppPlatformBuildServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppPlatformBuildServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuildServiceBuildServiceRestClient.CreateListBuildServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformBuildServiceBuildServiceRestClient.CreateListBuildServicesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildServiceResource(Client, AppPlatformBuildServiceData.DeserializeAppPlatformBuildServiceData(e)), _appPlatformBuildServiceBuildServiceClientDiagnostics, Pipeline, "AppPlatformBuildServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AppPlatformBuildServiceData.DeserializeAppPlatformBuildServiceData(e); return new AppPlatformBuildServiceResource(Client, data, data.Id); }, _appPlatformBuildServiceBuildServiceClientDiagnostics, Pipeline, "AppPlatformBuildServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuildServiceBuildServiceRestClient.CreateListBuildServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformBuildServiceBuildServiceRestClient.CreateListBuildServicesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildServiceResource(Client, AppPlatformBuildServiceData.DeserializeAppPlatformBuildServiceData(e)), _appPlatformBuildServiceBuildServiceClientDiagnostics, Pipeline, "AppPlatformBuildServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AppPlatformBuildServiceData.DeserializeAppPlatformBuildServiceData(e); return new AppPlatformBuildServiceResource(Client, data, data.Id); }, _appPlatformBuildServiceBuildServiceClientDiagnostics, Pipeline, "AppPlatformBuildServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

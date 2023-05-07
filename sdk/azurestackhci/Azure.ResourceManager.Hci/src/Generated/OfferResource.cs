@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Initializes a new instance of the <see cref = "OfferResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal OfferResource(ArmClient client, OfferData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal OfferResource(ArmClient client, OfferData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Hci
                 var response = await _offerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OfferResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OfferResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -198,7 +199,7 @@ namespace Azure.ResourceManager.Hci
                 var response = _offerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OfferResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OfferResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

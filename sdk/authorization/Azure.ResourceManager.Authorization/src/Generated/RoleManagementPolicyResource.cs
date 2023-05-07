@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> Initializes a new instance of the <see cref = "RoleManagementPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RoleManagementPolicyResource(ArmClient client, RoleManagementPolicyData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal RoleManagementPolicyResource(ArmClient client, RoleManagementPolicyData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Authorization
                 var response = await _roleManagementPolicyRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RoleManagementPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RoleManagementPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Authorization
                 var response = _roleManagementPolicyRestClient.Get(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RoleManagementPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RoleManagementPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.Authorization
             try
             {
                 var response = await _roleManagementPolicyRestClient.UpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new RoleManagementPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RoleManagementPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -209,7 +210,7 @@ namespace Azure.ResourceManager.Authorization
             try
             {
                 var response = _roleManagementPolicyRestClient.Update(Id.Parent, Id.Name, data, cancellationToken);
-                return Response.FromValue(new RoleManagementPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RoleManagementPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Blueprint
             try
             {
                 var response = await _blueprintArtifactArtifactsRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, artifactName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new BlueprintArmOperation<BlueprintArtifactResource>(Response.FromValue(new BlueprintArtifactResource(Client, response), response.GetRawResponse()));
+                var operation = new BlueprintArmOperation<BlueprintArtifactResource>(Response.FromValue(new BlueprintArtifactResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Blueprint
             try
             {
                 var response = _blueprintArtifactArtifactsRestClient.CreateOrUpdate(Id.Parent, Id.Name, artifactName, data, cancellationToken);
-                var operation = new BlueprintArmOperation<BlueprintArtifactResource>(Response.FromValue(new BlueprintArtifactResource(Client, response), response.GetRawResponse()));
+                var operation = new BlueprintArmOperation<BlueprintArtifactResource>(Response.FromValue(new BlueprintArtifactResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Blueprint
                 var response = await _blueprintArtifactArtifactsRestClient.GetAsync(Id.Parent, Id.Name, artifactName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BlueprintArtifactResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BlueprintArtifactResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Blueprint
                 var response = _blueprintArtifactArtifactsRestClient.Get(Id.Parent, Id.Name, artifactName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BlueprintArtifactResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BlueprintArtifactResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintArtifactArtifactsRestClient.CreateListRequest(Id.Parent, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blueprintArtifactArtifactsRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BlueprintArtifactResource(Client, ArtifactData.DeserializeArtifactData(e)), _blueprintArtifactArtifactsClientDiagnostics, Pipeline, "BlueprintArtifactCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ArtifactData.DeserializeArtifactData(e); return new BlueprintArtifactResource(Client, data, data.Id); }, _blueprintArtifactArtifactsClientDiagnostics, Pipeline, "BlueprintArtifactCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintArtifactArtifactsRestClient.CreateListRequest(Id.Parent, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blueprintArtifactArtifactsRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BlueprintArtifactResource(Client, ArtifactData.DeserializeArtifactData(e)), _blueprintArtifactArtifactsClientDiagnostics, Pipeline, "BlueprintArtifactCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ArtifactData.DeserializeArtifactData(e); return new BlueprintArtifactResource(Client, data, data.Id); }, _blueprintArtifactArtifactsClientDiagnostics, Pipeline, "BlueprintArtifactCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

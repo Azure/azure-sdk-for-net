@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementEmailTemplateEmailTemplateRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateName, content, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementEmailTemplateResource>(Response.FromValue(new ApiManagementEmailTemplateResource(Client, response), response.GetRawResponse()));
+                var operation = new ApiManagementArmOperation<ApiManagementEmailTemplateResource>(Response.FromValue(new ApiManagementEmailTemplateResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementEmailTemplateEmailTemplateRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateName, content, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementEmailTemplateResource>(Response.FromValue(new ApiManagementEmailTemplateResource(Client, response), response.GetRawResponse()));
+                var operation = new ApiManagementArmOperation<ApiManagementEmailTemplateResource>(Response.FromValue(new ApiManagementEmailTemplateResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = await _apiManagementEmailTemplateEmailTemplateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementEmailTemplateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementEmailTemplateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = _apiManagementEmailTemplateEmailTemplateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementEmailTemplateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementEmailTemplateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementEmailTemplateEmailTemplateRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementEmailTemplateEmailTemplateRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementEmailTemplateResource(Client, ApiManagementEmailTemplateData.DeserializeApiManagementEmailTemplateData(e)), _apiManagementEmailTemplateEmailTemplateClientDiagnostics, Pipeline, "ApiManagementEmailTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ApiManagementEmailTemplateData.DeserializeApiManagementEmailTemplateData(e); return new ApiManagementEmailTemplateResource(Client, data, data.Id); }, _apiManagementEmailTemplateEmailTemplateClientDiagnostics, Pipeline, "ApiManagementEmailTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementEmailTemplateEmailTemplateRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementEmailTemplateEmailTemplateRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementEmailTemplateResource(Client, ApiManagementEmailTemplateData.DeserializeApiManagementEmailTemplateData(e)), _apiManagementEmailTemplateEmailTemplateClientDiagnostics, Pipeline, "ApiManagementEmailTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ApiManagementEmailTemplateData.DeserializeApiManagementEmailTemplateData(e); return new ApiManagementEmailTemplateResource(Client, data, data.Id); }, _apiManagementEmailTemplateEmailTemplateClientDiagnostics, Pipeline, "ApiManagementEmailTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Automanage
             try
             {
                 var response = await _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomanageArmOperation<AutomanageConfigurationProfileVersionResource>(Response.FromValue(new AutomanageConfigurationProfileVersionResource(Client, response), response.GetRawResponse()));
+                var operation = new AutomanageArmOperation<AutomanageConfigurationProfileVersionResource>(Response.FromValue(new AutomanageConfigurationProfileVersionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Automanage
             try
             {
                 var response = _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionName, data, cancellationToken);
-                var operation = new AutomanageArmOperation<AutomanageConfigurationProfileVersionResource>(Response.FromValue(new AutomanageConfigurationProfileVersionResource(Client, response), response.GetRawResponse()));
+                var operation = new AutomanageArmOperation<AutomanageConfigurationProfileVersionResource>(Response.FromValue(new AutomanageConfigurationProfileVersionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Automanage
                 var response = await _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutomanageConfigurationProfileVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomanageConfigurationProfileVersionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Automanage
                 var response = _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutomanageConfigurationProfileVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomanageConfigurationProfileVersionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual AsyncPageable<AutomanageConfigurationProfileVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient.CreateListChildResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutomanageConfigurationProfileVersionResource(Client, AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(e)), _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics, Pipeline, "AutomanageConfigurationProfileVersionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(e); return new AutomanageConfigurationProfileVersionResource(Client, data, data.Id); }, _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics, Pipeline, "AutomanageConfigurationProfileVersionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual Pageable<AutomanageConfigurationProfileVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient.CreateListChildResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutomanageConfigurationProfileVersionResource(Client, AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(e)), _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics, Pipeline, "AutomanageConfigurationProfileVersionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(e); return new AutomanageConfigurationProfileVersionResource(Client, data, data.Id); }, _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics, Pipeline, "AutomanageConfigurationProfileVersionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Cdn
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = FrontDoorCustomDomainData.DeserializeFrontDoorCustomDomainData(document.RootElement);
-            return new FrontDoorCustomDomainResource(_client, data);
+            return new FrontDoorCustomDomainResource(_client, data, data.Id);
         }
 
         async ValueTask<FrontDoorCustomDomainResource> IOperationSource<FrontDoorCustomDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = FrontDoorCustomDomainData.DeserializeFrontDoorCustomDomainData(document.RootElement);
-            return new FrontDoorCustomDomainResource(_client, data);
+            return new FrontDoorCustomDomainResource(_client, data, data.Id);
         }
     }
 }

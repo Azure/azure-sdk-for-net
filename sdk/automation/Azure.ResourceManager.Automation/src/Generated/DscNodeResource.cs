@@ -46,7 +46,8 @@ namespace Azure.ResourceManager.Automation
         /// <summary> Initializes a new instance of the <see cref = "DscNodeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DscNodeResource(ArmClient client, DscNodeData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal DscNodeResource(ArmClient client, DscNodeData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Automation
                 var response = await _dscNodeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DscNodeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DscNodeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.Automation
                 var response = _dscNodeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DscNodeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DscNodeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -248,7 +249,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _dscNodeRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DscNodeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DscNodeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -282,7 +283,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _dscNodeRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new DscNodeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DscNodeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

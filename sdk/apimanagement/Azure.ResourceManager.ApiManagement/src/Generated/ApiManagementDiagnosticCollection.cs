@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementDiagnosticDiagnosticRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diagnosticId, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementDiagnosticResource>(Response.FromValue(new ApiManagementDiagnosticResource(Client, response), response.GetRawResponse()));
+                var operation = new ApiManagementArmOperation<ApiManagementDiagnosticResource>(Response.FromValue(new ApiManagementDiagnosticResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementDiagnosticDiagnosticRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diagnosticId, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementDiagnosticResource>(Response.FromValue(new ApiManagementDiagnosticResource(Client, response), response.GetRawResponse()));
+                var operation = new ApiManagementArmOperation<ApiManagementDiagnosticResource>(Response.FromValue(new ApiManagementDiagnosticResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = await _apiManagementDiagnosticDiagnosticRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diagnosticId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementDiagnosticResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementDiagnosticResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = _apiManagementDiagnosticDiagnosticRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diagnosticId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementDiagnosticResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementDiagnosticResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementDiagnosticDiagnosticRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementDiagnosticDiagnosticRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementDiagnosticResource(Client, DiagnosticContractData.DeserializeDiagnosticContractData(e)), _apiManagementDiagnosticDiagnosticClientDiagnostics, Pipeline, "ApiManagementDiagnosticCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DiagnosticContractData.DeserializeDiagnosticContractData(e); return new ApiManagementDiagnosticResource(Client, data, data.Id); }, _apiManagementDiagnosticDiagnosticClientDiagnostics, Pipeline, "ApiManagementDiagnosticCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementDiagnosticDiagnosticRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementDiagnosticDiagnosticRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementDiagnosticResource(Client, DiagnosticContractData.DeserializeDiagnosticContractData(e)), _apiManagementDiagnosticDiagnosticClientDiagnostics, Pipeline, "ApiManagementDiagnosticCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DiagnosticContractData.DeserializeDiagnosticContractData(e); return new ApiManagementDiagnosticResource(Client, data, data.Id); }, _apiManagementDiagnosticDiagnosticClientDiagnostics, Pipeline, "ApiManagementDiagnosticCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

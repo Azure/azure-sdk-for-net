@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <summary> Initializes a new instance of the <see cref = "BillingBenefitsSavingsPlanOrderResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BillingBenefitsSavingsPlanOrderResource(ArmClient client, BillingBenefitsSavingsPlanOrderData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal BillingBenefitsSavingsPlanOrderResource(ArmClient client, BillingBenefitsSavingsPlanOrderData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 var response = await _billingBenefitsSavingsPlanOrderSavingsPlanOrderRestClient.GetAsync(Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BillingBenefitsSavingsPlanOrderResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingBenefitsSavingsPlanOrderResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +201,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 var response = _billingBenefitsSavingsPlanOrderSavingsPlanOrderRestClient.Get(Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BillingBenefitsSavingsPlanOrderResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingBenefitsSavingsPlanOrderResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

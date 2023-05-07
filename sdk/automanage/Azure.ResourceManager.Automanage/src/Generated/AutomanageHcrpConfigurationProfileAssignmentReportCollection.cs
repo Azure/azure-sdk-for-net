@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Automanage
                 var response = await _automanageHcrpConfigurationProfileAssignmentReportHCRPReportsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutomanageHcrpConfigurationProfileAssignmentReportResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomanageHcrpConfigurationProfileAssignmentReportResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Automanage
                 var response = _automanageHcrpConfigurationProfileAssignmentReportHCRPReportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutomanageHcrpConfigurationProfileAssignmentReportResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomanageHcrpConfigurationProfileAssignmentReportResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual AsyncPageable<AutomanageHcrpConfigurationProfileAssignmentReportResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageHcrpConfigurationProfileAssignmentReportHCRPReportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutomanageHcrpConfigurationProfileAssignmentReportResource(Client, AutomanageConfigurationProfileAssignmentReportData.DeserializeAutomanageConfigurationProfileAssignmentReportData(e)), _automanageHcrpConfigurationProfileAssignmentReportHCRPReportsClientDiagnostics, Pipeline, "AutomanageHcrpConfigurationProfileAssignmentReportCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = AutomanageConfigurationProfileAssignmentReportData.DeserializeAutomanageConfigurationProfileAssignmentReportData(e); return new AutomanageHcrpConfigurationProfileAssignmentReportResource(Client, data, data.Id); }, _automanageHcrpConfigurationProfileAssignmentReportHCRPReportsClientDiagnostics, Pipeline, "AutomanageHcrpConfigurationProfileAssignmentReportCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual Pageable<AutomanageHcrpConfigurationProfileAssignmentReportResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageHcrpConfigurationProfileAssignmentReportHCRPReportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutomanageHcrpConfigurationProfileAssignmentReportResource(Client, AutomanageConfigurationProfileAssignmentReportData.DeserializeAutomanageConfigurationProfileAssignmentReportData(e)), _automanageHcrpConfigurationProfileAssignmentReportHCRPReportsClientDiagnostics, Pipeline, "AutomanageHcrpConfigurationProfileAssignmentReportCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = AutomanageConfigurationProfileAssignmentReportData.DeserializeAutomanageConfigurationProfileAssignmentReportData(e); return new AutomanageHcrpConfigurationProfileAssignmentReportResource(Client, data, data.Id); }, _automanageHcrpConfigurationProfileAssignmentReportHCRPReportsClientDiagnostics, Pipeline, "AutomanageHcrpConfigurationProfileAssignmentReportCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

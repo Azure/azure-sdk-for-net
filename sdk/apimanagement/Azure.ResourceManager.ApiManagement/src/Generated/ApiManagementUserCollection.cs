@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementUserUserRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userId, content, notify, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementUserResource>(Response.FromValue(new ApiManagementUserResource(Client, response), response.GetRawResponse()));
+                var operation = new ApiManagementArmOperation<ApiManagementUserResource>(Response.FromValue(new ApiManagementUserResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementUserUserRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userId, content, notify, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementUserResource>(Response.FromValue(new ApiManagementUserResource(Client, response), response.GetRawResponse()));
+                var operation = new ApiManagementArmOperation<ApiManagementUserResource>(Response.FromValue(new ApiManagementUserResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = await _apiManagementUserUserRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementUserResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementUserResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = _apiManagementUserUserRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementUserResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementUserResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementUserUserRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, expandGroups);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementUserUserRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, expandGroups);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementUserResource(Client, UserContractData.DeserializeUserContractData(e)), _apiManagementUserUserClientDiagnostics, Pipeline, "ApiManagementUserCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = UserContractData.DeserializeUserContractData(e); return new ApiManagementUserResource(Client, data, data.Id); }, _apiManagementUserUserClientDiagnostics, Pipeline, "ApiManagementUserCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementUserUserRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, expandGroups);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementUserUserRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, expandGroups);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementUserResource(Client, UserContractData.DeserializeUserContractData(e)), _apiManagementUserUserClientDiagnostics, Pipeline, "ApiManagementUserCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = UserContractData.DeserializeUserContractData(e); return new ApiManagementUserResource(Client, data, data.Id); }, _apiManagementUserUserClientDiagnostics, Pipeline, "ApiManagementUserCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

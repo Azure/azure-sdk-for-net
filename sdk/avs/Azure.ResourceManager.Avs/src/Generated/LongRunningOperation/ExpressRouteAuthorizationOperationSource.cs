@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Avs
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ExpressRouteAuthorizationData.DeserializeExpressRouteAuthorizationData(document.RootElement);
-            return new ExpressRouteAuthorizationResource(_client, data);
+            return new ExpressRouteAuthorizationResource(_client, data, data.Id);
         }
 
         async ValueTask<ExpressRouteAuthorizationResource> IOperationSource<ExpressRouteAuthorizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ExpressRouteAuthorizationData.DeserializeExpressRouteAuthorizationData(document.RootElement);
-            return new ExpressRouteAuthorizationResource(_client, data);
+            return new ExpressRouteAuthorizationResource(_client, data, data.Id);
         }
     }
 }

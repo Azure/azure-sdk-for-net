@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Blueprint
             try
             {
                 var response = await _publishedBlueprintRestClient.CreateAsync(Id.Parent, Id.Name, versionId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new BlueprintArmOperation<PublishedBlueprintResource>(Response.FromValue(new PublishedBlueprintResource(Client, response), response.GetRawResponse()));
+                var operation = new BlueprintArmOperation<PublishedBlueprintResource>(Response.FromValue(new PublishedBlueprintResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Blueprint
             try
             {
                 var response = _publishedBlueprintRestClient.Create(Id.Parent, Id.Name, versionId, data, cancellationToken);
-                var operation = new BlueprintArmOperation<PublishedBlueprintResource>(Response.FromValue(new PublishedBlueprintResource(Client, response), response.GetRawResponse()));
+                var operation = new BlueprintArmOperation<PublishedBlueprintResource>(Response.FromValue(new PublishedBlueprintResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Blueprint
                 var response = await _publishedBlueprintRestClient.GetAsync(Id.Parent, Id.Name, versionId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PublishedBlueprintResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PublishedBlueprintResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Blueprint
                 var response = _publishedBlueprintRestClient.Get(Id.Parent, Id.Name, versionId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PublishedBlueprintResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PublishedBlueprintResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

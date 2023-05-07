@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform
                 var response = await _appPlatformSupportedStackBuildServiceRestClient.GetSupportedStackAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, stackName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppPlatformSupportedStackResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppPlatformSupportedStackResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppPlatform
                 var response = _appPlatformSupportedStackBuildServiceRestClient.GetSupportedStack(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, stackName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppPlatformSupportedStackResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppPlatformSupportedStackResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppPlatform
         public virtual AsyncPageable<AppPlatformSupportedStackResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformSupportedStackBuildServiceRestClient.CreateListSupportedStacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AppPlatformSupportedStackResource(Client, AppPlatformSupportedStackData.DeserializeAppPlatformSupportedStackData(e)), _appPlatformSupportedStackBuildServiceClientDiagnostics, Pipeline, "AppPlatformSupportedStackCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = AppPlatformSupportedStackData.DeserializeAppPlatformSupportedStackData(e); return new AppPlatformSupportedStackResource(Client, data, data.Id); }, _appPlatformSupportedStackBuildServiceClientDiagnostics, Pipeline, "AppPlatformSupportedStackCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppPlatform
         public virtual Pageable<AppPlatformSupportedStackResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformSupportedStackBuildServiceRestClient.CreateListSupportedStacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AppPlatformSupportedStackResource(Client, AppPlatformSupportedStackData.DeserializeAppPlatformSupportedStackData(e)), _appPlatformSupportedStackBuildServiceClientDiagnostics, Pipeline, "AppPlatformSupportedStackCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = AppPlatformSupportedStackData.DeserializeAppPlatformSupportedStackData(e); return new AppPlatformSupportedStackResource(Client, data, data.Id); }, _appPlatformSupportedStackBuildServiceClientDiagnostics, Pipeline, "AppPlatformSupportedStackCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

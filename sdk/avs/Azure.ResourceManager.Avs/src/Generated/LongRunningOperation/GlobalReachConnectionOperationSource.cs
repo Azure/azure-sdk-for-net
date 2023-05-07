@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Avs
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = GlobalReachConnectionData.DeserializeGlobalReachConnectionData(document.RootElement);
-            return new GlobalReachConnectionResource(_client, data);
+            return new GlobalReachConnectionResource(_client, data, data.Id);
         }
 
         async ValueTask<GlobalReachConnectionResource> IOperationSource<GlobalReachConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = GlobalReachConnectionData.DeserializeGlobalReachConnectionData(document.RootElement);
-            return new GlobalReachConnectionResource(_client, data);
+            return new GlobalReachConnectionResource(_client, data, data.Id);
         }
     }
 }

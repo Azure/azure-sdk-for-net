@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Avs
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AvsCloudLinkData.DeserializeAvsCloudLinkData(document.RootElement);
-            return new AvsCloudLinkResource(_client, data);
+            return new AvsCloudLinkResource(_client, data, data.Id);
         }
 
         async ValueTask<AvsCloudLinkResource> IOperationSource<AvsCloudLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AvsCloudLinkData.DeserializeAvsCloudLinkData(document.RootElement);
-            return new AvsCloudLinkResource(_client, data);
+            return new AvsCloudLinkResource(_client, data, data.Id);
         }
     }
 }

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Chaos
                 var response = await _capabilityTypeRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, capabilityTypeName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CapabilityTypeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CapabilityTypeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Chaos
                 var response = _capabilityTypeRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, capabilityTypeName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CapabilityTypeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CapabilityTypeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Chaos
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capabilityTypeRestClient.CreateListRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capabilityTypeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, continuationToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CapabilityTypeResource(Client, CapabilityTypeData.DeserializeCapabilityTypeData(e)), _capabilityTypeClientDiagnostics, Pipeline, "CapabilityTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = CapabilityTypeData.DeserializeCapabilityTypeData(e); return new CapabilityTypeResource(Client, data, data.Id); }, _capabilityTypeClientDiagnostics, Pipeline, "CapabilityTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Chaos
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capabilityTypeRestClient.CreateListRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capabilityTypeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, continuationToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CapabilityTypeResource(Client, CapabilityTypeData.DeserializeCapabilityTypeData(e)), _capabilityTypeClientDiagnostics, Pipeline, "CapabilityTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = CapabilityTypeData.DeserializeCapabilityTypeData(e); return new CapabilityTypeResource(Client, data, data.Id); }, _capabilityTypeClientDiagnostics, Pipeline, "CapabilityTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

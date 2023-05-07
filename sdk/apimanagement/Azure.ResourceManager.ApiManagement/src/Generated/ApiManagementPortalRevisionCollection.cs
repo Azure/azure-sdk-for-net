@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = await _apiManagementPortalRevisionPortalRevisionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portalRevisionId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementPortalRevisionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementPortalRevisionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = _apiManagementPortalRevisionPortalRevisionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portalRevisionId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementPortalRevisionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementPortalRevisionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementPortalRevisionPortalRevisionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementPortalRevisionPortalRevisionRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementPortalRevisionResource(Client, ApiManagementPortalRevisionData.DeserializeApiManagementPortalRevisionData(e)), _apiManagementPortalRevisionPortalRevisionClientDiagnostics, Pipeline, "ApiManagementPortalRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ApiManagementPortalRevisionData.DeserializeApiManagementPortalRevisionData(e); return new ApiManagementPortalRevisionResource(Client, data, data.Id); }, _apiManagementPortalRevisionPortalRevisionClientDiagnostics, Pipeline, "ApiManagementPortalRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementPortalRevisionPortalRevisionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementPortalRevisionPortalRevisionRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementPortalRevisionResource(Client, ApiManagementPortalRevisionData.DeserializeApiManagementPortalRevisionData(e)), _apiManagementPortalRevisionPortalRevisionClientDiagnostics, Pipeline, "ApiManagementPortalRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ApiManagementPortalRevisionData.DeserializeApiManagementPortalRevisionData(e); return new ApiManagementPortalRevisionResource(Client, data, data.Id); }, _apiManagementPortalRevisionPortalRevisionClientDiagnostics, Pipeline, "ApiManagementPortalRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

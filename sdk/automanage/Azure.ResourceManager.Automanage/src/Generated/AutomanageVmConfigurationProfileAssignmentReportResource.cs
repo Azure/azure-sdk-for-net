@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Automanage
         /// <summary> Initializes a new instance of the <see cref = "AutomanageVmConfigurationProfileAssignmentReportResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AutomanageVmConfigurationProfileAssignmentReportResource(ArmClient client, AutomanageConfigurationProfileAssignmentReportData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal AutomanageVmConfigurationProfileAssignmentReportResource(ArmClient client, AutomanageConfigurationProfileAssignmentReportData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Automanage
                 var response = await _automanageVmConfigurationProfileAssignmentReportreportsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutomanageVmConfigurationProfileAssignmentReportResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomanageVmConfigurationProfileAssignmentReportResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Automanage
                 var response = _automanageVmConfigurationProfileAssignmentReportreportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutomanageVmConfigurationProfileAssignmentReportResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomanageVmConfigurationProfileAssignmentReportResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

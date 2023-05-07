@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Hci
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = HciClusterData.DeserializeHciClusterData(document.RootElement);
-            return new HciClusterResource(_client, data);
+            return new HciClusterResource(_client, data, data.Id);
         }
 
         async ValueTask<HciClusterResource> IOperationSource<HciClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = HciClusterData.DeserializeHciClusterData(document.RootElement);
-            return new HciClusterResource(_client, data);
+            return new HciClusterResource(_client, data, data.Id);
         }
     }
 }

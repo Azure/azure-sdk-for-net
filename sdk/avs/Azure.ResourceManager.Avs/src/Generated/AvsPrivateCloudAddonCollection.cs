@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Avs
                 var response = await _avsPrivateCloudAddonAddonsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addonName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AvsPrivateCloudAddonResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AvsPrivateCloudAddonResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Avs
                 var response = _avsPrivateCloudAddonAddonsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, addonName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AvsPrivateCloudAddonResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AvsPrivateCloudAddonResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudAddonAddonsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _avsPrivateCloudAddonAddonsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudAddonResource(Client, AvsPrivateCloudAddonData.DeserializeAvsPrivateCloudAddonData(e)), _avsPrivateCloudAddonAddonsClientDiagnostics, Pipeline, "AvsPrivateCloudAddonCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AvsPrivateCloudAddonData.DeserializeAvsPrivateCloudAddonData(e); return new AvsPrivateCloudAddonResource(Client, data, data.Id); }, _avsPrivateCloudAddonAddonsClientDiagnostics, Pipeline, "AvsPrivateCloudAddonCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudAddonAddonsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _avsPrivateCloudAddonAddonsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudAddonResource(Client, AvsPrivateCloudAddonData.DeserializeAvsPrivateCloudAddonData(e)), _avsPrivateCloudAddonAddonsClientDiagnostics, Pipeline, "AvsPrivateCloudAddonCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AvsPrivateCloudAddonData.DeserializeAvsPrivateCloudAddonData(e); return new AvsPrivateCloudAddonResource(Client, data, data.Id); }, _avsPrivateCloudAddonAddonsClientDiagnostics, Pipeline, "AvsPrivateCloudAddonCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

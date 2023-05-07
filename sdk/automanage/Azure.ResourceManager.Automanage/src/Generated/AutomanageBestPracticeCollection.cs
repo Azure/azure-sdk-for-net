@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Automanage
                 var response = await _automanageBestPracticeBestPracticesRestClient.GetAsync(bestPracticeName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutomanageBestPracticeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomanageBestPracticeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Automanage
                 var response = _automanageBestPracticeBestPracticesRestClient.Get(bestPracticeName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutomanageBestPracticeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomanageBestPracticeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual AsyncPageable<AutomanageBestPracticeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageBestPracticeBestPracticesRestClient.CreateListByTenantRequest();
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutomanageBestPracticeResource(Client, AutomanageBestPracticeData.DeserializeAutomanageBestPracticeData(e)), _automanageBestPracticeBestPracticesClientDiagnostics, Pipeline, "AutomanageBestPracticeCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = AutomanageBestPracticeData.DeserializeAutomanageBestPracticeData(e); return new AutomanageBestPracticeResource(Client, data, data.Id); }, _automanageBestPracticeBestPracticesClientDiagnostics, Pipeline, "AutomanageBestPracticeCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual Pageable<AutomanageBestPracticeResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageBestPracticeBestPracticesRestClient.CreateListByTenantRequest();
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutomanageBestPracticeResource(Client, AutomanageBestPracticeData.DeserializeAutomanageBestPracticeData(e)), _automanageBestPracticeBestPracticesClientDiagnostics, Pipeline, "AutomanageBestPracticeCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = AutomanageBestPracticeData.DeserializeAutomanageBestPracticeData(e); return new AutomanageBestPracticeResource(Client, data, data.Id); }, _automanageBestPracticeBestPracticesClientDiagnostics, Pipeline, "AutomanageBestPracticeCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

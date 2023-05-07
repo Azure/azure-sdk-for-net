@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Chaos
                 var response = await _experimentExecutionDetailExperimentsRestClient.GetExecutionDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, executionDetailsId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExperimentExecutionDetailResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExperimentExecutionDetailResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Chaos
                 var response = _experimentExecutionDetailExperimentsRestClient.GetExecutionDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, executionDetailsId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExperimentExecutionDetailResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExperimentExecutionDetailResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Chaos
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _experimentExecutionDetailExperimentsRestClient.CreateListExecutionDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _experimentExecutionDetailExperimentsRestClient.CreateListExecutionDetailsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExperimentExecutionDetailResource(Client, ExperimentExecutionDetailData.DeserializeExperimentExecutionDetailData(e)), _experimentExecutionDetailExperimentsClientDiagnostics, Pipeline, "ExperimentExecutionDetailCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ExperimentExecutionDetailData.DeserializeExperimentExecutionDetailData(e); return new ExperimentExecutionDetailResource(Client, data, data.Id); }, _experimentExecutionDetailExperimentsClientDiagnostics, Pipeline, "ExperimentExecutionDetailCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Chaos
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _experimentExecutionDetailExperimentsRestClient.CreateListExecutionDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _experimentExecutionDetailExperimentsRestClient.CreateListExecutionDetailsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExperimentExecutionDetailResource(Client, ExperimentExecutionDetailData.DeserializeExperimentExecutionDetailData(e)), _experimentExecutionDetailExperimentsClientDiagnostics, Pipeline, "ExperimentExecutionDetailCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ExperimentExecutionDetailData.DeserializeExperimentExecutionDetailData(e); return new ExperimentExecutionDetailResource(Client, data, data.Id); }, _experimentExecutionDetailExperimentsClientDiagnostics, Pipeline, "ExperimentExecutionDetailCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _hybridRunbookWorkerGroupRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hybridRunbookWorkerGroupName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<HybridRunbookWorkerGroupResource>(Response.FromValue(new HybridRunbookWorkerGroupResource(Client, response), response.GetRawResponse()));
+                var operation = new AutomationArmOperation<HybridRunbookWorkerGroupResource>(Response.FromValue(new HybridRunbookWorkerGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _hybridRunbookWorkerGroupRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hybridRunbookWorkerGroupName, content, cancellationToken);
-                var operation = new AutomationArmOperation<HybridRunbookWorkerGroupResource>(Response.FromValue(new HybridRunbookWorkerGroupResource(Client, response), response.GetRawResponse()));
+                var operation = new AutomationArmOperation<HybridRunbookWorkerGroupResource>(Response.FromValue(new HybridRunbookWorkerGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Automation
                 var response = await _hybridRunbookWorkerGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hybridRunbookWorkerGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridRunbookWorkerGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridRunbookWorkerGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Automation
                 var response = _hybridRunbookWorkerGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hybridRunbookWorkerGroupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridRunbookWorkerGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridRunbookWorkerGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridRunbookWorkerGroupRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridRunbookWorkerGroupRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridRunbookWorkerGroupResource(Client, HybridRunbookWorkerGroupData.DeserializeHybridRunbookWorkerGroupData(e)), _hybridRunbookWorkerGroupClientDiagnostics, Pipeline, "HybridRunbookWorkerGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = HybridRunbookWorkerGroupData.DeserializeHybridRunbookWorkerGroupData(e); return new HybridRunbookWorkerGroupResource(Client, data, data.Id); }, _hybridRunbookWorkerGroupClientDiagnostics, Pipeline, "HybridRunbookWorkerGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridRunbookWorkerGroupRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridRunbookWorkerGroupRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridRunbookWorkerGroupResource(Client, HybridRunbookWorkerGroupData.DeserializeHybridRunbookWorkerGroupData(e)), _hybridRunbookWorkerGroupClientDiagnostics, Pipeline, "HybridRunbookWorkerGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = HybridRunbookWorkerGroupData.DeserializeHybridRunbookWorkerGroupData(e); return new HybridRunbookWorkerGroupResource(Client, data, data.Id); }, _hybridRunbookWorkerGroupClientDiagnostics, Pipeline, "HybridRunbookWorkerGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

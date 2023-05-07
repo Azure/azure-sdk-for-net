@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Advisor
             try
             {
                 var response = await _suppressionContractSuppressionsRestClient.CreateAsync(Id.Parent, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AdvisorArmOperation<SuppressionContractResource>(Response.FromValue(new SuppressionContractResource(Client, response), response.GetRawResponse()));
+                var operation = new AdvisorArmOperation<SuppressionContractResource>(Response.FromValue(new SuppressionContractResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Advisor
             try
             {
                 var response = _suppressionContractSuppressionsRestClient.Create(Id.Parent, Id.Name, name, data, cancellationToken);
-                var operation = new AdvisorArmOperation<SuppressionContractResource>(Response.FromValue(new SuppressionContractResource(Client, response), response.GetRawResponse()));
+                var operation = new AdvisorArmOperation<SuppressionContractResource>(Response.FromValue(new SuppressionContractResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Advisor
                 var response = await _suppressionContractSuppressionsRestClient.GetAsync(Id.Parent, Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SuppressionContractResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SuppressionContractResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Advisor
                 var response = _suppressionContractSuppressionsRestClient.Get(Id.Parent, Id.Name, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SuppressionContractResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SuppressionContractResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

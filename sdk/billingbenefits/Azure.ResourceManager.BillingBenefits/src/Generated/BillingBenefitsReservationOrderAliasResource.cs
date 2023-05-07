@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <summary> Initializes a new instance of the <see cref = "BillingBenefitsReservationOrderAliasResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BillingBenefitsReservationOrderAliasResource(ArmClient client, BillingBenefitsReservationOrderAliasData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal BillingBenefitsReservationOrderAliasResource(ArmClient client, BillingBenefitsReservationOrderAliasData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 var response = await _billingBenefitsReservationOrderAliasReservationOrderAliasRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BillingBenefitsReservationOrderAliasResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingBenefitsReservationOrderAliasResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 var response = _billingBenefitsReservationOrderAliasReservationOrderAliasRestClient.Get(Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BillingBenefitsReservationOrderAliasResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingBenefitsReservationOrderAliasResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Avs
                 var response = await _placementPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, placementPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PlacementPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PlacementPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Avs
                 var response = _placementPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, placementPolicyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PlacementPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PlacementPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _placementPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _placementPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PlacementPolicyResource(Client, PlacementPolicyData.DeserializePlacementPolicyData(e)), _placementPolicyClientDiagnostics, Pipeline, "PlacementPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PlacementPolicyData.DeserializePlacementPolicyData(e); return new PlacementPolicyResource(Client, data, data.Id); }, _placementPolicyClientDiagnostics, Pipeline, "PlacementPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _placementPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _placementPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PlacementPolicyResource(Client, PlacementPolicyData.DeserializePlacementPolicyData(e)), _placementPolicyClientDiagnostics, Pipeline, "PlacementPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PlacementPolicyData.DeserializePlacementPolicyData(e); return new PlacementPolicyResource(Client, data, data.Id); }, _placementPolicyClientDiagnostics, Pipeline, "PlacementPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

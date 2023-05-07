@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiIssueRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiIssueResource>(Response.FromValue(new ApiIssueResource(Client, response), response.GetRawResponse()));
+                var operation = new ApiManagementArmOperation<ApiIssueResource>(Response.FromValue(new ApiIssueResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiIssueRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiIssueResource>(Response.FromValue(new ApiIssueResource(Client, response), response.GetRawResponse()));
+                var operation = new ApiManagementArmOperation<ApiIssueResource>(Response.FromValue(new ApiIssueResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = await _apiIssueRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, expandCommentsAttachments, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiIssueResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiIssueResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = _apiIssueRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, expandCommentsAttachments, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiIssueResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiIssueResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiIssueRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, expandCommentsAttachments, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiIssueRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, expandCommentsAttachments, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiIssueResource(Client, IssueContractData.DeserializeIssueContractData(e)), _apiIssueClientDiagnostics, Pipeline, "ApiIssueCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = IssueContractData.DeserializeIssueContractData(e); return new ApiIssueResource(Client, data, data.Id); }, _apiIssueClientDiagnostics, Pipeline, "ApiIssueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiIssueRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, expandCommentsAttachments, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiIssueRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, expandCommentsAttachments, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiIssueResource(Client, IssueContractData.DeserializeIssueContractData(e)), _apiIssueClientDiagnostics, Pipeline, "ApiIssueCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = IssueContractData.DeserializeIssueContractData(e); return new ApiIssueResource(Client, data, data.Id); }, _apiIssueClientDiagnostics, Pipeline, "ApiIssueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

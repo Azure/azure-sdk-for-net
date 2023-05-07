@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _softwareUpdateConfigurationRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, data, clientRequestId, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<SoftwareUpdateConfigurationResource>(Response.FromValue(new SoftwareUpdateConfigurationResource(Client, response), response.GetRawResponse()));
+                var operation = new AutomationArmOperation<SoftwareUpdateConfigurationResource>(Response.FromValue(new SoftwareUpdateConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _softwareUpdateConfigurationRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, data, clientRequestId, cancellationToken);
-                var operation = new AutomationArmOperation<SoftwareUpdateConfigurationResource>(Response.FromValue(new SoftwareUpdateConfigurationResource(Client, response), response.GetRawResponse()));
+                var operation = new AutomationArmOperation<SoftwareUpdateConfigurationResource>(Response.FromValue(new SoftwareUpdateConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Automation
                 var response = await _softwareUpdateConfigurationRestClient.GetByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SoftwareUpdateConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SoftwareUpdateConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Automation
                 var response = _softwareUpdateConfigurationRestClient.GetByName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SoftwareUpdateConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SoftwareUpdateConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

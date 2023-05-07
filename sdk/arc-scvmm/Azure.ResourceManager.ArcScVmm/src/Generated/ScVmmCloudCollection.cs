@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 var response = await _scVmmCloudCloudsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ScVmmCloudResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ScVmmCloudResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 var response = _scVmmCloudCloudsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ScVmmCloudResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ScVmmCloudResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ArcScVmm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmCloudCloudsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scVmmCloudCloudsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmCloudResource(Client, ScVmmCloudData.DeserializeScVmmCloudData(e)), _scVmmCloudCloudsClientDiagnostics, Pipeline, "ScVmmCloudCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ScVmmCloudData.DeserializeScVmmCloudData(e); return new ScVmmCloudResource(Client, data, data.Id); }, _scVmmCloudCloudsClientDiagnostics, Pipeline, "ScVmmCloudCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ArcScVmm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmCloudCloudsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scVmmCloudCloudsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmCloudResource(Client, ScVmmCloudData.DeserializeScVmmCloudData(e)), _scVmmCloudCloudsClientDiagnostics, Pipeline, "ScVmmCloudCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ScVmmCloudData.DeserializeScVmmCloudData(e); return new ScVmmCloudResource(Client, data, data.Id); }, _scVmmCloudCloudsClientDiagnostics, Pipeline, "ScVmmCloudCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

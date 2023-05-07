@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 var response = await _cognitiveServicesDeletedAccountDeletedAccountsRestClient.GetAsync(Id.SubscriptionId, location, resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CognitiveServicesDeletedAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CognitiveServicesDeletedAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 var response = _cognitiveServicesDeletedAccountDeletedAccountsRestClient.Get(Id.SubscriptionId, location, resourceGroupName, accountName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CognitiveServicesDeletedAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CognitiveServicesDeletedAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementNotificationNotificationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationName, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementNotificationResource>(Response.FromValue(new ApiManagementNotificationResource(Client, response), response.GetRawResponse()));
+                var operation = new ApiManagementArmOperation<ApiManagementNotificationResource>(Response.FromValue(new ApiManagementNotificationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementNotificationNotificationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationName, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementNotificationResource>(Response.FromValue(new ApiManagementNotificationResource(Client, response), response.GetRawResponse()));
+                var operation = new ApiManagementArmOperation<ApiManagementNotificationResource>(Response.FromValue(new ApiManagementNotificationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = await _apiManagementNotificationNotificationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementNotificationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementNotificationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = _apiManagementNotificationNotificationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementNotificationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementNotificationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementNotificationNotificationRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementNotificationNotificationRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementNotificationResource(Client, ApiManagementNotificationData.DeserializeApiManagementNotificationData(e)), _apiManagementNotificationNotificationClientDiagnostics, Pipeline, "ApiManagementNotificationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ApiManagementNotificationData.DeserializeApiManagementNotificationData(e); return new ApiManagementNotificationResource(Client, data, data.Id); }, _apiManagementNotificationNotificationClientDiagnostics, Pipeline, "ApiManagementNotificationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementNotificationNotificationRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementNotificationNotificationRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementNotificationResource(Client, ApiManagementNotificationData.DeserializeApiManagementNotificationData(e)), _apiManagementNotificationNotificationClientDiagnostics, Pipeline, "ApiManagementNotificationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ApiManagementNotificationData.DeserializeApiManagementNotificationData(e); return new ApiManagementNotificationResource(Client, data, data.Id); }, _apiManagementNotificationNotificationClientDiagnostics, Pipeline, "ApiManagementNotificationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

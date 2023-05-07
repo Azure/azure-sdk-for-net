@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <summary> Initializes a new instance of the <see cref = "BillingBenefitsSavingsPlanResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BillingBenefitsSavingsPlanResource(ArmClient client, BillingBenefitsSavingsPlanData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal BillingBenefitsSavingsPlanResource(ArmClient client, BillingBenefitsSavingsPlanData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 var response = await _billingBenefitsSavingsPlanSavingsPlanRestClient.GetAsync(Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BillingBenefitsSavingsPlanResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingBenefitsSavingsPlanResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 var response = _billingBenefitsSavingsPlanSavingsPlanRestClient.Get(Id.Parent.Name, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BillingBenefitsSavingsPlanResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingBenefitsSavingsPlanResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -178,7 +179,7 @@ namespace Azure.ResourceManager.BillingBenefits
             try
             {
                 var response = await _billingBenefitsSavingsPlanSavingsPlanRestClient.UpdateAsync(Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new BillingBenefitsSavingsPlanResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingBenefitsSavingsPlanResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -212,7 +213,7 @@ namespace Azure.ResourceManager.BillingBenefits
             try
             {
                 var response = _billingBenefitsSavingsPlanSavingsPlanRestClient.Update(Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new BillingBenefitsSavingsPlanResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingBenefitsSavingsPlanResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

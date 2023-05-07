@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _automationWatcherWatcherRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, watcherName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<AutomationWatcherResource>(Response.FromValue(new AutomationWatcherResource(Client, response), response.GetRawResponse()));
+                var operation = new AutomationArmOperation<AutomationWatcherResource>(Response.FromValue(new AutomationWatcherResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _automationWatcherWatcherRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, watcherName, data, cancellationToken);
-                var operation = new AutomationArmOperation<AutomationWatcherResource>(Response.FromValue(new AutomationWatcherResource(Client, response), response.GetRawResponse()));
+                var operation = new AutomationArmOperation<AutomationWatcherResource>(Response.FromValue(new AutomationWatcherResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Automation
                 var response = await _automationWatcherWatcherRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, watcherName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutomationWatcherResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationWatcherResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Automation
                 var response = _automationWatcherWatcherRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, watcherName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutomationWatcherResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationWatcherResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationWatcherWatcherRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationWatcherWatcherRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationWatcherResource(Client, AutomationWatcherData.DeserializeAutomationWatcherData(e)), _automationWatcherWatcherClientDiagnostics, Pipeline, "AutomationWatcherCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AutomationWatcherData.DeserializeAutomationWatcherData(e); return new AutomationWatcherResource(Client, data, data.Id); }, _automationWatcherWatcherClientDiagnostics, Pipeline, "AutomationWatcherCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationWatcherWatcherRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationWatcherWatcherRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationWatcherResource(Client, AutomationWatcherData.DeserializeAutomationWatcherData(e)), _automationWatcherWatcherClientDiagnostics, Pipeline, "AutomationWatcherCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AutomationWatcherData.DeserializeAutomationWatcherData(e); return new AutomationWatcherResource(Client, data, data.Id); }, _automationWatcherWatcherClientDiagnostics, Pipeline, "AutomationWatcherCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

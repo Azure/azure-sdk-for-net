@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Hci
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ArcExtensionData.DeserializeArcExtensionData(document.RootElement);
-            return new ArcExtensionResource(_client, data);
+            return new ArcExtensionResource(_client, data, data.Id);
         }
 
         async ValueTask<ArcExtensionResource> IOperationSource<ArcExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ArcExtensionData.DeserializeArcExtensionData(document.RootElement);
-            return new ArcExtensionResource(_client, data);
+            return new ArcExtensionResource(_client, data, data.Id);
         }
     }
 }

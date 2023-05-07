@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 var response = await _commitmentPlanAccountAssociationCommitmentPlansRestClient.GetAssociationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CommitmentPlanAccountAssociationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CommitmentPlanAccountAssociationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 var response = _commitmentPlanAccountAssociationCommitmentPlansRestClient.GetAssociation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CommitmentPlanAccountAssociationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CommitmentPlanAccountAssociationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateListAssociationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateListAssociationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CommitmentPlanAccountAssociationResource(Client, CommitmentPlanAccountAssociationData.DeserializeCommitmentPlanAccountAssociationData(e)), _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, "CommitmentPlanAccountAssociationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = CommitmentPlanAccountAssociationData.DeserializeCommitmentPlanAccountAssociationData(e); return new CommitmentPlanAccountAssociationResource(Client, data, data.Id); }, _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, "CommitmentPlanAccountAssociationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateListAssociationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateListAssociationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CommitmentPlanAccountAssociationResource(Client, CommitmentPlanAccountAssociationData.DeserializeCommitmentPlanAccountAssociationData(e)), _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, "CommitmentPlanAccountAssociationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = CommitmentPlanAccountAssociationData.DeserializeCommitmentPlanAccountAssociationData(e); return new CommitmentPlanAccountAssociationResource(Client, data, data.Id); }, _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, "CommitmentPlanAccountAssociationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

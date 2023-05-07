@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             try
             {
                 var response = await _componentLinkedStorageAccountRestClient.CreateAndUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, storageType, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationInsightsArmOperation<ComponentLinkedStorageAccountResource>(Response.FromValue(new ComponentLinkedStorageAccountResource(Client, response), response.GetRawResponse()));
+                var operation = new ApplicationInsightsArmOperation<ComponentLinkedStorageAccountResource>(Response.FromValue(new ComponentLinkedStorageAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             try
             {
                 var response = _componentLinkedStorageAccountRestClient.CreateAndUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, storageType, data, cancellationToken);
-                var operation = new ApplicationInsightsArmOperation<ComponentLinkedStorageAccountResource>(Response.FromValue(new ComponentLinkedStorageAccountResource(Client, response), response.GetRawResponse()));
+                var operation = new ApplicationInsightsArmOperation<ComponentLinkedStorageAccountResource>(Response.FromValue(new ComponentLinkedStorageAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 var response = await _componentLinkedStorageAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, storageType, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ComponentLinkedStorageAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComponentLinkedStorageAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 var response = _componentLinkedStorageAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, storageType, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ComponentLinkedStorageAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComponentLinkedStorageAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

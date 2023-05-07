@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _automationAccountModuleModuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, moduleName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<AutomationAccountModuleResource>(Response.FromValue(new AutomationAccountModuleResource(Client, response), response.GetRawResponse()));
+                var operation = new AutomationArmOperation<AutomationAccountModuleResource>(Response.FromValue(new AutomationAccountModuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _automationAccountModuleModuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, moduleName, content, cancellationToken);
-                var operation = new AutomationArmOperation<AutomationAccountModuleResource>(Response.FromValue(new AutomationAccountModuleResource(Client, response), response.GetRawResponse()));
+                var operation = new AutomationArmOperation<AutomationAccountModuleResource>(Response.FromValue(new AutomationAccountModuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Automation
                 var response = await _automationAccountModuleModuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, moduleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutomationAccountModuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationAccountModuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Automation
                 var response = _automationAccountModuleModuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, moduleName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutomationAccountModuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationAccountModuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationAccountModuleModuleRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationAccountModuleModuleRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationAccountModuleResource(Client, AutomationModuleData.DeserializeAutomationModuleData(e)), _automationAccountModuleModuleClientDiagnostics, Pipeline, "AutomationAccountModuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AutomationModuleData.DeserializeAutomationModuleData(e); return new AutomationAccountModuleResource(Client, data, data.Id); }, _automationAccountModuleModuleClientDiagnostics, Pipeline, "AutomationAccountModuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationAccountModuleModuleRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationAccountModuleModuleRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationAccountModuleResource(Client, AutomationModuleData.DeserializeAutomationModuleData(e)), _automationAccountModuleModuleClientDiagnostics, Pipeline, "AutomationAccountModuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AutomationModuleData.DeserializeAutomationModuleData(e); return new AutomationAccountModuleResource(Client, data, data.Id); }, _automationAccountModuleModuleClientDiagnostics, Pipeline, "AutomationAccountModuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

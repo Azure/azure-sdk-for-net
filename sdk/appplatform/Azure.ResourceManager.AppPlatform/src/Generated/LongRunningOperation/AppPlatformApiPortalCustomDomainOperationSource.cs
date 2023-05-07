@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.AppPlatform
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AppPlatformApiPortalCustomDomainData.DeserializeAppPlatformApiPortalCustomDomainData(document.RootElement);
-            return new AppPlatformApiPortalCustomDomainResource(_client, data);
+            return new AppPlatformApiPortalCustomDomainResource(_client, data, data.Id);
         }
 
         async ValueTask<AppPlatformApiPortalCustomDomainResource> IOperationSource<AppPlatformApiPortalCustomDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AppPlatformApiPortalCustomDomainData.DeserializeAppPlatformApiPortalCustomDomainData(document.RootElement);
-            return new AppPlatformApiPortalCustomDomainResource(_client, data);
+            return new AppPlatformApiPortalCustomDomainResource(_client, data, data.Id);
         }
     }
 }

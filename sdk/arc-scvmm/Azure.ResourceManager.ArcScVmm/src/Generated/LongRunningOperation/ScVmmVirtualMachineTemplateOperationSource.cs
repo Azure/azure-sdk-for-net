@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ArcScVmm
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScVmmVirtualMachineTemplateData.DeserializeScVmmVirtualMachineTemplateData(document.RootElement);
-            return new ScVmmVirtualMachineTemplateResource(_client, data);
+            return new ScVmmVirtualMachineTemplateResource(_client, data, data.Id);
         }
 
         async ValueTask<ScVmmVirtualMachineTemplateResource> IOperationSource<ScVmmVirtualMachineTemplateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScVmmVirtualMachineTemplateData.DeserializeScVmmVirtualMachineTemplateData(document.RootElement);
-            return new ScVmmVirtualMachineTemplateResource(_client, data);
+            return new ScVmmVirtualMachineTemplateResource(_client, data, data.Id);
         }
     }
 }

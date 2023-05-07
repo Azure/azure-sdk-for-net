@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Avs
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(document.RootElement);
-            return new WorkloadNetworkVmGroupResource(_client, data);
+            return new WorkloadNetworkVmGroupResource(_client, data, data.Id);
         }
 
         async ValueTask<WorkloadNetworkVmGroupResource> IOperationSource<WorkloadNetworkVmGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(document.RootElement);
-            return new WorkloadNetworkVmGroupResource(_client, data);
+            return new WorkloadNetworkVmGroupResource(_client, data, data.Id);
         }
     }
 }

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Batch
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = BatchPrivateEndpointConnectionData.DeserializeBatchPrivateEndpointConnectionData(document.RootElement);
-            return new BatchPrivateEndpointConnectionResource(_client, data);
+            return new BatchPrivateEndpointConnectionResource(_client, data, data.Id);
         }
 
         async ValueTask<BatchPrivateEndpointConnectionResource> IOperationSource<BatchPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = BatchPrivateEndpointConnectionData.DeserializeBatchPrivateEndpointConnectionData(document.RootElement);
-            return new BatchPrivateEndpointConnectionResource(_client, data);
+            return new BatchPrivateEndpointConnectionResource(_client, data, data.Id);
         }
     }
 }

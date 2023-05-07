@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 var response = await _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.GetPlanAsync(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CognitiveServicesCommitmentPlanResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CognitiveServicesCommitmentPlanResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 var response = _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.GetPlan(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CognitiveServicesCommitmentPlanResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CognitiveServicesCommitmentPlanResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateListPlansByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateListPlansByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesCommitmentPlanResource(Client, CommitmentPlanData.DeserializeCommitmentPlanData(e)), _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, "CognitiveServicesCommitmentPlanCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = CommitmentPlanData.DeserializeCommitmentPlanData(e); return new CognitiveServicesCommitmentPlanResource(Client, data, data.Id); }, _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, "CognitiveServicesCommitmentPlanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateListPlansByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateListPlansByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesCommitmentPlanResource(Client, CommitmentPlanData.DeserializeCommitmentPlanData(e)), _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, "CognitiveServicesCommitmentPlanCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = CommitmentPlanData.DeserializeCommitmentPlanData(e); return new CognitiveServicesCommitmentPlanResource(Client, data, data.Id); }, _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, "CognitiveServicesCommitmentPlanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

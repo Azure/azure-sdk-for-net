@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AppPlatformServiceServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AppPlatformServiceServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformServiceResource(Client, AppPlatformServiceData.DeserializeAppPlatformServiceData(e)), AppPlatformServiceServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAppPlatformServices", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AppPlatformServiceData.DeserializeAppPlatformServiceData(e); return new AppPlatformServiceResource(Client, data, data.Id); }, AppPlatformServiceServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAppPlatformServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AppPlatformServiceServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AppPlatformServiceServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformServiceResource(Client, AppPlatformServiceData.DeserializeAppPlatformServiceData(e)), AppPlatformServiceServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAppPlatformServices", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AppPlatformServiceData.DeserializeAppPlatformServiceData(e); return new AppPlatformServiceResource(Client, data, data.Id); }, AppPlatformServiceServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAppPlatformServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

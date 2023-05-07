@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Avs
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = WorkloadNetworkDnsServiceData.DeserializeWorkloadNetworkDnsServiceData(document.RootElement);
-            return new WorkloadNetworkDnsServiceResource(_client, data);
+            return new WorkloadNetworkDnsServiceResource(_client, data, data.Id);
         }
 
         async ValueTask<WorkloadNetworkDnsServiceResource> IOperationSource<WorkloadNetworkDnsServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = WorkloadNetworkDnsServiceData.DeserializeWorkloadNetworkDnsServiceData(document.RootElement);
-            return new WorkloadNetworkDnsServiceResource(_client, data);
+            return new WorkloadNetworkDnsServiceResource(_client, data, data.Id);
         }
     }
 }

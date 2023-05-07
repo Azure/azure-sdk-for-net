@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AlertsManagement
             try
             {
                 var response = await _alertProcessingRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, alertProcessingRuleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AlertsManagementArmOperation<AlertProcessingRuleResource>(Response.FromValue(new AlertProcessingRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new AlertsManagementArmOperation<AlertProcessingRuleResource>(Response.FromValue(new AlertProcessingRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AlertsManagement
             try
             {
                 var response = _alertProcessingRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, alertProcessingRuleName, data, cancellationToken);
-                var operation = new AlertsManagementArmOperation<AlertProcessingRuleResource>(Response.FromValue(new AlertProcessingRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new AlertsManagementArmOperation<AlertProcessingRuleResource>(Response.FromValue(new AlertProcessingRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 var response = await _alertProcessingRuleRestClient.GetByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, alertProcessingRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AlertProcessingRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AlertProcessingRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 var response = _alertProcessingRuleRestClient.GetByName(Id.SubscriptionId, Id.ResourceGroupName, alertProcessingRuleName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AlertProcessingRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AlertProcessingRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.AlertsManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _alertProcessingRuleRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _alertProcessingRuleRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AlertProcessingRuleResource(Client, AlertProcessingRuleData.DeserializeAlertProcessingRuleData(e)), _alertProcessingRuleClientDiagnostics, Pipeline, "AlertProcessingRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AlertProcessingRuleData.DeserializeAlertProcessingRuleData(e); return new AlertProcessingRuleResource(Client, data, data.Id); }, _alertProcessingRuleClientDiagnostics, Pipeline, "AlertProcessingRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AlertsManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _alertProcessingRuleRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _alertProcessingRuleRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AlertProcessingRuleResource(Client, AlertProcessingRuleData.DeserializeAlertProcessingRuleData(e)), _alertProcessingRuleClientDiagnostics, Pipeline, "AlertProcessingRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AlertProcessingRuleData.DeserializeAlertProcessingRuleData(e); return new AlertProcessingRuleResource(Client, data, data.Id); }, _alertProcessingRuleClientDiagnostics, Pipeline, "AlertProcessingRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

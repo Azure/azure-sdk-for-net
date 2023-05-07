@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Cdn
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CdnWebApplicationFirewallPolicyData.DeserializeCdnWebApplicationFirewallPolicyData(document.RootElement);
-            return new CdnWebApplicationFirewallPolicyResource(_client, data);
+            return new CdnWebApplicationFirewallPolicyResource(_client, data, data.Id);
         }
 
         async ValueTask<CdnWebApplicationFirewallPolicyResource> IOperationSource<CdnWebApplicationFirewallPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CdnWebApplicationFirewallPolicyData.DeserializeCdnWebApplicationFirewallPolicyData(document.RootElement);
-            return new CdnWebApplicationFirewallPolicyResource(_client, data);
+            return new CdnWebApplicationFirewallPolicyResource(_client, data, data.Id);
         }
     }
 }

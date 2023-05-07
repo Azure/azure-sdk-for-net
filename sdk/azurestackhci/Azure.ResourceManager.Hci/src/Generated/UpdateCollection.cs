@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = await _updateRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HciArmOperation<UpdateResource>(Response.FromValue(new UpdateResource(Client, response), response.GetRawResponse()));
+                var operation = new HciArmOperation<UpdateResource>(Response.FromValue(new UpdateResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = _updateRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateName, data, cancellationToken);
-                var operation = new HciArmOperation<UpdateResource>(Response.FromValue(new UpdateResource(Client, response), response.GetRawResponse()));
+                var operation = new HciArmOperation<UpdateResource>(Response.FromValue(new UpdateResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Hci
                 var response = await _updateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new UpdateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new UpdateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Hci
                 var response = _updateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new UpdateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new UpdateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _updateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _updateRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new UpdateResource(Client, UpdateData.DeserializeUpdateData(e)), _updateClientDiagnostics, Pipeline, "UpdateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = UpdateData.DeserializeUpdateData(e); return new UpdateResource(Client, data, data.Id); }, _updateClientDiagnostics, Pipeline, "UpdateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _updateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _updateRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new UpdateResource(Client, UpdateData.DeserializeUpdateData(e)), _updateClientDiagnostics, Pipeline, "UpdateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = UpdateData.DeserializeUpdateData(e); return new UpdateResource(Client, data, data.Id); }, _updateClientDiagnostics, Pipeline, "UpdateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

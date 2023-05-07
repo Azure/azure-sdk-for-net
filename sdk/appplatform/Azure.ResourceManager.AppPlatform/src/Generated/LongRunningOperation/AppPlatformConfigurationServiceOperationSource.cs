@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.AppPlatform
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AppPlatformConfigurationServiceData.DeserializeAppPlatformConfigurationServiceData(document.RootElement);
-            return new AppPlatformConfigurationServiceResource(_client, data);
+            return new AppPlatformConfigurationServiceResource(_client, data, data.Id);
         }
 
         async ValueTask<AppPlatformConfigurationServiceResource> IOperationSource<AppPlatformConfigurationServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AppPlatformConfigurationServiceData.DeserializeAppPlatformConfigurationServiceData(document.RootElement);
-            return new AppPlatformConfigurationServiceResource(_client, data);
+            return new AppPlatformConfigurationServiceResource(_client, data, data.Id);
         }
     }
 }

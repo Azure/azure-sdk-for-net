@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Initializes a new instance of the <see cref = "AvsPrivateCloudClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AvsPrivateCloudClusterResource(ArmClient client, AvsPrivateCloudClusterData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal AvsPrivateCloudClusterResource(ArmClient client, AvsPrivateCloudClusterData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -269,7 +270,7 @@ namespace Azure.ResourceManager.Avs
                 var response = await _avsPrivateCloudClusterClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AvsPrivateCloudClusterResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AvsPrivateCloudClusterResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -301,7 +302,7 @@ namespace Azure.ResourceManager.Avs
                 var response = _avsPrivateCloudClusterClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AvsPrivateCloudClusterResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AvsPrivateCloudClusterResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

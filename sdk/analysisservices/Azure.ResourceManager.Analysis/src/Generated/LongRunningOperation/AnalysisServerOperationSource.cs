@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Analysis
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AnalysisServerData.DeserializeAnalysisServerData(document.RootElement);
-            return new AnalysisServerResource(_client, data);
+            return new AnalysisServerResource(_client, data, data.Id);
         }
 
         async ValueTask<AnalysisServerResource> IOperationSource<AnalysisServerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AnalysisServerData.DeserializeAnalysisServerData(document.RootElement);
-            return new AnalysisServerResource(_client, data);
+            return new AnalysisServerResource(_client, data, data.Id);
         }
     }
 }

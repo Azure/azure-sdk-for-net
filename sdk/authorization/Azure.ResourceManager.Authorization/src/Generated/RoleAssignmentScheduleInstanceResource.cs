@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> Initializes a new instance of the <see cref = "RoleAssignmentScheduleInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RoleAssignmentScheduleInstanceResource(ArmClient client, RoleAssignmentScheduleInstanceData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal RoleAssignmentScheduleInstanceResource(ArmClient client, RoleAssignmentScheduleInstanceData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Authorization
                 var response = await _roleAssignmentScheduleInstanceRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RoleAssignmentScheduleInstanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RoleAssignmentScheduleInstanceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Authorization
                 var response = _roleAssignmentScheduleInstanceRestClient.Get(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RoleAssignmentScheduleInstanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RoleAssignmentScheduleInstanceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Batch
             try
             {
                 var response = await _batchApplicationApplicationRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new BatchArmOperation<BatchApplicationResource>(Response.FromValue(new BatchApplicationResource(Client, response), response.GetRawResponse()));
+                var operation = new BatchArmOperation<BatchApplicationResource>(Response.FromValue(new BatchApplicationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Batch
             try
             {
                 var response = _batchApplicationApplicationRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, data, cancellationToken);
-                var operation = new BatchArmOperation<BatchApplicationResource>(Response.FromValue(new BatchApplicationResource(Client, response), response.GetRawResponse()));
+                var operation = new BatchArmOperation<BatchApplicationResource>(Response.FromValue(new BatchApplicationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Batch
                 var response = await _batchApplicationApplicationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BatchApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchApplicationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Batch
                 var response = _batchApplicationApplicationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BatchApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchApplicationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Batch
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchApplicationApplicationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchApplicationApplicationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BatchApplicationResource(Client, BatchApplicationData.DeserializeBatchApplicationData(e)), _batchApplicationApplicationClientDiagnostics, Pipeline, "BatchApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = BatchApplicationData.DeserializeBatchApplicationData(e); return new BatchApplicationResource(Client, data, data.Id); }, _batchApplicationApplicationClientDiagnostics, Pipeline, "BatchApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Batch
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchApplicationApplicationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchApplicationApplicationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BatchApplicationResource(Client, BatchApplicationData.DeserializeBatchApplicationData(e)), _batchApplicationApplicationClientDiagnostics, Pipeline, "BatchApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = BatchApplicationData.DeserializeBatchApplicationData(e); return new BatchApplicationResource(Client, data, data.Id); }, _batchApplicationApplicationClientDiagnostics, Pipeline, "BatchApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

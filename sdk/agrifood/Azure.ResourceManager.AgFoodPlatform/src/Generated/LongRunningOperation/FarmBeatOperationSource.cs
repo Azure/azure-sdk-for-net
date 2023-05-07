@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = FarmBeatData.DeserializeFarmBeatData(document.RootElement);
-            return new FarmBeatResource(_client, data);
+            return new FarmBeatResource(_client, data, data.Id);
         }
 
         async ValueTask<FarmBeatResource> IOperationSource<FarmBeatResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = FarmBeatData.DeserializeFarmBeatData(document.RootElement);
-            return new FarmBeatResource(_client, data);
+            return new FarmBeatResource(_client, data, data.Id);
         }
     }
 }

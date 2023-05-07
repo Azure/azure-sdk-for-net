@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ApiManagement
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ApiManagementNamedValueData.DeserializeApiManagementNamedValueData(document.RootElement);
-            return new ApiManagementNamedValueResource(_client, data);
+            return new ApiManagementNamedValueResource(_client, data, data.Id);
         }
 
         async ValueTask<ApiManagementNamedValueResource> IOperationSource<ApiManagementNamedValueResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ApiManagementNamedValueData.DeserializeApiManagementNamedValueData(document.RootElement);
-            return new ApiManagementNamedValueResource(_client, data);
+            return new ApiManagementNamedValueResource(_client, data, data.Id);
         }
     }
 }

@@ -50,7 +50,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of the <see cref = "ApiManagementProductResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ApiManagementProductResource(ArmClient client, ApiManagementProductData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal ApiManagementProductResource(ArmClient client, ApiManagementProductData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -226,7 +227,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = await _apiManagementProductProductRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementProductResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementProductResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -258,7 +259,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = _apiManagementProductProductRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementProductResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementProductResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -365,7 +366,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementProductProductRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ApiManagementProductResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementProductResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -400,7 +401,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementProductProductRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken);
-                return Response.FromValue(new ApiManagementProductResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementProductResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

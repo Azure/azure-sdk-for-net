@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _tenantAccessInfoTenantAccessRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName, ifMatch, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<TenantAccessInfoResource>(Response.FromValue(new TenantAccessInfoResource(Client, response), response.GetRawResponse()));
+                var operation = new ApiManagementArmOperation<TenantAccessInfoResource>(Response.FromValue(new TenantAccessInfoResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _tenantAccessInfoTenantAccessRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName, ifMatch, content, cancellationToken);
-                var operation = new ApiManagementArmOperation<TenantAccessInfoResource>(Response.FromValue(new TenantAccessInfoResource(Client, response), response.GetRawResponse()));
+                var operation = new ApiManagementArmOperation<TenantAccessInfoResource>(Response.FromValue(new TenantAccessInfoResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = await _tenantAccessInfoTenantAccessRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantAccessInfoResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantAccessInfoResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = _tenantAccessInfoTenantAccessRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantAccessInfoResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantAccessInfoResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantAccessInfoTenantAccessRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantAccessInfoTenantAccessRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TenantAccessInfoResource(Client, TenantAccessInfoData.DeserializeTenantAccessInfoData(e)), _tenantAccessInfoTenantAccessClientDiagnostics, Pipeline, "TenantAccessInfoCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = TenantAccessInfoData.DeserializeTenantAccessInfoData(e); return new TenantAccessInfoResource(Client, data, data.Id); }, _tenantAccessInfoTenantAccessClientDiagnostics, Pipeline, "TenantAccessInfoCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantAccessInfoTenantAccessRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantAccessInfoTenantAccessRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TenantAccessInfoResource(Client, TenantAccessInfoData.DeserializeTenantAccessInfoData(e)), _tenantAccessInfoTenantAccessClientDiagnostics, Pipeline, "TenantAccessInfoCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = TenantAccessInfoData.DeserializeTenantAccessInfoData(e); return new TenantAccessInfoResource(Client, data, data.Id); }, _tenantAccessInfoTenantAccessClientDiagnostics, Pipeline, "TenantAccessInfoCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

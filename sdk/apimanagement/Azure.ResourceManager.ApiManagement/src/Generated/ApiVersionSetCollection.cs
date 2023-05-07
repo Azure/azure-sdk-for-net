@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiVersionSetRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionSetId, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiVersionSetResource>(Response.FromValue(new ApiVersionSetResource(Client, response), response.GetRawResponse()));
+                var operation = new ApiManagementArmOperation<ApiVersionSetResource>(Response.FromValue(new ApiVersionSetResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiVersionSetRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionSetId, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiVersionSetResource>(Response.FromValue(new ApiVersionSetResource(Client, response), response.GetRawResponse()));
+                var operation = new ApiManagementArmOperation<ApiVersionSetResource>(Response.FromValue(new ApiVersionSetResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = await _apiVersionSetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionSetId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiVersionSetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiVersionSetResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = _apiVersionSetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionSetId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiVersionSetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiVersionSetResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiVersionSetRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiVersionSetRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiVersionSetResource(Client, ApiVersionSetData.DeserializeApiVersionSetData(e)), _apiVersionSetClientDiagnostics, Pipeline, "ApiVersionSetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ApiVersionSetData.DeserializeApiVersionSetData(e); return new ApiVersionSetResource(Client, data, data.Id); }, _apiVersionSetClientDiagnostics, Pipeline, "ApiVersionSetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiVersionSetRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiVersionSetRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiVersionSetResource(Client, ApiVersionSetData.DeserializeApiVersionSetData(e)), _apiVersionSetClientDiagnostics, Pipeline, "ApiVersionSetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ApiVersionSetData.DeserializeApiVersionSetData(e); return new ApiVersionSetResource(Client, data, data.Id); }, _apiVersionSetClientDiagnostics, Pipeline, "ApiVersionSetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

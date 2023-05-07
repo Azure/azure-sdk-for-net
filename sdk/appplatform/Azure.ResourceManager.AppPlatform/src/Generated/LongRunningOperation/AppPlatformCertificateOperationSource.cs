@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.AppPlatform
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AppPlatformCertificateData.DeserializeAppPlatformCertificateData(document.RootElement);
-            return new AppPlatformCertificateResource(_client, data);
+            return new AppPlatformCertificateResource(_client, data, data.Id);
         }
 
         async ValueTask<AppPlatformCertificateResource> IOperationSource<AppPlatformCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AppPlatformCertificateData.DeserializeAppPlatformCertificateData(document.RootElement);
-            return new AppPlatformCertificateResource(_client, data);
+            return new AppPlatformCertificateResource(_client, data, data.Id);
         }
     }
 }

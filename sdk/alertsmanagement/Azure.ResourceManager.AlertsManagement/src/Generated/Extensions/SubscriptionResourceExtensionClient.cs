@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AlertsManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AlertProcessingRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AlertProcessingRuleRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AlertProcessingRuleResource(Client, AlertProcessingRuleData.DeserializeAlertProcessingRuleData(e)), AlertProcessingRuleClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAlertProcessingRules", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AlertProcessingRuleData.DeserializeAlertProcessingRuleData(e); return new AlertProcessingRuleResource(Client, data, data.Id); }, AlertProcessingRuleClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAlertProcessingRules", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AlertsManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AlertProcessingRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AlertProcessingRuleRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AlertProcessingRuleResource(Client, AlertProcessingRuleData.DeserializeAlertProcessingRuleData(e)), AlertProcessingRuleClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAlertProcessingRules", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AlertProcessingRuleData.DeserializeAlertProcessingRuleData(e); return new AlertProcessingRuleResource(Client, data, data.Id); }, AlertProcessingRuleClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAlertProcessingRules", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

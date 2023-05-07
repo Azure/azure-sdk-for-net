@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Automation
                 var response = await _dscCompilationJobRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, compilationJobName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DscCompilationJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DscCompilationJobResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Automation
                 var response = _dscCompilationJobRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, compilationJobName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DscCompilationJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DscCompilationJobResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dscCompilationJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dscCompilationJobRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DscCompilationJobResource(Client, DscCompilationJobData.DeserializeDscCompilationJobData(e)), _dscCompilationJobClientDiagnostics, Pipeline, "DscCompilationJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DscCompilationJobData.DeserializeDscCompilationJobData(e); return new DscCompilationJobResource(Client, data, data.Id); }, _dscCompilationJobClientDiagnostics, Pipeline, "DscCompilationJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dscCompilationJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dscCompilationJobRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DscCompilationJobResource(Client, DscCompilationJobData.DeserializeDscCompilationJobData(e)), _dscCompilationJobClientDiagnostics, Pipeline, "DscCompilationJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DscCompilationJobData.DeserializeDscCompilationJobData(e); return new DscCompilationJobResource(Client, data, data.Id); }, _dscCompilationJobClientDiagnostics, Pipeline, "DscCompilationJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

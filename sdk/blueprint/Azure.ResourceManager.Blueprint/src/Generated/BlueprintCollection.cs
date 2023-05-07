@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Blueprint
             try
             {
                 var response = await _blueprintRestClient.CreateOrUpdateAsync(Id, blueprintName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new BlueprintArmOperation<BlueprintResource>(Response.FromValue(new BlueprintResource(Client, response), response.GetRawResponse()));
+                var operation = new BlueprintArmOperation<BlueprintResource>(Response.FromValue(new BlueprintResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Blueprint
             try
             {
                 var response = _blueprintRestClient.CreateOrUpdate(Id, blueprintName, data, cancellationToken);
-                var operation = new BlueprintArmOperation<BlueprintResource>(Response.FromValue(new BlueprintResource(Client, response), response.GetRawResponse()));
+                var operation = new BlueprintArmOperation<BlueprintResource>(Response.FromValue(new BlueprintResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Blueprint
                 var response = await _blueprintRestClient.GetAsync(Id, blueprintName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BlueprintResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BlueprintResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Blueprint
                 var response = _blueprintRestClient.Get(Id, blueprintName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BlueprintResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BlueprintResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blueprintRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BlueprintResource(Client, BlueprintData.DeserializeBlueprintData(e)), _blueprintClientDiagnostics, Pipeline, "BlueprintCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = BlueprintData.DeserializeBlueprintData(e); return new BlueprintResource(Client, data, data.Id); }, _blueprintClientDiagnostics, Pipeline, "BlueprintCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blueprintRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BlueprintResource(Client, BlueprintData.DeserializeBlueprintData(e)), _blueprintClientDiagnostics, Pipeline, "BlueprintCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = BlueprintData.DeserializeBlueprintData(e); return new BlueprintResource(Client, data, data.Id); }, _blueprintClientDiagnostics, Pipeline, "BlueprintCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

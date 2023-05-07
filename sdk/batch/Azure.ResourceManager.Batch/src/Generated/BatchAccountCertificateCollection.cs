@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Batch
             try
             {
                 var response = await _batchAccountCertificateCertificateRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, content, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new BatchArmOperation<BatchAccountCertificateResource>(Response.FromValue(new BatchAccountCertificateResource(Client, response), response.GetRawResponse()));
+                var operation = new BatchArmOperation<BatchAccountCertificateResource>(Response.FromValue(new BatchAccountCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Batch
             try
             {
                 var response = _batchAccountCertificateCertificateRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, content, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new BatchArmOperation<BatchAccountCertificateResource>(Response.FromValue(new BatchAccountCertificateResource(Client, response), response.GetRawResponse()));
+                var operation = new BatchArmOperation<BatchAccountCertificateResource>(Response.FromValue(new BatchAccountCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Batch
                 var response = await _batchAccountCertificateCertificateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BatchAccountCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchAccountCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Batch
                 var response = _batchAccountCertificateCertificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BatchAccountCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchAccountCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Batch
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountCertificateCertificateRestClient.CreateListByBatchAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchAccountCertificateCertificateRestClient.CreateListByBatchAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BatchAccountCertificateResource(Client, BatchAccountCertificateData.DeserializeBatchAccountCertificateData(e)), _batchAccountCertificateCertificateClientDiagnostics, Pipeline, "BatchAccountCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = BatchAccountCertificateData.DeserializeBatchAccountCertificateData(e); return new BatchAccountCertificateResource(Client, data, data.Id); }, _batchAccountCertificateCertificateClientDiagnostics, Pipeline, "BatchAccountCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Batch
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountCertificateCertificateRestClient.CreateListByBatchAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchAccountCertificateCertificateRestClient.CreateListByBatchAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BatchAccountCertificateResource(Client, BatchAccountCertificateData.DeserializeBatchAccountCertificateData(e)), _batchAccountCertificateCertificateClientDiagnostics, Pipeline, "BatchAccountCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = BatchAccountCertificateData.DeserializeBatchAccountCertificateData(e); return new BatchAccountCertificateResource(Client, data, data.Id); }, _batchAccountCertificateCertificateClientDiagnostics, Pipeline, "BatchAccountCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

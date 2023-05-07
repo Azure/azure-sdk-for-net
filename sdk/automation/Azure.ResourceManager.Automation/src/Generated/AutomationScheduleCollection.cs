@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _automationScheduleScheduleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<AutomationScheduleResource>(Response.FromValue(new AutomationScheduleResource(Client, response), response.GetRawResponse()));
+                var operation = new AutomationArmOperation<AutomationScheduleResource>(Response.FromValue(new AutomationScheduleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _automationScheduleScheduleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, content, cancellationToken);
-                var operation = new AutomationArmOperation<AutomationScheduleResource>(Response.FromValue(new AutomationScheduleResource(Client, response), response.GetRawResponse()));
+                var operation = new AutomationArmOperation<AutomationScheduleResource>(Response.FromValue(new AutomationScheduleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Automation
                 var response = await _automationScheduleScheduleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutomationScheduleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationScheduleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Automation
                 var response = _automationScheduleScheduleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutomationScheduleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationScheduleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationScheduleScheduleRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationScheduleScheduleRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationScheduleResource(Client, AutomationScheduleData.DeserializeAutomationScheduleData(e)), _automationScheduleScheduleClientDiagnostics, Pipeline, "AutomationScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AutomationScheduleData.DeserializeAutomationScheduleData(e); return new AutomationScheduleResource(Client, data, data.Id); }, _automationScheduleScheduleClientDiagnostics, Pipeline, "AutomationScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationScheduleScheduleRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationScheduleScheduleRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationScheduleResource(Client, AutomationScheduleData.DeserializeAutomationScheduleData(e)), _automationScheduleScheduleClientDiagnostics, Pipeline, "AutomationScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AutomationScheduleData.DeserializeAutomationScheduleData(e); return new AutomationScheduleResource(Client, data, data.Id); }, _automationScheduleScheduleClientDiagnostics, Pipeline, "AutomationScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

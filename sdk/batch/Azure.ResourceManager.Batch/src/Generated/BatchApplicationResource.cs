@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Initializes a new instance of the <see cref = "BatchApplicationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BatchApplicationResource(ArmClient client, BatchApplicationData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal BatchApplicationResource(ArmClient client, BatchApplicationData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.Batch
                 var response = await _batchApplicationApplicationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BatchApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchApplicationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -194,7 +195,7 @@ namespace Azure.ResourceManager.Batch
                 var response = _batchApplicationApplicationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BatchApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchApplicationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -296,7 +297,7 @@ namespace Azure.ResourceManager.Batch
             try
             {
                 var response = await _batchApplicationApplicationRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new BatchApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchApplicationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -330,7 +331,7 @@ namespace Azure.ResourceManager.Batch
             try
             {
                 var response = _batchApplicationApplicationRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                return Response.FromValue(new BatchApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchApplicationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

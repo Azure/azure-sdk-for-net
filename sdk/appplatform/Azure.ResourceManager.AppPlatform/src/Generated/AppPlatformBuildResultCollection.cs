@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform
                 var response = await _appPlatformBuildResultBuildServiceRestClient.GetBuildResultAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildResultName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppPlatformBuildResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppPlatformBuildResultResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppPlatform
                 var response = _appPlatformBuildResultBuildServiceRestClient.GetBuildResult(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildResultName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppPlatformBuildResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppPlatformBuildResultResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuildResultBuildServiceRestClient.CreateListBuildResultsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformBuildResultBuildServiceRestClient.CreateListBuildResultsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildResultResource(Client, AppPlatformBuildResultData.DeserializeAppPlatformBuildResultData(e)), _appPlatformBuildResultBuildServiceClientDiagnostics, Pipeline, "AppPlatformBuildResultCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AppPlatformBuildResultData.DeserializeAppPlatformBuildResultData(e); return new AppPlatformBuildResultResource(Client, data, data.Id); }, _appPlatformBuildResultBuildServiceClientDiagnostics, Pipeline, "AppPlatformBuildResultCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuildResultBuildServiceRestClient.CreateListBuildResultsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformBuildResultBuildServiceRestClient.CreateListBuildResultsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildResultResource(Client, AppPlatformBuildResultData.DeserializeAppPlatformBuildResultData(e)), _appPlatformBuildResultBuildServiceClientDiagnostics, Pipeline, "AppPlatformBuildResultCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AppPlatformBuildResultData.DeserializeAppPlatformBuildResultData(e); return new AppPlatformBuildResultResource(Client, data, data.Id); }, _appPlatformBuildResultBuildServiceClientDiagnostics, Pipeline, "AppPlatformBuildResultCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

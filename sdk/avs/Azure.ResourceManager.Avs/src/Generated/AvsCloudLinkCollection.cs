@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Avs
                 var response = await _avsCloudLinkCloudLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AvsCloudLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AvsCloudLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Avs
                 var response = _avsCloudLinkCloudLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AvsCloudLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AvsCloudLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsCloudLinkCloudLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _avsCloudLinkCloudLinksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvsCloudLinkResource(Client, AvsCloudLinkData.DeserializeAvsCloudLinkData(e)), _avsCloudLinkCloudLinksClientDiagnostics, Pipeline, "AvsCloudLinkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AvsCloudLinkData.DeserializeAvsCloudLinkData(e); return new AvsCloudLinkResource(Client, data, data.Id); }, _avsCloudLinkCloudLinksClientDiagnostics, Pipeline, "AvsCloudLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsCloudLinkCloudLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _avsCloudLinkCloudLinksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvsCloudLinkResource(Client, AvsCloudLinkData.DeserializeAvsCloudLinkData(e)), _avsCloudLinkCloudLinksClientDiagnostics, Pipeline, "AvsCloudLinkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AvsCloudLinkData.DeserializeAvsCloudLinkData(e); return new AvsCloudLinkResource(Client, data, data.Id); }, _avsCloudLinkCloudLinksClientDiagnostics, Pipeline, "AvsCloudLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

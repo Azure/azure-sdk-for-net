@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 var response = await _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ScVmmVirtualMachineTemplateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ScVmmVirtualMachineTemplateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 var response = _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineTemplateName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ScVmmVirtualMachineTemplateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ScVmmVirtualMachineTemplateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ArcScVmm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualMachineTemplateResource(Client, ScVmmVirtualMachineTemplateData.DeserializeScVmmVirtualMachineTemplateData(e)), _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, "ScVmmVirtualMachineTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ScVmmVirtualMachineTemplateData.DeserializeScVmmVirtualMachineTemplateData(e); return new ScVmmVirtualMachineTemplateResource(Client, data, data.Id); }, _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, "ScVmmVirtualMachineTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ArcScVmm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualMachineTemplateResource(Client, ScVmmVirtualMachineTemplateData.DeserializeScVmmVirtualMachineTemplateData(e)), _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, "ScVmmVirtualMachineTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ScVmmVirtualMachineTemplateData.DeserializeScVmmVirtualMachineTemplateData(e); return new ScVmmVirtualMachineTemplateResource(Client, data, data.Id); }, _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, "ScVmmVirtualMachineTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Hci
                 var response = await _hciSkuSkusRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skuName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HciSkuResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HciSkuResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Hci
                 var response = _hciSkuSkusRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skuName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HciSkuResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HciSkuResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hciSkuSkusRestClient.CreateListByOfferRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciSkuSkusRestClient.CreateListByOfferNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciSkuResource(Client, HciSkuData.DeserializeHciSkuData(e)), _hciSkuSkusClientDiagnostics, Pipeline, "HciSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = HciSkuData.DeserializeHciSkuData(e); return new HciSkuResource(Client, data, data.Id); }, _hciSkuSkusClientDiagnostics, Pipeline, "HciSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hciSkuSkusRestClient.CreateListByOfferRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciSkuSkusRestClient.CreateListByOfferNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciSkuResource(Client, HciSkuData.DeserializeHciSkuData(e)), _hciSkuSkusClientDiagnostics, Pipeline, "HciSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = HciSkuData.DeserializeHciSkuData(e); return new HciSkuResource(Client, data, data.Id); }, _hciSkuSkusClientDiagnostics, Pipeline, "HciSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

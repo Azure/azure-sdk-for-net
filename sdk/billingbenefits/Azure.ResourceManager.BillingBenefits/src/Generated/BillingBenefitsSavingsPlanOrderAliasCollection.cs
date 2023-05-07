@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 var response = await _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasRestClient.GetAsync(savingsPlanOrderAliasName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BillingBenefitsSavingsPlanOrderAliasResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingBenefitsSavingsPlanOrderAliasResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 var response = _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasRestClient.Get(savingsPlanOrderAliasName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BillingBenefitsSavingsPlanOrderAliasResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingBenefitsSavingsPlanOrderAliasResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

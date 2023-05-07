@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _automationAccountPython2PackagePython2PackageRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<AutomationAccountPython2PackageResource>(Response.FromValue(new AutomationAccountPython2PackageResource(Client, response), response.GetRawResponse()));
+                var operation = new AutomationArmOperation<AutomationAccountPython2PackageResource>(Response.FromValue(new AutomationAccountPython2PackageResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _automationAccountPython2PackagePython2PackageRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageName, content, cancellationToken);
-                var operation = new AutomationArmOperation<AutomationAccountPython2PackageResource>(Response.FromValue(new AutomationAccountPython2PackageResource(Client, response), response.GetRawResponse()));
+                var operation = new AutomationArmOperation<AutomationAccountPython2PackageResource>(Response.FromValue(new AutomationAccountPython2PackageResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Automation
                 var response = await _automationAccountPython2PackagePython2PackageRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutomationAccountPython2PackageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationAccountPython2PackageResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Automation
                 var response = _automationAccountPython2PackagePython2PackageRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutomationAccountPython2PackageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationAccountPython2PackageResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationAccountPython2PackagePython2PackageRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationAccountPython2PackagePython2PackageRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationAccountPython2PackageResource(Client, AutomationModuleData.DeserializeAutomationModuleData(e)), _automationAccountPython2PackagePython2PackageClientDiagnostics, Pipeline, "AutomationAccountPython2PackageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AutomationModuleData.DeserializeAutomationModuleData(e); return new AutomationAccountPython2PackageResource(Client, data, data.Id); }, _automationAccountPython2PackagePython2PackageClientDiagnostics, Pipeline, "AutomationAccountPython2PackageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationAccountPython2PackagePython2PackageRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationAccountPython2PackagePython2PackageRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationAccountPython2PackageResource(Client, AutomationModuleData.DeserializeAutomationModuleData(e)), _automationAccountPython2PackagePython2PackageClientDiagnostics, Pipeline, "AutomationAccountPython2PackageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AutomationModuleData.DeserializeAutomationModuleData(e); return new AutomationAccountPython2PackageResource(Client, data, data.Id); }, _automationAccountPython2PackagePython2PackageClientDiagnostics, Pipeline, "AutomationAccountPython2PackageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

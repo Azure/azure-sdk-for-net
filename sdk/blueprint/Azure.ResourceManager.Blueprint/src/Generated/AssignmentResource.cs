@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.Blueprint
         /// <summary> Initializes a new instance of the <see cref = "AssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AssignmentResource(ArmClient client, AssignmentData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal AssignmentResource(ArmClient client, AssignmentData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.Blueprint
                 var response = await _assignmentRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -195,7 +196,7 @@ namespace Azure.ResourceManager.Blueprint
                 var response = _assignmentRestClient.Get(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.Blueprint
             try
             {
                 var response = await _assignmentRestClient.DeleteAsync(Id.Parent, Id.Name, deleteBehavior, cancellationToken).ConfigureAwait(false);
-                var operation = new BlueprintArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response), response.GetRawResponse()));
+                var operation = new BlueprintArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -262,7 +263,7 @@ namespace Azure.ResourceManager.Blueprint
             try
             {
                 var response = _assignmentRestClient.Delete(Id.Parent, Id.Name, deleteBehavior, cancellationToken);
-                var operation = new BlueprintArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response), response.GetRawResponse()));
+                var operation = new BlueprintArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -300,7 +301,7 @@ namespace Azure.ResourceManager.Blueprint
             try
             {
                 var response = await _assignmentRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new BlueprintArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response), response.GetRawResponse()));
+                var operation = new BlueprintArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -338,7 +339,7 @@ namespace Azure.ResourceManager.Blueprint
             try
             {
                 var response = _assignmentRestClient.CreateOrUpdate(Id.Parent, Id.Name, data, cancellationToken);
-                var operation = new BlueprintArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response), response.GetRawResponse()));
+                var operation = new BlueprintArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

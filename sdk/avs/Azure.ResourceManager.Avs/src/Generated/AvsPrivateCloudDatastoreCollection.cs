@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Avs
                 var response = await _avsPrivateCloudDatastoreDatastoresRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AvsPrivateCloudDatastoreResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AvsPrivateCloudDatastoreResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Avs
                 var response = _avsPrivateCloudDatastoreDatastoresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AvsPrivateCloudDatastoreResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AvsPrivateCloudDatastoreResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudDatastoreDatastoresRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _avsPrivateCloudDatastoreDatastoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudDatastoreResource(Client, AvsPrivateCloudDatastoreData.DeserializeAvsPrivateCloudDatastoreData(e)), _avsPrivateCloudDatastoreDatastoresClientDiagnostics, Pipeline, "AvsPrivateCloudDatastoreCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AvsPrivateCloudDatastoreData.DeserializeAvsPrivateCloudDatastoreData(e); return new AvsPrivateCloudDatastoreResource(Client, data, data.Id); }, _avsPrivateCloudDatastoreDatastoresClientDiagnostics, Pipeline, "AvsPrivateCloudDatastoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudDatastoreDatastoresRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _avsPrivateCloudDatastoreDatastoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudDatastoreResource(Client, AvsPrivateCloudDatastoreData.DeserializeAvsPrivateCloudDatastoreData(e)), _avsPrivateCloudDatastoreDatastoresClientDiagnostics, Pipeline, "AvsPrivateCloudDatastoreCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AvsPrivateCloudDatastoreData.DeserializeAvsPrivateCloudDatastoreData(e); return new AvsPrivateCloudDatastoreResource(Client, data, data.Id); }, _avsPrivateCloudDatastoreDatastoresClientDiagnostics, Pipeline, "AvsPrivateCloudDatastoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

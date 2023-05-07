@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Chaos
             try
             {
                 var response = await _experimentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, experimentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ChaosArmOperation<ExperimentResource>(Response.FromValue(new ExperimentResource(Client, response), response.GetRawResponse()));
+                var operation = new ChaosArmOperation<ExperimentResource>(Response.FromValue(new ExperimentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Chaos
             try
             {
                 var response = _experimentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, experimentName, data, cancellationToken);
-                var operation = new ChaosArmOperation<ExperimentResource>(Response.FromValue(new ExperimentResource(Client, response), response.GetRawResponse()));
+                var operation = new ChaosArmOperation<ExperimentResource>(Response.FromValue(new ExperimentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Chaos
                 var response = await _experimentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, experimentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExperimentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExperimentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Chaos
                 var response = _experimentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, experimentName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExperimentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExperimentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Chaos
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _experimentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, running, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _experimentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, running, continuationToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExperimentResource(Client, ExperimentData.DeserializeExperimentData(e)), _experimentClientDiagnostics, Pipeline, "ExperimentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ExperimentData.DeserializeExperimentData(e); return new ExperimentResource(Client, data, data.Id); }, _experimentClientDiagnostics, Pipeline, "ExperimentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Chaos
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _experimentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, running, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _experimentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, running, continuationToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExperimentResource(Client, ExperimentData.DeserializeExperimentData(e)), _experimentClientDiagnostics, Pipeline, "ExperimentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ExperimentData.DeserializeExperimentData(e); return new ExperimentResource(Client, data, data.Id); }, _experimentClientDiagnostics, Pipeline, "ExperimentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

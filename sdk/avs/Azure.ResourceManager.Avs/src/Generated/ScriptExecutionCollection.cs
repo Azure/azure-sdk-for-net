@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Avs
                 var response = await _scriptExecutionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scriptExecutionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ScriptExecutionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ScriptExecutionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Avs
                 var response = _scriptExecutionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scriptExecutionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ScriptExecutionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ScriptExecutionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptExecutionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptExecutionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScriptExecutionResource(Client, ScriptExecutionData.DeserializeScriptExecutionData(e)), _scriptExecutionClientDiagnostics, Pipeline, "ScriptExecutionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ScriptExecutionData.DeserializeScriptExecutionData(e); return new ScriptExecutionResource(Client, data, data.Id); }, _scriptExecutionClientDiagnostics, Pipeline, "ScriptExecutionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptExecutionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptExecutionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScriptExecutionResource(Client, ScriptExecutionData.DeserializeScriptExecutionData(e)), _scriptExecutionClientDiagnostics, Pipeline, "ScriptExecutionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ScriptExecutionData.DeserializeScriptExecutionData(e); return new ScriptExecutionResource(Client, data, data.Id); }, _scriptExecutionClientDiagnostics, Pipeline, "ScriptExecutionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

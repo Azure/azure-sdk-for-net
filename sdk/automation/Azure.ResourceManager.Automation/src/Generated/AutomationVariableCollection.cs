@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _automationVariableVariableRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, variableName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<AutomationVariableResource>(Response.FromValue(new AutomationVariableResource(Client, response), response.GetRawResponse()));
+                var operation = new AutomationArmOperation<AutomationVariableResource>(Response.FromValue(new AutomationVariableResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _automationVariableVariableRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, variableName, content, cancellationToken);
-                var operation = new AutomationArmOperation<AutomationVariableResource>(Response.FromValue(new AutomationVariableResource(Client, response), response.GetRawResponse()));
+                var operation = new AutomationArmOperation<AutomationVariableResource>(Response.FromValue(new AutomationVariableResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Automation
                 var response = await _automationVariableVariableRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, variableName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutomationVariableResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationVariableResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Automation
                 var response = _automationVariableVariableRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, variableName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutomationVariableResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationVariableResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationVariableVariableRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationVariableVariableRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationVariableResource(Client, AutomationVariableData.DeserializeAutomationVariableData(e)), _automationVariableVariableClientDiagnostics, Pipeline, "AutomationVariableCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AutomationVariableData.DeserializeAutomationVariableData(e); return new AutomationVariableResource(Client, data, data.Id); }, _automationVariableVariableClientDiagnostics, Pipeline, "AutomationVariableCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationVariableVariableRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationVariableVariableRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationVariableResource(Client, AutomationVariableData.DeserializeAutomationVariableData(e)), _automationVariableVariableClientDiagnostics, Pipeline, "AutomationVariableCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AutomationVariableData.DeserializeAutomationVariableData(e); return new AutomationVariableResource(Client, data, data.Id); }, _automationVariableVariableClientDiagnostics, Pipeline, "AutomationVariableCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

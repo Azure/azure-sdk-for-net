@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.Cdn
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScrubId(CdnEndpointData.DeserializeCdnEndpointData(document.RootElement));
-            return new CdnEndpointResource(_client, data);
+            return new CdnEndpointResource(_client, data, data.Id);
         }
 
         async ValueTask<CdnEndpointResource> IOperationSource<CdnEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScrubId(CdnEndpointData.DeserializeCdnEndpointData(document.RootElement));
-            return new CdnEndpointResource(_client, data);
+            return new CdnEndpointResource(_client, data, data.Id);
         }
 
         private CdnEndpointData ScrubId(CdnEndpointData data)

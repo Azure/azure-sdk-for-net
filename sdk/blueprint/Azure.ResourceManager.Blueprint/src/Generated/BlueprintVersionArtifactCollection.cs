@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Blueprint
                 var response = await _blueprintVersionArtifactPublishedArtifactsRestClient.GetAsync(Id.Parent.Parent, Id.Parent.Name, Id.Name, artifactName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BlueprintVersionArtifactResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BlueprintVersionArtifactResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Blueprint
                 var response = _blueprintVersionArtifactPublishedArtifactsRestClient.Get(Id.Parent.Parent, Id.Parent.Name, Id.Name, artifactName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BlueprintVersionArtifactResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BlueprintVersionArtifactResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintVersionArtifactPublishedArtifactsRestClient.CreateListRequest(Id.Parent.Parent, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blueprintVersionArtifactPublishedArtifactsRestClient.CreateListNextPageRequest(nextLink, Id.Parent.Parent, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BlueprintVersionArtifactResource(Client, ArtifactData.DeserializeArtifactData(e)), _blueprintVersionArtifactPublishedArtifactsClientDiagnostics, Pipeline, "BlueprintVersionArtifactCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ArtifactData.DeserializeArtifactData(e); return new BlueprintVersionArtifactResource(Client, data, data.Id); }, _blueprintVersionArtifactPublishedArtifactsClientDiagnostics, Pipeline, "BlueprintVersionArtifactCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintVersionArtifactPublishedArtifactsRestClient.CreateListRequest(Id.Parent.Parent, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blueprintVersionArtifactPublishedArtifactsRestClient.CreateListNextPageRequest(nextLink, Id.Parent.Parent, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BlueprintVersionArtifactResource(Client, ArtifactData.DeserializeArtifactData(e)), _blueprintVersionArtifactPublishedArtifactsClientDiagnostics, Pipeline, "BlueprintVersionArtifactCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ArtifactData.DeserializeArtifactData(e); return new BlueprintVersionArtifactResource(Client, data, data.Id); }, _blueprintVersionArtifactPublishedArtifactsClientDiagnostics, Pipeline, "BlueprintVersionArtifactCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

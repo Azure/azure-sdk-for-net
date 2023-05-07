@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ReportResourceData.DeserializeReportResourceData(document.RootElement);
-            return new ReportResource(_client, data);
+            return new ReportResource(_client, data, data.Id);
         }
 
         async ValueTask<ReportResource> IOperationSource<ReportResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ReportResourceData.DeserializeReportResourceData(document.RootElement);
-            return new ReportResource(_client, data);
+            return new ReportResource(_client, data, data.Id);
         }
     }
 }

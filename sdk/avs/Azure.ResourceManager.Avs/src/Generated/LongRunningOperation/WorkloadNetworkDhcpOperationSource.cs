@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Avs
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = WorkloadNetworkDhcpData.DeserializeWorkloadNetworkDhcpData(document.RootElement);
-            return new WorkloadNetworkDhcpResource(_client, data);
+            return new WorkloadNetworkDhcpResource(_client, data, data.Id);
         }
 
         async ValueTask<WorkloadNetworkDhcpResource> IOperationSource<WorkloadNetworkDhcpResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = WorkloadNetworkDhcpData.DeserializeWorkloadNetworkDhcpData(document.RootElement);
-            return new WorkloadNetworkDhcpResource(_client, data);
+            return new WorkloadNetworkDhcpResource(_client, data, data.Id);
         }
     }
 }

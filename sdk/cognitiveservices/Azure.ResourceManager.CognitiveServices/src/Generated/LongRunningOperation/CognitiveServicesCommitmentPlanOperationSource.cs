@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CommitmentPlanData.DeserializeCommitmentPlanData(document.RootElement);
-            return new CognitiveServicesCommitmentPlanResource(_client, data);
+            return new CognitiveServicesCommitmentPlanResource(_client, data, data.Id);
         }
 
         async ValueTask<CognitiveServicesCommitmentPlanResource> IOperationSource<CognitiveServicesCommitmentPlanResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CommitmentPlanData.DeserializeCommitmentPlanData(document.RootElement);
-            return new CognitiveServicesCommitmentPlanResource(_client, data);
+            return new CognitiveServicesCommitmentPlanResource(_client, data, data.Id);
         }
     }
 }

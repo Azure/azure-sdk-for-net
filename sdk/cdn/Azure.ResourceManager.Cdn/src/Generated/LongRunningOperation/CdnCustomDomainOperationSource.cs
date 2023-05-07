@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.Cdn
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScrubId(CdnCustomDomainData.DeserializeCdnCustomDomainData(document.RootElement));
-            return new CdnCustomDomainResource(_client, data);
+            return new CdnCustomDomainResource(_client, data, data.Id);
         }
 
         async ValueTask<CdnCustomDomainResource> IOperationSource<CdnCustomDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScrubId(CdnCustomDomainData.DeserializeCdnCustomDomainData(document.RootElement));
-            return new CdnCustomDomainResource(_client, data);
+            return new CdnCustomDomainResource(_client, data, data.Id);
         }
 
         private CdnCustomDomainData ScrubId(CdnCustomDomainData data)

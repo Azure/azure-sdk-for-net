@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Automanage
             try
             {
                 var response = await _automanageHcrpConfigurationProfileAssignmentConfigurationProfileHCRPAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationProfileAssignmentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomanageArmOperation<AutomanageHcrpConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageHcrpConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()));
+                var operation = new AutomanageArmOperation<AutomanageHcrpConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageHcrpConfigurationProfileAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Automanage
             try
             {
                 var response = _automanageHcrpConfigurationProfileAssignmentConfigurationProfileHCRPAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationProfileAssignmentName, data, cancellationToken);
-                var operation = new AutomanageArmOperation<AutomanageHcrpConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageHcrpConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()));
+                var operation = new AutomanageArmOperation<AutomanageHcrpConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageHcrpConfigurationProfileAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Automanage
                 var response = await _automanageHcrpConfigurationProfileAssignmentConfigurationProfileHCRPAssignmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationProfileAssignmentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutomanageHcrpConfigurationProfileAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomanageHcrpConfigurationProfileAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Automanage
                 var response = _automanageHcrpConfigurationProfileAssignmentConfigurationProfileHCRPAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationProfileAssignmentName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutomanageHcrpConfigurationProfileAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomanageHcrpConfigurationProfileAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual AsyncPageable<AutomanageHcrpConfigurationProfileAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageHcrpConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.CreateListByMachineNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutomanageHcrpConfigurationProfileAssignmentResource(Client, AutomanageConfigurationProfileAssignmentData.DeserializeAutomanageConfigurationProfileAssignmentData(e)), _automanageHcrpConfigurationProfileAssignmentConfigurationProfileAssignmentsClientDiagnostics, Pipeline, "AutomanageHcrpConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = AutomanageConfigurationProfileAssignmentData.DeserializeAutomanageConfigurationProfileAssignmentData(e); return new AutomanageHcrpConfigurationProfileAssignmentResource(Client, data, data.Id); }, _automanageHcrpConfigurationProfileAssignmentConfigurationProfileAssignmentsClientDiagnostics, Pipeline, "AutomanageHcrpConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual Pageable<AutomanageHcrpConfigurationProfileAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageHcrpConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.CreateListByMachineNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutomanageHcrpConfigurationProfileAssignmentResource(Client, AutomanageConfigurationProfileAssignmentData.DeserializeAutomanageConfigurationProfileAssignmentData(e)), _automanageHcrpConfigurationProfileAssignmentConfigurationProfileAssignmentsClientDiagnostics, Pipeline, "AutomanageHcrpConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = AutomanageConfigurationProfileAssignmentData.DeserializeAutomanageConfigurationProfileAssignmentData(e); return new AutomanageHcrpConfigurationProfileAssignmentResource(Client, data, data.Id); }, _automanageHcrpConfigurationProfileAssignmentConfigurationProfileAssignmentsClientDiagnostics, Pipeline, "AutomanageHcrpConfigurationProfileAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

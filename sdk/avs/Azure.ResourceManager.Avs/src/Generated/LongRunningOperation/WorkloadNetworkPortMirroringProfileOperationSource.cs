@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Avs
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = WorkloadNetworkPortMirroringProfileData.DeserializeWorkloadNetworkPortMirroringProfileData(document.RootElement);
-            return new WorkloadNetworkPortMirroringProfileResource(_client, data);
+            return new WorkloadNetworkPortMirroringProfileResource(_client, data, data.Id);
         }
 
         async ValueTask<WorkloadNetworkPortMirroringProfileResource> IOperationSource<WorkloadNetworkPortMirroringProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = WorkloadNetworkPortMirroringProfileData.DeserializeWorkloadNetworkPortMirroringProfileData(document.RootElement);
-            return new WorkloadNetworkPortMirroringProfileResource(_client, data);
+            return new WorkloadNetworkPortMirroringProfileResource(_client, data, data.Id);
         }
     }
 }

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Avs
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AvsPrivateCloudData.DeserializeAvsPrivateCloudData(document.RootElement);
-            return new AvsPrivateCloudResource(_client, data);
+            return new AvsPrivateCloudResource(_client, data, data.Id);
         }
 
         async ValueTask<AvsPrivateCloudResource> IOperationSource<AvsPrivateCloudResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AvsPrivateCloudData.DeserializeAvsPrivateCloudData(document.RootElement);
-            return new AvsPrivateCloudResource(_client, data);
+            return new AvsPrivateCloudResource(_client, data, data.Id);
         }
     }
 }

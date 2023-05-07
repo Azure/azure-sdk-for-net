@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Initializes a new instance of the <see cref = "BatchAccountCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BatchAccountCertificateResource(ArmClient client, BatchAccountCertificateData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal BatchAccountCertificateResource(ArmClient client, BatchAccountCertificateData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Batch
                 var response = await _batchAccountCertificateCertificateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BatchAccountCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchAccountCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Batch
                 var response = _batchAccountCertificateCertificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BatchAccountCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchAccountCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -245,7 +246,7 @@ namespace Azure.ResourceManager.Batch
             try
             {
                 var response = await _batchAccountCertificateCertificateRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, ifMatch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new BatchAccountCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchAccountCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -280,7 +281,7 @@ namespace Azure.ResourceManager.Batch
             try
             {
                 var response = _batchAccountCertificateCertificateRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, ifMatch, cancellationToken);
-                return Response.FromValue(new BatchAccountCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchAccountCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -312,7 +313,7 @@ namespace Azure.ResourceManager.Batch
             try
             {
                 var response = await _batchAccountCertificateCertificateRestClient.CancelDeletionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new BatchAccountCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchAccountCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -344,7 +345,7 @@ namespace Azure.ResourceManager.Batch
             try
             {
                 var response = _batchAccountCertificateCertificateRestClient.CancelDeletion(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new BatchAccountCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchAccountCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

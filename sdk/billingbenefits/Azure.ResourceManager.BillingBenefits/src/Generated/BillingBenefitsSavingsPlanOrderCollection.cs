@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 var response = await _billingBenefitsSavingsPlanOrderSavingsPlanOrderRestClient.GetAsync(savingsPlanOrderId, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BillingBenefitsSavingsPlanOrderResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingBenefitsSavingsPlanOrderResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 var response = _billingBenefitsSavingsPlanOrderSavingsPlanOrderRestClient.Get(savingsPlanOrderId, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BillingBenefitsSavingsPlanOrderResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingBenefitsSavingsPlanOrderResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingBenefitsSavingsPlanOrderSavingsPlanOrderRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingBenefitsSavingsPlanOrderSavingsPlanOrderRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingBenefitsSavingsPlanOrderResource(Client, BillingBenefitsSavingsPlanOrderData.DeserializeBillingBenefitsSavingsPlanOrderData(e)), _billingBenefitsSavingsPlanOrderSavingsPlanOrderClientDiagnostics, Pipeline, "BillingBenefitsSavingsPlanOrderCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = BillingBenefitsSavingsPlanOrderData.DeserializeBillingBenefitsSavingsPlanOrderData(e); return new BillingBenefitsSavingsPlanOrderResource(Client, data, data.Id); }, _billingBenefitsSavingsPlanOrderSavingsPlanOrderClientDiagnostics, Pipeline, "BillingBenefitsSavingsPlanOrderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingBenefitsSavingsPlanOrderSavingsPlanOrderRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingBenefitsSavingsPlanOrderSavingsPlanOrderRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingBenefitsSavingsPlanOrderResource(Client, BillingBenefitsSavingsPlanOrderData.DeserializeBillingBenefitsSavingsPlanOrderData(e)), _billingBenefitsSavingsPlanOrderSavingsPlanOrderClientDiagnostics, Pipeline, "BillingBenefitsSavingsPlanOrderCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = BillingBenefitsSavingsPlanOrderData.DeserializeBillingBenefitsSavingsPlanOrderData(e); return new BillingBenefitsSavingsPlanOrderResource(Client, data, data.Id); }, _billingBenefitsSavingsPlanOrderSavingsPlanOrderClientDiagnostics, Pipeline, "BillingBenefitsSavingsPlanOrderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

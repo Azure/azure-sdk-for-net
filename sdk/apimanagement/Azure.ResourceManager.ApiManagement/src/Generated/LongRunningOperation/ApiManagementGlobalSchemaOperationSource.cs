@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ApiManagement
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ApiManagementGlobalSchemaData.DeserializeApiManagementGlobalSchemaData(document.RootElement);
-            return new ApiManagementGlobalSchemaResource(_client, data);
+            return new ApiManagementGlobalSchemaResource(_client, data, data.Id);
         }
 
         async ValueTask<ApiManagementGlobalSchemaResource> IOperationSource<ApiManagementGlobalSchemaResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ApiManagementGlobalSchemaData.DeserializeApiManagementGlobalSchemaData(document.RootElement);
-            return new ApiManagementGlobalSchemaResource(_client, data);
+            return new ApiManagementGlobalSchemaResource(_client, data, data.Id);
         }
     }
 }

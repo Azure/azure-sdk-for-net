@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ArcScVmm
             try
             {
                 var response = await _inventoryItemRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ArcScVmmArmOperation<InventoryItemResource>(Response.FromValue(new InventoryItemResource(Client, response), response.GetRawResponse()));
+                var operation = new ArcScVmmArmOperation<InventoryItemResource>(Response.FromValue(new InventoryItemResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ArcScVmm
             try
             {
                 var response = _inventoryItemRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, data, cancellationToken);
-                var operation = new ArcScVmmArmOperation<InventoryItemResource>(Response.FromValue(new InventoryItemResource(Client, response), response.GetRawResponse()));
+                var operation = new ArcScVmmArmOperation<InventoryItemResource>(Response.FromValue(new InventoryItemResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 var response = await _inventoryItemRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new InventoryItemResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new InventoryItemResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 var response = _inventoryItemRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new InventoryItemResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new InventoryItemResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ArcScVmm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _inventoryItemRestClient.CreateListByVmmServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _inventoryItemRestClient.CreateListByVmmServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new InventoryItemResource(Client, InventoryItemData.DeserializeInventoryItemData(e)), _inventoryItemClientDiagnostics, Pipeline, "InventoryItemCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = InventoryItemData.DeserializeInventoryItemData(e); return new InventoryItemResource(Client, data, data.Id); }, _inventoryItemClientDiagnostics, Pipeline, "InventoryItemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ArcScVmm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _inventoryItemRestClient.CreateListByVmmServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _inventoryItemRestClient.CreateListByVmmServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new InventoryItemResource(Client, InventoryItemData.DeserializeInventoryItemData(e)), _inventoryItemClientDiagnostics, Pipeline, "InventoryItemCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = InventoryItemData.DeserializeInventoryItemData(e); return new InventoryItemResource(Client, data, data.Id); }, _inventoryItemClientDiagnostics, Pipeline, "InventoryItemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

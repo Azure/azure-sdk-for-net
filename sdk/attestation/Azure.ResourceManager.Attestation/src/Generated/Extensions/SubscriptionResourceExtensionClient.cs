@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Attestation
         public virtual AsyncPageable<AttestationProviderResource> GetAttestationProvidersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAttestationProviders", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = AttestationProviderData.DeserializeAttestationProviderData(e); return new AttestationProviderResource(Client, data, data.Id); }, AttestationProviderClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAttestationProviders", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Attestation
         public virtual Pageable<AttestationProviderResource> GetAttestationProviders(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAttestationProviders", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = AttestationProviderData.DeserializeAttestationProviderData(e); return new AttestationProviderResource(Client, data, data.Id); }, AttestationProviderClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAttestationProviders", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Attestation
         public virtual AsyncPageable<AttestationProviderResource> GetAttestationProvidersByDefaultProviderAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListDefaultRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAttestationProvidersByDefaultProvider", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = AttestationProviderData.DeserializeAttestationProviderData(e); return new AttestationProviderResource(Client, data, data.Id); }, AttestationProviderClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAttestationProvidersByDefaultProvider", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Attestation
         public virtual Pageable<AttestationProviderResource> GetAttestationProvidersByDefaultProvider(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListDefaultRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAttestationProvidersByDefaultProvider", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = AttestationProviderData.DeserializeAttestationProviderData(e); return new AttestationProviderResource(Client, data, data.Id); }, AttestationProviderClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAttestationProvidersByDefaultProvider", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Attestation
             try
             {
                 var response = await AttestationProviderRestClient.GetDefaultByLocationAsync(Id.SubscriptionId, location, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new AttestationProviderResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AttestationProviderResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Attestation
             try
             {
                 var response = AttestationProviderRestClient.GetDefaultByLocation(Id.SubscriptionId, location, cancellationToken);
-                return Response.FromValue(new AttestationProviderResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AttestationProviderResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

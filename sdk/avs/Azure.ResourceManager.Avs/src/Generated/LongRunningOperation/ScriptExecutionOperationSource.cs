@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Avs
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScriptExecutionData.DeserializeScriptExecutionData(document.RootElement);
-            return new ScriptExecutionResource(_client, data);
+            return new ScriptExecutionResource(_client, data, data.Id);
         }
 
         async ValueTask<ScriptExecutionResource> IOperationSource<ScriptExecutionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScriptExecutionData.DeserializeScriptExecutionData(document.RootElement);
-            return new ScriptExecutionResource(_client, data);
+            return new ScriptExecutionResource(_client, data, data.Id);
         }
     }
 }

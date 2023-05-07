@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Initializes a new instance of the <see cref = "UpdateSummaryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal UpdateSummaryResource(ArmClient client, UpdateSummaryData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal UpdateSummaryResource(ArmClient client, UpdateSummaryData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Hci
                 var response = await _updateSummaryRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new UpdateSummaryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new UpdateSummaryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Hci
                 var response = _updateSummaryRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new UpdateSummaryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new UpdateSummaryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = await _updateSummaryRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HciArmOperation<UpdateSummaryResource>(Response.FromValue(new UpdateSummaryResource(Client, response), response.GetRawResponse()));
+                var operation = new HciArmOperation<UpdateSummaryResource>(Response.FromValue(new UpdateSummaryResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,7 +283,7 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = _updateSummaryRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new HciArmOperation<UpdateSummaryResource>(Response.FromValue(new UpdateSummaryResource(Client, response), response.GetRawResponse()));
+                var operation = new HciArmOperation<UpdateSummaryResource>(Response.FromValue(new UpdateSummaryResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

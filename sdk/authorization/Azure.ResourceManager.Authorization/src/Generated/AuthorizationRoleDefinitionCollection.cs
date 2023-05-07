@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Authorization
             try
             {
                 var response = await _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateOrUpdateAsync(Id, roleDefinitionId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AuthorizationArmOperation<AuthorizationRoleDefinitionResource>(Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response), response.GetRawResponse()));
+                var operation = new AuthorizationArmOperation<AuthorizationRoleDefinitionResource>(Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Authorization
             try
             {
                 var response = _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateOrUpdate(Id, roleDefinitionId, data, cancellationToken);
-                var operation = new AuthorizationArmOperation<AuthorizationRoleDefinitionResource>(Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response), response.GetRawResponse()));
+                var operation = new AuthorizationArmOperation<AuthorizationRoleDefinitionResource>(Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Authorization
                 var response = await _authorizationRoleDefinitionRoleDefinitionsRestClient.GetAsync(Id, roleDefinitionId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Authorization
                 var response = _authorizationRoleDefinitionRoleDefinitionsRestClient.Get(Id, roleDefinitionId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateListRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateListNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AuthorizationRoleDefinitionResource(Client, AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(e)), _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics, Pipeline, "AuthorizationRoleDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(e); return new AuthorizationRoleDefinitionResource(Client, data, data.Id); }, _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics, Pipeline, "AuthorizationRoleDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateListRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateListNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AuthorizationRoleDefinitionResource(Client, AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(e)), _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics, Pipeline, "AuthorizationRoleDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(e); return new AuthorizationRoleDefinitionResource(Client, data, data.Id); }, _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics, Pipeline, "AuthorizationRoleDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

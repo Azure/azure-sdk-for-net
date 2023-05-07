@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppPlatform
                 var response = await _appPlatformConfigurationServiceConfigurationServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationServiceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppPlatformConfigurationServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppPlatformConfigurationServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppPlatform
                 var response = _appPlatformConfigurationServiceConfigurationServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationServiceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppPlatformConfigurationServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppPlatformConfigurationServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformConfigurationServiceConfigurationServicesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformConfigurationServiceConfigurationServicesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformConfigurationServiceResource(Client, AppPlatformConfigurationServiceData.DeserializeAppPlatformConfigurationServiceData(e)), _appPlatformConfigurationServiceConfigurationServicesClientDiagnostics, Pipeline, "AppPlatformConfigurationServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AppPlatformConfigurationServiceData.DeserializeAppPlatformConfigurationServiceData(e); return new AppPlatformConfigurationServiceResource(Client, data, data.Id); }, _appPlatformConfigurationServiceConfigurationServicesClientDiagnostics, Pipeline, "AppPlatformConfigurationServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformConfigurationServiceConfigurationServicesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformConfigurationServiceConfigurationServicesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformConfigurationServiceResource(Client, AppPlatformConfigurationServiceData.DeserializeAppPlatformConfigurationServiceData(e)), _appPlatformConfigurationServiceConfigurationServicesClientDiagnostics, Pipeline, "AppPlatformConfigurationServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AppPlatformConfigurationServiceData.DeserializeAppPlatformConfigurationServiceData(e); return new AppPlatformConfigurationServiceResource(Client, data, data.Id); }, _appPlatformConfigurationServiceConfigurationServicesClientDiagnostics, Pipeline, "AppPlatformConfigurationServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

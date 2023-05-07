@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 var response = await _billingBenefitsReservationOrderAliasReservationOrderAliasRestClient.GetAsync(reservationOrderAliasName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BillingBenefitsReservationOrderAliasResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingBenefitsReservationOrderAliasResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 var response = _billingBenefitsReservationOrderAliasReservationOrderAliasRestClient.Get(reservationOrderAliasName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BillingBenefitsReservationOrderAliasResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingBenefitsReservationOrderAliasResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AppConfigurationStoreData.DeserializeAppConfigurationStoreData(document.RootElement);
-            return new AppConfigurationStoreResource(_client, data);
+            return new AppConfigurationStoreResource(_client, data, data.Id);
         }
 
         async ValueTask<AppConfigurationStoreResource> IOperationSource<AppConfigurationStoreResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AppConfigurationStoreData.DeserializeAppConfigurationStoreData(document.RootElement);
-            return new AppConfigurationStoreResource(_client, data);
+            return new AppConfigurationStoreResource(_client, data, data.Id);
         }
     }
 }

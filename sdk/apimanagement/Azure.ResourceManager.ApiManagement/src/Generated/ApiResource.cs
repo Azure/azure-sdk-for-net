@@ -50,7 +50,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of the <see cref = "ApiResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ApiResource(ArmClient client, ApiData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal ApiResource(ArmClient client, ApiData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -546,7 +547,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = await _apiRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -578,7 +579,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = _apiRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -685,7 +686,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ApiResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -720,7 +721,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken);
-                return Response.FromValue(new ApiResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -801,7 +802,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiProductRestClient.CreateListByApisRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiProductRestClient.CreateListByApisNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementProductResource(Client, ApiManagementProductData.DeserializeApiManagementProductData(e)), _apiProductClientDiagnostics, Pipeline, "ApiResource.GetApiProducts", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ApiManagementProductData.DeserializeApiManagementProductData(e); return new ApiManagementProductResource(Client, data, data.Id); }, _apiProductClientDiagnostics, Pipeline, "ApiResource.GetApiProducts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -826,7 +827,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiProductRestClient.CreateListByApisRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiProductRestClient.CreateListByApisNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementProductResource(Client, ApiManagementProductData.DeserializeApiManagementProductData(e)), _apiProductClientDiagnostics, Pipeline, "ApiResource.GetApiProducts", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ApiManagementProductData.DeserializeApiManagementProductData(e); return new ApiManagementProductResource(Client, data, data.Id); }, _apiProductClientDiagnostics, Pipeline, "ApiResource.GetApiProducts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

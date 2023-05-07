@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Authorization
                 var response = await _roleAssignmentScheduleRestClient.GetAsync(Id, roleAssignmentScheduleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RoleAssignmentScheduleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RoleAssignmentScheduleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Authorization
                 var response = _roleAssignmentScheduleRestClient.Get(Id, roleAssignmentScheduleName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RoleAssignmentScheduleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RoleAssignmentScheduleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentScheduleRestClient.CreateListForScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleAssignmentScheduleRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentScheduleResource(Client, RoleAssignmentScheduleData.DeserializeRoleAssignmentScheduleData(e)), _roleAssignmentScheduleClientDiagnostics, Pipeline, "RoleAssignmentScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = RoleAssignmentScheduleData.DeserializeRoleAssignmentScheduleData(e); return new RoleAssignmentScheduleResource(Client, data, data.Id); }, _roleAssignmentScheduleClientDiagnostics, Pipeline, "RoleAssignmentScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentScheduleRestClient.CreateListForScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleAssignmentScheduleRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentScheduleResource(Client, RoleAssignmentScheduleData.DeserializeRoleAssignmentScheduleData(e)), _roleAssignmentScheduleClientDiagnostics, Pipeline, "RoleAssignmentScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = RoleAssignmentScheduleData.DeserializeRoleAssignmentScheduleData(e); return new RoleAssignmentScheduleResource(Client, data, data.Id); }, _roleAssignmentScheduleClientDiagnostics, Pipeline, "RoleAssignmentScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

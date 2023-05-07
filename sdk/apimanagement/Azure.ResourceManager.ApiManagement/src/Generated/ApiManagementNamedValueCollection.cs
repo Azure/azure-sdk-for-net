@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = await _apiManagementNamedValueNamedValueRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementNamedValueResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementNamedValueResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = _apiManagementNamedValueNamedValueRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementNamedValueResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementNamedValueResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementNamedValueNamedValueRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, isKeyVaultRefreshFailed);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementNamedValueNamedValueRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, isKeyVaultRefreshFailed);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementNamedValueResource(Client, ApiManagementNamedValueData.DeserializeApiManagementNamedValueData(e)), _apiManagementNamedValueNamedValueClientDiagnostics, Pipeline, "ApiManagementNamedValueCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ApiManagementNamedValueData.DeserializeApiManagementNamedValueData(e); return new ApiManagementNamedValueResource(Client, data, data.Id); }, _apiManagementNamedValueNamedValueClientDiagnostics, Pipeline, "ApiManagementNamedValueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementNamedValueNamedValueRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, isKeyVaultRefreshFailed);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementNamedValueNamedValueRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, isKeyVaultRefreshFailed);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementNamedValueResource(Client, ApiManagementNamedValueData.DeserializeApiManagementNamedValueData(e)), _apiManagementNamedValueNamedValueClientDiagnostics, Pipeline, "ApiManagementNamedValueCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ApiManagementNamedValueData.DeserializeApiManagementNamedValueData(e); return new ApiManagementNamedValueResource(Client, data, data.Id); }, _apiManagementNamedValueNamedValueClientDiagnostics, Pipeline, "ApiManagementNamedValueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Avs
                 var response = await _workloadNetworkPublicIPWorkloadNetworksRestClient.GetPublicIPAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicIPId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkloadNetworkPublicIPResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WorkloadNetworkPublicIPResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Avs
                 var response = _workloadNetworkPublicIPWorkloadNetworksRestClient.GetPublicIP(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publicIPId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkloadNetworkPublicIPResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WorkloadNetworkPublicIPResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkPublicIPWorkloadNetworksRestClient.CreateListPublicIPsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkPublicIPWorkloadNetworksRestClient.CreateListPublicIPsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkPublicIPResource(Client, WorkloadNetworkPublicIPData.DeserializeWorkloadNetworkPublicIPData(e)), _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkPublicIPCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = WorkloadNetworkPublicIPData.DeserializeWorkloadNetworkPublicIPData(e); return new WorkloadNetworkPublicIPResource(Client, data, data.Id); }, _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkPublicIPCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkPublicIPWorkloadNetworksRestClient.CreateListPublicIPsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkPublicIPWorkloadNetworksRestClient.CreateListPublicIPsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkPublicIPResource(Client, WorkloadNetworkPublicIPData.DeserializeWorkloadNetworkPublicIPData(e)), _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkPublicIPCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = WorkloadNetworkPublicIPData.DeserializeWorkloadNetworkPublicIPData(e); return new WorkloadNetworkPublicIPResource(Client, data, data.Id); }, _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkPublicIPCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

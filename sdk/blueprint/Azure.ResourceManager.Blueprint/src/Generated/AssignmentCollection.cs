@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Blueprint
             try
             {
                 var response = await _assignmentRestClient.CreateOrUpdateAsync(Id, assignmentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new BlueprintArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response), response.GetRawResponse()));
+                var operation = new BlueprintArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Blueprint
             try
             {
                 var response = _assignmentRestClient.CreateOrUpdate(Id, assignmentName, data, cancellationToken);
-                var operation = new BlueprintArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response), response.GetRawResponse()));
+                var operation = new BlueprintArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Blueprint
                 var response = await _assignmentRestClient.GetAsync(Id, assignmentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Blueprint
                 var response = _assignmentRestClient.Get(Id, assignmentName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _assignmentRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _assignmentRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AssignmentResource(Client, AssignmentData.DeserializeAssignmentData(e)), _assignmentClientDiagnostics, Pipeline, "AssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AssignmentData.DeserializeAssignmentData(e); return new AssignmentResource(Client, data, data.Id); }, _assignmentClientDiagnostics, Pipeline, "AssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _assignmentRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _assignmentRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AssignmentResource(Client, AssignmentData.DeserializeAssignmentData(e)), _assignmentClientDiagnostics, Pipeline, "AssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AssignmentData.DeserializeAssignmentData(e); return new AssignmentResource(Client, data, data.Id); }, _assignmentClientDiagnostics, Pipeline, "AssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

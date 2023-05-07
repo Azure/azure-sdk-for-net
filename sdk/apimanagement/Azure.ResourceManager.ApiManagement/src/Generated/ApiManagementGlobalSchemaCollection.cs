@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = await _apiManagementGlobalSchemaGlobalSchemaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementGlobalSchemaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementGlobalSchemaResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = _apiManagementGlobalSchemaGlobalSchemaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementGlobalSchemaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementGlobalSchemaResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementGlobalSchemaGlobalSchemaRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementGlobalSchemaGlobalSchemaRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementGlobalSchemaResource(Client, ApiManagementGlobalSchemaData.DeserializeApiManagementGlobalSchemaData(e)), _apiManagementGlobalSchemaGlobalSchemaClientDiagnostics, Pipeline, "ApiManagementGlobalSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ApiManagementGlobalSchemaData.DeserializeApiManagementGlobalSchemaData(e); return new ApiManagementGlobalSchemaResource(Client, data, data.Id); }, _apiManagementGlobalSchemaGlobalSchemaClientDiagnostics, Pipeline, "ApiManagementGlobalSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementGlobalSchemaGlobalSchemaRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementGlobalSchemaGlobalSchemaRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementGlobalSchemaResource(Client, ApiManagementGlobalSchemaData.DeserializeApiManagementGlobalSchemaData(e)), _apiManagementGlobalSchemaGlobalSchemaClientDiagnostics, Pipeline, "ApiManagementGlobalSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ApiManagementGlobalSchemaData.DeserializeApiManagementGlobalSchemaData(e); return new ApiManagementGlobalSchemaResource(Client, data, data.Id); }, _apiManagementGlobalSchemaGlobalSchemaClientDiagnostics, Pipeline, "ApiManagementGlobalSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

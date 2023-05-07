@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppPlatform
                 var response = await _appPlatformStorageStoragesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppPlatformStorageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppPlatformStorageResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppPlatform
                 var response = _appPlatformStorageStoragesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppPlatformStorageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppPlatformStorageResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformStorageStoragesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformStorageStoragesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformStorageResource(Client, AppPlatformStorageData.DeserializeAppPlatformStorageData(e)), _appPlatformStorageStoragesClientDiagnostics, Pipeline, "AppPlatformStorageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AppPlatformStorageData.DeserializeAppPlatformStorageData(e); return new AppPlatformStorageResource(Client, data, data.Id); }, _appPlatformStorageStoragesClientDiagnostics, Pipeline, "AppPlatformStorageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformStorageStoragesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformStorageStoragesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformStorageResource(Client, AppPlatformStorageData.DeserializeAppPlatformStorageData(e)), _appPlatformStorageStoragesClientDiagnostics, Pipeline, "AppPlatformStorageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AppPlatformStorageData.DeserializeAppPlatformStorageData(e); return new AppPlatformStorageResource(Client, data, data.Id); }, _appPlatformStorageStoragesClientDiagnostics, Pipeline, "AppPlatformStorageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

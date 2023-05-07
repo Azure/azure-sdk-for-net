@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Automanage
         /// <summary> Initializes a new instance of the <see cref = "AutomanageVmConfigurationProfileAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AutomanageVmConfigurationProfileAssignmentResource(ArmClient client, AutomanageConfigurationProfileAssignmentData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal AutomanageVmConfigurationProfileAssignmentResource(ArmClient client, AutomanageConfigurationProfileAssignmentData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.Automanage
                 var response = await _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutomanageVmConfigurationProfileAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomanageVmConfigurationProfileAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -194,7 +195,7 @@ namespace Azure.ResourceManager.Automanage
                 var response = _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutomanageVmConfigurationProfileAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomanageVmConfigurationProfileAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -297,7 +298,7 @@ namespace Azure.ResourceManager.Automanage
             try
             {
                 var response = await _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomanageArmOperation<AutomanageVmConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageVmConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()));
+                var operation = new AutomanageArmOperation<AutomanageVmConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageVmConfigurationProfileAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -335,7 +336,7 @@ namespace Azure.ResourceManager.Automanage
             try
             {
                 var response = _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AutomanageArmOperation<AutomanageVmConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageVmConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()));
+                var operation = new AutomanageArmOperation<AutomanageVmConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageVmConfigurationProfileAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

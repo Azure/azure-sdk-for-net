@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Automation
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DscCompilationJobData.DeserializeDscCompilationJobData(document.RootElement);
-            return new DscCompilationJobResource(_client, data);
+            return new DscCompilationJobResource(_client, data, data.Id);
         }
 
         async ValueTask<DscCompilationJobResource> IOperationSource<DscCompilationJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DscCompilationJobData.DeserializeDscCompilationJobData(document.RootElement);
-            return new DscCompilationJobResource(_client, data);
+            return new DscCompilationJobResource(_client, data, data.Id);
         }
     }
 }
