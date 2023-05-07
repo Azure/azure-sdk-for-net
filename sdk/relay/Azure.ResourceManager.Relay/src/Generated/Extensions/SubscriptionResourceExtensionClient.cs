@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Relay
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RelayNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RelayNamespaceNamespacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RelayNamespaceResource(Client, RelayNamespaceData.DeserializeRelayNamespaceData(e)), RelayNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRelayNamespaces", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = RelayNamespaceData.DeserializeRelayNamespaceData(e); return new RelayNamespaceResource(Client, data, data.Id); }, RelayNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRelayNamespaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Relay
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RelayNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RelayNamespaceNamespacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RelayNamespaceResource(Client, RelayNamespaceData.DeserializeRelayNamespaceData(e)), RelayNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRelayNamespaces", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = RelayNamespaceData.DeserializeRelayNamespaceData(e); return new RelayNamespaceResource(Client, data, data.Id); }, RelayNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRelayNamespaces", "value", "nextLink", cancellationToken);
         }
     }
 }

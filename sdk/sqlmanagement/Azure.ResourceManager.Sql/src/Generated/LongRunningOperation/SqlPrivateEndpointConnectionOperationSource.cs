@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Sql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SqlPrivateEndpointConnectionData.DeserializeSqlPrivateEndpointConnectionData(document.RootElement);
-            return new SqlPrivateEndpointConnectionResource(_client, data);
+            return new SqlPrivateEndpointConnectionResource(_client, data, data.Id);
         }
 
         async ValueTask<SqlPrivateEndpointConnectionResource> IOperationSource<SqlPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SqlPrivateEndpointConnectionData.DeserializeSqlPrivateEndpointConnectionData(document.RootElement);
-            return new SqlPrivateEndpointConnectionResource(_client, data);
+            return new SqlPrivateEndpointConnectionResource(_client, data, data.Id);
         }
     }
 }

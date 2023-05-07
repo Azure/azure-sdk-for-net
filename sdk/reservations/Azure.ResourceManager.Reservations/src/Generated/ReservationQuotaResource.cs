@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.Reservations
         /// <summary> Initializes a new instance of the <see cref = "ReservationQuotaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ReservationQuotaResource(ArmClient client, ReservationQuotaData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal ReservationQuotaResource(ArmClient client, ReservationQuotaData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Reservations
                 var response = await _reservationQuotaQuotaRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Parent.Name, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReservationQuotaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReservationQuotaResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Reservations
                 var response = _reservationQuotaQuotaRestClient.Get(Id.SubscriptionId, Id.Parent.Parent.Name, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReservationQuotaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReservationQuotaResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

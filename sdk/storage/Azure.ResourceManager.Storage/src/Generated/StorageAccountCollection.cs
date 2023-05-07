@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Storage
                 var response = await _storageAccountRestClient.GetPropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StorageAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Storage
                 var response = _storageAccountRestClient.GetProperties(Id.SubscriptionId, Id.ResourceGroupName, accountName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StorageAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Storage
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageAccountRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageAccountRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageAccountResource(Client, StorageAccountData.DeserializeStorageAccountData(e)), _storageAccountClientDiagnostics, Pipeline, "StorageAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = StorageAccountData.DeserializeStorageAccountData(e); return new StorageAccountResource(Client, data, data.Id); }, _storageAccountClientDiagnostics, Pipeline, "StorageAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Storage
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageAccountRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageAccountRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageAccountResource(Client, StorageAccountData.DeserializeStorageAccountData(e)), _storageAccountClientDiagnostics, Pipeline, "StorageAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = StorageAccountData.DeserializeStorageAccountData(e); return new StorageAccountResource(Client, data, data.Id); }, _storageAccountClientDiagnostics, Pipeline, "StorageAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

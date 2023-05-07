@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Redis
                 var response = await _redisPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RedisPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RedisPrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Redis
                 var response = _redisPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RedisPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RedisPrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Redis
         public virtual AsyncPageable<RedisPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new RedisPrivateEndpointConnectionResource(Client, RedisPrivateEndpointConnectionData.DeserializeRedisPrivateEndpointConnectionData(e)), _redisPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "RedisPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = RedisPrivateEndpointConnectionData.DeserializeRedisPrivateEndpointConnectionData(e); return new RedisPrivateEndpointConnectionResource(Client, data, data.Id); }, _redisPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "RedisPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Redis
         public virtual Pageable<RedisPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new RedisPrivateEndpointConnectionResource(Client, RedisPrivateEndpointConnectionData.DeserializeRedisPrivateEndpointConnectionData(e)), _redisPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "RedisPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = RedisPrivateEndpointConnectionData.DeserializeRedisPrivateEndpointConnectionData(e); return new RedisPrivateEndpointConnectionResource(Client, data, data.Id); }, _redisPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "RedisPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

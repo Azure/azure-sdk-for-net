@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _managedBackupShortTermRetentionPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedBackupShortTermRetentionPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedBackupShortTermRetentionPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _managedBackupShortTermRetentionPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedBackupShortTermRetentionPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedBackupShortTermRetentionPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedBackupShortTermRetentionPolicyRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedBackupShortTermRetentionPolicyRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedBackupShortTermRetentionPolicyResource(Client, ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(e)), _managedBackupShortTermRetentionPolicyClientDiagnostics, Pipeline, "ManagedBackupShortTermRetentionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(e); return new ManagedBackupShortTermRetentionPolicyResource(Client, data, data.Id); }, _managedBackupShortTermRetentionPolicyClientDiagnostics, Pipeline, "ManagedBackupShortTermRetentionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedBackupShortTermRetentionPolicyRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedBackupShortTermRetentionPolicyRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedBackupShortTermRetentionPolicyResource(Client, ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(e)), _managedBackupShortTermRetentionPolicyClientDiagnostics, Pipeline, "ManagedBackupShortTermRetentionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(e); return new ManagedBackupShortTermRetentionPolicyResource(Client, data, data.Id); }, _managedBackupShortTermRetentionPolicyClientDiagnostics, Pipeline, "ManagedBackupShortTermRetentionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

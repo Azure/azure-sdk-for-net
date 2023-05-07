@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlServerJobTargetGroupJobTargetGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, targetGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerJobTargetGroupResource>(Response.FromValue(new SqlServerJobTargetGroupResource(Client, response), response.GetRawResponse()));
+                var operation = new SqlArmOperation<SqlServerJobTargetGroupResource>(Response.FromValue(new SqlServerJobTargetGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlServerJobTargetGroupJobTargetGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, targetGroupName, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerJobTargetGroupResource>(Response.FromValue(new SqlServerJobTargetGroupResource(Client, response), response.GetRawResponse()));
+                var operation = new SqlArmOperation<SqlServerJobTargetGroupResource>(Response.FromValue(new SqlServerJobTargetGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _sqlServerJobTargetGroupJobTargetGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, targetGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlServerJobTargetGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlServerJobTargetGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _sqlServerJobTargetGroupJobTargetGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, targetGroupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlServerJobTargetGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlServerJobTargetGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobTargetGroupJobTargetGroupsRestClient.CreateListByAgentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobTargetGroupJobTargetGroupsRestClient.CreateListByAgentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobTargetGroupResource(Client, SqlServerJobTargetGroupData.DeserializeSqlServerJobTargetGroupData(e)), _sqlServerJobTargetGroupJobTargetGroupsClientDiagnostics, Pipeline, "SqlServerJobTargetGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SqlServerJobTargetGroupData.DeserializeSqlServerJobTargetGroupData(e); return new SqlServerJobTargetGroupResource(Client, data, data.Id); }, _sqlServerJobTargetGroupJobTargetGroupsClientDiagnostics, Pipeline, "SqlServerJobTargetGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobTargetGroupJobTargetGroupsRestClient.CreateListByAgentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobTargetGroupJobTargetGroupsRestClient.CreateListByAgentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobTargetGroupResource(Client, SqlServerJobTargetGroupData.DeserializeSqlServerJobTargetGroupData(e)), _sqlServerJobTargetGroupJobTargetGroupsClientDiagnostics, Pipeline, "SqlServerJobTargetGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SqlServerJobTargetGroupData.DeserializeSqlServerJobTargetGroupData(e); return new SqlServerJobTargetGroupResource(Client, data, data.Id); }, _sqlServerJobTargetGroupJobTargetGroupsClientDiagnostics, Pipeline, "SqlServerJobTargetGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

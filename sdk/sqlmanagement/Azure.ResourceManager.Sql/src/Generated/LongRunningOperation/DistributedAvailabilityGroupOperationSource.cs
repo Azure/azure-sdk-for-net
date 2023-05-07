@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Sql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DistributedAvailabilityGroupData.DeserializeDistributedAvailabilityGroupData(document.RootElement);
-            return new DistributedAvailabilityGroupResource(_client, data);
+            return new DistributedAvailabilityGroupResource(_client, data, data.Id);
         }
 
         async ValueTask<DistributedAvailabilityGroupResource> IOperationSource<DistributedAvailabilityGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DistributedAvailabilityGroupData.DeserializeDistributedAvailabilityGroupData(document.RootElement);
-            return new DistributedAvailabilityGroupResource(_client, data);
+            return new DistributedAvailabilityGroupResource(_client, data, data.Id);
         }
     }
 }

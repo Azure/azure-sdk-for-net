@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             try
             {
                 var response = await _serviceFabricManagedApplicationTypeApplicationTypesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedApplicationTypeResource>(Response.FromValue(new ServiceFabricManagedApplicationTypeResource(Client, response), response.GetRawResponse()));
+                var operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedApplicationTypeResource>(Response.FromValue(new ServiceFabricManagedApplicationTypeResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             try
             {
                 var response = _serviceFabricManagedApplicationTypeApplicationTypesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, data, cancellationToken);
-                var operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedApplicationTypeResource>(Response.FromValue(new ServiceFabricManagedApplicationTypeResource(Client, response), response.GetRawResponse()));
+                var operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedApplicationTypeResource>(Response.FromValue(new ServiceFabricManagedApplicationTypeResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 var response = await _serviceFabricManagedApplicationTypeApplicationTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceFabricManagedApplicationTypeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricManagedApplicationTypeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 var response = _serviceFabricManagedApplicationTypeApplicationTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceFabricManagedApplicationTypeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricManagedApplicationTypeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedApplicationTypeApplicationTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricManagedApplicationTypeApplicationTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricManagedApplicationTypeResource(Client, ServiceFabricManagedApplicationTypeData.DeserializeServiceFabricManagedApplicationTypeData(e)), _serviceFabricManagedApplicationTypeApplicationTypesClientDiagnostics, Pipeline, "ServiceFabricManagedApplicationTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceFabricManagedApplicationTypeData.DeserializeServiceFabricManagedApplicationTypeData(e); return new ServiceFabricManagedApplicationTypeResource(Client, data, data.Id); }, _serviceFabricManagedApplicationTypeApplicationTypesClientDiagnostics, Pipeline, "ServiceFabricManagedApplicationTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedApplicationTypeApplicationTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricManagedApplicationTypeApplicationTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricManagedApplicationTypeResource(Client, ServiceFabricManagedApplicationTypeData.DeserializeServiceFabricManagedApplicationTypeData(e)), _serviceFabricManagedApplicationTypeApplicationTypesClientDiagnostics, Pipeline, "ServiceFabricManagedApplicationTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceFabricManagedApplicationTypeData.DeserializeServiceFabricManagedApplicationTypeData(e); return new ServiceFabricManagedApplicationTypeResource(Client, data, data.Id); }, _serviceFabricManagedApplicationTypeApplicationTypesClientDiagnostics, Pipeline, "ServiceFabricManagedApplicationTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

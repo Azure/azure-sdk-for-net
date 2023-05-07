@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.UpdateAsync(Id.SubscriptionId, alertsSuppressionRuleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<SecurityAlertsSuppressionRuleResource>(Response.FromValue(new SecurityAlertsSuppressionRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<SecurityAlertsSuppressionRuleResource>(Response.FromValue(new SecurityAlertsSuppressionRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.Update(Id.SubscriptionId, alertsSuppressionRuleName, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<SecurityAlertsSuppressionRuleResource>(Response.FromValue(new SecurityAlertsSuppressionRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<SecurityAlertsSuppressionRuleResource>(Response.FromValue(new SecurityAlertsSuppressionRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.GetAsync(Id.SubscriptionId, alertsSuppressionRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityAlertsSuppressionRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityAlertsSuppressionRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.Get(Id.SubscriptionId, alertsSuppressionRuleName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityAlertsSuppressionRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityAlertsSuppressionRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.CreateListRequest(Id.SubscriptionId, alertType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, alertType);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityAlertsSuppressionRuleResource(Client, SecurityAlertsSuppressionRuleData.DeserializeSecurityAlertsSuppressionRuleData(e)), _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics, Pipeline, "SecurityAlertsSuppressionRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityAlertsSuppressionRuleData.DeserializeSecurityAlertsSuppressionRuleData(e); return new SecurityAlertsSuppressionRuleResource(Client, data, data.Id); }, _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics, Pipeline, "SecurityAlertsSuppressionRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.CreateListRequest(Id.SubscriptionId, alertType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, alertType);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityAlertsSuppressionRuleResource(Client, SecurityAlertsSuppressionRuleData.DeserializeSecurityAlertsSuppressionRuleData(e)), _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics, Pipeline, "SecurityAlertsSuppressionRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityAlertsSuppressionRuleData.DeserializeSecurityAlertsSuppressionRuleData(e); return new SecurityAlertsSuppressionRuleResource(Client, data, data.Id); }, _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics, Pipeline, "SecurityAlertsSuppressionRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

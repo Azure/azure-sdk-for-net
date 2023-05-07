@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ServiceBus
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(document.RootElement);
-            return new ServiceBusNamespaceResource(_client, data);
+            return new ServiceBusNamespaceResource(_client, data, data.Id);
         }
 
         async ValueTask<ServiceBusNamespaceResource> IOperationSource<ServiceBusNamespaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(document.RootElement);
-            return new ServiceBusNamespaceResource(_client, data);
+            return new ServiceBusNamespaceResource(_client, data, data.Id);
         }
     }
 }

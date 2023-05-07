@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ServiceLinker
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = LinkerResourceData.DeserializeLinkerResourceData(document.RootElement);
-            return new LinkerResource(_client, data);
+            return new LinkerResource(_client, data, data.Id);
         }
 
         async ValueTask<LinkerResource> IOperationSource<LinkerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = LinkerResourceData.DeserializeLinkerResourceData(document.RootElement);
-            return new LinkerResource(_client, data);
+            return new LinkerResource(_client, data, data.Id);
         }
     }
 }

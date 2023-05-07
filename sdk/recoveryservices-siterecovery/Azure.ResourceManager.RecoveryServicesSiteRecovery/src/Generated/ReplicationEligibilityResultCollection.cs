@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = await _replicationEligibilityResultRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _virtualMachineName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReplicationEligibilityResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReplicationEligibilityResultResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = _replicationEligibilityResultRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _virtualMachineName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReplicationEligibilityResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReplicationEligibilityResultResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         public virtual AsyncPageable<ReplicationEligibilityResultResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationEligibilityResultRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _virtualMachineName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ReplicationEligibilityResultResource(Client, ReplicationEligibilityResultData.DeserializeReplicationEligibilityResultData(e)), _replicationEligibilityResultClientDiagnostics, Pipeline, "ReplicationEligibilityResultCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = ReplicationEligibilityResultData.DeserializeReplicationEligibilityResultData(e); return new ReplicationEligibilityResultResource(Client, data, data.Id); }, _replicationEligibilityResultClientDiagnostics, Pipeline, "ReplicationEligibilityResultCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         public virtual Pageable<ReplicationEligibilityResultResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationEligibilityResultRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _virtualMachineName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ReplicationEligibilityResultResource(Client, ReplicationEligibilityResultData.DeserializeReplicationEligibilityResultData(e)), _replicationEligibilityResultClientDiagnostics, Pipeline, "ReplicationEligibilityResultCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = ReplicationEligibilityResultData.DeserializeReplicationEligibilityResultData(e); return new ReplicationEligibilityResultResource(Client, data, data.Id); }, _replicationEligibilityResultClientDiagnostics, Pipeline, "ReplicationEligibilityResultCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

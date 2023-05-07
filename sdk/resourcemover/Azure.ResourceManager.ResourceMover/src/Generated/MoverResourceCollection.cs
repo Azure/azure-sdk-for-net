@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ResourceMover
                 var response = await _moverResourceMoveResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, moverResourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MoverResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MoverResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ResourceMover
                 var response = _moverResourceMoveResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, moverResourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MoverResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MoverResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ResourceMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _moverResourceMoveResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _moverResourceMoveResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MoverResource(Client, MoverResourceData.DeserializeMoverResourceData(e)), _moverResourceMoveResourcesClientDiagnostics, Pipeline, "MoverResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = MoverResourceData.DeserializeMoverResourceData(e); return new MoverResource(Client, data, data.Id); }, _moverResourceMoveResourcesClientDiagnostics, Pipeline, "MoverResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ResourceMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _moverResourceMoveResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _moverResourceMoveResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MoverResource(Client, MoverResourceData.DeserializeMoverResourceData(e)), _moverResourceMoveResourcesClientDiagnostics, Pipeline, "MoverResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = MoverResourceData.DeserializeMoverResourceData(e); return new MoverResource(Client, data, data.Id); }, _moverResourceMoveResourcesClientDiagnostics, Pipeline, "MoverResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 var response = await _resourceHealthMetadataEntityMetadataRestClient.GetEntityAsync(name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceHealthMetadataEntityResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceHealthMetadataEntityResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 var response = _resourceHealthMetadataEntityMetadataRestClient.GetEntity(name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceHealthMetadataEntityResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceHealthMetadataEntityResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceHealthMetadataEntityMetadataRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceHealthMetadataEntityMetadataRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceHealthMetadataEntityResource(Client, ResourceHealthMetadataEntityData.DeserializeResourceHealthMetadataEntityData(e)), _resourceHealthMetadataEntityMetadataClientDiagnostics, Pipeline, "ResourceHealthMetadataEntityCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ResourceHealthMetadataEntityData.DeserializeResourceHealthMetadataEntityData(e); return new ResourceHealthMetadataEntityResource(Client, data, data.Id); }, _resourceHealthMetadataEntityMetadataClientDiagnostics, Pipeline, "ResourceHealthMetadataEntityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceHealthMetadataEntityMetadataRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceHealthMetadataEntityMetadataRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceHealthMetadataEntityResource(Client, ResourceHealthMetadataEntityData.DeserializeResourceHealthMetadataEntityData(e)), _resourceHealthMetadataEntityMetadataClientDiagnostics, Pipeline, "ResourceHealthMetadataEntityCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ResourceHealthMetadataEntityData.DeserializeResourceHealthMetadataEntityData(e); return new ResourceHealthMetadataEntityResource(Client, data, data.Id); }, _resourceHealthMetadataEntityMetadataClientDiagnostics, Pipeline, "ResourceHealthMetadataEntityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

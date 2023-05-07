@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Sql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(document.RootElement);
-            return new SqlServerCommunicationLinkResource(_client, data);
+            return new SqlServerCommunicationLinkResource(_client, data, data.Id);
         }
 
         async ValueTask<SqlServerCommunicationLinkResource> IOperationSource<SqlServerCommunicationLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(document.RootElement);
-            return new SqlServerCommunicationLinkResource(_client, data);
+            return new SqlServerCommunicationLinkResource(_client, data, data.Id);
         }
     }
 }

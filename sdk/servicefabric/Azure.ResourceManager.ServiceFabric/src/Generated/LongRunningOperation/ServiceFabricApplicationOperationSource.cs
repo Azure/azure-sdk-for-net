@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ServiceFabric
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServiceFabricApplicationData.DeserializeServiceFabricApplicationData(document.RootElement);
-            return new ServiceFabricApplicationResource(_client, data);
+            return new ServiceFabricApplicationResource(_client, data, data.Id);
         }
 
         async ValueTask<ServiceFabricApplicationResource> IOperationSource<ServiceFabricApplicationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServiceFabricApplicationData.DeserializeServiceFabricApplicationData(document.RootElement);
-            return new ServiceFabricApplicationResource(_client, data);
+            return new ServiceFabricApplicationResource(_client, data, data.Id);
         }
     }
 }

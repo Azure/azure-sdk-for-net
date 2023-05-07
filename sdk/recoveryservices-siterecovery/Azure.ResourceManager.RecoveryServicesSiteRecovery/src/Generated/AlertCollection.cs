@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _alertReplicationAlertSettingsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, alertSettingName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<AlertResource>(Response.FromValue(new AlertResource(Client, response), response.GetRawResponse()));
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<AlertResource>(Response.FromValue(new AlertResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _alertReplicationAlertSettingsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, alertSettingName, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<AlertResource>(Response.FromValue(new AlertResource(Client, response), response.GetRawResponse()));
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<AlertResource>(Response.FromValue(new AlertResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = await _alertReplicationAlertSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, alertSettingName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AlertResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AlertResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = _alertReplicationAlertSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, alertSettingName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AlertResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AlertResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _alertReplicationAlertSettingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _alertReplicationAlertSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AlertResource(Client, AlertData.DeserializeAlertData(e)), _alertReplicationAlertSettingsClientDiagnostics, Pipeline, "AlertCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AlertData.DeserializeAlertData(e); return new AlertResource(Client, data, data.Id); }, _alertReplicationAlertSettingsClientDiagnostics, Pipeline, "AlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _alertReplicationAlertSettingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _alertReplicationAlertSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AlertResource(Client, AlertData.DeserializeAlertData(e)), _alertReplicationAlertSettingsClientDiagnostics, Pipeline, "AlertCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AlertData.DeserializeAlertData(e); return new AlertResource(Client, data, data.Id); }, _alertReplicationAlertSettingsClientDiagnostics, Pipeline, "AlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ManagementGroups
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagementGroupData.DeserializeManagementGroupData(document.RootElement);
-            return new ManagementGroupResource(_client, data);
+            return new ManagementGroupResource(_client, data, data.Id);
         }
 
         async ValueTask<ManagementGroupResource> IOperationSource<ManagementGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagementGroupData.DeserializeManagementGroupData(document.RootElement);
-            return new ManagementGroupResource(_client, data);
+            return new ManagementGroupResource(_client, data, data.Id);
         }
     }
 }

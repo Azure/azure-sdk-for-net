@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 var response = await _sqlVmGroupSqlVmGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, sqlVmGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlVmGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlVmGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 var response = _sqlVmGroupSqlVmGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, sqlVmGroupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlVmGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlVmGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlVmGroupSqlVmGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlVmGroupSqlVmGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlVmGroupResource(Client, SqlVmGroupData.DeserializeSqlVmGroupData(e)), _sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, "SqlVmGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SqlVmGroupData.DeserializeSqlVmGroupData(e); return new SqlVmGroupResource(Client, data, data.Id); }, _sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, "SqlVmGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlVmGroupSqlVmGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlVmGroupSqlVmGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlVmGroupResource(Client, SqlVmGroupData.DeserializeSqlVmGroupData(e)), _sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, "SqlVmGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SqlVmGroupData.DeserializeSqlVmGroupData(e); return new SqlVmGroupResource(Client, data, data.Id); }, _sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, "SqlVmGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

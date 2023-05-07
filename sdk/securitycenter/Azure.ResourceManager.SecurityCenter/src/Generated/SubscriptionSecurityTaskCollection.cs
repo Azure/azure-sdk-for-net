@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _subscriptionSecurityTaskTasksRestClient.GetSubscriptionLevelTaskAsync(Id.SubscriptionId, new AzureLocation(Id.Name), taskName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionSecurityTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionSecurityTaskResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _subscriptionSecurityTaskTasksRestClient.GetSubscriptionLevelTask(Id.SubscriptionId, new AzureLocation(Id.Name), taskName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionSecurityTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionSecurityTaskResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionSecurityTaskTasksRestClient.CreateListByHomeRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name), filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionSecurityTaskTasksRestClient.CreateListByHomeRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionSecurityTaskResource(Client, SecurityTaskData.DeserializeSecurityTaskData(e)), _subscriptionSecurityTaskTasksClientDiagnostics, Pipeline, "SubscriptionSecurityTaskCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityTaskData.DeserializeSecurityTaskData(e); return new SubscriptionSecurityTaskResource(Client, data, data.Id); }, _subscriptionSecurityTaskTasksClientDiagnostics, Pipeline, "SubscriptionSecurityTaskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionSecurityTaskTasksRestClient.CreateListByHomeRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name), filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionSecurityTaskTasksRestClient.CreateListByHomeRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionSecurityTaskResource(Client, SecurityTaskData.DeserializeSecurityTaskData(e)), _subscriptionSecurityTaskTasksClientDiagnostics, Pipeline, "SubscriptionSecurityTaskCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityTaskData.DeserializeSecurityTaskData(e); return new SubscriptionSecurityTaskResource(Client, data, data.Id); }, _subscriptionSecurityTaskTasksClientDiagnostics, Pipeline, "SubscriptionSecurityTaskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

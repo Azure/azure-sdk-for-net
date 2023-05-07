@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _dataPolicyManifestRestClient.GetByPolicyModeAsync(policyMode, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataPolicyManifestResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataPolicyManifestResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _dataPolicyManifestRestClient.GetByPolicyMode(policyMode, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataPolicyManifestResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataPolicyManifestResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataPolicyManifestRestClient.CreateListRequest(filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataPolicyManifestRestClient.CreateListNextPageRequest(nextLink, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataPolicyManifestResource(Client, DataPolicyManifestData.DeserializeDataPolicyManifestData(e)), _dataPolicyManifestClientDiagnostics, Pipeline, "DataPolicyManifestCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DataPolicyManifestData.DeserializeDataPolicyManifestData(e); return new DataPolicyManifestResource(Client, data, data.Id); }, _dataPolicyManifestClientDiagnostics, Pipeline, "DataPolicyManifestCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataPolicyManifestRestClient.CreateListRequest(filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataPolicyManifestRestClient.CreateListNextPageRequest(nextLink, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataPolicyManifestResource(Client, DataPolicyManifestData.DeserializeDataPolicyManifestData(e)), _dataPolicyManifestClientDiagnostics, Pipeline, "DataPolicyManifestCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DataPolicyManifestData.DeserializeDataPolicyManifestData(e); return new DataPolicyManifestResource(Client, data, data.Id); }, _dataPolicyManifestClientDiagnostics, Pipeline, "DataPolicyManifestCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

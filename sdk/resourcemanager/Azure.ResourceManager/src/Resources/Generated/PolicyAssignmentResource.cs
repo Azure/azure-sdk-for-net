@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of the <see cref = "PolicyAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PolicyAssignmentResource(ArmClient client, PolicyAssignmentData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal PolicyAssignmentResource(ArmClient client, PolicyAssignmentData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _policyAssignmentRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _policyAssignmentRestClient.Get(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -173,7 +174,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _policyAssignmentRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<PolicyAssignmentResource>(Response.FromValue(new PolicyAssignmentResource(Client, response), response.GetRawResponse()));
+                var operation = new ResourcesArmOperation<PolicyAssignmentResource>(Response.FromValue(new PolicyAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,7 +208,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _policyAssignmentRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
-                var operation = new ResourcesArmOperation<PolicyAssignmentResource>(Response.FromValue(new PolicyAssignmentResource(Client, response), response.GetRawResponse()));
+                var operation = new ResourcesArmOperation<PolicyAssignmentResource>(Response.FromValue(new PolicyAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _policyAssignmentRestClient.UpdateAsync(Id.Parent, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -278,7 +279,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _policyAssignmentRestClient.Update(Id.Parent, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

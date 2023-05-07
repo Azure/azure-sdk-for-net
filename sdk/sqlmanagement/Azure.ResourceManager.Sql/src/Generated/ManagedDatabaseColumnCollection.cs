@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _managedDatabaseColumnRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, columnName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabaseColumnResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseColumnResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _managedDatabaseColumnRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, columnName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabaseColumnResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseColumnResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseColumnRestClient.CreateListByTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseColumnRestClient.CreateListByTableNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseColumnResource(Client, DatabaseColumnData.DeserializeDatabaseColumnData(e)), _managedDatabaseColumnClientDiagnostics, Pipeline, "ManagedDatabaseColumnCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DatabaseColumnData.DeserializeDatabaseColumnData(e); return new ManagedDatabaseColumnResource(Client, data, data.Id); }, _managedDatabaseColumnClientDiagnostics, Pipeline, "ManagedDatabaseColumnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseColumnRestClient.CreateListByTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseColumnRestClient.CreateListByTableNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseColumnResource(Client, DatabaseColumnData.DeserializeDatabaseColumnData(e)), _managedDatabaseColumnClientDiagnostics, Pipeline, "ManagedDatabaseColumnCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DatabaseColumnData.DeserializeDatabaseColumnData(e); return new ManagedDatabaseColumnResource(Client, data, data.Id); }, _managedDatabaseColumnClientDiagnostics, Pipeline, "ManagedDatabaseColumnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

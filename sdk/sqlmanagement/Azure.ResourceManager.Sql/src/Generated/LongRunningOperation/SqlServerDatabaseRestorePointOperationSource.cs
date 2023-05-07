@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Sql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SqlServerDatabaseRestorePointData.DeserializeSqlServerDatabaseRestorePointData(document.RootElement);
-            return new SqlServerDatabaseRestorePointResource(_client, data);
+            return new SqlServerDatabaseRestorePointResource(_client, data, data.Id);
         }
 
         async ValueTask<SqlServerDatabaseRestorePointResource> IOperationSource<SqlServerDatabaseRestorePointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SqlServerDatabaseRestorePointData.DeserializeSqlServerDatabaseRestorePointData(document.RootElement);
-            return new SqlServerDatabaseRestorePointResource(_client, data);
+            return new SqlServerDatabaseRestorePointResource(_client, data, data.Id);
         }
     }
 }

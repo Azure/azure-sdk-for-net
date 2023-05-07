@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Sql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SqlServerJobExecutionData.DeserializeSqlServerJobExecutionData(document.RootElement);
-            return new SqlServerJobExecutionResource(_client, data);
+            return new SqlServerJobExecutionResource(_client, data, data.Id);
         }
 
         async ValueTask<SqlServerJobExecutionResource> IOperationSource<SqlServerJobExecutionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SqlServerJobExecutionData.DeserializeSqlServerJobExecutionData(document.RootElement);
-            return new SqlServerJobExecutionResource(_client, data);
+            return new SqlServerJobExecutionResource(_client, data, data.Id);
         }
     }
 }

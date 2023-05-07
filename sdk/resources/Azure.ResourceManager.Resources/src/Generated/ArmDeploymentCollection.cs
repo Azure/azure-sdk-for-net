@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _armDeploymentDeploymentsRestClient.GetAtScopeAsync(Id, deploymentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ArmDeploymentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArmDeploymentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _armDeploymentDeploymentsRestClient.GetAtScope(Id, deploymentName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ArmDeploymentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArmDeploymentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Resources
         {
             Core.HttpMessage FirstPageRequest(int? pageSizeHint) => _armDeploymentDeploymentsRestClient.CreateListAtScopeRequest(Id, filter, top);
             Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _armDeploymentDeploymentsRestClient.CreateListAtScopeNextPageRequest(nextLink, Id, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentResource(Client, ArmDeploymentData.DeserializeArmDeploymentData(e)), _armDeploymentDeploymentsClientDiagnostics, Pipeline, "ArmDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ArmDeploymentData.DeserializeArmDeploymentData(e); return new ArmDeploymentResource(Client, data, data.Id); }, _armDeploymentDeploymentsClientDiagnostics, Pipeline, "ArmDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Resources
         {
             Core.HttpMessage FirstPageRequest(int? pageSizeHint) => _armDeploymentDeploymentsRestClient.CreateListAtScopeRequest(Id, filter, top);
             Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _armDeploymentDeploymentsRestClient.CreateListAtScopeNextPageRequest(nextLink, Id, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentResource(Client, ArmDeploymentData.DeserializeArmDeploymentData(e)), _armDeploymentDeploymentsClientDiagnostics, Pipeline, "ArmDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ArmDeploymentData.DeserializeArmDeploymentData(e); return new ArmDeploymentResource(Client, data, data.Id); }, _armDeploymentDeploymentsClientDiagnostics, Pipeline, "ArmDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

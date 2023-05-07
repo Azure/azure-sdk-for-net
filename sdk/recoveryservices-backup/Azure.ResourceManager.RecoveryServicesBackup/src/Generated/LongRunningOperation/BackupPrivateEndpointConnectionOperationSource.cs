@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = BackupPrivateEndpointConnectionData.DeserializeBackupPrivateEndpointConnectionData(document.RootElement);
-            return new BackupPrivateEndpointConnectionResource(_client, data);
+            return new BackupPrivateEndpointConnectionResource(_client, data, data.Id);
         }
 
         async ValueTask<BackupPrivateEndpointConnectionResource> IOperationSource<BackupPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = BackupPrivateEndpointConnectionData.DeserializeBackupPrivateEndpointConnectionData(document.RootElement);
-            return new BackupPrivateEndpointConnectionResource(_client, data);
+            return new BackupPrivateEndpointConnectionResource(_client, data, data.Id);
         }
     }
 }

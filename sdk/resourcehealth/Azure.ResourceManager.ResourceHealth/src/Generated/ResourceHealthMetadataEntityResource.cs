@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> Initializes a new instance of the <see cref = "ResourceHealthMetadataEntityResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ResourceHealthMetadataEntityResource(ArmClient client, ResourceHealthMetadataEntityData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal ResourceHealthMetadataEntityResource(ArmClient client, ResourceHealthMetadataEntityData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 var response = await _resourceHealthMetadataEntityMetadataRestClient.GetEntityAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceHealthMetadataEntityResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceHealthMetadataEntityResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 var response = _resourceHealthMetadataEntityMetadataRestClient.GetEntity(Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceHealthMetadataEntityResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceHealthMetadataEntityResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

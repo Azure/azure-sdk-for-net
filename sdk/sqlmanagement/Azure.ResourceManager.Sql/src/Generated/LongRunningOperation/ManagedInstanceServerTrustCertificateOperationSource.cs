@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Sql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServerTrustCertificateData.DeserializeServerTrustCertificateData(document.RootElement);
-            return new ManagedInstanceServerTrustCertificateResource(_client, data);
+            return new ManagedInstanceServerTrustCertificateResource(_client, data, data.Id);
         }
 
         async ValueTask<ManagedInstanceServerTrustCertificateResource> IOperationSource<ManagedInstanceServerTrustCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServerTrustCertificateData.DeserializeServerTrustCertificateData(document.RootElement);
-            return new ManagedInstanceServerTrustCertificateResource(_client, data);
+            return new ManagedInstanceServerTrustCertificateResource(_client, data, data.Id);
         }
     }
 }

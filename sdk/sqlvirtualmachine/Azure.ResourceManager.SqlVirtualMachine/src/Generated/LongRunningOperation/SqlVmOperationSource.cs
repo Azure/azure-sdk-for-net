@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SqlVmData.DeserializeSqlVmData(document.RootElement);
-            return new SqlVmResource(_client, data);
+            return new SqlVmResource(_client, data, data.Id);
         }
 
         async ValueTask<SqlVmResource> IOperationSource<SqlVmResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SqlVmData.DeserializeSqlVmData(document.RootElement);
-            return new SqlVmResource(_client, data);
+            return new SqlVmResource(_client, data, data.Id);
         }
     }
 }

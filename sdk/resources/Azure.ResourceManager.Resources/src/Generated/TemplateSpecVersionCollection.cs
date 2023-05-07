@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _templateSpecVersionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateSpecVersion, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<TemplateSpecVersionResource>(Response.FromValue(new TemplateSpecVersionResource(Client, response), response.GetRawResponse()));
+                var operation = new ResourcesArmOperation<TemplateSpecVersionResource>(Response.FromValue(new TemplateSpecVersionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _templateSpecVersionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateSpecVersion, data, cancellationToken);
-                var operation = new ResourcesArmOperation<TemplateSpecVersionResource>(Response.FromValue(new TemplateSpecVersionResource(Client, response), response.GetRawResponse()));
+                var operation = new ResourcesArmOperation<TemplateSpecVersionResource>(Response.FromValue(new TemplateSpecVersionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _templateSpecVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateSpecVersion, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TemplateSpecVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TemplateSpecVersionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _templateSpecVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateSpecVersion, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TemplateSpecVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TemplateSpecVersionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _templateSpecVersionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _templateSpecVersionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TemplateSpecVersionResource(Client, TemplateSpecVersionData.DeserializeTemplateSpecVersionData(e)), _templateSpecVersionClientDiagnostics, Pipeline, "TemplateSpecVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = TemplateSpecVersionData.DeserializeTemplateSpecVersionData(e); return new TemplateSpecVersionResource(Client, data, data.Id); }, _templateSpecVersionClientDiagnostics, Pipeline, "TemplateSpecVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _templateSpecVersionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _templateSpecVersionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TemplateSpecVersionResource(Client, TemplateSpecVersionData.DeserializeTemplateSpecVersionData(e)), _templateSpecVersionClientDiagnostics, Pipeline, "TemplateSpecVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = TemplateSpecVersionData.DeserializeTemplateSpecVersionData(e); return new TemplateSpecVersionResource(Client, data, data.Id); }, _templateSpecVersionClientDiagnostics, Pipeline, "TemplateSpecVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Sql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = OutboundFirewallRuleData.DeserializeOutboundFirewallRuleData(document.RootElement);
-            return new OutboundFirewallRuleResource(_client, data);
+            return new OutboundFirewallRuleResource(_client, data, data.Id);
         }
 
         async ValueTask<OutboundFirewallRuleResource> IOperationSource<OutboundFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = OutboundFirewallRuleData.DeserializeOutboundFirewallRuleData(document.RootElement);
-            return new OutboundFirewallRuleResource(_client, data);
+            return new OutboundFirewallRuleResource(_client, data, data.Id);
         }
     }
 }

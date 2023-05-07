@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 var response = await _availabilityGroupListenerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, availabilityGroupListenerName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AvailabilityGroupListenerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AvailabilityGroupListenerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 var response = _availabilityGroupListenerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, availabilityGroupListenerName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AvailabilityGroupListenerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AvailabilityGroupListenerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _availabilityGroupListenerRestClient.CreateListByGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _availabilityGroupListenerRestClient.CreateListByGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvailabilityGroupListenerResource(Client, AvailabilityGroupListenerData.DeserializeAvailabilityGroupListenerData(e)), _availabilityGroupListenerClientDiagnostics, Pipeline, "AvailabilityGroupListenerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AvailabilityGroupListenerData.DeserializeAvailabilityGroupListenerData(e); return new AvailabilityGroupListenerResource(Client, data, data.Id); }, _availabilityGroupListenerClientDiagnostics, Pipeline, "AvailabilityGroupListenerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _availabilityGroupListenerRestClient.CreateListByGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _availabilityGroupListenerRestClient.CreateListByGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvailabilityGroupListenerResource(Client, AvailabilityGroupListenerData.DeserializeAvailabilityGroupListenerData(e)), _availabilityGroupListenerClientDiagnostics, Pipeline, "AvailabilityGroupListenerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AvailabilityGroupListenerData.DeserializeAvailabilityGroupListenerData(e); return new AvailabilityGroupListenerResource(Client, data, data.Id); }, _availabilityGroupListenerClientDiagnostics, Pipeline, "AvailabilityGroupListenerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

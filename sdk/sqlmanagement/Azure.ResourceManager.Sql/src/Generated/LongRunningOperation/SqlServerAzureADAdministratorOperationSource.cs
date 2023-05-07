@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Sql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SqlServerAzureADAdministratorData.DeserializeSqlServerAzureADAdministratorData(document.RootElement);
-            return new SqlServerAzureADAdministratorResource(_client, data);
+            return new SqlServerAzureADAdministratorResource(_client, data, data.Id);
         }
 
         async ValueTask<SqlServerAzureADAdministratorResource> IOperationSource<SqlServerAzureADAdministratorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SqlServerAzureADAdministratorData.DeserializeSqlServerAzureADAdministratorData(document.RootElement);
-            return new SqlServerAzureADAdministratorResource(_client, data);
+            return new SqlServerAzureADAdministratorResource(_client, data, data.Id);
         }
     }
 }

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _blobContainerRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, containerName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation<BlobContainerResource>(Response.FromValue(new BlobContainerResource(Client, response), response.GetRawResponse()));
+                var operation = new StorageArmOperation<BlobContainerResource>(Response.FromValue(new BlobContainerResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _blobContainerRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, containerName, data, cancellationToken);
-                var operation = new StorageArmOperation<BlobContainerResource>(Response.FromValue(new BlobContainerResource(Client, response), response.GetRawResponse()));
+                var operation = new StorageArmOperation<BlobContainerResource>(Response.FromValue(new BlobContainerResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Storage
                 var response = await _blobContainerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, containerName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BlobContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BlobContainerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Storage
                 var response = _blobContainerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, containerName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BlobContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BlobContainerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Storage
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blobContainerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, include);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blobContainerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, include);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BlobContainerResource(Client, BlobContainerData.DeserializeBlobContainerData(e)), _blobContainerClientDiagnostics, Pipeline, "BlobContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = BlobContainerData.DeserializeBlobContainerData(e); return new BlobContainerResource(Client, data, data.Id); }, _blobContainerClientDiagnostics, Pipeline, "BlobContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Storage
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blobContainerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, include);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blobContainerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, include);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BlobContainerResource(Client, BlobContainerData.DeserializeBlobContainerData(e)), _blobContainerClientDiagnostics, Pipeline, "BlobContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = BlobContainerData.DeserializeBlobContainerData(e); return new BlobContainerResource(Client, data, data.Id); }, _blobContainerClientDiagnostics, Pipeline, "BlobContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Sql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SyncMemberData.DeserializeSyncMemberData(document.RootElement);
-            return new SyncMemberResource(_client, data);
+            return new SyncMemberResource(_client, data, data.Id);
         }
 
         async ValueTask<SyncMemberResource> IOperationSource<SyncMemberResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SyncMemberData.DeserializeSyncMemberData(document.RootElement);
-            return new SyncMemberResource(_client, data);
+            return new SyncMemberResource(_client, data, data.Id);
         }
     }
 }

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Quantum
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = QuantumWorkspaceData.DeserializeQuantumWorkspaceData(document.RootElement);
-            return new QuantumWorkspaceResource(_client, data);
+            return new QuantumWorkspaceResource(_client, data, data.Id);
         }
 
         async ValueTask<QuantumWorkspaceResource> IOperationSource<QuantumWorkspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = QuantumWorkspaceData.DeserializeQuantumWorkspaceData(document.RootElement);
-            return new QuantumWorkspaceResource(_client, data);
+            return new QuantumWorkspaceResource(_client, data, data.Id);
         }
     }
 }

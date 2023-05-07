@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = await _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBusDisasterRecoveryAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusDisasterRecoveryAuthorizationRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBusDisasterRecoveryAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusDisasterRecoveryAuthorizationRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceBusDisasterRecoveryAuthorizationRuleResource(Client, ServiceBusAuthorizationRuleData.DeserializeServiceBusAuthorizationRuleData(e)), _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics, Pipeline, "ServiceBusDisasterRecoveryAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceBusAuthorizationRuleData.DeserializeServiceBusAuthorizationRuleData(e); return new ServiceBusDisasterRecoveryAuthorizationRuleResource(Client, data, data.Id); }, _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics, Pipeline, "ServiceBusDisasterRecoveryAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceBusDisasterRecoveryAuthorizationRuleResource(Client, ServiceBusAuthorizationRuleData.DeserializeServiceBusAuthorizationRuleData(e)), _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics, Pipeline, "ServiceBusDisasterRecoveryAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceBusAuthorizationRuleData.DeserializeServiceBusAuthorizationRuleData(e); return new ServiceBusDisasterRecoveryAuthorizationRuleResource(Client, data, data.Id); }, _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics, Pipeline, "ServiceBusDisasterRecoveryAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _objectReplicationPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectReplicationPolicyId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation<ObjectReplicationPolicyResource>(Response.FromValue(new ObjectReplicationPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new StorageArmOperation<ObjectReplicationPolicyResource>(Response.FromValue(new ObjectReplicationPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _objectReplicationPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectReplicationPolicyId, data, cancellationToken);
-                var operation = new StorageArmOperation<ObjectReplicationPolicyResource>(Response.FromValue(new ObjectReplicationPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new StorageArmOperation<ObjectReplicationPolicyResource>(Response.FromValue(new ObjectReplicationPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Storage
                 var response = await _objectReplicationPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectReplicationPolicyId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ObjectReplicationPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ObjectReplicationPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Storage
                 var response = _objectReplicationPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectReplicationPolicyId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ObjectReplicationPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ObjectReplicationPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Storage
         public virtual AsyncPageable<ObjectReplicationPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _objectReplicationPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ObjectReplicationPolicyResource(Client, ObjectReplicationPolicyData.DeserializeObjectReplicationPolicyData(e)), _objectReplicationPolicyClientDiagnostics, Pipeline, "ObjectReplicationPolicyCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = ObjectReplicationPolicyData.DeserializeObjectReplicationPolicyData(e); return new ObjectReplicationPolicyResource(Client, data, data.Id); }, _objectReplicationPolicyClientDiagnostics, Pipeline, "ObjectReplicationPolicyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Storage
         public virtual Pageable<ObjectReplicationPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _objectReplicationPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ObjectReplicationPolicyResource(Client, ObjectReplicationPolicyData.DeserializeObjectReplicationPolicyData(e)), _objectReplicationPolicyClientDiagnostics, Pipeline, "ObjectReplicationPolicyCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = ObjectReplicationPolicyData.DeserializeObjectReplicationPolicyData(e); return new ObjectReplicationPolicyResource(Client, data, data.Id); }, _objectReplicationPolicyClientDiagnostics, Pipeline, "ObjectReplicationPolicyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

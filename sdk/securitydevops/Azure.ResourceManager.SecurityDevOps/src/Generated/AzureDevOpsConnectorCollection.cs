@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                 var response = await _azureDevOpsConnectorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, azureDevOpsConnectorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AzureDevOpsConnectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AzureDevOpsConnectorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                 var response = _azureDevOpsConnectorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, azureDevOpsConnectorName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AzureDevOpsConnectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AzureDevOpsConnectorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsConnectorRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureDevOpsConnectorRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsConnectorResource(Client, AzureDevOpsConnectorData.DeserializeAzureDevOpsConnectorData(e)), _azureDevOpsConnectorClientDiagnostics, Pipeline, "AzureDevOpsConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AzureDevOpsConnectorData.DeserializeAzureDevOpsConnectorData(e); return new AzureDevOpsConnectorResource(Client, data, data.Id); }, _azureDevOpsConnectorClientDiagnostics, Pipeline, "AzureDevOpsConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsConnectorRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureDevOpsConnectorRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsConnectorResource(Client, AzureDevOpsConnectorData.DeserializeAzureDevOpsConnectorData(e)), _azureDevOpsConnectorClientDiagnostics, Pipeline, "AzureDevOpsConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AzureDevOpsConnectorData.DeserializeAzureDevOpsConnectorData(e); return new AzureDevOpsConnectorResource(Client, data, data.Id); }, _azureDevOpsConnectorClientDiagnostics, Pipeline, "AzureDevOpsConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

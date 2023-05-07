@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _deviceSecurityGroupRestClient.CreateOrUpdateAsync(Id, deviceSecurityGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<DeviceSecurityGroupResource>(Response.FromValue(new DeviceSecurityGroupResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<DeviceSecurityGroupResource>(Response.FromValue(new DeviceSecurityGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _deviceSecurityGroupRestClient.CreateOrUpdate(Id, deviceSecurityGroupName, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<DeviceSecurityGroupResource>(Response.FromValue(new DeviceSecurityGroupResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<DeviceSecurityGroupResource>(Response.FromValue(new DeviceSecurityGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _deviceSecurityGroupRestClient.GetAsync(Id, deviceSecurityGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeviceSecurityGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeviceSecurityGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _deviceSecurityGroupRestClient.Get(Id, deviceSecurityGroupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeviceSecurityGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeviceSecurityGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceSecurityGroupRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceSecurityGroupRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeviceSecurityGroupResource(Client, DeviceSecurityGroupData.DeserializeDeviceSecurityGroupData(e)), _deviceSecurityGroupClientDiagnostics, Pipeline, "DeviceSecurityGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DeviceSecurityGroupData.DeserializeDeviceSecurityGroupData(e); return new DeviceSecurityGroupResource(Client, data, data.Id); }, _deviceSecurityGroupClientDiagnostics, Pipeline, "DeviceSecurityGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceSecurityGroupRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceSecurityGroupRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeviceSecurityGroupResource(Client, DeviceSecurityGroupData.DeserializeDeviceSecurityGroupData(e)), _deviceSecurityGroupClientDiagnostics, Pipeline, "DeviceSecurityGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DeviceSecurityGroupData.DeserializeDeviceSecurityGroupData(e); return new DeviceSecurityGroupResource(Client, data, data.Id); }, _deviceSecurityGroupClientDiagnostics, Pipeline, "DeviceSecurityGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

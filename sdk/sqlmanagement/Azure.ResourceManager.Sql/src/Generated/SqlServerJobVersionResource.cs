@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of the <see cref = "SqlServerJobVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SqlServerJobVersionResource(ArmClient client, SqlServerJobVersionData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal SqlServerJobVersionResource(ArmClient client, SqlServerJobVersionData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _sqlServerJobVersionJobVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlServerJobVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlServerJobVersionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -194,7 +195,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _sqlServerJobVersionJobVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlServerJobVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlServerJobVersionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

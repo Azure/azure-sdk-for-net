@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Sql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedInstanceEncryptionProtectorData.DeserializeManagedInstanceEncryptionProtectorData(document.RootElement);
-            return new ManagedInstanceEncryptionProtectorResource(_client, data);
+            return new ManagedInstanceEncryptionProtectorResource(_client, data, data.Id);
         }
 
         async ValueTask<ManagedInstanceEncryptionProtectorResource> IOperationSource<ManagedInstanceEncryptionProtectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedInstanceEncryptionProtectorData.DeserializeManagedInstanceEncryptionProtectorData(document.RootElement);
-            return new ManagedInstanceEncryptionProtectorResource(_client, data);
+            return new ManagedInstanceEncryptionProtectorResource(_client, data, data.Id);
         }
     }
 }

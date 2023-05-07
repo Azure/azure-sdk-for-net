@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Redis
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = RedisData.DeserializeRedisData(document.RootElement);
-            return new RedisResource(_client, data);
+            return new RedisResource(_client, data, data.Id);
         }
 
         async ValueTask<RedisResource> IOperationSource<RedisResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = RedisData.DeserializeRedisData(document.RootElement);
-            return new RedisResource(_client, data);
+            return new RedisResource(_client, data, data.Id);
         }
     }
 }

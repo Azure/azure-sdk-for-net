@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityInsights
             try
             {
                 var response = await _securityInsightsIncidentCommentIncidentCommentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, incidentCommentId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentCommentResource>(Response.FromValue(new SecurityInsightsIncidentCommentResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentCommentResource>(Response.FromValue(new SecurityInsightsIncidentCommentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityInsights
             try
             {
                 var response = _securityInsightsIncidentCommentIncidentCommentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, incidentCommentId, data, cancellationToken);
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentCommentResource>(Response.FromValue(new SecurityInsightsIncidentCommentResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentCommentResource>(Response.FromValue(new SecurityInsightsIncidentCommentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 var response = await _securityInsightsIncidentCommentIncidentCommentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, incidentCommentId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityInsightsIncidentCommentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsIncidentCommentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 var response = _securityInsightsIncidentCommentIncidentCommentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, incidentCommentId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityInsightsIncidentCommentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsIncidentCommentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsIncidentCommentIncidentCommentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsIncidentCommentIncidentCommentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsIncidentCommentResource(Client, SecurityInsightsIncidentCommentData.DeserializeSecurityInsightsIncidentCommentData(e)), _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics, Pipeline, "SecurityInsightsIncidentCommentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityInsightsIncidentCommentData.DeserializeSecurityInsightsIncidentCommentData(e); return new SecurityInsightsIncidentCommentResource(Client, data, data.Id); }, _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics, Pipeline, "SecurityInsightsIncidentCommentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsIncidentCommentIncidentCommentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsIncidentCommentIncidentCommentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsIncidentCommentResource(Client, SecurityInsightsIncidentCommentData.DeserializeSecurityInsightsIncidentCommentData(e)), _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics, Pipeline, "SecurityInsightsIncidentCommentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityInsightsIncidentCommentData.DeserializeSecurityInsightsIncidentCommentData(e); return new SecurityInsightsIncidentCommentResource(Client, data, data.Id); }, _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics, Pipeline, "SecurityInsightsIncidentCommentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

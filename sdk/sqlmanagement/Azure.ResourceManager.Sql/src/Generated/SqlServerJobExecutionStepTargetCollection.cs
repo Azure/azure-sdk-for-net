@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, targetId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlServerJobExecutionStepTargetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlServerJobExecutionStepTargetResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, targetId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlServerJobExecutionStepTargetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlServerJobExecutionStepTargetResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Sql
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.CreateListByStepRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, options.CreateTimeMin, options.CreateTimeMax, options.EndTimeMin, options.EndTimeMax, options.IsActive, options.Skip, options.Top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.CreateListByStepNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, options.CreateTimeMin, options.CreateTimeMax, options.EndTimeMin, options.EndTimeMax, options.IsActive, options.Skip, options.Top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobExecutionStepTargetResource(Client, SqlServerJobExecutionData.DeserializeSqlServerJobExecutionData(e)), _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics, Pipeline, "SqlServerJobExecutionStepTargetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SqlServerJobExecutionData.DeserializeSqlServerJobExecutionData(e); return new SqlServerJobExecutionStepTargetResource(Client, data, data.Id); }, _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics, Pipeline, "SqlServerJobExecutionStepTargetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Sql
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.CreateListByStepRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, options.CreateTimeMin, options.CreateTimeMax, options.EndTimeMin, options.EndTimeMax, options.IsActive, options.Skip, options.Top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.CreateListByStepNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, options.CreateTimeMin, options.CreateTimeMax, options.EndTimeMin, options.EndTimeMax, options.IsActive, options.Skip, options.Top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobExecutionStepTargetResource(Client, SqlServerJobExecutionData.DeserializeSqlServerJobExecutionData(e)), _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics, Pipeline, "SqlServerJobExecutionStepTargetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SqlServerJobExecutionData.DeserializeSqlServerJobExecutionData(e); return new SqlServerJobExecutionStepTargetResource(Client, data, data.Id); }, _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics, Pipeline, "SqlServerJobExecutionStepTargetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of the <see cref = "DeviceSecurityGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DeviceSecurityGroupResource(ArmClient client, DeviceSecurityGroupData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal DeviceSecurityGroupResource(ArmClient client, DeviceSecurityGroupData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _deviceSecurityGroupRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeviceSecurityGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeviceSecurityGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _deviceSecurityGroupRestClient.Get(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeviceSecurityGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeviceSecurityGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _deviceSecurityGroupRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<DeviceSecurityGroupResource>(Response.FromValue(new DeviceSecurityGroupResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<DeviceSecurityGroupResource>(Response.FromValue(new DeviceSecurityGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,7 +283,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _deviceSecurityGroupRestClient.CreateOrUpdate(Id.Parent, Id.Name, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<DeviceSecurityGroupResource>(Response.FromValue(new DeviceSecurityGroupResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<DeviceSecurityGroupResource>(Response.FromValue(new DeviceSecurityGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

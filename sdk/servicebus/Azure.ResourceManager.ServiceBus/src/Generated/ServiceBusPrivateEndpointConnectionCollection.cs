@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = await _serviceBusPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceBusArmOperation<ServiceBusPrivateEndpointConnectionResource>(Response.FromValue(new ServiceBusPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var operation = new ServiceBusArmOperation<ServiceBusPrivateEndpointConnectionResource>(Response.FromValue(new ServiceBusPrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = _serviceBusPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new ServiceBusArmOperation<ServiceBusPrivateEndpointConnectionResource>(Response.FromValue(new ServiceBusPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var operation = new ServiceBusArmOperation<ServiceBusPrivateEndpointConnectionResource>(Response.FromValue(new ServiceBusPrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = await _serviceBusPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBusPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusPrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = _serviceBusPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBusPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusPrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceBusPrivateEndpointConnectionResource(Client, ServiceBusPrivateEndpointConnectionData.DeserializeServiceBusPrivateEndpointConnectionData(e)), _serviceBusPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "ServiceBusPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceBusPrivateEndpointConnectionData.DeserializeServiceBusPrivateEndpointConnectionData(e); return new ServiceBusPrivateEndpointConnectionResource(Client, data, data.Id); }, _serviceBusPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "ServiceBusPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceBusPrivateEndpointConnectionResource(Client, ServiceBusPrivateEndpointConnectionData.DeserializeServiceBusPrivateEndpointConnectionData(e)), _serviceBusPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "ServiceBusPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceBusPrivateEndpointConnectionData.DeserializeServiceBusPrivateEndpointConnectionData(e); return new ServiceBusPrivateEndpointConnectionResource(Client, data, data.Id); }, _serviceBusPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "ServiceBusPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

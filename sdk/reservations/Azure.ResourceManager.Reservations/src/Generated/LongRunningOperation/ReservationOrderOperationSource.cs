@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Reservations
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ReservationOrderData.DeserializeReservationOrderData(document.RootElement);
-            return new ReservationOrderResource(_client, data);
+            return new ReservationOrderResource(_client, data, data.Id);
         }
 
         async ValueTask<ReservationOrderResource> IOperationSource<ReservationOrderResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ReservationOrderData.DeserializeReservationOrderData(document.RootElement);
-            return new ReservationOrderResource(_client, data);
+            return new ReservationOrderResource(_client, data, data.Id);
         }
     }
 }

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = await _serviceBusDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceBusArmOperation<ServiceBusDisasterRecoveryResource>(Response.FromValue(new ServiceBusDisasterRecoveryResource(Client, response), response.GetRawResponse()));
+                var operation = new ServiceBusArmOperation<ServiceBusDisasterRecoveryResource>(Response.FromValue(new ServiceBusDisasterRecoveryResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = _serviceBusDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, data, cancellationToken);
-                var operation = new ServiceBusArmOperation<ServiceBusDisasterRecoveryResource>(Response.FromValue(new ServiceBusDisasterRecoveryResource(Client, response), response.GetRawResponse()));
+                var operation = new ServiceBusArmOperation<ServiceBusDisasterRecoveryResource>(Response.FromValue(new ServiceBusDisasterRecoveryResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = await _serviceBusDisasterRecoveryDisasterRecoveryConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBusDisasterRecoveryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusDisasterRecoveryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = _serviceBusDisasterRecoveryDisasterRecoveryConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBusDisasterRecoveryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusDisasterRecoveryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceBusDisasterRecoveryResource(Client, ServiceBusDisasterRecoveryData.DeserializeServiceBusDisasterRecoveryData(e)), _serviceBusDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics, Pipeline, "ServiceBusDisasterRecoveryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceBusDisasterRecoveryData.DeserializeServiceBusDisasterRecoveryData(e); return new ServiceBusDisasterRecoveryResource(Client, data, data.Id); }, _serviceBusDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics, Pipeline, "ServiceBusDisasterRecoveryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceBusDisasterRecoveryResource(Client, ServiceBusDisasterRecoveryData.DeserializeServiceBusDisasterRecoveryData(e)), _serviceBusDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics, Pipeline, "ServiceBusDisasterRecoveryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceBusDisasterRecoveryData.DeserializeServiceBusDisasterRecoveryData(e); return new ServiceBusDisasterRecoveryResource(Client, data, data.Id); }, _serviceBusDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics, Pipeline, "ServiceBusDisasterRecoveryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

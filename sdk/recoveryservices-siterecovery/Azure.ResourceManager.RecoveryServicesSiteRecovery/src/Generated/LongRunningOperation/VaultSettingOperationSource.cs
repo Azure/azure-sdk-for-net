@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VaultSettingData.DeserializeVaultSettingData(document.RootElement);
-            return new VaultSettingResource(_client, data);
+            return new VaultSettingResource(_client, data, data.Id);
         }
 
         async ValueTask<VaultSettingResource> IOperationSource<VaultSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VaultSettingData.DeserializeVaultSettingData(document.RootElement);
-            return new VaultSettingResource(_client, data);
+            return new VaultSettingResource(_client, data, data.Id);
         }
     }
 }

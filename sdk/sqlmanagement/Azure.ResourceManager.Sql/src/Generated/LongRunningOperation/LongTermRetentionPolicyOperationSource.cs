@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Sql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = LongTermRetentionPolicyData.DeserializeLongTermRetentionPolicyData(document.RootElement);
-            return new LongTermRetentionPolicyResource(_client, data);
+            return new LongTermRetentionPolicyResource(_client, data, data.Id);
         }
 
         async ValueTask<LongTermRetentionPolicyResource> IOperationSource<LongTermRetentionPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = LongTermRetentionPolicyData.DeserializeLongTermRetentionPolicyData(document.RootElement);
-            return new LongTermRetentionPolicyResource(_client, data);
+            return new LongTermRetentionPolicyResource(_client, data, data.Id);
         }
     }
 }

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _managedDatabaseRestoreDetailRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restoreDetailsName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabaseRestoreDetailResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseRestoreDetailResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _managedDatabaseRestoreDetailRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restoreDetailsName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabaseRestoreDetailResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseRestoreDetailResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

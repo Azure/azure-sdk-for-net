@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _recoverableDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecoverableDatabaseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RecoverableDatabaseResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _recoverableDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecoverableDatabaseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RecoverableDatabaseResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Sql
         public virtual AsyncPageable<RecoverableDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoverableDatabaseRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new RecoverableDatabaseResource(Client, RecoverableDatabaseData.DeserializeRecoverableDatabaseData(e)), _recoverableDatabaseClientDiagnostics, Pipeline, "RecoverableDatabaseCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = RecoverableDatabaseData.DeserializeRecoverableDatabaseData(e); return new RecoverableDatabaseResource(Client, data, data.Id); }, _recoverableDatabaseClientDiagnostics, Pipeline, "RecoverableDatabaseCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Pageable<RecoverableDatabaseResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoverableDatabaseRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new RecoverableDatabaseResource(Client, RecoverableDatabaseData.DeserializeRecoverableDatabaseData(e)), _recoverableDatabaseClientDiagnostics, Pipeline, "RecoverableDatabaseCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = RecoverableDatabaseData.DeserializeRecoverableDatabaseData(e); return new RecoverableDatabaseResource(Client, data, data.Id); }, _recoverableDatabaseClientDiagnostics, Pipeline, "RecoverableDatabaseCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Reservations
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ReservationQuotaData.DeserializeReservationQuotaData(document.RootElement);
-            return new ReservationQuotaResource(_client, data);
+            return new ReservationQuotaResource(_client, data, data.Id);
         }
 
         async ValueTask<ReservationQuotaResource> IOperationSource<ReservationQuotaResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ReservationQuotaData.DeserializeReservationQuotaData(document.RootElement);
-            return new ReservationQuotaResource(_client, data);
+            return new ReservationQuotaResource(_client, data, data.Id);
         }
     }
 }

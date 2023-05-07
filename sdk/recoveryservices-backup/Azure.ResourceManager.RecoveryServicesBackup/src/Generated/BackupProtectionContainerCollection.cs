@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = await _backupProtectionContainerProtectionContainersRestClient.RegisterAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesBackupArmOperation<BackupProtectionContainerResource>(Response.FromValue(new BackupProtectionContainerResource(Client, response), response.GetRawResponse()));
+                var operation = new RecoveryServicesBackupArmOperation<BackupProtectionContainerResource>(Response.FromValue(new BackupProtectionContainerResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = _backupProtectionContainerProtectionContainersRestClient.Register(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, data, cancellationToken);
-                var operation = new RecoveryServicesBackupArmOperation<BackupProtectionContainerResource>(Response.FromValue(new BackupProtectionContainerResource(Client, response), response.GetRawResponse()));
+                var operation = new RecoveryServicesBackupArmOperation<BackupProtectionContainerResource>(Response.FromValue(new BackupProtectionContainerResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 var response = await _backupProtectionContainerProtectionContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupProtectionContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupProtectionContainerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 var response = _backupProtectionContainerProtectionContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupProtectionContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupProtectionContainerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 var response = await _backupPrivateEndpointConnectionPrivateEndpointConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupPrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 var response = _backupPrivateEndpointConnectionPrivateEndpointConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupPrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

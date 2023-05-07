@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _softwareInventoryRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName, softwareName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SoftwareInventoryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SoftwareInventoryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _softwareInventoryRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName, softwareName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SoftwareInventoryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SoftwareInventoryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareInventoryRestClient.CreateListByExtendedResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _softwareInventoryRestClient.CreateListByExtendedResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SoftwareInventoryResource(Client, SoftwareInventoryData.DeserializeSoftwareInventoryData(e)), _softwareInventoryClientDiagnostics, Pipeline, "SoftwareInventoryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SoftwareInventoryData.DeserializeSoftwareInventoryData(e); return new SoftwareInventoryResource(Client, data, data.Id); }, _softwareInventoryClientDiagnostics, Pipeline, "SoftwareInventoryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareInventoryRestClient.CreateListByExtendedResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _softwareInventoryRestClient.CreateListByExtendedResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SoftwareInventoryResource(Client, SoftwareInventoryData.DeserializeSoftwareInventoryData(e)), _softwareInventoryClientDiagnostics, Pipeline, "SoftwareInventoryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SoftwareInventoryData.DeserializeSoftwareInventoryData(e); return new SoftwareInventoryResource(Client, data, data.Id); }, _softwareInventoryClientDiagnostics, Pipeline, "SoftwareInventoryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

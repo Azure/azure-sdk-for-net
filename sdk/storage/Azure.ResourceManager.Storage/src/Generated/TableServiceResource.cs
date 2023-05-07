@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Initializes a new instance of the <see cref = "TableServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TableServiceResource(ArmClient client, TableServiceData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal TableServiceResource(ArmClient client, TableServiceData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.Storage
                 var response = await _tableServiceRestClient.GetServicePropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TableServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TableServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -194,7 +195,7 @@ namespace Azure.ResourceManager.Storage
                 var response = _tableServiceRestClient.GetServiceProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TableServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TableServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _tableServiceRestClient.SetServicePropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation<TableServiceResource>(Response.FromValue(new TableServiceResource(Client, response), response.GetRawResponse()));
+                var operation = new StorageArmOperation<TableServiceResource>(Response.FromValue(new TableServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -267,7 +268,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _tableServiceRestClient.SetServiceProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new StorageArmOperation<TableServiceResource>(Response.FromValue(new TableServiceResource(Client, response), response.GetRawResponse()));
+                var operation = new StorageArmOperation<TableServiceResource>(Response.FromValue(new TableServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

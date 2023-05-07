@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = RecoveryServicesVaultData.DeserializeRecoveryServicesVaultData(document.RootElement);
-            return new RecoveryServicesVaultResource(_client, data);
+            return new RecoveryServicesVaultResource(_client, data, data.Id);
         }
 
         async ValueTask<RecoveryServicesVaultResource> IOperationSource<RecoveryServicesVaultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = RecoveryServicesVaultData.DeserializeRecoveryServicesVaultData(document.RootElement);
-            return new RecoveryServicesVaultResource(_client, data);
+            return new RecoveryServicesVaultResource(_client, data, data.Id);
         }
     }
 }

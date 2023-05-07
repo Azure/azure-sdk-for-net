@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _policyAssignmentRestClient.CreateAsync(Id, policyAssignmentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<PolicyAssignmentResource>(Response.FromValue(new PolicyAssignmentResource(Client, response), response.GetRawResponse()));
+                var operation = new ResourcesArmOperation<PolicyAssignmentResource>(Response.FromValue(new PolicyAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _policyAssignmentRestClient.Create(Id, policyAssignmentName, data, cancellationToken);
-                var operation = new ResourcesArmOperation<PolicyAssignmentResource>(Response.FromValue(new PolicyAssignmentResource(Client, response), response.GetRawResponse()));
+                var operation = new ResourcesArmOperation<PolicyAssignmentResource>(Response.FromValue(new PolicyAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _policyAssignmentRestClient.GetAsync(Id, policyAssignmentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _policyAssignmentRestClient.Get(Id, policyAssignmentName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -247,25 +247,25 @@ namespace Azure.ResourceManager.Resources
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListForResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListForResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PolicyAssignmentData.DeserializePolicyAssignmentData(e); return new PolicyAssignmentResource(Client, data, data.Id); }, _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == ManagementGroupResource.ResourceType)
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListForManagementGroupRequest(Id.Name, filter, top);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListForManagementGroupNextPageRequest(nextLink, Id.Name, filter, top);
-                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PolicyAssignmentData.DeserializePolicyAssignmentData(e); return new PolicyAssignmentResource(Client, data, data.Id); }, _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == SubscriptionResource.ResourceType)
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListRequest(Id.SubscriptionId, filter, top);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PolicyAssignmentData.DeserializePolicyAssignmentData(e); return new PolicyAssignmentResource(Client, data, data.Id); }, _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListForResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListForResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top);
-                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PolicyAssignmentData.DeserializePolicyAssignmentData(e); return new PolicyAssignmentResource(Client, data, data.Id); }, _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
         }
 
@@ -316,25 +316,25 @@ namespace Azure.ResourceManager.Resources
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListForResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListForResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PolicyAssignmentData.DeserializePolicyAssignmentData(e); return new PolicyAssignmentResource(Client, data, data.Id); }, _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == ManagementGroupResource.ResourceType)
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListForManagementGroupRequest(Id.Name, filter, top);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListForManagementGroupNextPageRequest(nextLink, Id.Name, filter, top);
-                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PolicyAssignmentData.DeserializePolicyAssignmentData(e); return new PolicyAssignmentResource(Client, data, data.Id); }, _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == SubscriptionResource.ResourceType)
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListRequest(Id.SubscriptionId, filter, top);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PolicyAssignmentData.DeserializePolicyAssignmentData(e); return new PolicyAssignmentResource(Client, data, data.Id); }, _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListForResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListForResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top);
-                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PolicyAssignmentData.DeserializePolicyAssignmentData(e); return new PolicyAssignmentResource(Client, data, data.Id); }, _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
         }
 

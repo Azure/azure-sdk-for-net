@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of the <see cref = "ManagedDatabaseSecurityAlertPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagedDatabaseSecurityAlertPolicyResource(ArmClient client, ManagedDatabaseSecurityAlertPolicyData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal ManagedDatabaseSecurityAlertPolicyResource(ArmClient client, ManagedDatabaseSecurityAlertPolicyData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _managedDatabaseSecurityAlertPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabaseSecurityAlertPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseSecurityAlertPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _managedDatabaseSecurityAlertPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabaseSecurityAlertPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseSecurityAlertPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedDatabaseSecurityAlertPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedDatabaseSecurityAlertPolicyResource>(Response.FromValue(new ManagedDatabaseSecurityAlertPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new SqlArmOperation<ManagedDatabaseSecurityAlertPolicyResource>(Response.FromValue(new ManagedDatabaseSecurityAlertPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -215,7 +216,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedDatabaseSecurityAlertPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SqlArmOperation<ManagedDatabaseSecurityAlertPolicyResource>(Response.FromValue(new ManagedDatabaseSecurityAlertPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new SqlArmOperation<ManagedDatabaseSecurityAlertPolicyResource>(Response.FromValue(new ManagedDatabaseSecurityAlertPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityInsights
             try
             {
                 var response = await _securityInsightsWatchlistItemWatchlistItemsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, watchlistItemId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsWatchlistItemResource>(Response.FromValue(new SecurityInsightsWatchlistItemResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsWatchlistItemResource>(Response.FromValue(new SecurityInsightsWatchlistItemResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityInsights
             try
             {
                 var response = _securityInsightsWatchlistItemWatchlistItemsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, watchlistItemId, data, cancellationToken);
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsWatchlistItemResource>(Response.FromValue(new SecurityInsightsWatchlistItemResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsWatchlistItemResource>(Response.FromValue(new SecurityInsightsWatchlistItemResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 var response = await _securityInsightsWatchlistItemWatchlistItemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, watchlistItemId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityInsightsWatchlistItemResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsWatchlistItemResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 var response = _securityInsightsWatchlistItemWatchlistItemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, watchlistItemId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityInsightsWatchlistItemResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsWatchlistItemResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsWatchlistItemWatchlistItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsWatchlistItemWatchlistItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsWatchlistItemResource(Client, SecurityInsightsWatchlistItemData.DeserializeSecurityInsightsWatchlistItemData(e)), _securityInsightsWatchlistItemWatchlistItemsClientDiagnostics, Pipeline, "SecurityInsightsWatchlistItemCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityInsightsWatchlistItemData.DeserializeSecurityInsightsWatchlistItemData(e); return new SecurityInsightsWatchlistItemResource(Client, data, data.Id); }, _securityInsightsWatchlistItemWatchlistItemsClientDiagnostics, Pipeline, "SecurityInsightsWatchlistItemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsWatchlistItemWatchlistItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsWatchlistItemWatchlistItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsWatchlistItemResource(Client, SecurityInsightsWatchlistItemData.DeserializeSecurityInsightsWatchlistItemData(e)), _securityInsightsWatchlistItemWatchlistItemsClientDiagnostics, Pipeline, "SecurityInsightsWatchlistItemCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityInsightsWatchlistItemData.DeserializeSecurityInsightsWatchlistItemData(e); return new SecurityInsightsWatchlistItemResource(Client, data, data.Id); }, _securityInsightsWatchlistItemWatchlistItemsClientDiagnostics, Pipeline, "SecurityInsightsWatchlistItemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

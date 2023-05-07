@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = await _serviceBusQueueQueuesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queueName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceBusArmOperation<ServiceBusQueueResource>(Response.FromValue(new ServiceBusQueueResource(Client, response), response.GetRawResponse()));
+                var operation = new ServiceBusArmOperation<ServiceBusQueueResource>(Response.FromValue(new ServiceBusQueueResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = _serviceBusQueueQueuesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queueName, data, cancellationToken);
-                var operation = new ServiceBusArmOperation<ServiceBusQueueResource>(Response.FromValue(new ServiceBusQueueResource(Client, response), response.GetRawResponse()));
+                var operation = new ServiceBusArmOperation<ServiceBusQueueResource>(Response.FromValue(new ServiceBusQueueResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = await _serviceBusQueueQueuesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queueName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBusQueueResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusQueueResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = _serviceBusQueueQueuesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queueName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBusQueueResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusQueueResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusQueueQueuesRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusQueueQueuesRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceBusQueueResource(Client, ServiceBusQueueData.DeserializeServiceBusQueueData(e)), _serviceBusQueueQueuesClientDiagnostics, Pipeline, "ServiceBusQueueCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceBusQueueData.DeserializeServiceBusQueueData(e); return new ServiceBusQueueResource(Client, data, data.Id); }, _serviceBusQueueQueuesClientDiagnostics, Pipeline, "ServiceBusQueueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusQueueQueuesRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusQueueQueuesRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceBusQueueResource(Client, ServiceBusQueueData.DeserializeServiceBusQueueData(e)), _serviceBusQueueQueuesClientDiagnostics, Pipeline, "ServiceBusQueueCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceBusQueueData.DeserializeServiceBusQueueData(e); return new ServiceBusQueueResource(Client, data, data.Id); }, _serviceBusQueueQueuesClientDiagnostics, Pipeline, "ServiceBusQueueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

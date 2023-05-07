@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of the <see cref = "ScriptLogResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ScriptLogResource(ArmClient client, ScriptLogData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal ScriptLogResource(ArmClient client, ScriptLogData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _scriptLogDeploymentScriptsRestClient.GetLogsDefaultAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, tail, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ScriptLogResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ScriptLogResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _scriptLogDeploymentScriptsRestClient.GetLogsDefault(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, tail, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ScriptLogResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ScriptLogResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlDatabaseSensitivityLabelResource>(Response.FromValue(new SqlDatabaseSensitivityLabelResource(Client, response), response.GetRawResponse()));
+                var operation = new SqlArmOperation<SqlDatabaseSensitivityLabelResource>(Response.FromValue(new SqlDatabaseSensitivityLabelResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlDatabaseSensitivityLabelResource>(Response.FromValue(new SqlDatabaseSensitivityLabelResource(Client, response), response.GetRawResponse()));
+                var operation = new SqlArmOperation<SqlDatabaseSensitivityLabelResource>(Response.FromValue(new SqlDatabaseSensitivityLabelResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, sensitivityLabelSource, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlDatabaseSensitivityLabelResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlDatabaseSensitivityLabelResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, sensitivityLabelSource, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlDatabaseSensitivityLabelResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlDatabaseSensitivityLabelResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -50,7 +50,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary> Initializes a new instance of the <see cref = "BackupRecoveryPointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BackupRecoveryPointResource(ArmClient client, BackupRecoveryPointData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal BackupRecoveryPointResource(ArmClient client, BackupRecoveryPointData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 var response = await _backupRecoveryPointRecoveryPointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupRecoveryPointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,7 +157,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 var response = _backupRecoveryPointRecoveryPointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupRecoveryPointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

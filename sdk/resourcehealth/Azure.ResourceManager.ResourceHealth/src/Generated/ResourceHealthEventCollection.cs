@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 var response = await _resourceHealthEventEventRestClient.GetBySubscriptionIdAndTrackingIdAsync(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceHealthEventResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceHealthEventResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 var response = _resourceHealthEventEventRestClient.GetBySubscriptionIdAndTrackingId(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceHealthEventResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceHealthEventResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceHealthEventEventsRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId, filter, queryStartTime);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceHealthEventEventsRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId, filter, queryStartTime);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceHealthEventResource(Client, ResourceHealthEventData.DeserializeResourceHealthEventData(e)), _resourceHealthEventEventsClientDiagnostics, Pipeline, "ResourceHealthEventCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ResourceHealthEventData.DeserializeResourceHealthEventData(e); return new ResourceHealthEventResource(Client, data, data.Id); }, _resourceHealthEventEventsClientDiagnostics, Pipeline, "ResourceHealthEventCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceHealthEventEventsRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId, filter, queryStartTime);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceHealthEventEventsRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId, filter, queryStartTime);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceHealthEventResource(Client, ResourceHealthEventData.DeserializeResourceHealthEventData(e)), _resourceHealthEventEventsClientDiagnostics, Pipeline, "ResourceHealthEventCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ResourceHealthEventData.DeserializeResourceHealthEventData(e); return new ResourceHealthEventResource(Client, data, data.Id); }, _resourceHealthEventEventsClientDiagnostics, Pipeline, "ResourceHealthEventCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

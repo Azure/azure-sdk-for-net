@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = RecoveryPlanData.DeserializeRecoveryPlanData(document.RootElement);
-            return new RecoveryPlanResource(_client, data);
+            return new RecoveryPlanResource(_client, data, data.Id);
         }
 
         async ValueTask<RecoveryPlanResource> IOperationSource<RecoveryPlanResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = RecoveryPlanData.DeserializeRecoveryPlanData(document.RootElement);
-            return new RecoveryPlanResource(_client, data);
+            return new RecoveryPlanResource(_client, data, data.Id);
         }
     }
 }

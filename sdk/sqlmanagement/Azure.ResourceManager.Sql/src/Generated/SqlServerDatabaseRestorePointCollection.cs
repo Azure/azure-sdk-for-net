@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _sqlServerDatabaseRestorePointRestorePointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restorePointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlServerDatabaseRestorePointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlServerDatabaseRestorePointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _sqlServerDatabaseRestorePointRestorePointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restorePointName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlServerDatabaseRestorePointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlServerDatabaseRestorePointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDatabaseRestorePointRestorePointsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDatabaseRestorePointRestorePointsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerDatabaseRestorePointResource(Client, SqlServerDatabaseRestorePointData.DeserializeSqlServerDatabaseRestorePointData(e)), _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics, Pipeline, "SqlServerDatabaseRestorePointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SqlServerDatabaseRestorePointData.DeserializeSqlServerDatabaseRestorePointData(e); return new SqlServerDatabaseRestorePointResource(Client, data, data.Id); }, _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics, Pipeline, "SqlServerDatabaseRestorePointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDatabaseRestorePointRestorePointsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDatabaseRestorePointRestorePointsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerDatabaseRestorePointResource(Client, SqlServerDatabaseRestorePointData.DeserializeSqlServerDatabaseRestorePointData(e)), _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics, Pipeline, "SqlServerDatabaseRestorePointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SqlServerDatabaseRestorePointData.DeserializeSqlServerDatabaseRestorePointData(e); return new SqlServerDatabaseRestorePointResource(Client, data, data.Id); }, _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics, Pipeline, "SqlServerDatabaseRestorePointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

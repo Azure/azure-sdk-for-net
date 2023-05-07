@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _resourceGroupSecurityTaskTasksRestClient.GetResourceGroupLevelTaskAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), taskName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceGroupSecurityTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupSecurityTaskResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _resourceGroupSecurityTaskTasksRestClient.GetResourceGroupLevelTask(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), taskName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceGroupSecurityTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupSecurityTaskResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGroupSecurityTaskTasksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGroupSecurityTaskTasksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceGroupSecurityTaskResource(Client, SecurityTaskData.DeserializeSecurityTaskData(e)), _resourceGroupSecurityTaskTasksClientDiagnostics, Pipeline, "ResourceGroupSecurityTaskCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityTaskData.DeserializeSecurityTaskData(e); return new ResourceGroupSecurityTaskResource(Client, data, data.Id); }, _resourceGroupSecurityTaskTasksClientDiagnostics, Pipeline, "ResourceGroupSecurityTaskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGroupSecurityTaskTasksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGroupSecurityTaskTasksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceGroupSecurityTaskResource(Client, SecurityTaskData.DeserializeSecurityTaskData(e)), _resourceGroupSecurityTaskTasksClientDiagnostics, Pipeline, "ResourceGroupSecurityTaskCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityTaskData.DeserializeSecurityTaskData(e); return new ResourceGroupSecurityTaskResource(Client, data, data.Id); }, _resourceGroupSecurityTaskTasksClientDiagnostics, Pipeline, "ResourceGroupSecurityTaskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _jitNetworkAccessPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), jitNetworkAccessPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<JitNetworkAccessPolicyResource>(Response.FromValue(new JitNetworkAccessPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<JitNetworkAccessPolicyResource>(Response.FromValue(new JitNetworkAccessPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _jitNetworkAccessPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), jitNetworkAccessPolicyName, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<JitNetworkAccessPolicyResource>(Response.FromValue(new JitNetworkAccessPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<JitNetworkAccessPolicyResource>(Response.FromValue(new JitNetworkAccessPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _jitNetworkAccessPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), jitNetworkAccessPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JitNetworkAccessPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new JitNetworkAccessPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _jitNetworkAccessPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), jitNetworkAccessPolicyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JitNetworkAccessPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new JitNetworkAccessPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jitNetworkAccessPolicyRestClient.CreateListByResourceGroupAndRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jitNetworkAccessPolicyRestClient.CreateListByResourceGroupAndRegionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), _jitNetworkAccessPolicyClientDiagnostics, Pipeline, "JitNetworkAccessPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e); return new JitNetworkAccessPolicyResource(Client, data, data.Id); }, _jitNetworkAccessPolicyClientDiagnostics, Pipeline, "JitNetworkAccessPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jitNetworkAccessPolicyRestClient.CreateListByResourceGroupAndRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jitNetworkAccessPolicyRestClient.CreateListByResourceGroupAndRegionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), _jitNetworkAccessPolicyClientDiagnostics, Pipeline, "JitNetworkAccessPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e); return new JitNetworkAccessPolicyResource(Client, data, data.Id); }, _jitNetworkAccessPolicyClientDiagnostics, Pipeline, "JitNetworkAccessPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

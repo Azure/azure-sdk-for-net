@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.Reservations
         /// <summary> Initializes a new instance of the <see cref = "QuotaRequestDetailResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal QuotaRequestDetailResource(ArmClient client, QuotaRequestDetailData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal QuotaRequestDetailResource(ArmClient client, QuotaRequestDetailData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Reservations
                 var response = await _quotaRequestDetailQuotaRequestStatusRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Parent.Name, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new QuotaRequestDetailResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new QuotaRequestDetailResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Reservations
                 var response = _quotaRequestDetailQuotaRequestStatusRestClient.Get(Id.SubscriptionId, Id.Parent.Parent.Name, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new QuotaRequestDetailResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new QuotaRequestDetailResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

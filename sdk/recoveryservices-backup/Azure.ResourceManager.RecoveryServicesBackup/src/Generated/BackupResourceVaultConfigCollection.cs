@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = await _backupResourceVaultConfigRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesBackupArmOperation<BackupResourceVaultConfigResource>(Response.FromValue(new BackupResourceVaultConfigResource(Client, response), response.GetRawResponse()));
+                var operation = new RecoveryServicesBackupArmOperation<BackupResourceVaultConfigResource>(Response.FromValue(new BackupResourceVaultConfigResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = _backupResourceVaultConfigRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data, cancellationToken);
-                var operation = new RecoveryServicesBackupArmOperation<BackupResourceVaultConfigResource>(Response.FromValue(new BackupResourceVaultConfigResource(Client, response), response.GetRawResponse()));
+                var operation = new RecoveryServicesBackupArmOperation<BackupResourceVaultConfigResource>(Response.FromValue(new BackupResourceVaultConfigResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 var response = await _backupResourceVaultConfigRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupResourceVaultConfigResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupResourceVaultConfigResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 var response = _backupResourceVaultConfigRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupResourceVaultConfigResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupResourceVaultConfigResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

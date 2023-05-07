@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Relay
         /// <summary> Initializes a new instance of the <see cref = "RelayPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RelayPrivateLinkResource(ArmClient client, RelayPrivateLinkResourceData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal RelayPrivateLinkResource(ArmClient client, RelayPrivateLinkResourceData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Relay
                 var response = await _relayPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RelayPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RelayPrivateLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Relay
                 var response = _relayPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RelayPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RelayPrivateLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

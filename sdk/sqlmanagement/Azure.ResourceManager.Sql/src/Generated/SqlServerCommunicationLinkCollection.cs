@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _sqlServerCommunicationLinkServerCommunicationLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlServerCommunicationLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlServerCommunicationLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _sqlServerCommunicationLinkServerCommunicationLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlServerCommunicationLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlServerCommunicationLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Sql
         public virtual AsyncPageable<SqlServerCommunicationLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerCommunicationLinkServerCommunicationLinksRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SqlServerCommunicationLinkResource(Client, SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(e)), _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics, Pipeline, "SqlServerCommunicationLinkCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(e); return new SqlServerCommunicationLinkResource(Client, data, data.Id); }, _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics, Pipeline, "SqlServerCommunicationLinkCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Pageable<SqlServerCommunicationLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerCommunicationLinkServerCommunicationLinksRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SqlServerCommunicationLinkResource(Client, SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(e)), _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics, Pipeline, "SqlServerCommunicationLinkCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(e); return new SqlServerCommunicationLinkResource(Client, data, data.Id); }, _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics, Pipeline, "SqlServerCommunicationLinkCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

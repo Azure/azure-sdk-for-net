@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _regulatoryComplianceAssessmentRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, regulatoryComplianceAssessmentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RegulatoryComplianceAssessmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RegulatoryComplianceAssessmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _regulatoryComplianceAssessmentRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, regulatoryComplianceAssessmentName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RegulatoryComplianceAssessmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RegulatoryComplianceAssessmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _regulatoryComplianceAssessmentRestClient.CreateListRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _regulatoryComplianceAssessmentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RegulatoryComplianceAssessmentResource(Client, RegulatoryComplianceAssessmentData.DeserializeRegulatoryComplianceAssessmentData(e)), _regulatoryComplianceAssessmentClientDiagnostics, Pipeline, "RegulatoryComplianceAssessmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = RegulatoryComplianceAssessmentData.DeserializeRegulatoryComplianceAssessmentData(e); return new RegulatoryComplianceAssessmentResource(Client, data, data.Id); }, _regulatoryComplianceAssessmentClientDiagnostics, Pipeline, "RegulatoryComplianceAssessmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _regulatoryComplianceAssessmentRestClient.CreateListRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _regulatoryComplianceAssessmentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RegulatoryComplianceAssessmentResource(Client, RegulatoryComplianceAssessmentData.DeserializeRegulatoryComplianceAssessmentData(e)), _regulatoryComplianceAssessmentClientDiagnostics, Pipeline, "RegulatoryComplianceAssessmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = RegulatoryComplianceAssessmentData.DeserializeRegulatoryComplianceAssessmentData(e); return new RegulatoryComplianceAssessmentResource(Client, data, data.Id); }, _regulatoryComplianceAssessmentClientDiagnostics, Pipeline, "RegulatoryComplianceAssessmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

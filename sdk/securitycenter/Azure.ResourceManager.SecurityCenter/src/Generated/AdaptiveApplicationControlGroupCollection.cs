@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _adaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient.PutAsync(Id.SubscriptionId, new AzureLocation(Id.Name), groupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<AdaptiveApplicationControlGroupResource>(Response.FromValue(new AdaptiveApplicationControlGroupResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<AdaptiveApplicationControlGroupResource>(Response.FromValue(new AdaptiveApplicationControlGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _adaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient.Put(Id.SubscriptionId, new AzureLocation(Id.Name), groupName, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<AdaptiveApplicationControlGroupResource>(Response.FromValue(new AdaptiveApplicationControlGroupResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<AdaptiveApplicationControlGroupResource>(Response.FromValue(new AdaptiveApplicationControlGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _adaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Name), groupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AdaptiveApplicationControlGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AdaptiveApplicationControlGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _adaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Name), groupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AdaptiveApplicationControlGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AdaptiveApplicationControlGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

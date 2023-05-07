@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = await _resourceGuardProxyRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, resourceGuardProxyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesBackupArmOperation<ResourceGuardProxyResource>(Response.FromValue(new ResourceGuardProxyResource(Client, response), response.GetRawResponse()));
+                var operation = new RecoveryServicesBackupArmOperation<ResourceGuardProxyResource>(Response.FromValue(new ResourceGuardProxyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = _resourceGuardProxyRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, resourceGuardProxyName, data, cancellationToken);
-                var operation = new RecoveryServicesBackupArmOperation<ResourceGuardProxyResource>(Response.FromValue(new ResourceGuardProxyResource(Client, response), response.GetRawResponse()));
+                var operation = new RecoveryServicesBackupArmOperation<ResourceGuardProxyResource>(Response.FromValue(new ResourceGuardProxyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 var response = await _resourceGuardProxyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, resourceGuardProxyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceGuardProxyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceGuardProxyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 var response = _resourceGuardProxyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, resourceGuardProxyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceGuardProxyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceGuardProxyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardProxyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardProxyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceGuardProxyResource(Client, ResourceGuardProxyData.DeserializeResourceGuardProxyData(e)), _resourceGuardProxyClientDiagnostics, Pipeline, "ResourceGuardProxyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ResourceGuardProxyData.DeserializeResourceGuardProxyData(e); return new ResourceGuardProxyResource(Client, data, data.Id); }, _resourceGuardProxyClientDiagnostics, Pipeline, "ResourceGuardProxyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardProxyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardProxyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceGuardProxyResource(Client, ResourceGuardProxyData.DeserializeResourceGuardProxyData(e)), _resourceGuardProxyClientDiagnostics, Pipeline, "ResourceGuardProxyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ResourceGuardProxyData.DeserializeResourceGuardProxyData(e); return new ResourceGuardProxyResource(Client, data, data.Id); }, _resourceGuardProxyClientDiagnostics, Pipeline, "ResourceGuardProxyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

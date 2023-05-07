@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = StorageClassificationMappingData.DeserializeStorageClassificationMappingData(document.RootElement);
-            return new StorageClassificationMappingResource(_client, data);
+            return new StorageClassificationMappingResource(_client, data, data.Id);
         }
 
         async ValueTask<StorageClassificationMappingResource> IOperationSource<StorageClassificationMappingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = StorageClassificationMappingData.DeserializeStorageClassificationMappingData(document.RootElement);
-            return new StorageClassificationMappingResource(_client, data);
+            return new StorageClassificationMappingResource(_client, data, data.Id);
         }
     }
 }

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = await _serviceBusRuleRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceBusArmOperation<ServiceBusRuleResource>(Response.FromValue(new ServiceBusRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new ServiceBusArmOperation<ServiceBusRuleResource>(Response.FromValue(new ServiceBusRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = _serviceBusRuleRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, data, cancellationToken);
-                var operation = new ServiceBusArmOperation<ServiceBusRuleResource>(Response.FromValue(new ServiceBusRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new ServiceBusArmOperation<ServiceBusRuleResource>(Response.FromValue(new ServiceBusRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = await _serviceBusRuleRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBusRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = _serviceBusRuleRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ruleName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBusRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusRuleRulesRestClient.CreateListBySubscriptionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusRuleRulesRestClient.CreateListBySubscriptionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceBusRuleResource(Client, ServiceBusRuleData.DeserializeServiceBusRuleData(e)), _serviceBusRuleRulesClientDiagnostics, Pipeline, "ServiceBusRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceBusRuleData.DeserializeServiceBusRuleData(e); return new ServiceBusRuleResource(Client, data, data.Id); }, _serviceBusRuleRulesClientDiagnostics, Pipeline, "ServiceBusRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusRuleRulesRestClient.CreateListBySubscriptionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusRuleRulesRestClient.CreateListBySubscriptionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceBusRuleResource(Client, ServiceBusRuleData.DeserializeServiceBusRuleData(e)), _serviceBusRuleRulesClientDiagnostics, Pipeline, "ServiceBusRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceBusRuleData.DeserializeServiceBusRuleData(e); return new ServiceBusRuleResource(Client, data, data.Id); }, _serviceBusRuleRulesClientDiagnostics, Pipeline, "ServiceBusRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

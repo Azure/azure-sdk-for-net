@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = await _protectableItemReplicationProtectableItemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, protectableItemName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProtectableItemResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProtectableItemResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = _protectableItemReplicationProtectableItemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, protectableItemName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProtectableItemResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProtectableItemResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _protectableItemReplicationProtectableItemsRestClient.CreateListByReplicationProtectionContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, take, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _protectableItemReplicationProtectableItemsRestClient.CreateListByReplicationProtectionContainersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, take, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProtectableItemResource(Client, ProtectableItemData.DeserializeProtectableItemData(e)), _protectableItemReplicationProtectableItemsClientDiagnostics, Pipeline, "ProtectableItemCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ProtectableItemData.DeserializeProtectableItemData(e); return new ProtectableItemResource(Client, data, data.Id); }, _protectableItemReplicationProtectableItemsClientDiagnostics, Pipeline, "ProtectableItemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _protectableItemReplicationProtectableItemsRestClient.CreateListByReplicationProtectionContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, take, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _protectableItemReplicationProtectableItemsRestClient.CreateListByReplicationProtectionContainersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, take, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectableItemResource(Client, ProtectableItemData.DeserializeProtectableItemData(e)), _protectableItemReplicationProtectableItemsClientDiagnostics, Pipeline, "ProtectableItemCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ProtectableItemData.DeserializeProtectableItemData(e); return new ProtectableItemResource(Client, data, data.Id); }, _protectableItemReplicationProtectableItemsClientDiagnostics, Pipeline, "ProtectableItemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

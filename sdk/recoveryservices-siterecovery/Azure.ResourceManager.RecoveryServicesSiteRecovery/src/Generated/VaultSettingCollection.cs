@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = await _vaultSettingReplicationVaultSettingRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, vaultSettingName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VaultSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VaultSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = _vaultSettingReplicationVaultSettingRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, vaultSettingName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VaultSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VaultSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vaultSettingReplicationVaultSettingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vaultSettingReplicationVaultSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VaultSettingResource(Client, VaultSettingData.DeserializeVaultSettingData(e)), _vaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, "VaultSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = VaultSettingData.DeserializeVaultSettingData(e); return new VaultSettingResource(Client, data, data.Id); }, _vaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, "VaultSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vaultSettingReplicationVaultSettingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vaultSettingReplicationVaultSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VaultSettingResource(Client, VaultSettingData.DeserializeVaultSettingData(e)), _vaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, "VaultSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = VaultSettingData.DeserializeVaultSettingData(e); return new VaultSettingResource(Client, data, data.Id); }, _vaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, "VaultSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

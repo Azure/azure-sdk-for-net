@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.Reservations
         /// <summary> Initializes a new instance of the <see cref = "ReservationDetailResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ReservationDetailResource(ArmClient client, ReservationDetailData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal ReservationDetailResource(ArmClient client, ReservationDetailData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Reservations
                 var response = await _reservationDetailReservationRestClient.GetAsync(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReservationDetailResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReservationDetailResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.Reservations
                 var response = _reservationDetailReservationRestClient.Get(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReservationDetailResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReservationDetailResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

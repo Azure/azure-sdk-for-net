@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _managedDatabaseTableRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tableName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabaseTableResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseTableResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _managedDatabaseTableRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tableName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabaseTableResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseTableResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseTableRestClient.CreateListBySchemaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseTableRestClient.CreateListBySchemaNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseTableResource(Client, DatabaseTableData.DeserializeDatabaseTableData(e)), _managedDatabaseTableClientDiagnostics, Pipeline, "ManagedDatabaseTableCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DatabaseTableData.DeserializeDatabaseTableData(e); return new ManagedDatabaseTableResource(Client, data, data.Id); }, _managedDatabaseTableClientDiagnostics, Pipeline, "ManagedDatabaseTableCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseTableRestClient.CreateListBySchemaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseTableRestClient.CreateListBySchemaNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseTableResource(Client, DatabaseTableData.DeserializeDatabaseTableData(e)), _managedDatabaseTableClientDiagnostics, Pipeline, "ManagedDatabaseTableCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DatabaseTableData.DeserializeDatabaseTableData(e); return new ManagedDatabaseTableResource(Client, data, data.Id); }, _managedDatabaseTableClientDiagnostics, Pipeline, "ManagedDatabaseTableCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

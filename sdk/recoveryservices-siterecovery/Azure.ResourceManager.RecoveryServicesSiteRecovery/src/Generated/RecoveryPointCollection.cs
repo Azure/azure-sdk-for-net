@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = await _recoveryPointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recoveryPointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecoveryPointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RecoveryPointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = _recoveryPointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recoveryPointName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecoveryPointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RecoveryPointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryPointRestClient.CreateListByReplicationProtectedItemsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryPointRestClient.CreateListByReplicationProtectedItemsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RecoveryPointResource(Client, RecoveryPointData.DeserializeRecoveryPointData(e)), _recoveryPointClientDiagnostics, Pipeline, "RecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = RecoveryPointData.DeserializeRecoveryPointData(e); return new RecoveryPointResource(Client, data, data.Id); }, _recoveryPointClientDiagnostics, Pipeline, "RecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryPointRestClient.CreateListByReplicationProtectedItemsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryPointRestClient.CreateListByReplicationProtectedItemsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RecoveryPointResource(Client, RecoveryPointData.DeserializeRecoveryPointData(e)), _recoveryPointClientDiagnostics, Pipeline, "RecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = RecoveryPointData.DeserializeRecoveryPointData(e); return new RecoveryPointResource(Client, data, data.Id); }, _recoveryPointClientDiagnostics, Pipeline, "RecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

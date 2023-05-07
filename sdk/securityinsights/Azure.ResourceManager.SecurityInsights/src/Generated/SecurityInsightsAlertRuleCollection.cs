@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityInsights
             try
             {
                 var response = await _securityInsightsAlertRuleAlertRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsAlertRuleResource>(Response.FromValue(new SecurityInsightsAlertRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsAlertRuleResource>(Response.FromValue(new SecurityInsightsAlertRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityInsights
             try
             {
                 var response = _securityInsightsAlertRuleAlertRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleId, data, cancellationToken);
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsAlertRuleResource>(Response.FromValue(new SecurityInsightsAlertRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsAlertRuleResource>(Response.FromValue(new SecurityInsightsAlertRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 var response = await _securityInsightsAlertRuleAlertRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityInsightsAlertRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsAlertRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 var response = _securityInsightsAlertRuleAlertRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityInsightsAlertRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsAlertRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsAlertRuleAlertRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsAlertRuleAlertRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsAlertRuleResource(Client, SecurityInsightsAlertRuleData.DeserializeSecurityInsightsAlertRuleData(e)), _securityInsightsAlertRuleAlertRulesClientDiagnostics, Pipeline, "SecurityInsightsAlertRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityInsightsAlertRuleData.DeserializeSecurityInsightsAlertRuleData(e); return new SecurityInsightsAlertRuleResource(Client, data, data.Id); }, _securityInsightsAlertRuleAlertRulesClientDiagnostics, Pipeline, "SecurityInsightsAlertRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsAlertRuleAlertRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsAlertRuleAlertRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsAlertRuleResource(Client, SecurityInsightsAlertRuleData.DeserializeSecurityInsightsAlertRuleData(e)), _securityInsightsAlertRuleAlertRulesClientDiagnostics, Pipeline, "SecurityInsightsAlertRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityInsightsAlertRuleData.DeserializeSecurityInsightsAlertRuleData(e); return new SecurityInsightsAlertRuleResource(Client, data, data.Id); }, _securityInsightsAlertRuleAlertRulesClientDiagnostics, Pipeline, "SecurityInsightsAlertRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Qumulo
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(document.RootElement);
-            return new QumuloFileSystemResource(_client, data);
+            return new QumuloFileSystemResource(_client, data, data.Id);
         }
 
         async ValueTask<QumuloFileSystemResource> IOperationSource<QumuloFileSystemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(document.RootElement);
-            return new QumuloFileSystemResource(_client, data);
+            return new QumuloFileSystemResource(_client, data, data.Id);
         }
     }
 }

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _iPv6FirewallRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<IPv6FirewallRuleResource>(Response.FromValue(new IPv6FirewallRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new SqlArmOperation<IPv6FirewallRuleResource>(Response.FromValue(new IPv6FirewallRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _iPv6FirewallRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data, cancellationToken);
-                var operation = new SqlArmOperation<IPv6FirewallRuleResource>(Response.FromValue(new IPv6FirewallRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new SqlArmOperation<IPv6FirewallRuleResource>(Response.FromValue(new IPv6FirewallRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _iPv6FirewallRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IPv6FirewallRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IPv6FirewallRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _iPv6FirewallRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IPv6FirewallRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IPv6FirewallRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iPv6FirewallRuleRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iPv6FirewallRuleRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IPv6FirewallRuleResource(Client, IPv6FirewallRuleData.DeserializeIPv6FirewallRuleData(e)), _iPv6FirewallRuleClientDiagnostics, Pipeline, "IPv6FirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = IPv6FirewallRuleData.DeserializeIPv6FirewallRuleData(e); return new IPv6FirewallRuleResource(Client, data, data.Id); }, _iPv6FirewallRuleClientDiagnostics, Pipeline, "IPv6FirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iPv6FirewallRuleRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iPv6FirewallRuleRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IPv6FirewallRuleResource(Client, IPv6FirewallRuleData.DeserializeIPv6FirewallRuleData(e)), _iPv6FirewallRuleClientDiagnostics, Pipeline, "IPv6FirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = IPv6FirewallRuleData.DeserializeIPv6FirewallRuleData(e); return new IPv6FirewallRuleResource(Client, data, data.Id); }, _iPv6FirewallRuleClientDiagnostics, Pipeline, "IPv6FirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

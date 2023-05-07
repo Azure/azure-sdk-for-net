@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 var response = await _resourceHealthEventImpactedResourceImpactedResourcesRestClient.GetAsync(Id.SubscriptionId, Id.Name, impactedResourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceHealthEventImpactedResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceHealthEventImpactedResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 var response = _resourceHealthEventImpactedResourceImpactedResourcesRestClient.Get(Id.SubscriptionId, Id.Name, impactedResourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceHealthEventImpactedResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceHealthEventImpactedResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceHealthEventImpactedResourceImpactedResourcesRestClient.CreateListBySubscriptionIdAndEventIdRequest(Id.SubscriptionId, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceHealthEventImpactedResourceImpactedResourcesRestClient.CreateListBySubscriptionIdAndEventIdNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceHealthEventImpactedResource(Client, ResourceHealthEventImpactedResourceData.DeserializeResourceHealthEventImpactedResourceData(e)), _resourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics, Pipeline, "ResourceHealthEventImpactedResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ResourceHealthEventImpactedResourceData.DeserializeResourceHealthEventImpactedResourceData(e); return new ResourceHealthEventImpactedResource(Client, data, data.Id); }, _resourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics, Pipeline, "ResourceHealthEventImpactedResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceHealthEventImpactedResourceImpactedResourcesRestClient.CreateListBySubscriptionIdAndEventIdRequest(Id.SubscriptionId, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceHealthEventImpactedResourceImpactedResourcesRestClient.CreateListBySubscriptionIdAndEventIdNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceHealthEventImpactedResource(Client, ResourceHealthEventImpactedResourceData.DeserializeResourceHealthEventImpactedResourceData(e)), _resourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics, Pipeline, "ResourceHealthEventImpactedResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ResourceHealthEventImpactedResourceData.DeserializeResourceHealthEventImpactedResourceData(e); return new ResourceHealthEventImpactedResource(Client, data, data.Id); }, _resourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics, Pipeline, "ResourceHealthEventImpactedResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

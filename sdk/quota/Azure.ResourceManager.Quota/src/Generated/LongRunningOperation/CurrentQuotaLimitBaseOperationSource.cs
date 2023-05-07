@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Quota
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CurrentQuotaLimitBaseData.DeserializeCurrentQuotaLimitBaseData(document.RootElement);
-            return new CurrentQuotaLimitBaseResource(_client, data);
+            return new CurrentQuotaLimitBaseResource(_client, data, data.Id);
         }
 
         async ValueTask<CurrentQuotaLimitBaseResource> IOperationSource<CurrentQuotaLimitBaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CurrentQuotaLimitBaseData.DeserializeCurrentQuotaLimitBaseData(document.RootElement);
-            return new CurrentQuotaLimitBaseResource(_client, data);
+            return new CurrentQuotaLimitBaseResource(_client, data, data.Id);
         }
     }
 }

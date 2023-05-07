@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _armApplicationApplicationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ArmApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArmApplicationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _armApplicationApplicationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ArmApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArmApplicationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _armApplicationApplicationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _armApplicationApplicationsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArmApplicationResource(Client, ArmApplicationData.DeserializeArmApplicationData(e)), _armApplicationApplicationsClientDiagnostics, Pipeline, "ArmApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ArmApplicationData.DeserializeArmApplicationData(e); return new ArmApplicationResource(Client, data, data.Id); }, _armApplicationApplicationsClientDiagnostics, Pipeline, "ArmApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _armApplicationApplicationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _armApplicationApplicationsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArmApplicationResource(Client, ArmApplicationData.DeserializeArmApplicationData(e)), _armApplicationApplicationsClientDiagnostics, Pipeline, "ArmApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ArmApplicationData.DeserializeArmApplicationData(e); return new ArmApplicationResource(Client, data, data.Id); }, _armApplicationApplicationsClientDiagnostics, Pipeline, "ArmApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

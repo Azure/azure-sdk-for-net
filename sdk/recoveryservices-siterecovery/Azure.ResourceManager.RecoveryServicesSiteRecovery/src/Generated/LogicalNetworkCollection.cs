@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = await _logicalNetworkReplicationLogicalNetworksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, logicalNetworkName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogicalNetworkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogicalNetworkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = _logicalNetworkReplicationLogicalNetworksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, logicalNetworkName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogicalNetworkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogicalNetworkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicalNetworkReplicationLogicalNetworksRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logicalNetworkReplicationLogicalNetworksRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogicalNetworkResource(Client, LogicalNetworkData.DeserializeLogicalNetworkData(e)), _logicalNetworkReplicationLogicalNetworksClientDiagnostics, Pipeline, "LogicalNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = LogicalNetworkData.DeserializeLogicalNetworkData(e); return new LogicalNetworkResource(Client, data, data.Id); }, _logicalNetworkReplicationLogicalNetworksClientDiagnostics, Pipeline, "LogicalNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicalNetworkReplicationLogicalNetworksRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logicalNetworkReplicationLogicalNetworksRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogicalNetworkResource(Client, LogicalNetworkData.DeserializeLogicalNetworkData(e)), _logicalNetworkReplicationLogicalNetworksClientDiagnostics, Pipeline, "LogicalNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = LogicalNetworkData.DeserializeLogicalNetworkData(e); return new LogicalNetworkResource(Client, data, data.Id); }, _logicalNetworkReplicationLogicalNetworksClientDiagnostics, Pipeline, "LogicalNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

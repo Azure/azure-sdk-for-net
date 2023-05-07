@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _replicationProtectionIntentRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, intentObjectName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionIntentResource>(Response.FromValue(new ReplicationProtectionIntentResource(Client, response), response.GetRawResponse()));
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionIntentResource>(Response.FromValue(new ReplicationProtectionIntentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _replicationProtectionIntentRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, intentObjectName, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionIntentResource>(Response.FromValue(new ReplicationProtectionIntentResource(Client, response), response.GetRawResponse()));
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionIntentResource>(Response.FromValue(new ReplicationProtectionIntentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = await _replicationProtectionIntentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, intentObjectName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReplicationProtectionIntentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReplicationProtectionIntentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = _replicationProtectionIntentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, intentObjectName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReplicationProtectionIntentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReplicationProtectionIntentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationProtectionIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, skipToken, takeToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _replicationProtectionIntentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, skipToken, takeToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReplicationProtectionIntentResource(Client, ReplicationProtectionIntentData.DeserializeReplicationProtectionIntentData(e)), _replicationProtectionIntentClientDiagnostics, Pipeline, "ReplicationProtectionIntentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ReplicationProtectionIntentData.DeserializeReplicationProtectionIntentData(e); return new ReplicationProtectionIntentResource(Client, data, data.Id); }, _replicationProtectionIntentClientDiagnostics, Pipeline, "ReplicationProtectionIntentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationProtectionIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, skipToken, takeToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _replicationProtectionIntentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, skipToken, takeToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReplicationProtectionIntentResource(Client, ReplicationProtectionIntentData.DeserializeReplicationProtectionIntentData(e)), _replicationProtectionIntentClientDiagnostics, Pipeline, "ReplicationProtectionIntentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ReplicationProtectionIntentData.DeserializeReplicationProtectionIntentData(e); return new ReplicationProtectionIntentResource(Client, data, data.Id); }, _replicationProtectionIntentClientDiagnostics, Pipeline, "ReplicationProtectionIntentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

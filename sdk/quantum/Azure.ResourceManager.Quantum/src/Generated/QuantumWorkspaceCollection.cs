@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Quantum
                 var response = await _quantumWorkspaceWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new QuantumWorkspaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new QuantumWorkspaceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Quantum
                 var response = _quantumWorkspaceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new QuantumWorkspaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new QuantumWorkspaceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Quantum
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _quantumWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _quantumWorkspaceWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new QuantumWorkspaceResource(Client, QuantumWorkspaceData.DeserializeQuantumWorkspaceData(e)), _quantumWorkspaceWorkspacesClientDiagnostics, Pipeline, "QuantumWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = QuantumWorkspaceData.DeserializeQuantumWorkspaceData(e); return new QuantumWorkspaceResource(Client, data, data.Id); }, _quantumWorkspaceWorkspacesClientDiagnostics, Pipeline, "QuantumWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Quantum
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _quantumWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _quantumWorkspaceWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new QuantumWorkspaceResource(Client, QuantumWorkspaceData.DeserializeQuantumWorkspaceData(e)), _quantumWorkspaceWorkspacesClientDiagnostics, Pipeline, "QuantumWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = QuantumWorkspaceData.DeserializeQuantumWorkspaceData(e); return new QuantumWorkspaceResource(Client, data, data.Id); }, _quantumWorkspaceWorkspacesClientDiagnostics, Pipeline, "QuantumWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

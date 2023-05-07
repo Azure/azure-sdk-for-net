@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Sql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServerAdvancedThreatProtectionData.DeserializeServerAdvancedThreatProtectionData(document.RootElement);
-            return new ServerAdvancedThreatProtectionResource(_client, data);
+            return new ServerAdvancedThreatProtectionResource(_client, data, data.Id);
         }
 
         async ValueTask<ServerAdvancedThreatProtectionResource> IOperationSource<ServerAdvancedThreatProtectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServerAdvancedThreatProtectionData.DeserializeServerAdvancedThreatProtectionData(document.RootElement);
-            return new ServerAdvancedThreatProtectionResource(_client, data);
+            return new ServerAdvancedThreatProtectionResource(_client, data, data.Id);
         }
     }
 }

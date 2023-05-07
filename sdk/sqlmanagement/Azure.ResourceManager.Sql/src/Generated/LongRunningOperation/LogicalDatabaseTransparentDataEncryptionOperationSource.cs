@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Sql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = LogicalDatabaseTransparentDataEncryptionData.DeserializeLogicalDatabaseTransparentDataEncryptionData(document.RootElement);
-            return new LogicalDatabaseTransparentDataEncryptionResource(_client, data);
+            return new LogicalDatabaseTransparentDataEncryptionResource(_client, data, data.Id);
         }
 
         async ValueTask<LogicalDatabaseTransparentDataEncryptionResource> IOperationSource<LogicalDatabaseTransparentDataEncryptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = LogicalDatabaseTransparentDataEncryptionData.DeserializeLogicalDatabaseTransparentDataEncryptionData(document.RootElement);
-            return new LogicalDatabaseTransparentDataEncryptionResource(_client, data);
+            return new LogicalDatabaseTransparentDataEncryptionResource(_client, data, data.Id);
         }
     }
 }

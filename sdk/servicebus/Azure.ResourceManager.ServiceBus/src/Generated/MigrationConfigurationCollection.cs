@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = await _migrationConfigurationMigrationConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MigrationConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MigrationConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = _migrationConfigurationMigrationConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MigrationConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MigrationConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _migrationConfigurationMigrationConfigsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _migrationConfigurationMigrationConfigsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MigrationConfigurationResource(Client, MigrationConfigurationData.DeserializeMigrationConfigurationData(e)), _migrationConfigurationMigrationConfigsClientDiagnostics, Pipeline, "MigrationConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = MigrationConfigurationData.DeserializeMigrationConfigurationData(e); return new MigrationConfigurationResource(Client, data, data.Id); }, _migrationConfigurationMigrationConfigsClientDiagnostics, Pipeline, "MigrationConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _migrationConfigurationMigrationConfigsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _migrationConfigurationMigrationConfigsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MigrationConfigurationResource(Client, MigrationConfigurationData.DeserializeMigrationConfigurationData(e)), _migrationConfigurationMigrationConfigsClientDiagnostics, Pipeline, "MigrationConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = MigrationConfigurationData.DeserializeMigrationConfigurationData(e); return new MigrationConfigurationResource(Client, data, data.Id); }, _migrationConfigurationMigrationConfigsClientDiagnostics, Pipeline, "MigrationConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

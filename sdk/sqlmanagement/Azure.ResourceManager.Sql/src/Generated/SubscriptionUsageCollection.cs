@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _subscriptionUsageRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_locationName), usageName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionUsageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionUsageResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _subscriptionUsageRestClient.Get(Id.SubscriptionId, new AzureLocation(_locationName), usageName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionUsageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionUsageResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionUsageRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_locationName));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionUsageRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_locationName));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionUsageResource(Client, SubscriptionUsageData.DeserializeSubscriptionUsageData(e)), _subscriptionUsageClientDiagnostics, Pipeline, "SubscriptionUsageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SubscriptionUsageData.DeserializeSubscriptionUsageData(e); return new SubscriptionUsageResource(Client, data, data.Id); }, _subscriptionUsageClientDiagnostics, Pipeline, "SubscriptionUsageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionUsageRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_locationName));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionUsageRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_locationName));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionUsageResource(Client, SubscriptionUsageData.DeserializeSubscriptionUsageData(e)), _subscriptionUsageClientDiagnostics, Pipeline, "SubscriptionUsageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SubscriptionUsageData.DeserializeSubscriptionUsageData(e); return new SubscriptionUsageResource(Client, data, data.Id); }, _subscriptionUsageClientDiagnostics, Pipeline, "SubscriptionUsageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

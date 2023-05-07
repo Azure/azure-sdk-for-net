@@ -46,7 +46,8 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> Initializes a new instance of the <see cref = "TenantResourceHealthEventResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TenantResourceHealthEventResource(ArmClient client, ResourceHealthEventData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal TenantResourceHealthEventResource(ArmClient client, ResourceHealthEventData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 var response = await _tenantResourceHealthEventEventRestClient.GetByTenantIdAndTrackingIdAsync(Id.Name, filter, queryStartTime, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantResourceHealthEventResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantResourceHealthEventResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 var response = _tenantResourceHealthEventEventRestClient.GetByTenantIdAndTrackingId(Id.Name, filter, queryStartTime, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantResourceHealthEventResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantResourceHealthEventResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -279,7 +280,7 @@ namespace Azure.ResourceManager.ResourceHealth
             try
             {
                 var response = await _tenantResourceHealthEventEventRestClient.FetchDetailsByTenantIdAndTrackingIdAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new TenantResourceHealthEventResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantResourceHealthEventResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -309,7 +310,7 @@ namespace Azure.ResourceManager.ResourceHealth
             try
             {
                 var response = _tenantResourceHealthEventEventRestClient.FetchDetailsByTenantIdAndTrackingId(Id.Name, cancellationToken);
-                return Response.FromValue(new TenantResourceHealthEventResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantResourceHealthEventResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

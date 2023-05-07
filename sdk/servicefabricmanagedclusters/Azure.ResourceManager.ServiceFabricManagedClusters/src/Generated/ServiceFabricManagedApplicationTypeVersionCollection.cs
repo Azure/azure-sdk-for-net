@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 var response = await _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceFabricManagedApplicationTypeVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricManagedApplicationTypeVersionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 var response = _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceFabricManagedApplicationTypeVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricManagedApplicationTypeVersionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsRestClient.CreateListByApplicationTypesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsRestClient.CreateListByApplicationTypesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricManagedApplicationTypeVersionResource(Client, ServiceFabricManagedApplicationTypeVersionData.DeserializeServiceFabricManagedApplicationTypeVersionData(e)), _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, "ServiceFabricManagedApplicationTypeVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceFabricManagedApplicationTypeVersionData.DeserializeServiceFabricManagedApplicationTypeVersionData(e); return new ServiceFabricManagedApplicationTypeVersionResource(Client, data, data.Id); }, _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, "ServiceFabricManagedApplicationTypeVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsRestClient.CreateListByApplicationTypesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsRestClient.CreateListByApplicationTypesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricManagedApplicationTypeVersionResource(Client, ServiceFabricManagedApplicationTypeVersionData.DeserializeServiceFabricManagedApplicationTypeVersionData(e)), _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, "ServiceFabricManagedApplicationTypeVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceFabricManagedApplicationTypeVersionData.DeserializeServiceFabricManagedApplicationTypeVersionData(e); return new ServiceFabricManagedApplicationTypeVersionResource(Client, data, data.Id); }, _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, "ServiceFabricManagedApplicationTypeVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

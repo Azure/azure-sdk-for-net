@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of the <see cref = "SecurityAlertsSuppressionRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SecurityAlertsSuppressionRuleResource(ArmClient client, SecurityAlertsSuppressionRuleData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal SecurityAlertsSuppressionRuleResource(ArmClient client, SecurityAlertsSuppressionRuleData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityAlertsSuppressionRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityAlertsSuppressionRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityAlertsSuppressionRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityAlertsSuppressionRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -245,7 +246,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.UpdateAsync(Id.SubscriptionId, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<SecurityAlertsSuppressionRuleResource>(Response.FromValue(new SecurityAlertsSuppressionRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<SecurityAlertsSuppressionRuleResource>(Response.FromValue(new SecurityAlertsSuppressionRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,7 +284,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.Update(Id.SubscriptionId, Id.Name, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<SecurityAlertsSuppressionRuleResource>(Response.FromValue(new SecurityAlertsSuppressionRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<SecurityAlertsSuppressionRuleResource>(Response.FromValue(new SecurityAlertsSuppressionRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 var response = await _tenantResourceHealthEventImpactedResourceImpactedResourcesRestClient.GetByTenantIdAsync(Id.Name, impactedResourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantResourceHealthEventImpactedResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantResourceHealthEventImpactedResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 var response = _tenantResourceHealthEventImpactedResourceImpactedResourcesRestClient.GetByTenantId(Id.Name, impactedResourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantResourceHealthEventImpactedResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantResourceHealthEventImpactedResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantResourceHealthEventImpactedResourceImpactedResourcesRestClient.CreateListByTenantIdAndEventIdRequest(Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantResourceHealthEventImpactedResourceImpactedResourcesRestClient.CreateListByTenantIdAndEventIdNextPageRequest(nextLink, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TenantResourceHealthEventImpactedResource(Client, ResourceHealthEventImpactedResourceData.DeserializeResourceHealthEventImpactedResourceData(e)), _tenantResourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics, Pipeline, "TenantResourceHealthEventImpactedResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ResourceHealthEventImpactedResourceData.DeserializeResourceHealthEventImpactedResourceData(e); return new TenantResourceHealthEventImpactedResource(Client, data, data.Id); }, _tenantResourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics, Pipeline, "TenantResourceHealthEventImpactedResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantResourceHealthEventImpactedResourceImpactedResourcesRestClient.CreateListByTenantIdAndEventIdRequest(Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantResourceHealthEventImpactedResourceImpactedResourcesRestClient.CreateListByTenantIdAndEventIdNextPageRequest(nextLink, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TenantResourceHealthEventImpactedResource(Client, ResourceHealthEventImpactedResourceData.DeserializeResourceHealthEventImpactedResourceData(e)), _tenantResourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics, Pipeline, "TenantResourceHealthEventImpactedResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ResourceHealthEventImpactedResourceData.DeserializeResourceHealthEventImpactedResourceData(e); return new TenantResourceHealthEventImpactedResource(Client, data, data.Id); }, _tenantResourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics, Pipeline, "TenantResourceHealthEventImpactedResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

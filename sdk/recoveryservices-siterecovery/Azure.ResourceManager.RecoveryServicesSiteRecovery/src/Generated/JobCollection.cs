@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = await _jobReplicationJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, jobName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new JobResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = _jobReplicationJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, jobName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new JobResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jobReplicationJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobReplicationJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new JobResource(Client, JobData.DeserializeJobData(e)), _jobReplicationJobsClientDiagnostics, Pipeline, "JobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = JobData.DeserializeJobData(e); return new JobResource(Client, data, data.Id); }, _jobReplicationJobsClientDiagnostics, Pipeline, "JobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jobReplicationJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobReplicationJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new JobResource(Client, JobData.DeserializeJobData(e)), _jobReplicationJobsClientDiagnostics, Pipeline, "JobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = JobData.DeserializeJobData(e); return new JobResource(Client, data, data.Id); }, _jobReplicationJobsClientDiagnostics, Pipeline, "JobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

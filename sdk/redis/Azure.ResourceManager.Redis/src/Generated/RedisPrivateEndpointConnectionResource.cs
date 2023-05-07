@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Redis
         /// <summary> Initializes a new instance of the <see cref = "RedisPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RedisPrivateEndpointConnectionResource(ArmClient client, RedisPrivateEndpointConnectionData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal RedisPrivateEndpointConnectionResource(ArmClient client, RedisPrivateEndpointConnectionData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Redis
                 var response = await _redisPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RedisPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RedisPrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Redis
                 var response = _redisPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RedisPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RedisPrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

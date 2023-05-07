@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _recommendedActionDatabaseRecommendedActionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecommendedActionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RecommendedActionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _recommendedActionDatabaseRecommendedActionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecommendedActionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RecommendedActionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Sql
         public virtual AsyncPageable<RecommendedActionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recommendedActionDatabaseRecommendedActionsRestClient.CreateListByDatabaseAdvisorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new RecommendedActionResource(Client, RecommendedActionData.DeserializeRecommendedActionData(e)), _recommendedActionDatabaseRecommendedActionsClientDiagnostics, Pipeline, "RecommendedActionCollection.GetAll", "", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = RecommendedActionData.DeserializeRecommendedActionData(e); return new RecommendedActionResource(Client, data, data.Id); }, _recommendedActionDatabaseRecommendedActionsClientDiagnostics, Pipeline, "RecommendedActionCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Pageable<RecommendedActionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recommendedActionDatabaseRecommendedActionsRestClient.CreateListByDatabaseAdvisorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new RecommendedActionResource(Client, RecommendedActionData.DeserializeRecommendedActionData(e)), _recommendedActionDatabaseRecommendedActionsClientDiagnostics, Pipeline, "RecommendedActionCollection.GetAll", "", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = RecommendedActionData.DeserializeRecommendedActionData(e); return new RecommendedActionResource(Client, data, data.Id); }, _recommendedActionDatabaseRecommendedActionsClientDiagnostics, Pipeline, "RecommendedActionCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>

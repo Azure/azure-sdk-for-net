@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Sql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(document.RootElement);
-            return new ManagedBackupShortTermRetentionPolicyResource(_client, data);
+            return new ManagedBackupShortTermRetentionPolicyResource(_client, data, data.Id);
         }
 
         async ValueTask<ManagedBackupShortTermRetentionPolicyResource> IOperationSource<ManagedBackupShortTermRetentionPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(document.RootElement);
-            return new ManagedBackupShortTermRetentionPolicyResource(_client, data);
+            return new ManagedBackupShortTermRetentionPolicyResource(_client, data, data.Id);
         }
     }
 }

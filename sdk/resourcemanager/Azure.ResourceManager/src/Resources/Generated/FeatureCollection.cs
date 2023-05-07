@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _featureRestClient.GetAsync(Id.SubscriptionId, Id.Provider, featureName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FeatureResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _featureRestClient.Get(Id.SubscriptionId, Id.Provider, featureName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FeatureResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _featureRestClient.CreateListRequest(Id.SubscriptionId, Id.Provider);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _featureRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Provider);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FeatureResource(Client, FeatureData.DeserializeFeatureData(e)), _featureClientDiagnostics, Pipeline, "FeatureCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = FeatureData.DeserializeFeatureData(e); return new FeatureResource(Client, data, data.Id); }, _featureClientDiagnostics, Pipeline, "FeatureCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _featureRestClient.CreateListRequest(Id.SubscriptionId, Id.Provider);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _featureRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Provider);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FeatureResource(Client, FeatureData.DeserializeFeatureData(e)), _featureClientDiagnostics, Pipeline, "FeatureCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = FeatureData.DeserializeFeatureData(e); return new FeatureResource(Client, data, data.Id); }, _featureClientDiagnostics, Pipeline, "FeatureCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

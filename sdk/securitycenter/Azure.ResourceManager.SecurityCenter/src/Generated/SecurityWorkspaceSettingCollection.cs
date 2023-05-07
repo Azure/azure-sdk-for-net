@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _securityWorkspaceSettingWorkspaceSettingsRestClient.CreateAsync(Id.SubscriptionId, workspaceSettingName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<SecurityWorkspaceSettingResource>(Response.FromValue(new SecurityWorkspaceSettingResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<SecurityWorkspaceSettingResource>(Response.FromValue(new SecurityWorkspaceSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _securityWorkspaceSettingWorkspaceSettingsRestClient.Create(Id.SubscriptionId, workspaceSettingName, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<SecurityWorkspaceSettingResource>(Response.FromValue(new SecurityWorkspaceSettingResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<SecurityWorkspaceSettingResource>(Response.FromValue(new SecurityWorkspaceSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _securityWorkspaceSettingWorkspaceSettingsRestClient.GetAsync(Id.SubscriptionId, workspaceSettingName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityWorkspaceSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityWorkspaceSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _securityWorkspaceSettingWorkspaceSettingsRestClient.Get(Id.SubscriptionId, workspaceSettingName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityWorkspaceSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityWorkspaceSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityWorkspaceSettingWorkspaceSettingsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityWorkspaceSettingWorkspaceSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityWorkspaceSettingResource(Client, SecurityWorkspaceSettingData.DeserializeSecurityWorkspaceSettingData(e)), _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics, Pipeline, "SecurityWorkspaceSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityWorkspaceSettingData.DeserializeSecurityWorkspaceSettingData(e); return new SecurityWorkspaceSettingResource(Client, data, data.Id); }, _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics, Pipeline, "SecurityWorkspaceSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityWorkspaceSettingWorkspaceSettingsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityWorkspaceSettingWorkspaceSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityWorkspaceSettingResource(Client, SecurityWorkspaceSettingData.DeserializeSecurityWorkspaceSettingData(e)), _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics, Pipeline, "SecurityWorkspaceSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityWorkspaceSettingData.DeserializeSecurityWorkspaceSettingData(e); return new SecurityWorkspaceSettingResource(Client, data, data.Id); }, _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics, Pipeline, "SecurityWorkspaceSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

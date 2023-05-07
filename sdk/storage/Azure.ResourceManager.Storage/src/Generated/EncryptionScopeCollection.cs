@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _encryptionScopeRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation<EncryptionScopeResource>(Response.FromValue(new EncryptionScopeResource(Client, response), response.GetRawResponse()));
+                var operation = new StorageArmOperation<EncryptionScopeResource>(Response.FromValue(new EncryptionScopeResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _encryptionScopeRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, data, cancellationToken);
-                var operation = new StorageArmOperation<EncryptionScopeResource>(Response.FromValue(new EncryptionScopeResource(Client, response), response.GetRawResponse()));
+                var operation = new StorageArmOperation<EncryptionScopeResource>(Response.FromValue(new EncryptionScopeResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Storage
                 var response = await _encryptionScopeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EncryptionScopeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EncryptionScopeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Storage
                 var response = _encryptionScopeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EncryptionScopeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EncryptionScopeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Storage
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _encryptionScopeRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, filter, include);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _encryptionScopeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, filter, include);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EncryptionScopeResource(Client, EncryptionScopeData.DeserializeEncryptionScopeData(e)), _encryptionScopeClientDiagnostics, Pipeline, "EncryptionScopeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = EncryptionScopeData.DeserializeEncryptionScopeData(e); return new EncryptionScopeResource(Client, data, data.Id); }, _encryptionScopeClientDiagnostics, Pipeline, "EncryptionScopeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Storage
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _encryptionScopeRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, filter, include);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _encryptionScopeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, filter, include);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EncryptionScopeResource(Client, EncryptionScopeData.DeserializeEncryptionScopeData(e)), _encryptionScopeClientDiagnostics, Pipeline, "EncryptionScopeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = EncryptionScopeData.DeserializeEncryptionScopeData(e); return new EncryptionScopeResource(Client, data, data.Id); }, _encryptionScopeClientDiagnostics, Pipeline, "EncryptionScopeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

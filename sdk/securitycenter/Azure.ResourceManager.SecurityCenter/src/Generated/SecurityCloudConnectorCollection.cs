@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _securityCloudConnectorConnectorsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, connectorName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<SecurityCloudConnectorResource>(Response.FromValue(new SecurityCloudConnectorResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<SecurityCloudConnectorResource>(Response.FromValue(new SecurityCloudConnectorResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _securityCloudConnectorConnectorsRestClient.CreateOrUpdate(Id.SubscriptionId, connectorName, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<SecurityCloudConnectorResource>(Response.FromValue(new SecurityCloudConnectorResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<SecurityCloudConnectorResource>(Response.FromValue(new SecurityCloudConnectorResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _securityCloudConnectorConnectorsRestClient.GetAsync(Id.SubscriptionId, connectorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityCloudConnectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityCloudConnectorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _securityCloudConnectorConnectorsRestClient.Get(Id.SubscriptionId, connectorName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityCloudConnectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityCloudConnectorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCloudConnectorConnectorsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityCloudConnectorConnectorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityCloudConnectorResource(Client, SecurityCloudConnectorData.DeserializeSecurityCloudConnectorData(e)), _securityCloudConnectorConnectorsClientDiagnostics, Pipeline, "SecurityCloudConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityCloudConnectorData.DeserializeSecurityCloudConnectorData(e); return new SecurityCloudConnectorResource(Client, data, data.Id); }, _securityCloudConnectorConnectorsClientDiagnostics, Pipeline, "SecurityCloudConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCloudConnectorConnectorsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityCloudConnectorConnectorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityCloudConnectorResource(Client, SecurityCloudConnectorData.DeserializeSecurityCloudConnectorData(e)), _securityCloudConnectorConnectorsClientDiagnostics, Pipeline, "SecurityCloudConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityCloudConnectorData.DeserializeSecurityCloudConnectorData(e); return new SecurityCloudConnectorResource(Client, data, data.Id); }, _securityCloudConnectorConnectorsClientDiagnostics, Pipeline, "SecurityCloudConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

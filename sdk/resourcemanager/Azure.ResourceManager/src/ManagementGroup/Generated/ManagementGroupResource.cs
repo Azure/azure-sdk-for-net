@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <summary> Initializes a new instance of the <see cref = "ManagementGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagementGroupResource(ArmClient client, ManagementGroupData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal ManagementGroupResource(ArmClient client, ManagementGroupData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 var response = await _managementGroupRestClient.GetAsync(Id.Name, expand, recurse, filter, cacheControl, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -153,7 +154,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 var response = _managementGroupRestClient.Get(Id.Name, expand, recurse, filter, cacheControl, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -263,7 +264,7 @@ namespace Azure.ResourceManager.ManagementGroups
             try
             {
                 var response = await _managementGroupRestClient.UpdateAsync(Id.Name, patch, cacheControl, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ManagementGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -299,7 +300,7 @@ namespace Azure.ResourceManager.ManagementGroups
             try
             {
                 var response = _managementGroupRestClient.Update(Id.Name, patch, cacheControl, cancellationToken);
-                return Response.FromValue(new ManagementGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -46,7 +46,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <summary> Initializes a new instance of the <see cref = "ReplicationProtectedItemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ReplicationProtectedItemResource(ArmClient client, ReplicationProtectedItemData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal ReplicationProtectedItemResource(ArmClient client, ReplicationProtectedItemData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = await _replicationProtectedItemRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReplicationProtectedItemResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReplicationProtectedItemResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +200,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = _replicationProtectedItemRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReplicationProtectedItemResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReplicationProtectedItemResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

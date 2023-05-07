@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Sql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = LedgerDigestUploadData.DeserializeLedgerDigestUploadData(document.RootElement);
-            return new LedgerDigestUploadResource(_client, data);
+            return new LedgerDigestUploadResource(_client, data, data.Id);
         }
 
         async ValueTask<LedgerDigestUploadResource> IOperationSource<LedgerDigestUploadResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = LedgerDigestUploadData.DeserializeLedgerDigestUploadData(document.RootElement);
-            return new LedgerDigestUploadResource(_client, data);
+            return new LedgerDigestUploadResource(_client, data, data.Id);
         }
     }
 }

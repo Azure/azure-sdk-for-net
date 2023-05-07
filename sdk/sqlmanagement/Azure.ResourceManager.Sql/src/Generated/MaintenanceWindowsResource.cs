@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of the <see cref = "MaintenanceWindowsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MaintenanceWindowsResource(ArmClient client, MaintenanceWindowsData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal MaintenanceWindowsResource(ArmClient client, MaintenanceWindowsData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _maintenanceWindowsMaintenanceWindowsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MaintenanceWindowsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceWindowsResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _maintenanceWindowsMaintenanceWindowsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MaintenanceWindowsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceWindowsResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

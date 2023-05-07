@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Quantum
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuantumWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuantumWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new QuantumWorkspaceResource(Client, QuantumWorkspaceData.DeserializeQuantumWorkspaceData(e)), QuantumWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetQuantumWorkspaces", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = QuantumWorkspaceData.DeserializeQuantumWorkspaceData(e); return new QuantumWorkspaceResource(Client, data, data.Id); }, QuantumWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetQuantumWorkspaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Quantum
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuantumWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuantumWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new QuantumWorkspaceResource(Client, QuantumWorkspaceData.DeserializeQuantumWorkspaceData(e)), QuantumWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetQuantumWorkspaces", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = QuantumWorkspaceData.DeserializeQuantumWorkspaceData(e); return new QuantumWorkspaceResource(Client, data, data.Id); }, QuantumWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetQuantumWorkspaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

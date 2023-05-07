@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 var response = await _associationAssociationsInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AssociationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AssociationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 var response = _associationAssociationsInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AssociationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AssociationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _associationAssociationsInterfaceRestClient.CreateListByTrafficControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _associationAssociationsInterfaceRestClient.CreateListByTrafficControllerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AssociationResource(Client, AssociationData.DeserializeAssociationData(e)), _associationAssociationsInterfaceClientDiagnostics, Pipeline, "AssociationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AssociationData.DeserializeAssociationData(e); return new AssociationResource(Client, data, data.Id); }, _associationAssociationsInterfaceClientDiagnostics, Pipeline, "AssociationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _associationAssociationsInterfaceRestClient.CreateListByTrafficControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _associationAssociationsInterfaceRestClient.CreateListByTrafficControllerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AssociationResource(Client, AssociationData.DeserializeAssociationData(e)), _associationAssociationsInterfaceClientDiagnostics, Pipeline, "AssociationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AssociationData.DeserializeAssociationData(e); return new AssociationResource(Client, data, data.Id); }, _associationAssociationsInterfaceClientDiagnostics, Pipeline, "AssociationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

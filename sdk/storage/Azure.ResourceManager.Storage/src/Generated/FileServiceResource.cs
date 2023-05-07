@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Initializes a new instance of the <see cref = "FileServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal FileServiceResource(ArmClient client, FileServiceData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal FileServiceResource(ArmClient client, FileServiceData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.Storage
                 var response = await _fileServiceRestClient.GetServicePropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FileServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FileServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -198,7 +199,7 @@ namespace Azure.ResourceManager.Storage
                 var response = _fileServiceRestClient.GetServiceProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FileServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FileServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -233,7 +234,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _fileServiceRestClient.SetServicePropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation<FileServiceResource>(Response.FromValue(new FileServiceResource(Client, response), response.GetRawResponse()));
+                var operation = new StorageArmOperation<FileServiceResource>(Response.FromValue(new FileServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -271,7 +272,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _fileServiceRestClient.SetServiceProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new StorageArmOperation<FileServiceResource>(Response.FromValue(new FileServiceResource(Client, response), response.GetRawResponse()));
+                var operation = new StorageArmOperation<FileServiceResource>(Response.FromValue(new FileServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

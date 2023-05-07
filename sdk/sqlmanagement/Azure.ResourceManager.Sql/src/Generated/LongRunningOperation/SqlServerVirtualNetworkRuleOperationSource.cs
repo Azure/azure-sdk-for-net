@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Sql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SqlServerVirtualNetworkRuleData.DeserializeSqlServerVirtualNetworkRuleData(document.RootElement);
-            return new SqlServerVirtualNetworkRuleResource(_client, data);
+            return new SqlServerVirtualNetworkRuleResource(_client, data, data.Id);
         }
 
         async ValueTask<SqlServerVirtualNetworkRuleResource> IOperationSource<SqlServerVirtualNetworkRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SqlServerVirtualNetworkRuleData.DeserializeSqlServerVirtualNetworkRuleData(document.RootElement);
-            return new SqlServerVirtualNetworkRuleResource(_client, data);
+            return new SqlServerVirtualNetworkRuleResource(_client, data, data.Id);
         }
     }
 }

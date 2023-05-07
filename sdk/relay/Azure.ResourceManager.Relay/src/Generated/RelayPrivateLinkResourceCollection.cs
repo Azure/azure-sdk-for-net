@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Relay
                 var response = await _relayPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RelayPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RelayPrivateLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Relay
                 var response = _relayPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RelayPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RelayPrivateLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Relay
         public virtual AsyncPageable<RelayPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _relayPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new RelayPrivateLinkResource(Client, RelayPrivateLinkResourceData.DeserializeRelayPrivateLinkResourceData(e)), _relayPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "RelayPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = RelayPrivateLinkResourceData.DeserializeRelayPrivateLinkResourceData(e); return new RelayPrivateLinkResource(Client, data, data.Id); }, _relayPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "RelayPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Relay
         public virtual Pageable<RelayPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _relayPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new RelayPrivateLinkResource(Client, RelayPrivateLinkResourceData.DeserializeRelayPrivateLinkResourceData(e)), _relayPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "RelayPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = RelayPrivateLinkResourceData.DeserializeRelayPrivateLinkResourceData(e); return new RelayPrivateLinkResource(Client, data, data.Id); }, _relayPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "RelayPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

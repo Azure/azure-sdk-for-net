@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _failoverGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failoverGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FailoverGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FailoverGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _failoverGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failoverGroupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FailoverGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FailoverGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _failoverGroupRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _failoverGroupRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FailoverGroupResource(Client, FailoverGroupData.DeserializeFailoverGroupData(e)), _failoverGroupClientDiagnostics, Pipeline, "FailoverGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = FailoverGroupData.DeserializeFailoverGroupData(e); return new FailoverGroupResource(Client, data, data.Id); }, _failoverGroupClientDiagnostics, Pipeline, "FailoverGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _failoverGroupRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _failoverGroupRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FailoverGroupResource(Client, FailoverGroupData.DeserializeFailoverGroupData(e)), _failoverGroupClientDiagnostics, Pipeline, "FailoverGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = FailoverGroupData.DeserializeFailoverGroupData(e); return new FailoverGroupResource(Client, data, data.Id); }, _failoverGroupClientDiagnostics, Pipeline, "FailoverGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

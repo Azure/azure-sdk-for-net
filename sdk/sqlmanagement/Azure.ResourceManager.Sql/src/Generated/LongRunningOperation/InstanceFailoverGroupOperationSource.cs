@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Sql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = InstanceFailoverGroupData.DeserializeInstanceFailoverGroupData(document.RootElement);
-            return new InstanceFailoverGroupResource(_client, data);
+            return new InstanceFailoverGroupResource(_client, data, data.Id);
         }
 
         async ValueTask<InstanceFailoverGroupResource> IOperationSource<InstanceFailoverGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = InstanceFailoverGroupData.DeserializeInstanceFailoverGroupData(document.RootElement);
-            return new InstanceFailoverGroupResource(_client, data);
+            return new InstanceFailoverGroupResource(_client, data, data.Id);
         }
     }
 }

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_locationName), _managedInstanceName, _databaseName, backupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient.Get(Id.SubscriptionId, new AzureLocation(_locationName), _managedInstanceName, _databaseName, backupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, new AzureLocation(_locationName), _managedInstanceName, _databaseName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_locationName), _managedInstanceName, _databaseName, onlyLatestPerDatabase, databaseState);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData(e)), _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "SubscriptionLongTermRetentionManagedInstanceBackupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData(e); return new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, data, data.Id); }, _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "SubscriptionLongTermRetentionManagedInstanceBackupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, new AzureLocation(_locationName), _managedInstanceName, _databaseName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_locationName), _managedInstanceName, _databaseName, onlyLatestPerDatabase, databaseState);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData(e)), _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "SubscriptionLongTermRetentionManagedInstanceBackupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData(e); return new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, data, data.Id); }, _subscriptionLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "SubscriptionLongTermRetentionManagedInstanceBackupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

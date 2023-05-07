@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 var response = await _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceFabricApplicationTypeVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricApplicationTypeVersionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 var response = _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceFabricApplicationTypeVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricApplicationTypeVersionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual AsyncPageable<ServiceFabricApplicationTypeVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ServiceFabricApplicationTypeVersionResource(Client, ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(e)), _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, "ServiceFabricApplicationTypeVersionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(e); return new ServiceFabricApplicationTypeVersionResource(Client, data, data.Id); }, _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, "ServiceFabricApplicationTypeVersionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual Pageable<ServiceFabricApplicationTypeVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ServiceFabricApplicationTypeVersionResource(Client, ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(e)), _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, "ServiceFabricApplicationTypeVersionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(e); return new ServiceFabricApplicationTypeVersionResource(Client, data, data.Id); }, _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, "ServiceFabricApplicationTypeVersionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

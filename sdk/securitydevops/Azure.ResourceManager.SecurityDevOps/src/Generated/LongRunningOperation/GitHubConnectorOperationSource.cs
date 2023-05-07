@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = GitHubConnectorData.DeserializeGitHubConnectorData(document.RootElement);
-            return new GitHubConnectorResource(_client, data);
+            return new GitHubConnectorResource(_client, data, data.Id);
         }
 
         async ValueTask<GitHubConnectorResource> IOperationSource<GitHubConnectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = GitHubConnectorData.DeserializeGitHubConnectorData(document.RootElement);
-            return new GitHubConnectorResource(_client, data);
+            return new GitHubConnectorResource(_client, data, data.Id);
         }
     }
 }

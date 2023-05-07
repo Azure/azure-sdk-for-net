@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Sql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = InstancePoolData.DeserializeInstancePoolData(document.RootElement);
-            return new InstancePoolResource(_client, data);
+            return new InstancePoolResource(_client, data, data.Id);
         }
 
         async ValueTask<InstancePoolResource> IOperationSource<InstancePoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = InstancePoolData.DeserializeInstancePoolData(document.RootElement);
-            return new InstancePoolResource(_client, data);
+            return new InstancePoolResource(_client, data, data.Id);
         }
     }
 }

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 var response = await _serviceEmergingIssueEmergingIssuesRestClient.GetAsync(issueName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceEmergingIssueResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceEmergingIssueResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 var response = _serviceEmergingIssueEmergingIssuesRestClient.Get(issueName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceEmergingIssueResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceEmergingIssueResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceEmergingIssueEmergingIssuesRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceEmergingIssueEmergingIssuesRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceEmergingIssueResource(Client, ServiceEmergingIssueData.DeserializeServiceEmergingIssueData(e)), _serviceEmergingIssueEmergingIssuesClientDiagnostics, Pipeline, "ServiceEmergingIssueCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceEmergingIssueData.DeserializeServiceEmergingIssueData(e); return new ServiceEmergingIssueResource(Client, data, data.Id); }, _serviceEmergingIssueEmergingIssuesClientDiagnostics, Pipeline, "ServiceEmergingIssueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceEmergingIssueEmergingIssuesRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceEmergingIssueEmergingIssuesRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceEmergingIssueResource(Client, ServiceEmergingIssueData.DeserializeServiceEmergingIssueData(e)), _serviceEmergingIssueEmergingIssuesClientDiagnostics, Pipeline, "ServiceEmergingIssueCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceEmergingIssueData.DeserializeServiceEmergingIssueData(e); return new ServiceEmergingIssueResource(Client, data, data.Id); }, _serviceEmergingIssueEmergingIssuesClientDiagnostics, Pipeline, "ServiceEmergingIssueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

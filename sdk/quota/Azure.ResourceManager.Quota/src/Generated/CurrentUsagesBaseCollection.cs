@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Quota
                 var response = await _currentUsagesBaseUsagesRestClient.GetAsync(Id, resourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CurrentUsagesBaseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CurrentUsagesBaseResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Quota
                 var response = _currentUsagesBaseUsagesRestClient.Get(Id, resourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CurrentUsagesBaseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CurrentUsagesBaseResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Quota
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _currentUsagesBaseUsagesRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _currentUsagesBaseUsagesRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CurrentUsagesBaseResource(Client, CurrentUsagesBaseData.DeserializeCurrentUsagesBaseData(e)), _currentUsagesBaseUsagesClientDiagnostics, Pipeline, "CurrentUsagesBaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = CurrentUsagesBaseData.DeserializeCurrentUsagesBaseData(e); return new CurrentUsagesBaseResource(Client, data, data.Id); }, _currentUsagesBaseUsagesClientDiagnostics, Pipeline, "CurrentUsagesBaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Quota
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _currentUsagesBaseUsagesRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _currentUsagesBaseUsagesRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CurrentUsagesBaseResource(Client, CurrentUsagesBaseData.DeserializeCurrentUsagesBaseData(e)), _currentUsagesBaseUsagesClientDiagnostics, Pipeline, "CurrentUsagesBaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = CurrentUsagesBaseData.DeserializeCurrentUsagesBaseData(e); return new CurrentUsagesBaseResource(Client, data, data.Id); }, _currentUsagesBaseUsagesClientDiagnostics, Pipeline, "CurrentUsagesBaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

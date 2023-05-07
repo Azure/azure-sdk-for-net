@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of the <see cref = "SubscriptionPolicySetDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SubscriptionPolicySetDefinitionResource(ArmClient client, PolicySetDefinitionData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal SubscriptionPolicySetDefinitionResource(ArmClient client, PolicySetDefinitionData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<SubscriptionPolicySetDefinitionResource>(Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response), response.GetRawResponse()));
+                var operation = new ResourcesArmOperation<SubscriptionPolicySetDefinitionResource>(Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,7 +283,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Name, data, cancellationToken);
-                var operation = new ResourcesArmOperation<SubscriptionPolicySetDefinitionResource>(Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response), response.GetRawResponse()));
+                var operation = new ResourcesArmOperation<SubscriptionPolicySetDefinitionResource>(Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

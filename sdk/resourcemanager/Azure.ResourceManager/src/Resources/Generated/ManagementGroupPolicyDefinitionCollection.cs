@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.CreateOrUpdateAtManagementGroupAsync(Id.Name, policyDefinitionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<ManagementGroupPolicyDefinitionResource>(Response.FromValue(new ManagementGroupPolicyDefinitionResource(Client, response), response.GetRawResponse()));
+                var operation = new ResourcesArmOperation<ManagementGroupPolicyDefinitionResource>(Response.FromValue(new ManagementGroupPolicyDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.CreateOrUpdateAtManagementGroup(Id.Name, policyDefinitionName, data, cancellationToken);
-                var operation = new ResourcesArmOperation<ManagementGroupPolicyDefinitionResource>(Response.FromValue(new ManagementGroupPolicyDefinitionResource(Client, response), response.GetRawResponse()));
+                var operation = new ResourcesArmOperation<ManagementGroupPolicyDefinitionResource>(Response.FromValue(new ManagementGroupPolicyDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.GetAtManagementGroupAsync(Id.Name, policyDefinitionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementGroupPolicyDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupPolicyDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.GetAtManagementGroup(Id.Name, policyDefinitionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementGroupPolicyDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupPolicyDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.CreateListByManagementGroupRequest(Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.CreateListByManagementGroupNextPageRequest(nextLink, Id.Name, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagementGroupPolicyDefinitionResource(Client, PolicyDefinitionData.DeserializePolicyDefinitionData(e)), _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics, Pipeline, "ManagementGroupPolicyDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PolicyDefinitionData.DeserializePolicyDefinitionData(e); return new ManagementGroupPolicyDefinitionResource(Client, data, data.Id); }, _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics, Pipeline, "ManagementGroupPolicyDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.CreateListByManagementGroupRequest(Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.CreateListByManagementGroupNextPageRequest(nextLink, Id.Name, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagementGroupPolicyDefinitionResource(Client, PolicyDefinitionData.DeserializePolicyDefinitionData(e)), _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics, Pipeline, "ManagementGroupPolicyDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PolicyDefinitionData.DeserializePolicyDefinitionData(e); return new ManagementGroupPolicyDefinitionResource(Client, data, data.Id); }, _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics, Pipeline, "ManagementGroupPolicyDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

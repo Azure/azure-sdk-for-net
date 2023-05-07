@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 var response = await _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecoveryServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RecoveryServicesPrivateLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 var response = _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecoveryServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RecoveryServicesPrivateLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesPrivateLinkResource(Client, RecoveryServicesPrivateLinkResourceData.DeserializeRecoveryServicesPrivateLinkResourceData(e)), _recoveryServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "RecoveryServicesPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = RecoveryServicesPrivateLinkResourceData.DeserializeRecoveryServicesPrivateLinkResourceData(e); return new RecoveryServicesPrivateLinkResource(Client, data, data.Id); }, _recoveryServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "RecoveryServicesPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesPrivateLinkResource(Client, RecoveryServicesPrivateLinkResourceData.DeserializeRecoveryServicesPrivateLinkResourceData(e)), _recoveryServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "RecoveryServicesPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = RecoveryServicesPrivateLinkResourceData.DeserializeRecoveryServicesPrivateLinkResourceData(e); return new RecoveryServicesPrivateLinkResource(Client, data, data.Id); }, _recoveryServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "RecoveryServicesPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

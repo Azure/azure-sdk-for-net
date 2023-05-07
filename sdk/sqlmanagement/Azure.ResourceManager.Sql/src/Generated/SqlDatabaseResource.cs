@@ -65,7 +65,8 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of the <see cref = "SqlDatabaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SqlDatabaseResource(ArmClient client, SqlDatabaseData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal SqlDatabaseResource(ArmClient client, SqlDatabaseData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -1090,7 +1091,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlDatabaseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlDatabaseResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1124,7 +1125,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlDatabaseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlDatabaseResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1393,7 +1394,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseColumnDatabaseColumnsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseColumnDatabaseColumnsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseColumnResource(Client, DatabaseColumnData.DeserializeDatabaseColumnData(e)), _sqlDatabaseColumnDatabaseColumnsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseColumns", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DatabaseColumnData.DeserializeDatabaseColumnData(e); return new SqlDatabaseColumnResource(Client, data, data.Id); }, _sqlDatabaseColumnDatabaseColumnsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseColumns", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1420,7 +1421,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseColumnDatabaseColumnsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseColumnDatabaseColumnsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseColumnResource(Client, DatabaseColumnData.DeserializeDatabaseColumnData(e)), _sqlDatabaseColumnDatabaseColumnsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseColumns", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DatabaseColumnData.DeserializeDatabaseColumnData(e); return new SqlDatabaseColumnResource(Client, data, data.Id); }, _sqlDatabaseColumnDatabaseColumnsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseColumns", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1797,7 +1798,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListCurrentByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListCurrentByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetCurrentSensitivityLabels", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SensitivityLabelData.DeserializeSensitivityLabelData(e); return new SqlDatabaseSensitivityLabelResource(Client, data, data.Id); }, _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetCurrentSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1822,7 +1823,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListCurrentByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListCurrentByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetCurrentSensitivityLabels", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SensitivityLabelData.DeserializeSensitivityLabelData(e); return new SqlDatabaseSensitivityLabelResource(Client, data, data.Id); }, _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetCurrentSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1915,7 +1916,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListRecommendedByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListRecommendedByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetRecommendedSensitivityLabels", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SensitivityLabelData.DeserializeSensitivityLabelData(e); return new SqlDatabaseSensitivityLabelResource(Client, data, data.Id); }, _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetRecommendedSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1940,7 +1941,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListRecommendedByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListRecommendedByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetRecommendedSensitivityLabels", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SensitivityLabelData.DeserializeSensitivityLabelData(e); return new SqlDatabaseSensitivityLabelResource(Client, data, data.Id); }, _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetRecommendedSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2721,7 +2722,7 @@ namespace Azure.ResourceManager.Sql
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -2775,7 +2776,7 @@ namespace Azure.ResourceManager.Sql
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, null, cancellationToken);
-                    return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -2828,7 +2829,7 @@ namespace Azure.ResourceManager.Sql
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -2877,7 +2878,7 @@ namespace Azure.ResourceManager.Sql
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, null, cancellationToken);
-                    return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -2925,7 +2926,7 @@ namespace Azure.ResourceManager.Sql
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -2977,7 +2978,7 @@ namespace Azure.ResourceManager.Sql
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, null, cancellationToken);
-                    return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {

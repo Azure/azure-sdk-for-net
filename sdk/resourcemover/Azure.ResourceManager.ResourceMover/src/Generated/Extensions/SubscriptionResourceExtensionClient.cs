@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ResourceMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MoverResourceSetMoveCollectionsRestClient.CreateListMoveCollectionsBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MoverResourceSetMoveCollectionsRestClient.CreateListMoveCollectionsBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MoverResourceSetResource(Client, MoverResourceSetData.DeserializeMoverResourceSetData(e)), MoverResourceSetMoveCollectionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMoverResourceSets", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = MoverResourceSetData.DeserializeMoverResourceSetData(e); return new MoverResourceSetResource(Client, data, data.Id); }, MoverResourceSetMoveCollectionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMoverResourceSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ResourceMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MoverResourceSetMoveCollectionsRestClient.CreateListMoveCollectionsBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MoverResourceSetMoveCollectionsRestClient.CreateListMoveCollectionsBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MoverResourceSetResource(Client, MoverResourceSetData.DeserializeMoverResourceSetData(e)), MoverResourceSetMoveCollectionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMoverResourceSets", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = MoverResourceSetData.DeserializeMoverResourceSetData(e); return new MoverResourceSetResource(Client, data, data.Id); }, MoverResourceSetMoveCollectionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMoverResourceSets", "value", "nextLink", cancellationToken);
         }
     }
 }

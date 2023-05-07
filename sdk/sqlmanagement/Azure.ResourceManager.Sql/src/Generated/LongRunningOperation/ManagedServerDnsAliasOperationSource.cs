@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Sql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedServerDnsAliasData.DeserializeManagedServerDnsAliasData(document.RootElement);
-            return new ManagedServerDnsAliasResource(_client, data);
+            return new ManagedServerDnsAliasResource(_client, data, data.Id);
         }
 
         async ValueTask<ManagedServerDnsAliasResource> IOperationSource<ManagedServerDnsAliasResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedServerDnsAliasData.DeserializeManagedServerDnsAliasData(document.RootElement);
-            return new ManagedServerDnsAliasResource(_client, data);
+            return new ManagedServerDnsAliasResource(_client, data, data.Id);
         }
     }
 }

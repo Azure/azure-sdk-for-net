@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, aggregatedRecommendationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IotSecurityAggregatedRecommendationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IotSecurityAggregatedRecommendationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, aggregatedRecommendationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IotSecurityAggregatedRecommendationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IotSecurityAggregatedRecommendationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotSecurityAggregatedRecommendationResource(Client, IotSecurityAggregatedRecommendationData.DeserializeIotSecurityAggregatedRecommendationData(e)), _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationClientDiagnostics, Pipeline, "IotSecurityAggregatedRecommendationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = IotSecurityAggregatedRecommendationData.DeserializeIotSecurityAggregatedRecommendationData(e); return new IotSecurityAggregatedRecommendationResource(Client, data, data.Id); }, _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationClientDiagnostics, Pipeline, "IotSecurityAggregatedRecommendationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotSecurityAggregatedRecommendationResource(Client, IotSecurityAggregatedRecommendationData.DeserializeIotSecurityAggregatedRecommendationData(e)), _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationClientDiagnostics, Pipeline, "IotSecurityAggregatedRecommendationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = IotSecurityAggregatedRecommendationData.DeserializeIotSecurityAggregatedRecommendationData(e); return new IotSecurityAggregatedRecommendationResource(Client, data, data.Id); }, _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationClientDiagnostics, Pipeline, "IotSecurityAggregatedRecommendationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

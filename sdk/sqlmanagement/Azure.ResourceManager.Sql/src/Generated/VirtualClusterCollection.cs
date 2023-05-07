@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _virtualClusterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualClusterName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualClusterResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualClusterResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _virtualClusterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualClusterName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualClusterResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualClusterResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualClusterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualClusterResource(Client, VirtualClusterData.DeserializeVirtualClusterData(e)), _virtualClusterClientDiagnostics, Pipeline, "VirtualClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = VirtualClusterData.DeserializeVirtualClusterData(e); return new VirtualClusterResource(Client, data, data.Id); }, _virtualClusterClientDiagnostics, Pipeline, "VirtualClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualClusterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualClusterResource(Client, VirtualClusterData.DeserializeVirtualClusterData(e)), _virtualClusterClientDiagnostics, Pipeline, "VirtualClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = VirtualClusterData.DeserializeVirtualClusterData(e); return new VirtualClusterResource(Client, data, data.Id); }, _virtualClusterClientDiagnostics, Pipeline, "VirtualClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 var response = await _backupJobJobDetailsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, jobName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupJobResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 var response = _backupJobJobDetailsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, jobName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupJobResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupJobRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupJobRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupJobResource(Client, BackupJobData.DeserializeBackupJobData(e)), _backupJobClientDiagnostics, Pipeline, "BackupJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = BackupJobData.DeserializeBackupJobData(e); return new BackupJobResource(Client, data, data.Id); }, _backupJobClientDiagnostics, Pipeline, "BackupJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupJobRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupJobRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupJobResource(Client, BackupJobData.DeserializeBackupJobData(e)), _backupJobClientDiagnostics, Pipeline, "BackupJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = BackupJobData.DeserializeBackupJobData(e); return new BackupJobResource(Client, data, data.Id); }, _backupJobClientDiagnostics, Pipeline, "BackupJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

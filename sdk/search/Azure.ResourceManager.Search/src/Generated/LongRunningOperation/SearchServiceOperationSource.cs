@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Search
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SearchServiceData.DeserializeSearchServiceData(document.RootElement);
-            return new SearchServiceResource(_client, data);
+            return new SearchServiceResource(_client, data, data.Id);
         }
 
         async ValueTask<SearchServiceResource> IOperationSource<SearchServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SearchServiceData.DeserializeSearchServiceData(document.RootElement);
-            return new SearchServiceResource(_client, data);
+            return new SearchServiceResource(_client, data, data.Id);
         }
     }
 }

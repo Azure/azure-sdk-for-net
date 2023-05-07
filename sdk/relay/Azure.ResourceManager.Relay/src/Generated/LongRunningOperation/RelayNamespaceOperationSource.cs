@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Relay
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = RelayNamespaceData.DeserializeRelayNamespaceData(document.RootElement);
-            return new RelayNamespaceResource(_client, data);
+            return new RelayNamespaceResource(_client, data, data.Id);
         }
 
         async ValueTask<RelayNamespaceResource> IOperationSource<RelayNamespaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = RelayNamespaceData.DeserializeRelayNamespaceData(document.RootElement);
-            return new RelayNamespaceResource(_client, data);
+            return new RelayNamespaceResource(_client, data, data.Id);
         }
     }
 }

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityInsights
             try
             {
                 var response = await _securityInsightsAutomationRuleAutomationRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, automationRuleId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsAutomationRuleResource>(Response.FromValue(new SecurityInsightsAutomationRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsAutomationRuleResource>(Response.FromValue(new SecurityInsightsAutomationRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityInsights
             try
             {
                 var response = _securityInsightsAutomationRuleAutomationRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, automationRuleId, data, cancellationToken);
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsAutomationRuleResource>(Response.FromValue(new SecurityInsightsAutomationRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsAutomationRuleResource>(Response.FromValue(new SecurityInsightsAutomationRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 var response = await _securityInsightsAutomationRuleAutomationRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, automationRuleId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityInsightsAutomationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsAutomationRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 var response = _securityInsightsAutomationRuleAutomationRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, automationRuleId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityInsightsAutomationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsAutomationRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsAutomationRuleAutomationRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsAutomationRuleAutomationRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsAutomationRuleResource(Client, SecurityInsightsAutomationRuleData.DeserializeSecurityInsightsAutomationRuleData(e)), _securityInsightsAutomationRuleAutomationRulesClientDiagnostics, Pipeline, "SecurityInsightsAutomationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityInsightsAutomationRuleData.DeserializeSecurityInsightsAutomationRuleData(e); return new SecurityInsightsAutomationRuleResource(Client, data, data.Id); }, _securityInsightsAutomationRuleAutomationRulesClientDiagnostics, Pipeline, "SecurityInsightsAutomationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsAutomationRuleAutomationRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsAutomationRuleAutomationRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsAutomationRuleResource(Client, SecurityInsightsAutomationRuleData.DeserializeSecurityInsightsAutomationRuleData(e)), _securityInsightsAutomationRuleAutomationRulesClientDiagnostics, Pipeline, "SecurityInsightsAutomationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityInsightsAutomationRuleData.DeserializeSecurityInsightsAutomationRuleData(e); return new SecurityInsightsAutomationRuleResource(Client, data, data.Id); }, _securityInsightsAutomationRuleAutomationRulesClientDiagnostics, Pipeline, "SecurityInsightsAutomationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

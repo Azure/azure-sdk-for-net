@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, policySetDefinitionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<SubscriptionPolicySetDefinitionResource>(Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response), response.GetRawResponse()));
+                var operation = new ResourcesArmOperation<SubscriptionPolicySetDefinitionResource>(Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateOrUpdate(Id.SubscriptionId, policySetDefinitionName, data, cancellationToken);
-                var operation = new ResourcesArmOperation<SubscriptionPolicySetDefinitionResource>(Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response), response.GetRawResponse()));
+                var operation = new ResourcesArmOperation<SubscriptionPolicySetDefinitionResource>(Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.GetAsync(Id.SubscriptionId, policySetDefinitionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.Get(Id.SubscriptionId, policySetDefinitionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionPolicySetDefinitionResource(Client, PolicySetDefinitionData.DeserializePolicySetDefinitionData(e)), _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics, Pipeline, "SubscriptionPolicySetDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PolicySetDefinitionData.DeserializePolicySetDefinitionData(e); return new SubscriptionPolicySetDefinitionResource(Client, data, data.Id); }, _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics, Pipeline, "SubscriptionPolicySetDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionPolicySetDefinitionResource(Client, PolicySetDefinitionData.DeserializePolicySetDefinitionData(e)), _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics, Pipeline, "SubscriptionPolicySetDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PolicySetDefinitionData.DeserializePolicySetDefinitionData(e); return new SubscriptionPolicySetDefinitionResource(Client, data, data.Id); }, _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics, Pipeline, "SubscriptionPolicySetDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

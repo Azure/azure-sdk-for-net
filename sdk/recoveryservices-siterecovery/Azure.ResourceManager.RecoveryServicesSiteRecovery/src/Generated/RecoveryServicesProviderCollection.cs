@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = await _recoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, providerName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecoveryServicesProviderResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RecoveryServicesProviderResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = _recoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, providerName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecoveryServicesProviderResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RecoveryServicesProviderResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesProviderResource(Client, RecoveryServicesProviderData.DeserializeRecoveryServicesProviderData(e)), _recoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, "RecoveryServicesProviderCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = RecoveryServicesProviderData.DeserializeRecoveryServicesProviderData(e); return new RecoveryServicesProviderResource(Client, data, data.Id); }, _recoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, "RecoveryServicesProviderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesProviderResource(Client, RecoveryServicesProviderData.DeserializeRecoveryServicesProviderData(e)), _recoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, "RecoveryServicesProviderCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = RecoveryServicesProviderData.DeserializeRecoveryServicesProviderData(e); return new RecoveryServicesProviderResource(Client, data, data.Id); }, _recoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, "RecoveryServicesProviderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

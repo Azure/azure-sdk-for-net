@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = await _networkMappingReplicationNetworkMappingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, networkMappingName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkMappingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkMappingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = _networkMappingReplicationNetworkMappingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, networkMappingName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkMappingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkMappingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkMappingReplicationNetworkMappingsRestClient.CreateListByReplicationNetworksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkMappingReplicationNetworkMappingsRestClient.CreateListByReplicationNetworksNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkMappingResource(Client, NetworkMappingData.DeserializeNetworkMappingData(e)), _networkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, "NetworkMappingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = NetworkMappingData.DeserializeNetworkMappingData(e); return new NetworkMappingResource(Client, data, data.Id); }, _networkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, "NetworkMappingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkMappingReplicationNetworkMappingsRestClient.CreateListByReplicationNetworksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkMappingReplicationNetworkMappingsRestClient.CreateListByReplicationNetworksNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkMappingResource(Client, NetworkMappingData.DeserializeNetworkMappingData(e)), _networkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, "NetworkMappingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = NetworkMappingData.DeserializeNetworkMappingData(e); return new NetworkMappingResource(Client, data, data.Id); }, _networkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, "NetworkMappingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

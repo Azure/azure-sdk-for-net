@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of the <see cref = "AdvancedThreatProtectionSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AdvancedThreatProtectionSettingResource(ArmClient client, AdvancedThreatProtectionSettingData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal AdvancedThreatProtectionSettingResource(ArmClient client, AdvancedThreatProtectionSettingData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _advancedThreatProtectionSettingAdvancedThreatProtectionRestClient.GetAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AdvancedThreatProtectionSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AdvancedThreatProtectionSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _advancedThreatProtectionSettingAdvancedThreatProtectionRestClient.Get(Id.Parent, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AdvancedThreatProtectionSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AdvancedThreatProtectionSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -176,7 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _advancedThreatProtectionSettingAdvancedThreatProtectionRestClient.CreateAsync(Id.Parent, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<AdvancedThreatProtectionSettingResource>(Response.FromValue(new AdvancedThreatProtectionSettingResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<AdvancedThreatProtectionSettingResource>(Response.FromValue(new AdvancedThreatProtectionSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -214,7 +215,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _advancedThreatProtectionSettingAdvancedThreatProtectionRestClient.Create(Id.Parent, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<AdvancedThreatProtectionSettingResource>(Response.FromValue(new AdvancedThreatProtectionSettingResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<AdvancedThreatProtectionSettingResource>(Response.FromValue(new AdvancedThreatProtectionSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

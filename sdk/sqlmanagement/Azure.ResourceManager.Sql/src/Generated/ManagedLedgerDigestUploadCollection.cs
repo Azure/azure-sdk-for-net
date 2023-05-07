@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _managedLedgerDigestUploadRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedLedgerDigestUploadResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedLedgerDigestUploadResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _managedLedgerDigestUploadRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedLedgerDigestUploadResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedLedgerDigestUploadResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedLedgerDigestUploadRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedLedgerDigestUploadRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedLedgerDigestUploadResource(Client, ManagedLedgerDigestUploadData.DeserializeManagedLedgerDigestUploadData(e)), _managedLedgerDigestUploadClientDiagnostics, Pipeline, "ManagedLedgerDigestUploadCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ManagedLedgerDigestUploadData.DeserializeManagedLedgerDigestUploadData(e); return new ManagedLedgerDigestUploadResource(Client, data, data.Id); }, _managedLedgerDigestUploadClientDiagnostics, Pipeline, "ManagedLedgerDigestUploadCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedLedgerDigestUploadRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedLedgerDigestUploadRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedLedgerDigestUploadResource(Client, ManagedLedgerDigestUploadData.DeserializeManagedLedgerDigestUploadData(e)), _managedLedgerDigestUploadClientDiagnostics, Pipeline, "ManagedLedgerDigestUploadCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ManagedLedgerDigestUploadData.DeserializeManagedLedgerDigestUploadData(e); return new ManagedLedgerDigestUploadResource(Client, data, data.Id); }, _managedLedgerDigestUploadClientDiagnostics, Pipeline, "ManagedLedgerDigestUploadCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

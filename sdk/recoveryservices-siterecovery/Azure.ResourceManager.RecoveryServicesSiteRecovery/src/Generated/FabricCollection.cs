@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = await _fabricReplicationFabricsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, filter, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FabricResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FabricResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = _fabricReplicationFabricsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, fabricName, filter, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FabricResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FabricResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fabricReplicationFabricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fabricReplicationFabricsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FabricResource(Client, FabricData.DeserializeFabricData(e)), _fabricReplicationFabricsClientDiagnostics, Pipeline, "FabricCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = FabricData.DeserializeFabricData(e); return new FabricResource(Client, data, data.Id); }, _fabricReplicationFabricsClientDiagnostics, Pipeline, "FabricCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fabricReplicationFabricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fabricReplicationFabricsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FabricResource(Client, FabricData.DeserializeFabricData(e)), _fabricReplicationFabricsClientDiagnostics, Pipeline, "FabricCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = FabricData.DeserializeFabricData(e); return new FabricResource(Client, data, data.Id); }, _fabricReplicationFabricsClientDiagnostics, Pipeline, "FabricCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

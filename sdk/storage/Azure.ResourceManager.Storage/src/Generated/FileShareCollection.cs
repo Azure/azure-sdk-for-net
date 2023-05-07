@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _fileShareRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, data, expand, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation<FileShareResource>(Response.FromValue(new FileShareResource(Client, response), response.GetRawResponse()));
+                var operation = new StorageArmOperation<FileShareResource>(Response.FromValue(new FileShareResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _fileShareRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, data, expand, cancellationToken);
-                var operation = new StorageArmOperation<FileShareResource>(Response.FromValue(new FileShareResource(Client, response), response.GetRawResponse()));
+                var operation = new StorageArmOperation<FileShareResource>(Response.FromValue(new FileShareResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Storage
                 var response = await _fileShareRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FileShareResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FileShareResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Storage
                 var response = _fileShareRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FileShareResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FileShareResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Storage
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fileShareRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fileShareRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FileShareResource(Client, FileShareData.DeserializeFileShareData(e)), _fileShareClientDiagnostics, Pipeline, "FileShareCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = FileShareData.DeserializeFileShareData(e); return new FileShareResource(Client, data, data.Id); }, _fileShareClientDiagnostics, Pipeline, "FileShareCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Storage
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fileShareRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fileShareRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FileShareResource(Client, FileShareData.DeserializeFileShareData(e)), _fileShareClientDiagnostics, Pipeline, "FileShareCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = FileShareData.DeserializeFileShareData(e); return new FileShareResource(Client, data, data.Id); }, _fileShareClientDiagnostics, Pipeline, "FileShareCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

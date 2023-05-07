@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advancedThreatProtectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceAdvancedThreatProtectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceAdvancedThreatProtectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advancedThreatProtectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceAdvancedThreatProtectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceAdvancedThreatProtectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceAdvancedThreatProtectionResource(Client, ManagedInstanceAdvancedThreatProtectionData.DeserializeManagedInstanceAdvancedThreatProtectionData(e)), _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "ManagedInstanceAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ManagedInstanceAdvancedThreatProtectionData.DeserializeManagedInstanceAdvancedThreatProtectionData(e); return new ManagedInstanceAdvancedThreatProtectionResource(Client, data, data.Id); }, _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "ManagedInstanceAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceAdvancedThreatProtectionResource(Client, ManagedInstanceAdvancedThreatProtectionData.DeserializeManagedInstanceAdvancedThreatProtectionData(e)), _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "ManagedInstanceAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ManagedInstanceAdvancedThreatProtectionData.DeserializeManagedInstanceAdvancedThreatProtectionData(e); return new ManagedInstanceAdvancedThreatProtectionResource(Client, data, data.Id); }, _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "ManagedInstanceAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

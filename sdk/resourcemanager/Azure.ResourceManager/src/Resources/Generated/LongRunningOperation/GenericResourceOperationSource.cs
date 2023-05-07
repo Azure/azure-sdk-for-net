@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Resources
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = GenericResourceData.DeserializeGenericResourceData(document.RootElement);
-            return new GenericResource(_client, data);
+            return new GenericResource(_client, data, data.Id);
         }
 
         async ValueTask<GenericResource> IOperationSource<GenericResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = GenericResourceData.DeserializeGenericResourceData(document.RootElement);
-            return new GenericResource(_client, data);
+            return new GenericResource(_client, data, data.Id);
         }
     }
 }

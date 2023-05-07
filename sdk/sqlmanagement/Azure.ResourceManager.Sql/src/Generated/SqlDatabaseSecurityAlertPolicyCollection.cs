@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlDatabaseSecurityAlertPolicyDatabaseSecurityAlertPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlDatabaseSecurityAlertPolicyResource>(Response.FromValue(new SqlDatabaseSecurityAlertPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new SqlArmOperation<SqlDatabaseSecurityAlertPolicyResource>(Response.FromValue(new SqlDatabaseSecurityAlertPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlDatabaseSecurityAlertPolicyDatabaseSecurityAlertPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlDatabaseSecurityAlertPolicyResource>(Response.FromValue(new SqlDatabaseSecurityAlertPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new SqlArmOperation<SqlDatabaseSecurityAlertPolicyResource>(Response.FromValue(new SqlDatabaseSecurityAlertPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _sqlDatabaseSecurityAlertPolicyDatabaseSecurityAlertPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlDatabaseSecurityAlertPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlDatabaseSecurityAlertPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _sqlDatabaseSecurityAlertPolicyDatabaseSecurityAlertPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlDatabaseSecurityAlertPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlDatabaseSecurityAlertPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSecurityAlertPolicyDatabaseSecurityAlertPoliciesRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseSecurityAlertPolicyDatabaseSecurityAlertPoliciesRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseSecurityAlertPolicyResource(Client, SqlDatabaseSecurityAlertPolicyData.DeserializeSqlDatabaseSecurityAlertPolicyData(e)), _sqlDatabaseSecurityAlertPolicyDatabaseSecurityAlertPoliciesClientDiagnostics, Pipeline, "SqlDatabaseSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SqlDatabaseSecurityAlertPolicyData.DeserializeSqlDatabaseSecurityAlertPolicyData(e); return new SqlDatabaseSecurityAlertPolicyResource(Client, data, data.Id); }, _sqlDatabaseSecurityAlertPolicyDatabaseSecurityAlertPoliciesClientDiagnostics, Pipeline, "SqlDatabaseSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSecurityAlertPolicyDatabaseSecurityAlertPoliciesRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseSecurityAlertPolicyDatabaseSecurityAlertPoliciesRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseSecurityAlertPolicyResource(Client, SqlDatabaseSecurityAlertPolicyData.DeserializeSqlDatabaseSecurityAlertPolicyData(e)), _sqlDatabaseSecurityAlertPolicyDatabaseSecurityAlertPoliciesClientDiagnostics, Pipeline, "SqlDatabaseSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SqlDatabaseSecurityAlertPolicyData.DeserializeSqlDatabaseSecurityAlertPolicyData(e); return new SqlDatabaseSecurityAlertPolicyResource(Client, data, data.Id); }, _sqlDatabaseSecurityAlertPolicyDatabaseSecurityAlertPoliciesClientDiagnostics, Pipeline, "SqlDatabaseSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

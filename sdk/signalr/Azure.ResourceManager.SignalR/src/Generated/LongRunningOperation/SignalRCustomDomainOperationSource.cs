@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.SignalR
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SignalRCustomDomainData.DeserializeSignalRCustomDomainData(document.RootElement);
-            return new SignalRCustomDomainResource(_client, data);
+            return new SignalRCustomDomainResource(_client, data, data.Id);
         }
 
         async ValueTask<SignalRCustomDomainResource> IOperationSource<SignalRCustomDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SignalRCustomDomainData.DeserializeSignalRCustomDomainData(document.RootElement);
-            return new SignalRCustomDomainResource(_client, data);
+            return new SignalRCustomDomainResource(_client, data, data.Id);
         }
     }
 }

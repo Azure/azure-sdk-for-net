@@ -57,7 +57,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of the <see cref = "SecurityCenterLocationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SecurityCenterLocationResource(ArmClient client, SecurityCenterLocationData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal SecurityCenterLocationResource(ArmClient client, SecurityCenterLocationData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -295,7 +296,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _securityCenterLocationLocationsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityCenterLocationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityCenterLocationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -327,7 +328,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _securityCenterLocationLocationsRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityCenterLocationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityCenterLocationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -443,7 +444,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jitNetworkAccessPolicyRestClient.CreateListByRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jitNetworkAccessPolicyRestClient.CreateListByRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), _jitNetworkAccessPolicyClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetJitNetworkAccessPoliciesByRegion", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e); return new JitNetworkAccessPolicyResource(Client, data, data.Id); }, _jitNetworkAccessPolicyClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetJitNetworkAccessPoliciesByRegion", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -465,7 +466,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jitNetworkAccessPolicyRestClient.CreateListByRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jitNetworkAccessPolicyRestClient.CreateListByRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), _jitNetworkAccessPolicyClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetJitNetworkAccessPoliciesByRegion", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e); return new JitNetworkAccessPolicyResource(Client, data, data.Id); }, _jitNetworkAccessPolicyClientDiagnostics, Pipeline, "SecurityCenterLocationResource.GetJitNetworkAccessPoliciesByRegion", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

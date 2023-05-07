@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _securityAssessmentAssessmentsRestClient.CreateOrUpdateAsync(Id, assessmentName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<SecurityAssessmentResource>(Response.FromValue(new SecurityAssessmentResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<SecurityAssessmentResource>(Response.FromValue(new SecurityAssessmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _securityAssessmentAssessmentsRestClient.CreateOrUpdate(Id, assessmentName, content, cancellationToken);
-                var operation = new SecurityCenterArmOperation<SecurityAssessmentResource>(Response.FromValue(new SecurityAssessmentResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<SecurityAssessmentResource>(Response.FromValue(new SecurityAssessmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _securityAssessmentAssessmentsRestClient.GetAsync(Id, assessmentName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityAssessmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityAssessmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _securityAssessmentAssessmentsRestClient.Get(Id, assessmentName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityAssessmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityAssessmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Search
             try
             {
                 var response = await _searchPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
-                var operation = new SearchArmOperation<SearchPrivateEndpointConnectionResource>(Response.FromValue(new SearchPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var operation = new SearchArmOperation<SearchPrivateEndpointConnectionResource>(Response.FromValue(new SearchPrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Search
             try
             {
                 var response = _searchPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, searchManagementRequestOptions, cancellationToken);
-                var operation = new SearchArmOperation<SearchPrivateEndpointConnectionResource>(Response.FromValue(new SearchPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var operation = new SearchArmOperation<SearchPrivateEndpointConnectionResource>(Response.FromValue(new SearchPrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Search
                 var response = await _searchPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SearchPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SearchPrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Search
                 var response = _searchPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, searchManagementRequestOptions, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SearchPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SearchPrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Search
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _searchPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _searchPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SearchPrivateEndpointConnectionResource(Client, SearchPrivateEndpointConnectionData.DeserializeSearchPrivateEndpointConnectionData(e)), _searchPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "SearchPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SearchPrivateEndpointConnectionData.DeserializeSearchPrivateEndpointConnectionData(e); return new SearchPrivateEndpointConnectionResource(Client, data, data.Id); }, _searchPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "SearchPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Search
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _searchPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _searchPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SearchPrivateEndpointConnectionResource(Client, SearchPrivateEndpointConnectionData.DeserializeSearchPrivateEndpointConnectionData(e)), _searchPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "SearchPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SearchPrivateEndpointConnectionData.DeserializeSearchPrivateEndpointConnectionData(e); return new SearchPrivateEndpointConnectionResource(Client, data, data.Id); }, _searchPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "SearchPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

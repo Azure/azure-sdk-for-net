@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Sql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SqlServerDevOpsAuditingSettingData.DeserializeSqlServerDevOpsAuditingSettingData(document.RootElement);
-            return new SqlServerDevOpsAuditingSettingResource(_client, data);
+            return new SqlServerDevOpsAuditingSettingResource(_client, data, data.Id);
         }
 
         async ValueTask<SqlServerDevOpsAuditingSettingResource> IOperationSource<SqlServerDevOpsAuditingSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SqlServerDevOpsAuditingSettingData.DeserializeSqlServerDevOpsAuditingSettingData(document.RootElement);
-            return new SqlServerDevOpsAuditingSettingResource(_client, data);
+            return new SqlServerDevOpsAuditingSettingResource(_client, data, data.Id);
         }
     }
 }

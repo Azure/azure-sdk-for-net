@@ -49,7 +49,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary> Initializes a new instance of the <see cref = "BackupProtectedItemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BackupProtectedItemResource(ArmClient client, BackupProtectedItemData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal BackupProtectedItemResource(ArmClient client, BackupProtectedItemData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -176,7 +177,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 var response = await _backupProtectedItemProtectedItemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupProtectedItemResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupProtectedItemResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -210,7 +211,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 var response = _backupProtectedItemProtectedItemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupProtectedItemResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupProtectedItemResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -316,7 +317,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = await _backupProtectedItemProtectedItemsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesBackupArmOperation<BackupProtectedItemResource>(Response.FromValue(new BackupProtectedItemResource(Client, response), response.GetRawResponse()));
+                var operation = new RecoveryServicesBackupArmOperation<BackupProtectedItemResource>(Response.FromValue(new BackupProtectedItemResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -355,7 +356,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = _backupProtectedItemProtectedItemsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new RecoveryServicesBackupArmOperation<BackupProtectedItemResource>(Response.FromValue(new BackupProtectedItemResource(Client, response), response.GetRawResponse()));
+                var operation = new RecoveryServicesBackupArmOperation<BackupProtectedItemResource>(Response.FromValue(new BackupProtectedItemResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -460,7 +461,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryPointsRecommendedForMoveRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryPointsRecommendedForMoveRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupRecoveryPointResource(Client, BackupRecoveryPointData.DeserializeBackupRecoveryPointData(e)), _recoveryPointsRecommendedForMoveClientDiagnostics, Pipeline, "BackupProtectedItemResource.GetRecoveryPointsRecommendedForMove", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = BackupRecoveryPointData.DeserializeBackupRecoveryPointData(e); return new BackupRecoveryPointResource(Client, data, data.Id); }, _recoveryPointsRecommendedForMoveClientDiagnostics, Pipeline, "BackupProtectedItemResource.GetRecoveryPointsRecommendedForMove", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -486,7 +487,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryPointsRecommendedForMoveRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryPointsRecommendedForMoveRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupRecoveryPointResource(Client, BackupRecoveryPointData.DeserializeBackupRecoveryPointData(e)), _recoveryPointsRecommendedForMoveClientDiagnostics, Pipeline, "BackupProtectedItemResource.GetRecoveryPointsRecommendedForMove", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = BackupRecoveryPointData.DeserializeBackupRecoveryPointData(e); return new BackupRecoveryPointResource(Client, data, data.Id); }, _recoveryPointsRecommendedForMoveClientDiagnostics, Pipeline, "BackupProtectedItemResource.GetRecoveryPointsRecommendedForMove", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -521,7 +522,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _backupProtectedItemProtectedItemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new BackupProtectedItemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new BackupProtectedItemResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -570,7 +571,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _backupProtectedItemProtectedItemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new BackupProtectedItemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new BackupProtectedItemResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -618,7 +619,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _backupProtectedItemProtectedItemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new BackupProtectedItemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new BackupProtectedItemResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -666,7 +667,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _backupProtectedItemProtectedItemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new BackupProtectedItemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new BackupProtectedItemResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -713,7 +714,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _backupProtectedItemProtectedItemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new BackupProtectedItemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new BackupProtectedItemResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -760,7 +761,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _backupProtectedItemProtectedItemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new BackupProtectedItemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new BackupProtectedItemResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {

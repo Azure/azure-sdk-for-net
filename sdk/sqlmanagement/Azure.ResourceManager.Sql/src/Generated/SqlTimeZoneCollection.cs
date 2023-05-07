@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _sqlTimeZoneTimeZonesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_locationName), timeZoneId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlTimeZoneResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlTimeZoneResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _sqlTimeZoneTimeZonesRestClient.Get(Id.SubscriptionId, new AzureLocation(_locationName), timeZoneId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlTimeZoneResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlTimeZoneResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlTimeZoneTimeZonesRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_locationName));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlTimeZoneTimeZonesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_locationName));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlTimeZoneResource(Client, SqlTimeZoneData.DeserializeSqlTimeZoneData(e)), _sqlTimeZoneTimeZonesClientDiagnostics, Pipeline, "SqlTimeZoneCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SqlTimeZoneData.DeserializeSqlTimeZoneData(e); return new SqlTimeZoneResource(Client, data, data.Id); }, _sqlTimeZoneTimeZonesClientDiagnostics, Pipeline, "SqlTimeZoneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlTimeZoneTimeZonesRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_locationName));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlTimeZoneTimeZonesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_locationName));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlTimeZoneResource(Client, SqlTimeZoneData.DeserializeSqlTimeZoneData(e)), _sqlTimeZoneTimeZonesClientDiagnostics, Pipeline, "SqlTimeZoneCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SqlTimeZoneData.DeserializeSqlTimeZoneData(e); return new SqlTimeZoneResource(Client, data, data.Id); }, _sqlTimeZoneTimeZonesClientDiagnostics, Pipeline, "SqlTimeZoneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

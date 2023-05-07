@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Sql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ExtendedServerBlobAuditingPolicyData.DeserializeExtendedServerBlobAuditingPolicyData(document.RootElement);
-            return new ExtendedServerBlobAuditingPolicyResource(_client, data);
+            return new ExtendedServerBlobAuditingPolicyResource(_client, data, data.Id);
         }
 
         async ValueTask<ExtendedServerBlobAuditingPolicyResource> IOperationSource<ExtendedServerBlobAuditingPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ExtendedServerBlobAuditingPolicyData.DeserializeExtendedServerBlobAuditingPolicyData(document.RootElement);
-            return new ExtendedServerBlobAuditingPolicyResource(_client, data);
+            return new ExtendedServerBlobAuditingPolicyResource(_client, data, data.Id);
         }
     }
 }

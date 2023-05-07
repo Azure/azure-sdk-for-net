@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of the <see cref = "SoftwareInventoryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SoftwareInventoryResource(ArmClient client, SoftwareInventoryData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal SoftwareInventoryResource(ArmClient client, SoftwareInventoryData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _softwareInventoryRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SoftwareInventoryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SoftwareInventoryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _softwareInventoryRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SoftwareInventoryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SoftwareInventoryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

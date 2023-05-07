@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 var response = await _backupRecoveryPointRecoveryPointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recoveryPointId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupRecoveryPointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 var response = _backupRecoveryPointRecoveryPointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recoveryPointId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupRecoveryPointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupRecoveryPointRecoveryPointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupRecoveryPointRecoveryPointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupRecoveryPointResource(Client, BackupRecoveryPointData.DeserializeBackupRecoveryPointData(e)), _backupRecoveryPointRecoveryPointsClientDiagnostics, Pipeline, "BackupRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = BackupRecoveryPointData.DeserializeBackupRecoveryPointData(e); return new BackupRecoveryPointResource(Client, data, data.Id); }, _backupRecoveryPointRecoveryPointsClientDiagnostics, Pipeline, "BackupRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupRecoveryPointRecoveryPointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupRecoveryPointRecoveryPointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupRecoveryPointResource(Client, BackupRecoveryPointData.DeserializeBackupRecoveryPointData(e)), _backupRecoveryPointRecoveryPointsClientDiagnostics, Pipeline, "BackupRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = BackupRecoveryPointData.DeserializeBackupRecoveryPointData(e); return new BackupRecoveryPointResource(Client, data, data.Id); }, _backupRecoveryPointRecoveryPointsClientDiagnostics, Pipeline, "BackupRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of the <see cref = "FeatureResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal FeatureResource(ArmClient client, FeatureData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal FeatureResource(ArmClient client, FeatureData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _featureRestClient.GetAsync(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FeatureResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _featureRestClient.Get(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FeatureResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _featureRestClient.RegisterAsync(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FeatureResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -195,7 +196,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _featureRestClient.Register(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken);
-                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FeatureResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -225,7 +226,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _featureRestClient.UnregisterAsync(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FeatureResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -255,7 +256,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _featureRestClient.Unregister(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken);
-                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FeatureResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

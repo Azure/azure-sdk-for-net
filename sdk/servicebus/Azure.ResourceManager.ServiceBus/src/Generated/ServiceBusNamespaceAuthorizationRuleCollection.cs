@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = await _serviceBusNamespaceAuthorizationRuleNamespaceAuthorizationRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceBusArmOperation<ServiceBusNamespaceAuthorizationRuleResource>(Response.FromValue(new ServiceBusNamespaceAuthorizationRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new ServiceBusArmOperation<ServiceBusNamespaceAuthorizationRuleResource>(Response.FromValue(new ServiceBusNamespaceAuthorizationRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = _serviceBusNamespaceAuthorizationRuleNamespaceAuthorizationRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, data, cancellationToken);
-                var operation = new ServiceBusArmOperation<ServiceBusNamespaceAuthorizationRuleResource>(Response.FromValue(new ServiceBusNamespaceAuthorizationRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new ServiceBusArmOperation<ServiceBusNamespaceAuthorizationRuleResource>(Response.FromValue(new ServiceBusNamespaceAuthorizationRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = await _serviceBusNamespaceAuthorizationRuleNamespaceAuthorizationRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBusNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusNamespaceAuthorizationRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = _serviceBusNamespaceAuthorizationRuleNamespaceAuthorizationRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBusNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusNamespaceAuthorizationRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusNamespaceAuthorizationRuleNamespaceAuthorizationRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusNamespaceAuthorizationRuleNamespaceAuthorizationRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceBusNamespaceAuthorizationRuleResource(Client, ServiceBusAuthorizationRuleData.DeserializeServiceBusAuthorizationRuleData(e)), _serviceBusNamespaceAuthorizationRuleNamespaceAuthorizationRulesClientDiagnostics, Pipeline, "ServiceBusNamespaceAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceBusAuthorizationRuleData.DeserializeServiceBusAuthorizationRuleData(e); return new ServiceBusNamespaceAuthorizationRuleResource(Client, data, data.Id); }, _serviceBusNamespaceAuthorizationRuleNamespaceAuthorizationRulesClientDiagnostics, Pipeline, "ServiceBusNamespaceAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusNamespaceAuthorizationRuleNamespaceAuthorizationRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusNamespaceAuthorizationRuleNamespaceAuthorizationRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceBusNamespaceAuthorizationRuleResource(Client, ServiceBusAuthorizationRuleData.DeserializeServiceBusAuthorizationRuleData(e)), _serviceBusNamespaceAuthorizationRuleNamespaceAuthorizationRulesClientDiagnostics, Pipeline, "ServiceBusNamespaceAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceBusAuthorizationRuleData.DeserializeServiceBusAuthorizationRuleData(e); return new ServiceBusNamespaceAuthorizationRuleResource(Client, data, data.Id); }, _serviceBusNamespaceAuthorizationRuleNamespaceAuthorizationRulesClientDiagnostics, Pipeline, "ServiceBusNamespaceAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

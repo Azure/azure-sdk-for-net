@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of the <see cref = "IotSecuritySolutionAnalyticsModelResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal IotSecuritySolutionAnalyticsModelResource(ArmClient client, IotSecuritySolutionAnalyticsModelData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal IotSecuritySolutionAnalyticsModelResource(ArmClient client, IotSecuritySolutionAnalyticsModelData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -215,7 +216,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _iotSecuritySolutionAnalyticsModelIotSecuritySolutionAnalyticsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IotSecuritySolutionAnalyticsModelResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IotSecuritySolutionAnalyticsModelResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -247,7 +248,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _iotSecuritySolutionAnalyticsModelIotSecuritySolutionAnalyticsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IotSecuritySolutionAnalyticsModelResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IotSecuritySolutionAnalyticsModelResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

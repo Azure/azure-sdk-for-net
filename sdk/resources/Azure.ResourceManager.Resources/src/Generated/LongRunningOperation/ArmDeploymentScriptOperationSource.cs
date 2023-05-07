@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Resources
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ArmDeploymentScriptData.DeserializeArmDeploymentScriptData(document.RootElement);
-            return new ArmDeploymentScriptResource(_client, data);
+            return new ArmDeploymentScriptResource(_client, data, data.Id);
         }
 
         async ValueTask<ArmDeploymentScriptResource> IOperationSource<ArmDeploymentScriptResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ArmDeploymentScriptData.DeserializeArmDeploymentScriptData(document.RootElement);
-            return new ArmDeploymentScriptResource(_client, data);
+            return new ArmDeploymentScriptResource(_client, data, data.Id);
         }
     }
 }

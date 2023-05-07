@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Relay
         /// <summary> Initializes a new instance of the <see cref = "RelayHybridConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RelayHybridConnectionResource(ArmClient client, RelayHybridConnectionData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal RelayHybridConnectionResource(ArmClient client, RelayHybridConnectionData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.Relay
                 var response = await _relayHybridConnectionHybridConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RelayHybridConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RelayHybridConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -194,7 +195,7 @@ namespace Azure.ResourceManager.Relay
                 var response = _relayHybridConnectionHybridConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RelayHybridConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RelayHybridConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -297,7 +298,7 @@ namespace Azure.ResourceManager.Relay
             try
             {
                 var response = await _relayHybridConnectionHybridConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RelayArmOperation<RelayHybridConnectionResource>(Response.FromValue(new RelayHybridConnectionResource(Client, response), response.GetRawResponse()));
+                var operation = new RelayArmOperation<RelayHybridConnectionResource>(Response.FromValue(new RelayHybridConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -335,7 +336,7 @@ namespace Azure.ResourceManager.Relay
             try
             {
                 var response = _relayHybridConnectionHybridConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new RelayArmOperation<RelayHybridConnectionResource>(Response.FromValue(new RelayHybridConnectionResource(Client, response), response.GetRawResponse()));
+                var operation = new RelayArmOperation<RelayHybridConnectionResource>(Response.FromValue(new RelayHybridConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

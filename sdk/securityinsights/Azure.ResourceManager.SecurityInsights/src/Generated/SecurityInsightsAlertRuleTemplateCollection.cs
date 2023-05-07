@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 var response = await _securityInsightsAlertRuleTemplateAlertRuleTemplatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alertRuleTemplateId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityInsightsAlertRuleTemplateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsAlertRuleTemplateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 var response = _securityInsightsAlertRuleTemplateAlertRuleTemplatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alertRuleTemplateId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityInsightsAlertRuleTemplateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsAlertRuleTemplateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsAlertRuleTemplateAlertRuleTemplatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsAlertRuleTemplateAlertRuleTemplatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsAlertRuleTemplateResource(Client, SecurityInsightsAlertRuleTemplateData.DeserializeSecurityInsightsAlertRuleTemplateData(e)), _securityInsightsAlertRuleTemplateAlertRuleTemplatesClientDiagnostics, Pipeline, "SecurityInsightsAlertRuleTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityInsightsAlertRuleTemplateData.DeserializeSecurityInsightsAlertRuleTemplateData(e); return new SecurityInsightsAlertRuleTemplateResource(Client, data, data.Id); }, _securityInsightsAlertRuleTemplateAlertRuleTemplatesClientDiagnostics, Pipeline, "SecurityInsightsAlertRuleTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsAlertRuleTemplateAlertRuleTemplatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsAlertRuleTemplateAlertRuleTemplatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsAlertRuleTemplateResource(Client, SecurityInsightsAlertRuleTemplateData.DeserializeSecurityInsightsAlertRuleTemplateData(e)), _securityInsightsAlertRuleTemplateAlertRuleTemplatesClientDiagnostics, Pipeline, "SecurityInsightsAlertRuleTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityInsightsAlertRuleTemplateData.DeserializeSecurityInsightsAlertRuleTemplateData(e); return new SecurityInsightsAlertRuleTemplateResource(Client, data, data.Id); }, _securityInsightsAlertRuleTemplateAlertRuleTemplatesClientDiagnostics, Pipeline, "SecurityInsightsAlertRuleTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

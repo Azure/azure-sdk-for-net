@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, aggregatedAlertName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IotSecurityAggregatedAlertResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IotSecurityAggregatedAlertResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, aggregatedAlertName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IotSecurityAggregatedAlertResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IotSecurityAggregatedAlertResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotSecurityAggregatedAlertResource(Client, IotSecurityAggregatedAlertData.DeserializeIotSecurityAggregatedAlertData(e)), _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics, Pipeline, "IotSecurityAggregatedAlertCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = IotSecurityAggregatedAlertData.DeserializeIotSecurityAggregatedAlertData(e); return new IotSecurityAggregatedAlertResource(Client, data, data.Id); }, _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics, Pipeline, "IotSecurityAggregatedAlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotSecurityAggregatedAlertResource(Client, IotSecurityAggregatedAlertData.DeserializeIotSecurityAggregatedAlertData(e)), _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics, Pipeline, "IotSecurityAggregatedAlertCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = IotSecurityAggregatedAlertData.DeserializeIotSecurityAggregatedAlertData(e); return new IotSecurityAggregatedAlertResource(Client, data, data.Id); }, _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics, Pipeline, "IotSecurityAggregatedAlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

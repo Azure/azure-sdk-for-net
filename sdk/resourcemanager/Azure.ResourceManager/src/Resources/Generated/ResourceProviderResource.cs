@@ -46,7 +46,8 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of the <see cref = "ResourceProviderResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ResourceProviderResource(ArmClient client, ResourceProviderData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal ResourceProviderResource(ArmClient client, ResourceProviderData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -168,7 +169,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _resourceProviderProvidersRestClient.GetAsync(Id.SubscriptionId, Id.Provider, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceProviderResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceProviderResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,7 +202,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _resourceProviderProvidersRestClient.Get(Id.SubscriptionId, Id.Provider, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceProviderResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceProviderResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -231,7 +232,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _resourceProviderProvidersRestClient.UnregisterAsync(Id.SubscriptionId, Id.Provider, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ResourceProviderResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceProviderResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -261,7 +262,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _resourceProviderProvidersRestClient.Unregister(Id.SubscriptionId, Id.Provider, cancellationToken);
-                return Response.FromValue(new ResourceProviderResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceProviderResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -334,7 +335,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _resourceProviderProvidersRestClient.RegisterAsync(Id.SubscriptionId, Id.Provider, content, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ResourceProviderResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceProviderResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -365,7 +366,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _resourceProviderProvidersRestClient.Register(Id.SubscriptionId, Id.Provider, content, cancellationToken);
-                return Response.FromValue(new ResourceProviderResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceProviderResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

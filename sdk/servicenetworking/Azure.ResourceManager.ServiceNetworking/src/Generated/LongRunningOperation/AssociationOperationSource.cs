@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AssociationData.DeserializeAssociationData(document.RootElement);
-            return new AssociationResource(_client, data);
+            return new AssociationResource(_client, data, data.Id);
         }
 
         async ValueTask<AssociationResource> IOperationSource<AssociationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AssociationData.DeserializeAssociationData(document.RootElement);
-            return new AssociationResource(_client, data);
+            return new AssociationResource(_client, data, data.Id);
         }
     }
 }

@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary> Initializes a new instance of the <see cref = "BackupEngineResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BackupEngineResource(ArmClient client, BackupEngineData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal BackupEngineResource(ArmClient client, BackupEngineData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 var response = await _backupEngineRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skipToken, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupEngineResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupEngineResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 var response = _backupEngineRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skipToken, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupEngineResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupEngineResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

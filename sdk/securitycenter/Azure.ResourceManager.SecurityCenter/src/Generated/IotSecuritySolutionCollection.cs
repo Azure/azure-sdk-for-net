@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _iotSecuritySolutionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, solutionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<IotSecuritySolutionResource>(Response.FromValue(new IotSecuritySolutionResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<IotSecuritySolutionResource>(Response.FromValue(new IotSecuritySolutionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _iotSecuritySolutionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, solutionName, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<IotSecuritySolutionResource>(Response.FromValue(new IotSecuritySolutionResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<IotSecuritySolutionResource>(Response.FromValue(new IotSecuritySolutionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _iotSecuritySolutionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, solutionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IotSecuritySolutionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IotSecuritySolutionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _iotSecuritySolutionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, solutionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IotSecuritySolutionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IotSecuritySolutionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotSecuritySolutionRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotSecuritySolutionRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotSecuritySolutionResource(Client, IotSecuritySolutionData.DeserializeIotSecuritySolutionData(e)), _iotSecuritySolutionClientDiagnostics, Pipeline, "IotSecuritySolutionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = IotSecuritySolutionData.DeserializeIotSecuritySolutionData(e); return new IotSecuritySolutionResource(Client, data, data.Id); }, _iotSecuritySolutionClientDiagnostics, Pipeline, "IotSecuritySolutionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotSecuritySolutionRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotSecuritySolutionRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotSecuritySolutionResource(Client, IotSecuritySolutionData.DeserializeIotSecuritySolutionData(e)), _iotSecuritySolutionClientDiagnostics, Pipeline, "IotSecuritySolutionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = IotSecuritySolutionData.DeserializeIotSecuritySolutionData(e); return new IotSecuritySolutionResource(Client, data, data.Id); }, _iotSecuritySolutionClientDiagnostics, Pipeline, "IotSecuritySolutionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

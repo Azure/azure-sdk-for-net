@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Relay
         /// <summary> Initializes a new instance of the <see cref = "RelayNetworkRuleSetResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RelayNetworkRuleSetResource(ArmClient client, RelayNetworkRuleSetData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal RelayNetworkRuleSetResource(ArmClient client, RelayNetworkRuleSetData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Relay
                 var response = await _relayNetworkRuleSetNamespacesRestClient.GetNetworkRuleSetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RelayNetworkRuleSetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RelayNetworkRuleSetResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Relay
                 var response = _relayNetworkRuleSetNamespacesRestClient.GetNetworkRuleSet(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RelayNetworkRuleSetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RelayNetworkRuleSetResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -176,7 +177,7 @@ namespace Azure.ResourceManager.Relay
             try
             {
                 var response = await _relayNetworkRuleSetNamespacesRestClient.CreateOrUpdateNetworkRuleSetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RelayArmOperation<RelayNetworkRuleSetResource>(Response.FromValue(new RelayNetworkRuleSetResource(Client, response), response.GetRawResponse()));
+                var operation = new RelayArmOperation<RelayNetworkRuleSetResource>(Response.FromValue(new RelayNetworkRuleSetResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -214,7 +215,7 @@ namespace Azure.ResourceManager.Relay
             try
             {
                 var response = _relayNetworkRuleSetNamespacesRestClient.CreateOrUpdateNetworkRuleSet(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new RelayArmOperation<RelayNetworkRuleSetResource>(Response.FromValue(new RelayNetworkRuleSetResource(Client, response), response.GetRawResponse()));
+                var operation = new RelayArmOperation<RelayNetworkRuleSetResource>(Response.FromValue(new RelayNetworkRuleSetResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

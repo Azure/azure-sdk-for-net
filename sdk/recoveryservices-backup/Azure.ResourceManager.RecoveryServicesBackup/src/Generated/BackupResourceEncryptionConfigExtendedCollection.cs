@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 var response = await _backupResourceEncryptionConfigExtendedBackupResourceEncryptionConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupResourceEncryptionConfigExtendedResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupResourceEncryptionConfigExtendedResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 var response = _backupResourceEncryptionConfigExtendedBackupResourceEncryptionConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupResourceEncryptionConfigExtendedResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupResourceEncryptionConfigExtendedResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

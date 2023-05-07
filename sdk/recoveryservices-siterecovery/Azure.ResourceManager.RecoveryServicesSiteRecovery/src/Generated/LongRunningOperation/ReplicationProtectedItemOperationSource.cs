@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ReplicationProtectedItemData.DeserializeReplicationProtectedItemData(document.RootElement);
-            return new ReplicationProtectedItemResource(_client, data);
+            return new ReplicationProtectedItemResource(_client, data, data.Id);
         }
 
         async ValueTask<ReplicationProtectedItemResource> IOperationSource<ReplicationProtectedItemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ReplicationProtectedItemData.DeserializeReplicationProtectedItemData(document.RootElement);
-            return new ReplicationProtectedItemResource(_client, data);
+            return new ReplicationProtectedItemResource(_client, data, data.Id);
         }
     }
 }

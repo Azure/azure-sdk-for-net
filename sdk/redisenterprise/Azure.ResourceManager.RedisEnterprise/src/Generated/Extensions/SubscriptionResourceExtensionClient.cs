@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RedisEnterpriseClusterRedisEnterpriseRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RedisEnterpriseClusterRedisEnterpriseRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisEnterpriseClusterResource(Client, RedisEnterpriseClusterData.DeserializeRedisEnterpriseClusterData(e)), RedisEnterpriseClusterRedisEnterpriseClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRedisEnterpriseClusters", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = RedisEnterpriseClusterData.DeserializeRedisEnterpriseClusterData(e); return new RedisEnterpriseClusterResource(Client, data, data.Id); }, RedisEnterpriseClusterRedisEnterpriseClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRedisEnterpriseClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RedisEnterpriseClusterRedisEnterpriseRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RedisEnterpriseClusterRedisEnterpriseRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisEnterpriseClusterResource(Client, RedisEnterpriseClusterData.DeserializeRedisEnterpriseClusterData(e)), RedisEnterpriseClusterRedisEnterpriseClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRedisEnterpriseClusters", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = RedisEnterpriseClusterData.DeserializeRedisEnterpriseClusterData(e); return new RedisEnterpriseClusterResource(Client, data, data.Id); }, RedisEnterpriseClusterRedisEnterpriseClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRedisEnterpriseClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _governanceAssignmentRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, assignmentKey, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<GovernanceAssignmentResource>(Response.FromValue(new GovernanceAssignmentResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<GovernanceAssignmentResource>(Response.FromValue(new GovernanceAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _governanceAssignmentRestClient.CreateOrUpdate(Id.Parent, Id.Name, assignmentKey, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<GovernanceAssignmentResource>(Response.FromValue(new GovernanceAssignmentResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<GovernanceAssignmentResource>(Response.FromValue(new GovernanceAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _governanceAssignmentRestClient.GetAsync(Id.Parent, Id.Name, assignmentKey, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GovernanceAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GovernanceAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _governanceAssignmentRestClient.Get(Id.Parent, Id.Name, assignmentKey, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GovernanceAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GovernanceAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _governanceAssignmentRestClient.CreateListRequest(Id.Parent, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _governanceAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GovernanceAssignmentResource(Client, GovernanceAssignmentData.DeserializeGovernanceAssignmentData(e)), _governanceAssignmentClientDiagnostics, Pipeline, "GovernanceAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = GovernanceAssignmentData.DeserializeGovernanceAssignmentData(e); return new GovernanceAssignmentResource(Client, data, data.Id); }, _governanceAssignmentClientDiagnostics, Pipeline, "GovernanceAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _governanceAssignmentRestClient.CreateListRequest(Id.Parent, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _governanceAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GovernanceAssignmentResource(Client, GovernanceAssignmentData.DeserializeGovernanceAssignmentData(e)), _governanceAssignmentClientDiagnostics, Pipeline, "GovernanceAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = GovernanceAssignmentData.DeserializeGovernanceAssignmentData(e); return new GovernanceAssignmentResource(Client, data, data.Id); }, _governanceAssignmentClientDiagnostics, Pipeline, "GovernanceAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

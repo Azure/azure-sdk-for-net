@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _jitRequestRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JitRequestResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new JitRequestResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _jitRequestRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JitRequestResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new JitRequestResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Resources
         public virtual AsyncPageable<JitRequestResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jitRequestRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new JitRequestResource(Client, JitRequestData.DeserializeJitRequestData(e)), _jitRequestClientDiagnostics, Pipeline, "JitRequestCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = JitRequestData.DeserializeJitRequestData(e); return new JitRequestResource(Client, data, data.Id); }, _jitRequestClientDiagnostics, Pipeline, "JitRequestCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Resources
         public virtual Pageable<JitRequestResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jitRequestRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new JitRequestResource(Client, JitRequestData.DeserializeJitRequestData(e)), _jitRequestClientDiagnostics, Pipeline, "JitRequestCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = JitRequestData.DeserializeJitRequestData(e); return new JitRequestResource(Client, data, data.Id); }, _jitRequestClientDiagnostics, Pipeline, "JitRequestCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

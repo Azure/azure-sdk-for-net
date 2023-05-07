@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _geoBackupPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, geoBackupPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<GeoBackupPolicyResource>(Response.FromValue(new GeoBackupPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new SqlArmOperation<GeoBackupPolicyResource>(Response.FromValue(new GeoBackupPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _geoBackupPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, geoBackupPolicyName, data, cancellationToken);
-                var operation = new SqlArmOperation<GeoBackupPolicyResource>(Response.FromValue(new GeoBackupPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new SqlArmOperation<GeoBackupPolicyResource>(Response.FromValue(new GeoBackupPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _geoBackupPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, geoBackupPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GeoBackupPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GeoBackupPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _geoBackupPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, geoBackupPolicyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GeoBackupPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GeoBackupPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Sql
         public virtual AsyncPageable<GeoBackupPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _geoBackupPolicyRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new GeoBackupPolicyResource(Client, GeoBackupPolicyData.DeserializeGeoBackupPolicyData(e)), _geoBackupPolicyClientDiagnostics, Pipeline, "GeoBackupPolicyCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = GeoBackupPolicyData.DeserializeGeoBackupPolicyData(e); return new GeoBackupPolicyResource(Client, data, data.Id); }, _geoBackupPolicyClientDiagnostics, Pipeline, "GeoBackupPolicyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Pageable<GeoBackupPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _geoBackupPolicyRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new GeoBackupPolicyResource(Client, GeoBackupPolicyData.DeserializeGeoBackupPolicyData(e)), _geoBackupPolicyClientDiagnostics, Pipeline, "GeoBackupPolicyCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = GeoBackupPolicyData.DeserializeGeoBackupPolicyData(e); return new GeoBackupPolicyResource(Client, data, data.Id); }, _geoBackupPolicyClientDiagnostics, Pipeline, "GeoBackupPolicyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

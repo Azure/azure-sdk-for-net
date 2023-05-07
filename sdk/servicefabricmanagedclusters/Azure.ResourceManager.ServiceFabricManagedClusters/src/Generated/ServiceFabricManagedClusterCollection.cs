@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 var response = await _serviceFabricManagedClusterManagedClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceFabricManagedClusterResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricManagedClusterResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 var response = _serviceFabricManagedClusterManagedClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceFabricManagedClusterResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricManagedClusterResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedClusterManagedClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricManagedClusterManagedClustersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricManagedClusterResource(Client, ServiceFabricManagedClusterData.DeserializeServiceFabricManagedClusterData(e)), _serviceFabricManagedClusterManagedClustersClientDiagnostics, Pipeline, "ServiceFabricManagedClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceFabricManagedClusterData.DeserializeServiceFabricManagedClusterData(e); return new ServiceFabricManagedClusterResource(Client, data, data.Id); }, _serviceFabricManagedClusterManagedClustersClientDiagnostics, Pipeline, "ServiceFabricManagedClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedClusterManagedClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricManagedClusterManagedClustersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricManagedClusterResource(Client, ServiceFabricManagedClusterData.DeserializeServiceFabricManagedClusterData(e)), _serviceFabricManagedClusterManagedClustersClientDiagnostics, Pipeline, "ServiceFabricManagedClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceFabricManagedClusterData.DeserializeServiceFabricManagedClusterData(e); return new ServiceFabricManagedClusterResource(Client, data, data.Id); }, _serviceFabricManagedClusterManagedClustersClientDiagnostics, Pipeline, "ServiceFabricManagedClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

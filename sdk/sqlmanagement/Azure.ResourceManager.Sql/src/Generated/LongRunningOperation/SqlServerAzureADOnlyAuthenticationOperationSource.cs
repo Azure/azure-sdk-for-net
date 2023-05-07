@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Sql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SqlServerAzureADOnlyAuthenticationData.DeserializeSqlServerAzureADOnlyAuthenticationData(document.RootElement);
-            return new SqlServerAzureADOnlyAuthenticationResource(_client, data);
+            return new SqlServerAzureADOnlyAuthenticationResource(_client, data, data.Id);
         }
 
         async ValueTask<SqlServerAzureADOnlyAuthenticationResource> IOperationSource<SqlServerAzureADOnlyAuthenticationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SqlServerAzureADOnlyAuthenticationData.DeserializeSqlServerAzureADOnlyAuthenticationData(document.RootElement);
-            return new SqlServerAzureADOnlyAuthenticationResource(_client, data);
+            return new SqlServerAzureADOnlyAuthenticationResource(_client, data, data.Id);
         }
     }
 }

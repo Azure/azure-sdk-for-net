@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = await _eventReplicationEventsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, eventName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EventResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = _eventReplicationEventsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, eventName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EventResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventReplicationEventsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventReplicationEventsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventResource(Client, EventData.DeserializeEventData(e)), _eventReplicationEventsClientDiagnostics, Pipeline, "EventCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = EventData.DeserializeEventData(e); return new EventResource(Client, data, data.Id); }, _eventReplicationEventsClientDiagnostics, Pipeline, "EventCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventReplicationEventsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventReplicationEventsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventResource(Client, EventData.DeserializeEventData(e)), _eventReplicationEventsClientDiagnostics, Pipeline, "EventCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = EventData.DeserializeEventData(e); return new EventResource(Client, data, data.Id); }, _eventReplicationEventsClientDiagnostics, Pipeline, "EventCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

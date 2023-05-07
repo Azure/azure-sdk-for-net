@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _ingestionSettingRestClient.CreateAsync(Id.SubscriptionId, ingestionSettingName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<IngestionSettingResource>(Response.FromValue(new IngestionSettingResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<IngestionSettingResource>(Response.FromValue(new IngestionSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _ingestionSettingRestClient.Create(Id.SubscriptionId, ingestionSettingName, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<IngestionSettingResource>(Response.FromValue(new IngestionSettingResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<IngestionSettingResource>(Response.FromValue(new IngestionSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _ingestionSettingRestClient.GetAsync(Id.SubscriptionId, ingestionSettingName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IngestionSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IngestionSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _ingestionSettingRestClient.Get(Id.SubscriptionId, ingestionSettingName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IngestionSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IngestionSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _ingestionSettingRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ingestionSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IngestionSettingResource(Client, IngestionSettingData.DeserializeIngestionSettingData(e)), _ingestionSettingClientDiagnostics, Pipeline, "IngestionSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = IngestionSettingData.DeserializeIngestionSettingData(e); return new IngestionSettingResource(Client, data, data.Id); }, _ingestionSettingClientDiagnostics, Pipeline, "IngestionSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _ingestionSettingRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ingestionSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IngestionSettingResource(Client, IngestionSettingData.DeserializeIngestionSettingData(e)), _ingestionSettingClientDiagnostics, Pipeline, "IngestionSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = IngestionSettingData.DeserializeIngestionSettingData(e); return new IngestionSettingResource(Client, data, data.Id); }, _ingestionSettingClientDiagnostics, Pipeline, "IngestionSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

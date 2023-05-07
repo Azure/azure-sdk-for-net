@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CustomAssessmentAutomationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CustomAssessmentAutomationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomAssessmentAutomationResource(Client, CustomAssessmentAutomationData.DeserializeCustomAssessmentAutomationData(e)), CustomAssessmentAutomationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCustomAssessmentAutomations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = CustomAssessmentAutomationData.DeserializeCustomAssessmentAutomationData(e); return new CustomAssessmentAutomationResource(Client, data, data.Id); }, CustomAssessmentAutomationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCustomAssessmentAutomations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CustomAssessmentAutomationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CustomAssessmentAutomationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomAssessmentAutomationResource(Client, CustomAssessmentAutomationData.DeserializeCustomAssessmentAutomationData(e)), CustomAssessmentAutomationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCustomAssessmentAutomations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = CustomAssessmentAutomationData.DeserializeCustomAssessmentAutomationData(e); return new CustomAssessmentAutomationResource(Client, data, data.Id); }, CustomAssessmentAutomationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCustomAssessmentAutomations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CustomEntityStoreAssignmentRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CustomEntityStoreAssignmentRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomEntityStoreAssignmentResource(Client, CustomEntityStoreAssignmentData.DeserializeCustomEntityStoreAssignmentData(e)), CustomEntityStoreAssignmentClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCustomEntityStoreAssignments", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = CustomEntityStoreAssignmentData.DeserializeCustomEntityStoreAssignmentData(e); return new CustomEntityStoreAssignmentResource(Client, data, data.Id); }, CustomEntityStoreAssignmentClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCustomEntityStoreAssignments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CustomEntityStoreAssignmentRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CustomEntityStoreAssignmentRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomEntityStoreAssignmentResource(Client, CustomEntityStoreAssignmentData.DeserializeCustomEntityStoreAssignmentData(e)), CustomEntityStoreAssignmentClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCustomEntityStoreAssignments", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = CustomEntityStoreAssignmentData.DeserializeCustomEntityStoreAssignmentData(e); return new CustomEntityStoreAssignmentResource(Client, data, data.Id); }, CustomEntityStoreAssignmentClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCustomEntityStoreAssignments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IotSecuritySolutionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotSecuritySolutionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotSecuritySolutionResource(Client, IotSecuritySolutionData.DeserializeIotSecuritySolutionData(e)), IotSecuritySolutionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotSecuritySolutions", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = IotSecuritySolutionData.DeserializeIotSecuritySolutionData(e); return new IotSecuritySolutionResource(Client, data, data.Id); }, IotSecuritySolutionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotSecuritySolutions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IotSecuritySolutionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotSecuritySolutionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotSecuritySolutionResource(Client, IotSecuritySolutionData.DeserializeIotSecuritySolutionData(e)), IotSecuritySolutionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotSecuritySolutions", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = IotSecuritySolutionData.DeserializeIotSecuritySolutionData(e); return new IotSecuritySolutionResource(Client, data, data.Id); }, IotSecuritySolutionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotSecuritySolutions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityAutomationAutomationsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityAutomationAutomationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityAutomationResource(Client, SecurityAutomationData.DeserializeSecurityAutomationData(e)), SecurityAutomationAutomationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSecurityAutomations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityAutomationData.DeserializeSecurityAutomationData(e); return new SecurityAutomationResource(Client, data, data.Id); }, SecurityAutomationAutomationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSecurityAutomations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityAutomationAutomationsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityAutomationAutomationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityAutomationResource(Client, SecurityAutomationData.DeserializeSecurityAutomationData(e)), SecurityAutomationAutomationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSecurityAutomations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityAutomationData.DeserializeSecurityAutomationData(e); return new SecurityAutomationResource(Client, data, data.Id); }, SecurityAutomationAutomationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSecurityAutomations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual AsyncPageable<AdaptiveApplicationControlGroupResource> GetAdaptiveApplicationControlGroupsAsync(bool? includePathRecommendations = null, bool? summary = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AdaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient.CreateListRequest(Id.SubscriptionId, includePathRecommendations, summary);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AdaptiveApplicationControlGroupResource(Client, AdaptiveApplicationControlGroupData.DeserializeAdaptiveApplicationControlGroupData(e)), AdaptiveApplicationControlGroupAdaptiveApplicationControlsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAdaptiveApplicationControlGroups", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = AdaptiveApplicationControlGroupData.DeserializeAdaptiveApplicationControlGroupData(e); return new AdaptiveApplicationControlGroupResource(Client, data, data.Id); }, AdaptiveApplicationControlGroupAdaptiveApplicationControlsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAdaptiveApplicationControlGroups", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual Pageable<AdaptiveApplicationControlGroupResource> GetAdaptiveApplicationControlGroups(bool? includePathRecommendations = null, bool? summary = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AdaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient.CreateListRequest(Id.SubscriptionId, includePathRecommendations, summary);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AdaptiveApplicationControlGroupResource(Client, AdaptiveApplicationControlGroupData.DeserializeAdaptiveApplicationControlGroupData(e)), AdaptiveApplicationControlGroupAdaptiveApplicationControlsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAdaptiveApplicationControlGroups", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = AdaptiveApplicationControlGroupData.DeserializeAdaptiveApplicationControlGroupData(e); return new AdaptiveApplicationControlGroupResource(Client, data, data.Id); }, AdaptiveApplicationControlGroupAdaptiveApplicationControlsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAdaptiveApplicationControlGroups", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => JitNetworkAccessPolicyRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => JitNetworkAccessPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), JitNetworkAccessPolicyClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetJitNetworkAccessPolicies", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e); return new JitNetworkAccessPolicyResource(Client, data, data.Id); }, JitNetworkAccessPolicyClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetJitNetworkAccessPolicies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => JitNetworkAccessPolicyRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => JitNetworkAccessPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), JitNetworkAccessPolicyClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetJitNetworkAccessPolicies", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e); return new JitNetworkAccessPolicyResource(Client, data, data.Id); }, JitNetworkAccessPolicyClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetJitNetworkAccessPolicies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1044,7 +1044,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SoftwareInventoryRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SoftwareInventoryRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SoftwareInventoryResource(Client, SoftwareInventoryData.DeserializeSoftwareInventoryData(e)), SoftwareInventoryClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSoftwareInventories", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SoftwareInventoryData.DeserializeSoftwareInventoryData(e); return new SoftwareInventoryResource(Client, data, data.Id); }, SoftwareInventoryClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSoftwareInventories", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1066,7 +1066,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SoftwareInventoryRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SoftwareInventoryRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SoftwareInventoryResource(Client, SoftwareInventoryData.DeserializeSoftwareInventoryData(e)), SoftwareInventoryClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSoftwareInventories", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SoftwareInventoryData.DeserializeSoftwareInventoryData(e); return new SoftwareInventoryResource(Client, data, data.Id); }, SoftwareInventoryClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSoftwareInventories", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1088,7 +1088,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityConnectorRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityConnectorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityConnectorResource(Client, SecurityConnectorData.DeserializeSecurityConnectorData(e)), SecurityConnectorClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSecurityConnectors", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityConnectorData.DeserializeSecurityConnectorData(e); return new SecurityConnectorResource(Client, data, data.Id); }, SecurityConnectorClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSecurityConnectors", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1110,7 +1110,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityConnectorRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityConnectorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityConnectorResource(Client, SecurityConnectorData.DeserializeSecurityConnectorData(e)), SecurityConnectorClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSecurityConnectors", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityConnectorData.DeserializeSecurityConnectorData(e); return new SecurityConnectorResource(Client, data, data.Id); }, SecurityConnectorClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSecurityConnectors", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = await _policyReplicationPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, policyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = _policyReplicationPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, policyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyReplicationPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyReplicationPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PolicyResource(Client, PolicyData.DeserializePolicyData(e)), _policyReplicationPoliciesClientDiagnostics, Pipeline, "PolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PolicyData.DeserializePolicyData(e); return new PolicyResource(Client, data, data.Id); }, _policyReplicationPoliciesClientDiagnostics, Pipeline, "PolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyReplicationPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyReplicationPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PolicyResource(Client, PolicyData.DeserializePolicyData(e)), _policyReplicationPoliciesClientDiagnostics, Pipeline, "PolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PolicyData.DeserializePolicyData(e); return new PolicyResource(Client, data, data.Id); }, _policyReplicationPoliciesClientDiagnostics, Pipeline, "PolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

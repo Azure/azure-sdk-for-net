@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Sql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedInstanceAdministratorData.DeserializeManagedInstanceAdministratorData(document.RootElement);
-            return new ManagedInstanceAdministratorResource(_client, data);
+            return new ManagedInstanceAdministratorResource(_client, data, data.Id);
         }
 
         async ValueTask<ManagedInstanceAdministratorResource> IOperationSource<ManagedInstanceAdministratorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedInstanceAdministratorData.DeserializeManagedInstanceAdministratorData(document.RootElement);
-            return new ManagedInstanceAdministratorResource(_client, data);
+            return new ManagedInstanceAdministratorResource(_client, data, data.Id);
         }
     }
 }

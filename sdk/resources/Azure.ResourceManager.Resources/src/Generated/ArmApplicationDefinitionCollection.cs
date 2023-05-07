@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _armApplicationDefinitionApplicationDefinitionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ArmApplicationDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArmApplicationDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _armApplicationDefinitionApplicationDefinitionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ArmApplicationDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArmApplicationDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _armApplicationDefinitionApplicationDefinitionsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _armApplicationDefinitionApplicationDefinitionsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArmApplicationDefinitionResource(Client, ArmApplicationDefinitionData.DeserializeArmApplicationDefinitionData(e)), _armApplicationDefinitionApplicationDefinitionsClientDiagnostics, Pipeline, "ArmApplicationDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ArmApplicationDefinitionData.DeserializeArmApplicationDefinitionData(e); return new ArmApplicationDefinitionResource(Client, data, data.Id); }, _armApplicationDefinitionApplicationDefinitionsClientDiagnostics, Pipeline, "ArmApplicationDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _armApplicationDefinitionApplicationDefinitionsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _armApplicationDefinitionApplicationDefinitionsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArmApplicationDefinitionResource(Client, ArmApplicationDefinitionData.DeserializeArmApplicationDefinitionData(e)), _armApplicationDefinitionApplicationDefinitionsClientDiagnostics, Pipeline, "ArmApplicationDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ArmApplicationDefinitionData.DeserializeArmApplicationDefinitionData(e); return new ArmApplicationDefinitionResource(Client, data, data.Id); }, _armApplicationDefinitionApplicationDefinitionsClientDiagnostics, Pipeline, "ArmApplicationDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

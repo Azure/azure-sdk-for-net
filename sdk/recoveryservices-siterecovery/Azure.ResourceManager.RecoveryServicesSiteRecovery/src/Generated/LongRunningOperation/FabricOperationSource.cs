@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = FabricData.DeserializeFabricData(document.RootElement);
-            return new FabricResource(_client, data);
+            return new FabricResource(_client, data, data.Id);
         }
 
         async ValueTask<FabricResource> IOperationSource<FabricResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = FabricData.DeserializeFabricData(document.RootElement);
-            return new FabricResource(_client, data);
+            return new FabricResource(_client, data, data.Id);
         }
     }
 }

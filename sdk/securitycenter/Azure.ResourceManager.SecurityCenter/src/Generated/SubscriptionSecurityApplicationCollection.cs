@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _subscriptionSecurityApplicationApplicationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, applicationId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<SubscriptionSecurityApplicationResource>(Response.FromValue(new SubscriptionSecurityApplicationResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<SubscriptionSecurityApplicationResource>(Response.FromValue(new SubscriptionSecurityApplicationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _subscriptionSecurityApplicationApplicationRestClient.CreateOrUpdate(Id.SubscriptionId, applicationId, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<SubscriptionSecurityApplicationResource>(Response.FromValue(new SubscriptionSecurityApplicationResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<SubscriptionSecurityApplicationResource>(Response.FromValue(new SubscriptionSecurityApplicationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _subscriptionSecurityApplicationApplicationRestClient.GetAsync(Id.SubscriptionId, applicationId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionSecurityApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionSecurityApplicationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _subscriptionSecurityApplicationApplicationRestClient.Get(Id.SubscriptionId, applicationId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionSecurityApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionSecurityApplicationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionSecurityApplicationApplicationsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionSecurityApplicationApplicationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionSecurityApplicationResource(Client, SecurityApplicationData.DeserializeSecurityApplicationData(e)), _subscriptionSecurityApplicationApplicationsClientDiagnostics, Pipeline, "SubscriptionSecurityApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityApplicationData.DeserializeSecurityApplicationData(e); return new SubscriptionSecurityApplicationResource(Client, data, data.Id); }, _subscriptionSecurityApplicationApplicationsClientDiagnostics, Pipeline, "SubscriptionSecurityApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionSecurityApplicationApplicationsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionSecurityApplicationApplicationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionSecurityApplicationResource(Client, SecurityApplicationData.DeserializeSecurityApplicationData(e)), _subscriptionSecurityApplicationApplicationsClientDiagnostics, Pipeline, "SubscriptionSecurityApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityApplicationData.DeserializeSecurityApplicationData(e); return new SubscriptionSecurityApplicationResource(Client, data, data.Id); }, _subscriptionSecurityApplicationApplicationsClientDiagnostics, Pipeline, "SubscriptionSecurityApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

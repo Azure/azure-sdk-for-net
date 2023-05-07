@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Redis
                 var response = await _redisRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RedisResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RedisResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Redis
                 var response = _redisRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RedisResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RedisResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Redis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisResource(Client, RedisData.DeserializeRedisData(e)), _redisClientDiagnostics, Pipeline, "RedisCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = RedisData.DeserializeRedisData(e); return new RedisResource(Client, data, data.Id); }, _redisClientDiagnostics, Pipeline, "RedisCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Redis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisResource(Client, RedisData.DeserializeRedisData(e)), _redisClientDiagnostics, Pipeline, "RedisCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = RedisData.DeserializeRedisData(e); return new RedisResource(Client, data, data.Id); }, _redisClientDiagnostics, Pipeline, "RedisCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = RedisEnterprisePrivateEndpointConnectionData.DeserializeRedisEnterprisePrivateEndpointConnectionData(document.RootElement);
-            return new RedisEnterprisePrivateEndpointConnectionResource(_client, data);
+            return new RedisEnterprisePrivateEndpointConnectionResource(_client, data, data.Id);
         }
 
         async ValueTask<RedisEnterprisePrivateEndpointConnectionResource> IOperationSource<RedisEnterprisePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = RedisEnterprisePrivateEndpointConnectionData.DeserializeRedisEnterprisePrivateEndpointConnectionData(document.RootElement);
-            return new RedisEnterprisePrivateEndpointConnectionResource(_client, data);
+            return new RedisEnterprisePrivateEndpointConnectionResource(_client, data, data.Id);
         }
     }
 }

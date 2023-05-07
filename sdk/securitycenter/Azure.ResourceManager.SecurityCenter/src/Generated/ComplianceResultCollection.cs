@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _complianceResultRestClient.GetAsync(Id, complianceResultName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ComplianceResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComplianceResultResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _complianceResultRestClient.Get(Id, complianceResultName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ComplianceResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComplianceResultResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _complianceResultRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _complianceResultRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ComplianceResultResource(Client, ComplianceResultData.DeserializeComplianceResultData(e)), _complianceResultClientDiagnostics, Pipeline, "ComplianceResultCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ComplianceResultData.DeserializeComplianceResultData(e); return new ComplianceResultResource(Client, data, data.Id); }, _complianceResultClientDiagnostics, Pipeline, "ComplianceResultCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _complianceResultRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _complianceResultRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ComplianceResultResource(Client, ComplianceResultData.DeserializeComplianceResultData(e)), _complianceResultClientDiagnostics, Pipeline, "ComplianceResultCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ComplianceResultData.DeserializeComplianceResultData(e); return new ComplianceResultResource(Client, data, data.Id); }, _complianceResultClientDiagnostics, Pipeline, "ComplianceResultCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

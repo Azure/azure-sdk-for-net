@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.SignalR
                 var response = await _signalRCustomCertificateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SignalRCustomCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SignalRCustomCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.SignalR
                 var response = _signalRCustomCertificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SignalRCustomCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SignalRCustomCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.SignalR
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRCustomCertificateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _signalRCustomCertificateRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SignalRCustomCertificateResource(Client, SignalRCustomCertificateData.DeserializeSignalRCustomCertificateData(e)), _signalRCustomCertificateClientDiagnostics, Pipeline, "SignalRCustomCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SignalRCustomCertificateData.DeserializeSignalRCustomCertificateData(e); return new SignalRCustomCertificateResource(Client, data, data.Id); }, _signalRCustomCertificateClientDiagnostics, Pipeline, "SignalRCustomCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.SignalR
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRCustomCertificateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _signalRCustomCertificateRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SignalRCustomCertificateResource(Client, SignalRCustomCertificateData.DeserializeSignalRCustomCertificateData(e)), _signalRCustomCertificateClientDiagnostics, Pipeline, "SignalRCustomCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SignalRCustomCertificateData.DeserializeSignalRCustomCertificateData(e); return new SignalRCustomCertificateResource(Client, data, data.Id); }, _signalRCustomCertificateClientDiagnostics, Pipeline, "SignalRCustomCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

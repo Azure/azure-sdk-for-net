@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Sql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = WorkloadGroupData.DeserializeWorkloadGroupData(document.RootElement);
-            return new WorkloadGroupResource(_client, data);
+            return new WorkloadGroupResource(_client, data, data.Id);
         }
 
         async ValueTask<WorkloadGroupResource> IOperationSource<WorkloadGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = WorkloadGroupData.DeserializeWorkloadGroupData(document.RootElement);
-            return new WorkloadGroupResource(_client, data);
+            return new WorkloadGroupResource(_client, data, data.Id);
         }
     }
 }

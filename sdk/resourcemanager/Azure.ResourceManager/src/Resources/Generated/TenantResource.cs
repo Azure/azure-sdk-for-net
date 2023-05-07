@@ -38,6 +38,16 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
+        /// <summary> Initializes a new instance of the <see cref = "TenantResource"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal TenantResource(ArmClient client, TenantData data, ResourceIdentifier id) : this(client, id)
+        {
+            HasData = true;
+            _data = data;
+        }
+
         /// <summary> Initializes a new instance of the <see cref="TenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>

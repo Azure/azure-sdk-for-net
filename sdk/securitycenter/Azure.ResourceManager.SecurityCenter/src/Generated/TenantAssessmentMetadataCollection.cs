@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _tenantAssessmentMetadataAssessmentsMetadataRestClient.GetAsync(assessmentMetadataName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantAssessmentMetadataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantAssessmentMetadataResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _tenantAssessmentMetadataAssessmentsMetadataRestClient.Get(assessmentMetadataName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantAssessmentMetadataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantAssessmentMetadataResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantAssessmentMetadataAssessmentsMetadataRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantAssessmentMetadataAssessmentsMetadataRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TenantAssessmentMetadataResource(Client, SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(e)), _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics, Pipeline, "TenantAssessmentMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(e); return new TenantAssessmentMetadataResource(Client, data, data.Id); }, _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics, Pipeline, "TenantAssessmentMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantAssessmentMetadataAssessmentsMetadataRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantAssessmentMetadataAssessmentsMetadataRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TenantAssessmentMetadataResource(Client, SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(e)), _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics, Pipeline, "TenantAssessmentMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(e); return new TenantAssessmentMetadataResource(Client, data, data.Id); }, _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics, Pipeline, "TenantAssessmentMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

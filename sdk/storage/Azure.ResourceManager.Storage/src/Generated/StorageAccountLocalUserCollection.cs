@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _storageAccountLocalUserLocalUsersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation<StorageAccountLocalUserResource>(Response.FromValue(new StorageAccountLocalUserResource(Client, response), response.GetRawResponse()));
+                var operation = new StorageArmOperation<StorageAccountLocalUserResource>(Response.FromValue(new StorageAccountLocalUserResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _storageAccountLocalUserLocalUsersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, data, cancellationToken);
-                var operation = new StorageArmOperation<StorageAccountLocalUserResource>(Response.FromValue(new StorageAccountLocalUserResource(Client, response), response.GetRawResponse()));
+                var operation = new StorageArmOperation<StorageAccountLocalUserResource>(Response.FromValue(new StorageAccountLocalUserResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Storage
                 var response = await _storageAccountLocalUserLocalUsersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StorageAccountLocalUserResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageAccountLocalUserResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Storage
                 var response = _storageAccountLocalUserLocalUsersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StorageAccountLocalUserResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageAccountLocalUserResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Storage
         public virtual AsyncPageable<StorageAccountLocalUserResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageAccountLocalUserLocalUsersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StorageAccountLocalUserResource(Client, StorageAccountLocalUserData.DeserializeStorageAccountLocalUserData(e)), _storageAccountLocalUserLocalUsersClientDiagnostics, Pipeline, "StorageAccountLocalUserCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = StorageAccountLocalUserData.DeserializeStorageAccountLocalUserData(e); return new StorageAccountLocalUserResource(Client, data, data.Id); }, _storageAccountLocalUserLocalUsersClientDiagnostics, Pipeline, "StorageAccountLocalUserCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Storage
         public virtual Pageable<StorageAccountLocalUserResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageAccountLocalUserLocalUsersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new StorageAccountLocalUserResource(Client, StorageAccountLocalUserData.DeserializeStorageAccountLocalUserData(e)), _storageAccountLocalUserLocalUsersClientDiagnostics, Pipeline, "StorageAccountLocalUserCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = StorageAccountLocalUserData.DeserializeStorageAccountLocalUserData(e); return new StorageAccountLocalUserResource(Client, data, data.Id); }, _storageAccountLocalUserLocalUsersClientDiagnostics, Pipeline, "StorageAccountLocalUserCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

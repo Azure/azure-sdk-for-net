@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Initializes a new instance of the <see cref = "RedisEnterpriseDatabaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RedisEnterpriseDatabaseResource(ArmClient client, RedisEnterpriseDatabaseData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal RedisEnterpriseDatabaseResource(ArmClient client, RedisEnterpriseDatabaseData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 var response = await _redisEnterpriseDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RedisEnterpriseDatabaseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RedisEnterpriseDatabaseResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 var response = _redisEnterpriseDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RedisEnterpriseDatabaseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RedisEnterpriseDatabaseResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

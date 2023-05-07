@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of the <see cref = "SecurityAssessmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SecurityAssessmentResource(ArmClient client, SecurityAssessmentData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal SecurityAssessmentResource(ArmClient client, SecurityAssessmentData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -217,7 +218,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _securityAssessmentAssessmentsRestClient.GetAsync(Id.Parent, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityAssessmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityAssessmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _securityAssessmentAssessmentsRestClient.Get(Id.Parent, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityAssessmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityAssessmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -353,7 +354,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _securityAssessmentAssessmentsRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<SecurityAssessmentResource>(Response.FromValue(new SecurityAssessmentResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<SecurityAssessmentResource>(Response.FromValue(new SecurityAssessmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -391,7 +392,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _securityAssessmentAssessmentsRestClient.CreateOrUpdate(Id.Parent, Id.Name, content, cancellationToken);
-                var operation = new SecurityCenterArmOperation<SecurityAssessmentResource>(Response.FromValue(new SecurityAssessmentResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<SecurityAssessmentResource>(Response.FromValue(new SecurityAssessmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

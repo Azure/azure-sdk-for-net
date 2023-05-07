@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = await _serviceBusNamespaceNamespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBusNamespaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusNamespaceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ServiceBus
                 var response = _serviceBusNamespaceNamespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBusNamespaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceBusNamespaceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusNamespaceNamespacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusNamespaceNamespacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceBusNamespaceResource(Client, ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(e)), _serviceBusNamespaceNamespacesClientDiagnostics, Pipeline, "ServiceBusNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(e); return new ServiceBusNamespaceResource(Client, data, data.Id); }, _serviceBusNamespaceNamespacesClientDiagnostics, Pipeline, "ServiceBusNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusNamespaceNamespacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusNamespaceNamespacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceBusNamespaceResource(Client, ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(e)), _serviceBusNamespaceNamespacesClientDiagnostics, Pipeline, "ServiceBusNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(e); return new ServiceBusNamespaceResource(Client, data, data.Id); }, _serviceBusNamespaceNamespacesClientDiagnostics, Pipeline, "ServiceBusNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of the <see cref = "JitNetworkAccessPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal JitNetworkAccessPolicyResource(ArmClient client, JitNetworkAccessPolicyData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal JitNetworkAccessPolicyResource(ArmClient client, JitNetworkAccessPolicyData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _jitNetworkAccessPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JitNetworkAccessPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new JitNetworkAccessPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _jitNetworkAccessPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JitNetworkAccessPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new JitNetworkAccessPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -246,7 +247,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _jitNetworkAccessPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<JitNetworkAccessPolicyResource>(Response.FromValue(new JitNetworkAccessPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<JitNetworkAccessPolicyResource>(Response.FromValue(new JitNetworkAccessPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -284,7 +285,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _jitNetworkAccessPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<JitNetworkAccessPolicyResource>(Response.FromValue(new JitNetworkAccessPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<JitNetworkAccessPolicyResource>(Response.FromValue(new JitNetworkAccessPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

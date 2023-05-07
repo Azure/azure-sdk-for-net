@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _securitySubAssessmentSubAssessmentsRestClient.GetAsync(Id.Parent, Id.Name, subAssessmentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecuritySubAssessmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecuritySubAssessmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _securitySubAssessmentSubAssessmentsRestClient.Get(Id.Parent, Id.Name, subAssessmentName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecuritySubAssessmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecuritySubAssessmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securitySubAssessmentSubAssessmentsRestClient.CreateListRequest(Id.Parent, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securitySubAssessmentSubAssessmentsRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecuritySubAssessmentResource(Client, SecuritySubAssessmentData.DeserializeSecuritySubAssessmentData(e)), _securitySubAssessmentSubAssessmentsClientDiagnostics, Pipeline, "SecuritySubAssessmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SecuritySubAssessmentData.DeserializeSecuritySubAssessmentData(e); return new SecuritySubAssessmentResource(Client, data, data.Id); }, _securitySubAssessmentSubAssessmentsClientDiagnostics, Pipeline, "SecuritySubAssessmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securitySubAssessmentSubAssessmentsRestClient.CreateListRequest(Id.Parent, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securitySubAssessmentSubAssessmentsRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecuritySubAssessmentResource(Client, SecuritySubAssessmentData.DeserializeSecuritySubAssessmentData(e)), _securitySubAssessmentSubAssessmentsClientDiagnostics, Pipeline, "SecuritySubAssessmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SecuritySubAssessmentData.DeserializeSecuritySubAssessmentData(e); return new SecuritySubAssessmentResource(Client, data, data.Id); }, _securitySubAssessmentSubAssessmentsClientDiagnostics, Pipeline, "SecuritySubAssessmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

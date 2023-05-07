@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = await _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storageClassificationMappingName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StorageClassificationMappingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageClassificationMappingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storageClassificationMappingName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StorageClassificationMappingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageClassificationMappingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListByReplicationStorageClassificationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListByReplicationStorageClassificationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationMappingResource(Client, StorageClassificationMappingData.DeserializeStorageClassificationMappingData(e)), _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, "StorageClassificationMappingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = StorageClassificationMappingData.DeserializeStorageClassificationMappingData(e); return new StorageClassificationMappingResource(Client, data, data.Id); }, _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, "StorageClassificationMappingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListByReplicationStorageClassificationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListByReplicationStorageClassificationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationMappingResource(Client, StorageClassificationMappingData.DeserializeStorageClassificationMappingData(e)), _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, "StorageClassificationMappingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = StorageClassificationMappingData.DeserializeStorageClassificationMappingData(e); return new StorageClassificationMappingResource(Client, data, data.Id); }, _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, "StorageClassificationMappingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

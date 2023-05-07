@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServiceFabricManagedClusterData.DeserializeServiceFabricManagedClusterData(document.RootElement);
-            return new ServiceFabricManagedClusterResource(_client, data);
+            return new ServiceFabricManagedClusterResource(_client, data, data.Id);
         }
 
         async ValueTask<ServiceFabricManagedClusterResource> IOperationSource<ServiceFabricManagedClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServiceFabricManagedClusterData.DeserializeServiceFabricManagedClusterData(document.RootElement);
-            return new ServiceFabricManagedClusterResource(_client, data);
+            return new ServiceFabricManagedClusterResource(_client, data, data.Id);
         }
     }
 }

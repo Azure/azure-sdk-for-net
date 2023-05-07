@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Reservations
                 var response = await _reservationOrderRestClient.GetAsync(reservationOrderId, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReservationOrderResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReservationOrderResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Reservations
                 var response = _reservationOrderRestClient.Get(reservationOrderId, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReservationOrderResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReservationOrderResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Reservations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationOrderRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationOrderRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReservationOrderResource(Client, ReservationOrderData.DeserializeReservationOrderData(e)), _reservationOrderClientDiagnostics, Pipeline, "ReservationOrderCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ReservationOrderData.DeserializeReservationOrderData(e); return new ReservationOrderResource(Client, data, data.Id); }, _reservationOrderClientDiagnostics, Pipeline, "ReservationOrderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Reservations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationOrderRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationOrderRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReservationOrderResource(Client, ReservationOrderData.DeserializeReservationOrderData(e)), _reservationOrderClientDiagnostics, Pipeline, "ReservationOrderCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ReservationOrderData.DeserializeReservationOrderData(e); return new ReservationOrderResource(Client, data, data.Id); }, _reservationOrderClientDiagnostics, Pipeline, "ReservationOrderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

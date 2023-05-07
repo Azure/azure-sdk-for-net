@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _instancePoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, instancePoolName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new InstancePoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new InstancePoolResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _instancePoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, instancePoolName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new InstancePoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new InstancePoolResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _instancePoolRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _instancePoolRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new InstancePoolResource(Client, InstancePoolData.DeserializeInstancePoolData(e)), _instancePoolClientDiagnostics, Pipeline, "InstancePoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = InstancePoolData.DeserializeInstancePoolData(e); return new InstancePoolResource(Client, data, data.Id); }, _instancePoolClientDiagnostics, Pipeline, "InstancePoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _instancePoolRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _instancePoolRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new InstancePoolResource(Client, InstancePoolData.DeserializeInstancePoolData(e)), _instancePoolClientDiagnostics, Pipeline, "InstancePoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = InstancePoolData.DeserializeInstancePoolData(e); return new InstancePoolResource(Client, data, data.Id); }, _instancePoolClientDiagnostics, Pipeline, "InstancePoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

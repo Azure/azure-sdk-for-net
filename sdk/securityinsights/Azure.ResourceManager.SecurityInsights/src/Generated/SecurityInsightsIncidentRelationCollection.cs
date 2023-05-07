@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityInsights
             try
             {
                 var response = await _securityInsightsIncidentRelationIncidentRelationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentRelationResource>(Response.FromValue(new SecurityInsightsIncidentRelationResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentRelationResource>(Response.FromValue(new SecurityInsightsIncidentRelationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityInsights
             try
             {
                 var response = _securityInsightsIncidentRelationIncidentRelationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, data, cancellationToken);
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentRelationResource>(Response.FromValue(new SecurityInsightsIncidentRelationResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentRelationResource>(Response.FromValue(new SecurityInsightsIncidentRelationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 var response = await _securityInsightsIncidentRelationIncidentRelationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityInsightsIncidentRelationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsIncidentRelationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 var response = _securityInsightsIncidentRelationIncidentRelationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityInsightsIncidentRelationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsIncidentRelationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsIncidentRelationIncidentRelationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsIncidentRelationIncidentRelationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsIncidentRelationResource(Client, SecurityInsightsIncidentRelationData.DeserializeSecurityInsightsIncidentRelationData(e)), _securityInsightsIncidentRelationIncidentRelationsClientDiagnostics, Pipeline, "SecurityInsightsIncidentRelationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityInsightsIncidentRelationData.DeserializeSecurityInsightsIncidentRelationData(e); return new SecurityInsightsIncidentRelationResource(Client, data, data.Id); }, _securityInsightsIncidentRelationIncidentRelationsClientDiagnostics, Pipeline, "SecurityInsightsIncidentRelationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsIncidentRelationIncidentRelationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsIncidentRelationIncidentRelationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsIncidentRelationResource(Client, SecurityInsightsIncidentRelationData.DeserializeSecurityInsightsIncidentRelationData(e)), _securityInsightsIncidentRelationIncidentRelationsClientDiagnostics, Pipeline, "SecurityInsightsIncidentRelationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityInsightsIncidentRelationData.DeserializeSecurityInsightsIncidentRelationData(e); return new SecurityInsightsIncidentRelationResource(Client, data, data.Id); }, _securityInsightsIncidentRelationIncidentRelationsClientDiagnostics, Pipeline, "SecurityInsightsIncidentRelationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

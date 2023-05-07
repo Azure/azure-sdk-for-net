@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = await _protectionContainerReplicationProtectionContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectionContainerName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProtectionContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProtectionContainerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 var response = _protectionContainerReplicationProtectionContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectionContainerName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProtectionContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProtectionContainerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _protectionContainerReplicationProtectionContainersRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _protectionContainerReplicationProtectionContainersRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerResource(Client, ProtectionContainerData.DeserializeProtectionContainerData(e)), _protectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, "ProtectionContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ProtectionContainerData.DeserializeProtectionContainerData(e); return new ProtectionContainerResource(Client, data, data.Id); }, _protectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, "ProtectionContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _protectionContainerReplicationProtectionContainersRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _protectionContainerReplicationProtectionContainersRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerResource(Client, ProtectionContainerData.DeserializeProtectionContainerData(e)), _protectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, "ProtectionContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ProtectionContainerData.DeserializeProtectionContainerData(e); return new ProtectionContainerResource(Client, data, data.Id); }, _protectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, "ProtectionContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

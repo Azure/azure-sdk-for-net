@@ -50,7 +50,8 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of the <see cref = "SubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SubscriptionResource(ArmClient client, SubscriptionData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal SubscriptionResource(ArmClient client, SubscriptionData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -339,7 +340,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _subscriptionRestClient.GetAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -371,7 +372,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _subscriptionRestClient.Get(Id.SubscriptionId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -775,7 +776,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _featureRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _featureRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FeatureResource(Client, FeatureData.DeserializeFeatureData(e)), _featureClientDiagnostics, Pipeline, "SubscriptionResource.GetFeatures", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = FeatureData.DeserializeFeatureData(e); return new FeatureResource(Client, data, data.Id); }, _featureClientDiagnostics, Pipeline, "SubscriptionResource.GetFeatures", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -797,7 +798,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _featureRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _featureRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FeatureResource(Client, FeatureData.DeserializeFeatureData(e)), _featureClientDiagnostics, Pipeline, "SubscriptionResource.GetFeatures", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = FeatureData.DeserializeFeatureData(e); return new FeatureResource(Client, data, data.Id); }, _featureClientDiagnostics, Pipeline, "SubscriptionResource.GetFeatures", "value", "nextLink", cancellationToken);
         }
     }
 }

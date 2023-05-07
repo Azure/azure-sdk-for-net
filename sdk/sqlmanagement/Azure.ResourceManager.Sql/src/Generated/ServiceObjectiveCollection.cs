@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _serviceObjectiveRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceObjectiveName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceObjectiveResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceObjectiveResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _serviceObjectiveRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceObjectiveName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceObjectiveResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceObjectiveResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Sql
         public virtual AsyncPageable<ServiceObjectiveResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceObjectiveRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ServiceObjectiveResource(Client, ServiceObjectiveData.DeserializeServiceObjectiveData(e)), _serviceObjectiveClientDiagnostics, Pipeline, "ServiceObjectiveCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = ServiceObjectiveData.DeserializeServiceObjectiveData(e); return new ServiceObjectiveResource(Client, data, data.Id); }, _serviceObjectiveClientDiagnostics, Pipeline, "ServiceObjectiveCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Pageable<ServiceObjectiveResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceObjectiveRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ServiceObjectiveResource(Client, ServiceObjectiveData.DeserializeServiceObjectiveData(e)), _serviceObjectiveClientDiagnostics, Pipeline, "ServiceObjectiveCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = ServiceObjectiveData.DeserializeServiceObjectiveData(e); return new ServiceObjectiveResource(Client, data, data.Id); }, _serviceObjectiveClientDiagnostics, Pipeline, "ServiceObjectiveCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

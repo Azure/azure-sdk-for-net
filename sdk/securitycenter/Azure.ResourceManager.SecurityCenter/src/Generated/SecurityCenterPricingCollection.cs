@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _securityCenterPricingPricingsRestClient.UpdateAsync(Id.SubscriptionId, pricingName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<SecurityCenterPricingResource>(Response.FromValue(new SecurityCenterPricingResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<SecurityCenterPricingResource>(Response.FromValue(new SecurityCenterPricingResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _securityCenterPricingPricingsRestClient.Update(Id.SubscriptionId, pricingName, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<SecurityCenterPricingResource>(Response.FromValue(new SecurityCenterPricingResource(Client, response), response.GetRawResponse()));
+                var operation = new SecurityCenterArmOperation<SecurityCenterPricingResource>(Response.FromValue(new SecurityCenterPricingResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _securityCenterPricingPricingsRestClient.GetAsync(Id.SubscriptionId, pricingName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityCenterPricingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityCenterPricingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _securityCenterPricingPricingsRestClient.Get(Id.SubscriptionId, pricingName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityCenterPricingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityCenterPricingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual AsyncPageable<SecurityCenterPricingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCenterPricingPricingsRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SecurityCenterPricingResource(Client, SecurityCenterPricingData.DeserializeSecurityCenterPricingData(e)), _securityCenterPricingPricingsClientDiagnostics, Pipeline, "SecurityCenterPricingCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = SecurityCenterPricingData.DeserializeSecurityCenterPricingData(e); return new SecurityCenterPricingResource(Client, data, data.Id); }, _securityCenterPricingPricingsClientDiagnostics, Pipeline, "SecurityCenterPricingCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual Pageable<SecurityCenterPricingResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCenterPricingPricingsRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SecurityCenterPricingResource(Client, SecurityCenterPricingData.DeserializeSecurityCenterPricingData(e)), _securityCenterPricingPricingsClientDiagnostics, Pipeline, "SecurityCenterPricingCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = SecurityCenterPricingData.DeserializeSecurityCenterPricingData(e); return new SecurityCenterPricingResource(Client, data, data.Id); }, _securityCenterPricingPricingsClientDiagnostics, Pipeline, "SecurityCenterPricingCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

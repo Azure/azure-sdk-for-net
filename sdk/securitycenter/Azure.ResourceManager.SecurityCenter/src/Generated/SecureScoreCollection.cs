@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = await _secureScoreRestClient.GetAsync(Id.SubscriptionId, secureScoreName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecureScoreResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecureScoreResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 var response = _secureScoreRestClient.Get(Id.SubscriptionId, secureScoreName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecureScoreResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecureScoreResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _secureScoreRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _secureScoreRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecureScoreResource(Client, SecureScoreData.DeserializeSecureScoreData(e)), _secureScoreClientDiagnostics, Pipeline, "SecureScoreCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SecureScoreData.DeserializeSecureScoreData(e); return new SecureScoreResource(Client, data, data.Id); }, _secureScoreClientDiagnostics, Pipeline, "SecureScoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _secureScoreRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _secureScoreRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecureScoreResource(Client, SecureScoreData.DeserializeSecureScoreData(e)), _secureScoreClientDiagnostics, Pipeline, "SecureScoreCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SecureScoreData.DeserializeSecureScoreData(e); return new SecureScoreResource(Client, data, data.Id); }, _secureScoreClientDiagnostics, Pipeline, "SecureScoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Qumulo
                 var response = await _qumuloFileSystemResourceFileSystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new QumuloFileSystemResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new QumuloFileSystemResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Qumulo
                 var response = _qumuloFileSystemResourceFileSystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new QumuloFileSystemResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new QumuloFileSystemResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Qumulo
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _qumuloFileSystemResourceFileSystemsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _qumuloFileSystemResourceFileSystemsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new QumuloFileSystemResource(Client, QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(e)), _qumuloFileSystemResourceFileSystemsClientDiagnostics, Pipeline, "QumuloFileSystemResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(e); return new QumuloFileSystemResource(Client, data, data.Id); }, _qumuloFileSystemResourceFileSystemsClientDiagnostics, Pipeline, "QumuloFileSystemResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Qumulo
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _qumuloFileSystemResourceFileSystemsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _qumuloFileSystemResourceFileSystemsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new QumuloFileSystemResource(Client, QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(e)), _qumuloFileSystemResourceFileSystemsClientDiagnostics, Pipeline, "QumuloFileSystemResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(e); return new QumuloFileSystemResource(Client, data, data.Id); }, _qumuloFileSystemResourceFileSystemsClientDiagnostics, Pipeline, "QumuloFileSystemResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

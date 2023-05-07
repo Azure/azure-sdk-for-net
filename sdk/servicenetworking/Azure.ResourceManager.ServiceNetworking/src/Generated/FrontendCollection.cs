@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 var response = await _frontendFrontendsInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FrontendResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FrontendResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 var response = _frontendFrontendsInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FrontendResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FrontendResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontendFrontendsInterfaceRestClient.CreateListByTrafficControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontendFrontendsInterfaceRestClient.CreateListByTrafficControllerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontendResource(Client, FrontendData.DeserializeFrontendData(e)), _frontendFrontendsInterfaceClientDiagnostics, Pipeline, "FrontendCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = FrontendData.DeserializeFrontendData(e); return new FrontendResource(Client, data, data.Id); }, _frontendFrontendsInterfaceClientDiagnostics, Pipeline, "FrontendCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontendFrontendsInterfaceRestClient.CreateListByTrafficControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontendFrontendsInterfaceRestClient.CreateListByTrafficControllerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontendResource(Client, FrontendData.DeserializeFrontendData(e)), _frontendFrontendsInterfaceClientDiagnostics, Pipeline, "FrontendCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = FrontendData.DeserializeFrontendData(e); return new FrontendResource(Client, data, data.Id); }, _frontendFrontendsInterfaceClientDiagnostics, Pipeline, "FrontendCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

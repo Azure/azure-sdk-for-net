@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Search
                 var response = await _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SharedSearchServicePrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SharedSearchServicePrivateLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Search
                 var response = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, searchManagementRequestOptions, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SharedSearchServicePrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SharedSearchServicePrivateLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Search
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SharedSearchServicePrivateLinkResource(Client, SharedSearchServicePrivateLinkResourceData.DeserializeSharedSearchServicePrivateLinkResourceData(e)), _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics, Pipeline, "SharedSearchServicePrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SharedSearchServicePrivateLinkResourceData.DeserializeSharedSearchServicePrivateLinkResourceData(e); return new SharedSearchServicePrivateLinkResource(Client, data, data.Id); }, _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics, Pipeline, "SharedSearchServicePrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Search
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SharedSearchServicePrivateLinkResource(Client, SharedSearchServicePrivateLinkResourceData.DeserializeSharedSearchServicePrivateLinkResourceData(e)), _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics, Pipeline, "SharedSearchServicePrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SharedSearchServicePrivateLinkResourceData.DeserializeSharedSearchServicePrivateLinkResourceData(e); return new SharedSearchServicePrivateLinkResource(Client, data, data.Id); }, _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics, Pipeline, "SharedSearchServicePrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

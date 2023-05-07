@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _tenantPolicyDefinitionPolicyDefinitionsRestClient.GetBuiltInAsync(policyDefinitionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantPolicyDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantPolicyDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _tenantPolicyDefinitionPolicyDefinitionsRestClient.GetBuiltIn(policyDefinitionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantPolicyDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantPolicyDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantPolicyDefinitionPolicyDefinitionsRestClient.CreateListBuiltInRequest(filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantPolicyDefinitionPolicyDefinitionsRestClient.CreateListBuiltInNextPageRequest(nextLink, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TenantPolicyDefinitionResource(Client, PolicyDefinitionData.DeserializePolicyDefinitionData(e)), _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics, Pipeline, "TenantPolicyDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PolicyDefinitionData.DeserializePolicyDefinitionData(e); return new TenantPolicyDefinitionResource(Client, data, data.Id); }, _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics, Pipeline, "TenantPolicyDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantPolicyDefinitionPolicyDefinitionsRestClient.CreateListBuiltInRequest(filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantPolicyDefinitionPolicyDefinitionsRestClient.CreateListBuiltInNextPageRequest(nextLink, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TenantPolicyDefinitionResource(Client, PolicyDefinitionData.DeserializePolicyDefinitionData(e)), _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics, Pipeline, "TenantPolicyDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PolicyDefinitionData.DeserializePolicyDefinitionData(e); return new TenantPolicyDefinitionResource(Client, data, data.Id); }, _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics, Pipeline, "TenantPolicyDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

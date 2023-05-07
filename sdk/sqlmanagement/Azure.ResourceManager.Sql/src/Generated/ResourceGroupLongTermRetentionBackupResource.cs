@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of the <see cref = "ResourceGroupLongTermRetentionBackupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ResourceGroupLongTermRetentionBackupResource(ArmClient client, LongTermRetentionBackupData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal ResourceGroupLongTermRetentionBackupResource(ArmClient client, LongTermRetentionBackupData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsRestClient.GetByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceGroupLongTermRetentionBackupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupLongTermRetentionBackupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _resourceGroupLongTermRetentionBackupLongTermRetentionBackupsRestClient.GetByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceGroupLongTermRetentionBackupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupLongTermRetentionBackupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

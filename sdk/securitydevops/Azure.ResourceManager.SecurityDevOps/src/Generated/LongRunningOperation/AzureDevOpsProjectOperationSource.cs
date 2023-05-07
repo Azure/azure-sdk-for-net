@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AzureDevOpsProjectData.DeserializeAzureDevOpsProjectData(document.RootElement);
-            return new AzureDevOpsProjectResource(_client, data);
+            return new AzureDevOpsProjectResource(_client, data, data.Id);
         }
 
         async ValueTask<AzureDevOpsProjectResource> IOperationSource<AzureDevOpsProjectResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AzureDevOpsProjectData.DeserializeAzureDevOpsProjectData(document.RootElement);
-            return new AzureDevOpsProjectResource(_client, data);
+            return new AzureDevOpsProjectResource(_client, data, data.Id);
         }
     }
 }

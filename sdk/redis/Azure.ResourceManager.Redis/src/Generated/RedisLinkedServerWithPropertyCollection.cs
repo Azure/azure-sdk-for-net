@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Redis
                 var response = await _redisLinkedServerWithPropertyLinkedServerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RedisLinkedServerWithPropertyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RedisLinkedServerWithPropertyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Redis
                 var response = _redisLinkedServerWithPropertyLinkedServerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RedisLinkedServerWithPropertyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RedisLinkedServerWithPropertyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Redis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisLinkedServerWithPropertyLinkedServerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisLinkedServerWithPropertyLinkedServerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisLinkedServerWithPropertyResource(Client, RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(e)), _redisLinkedServerWithPropertyLinkedServerClientDiagnostics, Pipeline, "RedisLinkedServerWithPropertyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(e); return new RedisLinkedServerWithPropertyResource(Client, data, data.Id); }, _redisLinkedServerWithPropertyLinkedServerClientDiagnostics, Pipeline, "RedisLinkedServerWithPropertyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Redis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisLinkedServerWithPropertyLinkedServerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisLinkedServerWithPropertyLinkedServerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisLinkedServerWithPropertyResource(Client, RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(e)), _redisLinkedServerWithPropertyLinkedServerClientDiagnostics, Pipeline, "RedisLinkedServerWithPropertyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(e); return new RedisLinkedServerWithPropertyResource(Client, data, data.Id); }, _redisLinkedServerWithPropertyLinkedServerClientDiagnostics, Pipeline, "RedisLinkedServerWithPropertyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

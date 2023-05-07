@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlServerBlobAuditingPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlServerBlobAuditingPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlServerBlobAuditingPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlServerBlobAuditingPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerBlobAuditingPolicyResource(Client, SqlServerBlobAuditingPolicyData.DeserializeSqlServerBlobAuditingPolicyData(e)), _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesClientDiagnostics, Pipeline, "SqlServerBlobAuditingPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SqlServerBlobAuditingPolicyData.DeserializeSqlServerBlobAuditingPolicyData(e); return new SqlServerBlobAuditingPolicyResource(Client, data, data.Id); }, _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesClientDiagnostics, Pipeline, "SqlServerBlobAuditingPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerBlobAuditingPolicyResource(Client, SqlServerBlobAuditingPolicyData.DeserializeSqlServerBlobAuditingPolicyData(e)), _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesClientDiagnostics, Pipeline, "SqlServerBlobAuditingPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SqlServerBlobAuditingPolicyData.DeserializeSqlServerBlobAuditingPolicyData(e); return new SqlServerBlobAuditingPolicyResource(Client, data, data.Id); }, _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesClientDiagnostics, Pipeline, "SqlServerBlobAuditingPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

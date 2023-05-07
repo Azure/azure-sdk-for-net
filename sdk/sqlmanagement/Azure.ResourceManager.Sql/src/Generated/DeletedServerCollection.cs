@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _deletedServerRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_locationName), deletedServerName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeletedServerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedServerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _deletedServerRestClient.Get(Id.SubscriptionId, new AzureLocation(_locationName), deletedServerName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeletedServerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedServerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deletedServerRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_locationName));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deletedServerRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_locationName));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeletedServerResource(Client, DeletedServerData.DeserializeDeletedServerData(e)), _deletedServerClientDiagnostics, Pipeline, "DeletedServerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DeletedServerData.DeserializeDeletedServerData(e); return new DeletedServerResource(Client, data, data.Id); }, _deletedServerClientDiagnostics, Pipeline, "DeletedServerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deletedServerRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_locationName));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deletedServerRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_locationName));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeletedServerResource(Client, DeletedServerData.DeserializeDeletedServerData(e)), _deletedServerClientDiagnostics, Pipeline, "DeletedServerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DeletedServerData.DeserializeDeletedServerData(e); return new DeletedServerResource(Client, data, data.Id); }, _deletedServerClientDiagnostics, Pipeline, "DeletedServerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionIntentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionIntentResource(Client, BackupProtectionIntentData.DeserializeBackupProtectionIntentData(e)), BackupProtectionIntentClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectionIntents", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = BackupProtectionIntentData.DeserializeBackupProtectionIntentData(e); return new BackupProtectionIntentResource(Client, data, data.Id); }, BackupProtectionIntentClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectionIntents", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionIntentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionIntentResource(Client, BackupProtectionIntentData.DeserializeBackupProtectionIntentData(e)), BackupProtectionIntentClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectionIntents", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = BackupProtectionIntentData.DeserializeBackupProtectionIntentData(e); return new BackupProtectionIntentResource(Client, data, data.Id); }, BackupProtectionIntentClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectionIntents", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectedItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectedItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupProtectedItemResource(Client, BackupProtectedItemData.DeserializeBackupProtectedItemData(e)), BackupProtectedItemsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectedItems", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = BackupProtectedItemData.DeserializeBackupProtectedItemData(e); return new BackupProtectedItemResource(Client, data, data.Id); }, BackupProtectedItemsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectedItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectedItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectedItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupProtectedItemResource(Client, BackupProtectedItemData.DeserializeBackupProtectedItemData(e)), BackupProtectedItemsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectedItems", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = BackupProtectedItemData.DeserializeBackupProtectedItemData(e); return new BackupProtectedItemResource(Client, data, data.Id); }, BackupProtectedItemsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectedItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionContainerResource(Client, BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e)), BackupProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectionContainers", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e); return new BackupProtectionContainerResource(Client, data, data.Id); }, BackupProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectionContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionContainerResource(Client, BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e)), BackupProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectionContainers", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e); return new BackupProtectionContainerResource(Client, data, data.Id); }, BackupProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectionContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeletedProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionContainerResource(Client, BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e)), DeletedProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetSoftDeletedProtectionContainers", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e); return new BackupProtectionContainerResource(Client, data, data.Id); }, DeletedProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetSoftDeletedProtectionContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeletedProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionContainerResource(Client, BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e)), DeletedProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetSoftDeletedProtectionContainers", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e); return new BackupProtectionContainerResource(Client, data, data.Id); }, DeletedProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetSoftDeletedProtectionContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

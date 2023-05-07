@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _managedInstanceLongTermRetentionPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceLongTermRetentionPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceLongTermRetentionPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _managedInstanceLongTermRetentionPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceLongTermRetentionPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceLongTermRetentionPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceLongTermRetentionPolicyRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceLongTermRetentionPolicyRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceLongTermRetentionPolicyResource(Client, ManagedInstanceLongTermRetentionPolicyData.DeserializeManagedInstanceLongTermRetentionPolicyData(e)), _managedInstanceLongTermRetentionPolicyClientDiagnostics, Pipeline, "ManagedInstanceLongTermRetentionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ManagedInstanceLongTermRetentionPolicyData.DeserializeManagedInstanceLongTermRetentionPolicyData(e); return new ManagedInstanceLongTermRetentionPolicyResource(Client, data, data.Id); }, _managedInstanceLongTermRetentionPolicyClientDiagnostics, Pipeline, "ManagedInstanceLongTermRetentionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceLongTermRetentionPolicyRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceLongTermRetentionPolicyRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceLongTermRetentionPolicyResource(Client, ManagedInstanceLongTermRetentionPolicyData.DeserializeManagedInstanceLongTermRetentionPolicyData(e)), _managedInstanceLongTermRetentionPolicyClientDiagnostics, Pipeline, "ManagedInstanceLongTermRetentionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ManagedInstanceLongTermRetentionPolicyData.DeserializeManagedInstanceLongTermRetentionPolicyData(e); return new ManagedInstanceLongTermRetentionPolicyResource(Client, data, data.Id); }, _managedInstanceLongTermRetentionPolicyClientDiagnostics, Pipeline, "ManagedInstanceLongTermRetentionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

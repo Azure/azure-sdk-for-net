@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Sql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedServerSecurityAlertPolicyData.DeserializeManagedServerSecurityAlertPolicyData(document.RootElement);
-            return new ManagedServerSecurityAlertPolicyResource(_client, data);
+            return new ManagedServerSecurityAlertPolicyResource(_client, data, data.Id);
         }
 
         async ValueTask<ManagedServerSecurityAlertPolicyResource> IOperationSource<ManagedServerSecurityAlertPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedServerSecurityAlertPolicyData.DeserializeManagedServerSecurityAlertPolicyData(document.RootElement);
-            return new ManagedServerSecurityAlertPolicyResource(_client, data);
+            return new ManagedServerSecurityAlertPolicyResource(_client, data, data.Id);
         }
     }
 }

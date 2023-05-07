@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, expand, filter, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlDatabaseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlDatabaseResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, expand, filter, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlDatabaseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlDatabaseResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseDatabasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseDatabasesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseResource(Client, SqlDatabaseData.DeserializeSqlDatabaseData(e)), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, "SqlDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SqlDatabaseData.DeserializeSqlDatabaseData(e); return new SqlDatabaseResource(Client, data, data.Id); }, _sqlDatabaseDatabasesClientDiagnostics, Pipeline, "SqlDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseDatabasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseDatabasesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseResource(Client, SqlDatabaseData.DeserializeSqlDatabaseData(e)), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, "SqlDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SqlDatabaseData.DeserializeSqlDatabaseData(e); return new SqlDatabaseResource(Client, data, data.Id); }, _sqlDatabaseDatabasesClientDiagnostics, Pipeline, "SqlDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

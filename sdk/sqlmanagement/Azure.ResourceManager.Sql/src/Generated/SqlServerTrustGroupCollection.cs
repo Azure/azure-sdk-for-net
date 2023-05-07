@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _sqlServerTrustGroupServerTrustGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName), serverTrustGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlServerTrustGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlServerTrustGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _sqlServerTrustGroupServerTrustGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName), serverTrustGroupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlServerTrustGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlServerTrustGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByLocationRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerTrustGroupResource(Client, SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(e)), _sqlServerTrustGroupServerTrustGroupsClientDiagnostics, Pipeline, "SqlServerTrustGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(e); return new SqlServerTrustGroupResource(Client, data, data.Id); }, _sqlServerTrustGroupServerTrustGroupsClientDiagnostics, Pipeline, "SqlServerTrustGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByLocationRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerTrustGroupResource(Client, SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(e)), _sqlServerTrustGroupServerTrustGroupsClientDiagnostics, Pipeline, "SqlServerTrustGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(e); return new SqlServerTrustGroupResource(Client, data, data.Id); }, _sqlServerTrustGroupServerTrustGroupsClientDiagnostics, Pipeline, "SqlServerTrustGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

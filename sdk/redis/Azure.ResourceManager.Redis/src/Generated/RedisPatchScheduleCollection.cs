@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Redis
             try
             {
                 var response = await _redisPatchSchedulePatchSchedulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defaultName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RedisArmOperation<RedisPatchScheduleResource>(Response.FromValue(new RedisPatchScheduleResource(Client, response), response.GetRawResponse()));
+                var operation = new RedisArmOperation<RedisPatchScheduleResource>(Response.FromValue(new RedisPatchScheduleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Redis
             try
             {
                 var response = _redisPatchSchedulePatchSchedulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defaultName, data, cancellationToken);
-                var operation = new RedisArmOperation<RedisPatchScheduleResource>(Response.FromValue(new RedisPatchScheduleResource(Client, response), response.GetRawResponse()));
+                var operation = new RedisArmOperation<RedisPatchScheduleResource>(Response.FromValue(new RedisPatchScheduleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Redis
                 var response = await _redisPatchSchedulePatchSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defaultName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RedisPatchScheduleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RedisPatchScheduleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Redis
                 var response = _redisPatchSchedulePatchSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defaultName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RedisPatchScheduleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RedisPatchScheduleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Redis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisPatchSchedulePatchSchedulesRestClient.CreateListByRedisResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisPatchSchedulePatchSchedulesRestClient.CreateListByRedisResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisPatchScheduleResource(Client, RedisPatchScheduleData.DeserializeRedisPatchScheduleData(e)), _redisPatchSchedulePatchSchedulesClientDiagnostics, Pipeline, "RedisPatchScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = RedisPatchScheduleData.DeserializeRedisPatchScheduleData(e); return new RedisPatchScheduleResource(Client, data, data.Id); }, _redisPatchSchedulePatchSchedulesClientDiagnostics, Pipeline, "RedisPatchScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Redis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisPatchSchedulePatchSchedulesRestClient.CreateListByRedisResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisPatchSchedulePatchSchedulesRestClient.CreateListByRedisResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisPatchScheduleResource(Client, RedisPatchScheduleData.DeserializeRedisPatchScheduleData(e)), _redisPatchSchedulePatchSchedulesClientDiagnostics, Pipeline, "RedisPatchScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = RedisPatchScheduleData.DeserializeRedisPatchScheduleData(e); return new RedisPatchScheduleResource(Client, data, data.Id); }, _redisPatchSchedulePatchSchedulesClientDiagnostics, Pipeline, "RedisPatchScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

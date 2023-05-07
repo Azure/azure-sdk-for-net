@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 var response = await _serviceFabricApplicationApplicationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceFabricApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricApplicationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 var response = _serviceFabricApplicationApplicationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceFabricApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricApplicationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual AsyncPageable<ServiceFabricApplicationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricApplicationApplicationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ServiceFabricApplicationResource(Client, ServiceFabricApplicationData.DeserializeServiceFabricApplicationData(e)), _serviceFabricApplicationApplicationsClientDiagnostics, Pipeline, "ServiceFabricApplicationCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = ServiceFabricApplicationData.DeserializeServiceFabricApplicationData(e); return new ServiceFabricApplicationResource(Client, data, data.Id); }, _serviceFabricApplicationApplicationsClientDiagnostics, Pipeline, "ServiceFabricApplicationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual Pageable<ServiceFabricApplicationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricApplicationApplicationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ServiceFabricApplicationResource(Client, ServiceFabricApplicationData.DeserializeServiceFabricApplicationData(e)), _serviceFabricApplicationApplicationsClientDiagnostics, Pipeline, "ServiceFabricApplicationCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = ServiceFabricApplicationData.DeserializeServiceFabricApplicationData(e); return new ServiceFabricApplicationResource(Client, data, data.Id); }, _serviceFabricApplicationApplicationsClientDiagnostics, Pipeline, "ServiceFabricApplicationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

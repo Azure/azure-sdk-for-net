@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = await _backupProtectionPolicyProtectionPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, policyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesBackupArmOperation<BackupProtectionPolicyResource>(Response.FromValue(new BackupProtectionPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new RecoveryServicesBackupArmOperation<BackupProtectionPolicyResource>(Response.FromValue(new BackupProtectionPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = _backupProtectionPolicyProtectionPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, policyName, data, cancellationToken);
-                var operation = new RecoveryServicesBackupArmOperation<BackupProtectionPolicyResource>(Response.FromValue(new BackupProtectionPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new RecoveryServicesBackupArmOperation<BackupProtectionPolicyResource>(Response.FromValue(new BackupProtectionPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 var response = await _backupProtectionPolicyProtectionPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, policyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupProtectionPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupProtectionPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 var response = _backupProtectionPolicyProtectionPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, policyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupProtectionPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupProtectionPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupProtectionPolicyBackupPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupProtectionPolicyBackupPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionPolicyResource(Client, BackupProtectionPolicyData.DeserializeBackupProtectionPolicyData(e)), _backupProtectionPolicyBackupPoliciesClientDiagnostics, Pipeline, "BackupProtectionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = BackupProtectionPolicyData.DeserializeBackupProtectionPolicyData(e); return new BackupProtectionPolicyResource(Client, data, data.Id); }, _backupProtectionPolicyBackupPoliciesClientDiagnostics, Pipeline, "BackupProtectionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupProtectionPolicyBackupPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupProtectionPolicyBackupPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionPolicyResource(Client, BackupProtectionPolicyData.DeserializeBackupProtectionPolicyData(e)), _backupProtectionPolicyBackupPoliciesClientDiagnostics, Pipeline, "BackupProtectionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = BackupProtectionPolicyData.DeserializeBackupProtectionPolicyData(e); return new BackupProtectionPolicyResource(Client, data, data.Id); }, _backupProtectionPolicyBackupPoliciesClientDiagnostics, Pipeline, "BackupProtectionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

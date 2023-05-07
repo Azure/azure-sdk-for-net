@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Search
                 var response = await _searchServiceServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, searchServiceName, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SearchServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SearchServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Search
                 var response = _searchServiceServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, searchServiceName, searchManagementRequestOptions, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SearchServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SearchServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Search
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _searchServiceServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, searchManagementRequestOptions);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _searchServiceServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, searchManagementRequestOptions);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SearchServiceResource(Client, SearchServiceData.DeserializeSearchServiceData(e)), _searchServiceServicesClientDiagnostics, Pipeline, "SearchServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SearchServiceData.DeserializeSearchServiceData(e); return new SearchServiceResource(Client, data, data.Id); }, _searchServiceServicesClientDiagnostics, Pipeline, "SearchServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Search
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _searchServiceServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, searchManagementRequestOptions);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _searchServiceServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, searchManagementRequestOptions);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SearchServiceResource(Client, SearchServiceData.DeserializeSearchServiceData(e)), _searchServiceServicesClientDiagnostics, Pipeline, "SearchServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SearchServiceData.DeserializeSearchServiceData(e); return new SearchServiceResource(Client, data, data.Id); }, _searchServiceServicesClientDiagnostics, Pipeline, "SearchServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

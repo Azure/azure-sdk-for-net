@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_locationName), _longTermRetentionServerName, _longTermRetentionDatabaseName, backupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionLongTermRetentionBackupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionLongTermRetentionBackupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.Get(Id.SubscriptionId, new AzureLocation(_locationName), _longTermRetentionServerName, _longTermRetentionDatabaseName, backupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionLongTermRetentionBackupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionLongTermRetentionBackupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, new AzureLocation(_locationName), _longTermRetentionServerName, _longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_locationName), _longTermRetentionServerName, _longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionLongTermRetentionBackupResource(Client, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData(e)), _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, "SubscriptionLongTermRetentionBackupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData(e); return new SubscriptionLongTermRetentionBackupResource(Client, data, data.Id); }, _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, "SubscriptionLongTermRetentionBackupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, new AzureLocation(_locationName), _longTermRetentionServerName, _longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_locationName), _longTermRetentionServerName, _longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionLongTermRetentionBackupResource(Client, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData(e)), _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, "SubscriptionLongTermRetentionBackupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData(e); return new SubscriptionLongTermRetentionBackupResource(Client, data, data.Id); }, _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, "SubscriptionLongTermRetentionBackupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

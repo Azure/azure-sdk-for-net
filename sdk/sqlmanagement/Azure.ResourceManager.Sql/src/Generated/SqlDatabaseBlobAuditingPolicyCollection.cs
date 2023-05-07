@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlDatabaseBlobAuditingPolicyDatabaseBlobAuditingPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlDatabaseBlobAuditingPolicyResource>(Response.FromValue(new SqlDatabaseBlobAuditingPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new SqlArmOperation<SqlDatabaseBlobAuditingPolicyResource>(Response.FromValue(new SqlDatabaseBlobAuditingPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlDatabaseBlobAuditingPolicyDatabaseBlobAuditingPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlDatabaseBlobAuditingPolicyResource>(Response.FromValue(new SqlDatabaseBlobAuditingPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new SqlArmOperation<SqlDatabaseBlobAuditingPolicyResource>(Response.FromValue(new SqlDatabaseBlobAuditingPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _sqlDatabaseBlobAuditingPolicyDatabaseBlobAuditingPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlDatabaseBlobAuditingPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlDatabaseBlobAuditingPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _sqlDatabaseBlobAuditingPolicyDatabaseBlobAuditingPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlDatabaseBlobAuditingPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlDatabaseBlobAuditingPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseBlobAuditingPolicyDatabaseBlobAuditingPoliciesRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseBlobAuditingPolicyDatabaseBlobAuditingPoliciesRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseBlobAuditingPolicyResource(Client, SqlDatabaseBlobAuditingPolicyData.DeserializeSqlDatabaseBlobAuditingPolicyData(e)), _sqlDatabaseBlobAuditingPolicyDatabaseBlobAuditingPoliciesClientDiagnostics, Pipeline, "SqlDatabaseBlobAuditingPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SqlDatabaseBlobAuditingPolicyData.DeserializeSqlDatabaseBlobAuditingPolicyData(e); return new SqlDatabaseBlobAuditingPolicyResource(Client, data, data.Id); }, _sqlDatabaseBlobAuditingPolicyDatabaseBlobAuditingPoliciesClientDiagnostics, Pipeline, "SqlDatabaseBlobAuditingPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseBlobAuditingPolicyDatabaseBlobAuditingPoliciesRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseBlobAuditingPolicyDatabaseBlobAuditingPoliciesRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseBlobAuditingPolicyResource(Client, SqlDatabaseBlobAuditingPolicyData.DeserializeSqlDatabaseBlobAuditingPolicyData(e)), _sqlDatabaseBlobAuditingPolicyDatabaseBlobAuditingPoliciesClientDiagnostics, Pipeline, "SqlDatabaseBlobAuditingPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SqlDatabaseBlobAuditingPolicyData.DeserializeSqlDatabaseBlobAuditingPolicyData(e); return new SqlDatabaseBlobAuditingPolicyResource(Client, data, data.Id); }, _sqlDatabaseBlobAuditingPolicyDatabaseBlobAuditingPoliciesClientDiagnostics, Pipeline, "SqlDatabaseBlobAuditingPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

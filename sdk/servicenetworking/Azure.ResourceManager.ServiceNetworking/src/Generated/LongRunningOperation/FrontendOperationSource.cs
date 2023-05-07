@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = FrontendData.DeserializeFrontendData(document.RootElement);
-            return new FrontendResource(_client, data);
+            return new FrontendResource(_client, data, data.Id);
         }
 
         async ValueTask<FrontendResource> IOperationSource<FrontendResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = FrontendData.DeserializeFrontendData(document.RootElement);
-            return new FrontendResource(_client, data);
+            return new FrontendResource(_client, data, data.Id);
         }
     }
 }

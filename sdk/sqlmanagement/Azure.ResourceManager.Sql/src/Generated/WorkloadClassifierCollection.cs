@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _workloadClassifierRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkloadClassifierResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WorkloadClassifierResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _workloadClassifierRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, workloadClassifierName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkloadClassifierResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WorkloadClassifierResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadClassifierRestClient.CreateListByWorkloadGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadClassifierRestClient.CreateListByWorkloadGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadClassifierResource(Client, WorkloadClassifierData.DeserializeWorkloadClassifierData(e)), _workloadClassifierClientDiagnostics, Pipeline, "WorkloadClassifierCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = WorkloadClassifierData.DeserializeWorkloadClassifierData(e); return new WorkloadClassifierResource(Client, data, data.Id); }, _workloadClassifierClientDiagnostics, Pipeline, "WorkloadClassifierCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadClassifierRestClient.CreateListByWorkloadGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadClassifierRestClient.CreateListByWorkloadGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadClassifierResource(Client, WorkloadClassifierData.DeserializeWorkloadClassifierData(e)), _workloadClassifierClientDiagnostics, Pipeline, "WorkloadClassifierCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = WorkloadClassifierData.DeserializeWorkloadClassifierData(e); return new WorkloadClassifierResource(Client, data, data.Id); }, _workloadClassifierClientDiagnostics, Pipeline, "WorkloadClassifierCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

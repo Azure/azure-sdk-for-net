@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 var response = await _trafficControllerTrafficControllerInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, trafficControllerName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TrafficControllerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TrafficControllerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 var response = _trafficControllerTrafficControllerInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, trafficControllerName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TrafficControllerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TrafficControllerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _trafficControllerTrafficControllerInterfaceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _trafficControllerTrafficControllerInterfaceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TrafficControllerResource(Client, TrafficControllerData.DeserializeTrafficControllerData(e)), _trafficControllerTrafficControllerInterfaceClientDiagnostics, Pipeline, "TrafficControllerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = TrafficControllerData.DeserializeTrafficControllerData(e); return new TrafficControllerResource(Client, data, data.Id); }, _trafficControllerTrafficControllerInterfaceClientDiagnostics, Pipeline, "TrafficControllerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _trafficControllerTrafficControllerInterfaceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _trafficControllerTrafficControllerInterfaceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TrafficControllerResource(Client, TrafficControllerData.DeserializeTrafficControllerData(e)), _trafficControllerTrafficControllerInterfaceClientDiagnostics, Pipeline, "TrafficControllerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = TrafficControllerData.DeserializeTrafficControllerData(e); return new TrafficControllerResource(Client, data, data.Id); }, _trafficControllerTrafficControllerInterfaceClientDiagnostics, Pipeline, "TrafficControllerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

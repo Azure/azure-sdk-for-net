@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ServiceBus
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MigrationConfigurationData.DeserializeMigrationConfigurationData(document.RootElement);
-            return new MigrationConfigurationResource(_client, data);
+            return new MigrationConfigurationResource(_client, data, data.Id);
         }
 
         async ValueTask<MigrationConfigurationResource> IOperationSource<MigrationConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MigrationConfigurationData.DeserializeMigrationConfigurationData(document.RootElement);
-            return new MigrationConfigurationResource(_client, data);
+            return new MigrationConfigurationResource(_client, data, data.Id);
         }
     }
 }
