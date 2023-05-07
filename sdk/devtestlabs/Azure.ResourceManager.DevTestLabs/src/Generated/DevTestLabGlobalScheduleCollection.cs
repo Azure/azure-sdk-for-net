@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = await _devTestLabGlobalScheduleGlobalSchedulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation<DevTestLabGlobalScheduleResource>(Response.FromValue(new DevTestLabGlobalScheduleResource(Client, response), response.GetRawResponse()));
+                var operation = new DevTestLabsArmOperation<DevTestLabGlobalScheduleResource>(Response.FromValue(new DevTestLabGlobalScheduleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = _devTestLabGlobalScheduleGlobalSchedulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken);
-                var operation = new DevTestLabsArmOperation<DevTestLabGlobalScheduleResource>(Response.FromValue(new DevTestLabGlobalScheduleResource(Client, response), response.GetRawResponse()));
+                var operation = new DevTestLabsArmOperation<DevTestLabGlobalScheduleResource>(Response.FromValue(new DevTestLabGlobalScheduleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 var response = await _devTestLabGlobalScheduleGlobalSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevTestLabGlobalScheduleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevTestLabGlobalScheduleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 var response = _devTestLabGlobalScheduleGlobalSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevTestLabGlobalScheduleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevTestLabGlobalScheduleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabGlobalScheduleGlobalSchedulesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabGlobalScheduleGlobalSchedulesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabGlobalScheduleResource(Client, DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e)), _devTestLabGlobalScheduleGlobalSchedulesClientDiagnostics, Pipeline, "DevTestLabGlobalScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e); return new DevTestLabGlobalScheduleResource(Client, data, data.Id); }, _devTestLabGlobalScheduleGlobalSchedulesClientDiagnostics, Pipeline, "DevTestLabGlobalScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabGlobalScheduleGlobalSchedulesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabGlobalScheduleGlobalSchedulesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabGlobalScheduleResource(Client, DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e)), _devTestLabGlobalScheduleGlobalSchedulesClientDiagnostics, Pipeline, "DevTestLabGlobalScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e); return new DevTestLabGlobalScheduleResource(Client, data, data.Id); }, _devTestLabGlobalScheduleGlobalSchedulesClientDiagnostics, Pipeline, "DevTestLabGlobalScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

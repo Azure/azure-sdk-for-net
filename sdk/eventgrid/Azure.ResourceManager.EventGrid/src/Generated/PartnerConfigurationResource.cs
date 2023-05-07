@@ -46,7 +46,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Initializes a new instance of the <see cref = "PartnerConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PartnerConfigurationResource(ArmClient client, PartnerConfigurationData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal PartnerConfigurationResource(ArmClient client, PartnerConfigurationData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.EventGrid
                 var response = await _partnerConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PartnerConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PartnerConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.EventGrid
                 var response = _partnerConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PartnerConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PartnerConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -398,7 +399,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _partnerConfigurationRestClient.AuthorizePartnerAsync(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PartnerConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PartnerConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -432,7 +433,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _partnerConfigurationRestClient.AuthorizePartner(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken);
-                return Response.FromValue(new PartnerConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PartnerConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -466,7 +467,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _partnerConfigurationRestClient.UnauthorizePartnerAsync(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PartnerConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PartnerConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -500,7 +501,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _partnerConfigurationRestClient.UnauthorizePartner(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken);
-                return Response.FromValue(new PartnerConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PartnerConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -541,7 +542,7 @@ namespace Azure.ResourceManager.EventGrid
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _partnerConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new PartnerConfigurationResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new PartnerConfigurationResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -595,7 +596,7 @@ namespace Azure.ResourceManager.EventGrid
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _partnerConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
-                    return Response.FromValue(new PartnerConfigurationResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new PartnerConfigurationResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -648,7 +649,7 @@ namespace Azure.ResourceManager.EventGrid
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _partnerConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new PartnerConfigurationResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new PartnerConfigurationResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -697,7 +698,7 @@ namespace Azure.ResourceManager.EventGrid
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _partnerConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
-                    return Response.FromValue(new PartnerConfigurationResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new PartnerConfigurationResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -745,7 +746,7 @@ namespace Azure.ResourceManager.EventGrid
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _partnerConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new PartnerConfigurationResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new PartnerConfigurationResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -797,7 +798,7 @@ namespace Azure.ResourceManager.EventGrid
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _partnerConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
-                    return Response.FromValue(new PartnerConfigurationResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new PartnerConfigurationResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {

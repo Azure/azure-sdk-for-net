@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.FrontDoor
                 var response = await _frontDoorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FrontDoorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FrontDoorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.FrontDoor
                 var response = _frontDoorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FrontDoorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FrontDoorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorResource(Client, FrontDoorData.DeserializeFrontDoorData(e)), _frontDoorClientDiagnostics, Pipeline, "FrontDoorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = FrontDoorData.DeserializeFrontDoorData(e); return new FrontDoorResource(Client, data, data.Id); }, _frontDoorClientDiagnostics, Pipeline, "FrontDoorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorResource(Client, FrontDoorData.DeserializeFrontDoorData(e)), _frontDoorClientDiagnostics, Pipeline, "FrontDoorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = FrontDoorData.DeserializeFrontDoorData(e); return new FrontDoorResource(Client, data, data.Id); }, _frontDoorClientDiagnostics, Pipeline, "FrontDoorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

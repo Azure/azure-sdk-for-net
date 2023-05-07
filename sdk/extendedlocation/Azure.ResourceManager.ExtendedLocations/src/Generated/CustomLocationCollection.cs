@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 var response = await _customLocationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CustomLocationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CustomLocationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 var response = _customLocationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CustomLocationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CustomLocationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customLocationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customLocationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomLocationResource(Client, CustomLocationData.DeserializeCustomLocationData(e)), _customLocationClientDiagnostics, Pipeline, "CustomLocationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = CustomLocationData.DeserializeCustomLocationData(e); return new CustomLocationResource(Client, data, data.Id); }, _customLocationClientDiagnostics, Pipeline, "CustomLocationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customLocationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customLocationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomLocationResource(Client, CustomLocationData.DeserializeCustomLocationData(e)), _customLocationClientDiagnostics, Pipeline, "CustomLocationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = CustomLocationData.DeserializeCustomLocationData(e); return new CustomLocationResource(Client, data, data.Id); }, _customLocationClientDiagnostics, Pipeline, "CustomLocationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

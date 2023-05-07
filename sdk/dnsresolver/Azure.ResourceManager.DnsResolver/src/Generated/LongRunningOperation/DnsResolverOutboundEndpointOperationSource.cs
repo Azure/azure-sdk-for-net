@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DnsResolver
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DnsResolverOutboundEndpointData.DeserializeDnsResolverOutboundEndpointData(document.RootElement);
-            return new DnsResolverOutboundEndpointResource(_client, data);
+            return new DnsResolverOutboundEndpointResource(_client, data, data.Id);
         }
 
         async ValueTask<DnsResolverOutboundEndpointResource> IOperationSource<DnsResolverOutboundEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DnsResolverOutboundEndpointData.DeserializeDnsResolverOutboundEndpointData(document.RootElement);
-            return new DnsResolverOutboundEndpointResource(_client, data);
+            return new DnsResolverOutboundEndpointResource(_client, data, data.Id);
         }
     }
 }

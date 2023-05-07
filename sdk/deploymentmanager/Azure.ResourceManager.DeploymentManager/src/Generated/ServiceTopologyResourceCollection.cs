@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DeploymentManager
             try
             {
                 var response = await _serviceTopologyResourceServiceTopologiesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceTopologyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DeploymentManagerArmOperation<ServiceTopologyResource>(Response.FromValue(new ServiceTopologyResource(Client, response), response.GetRawResponse()));
+                var operation = new DeploymentManagerArmOperation<ServiceTopologyResource>(Response.FromValue(new ServiceTopologyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DeploymentManager
             try
             {
                 var response = _serviceTopologyResourceServiceTopologiesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, serviceTopologyName, data, cancellationToken);
-                var operation = new DeploymentManagerArmOperation<ServiceTopologyResource>(Response.FromValue(new ServiceTopologyResource(Client, response), response.GetRawResponse()));
+                var operation = new DeploymentManagerArmOperation<ServiceTopologyResource>(Response.FromValue(new ServiceTopologyResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DeploymentManager
                 var response = await _serviceTopologyResourceServiceTopologiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceTopologyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceTopologyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceTopologyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DeploymentManager
                 var response = _serviceTopologyResourceServiceTopologiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serviceTopologyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceTopologyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceTopologyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DeploymentManager
         public virtual AsyncPageable<ServiceTopologyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceTopologyResourceServiceTopologiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ServiceTopologyResource(Client, ServiceTopologyResourceData.DeserializeServiceTopologyResourceData(e)), _serviceTopologyResourceServiceTopologiesClientDiagnostics, Pipeline, "ServiceTopologyResourceCollection.GetAll", "", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = ServiceTopologyResourceData.DeserializeServiceTopologyResourceData(e); return new ServiceTopologyResource(Client, data, data.Id); }, _serviceTopologyResourceServiceTopologiesClientDiagnostics, Pipeline, "ServiceTopologyResourceCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DeploymentManager
         public virtual Pageable<ServiceTopologyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceTopologyResourceServiceTopologiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ServiceTopologyResource(Client, ServiceTopologyResourceData.DeserializeServiceTopologyResourceData(e)), _serviceTopologyResourceServiceTopologiesClientDiagnostics, Pipeline, "ServiceTopologyResourceCollection.GetAll", "", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = ServiceTopologyResourceData.DeserializeServiceTopologyResourceData(e); return new ServiceTopologyResource(Client, data, data.Id); }, _serviceTopologyResourceServiceTopologiesClientDiagnostics, Pipeline, "ServiceTopologyResourceCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DevCenter
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CatalogData.DeserializeCatalogData(document.RootElement);
-            return new CatalogResource(_client, data);
+            return new CatalogResource(_client, data, data.Id);
         }
 
         async ValueTask<CatalogResource> IOperationSource<CatalogResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CatalogData.DeserializeCatalogData(document.RootElement);
-            return new CatalogResource(_client, data);
+            return new CatalogResource(_client, data, data.Id);
         }
     }
 }

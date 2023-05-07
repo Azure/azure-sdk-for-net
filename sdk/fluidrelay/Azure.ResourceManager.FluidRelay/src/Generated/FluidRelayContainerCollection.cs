@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.FluidRelay
                 var response = await _fluidRelayContainerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fluidRelayContainerName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FluidRelayContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FluidRelayContainerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.FluidRelay
                 var response = _fluidRelayContainerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fluidRelayContainerName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FluidRelayContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FluidRelayContainerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.FluidRelay
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fluidRelayContainerRestClient.CreateListByFluidRelayServersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fluidRelayContainerRestClient.CreateListByFluidRelayServersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FluidRelayContainerResource(Client, FluidRelayContainerData.DeserializeFluidRelayContainerData(e)), _fluidRelayContainerClientDiagnostics, Pipeline, "FluidRelayContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = FluidRelayContainerData.DeserializeFluidRelayContainerData(e); return new FluidRelayContainerResource(Client, data, data.Id); }, _fluidRelayContainerClientDiagnostics, Pipeline, "FluidRelayContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.FluidRelay
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fluidRelayContainerRestClient.CreateListByFluidRelayServersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fluidRelayContainerRestClient.CreateListByFluidRelayServersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FluidRelayContainerResource(Client, FluidRelayContainerData.DeserializeFluidRelayContainerData(e)), _fluidRelayContainerClientDiagnostics, Pipeline, "FluidRelayContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = FluidRelayContainerData.DeserializeFluidRelayContainerData(e); return new FluidRelayContainerResource(Client, data, data.Id); }, _fluidRelayContainerClientDiagnostics, Pipeline, "FluidRelayContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

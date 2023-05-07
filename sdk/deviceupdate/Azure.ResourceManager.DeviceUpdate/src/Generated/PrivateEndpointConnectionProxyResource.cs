@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Initializes a new instance of the <see cref = "PrivateEndpointConnectionProxyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PrivateEndpointConnectionProxyResource(ArmClient client, PrivateEndpointConnectionProxyData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal PrivateEndpointConnectionProxyResource(ArmClient client, PrivateEndpointConnectionProxyData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 var response = await _privateEndpointConnectionProxyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateEndpointConnectionProxyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateEndpointConnectionProxyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 var response = _privateEndpointConnectionProxyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateEndpointConnectionProxyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateEndpointConnectionProxyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

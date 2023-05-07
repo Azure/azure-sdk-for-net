@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DevCenter
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AttachedNetworkConnectionData.DeserializeAttachedNetworkConnectionData(document.RootElement);
-            return new AttachedNetworkConnectionResource(_client, data);
+            return new AttachedNetworkConnectionResource(_client, data, data.Id);
         }
 
         async ValueTask<AttachedNetworkConnectionResource> IOperationSource<AttachedNetworkConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AttachedNetworkConnectionData.DeserializeAttachedNetworkConnectionData(document.RootElement);
-            return new AttachedNetworkConnectionResource(_client, data);
+            return new AttachedNetworkConnectionResource(_client, data, data.Id);
         }
     }
 }

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PrivateEndpointConnectionProxyData.DeserializePrivateEndpointConnectionProxyData(document.RootElement);
-            return new PrivateEndpointConnectionProxyResource(_client, data);
+            return new PrivateEndpointConnectionProxyResource(_client, data, data.Id);
         }
 
         async ValueTask<PrivateEndpointConnectionProxyResource> IOperationSource<PrivateEndpointConnectionProxyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PrivateEndpointConnectionProxyData.DeserializePrivateEndpointConnectionProxyData(document.RootElement);
-            return new PrivateEndpointConnectionProxyResource(_client, data);
+            return new PrivateEndpointConnectionProxyResource(_client, data, data.Id);
         }
     }
 }

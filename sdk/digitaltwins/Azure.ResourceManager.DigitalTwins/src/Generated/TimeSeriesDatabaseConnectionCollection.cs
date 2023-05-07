@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 var response = await _timeSeriesDatabaseConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, timeSeriesDatabaseConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TimeSeriesDatabaseConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TimeSeriesDatabaseConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 var response = _timeSeriesDatabaseConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, timeSeriesDatabaseConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TimeSeriesDatabaseConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TimeSeriesDatabaseConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DigitalTwins
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _timeSeriesDatabaseConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _timeSeriesDatabaseConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TimeSeriesDatabaseConnectionResource(Client, TimeSeriesDatabaseConnectionData.DeserializeTimeSeriesDatabaseConnectionData(e)), _timeSeriesDatabaseConnectionClientDiagnostics, Pipeline, "TimeSeriesDatabaseConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = TimeSeriesDatabaseConnectionData.DeserializeTimeSeriesDatabaseConnectionData(e); return new TimeSeriesDatabaseConnectionResource(Client, data, data.Id); }, _timeSeriesDatabaseConnectionClientDiagnostics, Pipeline, "TimeSeriesDatabaseConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DigitalTwins
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _timeSeriesDatabaseConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _timeSeriesDatabaseConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TimeSeriesDatabaseConnectionResource(Client, TimeSeriesDatabaseConnectionData.DeserializeTimeSeriesDatabaseConnectionData(e)), _timeSeriesDatabaseConnectionClientDiagnostics, Pipeline, "TimeSeriesDatabaseConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = TimeSeriesDatabaseConnectionData.DeserializeTimeSeriesDatabaseConnectionData(e); return new TimeSeriesDatabaseConnectionResource(Client, data, data.Id); }, _timeSeriesDatabaseConnectionClientDiagnostics, Pipeline, "TimeSeriesDatabaseConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

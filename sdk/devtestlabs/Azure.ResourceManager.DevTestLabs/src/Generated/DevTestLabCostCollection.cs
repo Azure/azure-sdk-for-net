@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = await _devTestLabCostCostsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation<DevTestLabCostResource>(Response.FromValue(new DevTestLabCostResource(Client, response), response.GetRawResponse()));
+                var operation = new DevTestLabsArmOperation<DevTestLabCostResource>(Response.FromValue(new DevTestLabCostResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = _devTestLabCostCostsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new DevTestLabsArmOperation<DevTestLabCostResource>(Response.FromValue(new DevTestLabCostResource(Client, response), response.GetRawResponse()));
+                var operation = new DevTestLabsArmOperation<DevTestLabCostResource>(Response.FromValue(new DevTestLabCostResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 var response = await _devTestLabCostCostsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevTestLabCostResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevTestLabCostResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 var response = _devTestLabCostCostsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevTestLabCostResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevTestLabCostResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

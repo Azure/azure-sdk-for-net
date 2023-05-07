@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DevCenter
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = GalleryData.DeserializeGalleryData(document.RootElement);
-            return new GalleryResource(_client, data);
+            return new GalleryResource(_client, data, data.Id);
         }
 
         async ValueTask<GalleryResource> IOperationSource<GalleryResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = GalleryData.DeserializeGalleryData(document.RootElement);
-            return new GalleryResource(_client, data);
+            return new GalleryResource(_client, data, data.Id);
         }
     }
 }

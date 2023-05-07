@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Dns
             try
             {
                 var response = await _dnsZoneZonesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, zoneName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsArmOperation<DnsZoneResource>(Response.FromValue(new DnsZoneResource(Client, response), response.GetRawResponse()));
+                var operation = new DnsArmOperation<DnsZoneResource>(Response.FromValue(new DnsZoneResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Dns
             try
             {
                 var response = _dnsZoneZonesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, zoneName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new DnsArmOperation<DnsZoneResource>(Response.FromValue(new DnsZoneResource(Client, response), response.GetRawResponse()));
+                var operation = new DnsArmOperation<DnsZoneResource>(Response.FromValue(new DnsZoneResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Dns
                 var response = await _dnsZoneZonesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, zoneName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DnsZoneResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsZoneResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Dns
                 var response = _dnsZoneZonesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, zoneName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DnsZoneResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsZoneResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Dns
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsZoneZonesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsZoneZonesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsZoneResource(Client, DnsZoneData.DeserializeDnsZoneData(e)), _dnsZoneZonesClientDiagnostics, Pipeline, "DnsZoneCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DnsZoneData.DeserializeDnsZoneData(e); return new DnsZoneResource(Client, data, data.Id); }, _dnsZoneZonesClientDiagnostics, Pipeline, "DnsZoneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Dns
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsZoneZonesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsZoneZonesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsZoneResource(Client, DnsZoneData.DeserializeDnsZoneData(e)), _dnsZoneZonesClientDiagnostics, Pipeline, "DnsZoneCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DnsZoneData.DeserializeDnsZoneData(e); return new DnsZoneResource(Client, data, data.Id); }, _dnsZoneZonesClientDiagnostics, Pipeline, "DnsZoneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

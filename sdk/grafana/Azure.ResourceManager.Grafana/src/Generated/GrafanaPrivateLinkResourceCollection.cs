@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Grafana
                 var response = await _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GrafanaPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GrafanaPrivateLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Grafana
                 var response = _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GrafanaPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GrafanaPrivateLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Grafana
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GrafanaPrivateLinkResource(Client, GrafanaPrivateLinkResourceData.DeserializeGrafanaPrivateLinkResourceData(e)), _grafanaPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "GrafanaPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = GrafanaPrivateLinkResourceData.DeserializeGrafanaPrivateLinkResourceData(e); return new GrafanaPrivateLinkResource(Client, data, data.Id); }, _grafanaPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "GrafanaPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Grafana
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GrafanaPrivateLinkResource(Client, GrafanaPrivateLinkResourceData.DeserializeGrafanaPrivateLinkResourceData(e)), _grafanaPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "GrafanaPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = GrafanaPrivateLinkResourceData.DeserializeGrafanaPrivateLinkResourceData(e); return new GrafanaPrivateLinkResource(Client, data, data.Id); }, _grafanaPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "GrafanaPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

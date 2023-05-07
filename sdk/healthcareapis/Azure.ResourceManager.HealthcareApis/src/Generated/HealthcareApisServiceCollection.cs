@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 var response = await _healthcareApisServiceServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HealthcareApisServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HealthcareApisServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 var response = _healthcareApisServiceServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HealthcareApisServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HealthcareApisServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisServiceServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthcareApisServiceServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisServiceResource(Client, HealthcareApisServiceData.DeserializeHealthcareApisServiceData(e)), _healthcareApisServiceServicesClientDiagnostics, Pipeline, "HealthcareApisServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = HealthcareApisServiceData.DeserializeHealthcareApisServiceData(e); return new HealthcareApisServiceResource(Client, data, data.Id); }, _healthcareApisServiceServicesClientDiagnostics, Pipeline, "HealthcareApisServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisServiceServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthcareApisServiceServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisServiceResource(Client, HealthcareApisServiceData.DeserializeHealthcareApisServiceData(e)), _healthcareApisServiceServicesClientDiagnostics, Pipeline, "HealthcareApisServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = HealthcareApisServiceData.DeserializeHealthcareApisServiceData(e); return new HealthcareApisServiceResource(Client, data, data.Id); }, _healthcareApisServiceServicesClientDiagnostics, Pipeline, "HealthcareApisServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

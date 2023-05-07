@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 var response = await _healthcareApisIotConnectorIotConnectorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iotConnectorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HealthcareApisIotConnectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HealthcareApisIotConnectorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 var response = _healthcareApisIotConnectorIotConnectorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iotConnectorName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HealthcareApisIotConnectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HealthcareApisIotConnectorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisIotConnectorIotConnectorsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthcareApisIotConnectorIotConnectorsRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisIotConnectorResource(Client, HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(e)), _healthcareApisIotConnectorIotConnectorsClientDiagnostics, Pipeline, "HealthcareApisIotConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(e); return new HealthcareApisIotConnectorResource(Client, data, data.Id); }, _healthcareApisIotConnectorIotConnectorsClientDiagnostics, Pipeline, "HealthcareApisIotConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisIotConnectorIotConnectorsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthcareApisIotConnectorIotConnectorsRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisIotConnectorResource(Client, HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(e)), _healthcareApisIotConnectorIotConnectorsClientDiagnostics, Pipeline, "HealthcareApisIotConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(e); return new HealthcareApisIotConnectorResource(Client, data, data.Id); }, _healthcareApisIotConnectorIotConnectorsClientDiagnostics, Pipeline, "HealthcareApisIotConnectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

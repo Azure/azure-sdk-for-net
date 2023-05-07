@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.EventGrid
                 var response = await _partnerNamespaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, partnerNamespaceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PartnerNamespaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PartnerNamespaceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.EventGrid
                 var response = _partnerNamespaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, partnerNamespaceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PartnerNamespaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PartnerNamespaceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partnerNamespaceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _partnerNamespaceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerNamespaceResource(Client, PartnerNamespaceData.DeserializePartnerNamespaceData(e)), _partnerNamespaceClientDiagnostics, Pipeline, "PartnerNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PartnerNamespaceData.DeserializePartnerNamespaceData(e); return new PartnerNamespaceResource(Client, data, data.Id); }, _partnerNamespaceClientDiagnostics, Pipeline, "PartnerNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partnerNamespaceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _partnerNamespaceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerNamespaceResource(Client, PartnerNamespaceData.DeserializePartnerNamespaceData(e)), _partnerNamespaceClientDiagnostics, Pipeline, "PartnerNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PartnerNamespaceData.DeserializePartnerNamespaceData(e); return new PartnerNamespaceResource(Client, data, data.Id); }, _partnerNamespaceClientDiagnostics, Pipeline, "PartnerNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

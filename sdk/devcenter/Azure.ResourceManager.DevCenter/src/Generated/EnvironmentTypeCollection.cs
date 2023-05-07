@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _environmentTypeRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<EnvironmentTypeResource>(Response.FromValue(new EnvironmentTypeResource(Client, response), response.GetRawResponse()));
+                var operation = new DevCenterArmOperation<EnvironmentTypeResource>(Response.FromValue(new EnvironmentTypeResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _environmentTypeRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, data, cancellationToken);
-                var operation = new DevCenterArmOperation<EnvironmentTypeResource>(Response.FromValue(new EnvironmentTypeResource(Client, response), response.GetRawResponse()));
+                var operation = new DevCenterArmOperation<EnvironmentTypeResource>(Response.FromValue(new EnvironmentTypeResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DevCenter
                 var response = await _environmentTypeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EnvironmentTypeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EnvironmentTypeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DevCenter
                 var response = _environmentTypeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EnvironmentTypeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EnvironmentTypeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _environmentTypeRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _environmentTypeRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EnvironmentTypeResource(Client, EnvironmentTypeData.DeserializeEnvironmentTypeData(e)), _environmentTypeClientDiagnostics, Pipeline, "EnvironmentTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = EnvironmentTypeData.DeserializeEnvironmentTypeData(e); return new EnvironmentTypeResource(Client, data, data.Id); }, _environmentTypeClientDiagnostics, Pipeline, "EnvironmentTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _environmentTypeRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _environmentTypeRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EnvironmentTypeResource(Client, EnvironmentTypeData.DeserializeEnvironmentTypeData(e)), _environmentTypeClientDiagnostics, Pipeline, "EnvironmentTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = EnvironmentTypeData.DeserializeEnvironmentTypeData(e); return new EnvironmentTypeResource(Client, data, data.Id); }, _environmentTypeClientDiagnostics, Pipeline, "EnvironmentTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

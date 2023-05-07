@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = EdgeOrderItemData.DeserializeEdgeOrderItemData(document.RootElement);
-            return new EdgeOrderItemResource(_client, data);
+            return new EdgeOrderItemResource(_client, data, data.Id);
         }
 
         async ValueTask<EdgeOrderItemResource> IOperationSource<EdgeOrderItemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = EdgeOrderItemData.DeserializeEdgeOrderItemData(document.RootElement);
-            return new EdgeOrderItemResource(_client, data);
+            return new EdgeOrderItemResource(_client, data, data.Id);
         }
     }
 }

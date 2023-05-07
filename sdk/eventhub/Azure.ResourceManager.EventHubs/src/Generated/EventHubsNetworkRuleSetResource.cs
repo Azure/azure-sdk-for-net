@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Initializes a new instance of the <see cref = "EventHubsNetworkRuleSetResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal EventHubsNetworkRuleSetResource(ArmClient client, EventHubsNetworkRuleSetData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal EventHubsNetworkRuleSetResource(ArmClient client, EventHubsNetworkRuleSetData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.EventHubs
                 var response = await _eventHubsNetworkRuleSetNamespacesRestClient.GetNetworkRuleSetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EventHubsNetworkRuleSetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubsNetworkRuleSetResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.EventHubs
                 var response = _eventHubsNetworkRuleSetNamespacesRestClient.GetNetworkRuleSet(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EventHubsNetworkRuleSetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubsNetworkRuleSetResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -176,7 +177,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = await _eventHubsNetworkRuleSetNamespacesRestClient.CreateOrUpdateNetworkRuleSetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubsArmOperation<EventHubsNetworkRuleSetResource>(Response.FromValue(new EventHubsNetworkRuleSetResource(Client, response), response.GetRawResponse()));
+                var operation = new EventHubsArmOperation<EventHubsNetworkRuleSetResource>(Response.FromValue(new EventHubsNetworkRuleSetResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -214,7 +215,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = _eventHubsNetworkRuleSetNamespacesRestClient.CreateOrUpdateNetworkRuleSet(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new EventHubsArmOperation<EventHubsNetworkRuleSetResource>(Response.FromValue(new EventHubsNetworkRuleSetResource(Client, response), response.GetRawResponse()));
+                var operation = new EventHubsArmOperation<EventHubsNetworkRuleSetResource>(Response.FromValue(new EventHubsNetworkRuleSetResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

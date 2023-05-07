@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(document.RootElement);
-            return new DeviceProvisioningServiceResource(_client, data);
+            return new DeviceProvisioningServiceResource(_client, data, data.Id);
         }
 
         async ValueTask<DeviceProvisioningServiceResource> IOperationSource<DeviceProvisioningServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(document.RootElement);
-            return new DeviceProvisioningServiceResource(_client, data);
+            return new DeviceProvisioningServiceResource(_client, data, data.Id);
         }
     }
 }

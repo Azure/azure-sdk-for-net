@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.FrontDoor
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = FrontDoorWebApplicationFirewallPolicyData.DeserializeFrontDoorWebApplicationFirewallPolicyData(document.RootElement);
-            return new FrontDoorWebApplicationFirewallPolicyResource(_client, data);
+            return new FrontDoorWebApplicationFirewallPolicyResource(_client, data, data.Id);
         }
 
         async ValueTask<FrontDoorWebApplicationFirewallPolicyResource> IOperationSource<FrontDoorWebApplicationFirewallPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = FrontDoorWebApplicationFirewallPolicyData.DeserializeFrontDoorWebApplicationFirewallPolicyData(document.RootElement);
-            return new FrontDoorWebApplicationFirewallPolicyResource(_client, data);
+            return new FrontDoorWebApplicationFirewallPolicyResource(_client, data, data.Id);
         }
     }
 }

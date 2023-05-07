@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 var response = await _devTestLabArmTemplateArmTemplatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevTestLabArmTemplateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevTestLabArmTemplateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 var response = _devTestLabArmTemplateArmTemplatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevTestLabArmTemplateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevTestLabArmTemplateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabArmTemplateArmTemplatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabArmTemplateArmTemplatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabArmTemplateResource(Client, DevTestLabArmTemplateData.DeserializeDevTestLabArmTemplateData(e)), _devTestLabArmTemplateArmTemplatesClientDiagnostics, Pipeline, "DevTestLabArmTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DevTestLabArmTemplateData.DeserializeDevTestLabArmTemplateData(e); return new DevTestLabArmTemplateResource(Client, data, data.Id); }, _devTestLabArmTemplateArmTemplatesClientDiagnostics, Pipeline, "DevTestLabArmTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabArmTemplateArmTemplatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabArmTemplateArmTemplatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabArmTemplateResource(Client, DevTestLabArmTemplateData.DeserializeDevTestLabArmTemplateData(e)), _devTestLabArmTemplateArmTemplatesClientDiagnostics, Pipeline, "DevTestLabArmTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DevTestLabArmTemplateData.DeserializeDevTestLabArmTemplateData(e); return new DevTestLabArmTemplateResource(Client, data, data.Id); }, _devTestLabArmTemplateArmTemplatesClientDiagnostics, Pipeline, "DevTestLabArmTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

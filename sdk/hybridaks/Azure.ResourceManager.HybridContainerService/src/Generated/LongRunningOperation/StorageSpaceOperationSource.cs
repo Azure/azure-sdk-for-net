@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.HybridContainerService
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = StorageSpaceData.DeserializeStorageSpaceData(document.RootElement);
-            return new StorageSpaceResource(_client, data);
+            return new StorageSpaceResource(_client, data, data.Id);
         }
 
         async ValueTask<StorageSpaceResource> IOperationSource<StorageSpaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = StorageSpaceData.DeserializeStorageSpaceData(document.RootElement);
-            return new StorageSpaceResource(_client, data);
+            return new StorageSpaceResource(_client, data, data.Id);
         }
     }
 }

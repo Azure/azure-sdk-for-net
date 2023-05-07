@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.EventGrid
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = EventGridPrivateEndpointConnectionData.DeserializeEventGridPrivateEndpointConnectionData(document.RootElement);
-            return new EventGridTopicPrivateEndpointConnectionResource(_client, data);
+            return new EventGridTopicPrivateEndpointConnectionResource(_client, data, data.Id);
         }
 
         async ValueTask<EventGridTopicPrivateEndpointConnectionResource> IOperationSource<EventGridTopicPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = EventGridPrivateEndpointConnectionData.DeserializeEventGridPrivateEndpointConnectionData(document.RootElement);
-            return new EventGridTopicPrivateEndpointConnectionResource(_client, data);
+            return new EventGridTopicPrivateEndpointConnectionResource(_client, data, data.Id);
         }
     }
 }

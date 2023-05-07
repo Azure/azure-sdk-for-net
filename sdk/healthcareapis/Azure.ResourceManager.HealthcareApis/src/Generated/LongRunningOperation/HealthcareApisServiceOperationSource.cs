@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = HealthcareApisServiceData.DeserializeHealthcareApisServiceData(document.RootElement);
-            return new HealthcareApisServiceResource(_client, data);
+            return new HealthcareApisServiceResource(_client, data, data.Id);
         }
 
         async ValueTask<HealthcareApisServiceResource> IOperationSource<HealthcareApisServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = HealthcareApisServiceData.DeserializeHealthcareApisServiceData(document.RootElement);
-            return new HealthcareApisServiceResource(_client, data);
+            return new HealthcareApisServiceResource(_client, data, data.Id);
         }
     }
 }

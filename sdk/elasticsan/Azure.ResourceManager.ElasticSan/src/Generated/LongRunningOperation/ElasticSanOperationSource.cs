@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ElasticSan
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ElasticSanData.DeserializeElasticSanData(document.RootElement);
-            return new ElasticSanResource(_client, data);
+            return new ElasticSanResource(_client, data, data.Id);
         }
 
         async ValueTask<ElasticSanResource> IOperationSource<ElasticSanResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ElasticSanData.DeserializeElasticSanData(document.RootElement);
-            return new ElasticSanResource(_client, data);
+            return new ElasticSanResource(_client, data, data.Id);
         }
     }
 }

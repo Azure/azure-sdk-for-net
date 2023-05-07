@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DevTestLabDiskData.DeserializeDevTestLabDiskData(document.RootElement);
-            return new DevTestLabDiskResource(_client, data);
+            return new DevTestLabDiskResource(_client, data, data.Id);
         }
 
         async ValueTask<DevTestLabDiskResource> IOperationSource<DevTestLabDiskResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DevTestLabDiskData.DeserializeDevTestLabDiskData(document.RootElement);
-            return new DevTestLabDiskResource(_client, data);
+            return new DevTestLabDiskResource(_client, data, data.Id);
         }
     }
 }

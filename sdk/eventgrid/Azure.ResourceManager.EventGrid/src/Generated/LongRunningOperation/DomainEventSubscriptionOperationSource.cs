@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.EventGrid
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = EventGridSubscriptionData.DeserializeEventGridSubscriptionData(document.RootElement);
-            return new DomainEventSubscriptionResource(_client, data);
+            return new DomainEventSubscriptionResource(_client, data, data.Id);
         }
 
         async ValueTask<DomainEventSubscriptionResource> IOperationSource<DomainEventSubscriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = EventGridSubscriptionData.DeserializeEventGridSubscriptionData(document.RootElement);
-            return new DomainEventSubscriptionResource(_client, data);
+            return new DomainEventSubscriptionResource(_client, data, data.Id);
         }
     }
 }

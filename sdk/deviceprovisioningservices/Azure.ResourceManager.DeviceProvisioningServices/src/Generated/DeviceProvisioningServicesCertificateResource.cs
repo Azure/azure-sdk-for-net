@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <summary> Initializes a new instance of the <see cref = "DeviceProvisioningServicesCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DeviceProvisioningServicesCertificateResource(ArmClient client, DeviceProvisioningServicesCertificateData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal DeviceProvisioningServicesCertificateResource(ArmClient client, DeviceProvisioningServicesCertificateData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 var response = await _deviceProvisioningServicesCertificateDpsCertificateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 var response = _deviceProvisioningServicesCertificateDpsCertificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -256,7 +257,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             try
             {
                 var response = await _deviceProvisioningServicesCertificateDpsCertificateRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesCertificateResource>(Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response), response.GetRawResponse()));
+                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesCertificateResource>(Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -295,7 +296,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             try
             {
                 var response = _deviceProvisioningServicesCertificateDpsCertificateRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
-                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesCertificateResource>(Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response), response.GetRawResponse()));
+                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesCertificateResource>(Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -400,7 +401,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             try
             {
                 var response = await _deviceProvisioningServicesCertificateDpsCertificateRestClient.VerifyCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.IfMatch, options.Content, options.CertificateCommonName, options.CertificateRawBytes, options.CertificateIsVerified, options.CertificatePurpose, options.CertificateCreatedOn, options.CertificateLastUpdatedOn, options.CertificateHasPrivateKey, options.CertificateNonce, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -434,7 +435,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             try
             {
                 var response = _deviceProvisioningServicesCertificateDpsCertificateRestClient.VerifyCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.IfMatch, options.Content, options.CertificateCommonName, options.CertificateRawBytes, options.CertificateIsVerified, options.CertificatePurpose, options.CertificateCreatedOn, options.CertificateLastUpdatedOn, options.CertificateHasPrivateKey, options.CertificateNonce, cancellationToken);
-                return Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

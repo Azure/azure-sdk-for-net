@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DevCenter
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DevBoxDefinitionData.DeserializeDevBoxDefinitionData(document.RootElement);
-            return new DevBoxDefinitionResource(_client, data);
+            return new DevBoxDefinitionResource(_client, data, data.Id);
         }
 
         async ValueTask<DevBoxDefinitionResource> IOperationSource<DevBoxDefinitionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DevBoxDefinitionData.DeserializeDevBoxDefinitionData(document.RootElement);
-            return new DevBoxDefinitionResource(_client, data);
+            return new DevBoxDefinitionResource(_client, data, data.Id);
         }
     }
 }

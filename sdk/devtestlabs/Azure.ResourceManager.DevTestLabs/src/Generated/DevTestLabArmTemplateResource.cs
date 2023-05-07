@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary> Initializes a new instance of the <see cref = "DevTestLabArmTemplateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DevTestLabArmTemplateResource(ArmClient client, DevTestLabArmTemplateData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal DevTestLabArmTemplateResource(ArmClient client, DevTestLabArmTemplateData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 var response = await _devTestLabArmTemplateArmTemplatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevTestLabArmTemplateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevTestLabArmTemplateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 var response = _devTestLabArmTemplateArmTemplatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevTestLabArmTemplateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevTestLabArmTemplateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

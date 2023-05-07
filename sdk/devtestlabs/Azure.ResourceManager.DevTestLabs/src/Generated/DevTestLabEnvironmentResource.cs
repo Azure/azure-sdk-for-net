@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary> Initializes a new instance of the <see cref = "DevTestLabEnvironmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DevTestLabEnvironmentResource(ArmClient client, DevTestLabEnvironmentData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal DevTestLabEnvironmentResource(ArmClient client, DevTestLabEnvironmentData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 var response = await _devTestLabEnvironmentEnvironmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevTestLabEnvironmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevTestLabEnvironmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 var response = _devTestLabEnvironmentEnvironmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevTestLabEnvironmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevTestLabEnvironmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -247,7 +248,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = await _devTestLabEnvironmentEnvironmentsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DevTestLabEnvironmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevTestLabEnvironmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -281,7 +282,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = _devTestLabEnvironmentEnvironmentsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new DevTestLabEnvironmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevTestLabEnvironmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -322,7 +323,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _devTestLabEnvironmentEnvironmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DevTestLabEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new DevTestLabEnvironmentResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -376,7 +377,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _devTestLabEnvironmentEnvironmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new DevTestLabEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new DevTestLabEnvironmentResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -429,7 +430,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _devTestLabEnvironmentEnvironmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DevTestLabEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new DevTestLabEnvironmentResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -478,7 +479,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _devTestLabEnvironmentEnvironmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new DevTestLabEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new DevTestLabEnvironmentResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -526,7 +527,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _devTestLabEnvironmentEnvironmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DevTestLabEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new DevTestLabEnvironmentResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -578,7 +579,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _devTestLabEnvironmentEnvironmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new DevTestLabEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new DevTestLabEnvironmentResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {

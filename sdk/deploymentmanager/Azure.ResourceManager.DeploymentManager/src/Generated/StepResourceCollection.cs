@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DeploymentManager
             try
             {
                 var response = await _stepResourceStepsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, stepName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DeploymentManagerArmOperation<StepResource>(Response.FromValue(new StepResource(Client, response), response.GetRawResponse()));
+                var operation = new DeploymentManagerArmOperation<StepResource>(Response.FromValue(new StepResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DeploymentManager
             try
             {
                 var response = _stepResourceStepsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, stepName, data, cancellationToken);
-                var operation = new DeploymentManagerArmOperation<StepResource>(Response.FromValue(new StepResource(Client, response), response.GetRawResponse()));
+                var operation = new DeploymentManagerArmOperation<StepResource>(Response.FromValue(new StepResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DeploymentManager
                 var response = await _stepResourceStepsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, stepName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StepResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StepResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DeploymentManager
                 var response = _stepResourceStepsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, stepName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StepResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StepResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DeploymentManager
         public virtual AsyncPageable<StepResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _stepResourceStepsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StepResource(Client, StepResourceData.DeserializeStepResourceData(e)), _stepResourceStepsClientDiagnostics, Pipeline, "StepResourceCollection.GetAll", "", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = StepResourceData.DeserializeStepResourceData(e); return new StepResource(Client, data, data.Id); }, _stepResourceStepsClientDiagnostics, Pipeline, "StepResourceCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DeploymentManager
         public virtual Pageable<StepResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _stepResourceStepsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new StepResource(Client, StepResourceData.DeserializeStepResourceData(e)), _stepResourceStepsClientDiagnostics, Pipeline, "StepResourceCollection.GetAll", "", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = StepResourceData.DeserializeStepResourceData(e); return new StepResource(Client, data, data.Id); }, _stepResourceStepsClientDiagnostics, Pipeline, "StepResourceCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.HealthBot
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = HealthBotData.DeserializeHealthBotData(document.RootElement);
-            return new HealthBotResource(_client, data);
+            return new HealthBotResource(_client, data, data.Id);
         }
 
         async ValueTask<HealthBotResource> IOperationSource<HealthBotResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = HealthBotData.DeserializeHealthBotData(document.RootElement);
-            return new HealthBotResource(_client, data);
+            return new HealthBotResource(_client, data, data.Id);
         }
     }
 }

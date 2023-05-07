@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.HybridContainerService
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = HybridContainerServiceAgentPoolData.DeserializeHybridContainerServiceAgentPoolData(document.RootElement);
-            return new HybridContainerServiceAgentPoolResource(_client, data);
+            return new HybridContainerServiceAgentPoolResource(_client, data, data.Id);
         }
 
         async ValueTask<HybridContainerServiceAgentPoolResource> IOperationSource<HybridContainerServiceAgentPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = HybridContainerServiceAgentPoolData.DeserializeHybridContainerServiceAgentPoolData(document.RootElement);
-            return new HybridContainerServiceAgentPoolResource(_client, data);
+            return new HybridContainerServiceAgentPoolResource(_client, data, data.Id);
         }
     }
 }

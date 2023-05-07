@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> Initializes a new instance of the <see cref = "SessionHostResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SessionHostResource(ArmClient client, SessionHostData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal SessionHostResource(ArmClient client, SessionHostData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 var response = await _sessionHostRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SessionHostResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SessionHostResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -195,7 +196,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 var response = _sessionHostRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SessionHostResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SessionHostResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -299,7 +300,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             try
             {
                 var response = await _sessionHostRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SessionHostResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SessionHostResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -333,7 +334,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             try
             {
                 var response = _sessionHostRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new SessionHostResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SessionHostResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

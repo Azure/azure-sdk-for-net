@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HybridCompute
             try
             {
                 var response = await _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, scopeName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridComputeArmOperation<HybridComputePrivateLinkScopeResource>(Response.FromValue(new HybridComputePrivateLinkScopeResource(Client, response), response.GetRawResponse()));
+                var operation = new HybridComputeArmOperation<HybridComputePrivateLinkScopeResource>(Response.FromValue(new HybridComputePrivateLinkScopeResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HybridCompute
             try
             {
                 var response = _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, scopeName, data, cancellationToken);
-                var operation = new HybridComputeArmOperation<HybridComputePrivateLinkScopeResource>(Response.FromValue(new HybridComputePrivateLinkScopeResource(Client, response), response.GetRawResponse()));
+                var operation = new HybridComputeArmOperation<HybridComputePrivateLinkScopeResource>(Response.FromValue(new HybridComputePrivateLinkScopeResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.HybridCompute
                 var response = await _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, scopeName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridComputePrivateLinkScopeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridComputePrivateLinkScopeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.HybridCompute
                 var response = _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, scopeName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridComputePrivateLinkScopeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridComputePrivateLinkScopeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridComputePrivateLinkScopeResource(Client, HybridComputePrivateLinkScopeData.DeserializeHybridComputePrivateLinkScopeData(e)), _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, "HybridComputePrivateLinkScopeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = HybridComputePrivateLinkScopeData.DeserializeHybridComputePrivateLinkScopeData(e); return new HybridComputePrivateLinkScopeResource(Client, data, data.Id); }, _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, "HybridComputePrivateLinkScopeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridComputePrivateLinkScopeResource(Client, HybridComputePrivateLinkScopeData.DeserializeHybridComputePrivateLinkScopeData(e)), _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, "HybridComputePrivateLinkScopeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = HybridComputePrivateLinkScopeData.DeserializeHybridComputePrivateLinkScopeData(e); return new HybridComputePrivateLinkScopeResource(Client, data, data.Id); }, _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, "HybridComputePrivateLinkScopeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

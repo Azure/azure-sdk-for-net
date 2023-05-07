@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.HybridCompute
                 var response = await _hybridComputeMachineExtensionMachineExtensionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridComputeMachineExtensionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridComputeMachineExtensionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.HybridCompute
                 var response = _hybridComputeMachineExtensionMachineExtensionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridComputeMachineExtensionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridComputeMachineExtensionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputeMachineExtensionMachineExtensionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputeMachineExtensionMachineExtensionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridComputeMachineExtensionResource(Client, HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(e)), _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics, Pipeline, "HybridComputeMachineExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(e); return new HybridComputeMachineExtensionResource(Client, data, data.Id); }, _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics, Pipeline, "HybridComputeMachineExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputeMachineExtensionMachineExtensionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputeMachineExtensionMachineExtensionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridComputeMachineExtensionResource(Client, HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(e)), _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics, Pipeline, "HybridComputeMachineExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(e); return new HybridComputeMachineExtensionResource(Client, data, data.Id); }, _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics, Pipeline, "HybridComputeMachineExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

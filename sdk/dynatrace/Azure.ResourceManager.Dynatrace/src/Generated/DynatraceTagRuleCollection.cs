@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Dynatrace
                 var response = await _dynatraceTagRuleTagRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DynatraceTagRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DynatraceTagRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Dynatrace
                 var response = _dynatraceTagRuleTagRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DynatraceTagRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DynatraceTagRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceTagRuleTagRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceTagRuleTagRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DynatraceTagRuleResource(Client, DynatraceTagRuleData.DeserializeDynatraceTagRuleData(e)), _dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, "DynatraceTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DynatraceTagRuleData.DeserializeDynatraceTagRuleData(e); return new DynatraceTagRuleResource(Client, data, data.Id); }, _dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, "DynatraceTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceTagRuleTagRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceTagRuleTagRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DynatraceTagRuleResource(Client, DynatraceTagRuleData.DeserializeDynatraceTagRuleData(e)), _dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, "DynatraceTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DynatraceTagRuleData.DeserializeDynatraceTagRuleData(e); return new DynatraceTagRuleResource(Client, data, data.Id); }, _dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, "DynatraceTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

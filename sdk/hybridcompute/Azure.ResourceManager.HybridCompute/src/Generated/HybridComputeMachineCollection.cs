@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HybridCompute
             try
             {
                 var response = await _hybridComputeMachineMachinesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, machineName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridComputeArmOperation<HybridComputeMachineResource>(Response.FromValue(new HybridComputeMachineResource(Client, response), response.GetRawResponse()));
+                var operation = new HybridComputeArmOperation<HybridComputeMachineResource>(Response.FromValue(new HybridComputeMachineResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HybridCompute
             try
             {
                 var response = _hybridComputeMachineMachinesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, machineName, data, cancellationToken);
-                var operation = new HybridComputeArmOperation<HybridComputeMachineResource>(Response.FromValue(new HybridComputeMachineResource(Client, response), response.GetRawResponse()));
+                var operation = new HybridComputeArmOperation<HybridComputeMachineResource>(Response.FromValue(new HybridComputeMachineResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.HybridCompute
                 var response = await _hybridComputeMachineMachinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, machineName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridComputeMachineResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridComputeMachineResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HybridCompute
                 var response = _hybridComputeMachineMachinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, machineName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridComputeMachineResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridComputeMachineResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputeMachineMachinesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputeMachineMachinesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridComputeMachineResource(Client, HybridComputeMachineData.DeserializeHybridComputeMachineData(e)), _hybridComputeMachineMachinesClientDiagnostics, Pipeline, "HybridComputeMachineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = HybridComputeMachineData.DeserializeHybridComputeMachineData(e); return new HybridComputeMachineResource(Client, data, data.Id); }, _hybridComputeMachineMachinesClientDiagnostics, Pipeline, "HybridComputeMachineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputeMachineMachinesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputeMachineMachinesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridComputeMachineResource(Client, HybridComputeMachineData.DeserializeHybridComputeMachineData(e)), _hybridComputeMachineMachinesClientDiagnostics, Pipeline, "HybridComputeMachineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = HybridComputeMachineData.DeserializeHybridComputeMachineData(e); return new HybridComputeMachineResource(Client, data, data.Id); }, _hybridComputeMachineMachinesClientDiagnostics, Pipeline, "HybridComputeMachineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

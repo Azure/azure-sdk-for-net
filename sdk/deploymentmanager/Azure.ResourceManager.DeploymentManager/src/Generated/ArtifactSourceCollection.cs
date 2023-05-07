@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DeploymentManager
             try
             {
                 var response = await _artifactSourceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, artifactSourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DeploymentManagerArmOperation<ArtifactSourceResource>(Response.FromValue(new ArtifactSourceResource(Client, response), response.GetRawResponse()));
+                var operation = new DeploymentManagerArmOperation<ArtifactSourceResource>(Response.FromValue(new ArtifactSourceResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DeploymentManager
             try
             {
                 var response = _artifactSourceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, artifactSourceName, data, cancellationToken);
-                var operation = new DeploymentManagerArmOperation<ArtifactSourceResource>(Response.FromValue(new ArtifactSourceResource(Client, response), response.GetRawResponse()));
+                var operation = new DeploymentManagerArmOperation<ArtifactSourceResource>(Response.FromValue(new ArtifactSourceResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DeploymentManager
                 var response = await _artifactSourceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, artifactSourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ArtifactSourceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArtifactSourceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DeploymentManager
                 var response = _artifactSourceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, artifactSourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ArtifactSourceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArtifactSourceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DeploymentManager
         public virtual AsyncPageable<ArtifactSourceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _artifactSourceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ArtifactSourceResource(Client, ArtifactSourceData.DeserializeArtifactSourceData(e)), _artifactSourceClientDiagnostics, Pipeline, "ArtifactSourceCollection.GetAll", "", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = ArtifactSourceData.DeserializeArtifactSourceData(e); return new ArtifactSourceResource(Client, data, data.Id); }, _artifactSourceClientDiagnostics, Pipeline, "ArtifactSourceCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DeploymentManager
         public virtual Pageable<ArtifactSourceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _artifactSourceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ArtifactSourceResource(Client, ArtifactSourceData.DeserializeArtifactSourceData(e)), _artifactSourceClientDiagnostics, Pipeline, "ArtifactSourceCollection.GetAll", "", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = ArtifactSourceData.DeserializeArtifactSourceData(e); return new ArtifactSourceResource(Client, data, data.Id); }, _artifactSourceClientDiagnostics, Pipeline, "ArtifactSourceCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>

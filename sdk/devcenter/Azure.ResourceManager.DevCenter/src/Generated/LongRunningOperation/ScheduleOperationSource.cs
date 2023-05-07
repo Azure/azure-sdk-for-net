@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DevCenter
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScheduleData.DeserializeScheduleData(document.RootElement);
-            return new ScheduleResource(_client, data);
+            return new ScheduleResource(_client, data, data.Id);
         }
 
         async ValueTask<ScheduleResource> IOperationSource<ScheduleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScheduleData.DeserializeScheduleData(document.RootElement);
-            return new ScheduleResource(_client, data);
+            return new ScheduleResource(_client, data, data.Id);
         }
     }
 }

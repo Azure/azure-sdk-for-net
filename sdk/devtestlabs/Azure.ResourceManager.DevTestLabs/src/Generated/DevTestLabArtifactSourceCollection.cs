@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = await _devTestLabArtifactSourceArtifactSourcesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation<DevTestLabArtifactSourceResource>(Response.FromValue(new DevTestLabArtifactSourceResource(Client, response), response.GetRawResponse()));
+                var operation = new DevTestLabsArmOperation<DevTestLabArtifactSourceResource>(Response.FromValue(new DevTestLabArtifactSourceResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = _devTestLabArtifactSourceArtifactSourcesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new DevTestLabsArmOperation<DevTestLabArtifactSourceResource>(Response.FromValue(new DevTestLabArtifactSourceResource(Client, response), response.GetRawResponse()));
+                var operation = new DevTestLabsArmOperation<DevTestLabArtifactSourceResource>(Response.FromValue(new DevTestLabArtifactSourceResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 var response = await _devTestLabArtifactSourceArtifactSourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevTestLabArtifactSourceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevTestLabArtifactSourceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 var response = _devTestLabArtifactSourceArtifactSourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevTestLabArtifactSourceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevTestLabArtifactSourceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabArtifactSourceArtifactSourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabArtifactSourceArtifactSourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabArtifactSourceResource(Client, DevTestLabArtifactSourceData.DeserializeDevTestLabArtifactSourceData(e)), _devTestLabArtifactSourceArtifactSourcesClientDiagnostics, Pipeline, "DevTestLabArtifactSourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DevTestLabArtifactSourceData.DeserializeDevTestLabArtifactSourceData(e); return new DevTestLabArtifactSourceResource(Client, data, data.Id); }, _devTestLabArtifactSourceArtifactSourcesClientDiagnostics, Pipeline, "DevTestLabArtifactSourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabArtifactSourceArtifactSourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabArtifactSourceArtifactSourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabArtifactSourceResource(Client, DevTestLabArtifactSourceData.DeserializeDevTestLabArtifactSourceData(e)), _devTestLabArtifactSourceArtifactSourcesClientDiagnostics, Pipeline, "DevTestLabArtifactSourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DevTestLabArtifactSourceData.DeserializeDevTestLabArtifactSourceData(e); return new DevTestLabArtifactSourceResource(Client, data, data.Id); }, _devTestLabArtifactSourceArtifactSourcesClientDiagnostics, Pipeline, "DevTestLabArtifactSourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

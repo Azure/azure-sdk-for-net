@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.EventHubs
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = EventHubsNamespaceData.DeserializeEventHubsNamespaceData(document.RootElement);
-            return new EventHubsNamespaceResource(_client, data);
+            return new EventHubsNamespaceResource(_client, data, data.Id);
         }
 
         async ValueTask<EventHubsNamespaceResource> IOperationSource<EventHubsNamespaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = EventHubsNamespaceData.DeserializeEventHubsNamespaceData(document.RootElement);
-            return new EventHubsNamespaceResource(_client, data);
+            return new EventHubsNamespaceResource(_client, data, data.Id);
         }
     }
 }

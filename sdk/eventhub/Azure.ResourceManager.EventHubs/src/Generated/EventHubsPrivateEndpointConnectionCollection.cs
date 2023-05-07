@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = await _eventHubsPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubsArmOperation<EventHubsPrivateEndpointConnectionResource>(Response.FromValue(new EventHubsPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var operation = new EventHubsArmOperation<EventHubsPrivateEndpointConnectionResource>(Response.FromValue(new EventHubsPrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = _eventHubsPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new EventHubsArmOperation<EventHubsPrivateEndpointConnectionResource>(Response.FromValue(new EventHubsPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var operation = new EventHubsArmOperation<EventHubsPrivateEndpointConnectionResource>(Response.FromValue(new EventHubsPrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.EventHubs
                 var response = await _eventHubsPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EventHubsPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubsPrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.EventHubs
                 var response = _eventHubsPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EventHubsPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubsPrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventHubsPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventHubsPrivateEndpointConnectionResource(Client, EventHubsPrivateEndpointConnectionData.DeserializeEventHubsPrivateEndpointConnectionData(e)), _eventHubsPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "EventHubsPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = EventHubsPrivateEndpointConnectionData.DeserializeEventHubsPrivateEndpointConnectionData(e); return new EventHubsPrivateEndpointConnectionResource(Client, data, data.Id); }, _eventHubsPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "EventHubsPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventHubsPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventHubsPrivateEndpointConnectionResource(Client, EventHubsPrivateEndpointConnectionData.DeserializeEventHubsPrivateEndpointConnectionData(e)), _eventHubsPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "EventHubsPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = EventHubsPrivateEndpointConnectionData.DeserializeEventHubsPrivateEndpointConnectionData(e); return new EventHubsPrivateEndpointConnectionResource(Client, data, data.Id); }, _eventHubsPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "EventHubsPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

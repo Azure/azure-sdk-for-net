@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DicomServiceData.DeserializeDicomServiceData(document.RootElement);
-            return new DicomServiceResource(_client, data);
+            return new DicomServiceResource(_client, data, data.Id);
         }
 
         async ValueTask<DicomServiceResource> IOperationSource<DicomServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DicomServiceData.DeserializeDicomServiceData(document.RootElement);
-            return new DicomServiceResource(_client, data);
+            return new DicomServiceResource(_client, data, data.Id);
         }
     }
 }

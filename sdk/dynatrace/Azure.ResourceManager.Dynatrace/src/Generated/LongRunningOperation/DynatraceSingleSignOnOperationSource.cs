@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Dynatrace
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DynatraceSingleSignOnData.DeserializeDynatraceSingleSignOnData(document.RootElement);
-            return new DynatraceSingleSignOnResource(_client, data);
+            return new DynatraceSingleSignOnResource(_client, data, data.Id);
         }
 
         async ValueTask<DynatraceSingleSignOnResource> IOperationSource<DynatraceSingleSignOnResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DynatraceSingleSignOnData.DeserializeDynatraceSingleSignOnData(document.RootElement);
-            return new DynatraceSingleSignOnResource(_client, data);
+            return new DynatraceSingleSignOnResource(_client, data, data.Id);
         }
     }
 }

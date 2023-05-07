@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _partnerTopicRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, partnerTopicName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<PartnerTopicResource>(Response.FromValue(new PartnerTopicResource(Client, response), response.GetRawResponse()));
+                var operation = new EventGridArmOperation<PartnerTopicResource>(Response.FromValue(new PartnerTopicResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _partnerTopicRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, partnerTopicName, data, cancellationToken);
-                var operation = new EventGridArmOperation<PartnerTopicResource>(Response.FromValue(new PartnerTopicResource(Client, response), response.GetRawResponse()));
+                var operation = new EventGridArmOperation<PartnerTopicResource>(Response.FromValue(new PartnerTopicResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.EventGrid
                 var response = await _partnerTopicRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, partnerTopicName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PartnerTopicResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PartnerTopicResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.EventGrid
                 var response = _partnerTopicRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, partnerTopicName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PartnerTopicResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PartnerTopicResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partnerTopicRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _partnerTopicRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerTopicResource(Client, PartnerTopicData.DeserializePartnerTopicData(e)), _partnerTopicClientDiagnostics, Pipeline, "PartnerTopicCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PartnerTopicData.DeserializePartnerTopicData(e); return new PartnerTopicResource(Client, data, data.Id); }, _partnerTopicClientDiagnostics, Pipeline, "PartnerTopicCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partnerTopicRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _partnerTopicRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerTopicResource(Client, PartnerTopicData.DeserializePartnerTopicData(e)), _partnerTopicClientDiagnostics, Pipeline, "PartnerTopicCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PartnerTopicData.DeserializePartnerTopicData(e); return new PartnerTopicResource(Client, data, data.Id); }, _partnerTopicClientDiagnostics, Pipeline, "PartnerTopicCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

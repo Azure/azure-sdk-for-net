@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(document.RootElement);
-            return new DeviceUpdateInstanceResource(_client, data);
+            return new DeviceUpdateInstanceResource(_client, data, data.Id);
         }
 
         async ValueTask<DeviceUpdateInstanceResource> IOperationSource<DeviceUpdateInstanceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(document.RootElement);
-            return new DeviceUpdateInstanceResource(_client, data);
+            return new DeviceUpdateInstanceResource(_client, data, data.Id);
         }
     }
 }

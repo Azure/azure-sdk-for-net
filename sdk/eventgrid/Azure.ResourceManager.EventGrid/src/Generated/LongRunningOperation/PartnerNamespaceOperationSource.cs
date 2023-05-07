@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.EventGrid
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PartnerNamespaceData.DeserializePartnerNamespaceData(document.RootElement);
-            return new PartnerNamespaceResource(_client, data);
+            return new PartnerNamespaceResource(_client, data, data.Id);
         }
 
         async ValueTask<PartnerNamespaceResource> IOperationSource<PartnerNamespaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PartnerNamespaceData.DeserializePartnerNamespaceData(document.RootElement);
-            return new PartnerNamespaceResource(_client, data);
+            return new PartnerNamespaceResource(_client, data, data.Id);
         }
     }
 }

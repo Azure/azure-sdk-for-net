@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DevTestLabEnvironmentData.DeserializeDevTestLabEnvironmentData(document.RootElement);
-            return new DevTestLabEnvironmentResource(_client, data);
+            return new DevTestLabEnvironmentResource(_client, data, data.Id);
         }
 
         async ValueTask<DevTestLabEnvironmentResource> IOperationSource<DevTestLabEnvironmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DevTestLabEnvironmentData.DeserializeDevTestLabEnvironmentData(document.RootElement);
-            return new DevTestLabEnvironmentResource(_client, data);
+            return new DevTestLabEnvironmentResource(_client, data, data.Id);
         }
     }
 }

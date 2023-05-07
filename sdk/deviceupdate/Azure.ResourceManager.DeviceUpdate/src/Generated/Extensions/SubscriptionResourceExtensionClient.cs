@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeviceUpdateAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeviceUpdateAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeviceUpdateAccountResource(Client, DeviceUpdateAccountData.DeserializeDeviceUpdateAccountData(e)), DeviceUpdateAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeviceUpdateAccounts", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DeviceUpdateAccountData.DeserializeDeviceUpdateAccountData(e); return new DeviceUpdateAccountResource(Client, data, data.Id); }, DeviceUpdateAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeviceUpdateAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeviceUpdateAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeviceUpdateAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeviceUpdateAccountResource(Client, DeviceUpdateAccountData.DeserializeDeviceUpdateAccountData(e)), DeviceUpdateAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeviceUpdateAccounts", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DeviceUpdateAccountData.DeserializeDeviceUpdateAccountData(e); return new DeviceUpdateAccountResource(Client, data, data.Id); }, DeviceUpdateAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeviceUpdateAccounts", "value", "nextLink", cancellationToken);
         }
     }
 }

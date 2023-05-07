@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DnsResolver
                 var response = await _dnsResolverOutboundEndpointOutboundEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundEndpointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DnsResolverOutboundEndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsResolverOutboundEndpointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DnsResolver
                 var response = _dnsResolverOutboundEndpointOutboundEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundEndpointName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DnsResolverOutboundEndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsResolverOutboundEndpointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsResolverOutboundEndpointResource(Client, DnsResolverOutboundEndpointData.DeserializeDnsResolverOutboundEndpointData(e)), _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics, Pipeline, "DnsResolverOutboundEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DnsResolverOutboundEndpointData.DeserializeDnsResolverOutboundEndpointData(e); return new DnsResolverOutboundEndpointResource(Client, data, data.Id); }, _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics, Pipeline, "DnsResolverOutboundEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsResolverOutboundEndpointResource(Client, DnsResolverOutboundEndpointData.DeserializeDnsResolverOutboundEndpointData(e)), _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics, Pipeline, "DnsResolverOutboundEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DnsResolverOutboundEndpointData.DeserializeDnsResolverOutboundEndpointData(e); return new DnsResolverOutboundEndpointResource(Client, data, data.Id); }, _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics, Pipeline, "DnsResolverOutboundEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

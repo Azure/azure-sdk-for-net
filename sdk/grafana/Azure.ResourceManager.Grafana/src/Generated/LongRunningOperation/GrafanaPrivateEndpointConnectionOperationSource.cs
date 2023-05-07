@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Grafana
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = GrafanaPrivateEndpointConnectionData.DeserializeGrafanaPrivateEndpointConnectionData(document.RootElement);
-            return new GrafanaPrivateEndpointConnectionResource(_client, data);
+            return new GrafanaPrivateEndpointConnectionResource(_client, data, data.Id);
         }
 
         async ValueTask<GrafanaPrivateEndpointConnectionResource> IOperationSource<GrafanaPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = GrafanaPrivateEndpointConnectionData.DeserializeGrafanaPrivateEndpointConnectionData(document.RootElement);
-            return new GrafanaPrivateEndpointConnectionResource(_client, data);
+            return new GrafanaPrivateEndpointConnectionResource(_client, data, data.Id);
         }
     }
 }

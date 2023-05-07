@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DigitalTwins
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DigitalTwinsEndpointResourceData.DeserializeDigitalTwinsEndpointResourceData(document.RootElement);
-            return new DigitalTwinsEndpointResource(_client, data);
+            return new DigitalTwinsEndpointResource(_client, data, data.Id);
         }
 
         async ValueTask<DigitalTwinsEndpointResource> IOperationSource<DigitalTwinsEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DigitalTwinsEndpointResourceData.DeserializeDigitalTwinsEndpointResourceData(document.RootElement);
-            return new DigitalTwinsEndpointResource(_client, data);
+            return new DigitalTwinsEndpointResource(_client, data, data.Id);
         }
     }
 }

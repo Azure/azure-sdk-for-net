@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 var response = await _fhirServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FhirServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FhirServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 var response = _fhirServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FhirServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FhirServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fhirServiceRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fhirServiceRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FhirServiceResource(Client, FhirServiceData.DeserializeFhirServiceData(e)), _fhirServiceClientDiagnostics, Pipeline, "FhirServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = FhirServiceData.DeserializeFhirServiceData(e); return new FhirServiceResource(Client, data, data.Id); }, _fhirServiceClientDiagnostics, Pipeline, "FhirServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fhirServiceRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fhirServiceRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FhirServiceResource(Client, FhirServiceData.DeserializeFhirServiceData(e)), _fhirServiceClientDiagnostics, Pipeline, "FhirServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = FhirServiceData.DeserializeFhirServiceData(e); return new FhirServiceResource(Client, data, data.Id); }, _fhirServiceClientDiagnostics, Pipeline, "FhirServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

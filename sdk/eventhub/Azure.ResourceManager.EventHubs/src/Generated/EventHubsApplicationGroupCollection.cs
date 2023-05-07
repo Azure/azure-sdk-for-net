@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = await _eventHubsApplicationGroupApplicationGroupRestClient.CreateOrUpdateApplicationGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubsArmOperation<EventHubsApplicationGroupResource>(Response.FromValue(new EventHubsApplicationGroupResource(Client, response), response.GetRawResponse()));
+                var operation = new EventHubsArmOperation<EventHubsApplicationGroupResource>(Response.FromValue(new EventHubsApplicationGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = _eventHubsApplicationGroupApplicationGroupRestClient.CreateOrUpdateApplicationGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationGroupName, data, cancellationToken);
-                var operation = new EventHubsArmOperation<EventHubsApplicationGroupResource>(Response.FromValue(new EventHubsApplicationGroupResource(Client, response), response.GetRawResponse()));
+                var operation = new EventHubsArmOperation<EventHubsApplicationGroupResource>(Response.FromValue(new EventHubsApplicationGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.EventHubs
                 var response = await _eventHubsApplicationGroupApplicationGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EventHubsApplicationGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubsApplicationGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.EventHubs
                 var response = _eventHubsApplicationGroupApplicationGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationGroupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EventHubsApplicationGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubsApplicationGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsApplicationGroupApplicationGroupRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventHubsApplicationGroupApplicationGroupRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventHubsApplicationGroupResource(Client, EventHubsApplicationGroupData.DeserializeEventHubsApplicationGroupData(e)), _eventHubsApplicationGroupApplicationGroupClientDiagnostics, Pipeline, "EventHubsApplicationGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = EventHubsApplicationGroupData.DeserializeEventHubsApplicationGroupData(e); return new EventHubsApplicationGroupResource(Client, data, data.Id); }, _eventHubsApplicationGroupApplicationGroupClientDiagnostics, Pipeline, "EventHubsApplicationGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsApplicationGroupApplicationGroupRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventHubsApplicationGroupApplicationGroupRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventHubsApplicationGroupResource(Client, EventHubsApplicationGroupData.DeserializeEventHubsApplicationGroupData(e)), _eventHubsApplicationGroupApplicationGroupClientDiagnostics, Pipeline, "EventHubsApplicationGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = EventHubsApplicationGroupData.DeserializeEventHubsApplicationGroupData(e); return new EventHubsApplicationGroupResource(Client, data, data.Id); }, _eventHubsApplicationGroupApplicationGroupClientDiagnostics, Pipeline, "EventHubsApplicationGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

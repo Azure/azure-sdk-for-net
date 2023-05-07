@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ExtendedLocations
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CustomLocationData.DeserializeCustomLocationData(document.RootElement);
-            return new CustomLocationResource(_client, data);
+            return new CustomLocationResource(_client, data, data.Id);
         }
 
         async ValueTask<CustomLocationResource> IOperationSource<CustomLocationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CustomLocationData.DeserializeCustomLocationData(document.RootElement);
-            return new CustomLocationResource(_client, data);
+            return new CustomLocationResource(_client, data, data.Id);
         }
     }
 }

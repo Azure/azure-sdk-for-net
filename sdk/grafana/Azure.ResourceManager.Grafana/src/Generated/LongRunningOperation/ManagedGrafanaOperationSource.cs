@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Grafana
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedGrafanaData.DeserializeManagedGrafanaData(document.RootElement);
-            return new ManagedGrafanaResource(_client, data);
+            return new ManagedGrafanaResource(_client, data, data.Id);
         }
 
         async ValueTask<ManagedGrafanaResource> IOperationSource<ManagedGrafanaResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedGrafanaData.DeserializeManagedGrafanaData(document.RootElement);
-            return new ManagedGrafanaResource(_client, data);
+            return new ManagedGrafanaResource(_client, data, data.Id);
         }
     }
 }

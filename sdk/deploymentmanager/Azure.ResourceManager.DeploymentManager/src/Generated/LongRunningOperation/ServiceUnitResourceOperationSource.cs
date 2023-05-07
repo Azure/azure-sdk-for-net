@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DeploymentManager
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServiceUnitResourceData.DeserializeServiceUnitResourceData(document.RootElement);
-            return new ServiceUnitResource(_client, data);
+            return new ServiceUnitResource(_client, data, data.Id);
         }
 
         async ValueTask<ServiceUnitResource> IOperationSource<ServiceUnitResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServiceUnitResourceData.DeserializeServiceUnitResourceData(document.RootElement);
-            return new ServiceUnitResource(_client, data);
+            return new ServiceUnitResource(_client, data, data.Id);
         }
     }
 }

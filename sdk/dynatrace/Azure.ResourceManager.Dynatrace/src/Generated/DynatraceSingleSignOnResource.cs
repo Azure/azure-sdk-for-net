@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Dynatrace
         /// <summary> Initializes a new instance of the <see cref = "DynatraceSingleSignOnResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DynatraceSingleSignOnResource(ArmClient client, DynatraceSingleSignOnData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal DynatraceSingleSignOnResource(ArmClient client, DynatraceSingleSignOnData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Dynatrace
                 var response = await _dynatraceSingleSignOnSingleSignOnRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DynatraceSingleSignOnResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DynatraceSingleSignOnResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Dynatrace
                 var response = _dynatraceSingleSignOnSingleSignOnRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DynatraceSingleSignOnResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DynatraceSingleSignOnResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

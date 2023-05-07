@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 var response = await _deviceUpdateInstanceInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeviceUpdateInstanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeviceUpdateInstanceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 var response = _deviceUpdateInstanceInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeviceUpdateInstanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeviceUpdateInstanceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceUpdateInstanceInstancesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceUpdateInstanceInstancesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeviceUpdateInstanceResource(Client, DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(e)), _deviceUpdateInstanceInstancesClientDiagnostics, Pipeline, "DeviceUpdateInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(e); return new DeviceUpdateInstanceResource(Client, data, data.Id); }, _deviceUpdateInstanceInstancesClientDiagnostics, Pipeline, "DeviceUpdateInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceUpdateInstanceInstancesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceUpdateInstanceInstancesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeviceUpdateInstanceResource(Client, DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(e)), _deviceUpdateInstanceInstancesClientDiagnostics, Pipeline, "DeviceUpdateInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(e); return new DeviceUpdateInstanceResource(Client, data, data.Id); }, _deviceUpdateInstanceInstancesClientDiagnostics, Pipeline, "DeviceUpdateInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

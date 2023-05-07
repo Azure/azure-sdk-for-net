@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DevSpaces
                 var response = await _controllerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ControllerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ControllerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DevSpaces
                 var response = _controllerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ControllerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ControllerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DevSpaces
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _controllerRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _controllerRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ControllerResource(Client, ControllerData.DeserializeControllerData(e)), _controllerClientDiagnostics, Pipeline, "ControllerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ControllerData.DeserializeControllerData(e); return new ControllerResource(Client, data, data.Id); }, _controllerClientDiagnostics, Pipeline, "ControllerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DevSpaces
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _controllerRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _controllerRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ControllerResource(Client, ControllerData.DeserializeControllerData(e)), _controllerClientDiagnostics, Pipeline, "ControllerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ControllerData.DeserializeControllerData(e); return new ControllerResource(Client, data, data.Id); }, _controllerClientDiagnostics, Pipeline, "ControllerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Dynatrace
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DynatraceMonitorData.DeserializeDynatraceMonitorData(document.RootElement);
-            return new DynatraceMonitorResource(_client, data);
+            return new DynatraceMonitorResource(_client, data, data.Id);
         }
 
         async ValueTask<DynatraceMonitorResource> IOperationSource<DynatraceMonitorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DynatraceMonitorData.DeserializeDynatraceMonitorData(document.RootElement);
-            return new DynatraceMonitorResource(_client, data);
+            return new DynatraceMonitorResource(_client, data, data.Id);
         }
     }
 }

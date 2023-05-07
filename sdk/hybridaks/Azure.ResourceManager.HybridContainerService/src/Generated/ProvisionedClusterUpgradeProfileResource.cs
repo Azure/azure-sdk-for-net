@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <summary> Initializes a new instance of the <see cref = "ProvisionedClusterUpgradeProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ProvisionedClusterUpgradeProfileResource(ArmClient client, ProvisionedClusterUpgradeProfileData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal ProvisionedClusterUpgradeProfileResource(ArmClient client, ProvisionedClusterUpgradeProfileData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 var response = await _provisionedClusterUpgradeProfileProvisionedClustersRestClient.GetUpgradeProfileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProvisionedClusterUpgradeProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProvisionedClusterUpgradeProfileResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 var response = _provisionedClusterUpgradeProfileProvisionedClustersRestClient.GetUpgradeProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProvisionedClusterUpgradeProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProvisionedClusterUpgradeProfileResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

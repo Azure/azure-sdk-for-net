@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.HybridCompute
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(document.RootElement);
-            return new HybridComputeMachineExtensionResource(_client, data);
+            return new HybridComputeMachineExtensionResource(_client, data, data.Id);
         }
 
         async ValueTask<HybridComputeMachineExtensionResource> IOperationSource<HybridComputeMachineExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(document.RootElement);
-            return new HybridComputeMachineExtensionResource(_client, data);
+            return new HybridComputeMachineExtensionResource(_client, data, data.Id);
         }
     }
 }

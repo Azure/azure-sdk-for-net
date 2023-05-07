@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DnsResolver
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DnsForwardingRulesetData.DeserializeDnsForwardingRulesetData(document.RootElement);
-            return new DnsForwardingRulesetResource(_client, data);
+            return new DnsForwardingRulesetResource(_client, data, data.Id);
         }
 
         async ValueTask<DnsForwardingRulesetResource> IOperationSource<DnsForwardingRulesetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DnsForwardingRulesetData.DeserializeDnsForwardingRulesetData(document.RootElement);
-            return new DnsForwardingRulesetResource(_client, data);
+            return new DnsForwardingRulesetResource(_client, data, data.Id);
         }
     }
 }

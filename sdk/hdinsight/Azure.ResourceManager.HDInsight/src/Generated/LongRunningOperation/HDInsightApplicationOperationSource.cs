@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.HDInsight
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = HDInsightApplicationData.DeserializeHDInsightApplicationData(document.RootElement);
-            return new HDInsightApplicationResource(_client, data);
+            return new HDInsightApplicationResource(_client, data, data.Id);
         }
 
         async ValueTask<HDInsightApplicationResource> IOperationSource<HDInsightApplicationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = HDInsightApplicationData.DeserializeHDInsightApplicationData(document.RootElement);
-            return new HDInsightApplicationResource(_client, data);
+            return new HDInsightApplicationResource(_client, data, data.Id);
         }
     }
 }

@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.EventGrid
                 var response = await _systemTopicRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, systemTopicName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SystemTopicResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SystemTopicResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.EventGrid
                 var response = _systemTopicRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, systemTopicName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SystemTopicResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SystemTopicResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _systemTopicRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _systemTopicRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SystemTopicResource(Client, SystemTopicData.DeserializeSystemTopicData(e)), _systemTopicClientDiagnostics, Pipeline, "SystemTopicCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SystemTopicData.DeserializeSystemTopicData(e); return new SystemTopicResource(Client, data, data.Id); }, _systemTopicClientDiagnostics, Pipeline, "SystemTopicCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _systemTopicRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _systemTopicRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SystemTopicResource(Client, SystemTopicData.DeserializeSystemTopicData(e)), _systemTopicClientDiagnostics, Pipeline, "SystemTopicCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SystemTopicData.DeserializeSystemTopicData(e); return new SystemTopicResource(Client, data, data.Id); }, _systemTopicClientDiagnostics, Pipeline, "SystemTopicCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
