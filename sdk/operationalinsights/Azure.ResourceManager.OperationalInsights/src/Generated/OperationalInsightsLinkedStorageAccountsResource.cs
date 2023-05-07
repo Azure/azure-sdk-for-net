@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <summary> Initializes a new instance of the <see cref = "OperationalInsightsLinkedStorageAccountsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal OperationalInsightsLinkedStorageAccountsResource(ArmClient client, OperationalInsightsLinkedStorageAccountsData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal OperationalInsightsLinkedStorageAccountsResource(ArmClient client, OperationalInsightsLinkedStorageAccountsData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 var response = await _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name.ToOperationalInsightsDataSourceType(), cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OperationalInsightsLinkedStorageAccountsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OperationalInsightsLinkedStorageAccountsResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 var response = _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name.ToOperationalInsightsDataSourceType(), cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OperationalInsightsLinkedStorageAccountsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OperationalInsightsLinkedStorageAccountsResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -245,7 +246,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = await _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name.ToOperationalInsightsDataSourceType(), data, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedStorageAccountsResource>(Response.FromValue(new OperationalInsightsLinkedStorageAccountsResource(Client, response), response.GetRawResponse()));
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedStorageAccountsResource>(Response.FromValue(new OperationalInsightsLinkedStorageAccountsResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,7 +284,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name.ToOperationalInsightsDataSourceType(), data, cancellationToken);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedStorageAccountsResource>(Response.FromValue(new OperationalInsightsLinkedStorageAccountsResource(Client, response), response.GetRawResponse()));
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedStorageAccountsResource>(Response.FromValue(new OperationalInsightsLinkedStorageAccountsResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

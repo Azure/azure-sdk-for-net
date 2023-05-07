@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendIPConfigurationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FrontendIPConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FrontendIPConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network
                 var response = _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendIPConfigurationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FrontendIPConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FrontendIPConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontendIPConfigurationResource(Client, FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(e)), _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics, Pipeline, "FrontendIPConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(e); return new FrontendIPConfigurationResource(Client, data, data.Id); }, _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics, Pipeline, "FrontendIPConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontendIPConfigurationResource(Client, FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(e)), _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics, Pipeline, "FrontendIPConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(e); return new FrontendIPConfigurationResource(Client, data, data.Id); }, _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics, Pipeline, "FrontendIPConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

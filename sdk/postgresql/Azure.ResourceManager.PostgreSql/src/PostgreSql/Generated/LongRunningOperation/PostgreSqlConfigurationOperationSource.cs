@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.PostgreSql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PostgreSqlConfigurationData.DeserializePostgreSqlConfigurationData(document.RootElement);
-            return new PostgreSqlConfigurationResource(_client, data);
+            return new PostgreSqlConfigurationResource(_client, data, data.Id);
         }
 
         async ValueTask<PostgreSqlConfigurationResource> IOperationSource<PostgreSqlConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PostgreSqlConfigurationData.DeserializePostgreSqlConfigurationData(document.RootElement);
-            return new PostgreSqlConfigurationResource(_client, data);
+            return new PostgreSqlConfigurationResource(_client, data, data.Id);
         }
     }
 }

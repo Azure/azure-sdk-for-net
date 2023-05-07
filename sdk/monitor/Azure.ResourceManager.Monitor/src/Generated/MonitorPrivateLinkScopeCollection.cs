@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _monitorPrivateLinkScopePrivateLinkScopesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, scopeName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<MonitorPrivateLinkScopeResource>(Response.FromValue(new MonitorPrivateLinkScopeResource(Client, response), response.GetRawResponse()));
+                var operation = new MonitorArmOperation<MonitorPrivateLinkScopeResource>(Response.FromValue(new MonitorPrivateLinkScopeResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _monitorPrivateLinkScopePrivateLinkScopesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, scopeName, data, cancellationToken);
-                var operation = new MonitorArmOperation<MonitorPrivateLinkScopeResource>(Response.FromValue(new MonitorPrivateLinkScopeResource(Client, response), response.GetRawResponse()));
+                var operation = new MonitorArmOperation<MonitorPrivateLinkScopeResource>(Response.FromValue(new MonitorPrivateLinkScopeResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _monitorPrivateLinkScopePrivateLinkScopesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, scopeName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MonitorPrivateLinkScopeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MonitorPrivateLinkScopeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _monitorPrivateLinkScopePrivateLinkScopesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, scopeName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MonitorPrivateLinkScopeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MonitorPrivateLinkScopeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitorPrivateLinkScopePrivateLinkScopesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _monitorPrivateLinkScopePrivateLinkScopesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MonitorPrivateLinkScopeResource(Client, MonitorPrivateLinkScopeData.DeserializeMonitorPrivateLinkScopeData(e)), _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, "MonitorPrivateLinkScopeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = MonitorPrivateLinkScopeData.DeserializeMonitorPrivateLinkScopeData(e); return new MonitorPrivateLinkScopeResource(Client, data, data.Id); }, _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, "MonitorPrivateLinkScopeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitorPrivateLinkScopePrivateLinkScopesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _monitorPrivateLinkScopePrivateLinkScopesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MonitorPrivateLinkScopeResource(Client, MonitorPrivateLinkScopeData.DeserializeMonitorPrivateLinkScopeData(e)), _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, "MonitorPrivateLinkScopeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = MonitorPrivateLinkScopeData.DeserializeMonitorPrivateLinkScopeData(e); return new MonitorPrivateLinkScopeResource(Client, data, data.Id); }, _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, "MonitorPrivateLinkScopeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

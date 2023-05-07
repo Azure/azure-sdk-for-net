@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ApplicationGatewayPrivateEndpointConnectionData.DeserializeApplicationGatewayPrivateEndpointConnectionData(document.RootElement);
-            return new ApplicationGatewayPrivateEndpointConnectionResource(_client, data);
+            return new ApplicationGatewayPrivateEndpointConnectionResource(_client, data, data.Id);
         }
 
         async ValueTask<ApplicationGatewayPrivateEndpointConnectionResource> IOperationSource<ApplicationGatewayPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ApplicationGatewayPrivateEndpointConnectionData.DeserializeApplicationGatewayPrivateEndpointConnectionData(document.RootElement);
-            return new ApplicationGatewayPrivateEndpointConnectionResource(_client, data);
+            return new ApplicationGatewayPrivateEndpointConnectionResource(_client, data, data.Id);
         }
     }
 }

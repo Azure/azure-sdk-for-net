@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = BgpConnectionData.DeserializeBgpConnectionData(document.RootElement);
-            return new BgpConnectionResource(_client, data);
+            return new BgpConnectionResource(_client, data, data.Id);
         }
 
         async ValueTask<BgpConnectionResource> IOperationSource<BgpConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = BgpConnectionData.DeserializeBgpConnectionData(document.RootElement);
-            return new BgpConnectionResource(_client, data);
+            return new BgpConnectionResource(_client, data, data.Id);
         }
     }
 }

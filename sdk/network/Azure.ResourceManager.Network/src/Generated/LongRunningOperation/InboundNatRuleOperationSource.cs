@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = InboundNatRuleData.DeserializeInboundNatRuleData(document.RootElement);
-            return new InboundNatRuleResource(_client, data);
+            return new InboundNatRuleResource(_client, data, data.Id);
         }
 
         async ValueTask<InboundNatRuleResource> IOperationSource<InboundNatRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = InboundNatRuleData.DeserializeInboundNatRuleData(document.RootElement);
-            return new InboundNatRuleResource(_client, data);
+            return new InboundNatRuleResource(_client, data, data.Id);
         }
     }
 }

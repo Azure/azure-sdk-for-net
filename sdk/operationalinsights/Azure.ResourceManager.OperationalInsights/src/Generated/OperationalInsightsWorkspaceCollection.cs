@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 var response = await _operationalInsightsWorkspaceWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 var response = _operationalInsightsWorkspaceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual AsyncPageable<OperationalInsightsWorkspaceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new OperationalInsightsWorkspaceResource(Client, OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(e)), _operationalInsightsWorkspaceWorkspacesClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(e); return new OperationalInsightsWorkspaceResource(Client, data, data.Id); }, _operationalInsightsWorkspaceWorkspacesClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual Pageable<OperationalInsightsWorkspaceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new OperationalInsightsWorkspaceResource(Client, OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(e)), _operationalInsightsWorkspaceWorkspacesClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(e); return new OperationalInsightsWorkspaceResource(Client, data, data.Id); }, _operationalInsightsWorkspaceWorkspacesClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

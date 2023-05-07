@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <summary> Initializes a new instance of the <see cref = "LogAnalyticsQueryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal LogAnalyticsQueryResource(ArmClient client, LogAnalyticsQueryData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal LogAnalyticsQueryResource(ArmClient client, LogAnalyticsQueryData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 var response = await _logAnalyticsQueryQueriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogAnalyticsQueryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogAnalyticsQueryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 var response = _logAnalyticsQueryQueriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogAnalyticsQueryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogAnalyticsQueryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -243,7 +244,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = await _logAnalyticsQueryQueriesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new LogAnalyticsQueryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogAnalyticsQueryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -277,7 +278,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = _logAnalyticsQueryQueriesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                return Response.FromValue(new LogAnalyticsQueryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogAnalyticsQueryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PrivateDnsZoneGroupData.DeserializePrivateDnsZoneGroupData(document.RootElement);
-            return new PrivateDnsZoneGroupResource(_client, data);
+            return new PrivateDnsZoneGroupResource(_client, data, data.Id);
         }
 
         async ValueTask<PrivateDnsZoneGroupResource> IOperationSource<PrivateDnsZoneGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PrivateDnsZoneGroupData.DeserializePrivateDnsZoneGroupData(document.RootElement);
-            return new PrivateDnsZoneGroupResource(_client, data);
+            return new PrivateDnsZoneGroupResource(_client, data, data.Id);
         }
     }
 }

@@ -48,7 +48,8 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <summary> Initializes a new instance of the <see cref = "NotificationHubNamespaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal NotificationHubNamespaceResource(ArmClient client, NotificationHubNamespaceData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal NotificationHubNamespaceResource(ArmClient client, NotificationHubNamespaceData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -222,7 +223,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 var response = await _notificationHubNamespaceNamespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NotificationHubNamespaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NotificationHubNamespaceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -254,7 +255,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 var response = _notificationHubNamespaceNamespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NotificationHubNamespaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NotificationHubNamespaceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -356,7 +357,7 @@ namespace Azure.ResourceManager.NotificationHubs
             try
             {
                 var response = await _notificationHubNamespaceNamespacesRestClient.PatchAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new NotificationHubNamespaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NotificationHubNamespaceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -390,7 +391,7 @@ namespace Azure.ResourceManager.NotificationHubs
             try
             {
                 var response = _notificationHubNamespaceNamespacesRestClient.Patch(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new NotificationHubNamespaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NotificationHubNamespaceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -499,7 +500,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _notificationHubNamespaceNamespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new NotificationHubNamespaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new NotificationHubNamespaceResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -553,7 +554,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _notificationHubNamespaceNamespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new NotificationHubNamespaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new NotificationHubNamespaceResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -606,7 +607,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _notificationHubNamespaceNamespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new NotificationHubNamespaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new NotificationHubNamespaceResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -655,7 +656,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _notificationHubNamespaceNamespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new NotificationHubNamespaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new NotificationHubNamespaceResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -703,7 +704,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _notificationHubNamespaceNamespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new NotificationHubNamespaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new NotificationHubNamespaceResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -755,7 +756,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _notificationHubNamespaceNamespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new NotificationHubNamespaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new NotificationHubNamespaceResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {

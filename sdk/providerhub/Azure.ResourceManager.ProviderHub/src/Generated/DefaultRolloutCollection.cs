@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ProviderHub
                 var response = await _defaultRolloutRestClient.GetAsync(Id.SubscriptionId, Id.Name, rolloutName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DefaultRolloutResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DefaultRolloutResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ProviderHub
                 var response = _defaultRolloutRestClient.Get(Id.SubscriptionId, Id.Name, rolloutName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DefaultRolloutResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DefaultRolloutResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRolloutRestClient.CreateListByProviderRegistrationRequest(Id.SubscriptionId, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _defaultRolloutRestClient.CreateListByProviderRegistrationNextPageRequest(nextLink, Id.SubscriptionId, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DefaultRolloutResource(Client, DefaultRolloutData.DeserializeDefaultRolloutData(e)), _defaultRolloutClientDiagnostics, Pipeline, "DefaultRolloutCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DefaultRolloutData.DeserializeDefaultRolloutData(e); return new DefaultRolloutResource(Client, data, data.Id); }, _defaultRolloutClientDiagnostics, Pipeline, "DefaultRolloutCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRolloutRestClient.CreateListByProviderRegistrationRequest(Id.SubscriptionId, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _defaultRolloutRestClient.CreateListByProviderRegistrationNextPageRequest(nextLink, Id.SubscriptionId, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DefaultRolloutResource(Client, DefaultRolloutData.DeserializeDefaultRolloutData(e)), _defaultRolloutClientDiagnostics, Pipeline, "DefaultRolloutCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DefaultRolloutData.DeserializeDefaultRolloutData(e); return new DefaultRolloutResource(Client, data, data.Id); }, _defaultRolloutClientDiagnostics, Pipeline, "DefaultRolloutCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

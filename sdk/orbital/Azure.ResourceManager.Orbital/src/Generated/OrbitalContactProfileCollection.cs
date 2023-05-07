@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Orbital
                 var response = await _orbitalContactProfileContactProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, contactProfileName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OrbitalContactProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OrbitalContactProfileResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Orbital
                 var response = _orbitalContactProfileContactProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, contactProfileName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OrbitalContactProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OrbitalContactProfileResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Orbital
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _orbitalContactProfileContactProfilesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _orbitalContactProfileContactProfilesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OrbitalContactProfileResource(Client, OrbitalContactProfileData.DeserializeOrbitalContactProfileData(e)), _orbitalContactProfileContactProfilesClientDiagnostics, Pipeline, "OrbitalContactProfileCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = OrbitalContactProfileData.DeserializeOrbitalContactProfileData(e); return new OrbitalContactProfileResource(Client, data, data.Id); }, _orbitalContactProfileContactProfilesClientDiagnostics, Pipeline, "OrbitalContactProfileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Orbital
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _orbitalContactProfileContactProfilesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _orbitalContactProfileContactProfilesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OrbitalContactProfileResource(Client, OrbitalContactProfileData.DeserializeOrbitalContactProfileData(e)), _orbitalContactProfileContactProfilesClientDiagnostics, Pipeline, "OrbitalContactProfileCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = OrbitalContactProfileData.DeserializeOrbitalContactProfileData(e); return new OrbitalContactProfileResource(Client, data, data.Id); }, _orbitalContactProfileContactProfilesClientDiagnostics, Pipeline, "OrbitalContactProfileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

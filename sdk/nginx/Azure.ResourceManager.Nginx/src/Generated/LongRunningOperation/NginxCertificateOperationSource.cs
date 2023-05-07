@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Nginx
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NginxCertificateData.DeserializeNginxCertificateData(document.RootElement);
-            return new NginxCertificateResource(_client, data);
+            return new NginxCertificateResource(_client, data, data.Id);
         }
 
         async ValueTask<NginxCertificateResource> IOperationSource<NginxCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NginxCertificateData.DeserializeNginxCertificateData(document.RootElement);
-            return new NginxCertificateResource(_client, data);
+            return new NginxCertificateResource(_client, data, data.Id);
         }
     }
 }

@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _privateEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, privateEndpointName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateEndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateEndpointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
                 var response = _privateEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, privateEndpointName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateEndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateEndpointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateEndpointRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateEndpointRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PrivateEndpointResource(Client, PrivateEndpointData.DeserializePrivateEndpointData(e)), _privateEndpointClientDiagnostics, Pipeline, "PrivateEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PrivateEndpointData.DeserializePrivateEndpointData(e); return new PrivateEndpointResource(Client, data, data.Id); }, _privateEndpointClientDiagnostics, Pipeline, "PrivateEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateEndpointRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateEndpointRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrivateEndpointResource(Client, PrivateEndpointData.DeserializePrivateEndpointData(e)), _privateEndpointClientDiagnostics, Pipeline, "PrivateEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PrivateEndpointData.DeserializePrivateEndpointData(e); return new PrivateEndpointResource(Client, data, data.Id); }, _privateEndpointClientDiagnostics, Pipeline, "PrivateEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

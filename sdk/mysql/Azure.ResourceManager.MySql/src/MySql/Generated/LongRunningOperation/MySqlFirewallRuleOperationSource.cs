@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.MySql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(document.RootElement);
-            return new MySqlFirewallRuleResource(_client, data);
+            return new MySqlFirewallRuleResource(_client, data, data.Id);
         }
 
         async ValueTask<MySqlFirewallRuleResource> IOperationSource<MySqlFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(document.RootElement);
-            return new MySqlFirewallRuleResource(_client, data);
+            return new MySqlFirewallRuleResource(_client, data, data.Id);
         }
     }
 }

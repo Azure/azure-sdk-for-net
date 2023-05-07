@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             try
             {
                 var response = await _autoScaleVCoreRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, vcoreName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PowerBIDedicatedArmOperation<AutoScaleVCoreResource>(Response.FromValue(new AutoScaleVCoreResource(Client, response), response.GetRawResponse()));
+                var operation = new PowerBIDedicatedArmOperation<AutoScaleVCoreResource>(Response.FromValue(new AutoScaleVCoreResource(Client, response.Value, new ResourceIdentifier(response.Value.Id)), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             try
             {
                 var response = _autoScaleVCoreRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, vcoreName, data, cancellationToken);
-                var operation = new PowerBIDedicatedArmOperation<AutoScaleVCoreResource>(Response.FromValue(new AutoScaleVCoreResource(Client, response), response.GetRawResponse()));
+                var operation = new PowerBIDedicatedArmOperation<AutoScaleVCoreResource>(Response.FromValue(new AutoScaleVCoreResource(Client, response.Value, new ResourceIdentifier(response.Value.Id)), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 var response = await _autoScaleVCoreRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vcoreName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutoScaleVCoreResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutoScaleVCoreResource(Client, response.Value, new ResourceIdentifier(response.Value.Id)), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 var response = _autoScaleVCoreRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vcoreName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutoScaleVCoreResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutoScaleVCoreResource(Client, response.Value, new ResourceIdentifier(response.Value.Id)), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         public virtual AsyncPageable<AutoScaleVCoreResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _autoScaleVCoreRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutoScaleVCoreResource(Client, AutoScaleVCoreData.DeserializeAutoScaleVCoreData(e)), _autoScaleVCoreClientDiagnostics, Pipeline, "AutoScaleVCoreCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = AutoScaleVCoreData.DeserializeAutoScaleVCoreData(e); return new AutoScaleVCoreResource(Client, data, new ResourceIdentifier(data.Id)); }, _autoScaleVCoreClientDiagnostics, Pipeline, "AutoScaleVCoreCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         public virtual Pageable<AutoScaleVCoreResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _autoScaleVCoreRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutoScaleVCoreResource(Client, AutoScaleVCoreData.DeserializeAutoScaleVCoreData(e)), _autoScaleVCoreClientDiagnostics, Pipeline, "AutoScaleVCoreCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = AutoScaleVCoreData.DeserializeAutoScaleVCoreData(e); return new AutoScaleVCoreResource(Client, data, new ResourceIdentifier(data.Id)); }, _autoScaleVCoreClientDiagnostics, Pipeline, "AutoScaleVCoreCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

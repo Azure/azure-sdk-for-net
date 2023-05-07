@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PostgreSqlFlexibleServerData.DeserializePostgreSqlFlexibleServerData(document.RootElement);
-            return new PostgreSqlFlexibleServerResource(_client, data);
+            return new PostgreSqlFlexibleServerResource(_client, data, data.Id);
         }
 
         async ValueTask<PostgreSqlFlexibleServerResource> IOperationSource<PostgreSqlFlexibleServerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PostgreSqlFlexibleServerData.DeserializePostgreSqlFlexibleServerData(document.RootElement);
-            return new PostgreSqlFlexibleServerResource(_client, data);
+            return new PostgreSqlFlexibleServerResource(_client, data, data.Id);
         }
     }
 }

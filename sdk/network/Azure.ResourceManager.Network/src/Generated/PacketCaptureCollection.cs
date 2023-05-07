@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _packetCaptureRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PacketCaptureResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PacketCaptureResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Network
                 var response = _packetCaptureRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PacketCaptureResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PacketCaptureResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network
         public virtual AsyncPageable<PacketCaptureResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _packetCaptureRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PacketCaptureResource(Client, PacketCaptureData.DeserializePacketCaptureData(e)), _packetCaptureClientDiagnostics, Pipeline, "PacketCaptureCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = PacketCaptureData.DeserializePacketCaptureData(e); return new PacketCaptureResource(Client, data, data.Id); }, _packetCaptureClientDiagnostics, Pipeline, "PacketCaptureCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Network
         public virtual Pageable<PacketCaptureResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _packetCaptureRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new PacketCaptureResource(Client, PacketCaptureData.DeserializePacketCaptureData(e)), _packetCaptureClientDiagnostics, Pipeline, "PacketCaptureCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = PacketCaptureData.DeserializePacketCaptureData(e); return new PacketCaptureResource(Client, data, data.Id); }, _packetCaptureClientDiagnostics, Pipeline, "PacketCaptureCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

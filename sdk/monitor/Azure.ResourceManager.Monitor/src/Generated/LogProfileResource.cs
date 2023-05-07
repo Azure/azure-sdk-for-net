@@ -46,7 +46,8 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Initializes a new instance of the <see cref = "LogProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal LogProfileResource(ArmClient client, LogProfileData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal LogProfileResource(ArmClient client, LogProfileData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _logProfileRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogProfileResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _logProfileRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogProfileResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -246,7 +247,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _logProfileRestClient.UpdateAsync(Id.SubscriptionId, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogProfileResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -280,7 +281,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _logProfileRestClient.Update(Id.SubscriptionId, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogProfileResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -321,7 +322,7 @@ namespace Azure.ResourceManager.Monitor
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _logProfileRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new LogProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new LogProfileResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -375,7 +376,7 @@ namespace Azure.ResourceManager.Monitor
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _logProfileRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
-                    return Response.FromValue(new LogProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new LogProfileResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -428,7 +429,7 @@ namespace Azure.ResourceManager.Monitor
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _logProfileRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new LogProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new LogProfileResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -477,7 +478,7 @@ namespace Azure.ResourceManager.Monitor
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _logProfileRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
-                    return Response.FromValue(new LogProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new LogProfileResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -525,7 +526,7 @@ namespace Azure.ResourceManager.Monitor
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _logProfileRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new LogProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new LogProfileResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -577,7 +578,7 @@ namespace Azure.ResourceManager.Monitor
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _logProfileRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
-                    return Response.FromValue(new LogProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new LogProfileResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {

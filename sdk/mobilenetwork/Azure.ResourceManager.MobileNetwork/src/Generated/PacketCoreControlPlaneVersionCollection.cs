@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 var response = await _packetCoreControlPlaneVersionRestClient.GetAsync(versionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PacketCoreControlPlaneVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PacketCoreControlPlaneVersionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 var response = _packetCoreControlPlaneVersionRestClient.Get(versionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PacketCoreControlPlaneVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PacketCoreControlPlaneVersionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _packetCoreControlPlaneVersionRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _packetCoreControlPlaneVersionRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PacketCoreControlPlaneVersionResource(Client, PacketCoreControlPlaneVersionData.DeserializePacketCoreControlPlaneVersionData(e)), _packetCoreControlPlaneVersionClientDiagnostics, Pipeline, "PacketCoreControlPlaneVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PacketCoreControlPlaneVersionData.DeserializePacketCoreControlPlaneVersionData(e); return new PacketCoreControlPlaneVersionResource(Client, data, data.Id); }, _packetCoreControlPlaneVersionClientDiagnostics, Pipeline, "PacketCoreControlPlaneVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _packetCoreControlPlaneVersionRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _packetCoreControlPlaneVersionRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PacketCoreControlPlaneVersionResource(Client, PacketCoreControlPlaneVersionData.DeserializePacketCoreControlPlaneVersionData(e)), _packetCoreControlPlaneVersionClientDiagnostics, Pipeline, "PacketCoreControlPlaneVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PacketCoreControlPlaneVersionData.DeserializePacketCoreControlPlaneVersionData(e); return new PacketCoreControlPlaneVersionResource(Client, data, data.Id); }, _packetCoreControlPlaneVersionClientDiagnostics, Pipeline, "PacketCoreControlPlaneVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

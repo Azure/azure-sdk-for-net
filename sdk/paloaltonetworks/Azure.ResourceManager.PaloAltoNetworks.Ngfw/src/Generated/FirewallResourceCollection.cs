@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 var response = await _firewallResourceFirewallsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, firewallName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FirewallResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FirewallResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 var response = _firewallResourceFirewallsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, firewallName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FirewallResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FirewallResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _firewallResourceFirewallsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firewallResourceFirewallsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FirewallResource(Client, FirewallResourceData.DeserializeFirewallResourceData(e)), _firewallResourceFirewallsClientDiagnostics, Pipeline, "FirewallResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = FirewallResourceData.DeserializeFirewallResourceData(e); return new FirewallResource(Client, data, data.Id); }, _firewallResourceFirewallsClientDiagnostics, Pipeline, "FirewallResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _firewallResourceFirewallsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firewallResourceFirewallsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FirewallResource(Client, FirewallResourceData.DeserializeFirewallResourceData(e)), _firewallResourceFirewallsClientDiagnostics, Pipeline, "FirewallResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = FirewallResourceData.DeserializeFirewallResourceData(e); return new FirewallResource(Client, data, data.Id); }, _firewallResourceFirewallsClientDiagnostics, Pipeline, "FirewallResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

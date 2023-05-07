@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _flowLogRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FlowLogResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FlowLogResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network
                 var response = _flowLogRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FlowLogResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FlowLogResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _flowLogRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _flowLogRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FlowLogResource(Client, FlowLogData.DeserializeFlowLogData(e)), _flowLogClientDiagnostics, Pipeline, "FlowLogCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = FlowLogData.DeserializeFlowLogData(e); return new FlowLogResource(Client, data, data.Id); }, _flowLogClientDiagnostics, Pipeline, "FlowLogCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _flowLogRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _flowLogRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FlowLogResource(Client, FlowLogData.DeserializeFlowLogData(e)), _flowLogClientDiagnostics, Pipeline, "FlowLogCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = FlowLogData.DeserializeFlowLogData(e); return new FlowLogResource(Client, data, data.Id); }, _flowLogClientDiagnostics, Pipeline, "FlowLogCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

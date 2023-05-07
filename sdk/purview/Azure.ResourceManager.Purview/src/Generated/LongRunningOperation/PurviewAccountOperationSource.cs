@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Purview
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PurviewAccountData.DeserializePurviewAccountData(document.RootElement);
-            return new PurviewAccountResource(_client, data);
+            return new PurviewAccountResource(_client, data, data.Id);
         }
 
         async ValueTask<PurviewAccountResource> IOperationSource<PurviewAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PurviewAccountData.DeserializePurviewAccountData(document.RootElement);
-            return new PurviewAccountResource(_client, data);
+            return new PurviewAccountResource(_client, data, data.Id);
         }
     }
 }

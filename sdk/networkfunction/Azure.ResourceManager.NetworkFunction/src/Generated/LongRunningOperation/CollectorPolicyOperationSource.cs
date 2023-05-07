@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.NetworkFunction
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CollectorPolicyData.DeserializeCollectorPolicyData(document.RootElement);
-            return new CollectorPolicyResource(_client, data);
+            return new CollectorPolicyResource(_client, data, data.Id);
         }
 
         async ValueTask<CollectorPolicyResource> IOperationSource<CollectorPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CollectorPolicyData.DeserializeCollectorPolicyData(document.RootElement);
-            return new CollectorPolicyResource(_client, data);
+            return new CollectorPolicyResource(_client, data, data.Id);
         }
     }
 }

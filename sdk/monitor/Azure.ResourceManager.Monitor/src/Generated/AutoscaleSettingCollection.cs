@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _autoscaleSettingRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, autoscaleSettingName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<AutoscaleSettingResource>(Response.FromValue(new AutoscaleSettingResource(Client, response), response.GetRawResponse()));
+                var operation = new MonitorArmOperation<AutoscaleSettingResource>(Response.FromValue(new AutoscaleSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _autoscaleSettingRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, autoscaleSettingName, data, cancellationToken);
-                var operation = new MonitorArmOperation<AutoscaleSettingResource>(Response.FromValue(new AutoscaleSettingResource(Client, response), response.GetRawResponse()));
+                var operation = new MonitorArmOperation<AutoscaleSettingResource>(Response.FromValue(new AutoscaleSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _autoscaleSettingRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, autoscaleSettingName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutoscaleSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutoscaleSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _autoscaleSettingRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, autoscaleSettingName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutoscaleSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutoscaleSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _autoscaleSettingRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _autoscaleSettingRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutoscaleSettingResource(Client, AutoscaleSettingData.DeserializeAutoscaleSettingData(e)), _autoscaleSettingClientDiagnostics, Pipeline, "AutoscaleSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AutoscaleSettingData.DeserializeAutoscaleSettingData(e); return new AutoscaleSettingResource(Client, data, data.Id); }, _autoscaleSettingClientDiagnostics, Pipeline, "AutoscaleSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _autoscaleSettingRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _autoscaleSettingRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutoscaleSettingResource(Client, AutoscaleSettingData.DeserializeAutoscaleSettingData(e)), _autoscaleSettingClientDiagnostics, Pipeline, "AutoscaleSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AutoscaleSettingData.DeserializeAutoscaleSettingData(e); return new AutoscaleSettingResource(Client, data, data.Id); }, _autoscaleSettingClientDiagnostics, Pipeline, "AutoscaleSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

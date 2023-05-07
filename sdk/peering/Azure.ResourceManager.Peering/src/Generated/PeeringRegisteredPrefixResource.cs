@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Peering
         /// <summary> Initializes a new instance of the <see cref = "PeeringRegisteredPrefixResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PeeringRegisteredPrefixResource(ArmClient client, PeeringRegisteredPrefixData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal PeeringRegisteredPrefixResource(ArmClient client, PeeringRegisteredPrefixData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Peering
                 var response = await _peeringRegisteredPrefixRegisteredPrefixesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PeeringRegisteredPrefixResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PeeringRegisteredPrefixResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Peering
                 var response = _peeringRegisteredPrefixRegisteredPrefixesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PeeringRegisteredPrefixResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PeeringRegisteredPrefixResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.Peering
             try
             {
                 var response = await _peeringRegisteredPrefixRegisteredPrefixesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PeeringArmOperation<PeeringRegisteredPrefixResource>(Response.FromValue(new PeeringRegisteredPrefixResource(Client, response), response.GetRawResponse()));
+                var operation = new PeeringArmOperation<PeeringRegisteredPrefixResource>(Response.FromValue(new PeeringRegisteredPrefixResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,7 +283,7 @@ namespace Azure.ResourceManager.Peering
             try
             {
                 var response = _peeringRegisteredPrefixRegisteredPrefixesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new PeeringArmOperation<PeeringRegisteredPrefixResource>(Response.FromValue(new PeeringRegisteredPrefixResource(Client, response), response.GetRawResponse()));
+                var operation = new PeeringArmOperation<PeeringRegisteredPrefixResource>(Response.FromValue(new PeeringRegisteredPrefixResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -315,7 +316,7 @@ namespace Azure.ResourceManager.Peering
             try
             {
                 var response = await _peeringRegisteredPrefixRegisteredPrefixesRestClient.ValidateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PeeringRegisteredPrefixResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PeeringRegisteredPrefixResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -345,7 +346,7 @@ namespace Azure.ResourceManager.Peering
             try
             {
                 var response = _peeringRegisteredPrefixRegisteredPrefixesRestClient.Validate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new PeeringRegisteredPrefixResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PeeringRegisteredPrefixResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

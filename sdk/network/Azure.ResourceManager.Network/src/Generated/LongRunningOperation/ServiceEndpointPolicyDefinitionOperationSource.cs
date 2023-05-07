@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServiceEndpointPolicyDefinitionData.DeserializeServiceEndpointPolicyDefinitionData(document.RootElement);
-            return new ServiceEndpointPolicyDefinitionResource(_client, data);
+            return new ServiceEndpointPolicyDefinitionResource(_client, data, data.Id);
         }
 
         async ValueTask<ServiceEndpointPolicyDefinitionResource> IOperationSource<ServiceEndpointPolicyDefinitionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServiceEndpointPolicyDefinitionData.DeserializeServiceEndpointPolicyDefinitionData(document.RootElement);
-            return new ServiceEndpointPolicyDefinitionResource(_client, data);
+            return new ServiceEndpointPolicyDefinitionResource(_client, data, data.Id);
         }
     }
 }

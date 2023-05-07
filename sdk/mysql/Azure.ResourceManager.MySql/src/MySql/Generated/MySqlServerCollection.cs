@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.MySql
                 var response = await _mySqlServerServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serverName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MySqlServerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlServerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.MySql
                 var response = _mySqlServerServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serverName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MySqlServerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlServerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.MySql
         public virtual AsyncPageable<MySqlServerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlServerServersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), _mySqlServerServersClientDiagnostics, Pipeline, "MySqlServerCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = MySqlServerData.DeserializeMySqlServerData(e); return new MySqlServerResource(Client, data, data.Id); }, _mySqlServerServersClientDiagnostics, Pipeline, "MySqlServerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.MySql
         public virtual Pageable<MySqlServerResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlServerServersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), _mySqlServerServersClientDiagnostics, Pipeline, "MySqlServerCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = MySqlServerData.DeserializeMySqlServerData(e); return new MySqlServerResource(Client, data, data.Id); }, _mySqlServerServersClientDiagnostics, Pipeline, "MySqlServerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.MySql
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicasRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), _replicasClientDiagnostics, Pipeline, "MySqlServerCollection.GetReplicas", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = MySqlServerData.DeserializeMySqlServerData(e); return new MySqlServerResource(Client, data, data.Id); }, _replicasClientDiagnostics, Pipeline, "MySqlServerCollection.GetReplicas", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.MySql
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicasRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), _replicasClientDiagnostics, Pipeline, "MySqlServerCollection.GetReplicas", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = MySqlServerData.DeserializeMySqlServerData(e); return new MySqlServerResource(Client, data, data.Id); }, _replicasClientDiagnostics, Pipeline, "MySqlServerCollection.GetReplicas", "value", null, cancellationToken);
         }
 
         /// <summary>

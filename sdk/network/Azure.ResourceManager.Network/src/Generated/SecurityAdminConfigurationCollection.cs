@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _securityAdminConfigurationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<SecurityAdminConfigurationResource>(Response.FromValue(new SecurityAdminConfigurationResource(Client, response), response.GetRawResponse()));
+                var operation = new NetworkArmOperation<SecurityAdminConfigurationResource>(Response.FromValue(new SecurityAdminConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _securityAdminConfigurationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data, cancellationToken);
-                var operation = new NetworkArmOperation<SecurityAdminConfigurationResource>(Response.FromValue(new SecurityAdminConfigurationResource(Client, response), response.GetRawResponse()));
+                var operation = new NetworkArmOperation<SecurityAdminConfigurationResource>(Response.FromValue(new SecurityAdminConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _securityAdminConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityAdminConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityAdminConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network
                 var response = _securityAdminConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityAdminConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityAdminConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAdminConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityAdminConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityAdminConfigurationResource(Client, SecurityAdminConfigurationData.DeserializeSecurityAdminConfigurationData(e)), _securityAdminConfigurationClientDiagnostics, Pipeline, "SecurityAdminConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityAdminConfigurationData.DeserializeSecurityAdminConfigurationData(e); return new SecurityAdminConfigurationResource(Client, data, data.Id); }, _securityAdminConfigurationClientDiagnostics, Pipeline, "SecurityAdminConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAdminConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityAdminConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityAdminConfigurationResource(Client, SecurityAdminConfigurationData.DeserializeSecurityAdminConfigurationData(e)), _securityAdminConfigurationClientDiagnostics, Pipeline, "SecurityAdminConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityAdminConfigurationData.DeserializeSecurityAdminConfigurationData(e); return new SecurityAdminConfigurationResource(Client, data, data.Id); }, _securityAdminConfigurationClientDiagnostics, Pipeline, "SecurityAdminConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

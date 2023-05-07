@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 var response = await _mySqlFlexibleServerServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serverName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MySqlFlexibleServerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlFlexibleServerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 var response = _mySqlFlexibleServerServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serverName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MySqlFlexibleServerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlFlexibleServerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerServersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlFlexibleServerServersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerResource(Client, MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(e)), _mySqlFlexibleServerServersClientDiagnostics, Pipeline, "MySqlFlexibleServerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(e); return new MySqlFlexibleServerResource(Client, data, data.Id); }, _mySqlFlexibleServerServersClientDiagnostics, Pipeline, "MySqlFlexibleServerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerServersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlFlexibleServerServersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerResource(Client, MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(e)), _mySqlFlexibleServerServersClientDiagnostics, Pipeline, "MySqlFlexibleServerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(e); return new MySqlFlexibleServerResource(Client, data, data.Id); }, _mySqlFlexibleServerServersClientDiagnostics, Pipeline, "MySqlFlexibleServerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicasRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _replicasRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, serverName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerResource(Client, MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(e)), _replicasClientDiagnostics, Pipeline, "MySqlFlexibleServerCollection.GetReplicas", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(e); return new MySqlFlexibleServerResource(Client, data, data.Id); }, _replicasClientDiagnostics, Pipeline, "MySqlFlexibleServerCollection.GetReplicas", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicasRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _replicasRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, serverName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerResource(Client, MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(e)), _replicasClientDiagnostics, Pipeline, "MySqlFlexibleServerCollection.GetReplicas", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(e); return new MySqlFlexibleServerResource(Client, data, data.Id); }, _replicasClientDiagnostics, Pipeline, "MySqlFlexibleServerCollection.GetReplicas", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

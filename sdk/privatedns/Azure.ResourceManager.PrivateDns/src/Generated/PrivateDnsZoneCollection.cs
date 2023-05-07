@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.PrivateDns
                 var response = await _privateDnsZonePrivateZonesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateDnsZoneResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateDnsZoneResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.PrivateDns
                 var response = _privateDnsZonePrivateZonesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateDnsZoneResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateDnsZoneResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.PrivateDns
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateDnsZonePrivateZonesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateDnsZonePrivateZonesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PrivateDnsZoneResource(Client, PrivateDnsZoneData.DeserializePrivateDnsZoneData(e)), _privateDnsZonePrivateZonesClientDiagnostics, Pipeline, "PrivateDnsZoneCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PrivateDnsZoneData.DeserializePrivateDnsZoneData(e); return new PrivateDnsZoneResource(Client, data, data.Id); }, _privateDnsZonePrivateZonesClientDiagnostics, Pipeline, "PrivateDnsZoneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.PrivateDns
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateDnsZonePrivateZonesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateDnsZonePrivateZonesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrivateDnsZoneResource(Client, PrivateDnsZoneData.DeserializePrivateDnsZoneData(e)), _privateDnsZonePrivateZonesClientDiagnostics, Pipeline, "PrivateDnsZoneCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PrivateDnsZoneData.DeserializePrivateDnsZoneData(e); return new PrivateDnsZoneResource(Client, data, data.Id); }, _privateDnsZonePrivateZonesClientDiagnostics, Pipeline, "PrivateDnsZoneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

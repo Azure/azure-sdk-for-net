@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = RoutingIntentData.DeserializeRoutingIntentData(document.RootElement);
-            return new RoutingIntentResource(_client, data);
+            return new RoutingIntentResource(_client, data, data.Id);
         }
 
         async ValueTask<RoutingIntentResource> IOperationSource<RoutingIntentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = RoutingIntentData.DeserializeRoutingIntentData(document.RootElement);
-            return new RoutingIntentResource(_client, data);
+            return new RoutingIntentResource(_client, data, data.Id);
         }
     }
 }

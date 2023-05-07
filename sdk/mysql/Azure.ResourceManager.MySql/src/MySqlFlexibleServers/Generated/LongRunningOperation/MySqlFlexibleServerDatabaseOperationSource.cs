@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MySqlFlexibleServerDatabaseData.DeserializeMySqlFlexibleServerDatabaseData(document.RootElement);
-            return new MySqlFlexibleServerDatabaseResource(_client, data);
+            return new MySqlFlexibleServerDatabaseResource(_client, data, data.Id);
         }
 
         async ValueTask<MySqlFlexibleServerDatabaseResource> IOperationSource<MySqlFlexibleServerDatabaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MySqlFlexibleServerDatabaseData.DeserializeMySqlFlexibleServerDatabaseData(document.RootElement);
-            return new MySqlFlexibleServerDatabaseResource(_client, data);
+            return new MySqlFlexibleServerDatabaseResource(_client, data, data.Id);
         }
     }
 }

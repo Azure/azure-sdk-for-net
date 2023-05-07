@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = await _logAnalyticsQueryQueriesRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, data, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation<LogAnalyticsQueryResource>(Response.FromValue(new LogAnalyticsQueryResource(Client, response), response.GetRawResponse()));
+                var operation = new OperationalInsightsArmOperation<LogAnalyticsQueryResource>(Response.FromValue(new LogAnalyticsQueryResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = _logAnalyticsQueryQueriesRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, data, cancellationToken);
-                var operation = new OperationalInsightsArmOperation<LogAnalyticsQueryResource>(Response.FromValue(new LogAnalyticsQueryResource(Client, response), response.GetRawResponse()));
+                var operation = new OperationalInsightsArmOperation<LogAnalyticsQueryResource>(Response.FromValue(new LogAnalyticsQueryResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 var response = await _logAnalyticsQueryQueriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogAnalyticsQueryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogAnalyticsQueryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 var response = _logAnalyticsQueryQueriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogAnalyticsQueryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogAnalyticsQueryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logAnalyticsQueryQueriesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, includeBody, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logAnalyticsQueryQueriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, includeBody, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogAnalyticsQueryResource(Client, LogAnalyticsQueryData.DeserializeLogAnalyticsQueryData(e)), _logAnalyticsQueryQueriesClientDiagnostics, Pipeline, "LogAnalyticsQueryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = LogAnalyticsQueryData.DeserializeLogAnalyticsQueryData(e); return new LogAnalyticsQueryResource(Client, data, data.Id); }, _logAnalyticsQueryQueriesClientDiagnostics, Pipeline, "LogAnalyticsQueryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logAnalyticsQueryQueriesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, includeBody, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logAnalyticsQueryQueriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, includeBody, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogAnalyticsQueryResource(Client, LogAnalyticsQueryData.DeserializeLogAnalyticsQueryData(e)), _logAnalyticsQueryQueriesClientDiagnostics, Pipeline, "LogAnalyticsQueryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = LogAnalyticsQueryData.DeserializeLogAnalyticsQueryData(e); return new LogAnalyticsQueryResource(Client, data, data.Id); }, _logAnalyticsQueryQueriesClientDiagnostics, Pipeline, "LogAnalyticsQueryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

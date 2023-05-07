@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ProviderHub
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ResourceTypeRegistrationData.DeserializeResourceTypeRegistrationData(document.RootElement);
-            return new ResourceTypeRegistrationResource(_client, data);
+            return new ResourceTypeRegistrationResource(_client, data, data.Id);
         }
 
         async ValueTask<ResourceTypeRegistrationResource> IOperationSource<ResourceTypeRegistrationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ResourceTypeRegistrationData.DeserializeResourceTypeRegistrationData(document.RootElement);
-            return new ResourceTypeRegistrationResource(_client, data);
+            return new ResourceTypeRegistrationResource(_client, data, data.Id);
         }
     }
 }

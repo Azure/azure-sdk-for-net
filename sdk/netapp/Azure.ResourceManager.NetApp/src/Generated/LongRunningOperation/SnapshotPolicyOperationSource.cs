@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.NetApp
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SnapshotPolicyData.DeserializeSnapshotPolicyData(document.RootElement);
-            return new SnapshotPolicyResource(_client, data);
+            return new SnapshotPolicyResource(_client, data, data.Id);
         }
 
         async ValueTask<SnapshotPolicyResource> IOperationSource<SnapshotPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SnapshotPolicyData.DeserializeSnapshotPolicyData(document.RootElement);
-            return new SnapshotPolicyResource(_client, data);
+            return new SnapshotPolicyResource(_client, data, data.Id);
         }
     }
 }

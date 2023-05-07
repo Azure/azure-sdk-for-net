@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _privateLinkServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateLinkServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateLinkServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
                 var response = _privateLinkServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serviceName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateLinkServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateLinkServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkServiceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateLinkServiceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PrivateLinkServiceResource(Client, PrivateLinkServiceData.DeserializePrivateLinkServiceData(e)), _privateLinkServiceClientDiagnostics, Pipeline, "PrivateLinkServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PrivateLinkServiceData.DeserializePrivateLinkServiceData(e); return new PrivateLinkServiceResource(Client, data, data.Id); }, _privateLinkServiceClientDiagnostics, Pipeline, "PrivateLinkServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkServiceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateLinkServiceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrivateLinkServiceResource(Client, PrivateLinkServiceData.DeserializePrivateLinkServiceData(e)), _privateLinkServiceClientDiagnostics, Pipeline, "PrivateLinkServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PrivateLinkServiceData.DeserializePrivateLinkServiceData(e); return new PrivateLinkServiceResource(Client, data, data.Id); }, _privateLinkServiceClientDiagnostics, Pipeline, "PrivateLinkServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _serviceEndpointPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceEndpointPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceEndpointPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
                 var response = _serviceEndpointPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceEndpointPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceEndpointPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceEndpointPolicyRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceEndpointPolicyRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceEndpointPolicyResource(Client, ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(e)), _serviceEndpointPolicyClientDiagnostics, Pipeline, "ServiceEndpointPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(e); return new ServiceEndpointPolicyResource(Client, data, data.Id); }, _serviceEndpointPolicyClientDiagnostics, Pipeline, "ServiceEndpointPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceEndpointPolicyRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceEndpointPolicyRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceEndpointPolicyResource(Client, ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(e)), _serviceEndpointPolicyClientDiagnostics, Pipeline, "ServiceEndpointPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(e); return new ServiceEndpointPolicyResource(Client, data, data.Id); }, _serviceEndpointPolicyClientDiagnostics, Pipeline, "ServiceEndpointPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

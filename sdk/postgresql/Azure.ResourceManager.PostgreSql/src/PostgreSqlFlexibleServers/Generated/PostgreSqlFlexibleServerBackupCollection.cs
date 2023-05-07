@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 var response = await _postgreSqlFlexibleServerBackupBackupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PostgreSqlFlexibleServerBackupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlFlexibleServerBackupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 var response = _postgreSqlFlexibleServerBackupBackupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PostgreSqlFlexibleServerBackupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlFlexibleServerBackupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFlexibleServerBackupBackupsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlFlexibleServerBackupBackupsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerBackupResource(Client, PostgreSqlFlexibleServerBackupData.DeserializePostgreSqlFlexibleServerBackupData(e)), _postgreSqlFlexibleServerBackupBackupsClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerBackupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PostgreSqlFlexibleServerBackupData.DeserializePostgreSqlFlexibleServerBackupData(e); return new PostgreSqlFlexibleServerBackupResource(Client, data, data.Id); }, _postgreSqlFlexibleServerBackupBackupsClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerBackupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFlexibleServerBackupBackupsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlFlexibleServerBackupBackupsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerBackupResource(Client, PostgreSqlFlexibleServerBackupData.DeserializePostgreSqlFlexibleServerBackupData(e)), _postgreSqlFlexibleServerBackupBackupsClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerBackupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PostgreSqlFlexibleServerBackupData.DeserializePostgreSqlFlexibleServerBackupData(e); return new PostgreSqlFlexibleServerBackupResource(Client, data, data.Id); }, _postgreSqlFlexibleServerBackupBackupsClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerBackupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

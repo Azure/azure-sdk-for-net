@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 var response = await _policyAttestationAttestationsRestClient.GetAtResourceAsync(Id, attestationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PolicyAttestationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyAttestationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 var response = _policyAttestationAttestationsRestClient.GetAtResource(Id, attestationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PolicyAttestationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyAttestationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAttestationAttestationsRestClient.CreateListForResourceRequest(Id, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAttestationAttestationsRestClient.CreateListForResourceNextPageRequest(nextLink, Id, policyQuerySettings);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PolicyAttestationResource(Client, PolicyAttestationData.DeserializePolicyAttestationData(e)), _policyAttestationAttestationsClientDiagnostics, Pipeline, "PolicyAttestationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PolicyAttestationData.DeserializePolicyAttestationData(e); return new PolicyAttestationResource(Client, data, data.Id); }, _policyAttestationAttestationsClientDiagnostics, Pipeline, "PolicyAttestationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAttestationAttestationsRestClient.CreateListForResourceRequest(Id, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAttestationAttestationsRestClient.CreateListForResourceNextPageRequest(nextLink, Id, policyQuerySettings);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PolicyAttestationResource(Client, PolicyAttestationData.DeserializePolicyAttestationData(e)), _policyAttestationAttestationsClientDiagnostics, Pipeline, "PolicyAttestationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PolicyAttestationData.DeserializePolicyAttestationData(e); return new PolicyAttestationResource(Client, data, data.Id); }, _policyAttestationAttestationsClientDiagnostics, Pipeline, "PolicyAttestationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

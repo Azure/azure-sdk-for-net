@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// <summary> Initializes a new instance of the <see cref = "NestedResourceTypeSecondSkuResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal NestedResourceTypeSecondSkuResource(ArmClient client, ResourceTypeSkuData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal NestedResourceTypeSecondSkuResource(ArmClient client, ResourceTypeSkuData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.ProviderHub
                 var response = await _nestedResourceTypeSecondSkuSkusRestClient.GetNestedResourceTypeSecondAsync(Id.SubscriptionId, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NestedResourceTypeSecondSkuResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NestedResourceTypeSecondSkuResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.ProviderHub
                 var response = _nestedResourceTypeSecondSkuSkusRestClient.GetNestedResourceTypeSecond(Id.SubscriptionId, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NestedResourceTypeSecondSkuResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NestedResourceTypeSecondSkuResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = await _nestedResourceTypeSecondSkuSkusRestClient.CreateOrUpdateNestedResourceTypeSecondAsync(Id.SubscriptionId, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation<NestedResourceTypeSecondSkuResource>(Response.FromValue(new NestedResourceTypeSecondSkuResource(Client, response), response.GetRawResponse()));
+                var operation = new ProviderHubArmOperation<NestedResourceTypeSecondSkuResource>(Response.FromValue(new NestedResourceTypeSecondSkuResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,7 +283,7 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = _nestedResourceTypeSecondSkuSkusRestClient.CreateOrUpdateNestedResourceTypeSecond(Id.SubscriptionId, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new ProviderHubArmOperation<NestedResourceTypeSecondSkuResource>(Response.FromValue(new NestedResourceTypeSecondSkuResource(Client, response), response.GetRawResponse()));
+                var operation = new ProviderHubArmOperation<NestedResourceTypeSecondSkuResource>(Response.FromValue(new NestedResourceTypeSecondSkuResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

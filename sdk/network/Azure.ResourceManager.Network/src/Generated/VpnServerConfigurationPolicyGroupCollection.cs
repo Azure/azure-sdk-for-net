@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationPolicyGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VpnServerConfigurationPolicyGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VpnServerConfigurationPolicyGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network
                 var response = _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationPolicyGroupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VpnServerConfigurationPolicyGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VpnServerConfigurationPolicyGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsRestClient.CreateListByVpnServerConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsRestClient.CreateListByVpnServerConfigurationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VpnServerConfigurationPolicyGroupResource(Client, VpnServerConfigurationPolicyGroupData.DeserializeVpnServerConfigurationPolicyGroupData(e)), _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics, Pipeline, "VpnServerConfigurationPolicyGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = VpnServerConfigurationPolicyGroupData.DeserializeVpnServerConfigurationPolicyGroupData(e); return new VpnServerConfigurationPolicyGroupResource(Client, data, data.Id); }, _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics, Pipeline, "VpnServerConfigurationPolicyGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsRestClient.CreateListByVpnServerConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsRestClient.CreateListByVpnServerConfigurationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VpnServerConfigurationPolicyGroupResource(Client, VpnServerConfigurationPolicyGroupData.DeserializeVpnServerConfigurationPolicyGroupData(e)), _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics, Pipeline, "VpnServerConfigurationPolicyGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = VpnServerConfigurationPolicyGroupData.DeserializeVpnServerConfigurationPolicyGroupData(e); return new VpnServerConfigurationPolicyGroupResource(Client, data, data.Id); }, _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics, Pipeline, "VpnServerConfigurationPolicyGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

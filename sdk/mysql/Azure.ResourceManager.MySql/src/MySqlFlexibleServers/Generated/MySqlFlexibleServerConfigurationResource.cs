@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <summary> Initializes a new instance of the <see cref = "MySqlFlexibleServerConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MySqlFlexibleServerConfigurationResource(ArmClient client, MySqlFlexibleServerConfigurationData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal MySqlFlexibleServerConfigurationResource(ArmClient client, MySqlFlexibleServerConfigurationData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 var response = await _mySqlFlexibleServerConfigurationConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MySqlFlexibleServerConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlFlexibleServerConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 var response = _mySqlFlexibleServerConfigurationConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MySqlFlexibleServerConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlFlexibleServerConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

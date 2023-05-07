@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = P2SVpnGatewayData.DeserializeP2SVpnGatewayData(document.RootElement);
-            return new P2SVpnGatewayResource(_client, data);
+            return new P2SVpnGatewayResource(_client, data, data.Id);
         }
 
         async ValueTask<P2SVpnGatewayResource> IOperationSource<P2SVpnGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = P2SVpnGatewayData.DeserializeP2SVpnGatewayData(document.RootElement);
-            return new P2SVpnGatewayResource(_client, data);
+            return new P2SVpnGatewayResource(_client, data, data.Id);
         }
     }
 }

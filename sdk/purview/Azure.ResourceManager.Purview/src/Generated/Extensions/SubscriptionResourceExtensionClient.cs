@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Purview
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PurviewAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PurviewAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PurviewAccountResource(Client, PurviewAccountData.DeserializePurviewAccountData(e)), PurviewAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPurviewAccounts", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PurviewAccountData.DeserializePurviewAccountData(e); return new PurviewAccountResource(Client, data, data.Id); }, PurviewAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPurviewAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Purview
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PurviewAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PurviewAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PurviewAccountResource(Client, PurviewAccountData.DeserializePurviewAccountData(e)), PurviewAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPurviewAccounts", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PurviewAccountData.DeserializePurviewAccountData(e); return new PurviewAccountResource(Client, data, data.Id); }, PurviewAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPurviewAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

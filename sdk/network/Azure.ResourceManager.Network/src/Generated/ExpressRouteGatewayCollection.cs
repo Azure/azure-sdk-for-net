@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRouteGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteGatewayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteGatewayResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRouteGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, expressRouteGatewayName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteGatewayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteGatewayResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network
         public virtual AsyncPageable<ExpressRouteGatewayResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteGatewayRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ExpressRouteGatewayResource(Client, ExpressRouteGatewayData.DeserializeExpressRouteGatewayData(e)), _expressRouteGatewayClientDiagnostics, Pipeline, "ExpressRouteGatewayCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = ExpressRouteGatewayData.DeserializeExpressRouteGatewayData(e); return new ExpressRouteGatewayResource(Client, data, data.Id); }, _expressRouteGatewayClientDiagnostics, Pipeline, "ExpressRouteGatewayCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Network
         public virtual Pageable<ExpressRouteGatewayResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteGatewayRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ExpressRouteGatewayResource(Client, ExpressRouteGatewayData.DeserializeExpressRouteGatewayData(e)), _expressRouteGatewayClientDiagnostics, Pipeline, "ExpressRouteGatewayCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = ExpressRouteGatewayData.DeserializeExpressRouteGatewayData(e); return new ExpressRouteGatewayResource(Client, data, data.Id); }, _expressRouteGatewayClientDiagnostics, Pipeline, "ExpressRouteGatewayCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

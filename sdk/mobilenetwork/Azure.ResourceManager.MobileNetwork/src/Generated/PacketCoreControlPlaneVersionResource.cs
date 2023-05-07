@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary> Initializes a new instance of the <see cref = "PacketCoreControlPlaneVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PacketCoreControlPlaneVersionResource(ArmClient client, PacketCoreControlPlaneVersionData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal PacketCoreControlPlaneVersionResource(ArmClient client, PacketCoreControlPlaneVersionData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 var response = await _packetCoreControlPlaneVersionRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PacketCoreControlPlaneVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PacketCoreControlPlaneVersionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 var response = _packetCoreControlPlaneVersionRestClient.Get(Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PacketCoreControlPlaneVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PacketCoreControlPlaneVersionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

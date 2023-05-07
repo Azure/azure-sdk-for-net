@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MySql
                 var response = await _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MySqlServerSecurityAlertPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlServerSecurityAlertPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.MySql
                 var response = _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MySqlServerSecurityAlertPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlServerSecurityAlertPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.MySql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlServerSecurityAlertPolicyResource(Client, MySqlServerSecurityAlertPolicyData.DeserializeMySqlServerSecurityAlertPolicyData(e)), _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics, Pipeline, "MySqlServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = MySqlServerSecurityAlertPolicyData.DeserializeMySqlServerSecurityAlertPolicyData(e); return new MySqlServerSecurityAlertPolicyResource(Client, data, data.Id); }, _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics, Pipeline, "MySqlServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.MySql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlServerSecurityAlertPolicyResource(Client, MySqlServerSecurityAlertPolicyData.DeserializeMySqlServerSecurityAlertPolicyData(e)), _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics, Pipeline, "MySqlServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = MySqlServerSecurityAlertPolicyData.DeserializeMySqlServerSecurityAlertPolicyData(e); return new MySqlServerSecurityAlertPolicyResource(Client, data, data.Id); }, _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics, Pipeline, "MySqlServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

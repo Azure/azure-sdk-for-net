@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 var response = await _tagRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TagRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TagRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 var response = _tagRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TagRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TagRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tagRuleRestClient.CreateListByNewRelicMonitorResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tagRuleRestClient.CreateListByNewRelicMonitorResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TagRuleResource(Client, TagRuleData.DeserializeTagRuleData(e)), _tagRuleClientDiagnostics, Pipeline, "TagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = TagRuleData.DeserializeTagRuleData(e); return new TagRuleResource(Client, data, data.Id); }, _tagRuleClientDiagnostics, Pipeline, "TagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tagRuleRestClient.CreateListByNewRelicMonitorResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tagRuleRestClient.CreateListByNewRelicMonitorResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TagRuleResource(Client, TagRuleData.DeserializeTagRuleData(e)), _tagRuleClientDiagnostics, Pipeline, "TagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = TagRuleData.DeserializeTagRuleData(e); return new TagRuleResource(Client, data, data.Id); }, _tagRuleClientDiagnostics, Pipeline, "TagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

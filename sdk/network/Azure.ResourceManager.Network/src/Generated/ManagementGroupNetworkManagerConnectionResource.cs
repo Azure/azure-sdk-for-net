@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "ManagementGroupNetworkManagerConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagementGroupNetworkManagerConnectionResource(ArmClient client, NetworkManagerConnectionData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal ManagementGroupNetworkManagerConnectionResource(ArmClient client, NetworkManagerConnectionData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _managementGroupNetworkManagerConnectionRestClient.GetAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementGroupNetworkManagerConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupNetworkManagerConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Network
                 var response = _managementGroupNetworkManagerConnectionRestClient.Get(Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementGroupNetworkManagerConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupNetworkManagerConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -245,7 +246,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _managementGroupNetworkManagerConnectionRestClient.CreateOrUpdateAsync(Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<ManagementGroupNetworkManagerConnectionResource>(Response.FromValue(new ManagementGroupNetworkManagerConnectionResource(Client, response), response.GetRawResponse()));
+                var operation = new NetworkArmOperation<ManagementGroupNetworkManagerConnectionResource>(Response.FromValue(new ManagementGroupNetworkManagerConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,7 +284,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _managementGroupNetworkManagerConnectionRestClient.CreateOrUpdate(Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new NetworkArmOperation<ManagementGroupNetworkManagerConnectionResource>(Response.FromValue(new ManagementGroupNetworkManagerConnectionResource(Client, response), response.GetRawResponse()));
+                var operation = new NetworkArmOperation<ManagementGroupNetworkManagerConnectionResource>(Response.FromValue(new ManagementGroupNetworkManagerConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.PrivateDns
                 var response = await _virtualNetworkLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualNetworkLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualNetworkLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.PrivateDns
                 var response = _virtualNetworkLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualNetworkLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualNetworkLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.PrivateDns
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualNetworkLinkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualNetworkLinkRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkLinkResource(Client, VirtualNetworkLinkData.DeserializeVirtualNetworkLinkData(e)), _virtualNetworkLinkClientDiagnostics, Pipeline, "VirtualNetworkLinkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = VirtualNetworkLinkData.DeserializeVirtualNetworkLinkData(e); return new VirtualNetworkLinkResource(Client, data, data.Id); }, _virtualNetworkLinkClientDiagnostics, Pipeline, "VirtualNetworkLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.PrivateDns
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualNetworkLinkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualNetworkLinkRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkLinkResource(Client, VirtualNetworkLinkData.DeserializeVirtualNetworkLinkData(e)), _virtualNetworkLinkClientDiagnostics, Pipeline, "VirtualNetworkLinkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = VirtualNetworkLinkData.DeserializeVirtualNetworkLinkData(e); return new VirtualNetworkLinkResource(Client, data, data.Id); }, _virtualNetworkLinkClientDiagnostics, Pipeline, "VirtualNetworkLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

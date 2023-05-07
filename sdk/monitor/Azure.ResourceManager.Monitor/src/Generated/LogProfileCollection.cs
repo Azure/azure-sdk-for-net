@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _logProfileRestClient.CreateOrUpdateAsync(Id.SubscriptionId, logProfileName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<LogProfileResource>(Response.FromValue(new LogProfileResource(Client, response), response.GetRawResponse()));
+                var operation = new MonitorArmOperation<LogProfileResource>(Response.FromValue(new LogProfileResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _logProfileRestClient.CreateOrUpdate(Id.SubscriptionId, logProfileName, data, cancellationToken);
-                var operation = new MonitorArmOperation<LogProfileResource>(Response.FromValue(new LogProfileResource(Client, response), response.GetRawResponse()));
+                var operation = new MonitorArmOperation<LogProfileResource>(Response.FromValue(new LogProfileResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _logProfileRestClient.GetAsync(Id.SubscriptionId, logProfileName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogProfileResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _logProfileRestClient.Get(Id.SubscriptionId, logProfileName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogProfileResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<LogProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logProfileRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new LogProfileResource(Client, LogProfileData.DeserializeLogProfileData(e)), _logProfileClientDiagnostics, Pipeline, "LogProfileCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = LogProfileData.DeserializeLogProfileData(e); return new LogProfileResource(Client, data, data.Id); }, _logProfileClientDiagnostics, Pipeline, "LogProfileCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<LogProfileResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logProfileRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new LogProfileResource(Client, LogProfileData.DeserializeLogProfileData(e)), _logProfileClientDiagnostics, Pipeline, "LogProfileCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = LogProfileData.DeserializeLogProfileData(e); return new LogProfileResource(Client, data, data.Id); }, _logProfileClientDiagnostics, Pipeline, "LogProfileCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

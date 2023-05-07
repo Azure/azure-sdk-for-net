@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VpnServerConfigurationPolicyGroupData.DeserializeVpnServerConfigurationPolicyGroupData(document.RootElement);
-            return new VpnServerConfigurationPolicyGroupResource(_client, data);
+            return new VpnServerConfigurationPolicyGroupResource(_client, data, data.Id);
         }
 
         async ValueTask<VpnServerConfigurationPolicyGroupResource> IOperationSource<VpnServerConfigurationPolicyGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VpnServerConfigurationPolicyGroupData.DeserializeVpnServerConfigurationPolicyGroupData(document.RootElement);
-            return new VpnServerConfigurationPolicyGroupResource(_client, data);
+            return new VpnServerConfigurationPolicyGroupResource(_client, data, data.Id);
         }
     }
 }

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PublicIPPrefixData.DeserializePublicIPPrefixData(document.RootElement);
-            return new PublicIPPrefixResource(_client, data);
+            return new PublicIPPrefixResource(_client, data, data.Id);
         }
 
         async ValueTask<PublicIPPrefixResource> IOperationSource<PublicIPPrefixResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PublicIPPrefixData.DeserializePublicIPPrefixData(document.RootElement);
-            return new PublicIPPrefixResource(_client, data);
+            return new PublicIPPrefixResource(_client, data, data.Id);
         }
     }
 }

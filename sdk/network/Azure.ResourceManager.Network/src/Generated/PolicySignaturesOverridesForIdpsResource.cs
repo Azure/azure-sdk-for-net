@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "PolicySignaturesOverridesForIdpsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PolicySignaturesOverridesForIdpsResource(ArmClient client, PolicySignaturesOverridesForIdpsData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal PolicySignaturesOverridesForIdpsResource(ArmClient client, PolicySignaturesOverridesForIdpsData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PolicySignaturesOverridesForIdpsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicySignaturesOverridesForIdpsResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Network
                 var response = _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PolicySignaturesOverridesForIdpsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicySignaturesOverridesForIdpsResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesRestClient.PatchAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PolicySignaturesOverridesForIdpsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicySignaturesOverridesForIdpsResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -209,7 +210,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesRestClient.Patch(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                return Response.FromValue(new PolicySignaturesOverridesForIdpsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicySignaturesOverridesForIdpsResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<PolicySignaturesOverridesForIdpsResource>(Response.FromValue(new PolicySignaturesOverridesForIdpsResource(Client, response), response.GetRawResponse()));
+                var operation = new NetworkArmOperation<PolicySignaturesOverridesForIdpsResource>(Response.FromValue(new PolicySignaturesOverridesForIdpsResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,7 +283,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new NetworkArmOperation<PolicySignaturesOverridesForIdpsResource>(Response.FromValue(new PolicySignaturesOverridesForIdpsResource(Client, response), response.GetRawResponse()));
+                var operation = new NetworkArmOperation<PolicySignaturesOverridesForIdpsResource>(Response.FromValue(new PolicySignaturesOverridesForIdpsResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

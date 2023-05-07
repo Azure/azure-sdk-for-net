@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.PolicyInsights
             try
             {
                 var response = await _policyRemediationRemediationsRestClient.CreateOrUpdateAtResourceAsync(Id, remediationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PolicyInsightsArmOperation<PolicyRemediationResource>(Response.FromValue(new PolicyRemediationResource(Client, response), response.GetRawResponse()));
+                var operation = new PolicyInsightsArmOperation<PolicyRemediationResource>(Response.FromValue(new PolicyRemediationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.PolicyInsights
             try
             {
                 var response = _policyRemediationRemediationsRestClient.CreateOrUpdateAtResource(Id, remediationName, data, cancellationToken);
-                var operation = new PolicyInsightsArmOperation<PolicyRemediationResource>(Response.FromValue(new PolicyRemediationResource(Client, response), response.GetRawResponse()));
+                var operation = new PolicyInsightsArmOperation<PolicyRemediationResource>(Response.FromValue(new PolicyRemediationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 var response = await _policyRemediationRemediationsRestClient.GetAtResourceAsync(Id, remediationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PolicyRemediationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyRemediationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 var response = _policyRemediationRemediationsRestClient.GetAtResource(Id, remediationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PolicyRemediationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyRemediationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyRemediationRemediationsRestClient.CreateListForResourceRequest(Id, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyRemediationRemediationsRestClient.CreateListForResourceNextPageRequest(nextLink, Id, policyQuerySettings);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PolicyRemediationResource(Client, PolicyRemediationData.DeserializePolicyRemediationData(e)), _policyRemediationRemediationsClientDiagnostics, Pipeline, "PolicyRemediationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PolicyRemediationData.DeserializePolicyRemediationData(e); return new PolicyRemediationResource(Client, data, data.Id); }, _policyRemediationRemediationsClientDiagnostics, Pipeline, "PolicyRemediationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyRemediationRemediationsRestClient.CreateListForResourceRequest(Id, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyRemediationRemediationsRestClient.CreateListForResourceNextPageRequest(nextLink, Id, policyQuerySettings);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PolicyRemediationResource(Client, PolicyRemediationData.DeserializePolicyRemediationData(e)), _policyRemediationRemediationsClientDiagnostics, Pipeline, "PolicyRemediationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PolicyRemediationData.DeserializePolicyRemediationData(e); return new PolicyRemediationResource(Client, data, data.Id); }, _policyRemediationRemediationsClientDiagnostics, Pipeline, "PolicyRemediationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 var response = await _preRulesResourcePreRulesRestClient.GetAsync(Id.Name, priority, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PreRulesResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PreRulesResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 var response = _preRulesResourcePreRulesRestClient.Get(Id.Name, priority, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PreRulesResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PreRulesResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _preRulesResourcePreRulesRestClient.CreateListRequest(Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _preRulesResourcePreRulesRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PreRulesResource(Client, PreRulesResourceData.DeserializePreRulesResourceData(e)), _preRulesResourcePreRulesClientDiagnostics, Pipeline, "PreRulesResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PreRulesResourceData.DeserializePreRulesResourceData(e); return new PreRulesResource(Client, data, data.Id); }, _preRulesResourcePreRulesClientDiagnostics, Pipeline, "PreRulesResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _preRulesResourcePreRulesRestClient.CreateListRequest(Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _preRulesResourcePreRulesRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PreRulesResource(Client, PreRulesResourceData.DeserializePreRulesResourceData(e)), _preRulesResourcePreRulesClientDiagnostics, Pipeline, "PreRulesResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PreRulesResourceData.DeserializePreRulesResourceData(e); return new PreRulesResource(Client, data, data.Id); }, _preRulesResourcePreRulesClientDiagnostics, Pipeline, "PreRulesResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

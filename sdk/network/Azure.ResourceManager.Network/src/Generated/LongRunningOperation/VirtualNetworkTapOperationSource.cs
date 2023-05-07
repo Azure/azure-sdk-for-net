@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualNetworkTapData.DeserializeVirtualNetworkTapData(document.RootElement);
-            return new VirtualNetworkTapResource(_client, data);
+            return new VirtualNetworkTapResource(_client, data, data.Id);
         }
 
         async ValueTask<VirtualNetworkTapResource> IOperationSource<VirtualNetworkTapResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualNetworkTapData.DeserializeVirtualNetworkTapData(document.RootElement);
-            return new VirtualNetworkTapResource(_client, data);
+            return new VirtualNetworkTapResource(_client, data, data.Id);
         }
     }
 }

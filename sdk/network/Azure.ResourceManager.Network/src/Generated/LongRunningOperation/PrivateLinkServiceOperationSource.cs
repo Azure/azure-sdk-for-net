@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PrivateLinkServiceData.DeserializePrivateLinkServiceData(document.RootElement);
-            return new PrivateLinkServiceResource(_client, data);
+            return new PrivateLinkServiceResource(_client, data, data.Id);
         }
 
         async ValueTask<PrivateLinkServiceResource> IOperationSource<PrivateLinkServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PrivateLinkServiceData.DeserializePrivateLinkServiceData(document.RootElement);
-            return new PrivateLinkServiceResource(_client, data);
+            return new PrivateLinkServiceResource(_client, data, data.Id);
         }
     }
 }

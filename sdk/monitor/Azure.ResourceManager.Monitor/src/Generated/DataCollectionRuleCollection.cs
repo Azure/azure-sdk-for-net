@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _dataCollectionRuleRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionRuleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<DataCollectionRuleResource>(Response.FromValue(new DataCollectionRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new MonitorArmOperation<DataCollectionRuleResource>(Response.FromValue(new DataCollectionRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _dataCollectionRuleRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionRuleName, data, cancellationToken);
-                var operation = new MonitorArmOperation<DataCollectionRuleResource>(Response.FromValue(new DataCollectionRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new MonitorArmOperation<DataCollectionRuleResource>(Response.FromValue(new DataCollectionRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _dataCollectionRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataCollectionRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataCollectionRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _dataCollectionRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionRuleName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataCollectionRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataCollectionRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataCollectionRuleRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataCollectionRuleRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataCollectionRuleResource(Client, DataCollectionRuleData.DeserializeDataCollectionRuleData(e)), _dataCollectionRuleClientDiagnostics, Pipeline, "DataCollectionRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DataCollectionRuleData.DeserializeDataCollectionRuleData(e); return new DataCollectionRuleResource(Client, data, data.Id); }, _dataCollectionRuleClientDiagnostics, Pipeline, "DataCollectionRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataCollectionRuleRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataCollectionRuleRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataCollectionRuleResource(Client, DataCollectionRuleData.DeserializeDataCollectionRuleData(e)), _dataCollectionRuleClientDiagnostics, Pipeline, "DataCollectionRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DataCollectionRuleData.DeserializeDataCollectionRuleData(e); return new DataCollectionRuleResource(Client, data, data.Id); }, _dataCollectionRuleClientDiagnostics, Pipeline, "DataCollectionRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

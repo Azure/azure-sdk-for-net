@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Peering
             try
             {
                 var response = await _peeringServicePrefixPrefixesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefixName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PeeringArmOperation<PeeringServicePrefixResource>(Response.FromValue(new PeeringServicePrefixResource(Client, response), response.GetRawResponse()));
+                var operation = new PeeringArmOperation<PeeringServicePrefixResource>(Response.FromValue(new PeeringServicePrefixResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Peering
             try
             {
                 var response = _peeringServicePrefixPrefixesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefixName, data, cancellationToken);
-                var operation = new PeeringArmOperation<PeeringServicePrefixResource>(Response.FromValue(new PeeringServicePrefixResource(Client, response), response.GetRawResponse()));
+                var operation = new PeeringArmOperation<PeeringServicePrefixResource>(Response.FromValue(new PeeringServicePrefixResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Peering
                 var response = await _peeringServicePrefixPrefixesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefixName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PeeringServicePrefixResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PeeringServicePrefixResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Peering
                 var response = _peeringServicePrefixPrefixesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefixName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PeeringServicePrefixResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PeeringServicePrefixResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _peeringServicePrefixPrefixesRestClient.CreateListByPeeringServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _peeringServicePrefixPrefixesRestClient.CreateListByPeeringServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PeeringServicePrefixResource(Client, PeeringServicePrefixData.DeserializePeeringServicePrefixData(e)), _peeringServicePrefixPrefixesClientDiagnostics, Pipeline, "PeeringServicePrefixCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PeeringServicePrefixData.DeserializePeeringServicePrefixData(e); return new PeeringServicePrefixResource(Client, data, data.Id); }, _peeringServicePrefixPrefixesClientDiagnostics, Pipeline, "PeeringServicePrefixCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _peeringServicePrefixPrefixesRestClient.CreateListByPeeringServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _peeringServicePrefixPrefixesRestClient.CreateListByPeeringServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PeeringServicePrefixResource(Client, PeeringServicePrefixData.DeserializePeeringServicePrefixData(e)), _peeringServicePrefixPrefixesClientDiagnostics, Pipeline, "PeeringServicePrefixCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PeeringServicePrefixData.DeserializePeeringServicePrefixData(e); return new PeeringServicePrefixResource(Client, data, data.Id); }, _peeringServicePrefixPrefixesClientDiagnostics, Pipeline, "PeeringServicePrefixCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

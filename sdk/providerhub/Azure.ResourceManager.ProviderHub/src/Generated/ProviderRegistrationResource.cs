@@ -47,7 +47,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// <summary> Initializes a new instance of the <see cref = "ProviderRegistrationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ProviderRegistrationResource(ArmClient client, ProviderRegistrationData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal ProviderRegistrationResource(ArmClient client, ProviderRegistrationData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -327,7 +328,7 @@ namespace Azure.ResourceManager.ProviderHub
                 var response = await _providerRegistrationRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProviderRegistrationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProviderRegistrationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -359,7 +360,7 @@ namespace Azure.ResourceManager.ProviderHub
                 var response = _providerRegistrationRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProviderRegistrationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProviderRegistrationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

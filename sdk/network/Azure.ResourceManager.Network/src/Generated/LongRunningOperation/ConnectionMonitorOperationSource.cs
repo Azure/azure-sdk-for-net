@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ConnectionMonitorData.DeserializeConnectionMonitorData(document.RootElement);
-            return new ConnectionMonitorResource(_client, data);
+            return new ConnectionMonitorResource(_client, data, data.Id);
         }
 
         async ValueTask<ConnectionMonitorResource> IOperationSource<ConnectionMonitorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ConnectionMonitorData.DeserializeConnectionMonitorData(document.RootElement);
-            return new ConnectionMonitorResource(_client, data);
+            return new ConnectionMonitorResource(_client, data, data.Id);
         }
     }
 }

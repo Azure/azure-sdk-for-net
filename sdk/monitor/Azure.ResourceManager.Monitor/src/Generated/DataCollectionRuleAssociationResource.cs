@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Initializes a new instance of the <see cref = "DataCollectionRuleAssociationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataCollectionRuleAssociationResource(ArmClient client, DataCollectionRuleAssociationData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal DataCollectionRuleAssociationResource(ArmClient client, DataCollectionRuleAssociationData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _dataCollectionRuleAssociationRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataCollectionRuleAssociationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataCollectionRuleAssociationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _dataCollectionRuleAssociationRestClient.Get(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataCollectionRuleAssociationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataCollectionRuleAssociationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _dataCollectionRuleAssociationRestClient.CreateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<DataCollectionRuleAssociationResource>(Response.FromValue(new DataCollectionRuleAssociationResource(Client, response), response.GetRawResponse()));
+                var operation = new MonitorArmOperation<DataCollectionRuleAssociationResource>(Response.FromValue(new DataCollectionRuleAssociationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,7 +283,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _dataCollectionRuleAssociationRestClient.Create(Id.Parent, Id.Name, data, cancellationToken);
-                var operation = new MonitorArmOperation<DataCollectionRuleAssociationResource>(Response.FromValue(new DataCollectionRuleAssociationResource(Client, response), response.GetRawResponse()));
+                var operation = new MonitorArmOperation<DataCollectionRuleAssociationResource>(Response.FromValue(new DataCollectionRuleAssociationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

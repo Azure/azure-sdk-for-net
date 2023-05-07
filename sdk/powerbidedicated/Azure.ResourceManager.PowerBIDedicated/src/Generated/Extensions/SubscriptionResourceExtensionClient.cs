@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         public virtual AsyncPageable<DedicatedCapacityResource> GetDedicatedCapacitiesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedCapacityCapacitiesRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DedicatedCapacityResource(Client, DedicatedCapacityData.DeserializeDedicatedCapacityData(e)), DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDedicatedCapacities", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = DedicatedCapacityData.DeserializeDedicatedCapacityData(e); return new DedicatedCapacityResource(Client, data, new ResourceIdentifier(data.Id)); }, DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDedicatedCapacities", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         public virtual Pageable<DedicatedCapacityResource> GetDedicatedCapacities(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedCapacityCapacitiesRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new DedicatedCapacityResource(Client, DedicatedCapacityData.DeserializeDedicatedCapacityData(e)), DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDedicatedCapacities", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = DedicatedCapacityData.DeserializeDedicatedCapacityData(e); return new DedicatedCapacityResource(Client, data, new ResourceIdentifier(data.Id)); }, DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDedicatedCapacities", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         public virtual AsyncPageable<AutoScaleVCoreResource> GetAutoScaleVCoresAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AutoScaleVCoreRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutoScaleVCoreResource(Client, AutoScaleVCoreData.DeserializeAutoScaleVCoreData(e)), AutoScaleVCoreClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAutoScaleVCores", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = AutoScaleVCoreData.DeserializeAutoScaleVCoreData(e); return new AutoScaleVCoreResource(Client, data, new ResourceIdentifier(data.Id)); }, AutoScaleVCoreClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAutoScaleVCores", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         public virtual Pageable<AutoScaleVCoreResource> GetAutoScaleVCores(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AutoScaleVCoreRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutoScaleVCoreResource(Client, AutoScaleVCoreData.DeserializeAutoScaleVCoreData(e)), AutoScaleVCoreClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAutoScaleVCores", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = AutoScaleVCoreData.DeserializeAutoScaleVCoreData(e); return new AutoScaleVCoreResource(Client, data, new ResourceIdentifier(data.Id)); }, AutoScaleVCoreClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAutoScaleVCores", "value", null, cancellationToken);
         }
     }
 }

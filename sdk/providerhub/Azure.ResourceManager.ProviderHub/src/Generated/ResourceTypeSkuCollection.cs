@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = await _resourceTypeSkuSkusRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, sku, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation<ResourceTypeSkuResource>(Response.FromValue(new ResourceTypeSkuResource(Client, response), response.GetRawResponse()));
+                var operation = new ProviderHubArmOperation<ResourceTypeSkuResource>(Response.FromValue(new ResourceTypeSkuResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = _resourceTypeSkuSkusRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Parent.Name, Id.Name, sku, data, cancellationToken);
-                var operation = new ProviderHubArmOperation<ResourceTypeSkuResource>(Response.FromValue(new ResourceTypeSkuResource(Client, response), response.GetRawResponse()));
+                var operation = new ProviderHubArmOperation<ResourceTypeSkuResource>(Response.FromValue(new ResourceTypeSkuResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ProviderHub
                 var response = await _resourceTypeSkuSkusRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, sku, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceTypeSkuResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceTypeSkuResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ProviderHub
                 var response = _resourceTypeSkuSkusRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, sku, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceTypeSkuResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceTypeSkuResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceTypeSkuSkusRestClient.CreateListByResourceTypeRegistrationsRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceTypeSkuSkusRestClient.CreateListByResourceTypeRegistrationsNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceTypeSkuResource(Client, ResourceTypeSkuData.DeserializeResourceTypeSkuData(e)), _resourceTypeSkuSkusClientDiagnostics, Pipeline, "ResourceTypeSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ResourceTypeSkuData.DeserializeResourceTypeSkuData(e); return new ResourceTypeSkuResource(Client, data, data.Id); }, _resourceTypeSkuSkusClientDiagnostics, Pipeline, "ResourceTypeSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceTypeSkuSkusRestClient.CreateListByResourceTypeRegistrationsRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceTypeSkuSkusRestClient.CreateListByResourceTypeRegistrationsNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceTypeSkuResource(Client, ResourceTypeSkuData.DeserializeResourceTypeSkuData(e)), _resourceTypeSkuSkusClientDiagnostics, Pipeline, "ResourceTypeSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ResourceTypeSkuData.DeserializeResourceTypeSkuData(e); return new ResourceTypeSkuResource(Client, data, data.Id); }, _resourceTypeSkuSkusClientDiagnostics, Pipeline, "ResourceTypeSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

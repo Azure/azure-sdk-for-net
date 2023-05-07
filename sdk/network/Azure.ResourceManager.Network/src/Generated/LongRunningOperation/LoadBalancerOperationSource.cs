@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = LoadBalancerData.DeserializeLoadBalancerData(document.RootElement);
-            return new LoadBalancerResource(_client, data);
+            return new LoadBalancerResource(_client, data, data.Id);
         }
 
         async ValueTask<LoadBalancerResource> IOperationSource<LoadBalancerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = LoadBalancerData.DeserializeLoadBalancerData(document.RootElement);
-            return new LoadBalancerResource(_client, data);
+            return new LoadBalancerResource(_client, data, data.Id);
         }
     }
 }

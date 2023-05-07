@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.MySql
                 var response = await _mySqlVirtualNetworkRuleVirtualNetworkRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MySqlVirtualNetworkRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlVirtualNetworkRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.MySql
                 var response = _mySqlVirtualNetworkRuleVirtualNetworkRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MySqlVirtualNetworkRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlVirtualNetworkRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.MySql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlVirtualNetworkRuleResource(Client, MySqlVirtualNetworkRuleData.DeserializeMySqlVirtualNetworkRuleData(e)), _mySqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, "MySqlVirtualNetworkRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = MySqlVirtualNetworkRuleData.DeserializeMySqlVirtualNetworkRuleData(e); return new MySqlVirtualNetworkRuleResource(Client, data, data.Id); }, _mySqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, "MySqlVirtualNetworkRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.MySql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlVirtualNetworkRuleResource(Client, MySqlVirtualNetworkRuleData.DeserializeMySqlVirtualNetworkRuleData(e)), _mySqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, "MySqlVirtualNetworkRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = MySqlVirtualNetworkRuleData.DeserializeMySqlVirtualNetworkRuleData(e); return new MySqlVirtualNetworkRuleResource(Client, data, data.Id); }, _mySqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, "MySqlVirtualNetworkRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

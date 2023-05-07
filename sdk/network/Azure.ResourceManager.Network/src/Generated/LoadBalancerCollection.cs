@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _loadBalancerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, loadBalancerName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LoadBalancerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LoadBalancerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
                 var response = _loadBalancerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, loadBalancerName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LoadBalancerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LoadBalancerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _loadBalancerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _loadBalancerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LoadBalancerResource(Client, LoadBalancerData.DeserializeLoadBalancerData(e)), _loadBalancerClientDiagnostics, Pipeline, "LoadBalancerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = LoadBalancerData.DeserializeLoadBalancerData(e); return new LoadBalancerResource(Client, data, data.Id); }, _loadBalancerClientDiagnostics, Pipeline, "LoadBalancerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _loadBalancerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _loadBalancerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LoadBalancerResource(Client, LoadBalancerData.DeserializeLoadBalancerData(e)), _loadBalancerClientDiagnostics, Pipeline, "LoadBalancerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = LoadBalancerData.DeserializeLoadBalancerData(e); return new LoadBalancerResource(Client, data, data.Id); }, _loadBalancerClientDiagnostics, Pipeline, "LoadBalancerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

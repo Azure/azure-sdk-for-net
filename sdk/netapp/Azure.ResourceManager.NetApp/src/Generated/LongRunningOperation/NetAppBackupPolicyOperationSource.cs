@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.NetApp
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NetAppBackupPolicyData.DeserializeNetAppBackupPolicyData(document.RootElement);
-            return new NetAppBackupPolicyResource(_client, data);
+            return new NetAppBackupPolicyResource(_client, data, data.Id);
         }
 
         async ValueTask<NetAppBackupPolicyResource> IOperationSource<NetAppBackupPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NetAppBackupPolicyData.DeserializeNetAppBackupPolicyData(document.RootElement);
-            return new NetAppBackupPolicyResource(_client, data);
+            return new NetAppBackupPolicyResource(_client, data, data.Id);
         }
     }
 }

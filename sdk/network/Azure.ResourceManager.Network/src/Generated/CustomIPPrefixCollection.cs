@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _customIPPrefixRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, customIPPrefixName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CustomIPPrefixResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CustomIPPrefixResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
                 var response = _customIPPrefixRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, customIPPrefixName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CustomIPPrefixResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CustomIPPrefixResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customIPPrefixRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customIPPrefixRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomIPPrefixResource(Client, CustomIPPrefixData.DeserializeCustomIPPrefixData(e)), _customIPPrefixClientDiagnostics, Pipeline, "CustomIPPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = CustomIPPrefixData.DeserializeCustomIPPrefixData(e); return new CustomIPPrefixResource(Client, data, data.Id); }, _customIPPrefixClientDiagnostics, Pipeline, "CustomIPPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customIPPrefixRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customIPPrefixRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomIPPrefixResource(Client, CustomIPPrefixData.DeserializeCustomIPPrefixData(e)), _customIPPrefixClientDiagnostics, Pipeline, "CustomIPPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = CustomIPPrefixData.DeserializeCustomIPPrefixData(e); return new CustomIPPrefixResource(Client, data, data.Id); }, _customIPPrefixClientDiagnostics, Pipeline, "CustomIPPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

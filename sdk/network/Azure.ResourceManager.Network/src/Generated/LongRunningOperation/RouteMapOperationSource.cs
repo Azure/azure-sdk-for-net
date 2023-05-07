@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = RouteMapData.DeserializeRouteMapData(document.RootElement);
-            return new RouteMapResource(_client, data);
+            return new RouteMapResource(_client, data, data.Id);
         }
 
         async ValueTask<RouteMapResource> IOperationSource<RouteMapResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = RouteMapData.DeserializeRouteMapData(document.RootElement);
-            return new RouteMapResource(_client, data);
+            return new RouteMapResource(_client, data, data.Id);
         }
     }
 }

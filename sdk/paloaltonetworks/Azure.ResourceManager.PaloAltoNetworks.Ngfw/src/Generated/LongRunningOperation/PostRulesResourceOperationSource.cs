@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PostRulesResourceData.DeserializePostRulesResourceData(document.RootElement);
-            return new PostRulesResource(_client, data);
+            return new PostRulesResource(_client, data, data.Id);
         }
 
         async ValueTask<PostRulesResource> IOperationSource<PostRulesResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PostRulesResourceData.DeserializePostRulesResourceData(document.RootElement);
-            return new PostRulesResource(_client, data);
+            return new PostRulesResource(_client, data, data.Id);
         }
     }
 }

@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <summary> Initializes a new instance of the <see cref = "PrefixListGlobalRulestackResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PrefixListGlobalRulestackResource(ArmClient client, PrefixListGlobalRulestackResourceData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal PrefixListGlobalRulestackResource(ArmClient client, PrefixListGlobalRulestackResourceData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 var response = await _prefixListGlobalRulestackResourcePrefixListGlobalRulestackRestClient.GetAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrefixListGlobalRulestackResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrefixListGlobalRulestackResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 var response = _prefixListGlobalRulestackResourcePrefixListGlobalRulestackRestClient.Get(Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrefixListGlobalRulestackResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrefixListGlobalRulestackResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

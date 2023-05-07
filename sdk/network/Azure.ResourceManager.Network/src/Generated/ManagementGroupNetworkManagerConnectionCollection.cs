@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _managementGroupNetworkManagerConnectionRestClient.CreateOrUpdateAsync(Id.Name, networkManagerConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<ManagementGroupNetworkManagerConnectionResource>(Response.FromValue(new ManagementGroupNetworkManagerConnectionResource(Client, response), response.GetRawResponse()));
+                var operation = new NetworkArmOperation<ManagementGroupNetworkManagerConnectionResource>(Response.FromValue(new ManagementGroupNetworkManagerConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _managementGroupNetworkManagerConnectionRestClient.CreateOrUpdate(Id.Name, networkManagerConnectionName, data, cancellationToken);
-                var operation = new NetworkArmOperation<ManagementGroupNetworkManagerConnectionResource>(Response.FromValue(new ManagementGroupNetworkManagerConnectionResource(Client, response), response.GetRawResponse()));
+                var operation = new NetworkArmOperation<ManagementGroupNetworkManagerConnectionResource>(Response.FromValue(new ManagementGroupNetworkManagerConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _managementGroupNetworkManagerConnectionRestClient.GetAsync(Id.Name, networkManagerConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementGroupNetworkManagerConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupNetworkManagerConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Network
                 var response = _managementGroupNetworkManagerConnectionRestClient.Get(Id.Name, networkManagerConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementGroupNetworkManagerConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupNetworkManagerConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupNetworkManagerConnectionRestClient.CreateListRequest(Id.Name, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupNetworkManagerConnectionRestClient.CreateListNextPageRequest(nextLink, Id.Name, top, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagementGroupNetworkManagerConnectionResource(Client, NetworkManagerConnectionData.DeserializeNetworkManagerConnectionData(e)), _managementGroupNetworkManagerConnectionClientDiagnostics, Pipeline, "ManagementGroupNetworkManagerConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = NetworkManagerConnectionData.DeserializeNetworkManagerConnectionData(e); return new ManagementGroupNetworkManagerConnectionResource(Client, data, data.Id); }, _managementGroupNetworkManagerConnectionClientDiagnostics, Pipeline, "ManagementGroupNetworkManagerConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupNetworkManagerConnectionRestClient.CreateListRequest(Id.Name, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupNetworkManagerConnectionRestClient.CreateListNextPageRequest(nextLink, Id.Name, top, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagementGroupNetworkManagerConnectionResource(Client, NetworkManagerConnectionData.DeserializeNetworkManagerConnectionData(e)), _managementGroupNetworkManagerConnectionClientDiagnostics, Pipeline, "ManagementGroupNetworkManagerConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = NetworkManagerConnectionData.DeserializeNetworkManagerConnectionData(e); return new ManagementGroupNetworkManagerConnectionResource(Client, data, data.Id); }, _managementGroupNetworkManagerConnectionClientDiagnostics, Pipeline, "ManagementGroupNetworkManagerConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

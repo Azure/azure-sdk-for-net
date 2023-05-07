@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.NetApp
                 var response = await _netAppVolumeGroupVolumeGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, volumeGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetAppVolumeGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetAppVolumeGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.NetApp
                 var response = _netAppVolumeGroupVolumeGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, volumeGroupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetAppVolumeGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetAppVolumeGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

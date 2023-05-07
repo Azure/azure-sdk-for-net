@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRouteCrossConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, crossConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteCrossConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCrossConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRouteCrossConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, crossConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteCrossConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCrossConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteCrossConnectionRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expressRouteCrossConnectionRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteCrossConnectionResource(Client, ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(e)), _expressRouteCrossConnectionClientDiagnostics, Pipeline, "ExpressRouteCrossConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(e); return new ExpressRouteCrossConnectionResource(Client, data, data.Id); }, _expressRouteCrossConnectionClientDiagnostics, Pipeline, "ExpressRouteCrossConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteCrossConnectionRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expressRouteCrossConnectionRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteCrossConnectionResource(Client, ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(e)), _expressRouteCrossConnectionClientDiagnostics, Pipeline, "ExpressRouteCrossConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(e); return new ExpressRouteCrossConnectionResource(Client, data, data.Id); }, _expressRouteCrossConnectionClientDiagnostics, Pipeline, "ExpressRouteCrossConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

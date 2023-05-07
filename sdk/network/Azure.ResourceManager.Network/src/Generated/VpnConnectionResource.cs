@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "VpnConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VpnConnectionResource(ArmClient client, VpnConnectionData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal VpnConnectionResource(ArmClient client, VpnConnectionData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _vpnConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VpnConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VpnConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -195,7 +196,7 @@ namespace Azure.ResourceManager.Network
                 var response = _vpnConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VpnConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VpnConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRouteConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRouteConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
         public virtual AsyncPageable<ExpressRouteConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ExpressRouteConnectionResource(Client, ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(e)), _expressRouteConnectionClientDiagnostics, Pipeline, "ExpressRouteConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(e); return new ExpressRouteConnectionResource(Client, data, data.Id); }, _expressRouteConnectionClientDiagnostics, Pipeline, "ExpressRouteConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Network
         public virtual Pageable<ExpressRouteConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ExpressRouteConnectionResource(Client, ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(e)), _expressRouteConnectionClientDiagnostics, Pipeline, "ExpressRouteConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(e); return new ExpressRouteConnectionResource(Client, data, data.Id); }, _expressRouteConnectionClientDiagnostics, Pipeline, "ExpressRouteConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

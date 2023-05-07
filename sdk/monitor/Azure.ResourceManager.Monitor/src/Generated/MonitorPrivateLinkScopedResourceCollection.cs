@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MonitorPrivateLinkScopedResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MonitorPrivateLinkScopedResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MonitorPrivateLinkScopedResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MonitorPrivateLinkScopedResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesRestClient.CreateListByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesRestClient.CreateListByPrivateLinkScopeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MonitorPrivateLinkScopedResource(Client, MonitorPrivateLinkScopedResourceData.DeserializeMonitorPrivateLinkScopedResourceData(e)), _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesClientDiagnostics, Pipeline, "MonitorPrivateLinkScopedResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = MonitorPrivateLinkScopedResourceData.DeserializeMonitorPrivateLinkScopedResourceData(e); return new MonitorPrivateLinkScopedResource(Client, data, data.Id); }, _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesClientDiagnostics, Pipeline, "MonitorPrivateLinkScopedResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesRestClient.CreateListByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesRestClient.CreateListByPrivateLinkScopeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MonitorPrivateLinkScopedResource(Client, MonitorPrivateLinkScopedResourceData.DeserializeMonitorPrivateLinkScopedResourceData(e)), _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesClientDiagnostics, Pipeline, "MonitorPrivateLinkScopedResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = MonitorPrivateLinkScopedResourceData.DeserializeMonitorPrivateLinkScopedResourceData(e); return new MonitorPrivateLinkScopedResource(Client, data, data.Id); }, _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesClientDiagnostics, Pipeline, "MonitorPrivateLinkScopedResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

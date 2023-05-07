@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _connectivityConfigurationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<ConnectivityConfigurationResource>(Response.FromValue(new ConnectivityConfigurationResource(Client, response), response.GetRawResponse()));
+                var operation = new NetworkArmOperation<ConnectivityConfigurationResource>(Response.FromValue(new ConnectivityConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _connectivityConfigurationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data, cancellationToken);
-                var operation = new NetworkArmOperation<ConnectivityConfigurationResource>(Response.FromValue(new ConnectivityConfigurationResource(Client, response), response.GetRawResponse()));
+                var operation = new NetworkArmOperation<ConnectivityConfigurationResource>(Response.FromValue(new ConnectivityConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _connectivityConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ConnectivityConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConnectivityConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network
                 var response = _connectivityConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ConnectivityConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConnectivityConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectivityConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectivityConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConnectivityConfigurationResource(Client, ConnectivityConfigurationData.DeserializeConnectivityConfigurationData(e)), _connectivityConfigurationClientDiagnostics, Pipeline, "ConnectivityConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ConnectivityConfigurationData.DeserializeConnectivityConfigurationData(e); return new ConnectivityConfigurationResource(Client, data, data.Id); }, _connectivityConfigurationClientDiagnostics, Pipeline, "ConnectivityConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectivityConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectivityConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConnectivityConfigurationResource(Client, ConnectivityConfigurationData.DeserializeConnectivityConfigurationData(e)), _connectivityConfigurationClientDiagnostics, Pipeline, "ConnectivityConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ConnectivityConfigurationData.DeserializeConnectivityConfigurationData(e); return new ConnectivityConfigurationResource(Client, data, data.Id); }, _connectivityConfigurationClientDiagnostics, Pipeline, "ConnectivityConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = await _operationalInsightsSavedSearchSavedSearchesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, savedSearchId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsSavedSearchResource>(Response.FromValue(new OperationalInsightsSavedSearchResource(Client, response), response.GetRawResponse()));
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsSavedSearchResource>(Response.FromValue(new OperationalInsightsSavedSearchResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = _operationalInsightsSavedSearchSavedSearchesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, savedSearchId, data, cancellationToken);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsSavedSearchResource>(Response.FromValue(new OperationalInsightsSavedSearchResource(Client, response), response.GetRawResponse()));
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsSavedSearchResource>(Response.FromValue(new OperationalInsightsSavedSearchResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 var response = await _operationalInsightsSavedSearchSavedSearchesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, savedSearchId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OperationalInsightsSavedSearchResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OperationalInsightsSavedSearchResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 var response = _operationalInsightsSavedSearchSavedSearchesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, savedSearchId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OperationalInsightsSavedSearchResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OperationalInsightsSavedSearchResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual AsyncPageable<OperationalInsightsSavedSearchResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsSavedSearchSavedSearchesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new OperationalInsightsSavedSearchResource(Client, OperationalInsightsSavedSearchData.DeserializeOperationalInsightsSavedSearchData(e)), _operationalInsightsSavedSearchSavedSearchesClientDiagnostics, Pipeline, "OperationalInsightsSavedSearchCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = OperationalInsightsSavedSearchData.DeserializeOperationalInsightsSavedSearchData(e); return new OperationalInsightsSavedSearchResource(Client, data, data.Id); }, _operationalInsightsSavedSearchSavedSearchesClientDiagnostics, Pipeline, "OperationalInsightsSavedSearchCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual Pageable<OperationalInsightsSavedSearchResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsSavedSearchSavedSearchesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new OperationalInsightsSavedSearchResource(Client, OperationalInsightsSavedSearchData.DeserializeOperationalInsightsSavedSearchData(e)), _operationalInsightsSavedSearchSavedSearchesClientDiagnostics, Pipeline, "OperationalInsightsSavedSearchCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = OperationalInsightsSavedSearchData.DeserializeOperationalInsightsSavedSearchData(e); return new OperationalInsightsSavedSearchResource(Client, data, data.Id); }, _operationalInsightsSavedSearchSavedSearchesClientDiagnostics, Pipeline, "OperationalInsightsSavedSearchCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

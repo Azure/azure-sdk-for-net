@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Purview
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PurviewPrivateEndpointConnectionData.DeserializePurviewPrivateEndpointConnectionData(document.RootElement);
-            return new PurviewPrivateEndpointConnectionResource(_client, data);
+            return new PurviewPrivateEndpointConnectionResource(_client, data, data.Id);
         }
 
         async ValueTask<PurviewPrivateEndpointConnectionResource> IOperationSource<PurviewPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PurviewPrivateEndpointConnectionData.DeserializePurviewPrivateEndpointConnectionData(document.RootElement);
-            return new PurviewPrivateEndpointConnectionResource(_client, data);
+            return new PurviewPrivateEndpointConnectionResource(_client, data, data.Id);
         }
     }
 }

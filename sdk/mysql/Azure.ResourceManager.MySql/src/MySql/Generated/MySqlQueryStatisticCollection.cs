@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MySql
                 var response = await _mySqlQueryStatisticTopQueryStatisticsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryStatisticId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MySqlQueryStatisticResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlQueryStatisticResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MySql
                 var response = _mySqlQueryStatisticTopQueryStatisticsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryStatisticId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MySqlQueryStatisticResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlQueryStatisticResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MySql
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlQueryStatisticTopQueryStatisticsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlQueryStatisticTopQueryStatisticsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlQueryStatisticResource(Client, MySqlQueryStatisticData.DeserializeMySqlQueryStatisticData(e)), _mySqlQueryStatisticTopQueryStatisticsClientDiagnostics, Pipeline, "MySqlQueryStatisticCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = MySqlQueryStatisticData.DeserializeMySqlQueryStatisticData(e); return new MySqlQueryStatisticResource(Client, data, data.Id); }, _mySqlQueryStatisticTopQueryStatisticsClientDiagnostics, Pipeline, "MySqlQueryStatisticCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MySql
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlQueryStatisticTopQueryStatisticsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlQueryStatisticTopQueryStatisticsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlQueryStatisticResource(Client, MySqlQueryStatisticData.DeserializeMySqlQueryStatisticData(e)), _mySqlQueryStatisticTopQueryStatisticsClientDiagnostics, Pipeline, "MySqlQueryStatisticCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = MySqlQueryStatisticData.DeserializeMySqlQueryStatisticData(e); return new MySqlQueryStatisticResource(Client, data, data.Id); }, _mySqlQueryStatisticTopQueryStatisticsClientDiagnostics, Pipeline, "MySqlQueryStatisticCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

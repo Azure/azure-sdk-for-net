@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 var response = await _fqdnListLocalRulestackResourceFqdnListLocalRulestackRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FqdnListLocalRulestackResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FqdnListLocalRulestackResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 var response = _fqdnListLocalRulestackResourceFqdnListLocalRulestackRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FqdnListLocalRulestackResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FqdnListLocalRulestackResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fqdnListLocalRulestackResourceFqdnListLocalRulestackRestClient.CreateListByLocalRulestacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fqdnListLocalRulestackResourceFqdnListLocalRulestackRestClient.CreateListByLocalRulestacksNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FqdnListLocalRulestackResource(Client, FqdnListLocalRulestackResourceData.DeserializeFqdnListLocalRulestackResourceData(e)), _fqdnListLocalRulestackResourceFqdnListLocalRulestackClientDiagnostics, Pipeline, "FqdnListLocalRulestackResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = FqdnListLocalRulestackResourceData.DeserializeFqdnListLocalRulestackResourceData(e); return new FqdnListLocalRulestackResource(Client, data, data.Id); }, _fqdnListLocalRulestackResourceFqdnListLocalRulestackClientDiagnostics, Pipeline, "FqdnListLocalRulestackResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fqdnListLocalRulestackResourceFqdnListLocalRulestackRestClient.CreateListByLocalRulestacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fqdnListLocalRulestackResourceFqdnListLocalRulestackRestClient.CreateListByLocalRulestacksNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FqdnListLocalRulestackResource(Client, FqdnListLocalRulestackResourceData.DeserializeFqdnListLocalRulestackResourceData(e)), _fqdnListLocalRulestackResourceFqdnListLocalRulestackClientDiagnostics, Pipeline, "FqdnListLocalRulestackResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = FqdnListLocalRulestackResourceData.DeserializeFqdnListLocalRulestackResourceData(e); return new FqdnListLocalRulestackResource(Client, data, data.Id); }, _fqdnListLocalRulestackResourceFqdnListLocalRulestackClientDiagnostics, Pipeline, "FqdnListLocalRulestackResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

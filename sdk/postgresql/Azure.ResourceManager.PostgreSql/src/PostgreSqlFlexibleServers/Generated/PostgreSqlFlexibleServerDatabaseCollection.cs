@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 var response = await _postgreSqlFlexibleServerDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PostgreSqlFlexibleServerDatabaseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlFlexibleServerDatabaseResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 var response = _postgreSqlFlexibleServerDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PostgreSqlFlexibleServerDatabaseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlFlexibleServerDatabaseResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFlexibleServerDatabaseDatabasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlFlexibleServerDatabaseDatabasesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerDatabaseResource(Client, PostgreSqlFlexibleServerDatabaseData.DeserializePostgreSqlFlexibleServerDatabaseData(e)), _postgreSqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PostgreSqlFlexibleServerDatabaseData.DeserializePostgreSqlFlexibleServerDatabaseData(e); return new PostgreSqlFlexibleServerDatabaseResource(Client, data, data.Id); }, _postgreSqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFlexibleServerDatabaseDatabasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlFlexibleServerDatabaseDatabasesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerDatabaseResource(Client, PostgreSqlFlexibleServerDatabaseData.DeserializePostgreSqlFlexibleServerDatabaseData(e)), _postgreSqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PostgreSqlFlexibleServerDatabaseData.DeserializePostgreSqlFlexibleServerDatabaseData(e); return new PostgreSqlFlexibleServerDatabaseResource(Client, data, data.Id); }, _postgreSqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

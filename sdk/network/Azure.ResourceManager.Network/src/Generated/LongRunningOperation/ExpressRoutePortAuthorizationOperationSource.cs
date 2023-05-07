@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ExpressRoutePortAuthorizationData.DeserializeExpressRoutePortAuthorizationData(document.RootElement);
-            return new ExpressRoutePortAuthorizationResource(_client, data);
+            return new ExpressRoutePortAuthorizationResource(_client, data, data.Id);
         }
 
         async ValueTask<ExpressRoutePortAuthorizationResource> IOperationSource<ExpressRoutePortAuthorizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ExpressRoutePortAuthorizationData.DeserializeExpressRoutePortAuthorizationData(document.RootElement);
-            return new ExpressRoutePortAuthorizationResource(_client, data);
+            return new ExpressRoutePortAuthorizationResource(_client, data, data.Id);
         }
     }
 }

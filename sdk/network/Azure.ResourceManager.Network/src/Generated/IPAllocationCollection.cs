@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _ipAllocationIPAllocationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IPAllocationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IPAllocationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
                 var response = _ipAllocationIPAllocationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IPAllocationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IPAllocationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _ipAllocationIPAllocationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ipAllocationIPAllocationsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IPAllocationResource(Client, IPAllocationData.DeserializeIPAllocationData(e)), _ipAllocationIPAllocationsClientDiagnostics, Pipeline, "IPAllocationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = IPAllocationData.DeserializeIPAllocationData(e); return new IPAllocationResource(Client, data, data.Id); }, _ipAllocationIPAllocationsClientDiagnostics, Pipeline, "IPAllocationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _ipAllocationIPAllocationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ipAllocationIPAllocationsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IPAllocationResource(Client, IPAllocationData.DeserializeIPAllocationData(e)), _ipAllocationIPAllocationsClientDiagnostics, Pipeline, "IPAllocationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = IPAllocationData.DeserializeIPAllocationData(e); return new IPAllocationResource(Client, data, data.Id); }, _ipAllocationIPAllocationsClientDiagnostics, Pipeline, "IPAllocationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

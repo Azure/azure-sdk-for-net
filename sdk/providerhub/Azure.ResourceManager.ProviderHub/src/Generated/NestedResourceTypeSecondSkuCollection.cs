@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = await _nestedResourceTypeSecondSkuSkusRestClient.CreateOrUpdateNestedResourceTypeSecondAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, sku, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation<NestedResourceTypeSecondSkuResource>(Response.FromValue(new NestedResourceTypeSecondSkuResource(Client, response), response.GetRawResponse()));
+                var operation = new ProviderHubArmOperation<NestedResourceTypeSecondSkuResource>(Response.FromValue(new NestedResourceTypeSecondSkuResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = _nestedResourceTypeSecondSkuSkusRestClient.CreateOrUpdateNestedResourceTypeSecond(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, sku, data, cancellationToken);
-                var operation = new ProviderHubArmOperation<NestedResourceTypeSecondSkuResource>(Response.FromValue(new NestedResourceTypeSecondSkuResource(Client, response), response.GetRawResponse()));
+                var operation = new ProviderHubArmOperation<NestedResourceTypeSecondSkuResource>(Response.FromValue(new NestedResourceTypeSecondSkuResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ProviderHub
                 var response = await _nestedResourceTypeSecondSkuSkusRestClient.GetNestedResourceTypeSecondAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, sku, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NestedResourceTypeSecondSkuResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NestedResourceTypeSecondSkuResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ProviderHub
                 var response = _nestedResourceTypeSecondSkuSkusRestClient.GetNestedResourceTypeSecond(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, sku, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NestedResourceTypeSecondSkuResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NestedResourceTypeSecondSkuResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nestedResourceTypeSecondSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeSecondRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nestedResourceTypeSecondSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeSecondNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NestedResourceTypeSecondSkuResource(Client, ResourceTypeSkuData.DeserializeResourceTypeSkuData(e)), _nestedResourceTypeSecondSkuSkusClientDiagnostics, Pipeline, "NestedResourceTypeSecondSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ResourceTypeSkuData.DeserializeResourceTypeSkuData(e); return new NestedResourceTypeSecondSkuResource(Client, data, data.Id); }, _nestedResourceTypeSecondSkuSkusClientDiagnostics, Pipeline, "NestedResourceTypeSecondSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nestedResourceTypeSecondSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeSecondRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nestedResourceTypeSecondSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeSecondNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NestedResourceTypeSecondSkuResource(Client, ResourceTypeSkuData.DeserializeResourceTypeSkuData(e)), _nestedResourceTypeSecondSkuSkusClientDiagnostics, Pipeline, "NestedResourceTypeSecondSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ResourceTypeSkuData.DeserializeResourceTypeSkuData(e); return new NestedResourceTypeSecondSkuResource(Client, data, data.Id); }, _nestedResourceTypeSecondSkuSkusClientDiagnostics, Pipeline, "NestedResourceTypeSecondSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

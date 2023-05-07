@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _activityLogAlertRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<ActivityLogAlertResource>(Response.FromValue(new ActivityLogAlertResource(Client, response), response.GetRawResponse()));
+                var operation = new MonitorArmOperation<ActivityLogAlertResource>(Response.FromValue(new ActivityLogAlertResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _activityLogAlertRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, data, cancellationToken);
-                var operation = new MonitorArmOperation<ActivityLogAlertResource>(Response.FromValue(new ActivityLogAlertResource(Client, response), response.GetRawResponse()));
+                var operation = new MonitorArmOperation<ActivityLogAlertResource>(Response.FromValue(new ActivityLogAlertResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _activityLogAlertRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ActivityLogAlertResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ActivityLogAlertResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _activityLogAlertRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ActivityLogAlertResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ActivityLogAlertResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _activityLogAlertRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _activityLogAlertRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ActivityLogAlertResource(Client, ActivityLogAlertData.DeserializeActivityLogAlertData(e)), _activityLogAlertClientDiagnostics, Pipeline, "ActivityLogAlertCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ActivityLogAlertData.DeserializeActivityLogAlertData(e); return new ActivityLogAlertResource(Client, data, data.Id); }, _activityLogAlertClientDiagnostics, Pipeline, "ActivityLogAlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _activityLogAlertRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _activityLogAlertRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ActivityLogAlertResource(Client, ActivityLogAlertData.DeserializeActivityLogAlertData(e)), _activityLogAlertClientDiagnostics, Pipeline, "ActivityLogAlertCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ActivityLogAlertData.DeserializeActivityLogAlertData(e); return new ActivityLogAlertResource(Client, data, data.Id); }, _activityLogAlertClientDiagnostics, Pipeline, "ActivityLogAlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

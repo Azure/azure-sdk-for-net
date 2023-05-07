@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = await _notificationRegistrationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Name, notificationRegistrationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation<NotificationRegistrationResource>(Response.FromValue(new NotificationRegistrationResource(Client, response), response.GetRawResponse()));
+                var operation = new ProviderHubArmOperation<NotificationRegistrationResource>(Response.FromValue(new NotificationRegistrationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = _notificationRegistrationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Name, notificationRegistrationName, data, cancellationToken);
-                var operation = new ProviderHubArmOperation<NotificationRegistrationResource>(Response.FromValue(new NotificationRegistrationResource(Client, response), response.GetRawResponse()));
+                var operation = new ProviderHubArmOperation<NotificationRegistrationResource>(Response.FromValue(new NotificationRegistrationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ProviderHub
                 var response = await _notificationRegistrationRestClient.GetAsync(Id.SubscriptionId, Id.Name, notificationRegistrationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NotificationRegistrationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NotificationRegistrationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ProviderHub
                 var response = _notificationRegistrationRestClient.Get(Id.SubscriptionId, Id.Name, notificationRegistrationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NotificationRegistrationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NotificationRegistrationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationRegistrationRestClient.CreateListByProviderRegistrationRequest(Id.SubscriptionId, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _notificationRegistrationRestClient.CreateListByProviderRegistrationNextPageRequest(nextLink, Id.SubscriptionId, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NotificationRegistrationResource(Client, NotificationRegistrationData.DeserializeNotificationRegistrationData(e)), _notificationRegistrationClientDiagnostics, Pipeline, "NotificationRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = NotificationRegistrationData.DeserializeNotificationRegistrationData(e); return new NotificationRegistrationResource(Client, data, data.Id); }, _notificationRegistrationClientDiagnostics, Pipeline, "NotificationRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationRegistrationRestClient.CreateListByProviderRegistrationRequest(Id.SubscriptionId, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _notificationRegistrationRestClient.CreateListByProviderRegistrationNextPageRequest(nextLink, Id.SubscriptionId, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NotificationRegistrationResource(Client, NotificationRegistrationData.DeserializeNotificationRegistrationData(e)), _notificationRegistrationClientDiagnostics, Pipeline, "NotificationRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = NotificationRegistrationData.DeserializeNotificationRegistrationData(e); return new NotificationRegistrationResource(Client, data, data.Id); }, _notificationRegistrationClientDiagnostics, Pipeline, "NotificationRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

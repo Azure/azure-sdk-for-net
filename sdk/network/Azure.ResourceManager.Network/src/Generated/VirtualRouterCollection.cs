@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _virtualRouterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualRouterName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualRouterResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualRouterResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
                 var response = _virtualRouterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualRouterName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualRouterResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualRouterResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualRouterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualRouterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualRouterResource(Client, VirtualRouterData.DeserializeVirtualRouterData(e)), _virtualRouterClientDiagnostics, Pipeline, "VirtualRouterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = VirtualRouterData.DeserializeVirtualRouterData(e); return new VirtualRouterResource(Client, data, data.Id); }, _virtualRouterClientDiagnostics, Pipeline, "VirtualRouterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualRouterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualRouterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualRouterResource(Client, VirtualRouterData.DeserializeVirtualRouterData(e)), _virtualRouterClientDiagnostics, Pipeline, "VirtualRouterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = VirtualRouterData.DeserializeVirtualRouterData(e); return new VirtualRouterResource(Client, data, data.Id); }, _virtualRouterClientDiagnostics, Pipeline, "VirtualRouterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

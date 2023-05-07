@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.PostgreSql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PostgreSqlFirewallRuleData.DeserializePostgreSqlFirewallRuleData(document.RootElement);
-            return new PostgreSqlFirewallRuleResource(_client, data);
+            return new PostgreSqlFirewallRuleResource(_client, data, data.Id);
         }
 
         async ValueTask<PostgreSqlFirewallRuleResource> IOperationSource<PostgreSqlFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PostgreSqlFirewallRuleData.DeserializePostgreSqlFirewallRuleData(document.RootElement);
-            return new PostgreSqlFirewallRuleResource(_client, data);
+            return new PostgreSqlFirewallRuleResource(_client, data, data.Id);
         }
     }
 }

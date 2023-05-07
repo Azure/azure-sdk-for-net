@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = FirewallResourceData.DeserializeFirewallResourceData(document.RootElement);
-            return new FirewallResource(_client, data);
+            return new FirewallResource(_client, data, data.Id);
         }
 
         async ValueTask<FirewallResource> IOperationSource<FirewallResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = FirewallResourceData.DeserializeFirewallResourceData(document.RootElement);
-            return new FirewallResource(_client, data);
+            return new FirewallResource(_client, data, data.Id);
         }
     }
 }

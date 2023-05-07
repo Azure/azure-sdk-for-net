@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Orbital
                 var response = await _availableGroundStationRestClient.GetAsync(Id.SubscriptionId, groundStationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AvailableGroundStationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AvailableGroundStationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Orbital
                 var response = _availableGroundStationRestClient.Get(Id.SubscriptionId, groundStationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AvailableGroundStationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AvailableGroundStationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Orbital
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _availableGroundStationRestClient.CreateListByCapabilityRequest(Id.SubscriptionId, capability);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _availableGroundStationRestClient.CreateListByCapabilityNextPageRequest(nextLink, Id.SubscriptionId, capability);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvailableGroundStationResource(Client, AvailableGroundStationData.DeserializeAvailableGroundStationData(e)), _availableGroundStationClientDiagnostics, Pipeline, "AvailableGroundStationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AvailableGroundStationData.DeserializeAvailableGroundStationData(e); return new AvailableGroundStationResource(Client, data, data.Id); }, _availableGroundStationClientDiagnostics, Pipeline, "AvailableGroundStationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Orbital
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _availableGroundStationRestClient.CreateListByCapabilityRequest(Id.SubscriptionId, capability);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _availableGroundStationRestClient.CreateListByCapabilityNextPageRequest(nextLink, Id.SubscriptionId, capability);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvailableGroundStationResource(Client, AvailableGroundStationData.DeserializeAvailableGroundStationData(e)), _availableGroundStationClientDiagnostics, Pipeline, "AvailableGroundStationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AvailableGroundStationData.DeserializeAvailableGroundStationData(e); return new AvailableGroundStationResource(Client, data, data.Id); }, _availableGroundStationClientDiagnostics, Pipeline, "AvailableGroundStationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

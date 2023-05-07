@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.NetApp
                 var response = await _capacityPoolPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CapacityPoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CapacityPoolResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.NetApp
                 var response = _capacityPoolPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CapacityPoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CapacityPoolResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.NetApp
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capacityPoolPoolsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capacityPoolPoolsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CapacityPoolResource(Client, CapacityPoolData.DeserializeCapacityPoolData(e)), _capacityPoolPoolsClientDiagnostics, Pipeline, "CapacityPoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = CapacityPoolData.DeserializeCapacityPoolData(e); return new CapacityPoolResource(Client, data, data.Id); }, _capacityPoolPoolsClientDiagnostics, Pipeline, "CapacityPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.NetApp
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capacityPoolPoolsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capacityPoolPoolsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CapacityPoolResource(Client, CapacityPoolData.DeserializeCapacityPoolData(e)), _capacityPoolPoolsClientDiagnostics, Pipeline, "CapacityPoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = CapacityPoolData.DeserializeCapacityPoolData(e); return new CapacityPoolResource(Client, data, data.Id); }, _capacityPoolPoolsClientDiagnostics, Pipeline, "CapacityPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

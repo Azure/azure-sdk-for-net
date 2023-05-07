@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkWatcherRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkWatcherName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<NetworkWatcherResource>(Response.FromValue(new NetworkWatcherResource(Client, response), response.GetRawResponse()));
+                var operation = new NetworkArmOperation<NetworkWatcherResource>(Response.FromValue(new NetworkWatcherResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkWatcherRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, networkWatcherName, data, cancellationToken);
-                var operation = new NetworkArmOperation<NetworkWatcherResource>(Response.FromValue(new NetworkWatcherResource(Client, response), response.GetRawResponse()));
+                var operation = new NetworkArmOperation<NetworkWatcherResource>(Response.FromValue(new NetworkWatcherResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _networkWatcherRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkWatcherName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkWatcherResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkWatcherResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Network
                 var response = _networkWatcherRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkWatcherName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkWatcherResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkWatcherResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network
         public virtual AsyncPageable<NetworkWatcherResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkWatcherRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new NetworkWatcherResource(Client, NetworkWatcherData.DeserializeNetworkWatcherData(e)), _networkWatcherClientDiagnostics, Pipeline, "NetworkWatcherCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = NetworkWatcherData.DeserializeNetworkWatcherData(e); return new NetworkWatcherResource(Client, data, data.Id); }, _networkWatcherClientDiagnostics, Pipeline, "NetworkWatcherCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Network
         public virtual Pageable<NetworkWatcherResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkWatcherRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new NetworkWatcherResource(Client, NetworkWatcherData.DeserializeNetworkWatcherData(e)), _networkWatcherClientDiagnostics, Pipeline, "NetworkWatcherCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = NetworkWatcherData.DeserializeNetworkWatcherData(e); return new NetworkWatcherResource(Client, data, data.Id); }, _networkWatcherClientDiagnostics, Pipeline, "NetworkWatcherCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 var response = await _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PostgreSqlFlexibleServerActiveDirectoryAdministratorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlFlexibleServerActiveDirectoryAdministratorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 var response = _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PostgreSqlFlexibleServerActiveDirectoryAdministratorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlFlexibleServerActiveDirectoryAdministratorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerActiveDirectoryAdministratorResource(Client, PostgreSqlFlexibleServerActiveDirectoryAdministratorData.DeserializePostgreSqlFlexibleServerActiveDirectoryAdministratorData(e)), _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerActiveDirectoryAdministratorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PostgreSqlFlexibleServerActiveDirectoryAdministratorData.DeserializePostgreSqlFlexibleServerActiveDirectoryAdministratorData(e); return new PostgreSqlFlexibleServerActiveDirectoryAdministratorResource(Client, data, data.Id); }, _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerActiveDirectoryAdministratorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerActiveDirectoryAdministratorResource(Client, PostgreSqlFlexibleServerActiveDirectoryAdministratorData.DeserializePostgreSqlFlexibleServerActiveDirectoryAdministratorData(e)), _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerActiveDirectoryAdministratorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PostgreSqlFlexibleServerActiveDirectoryAdministratorData.DeserializePostgreSqlFlexibleServerActiveDirectoryAdministratorData(e); return new PostgreSqlFlexibleServerActiveDirectoryAdministratorResource(Client, data, data.Id); }, _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerActiveDirectoryAdministratorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

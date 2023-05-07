@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = BackendAddressPoolData.DeserializeBackendAddressPoolData(document.RootElement);
-            return new BackendAddressPoolResource(_client, data);
+            return new BackendAddressPoolResource(_client, data, data.Id);
         }
 
         async ValueTask<BackendAddressPoolResource> IOperationSource<BackendAddressPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = BackendAddressPoolData.DeserializeBackendAddressPoolData(document.RootElement);
-            return new BackendAddressPoolResource(_client, data);
+            return new BackendAddressPoolResource(_client, data, data.Id);
         }
     }
 }

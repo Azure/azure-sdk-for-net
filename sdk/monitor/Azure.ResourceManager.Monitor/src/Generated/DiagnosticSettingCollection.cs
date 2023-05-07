@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _diagnosticSettingRestClient.CreateOrUpdateAsync(Id, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<DiagnosticSettingResource>(Response.FromValue(new DiagnosticSettingResource(Client, response), response.GetRawResponse()));
+                var operation = new MonitorArmOperation<DiagnosticSettingResource>(Response.FromValue(new DiagnosticSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _diagnosticSettingRestClient.CreateOrUpdate(Id, name, data, cancellationToken);
-                var operation = new MonitorArmOperation<DiagnosticSettingResource>(Response.FromValue(new DiagnosticSettingResource(Client, response), response.GetRawResponse()));
+                var operation = new MonitorArmOperation<DiagnosticSettingResource>(Response.FromValue(new DiagnosticSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _diagnosticSettingRestClient.GetAsync(Id, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DiagnosticSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiagnosticSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _diagnosticSettingRestClient.Get(Id, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DiagnosticSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiagnosticSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<DiagnosticSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diagnosticSettingRestClient.CreateListRequest(Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DiagnosticSettingResource(Client, DiagnosticSettingData.DeserializeDiagnosticSettingData(e)), _diagnosticSettingClientDiagnostics, Pipeline, "DiagnosticSettingCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = DiagnosticSettingData.DeserializeDiagnosticSettingData(e); return new DiagnosticSettingResource(Client, data, data.Id); }, _diagnosticSettingClientDiagnostics, Pipeline, "DiagnosticSettingCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<DiagnosticSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diagnosticSettingRestClient.CreateListRequest(Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new DiagnosticSettingResource(Client, DiagnosticSettingData.DeserializeDiagnosticSettingData(e)), _diagnosticSettingClientDiagnostics, Pipeline, "DiagnosticSettingCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = DiagnosticSettingData.DeserializeDiagnosticSettingData(e); return new DiagnosticSettingResource(Client, data, data.Id); }, _diagnosticSettingClientDiagnostics, Pipeline, "DiagnosticSettingCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

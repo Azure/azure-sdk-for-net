@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.PostgreSql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PostgreSqlPrivateEndpointConnectionData.DeserializePostgreSqlPrivateEndpointConnectionData(document.RootElement);
-            return new PostgreSqlPrivateEndpointConnectionResource(_client, data);
+            return new PostgreSqlPrivateEndpointConnectionResource(_client, data, data.Id);
         }
 
         async ValueTask<PostgreSqlPrivateEndpointConnectionResource> IOperationSource<PostgreSqlPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PostgreSqlPrivateEndpointConnectionData.DeserializePostgreSqlPrivateEndpointConnectionData(document.RootElement);
-            return new PostgreSqlPrivateEndpointConnectionResource(_client, data);
+            return new PostgreSqlPrivateEndpointConnectionResource(_client, data, data.Id);
         }
     }
 }

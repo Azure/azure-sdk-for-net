@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _adminRuleGroupAdminRuleCollectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<AdminRuleGroupResource>(Response.FromValue(new AdminRuleGroupResource(Client, response), response.GetRawResponse()));
+                var operation = new NetworkArmOperation<AdminRuleGroupResource>(Response.FromValue(new AdminRuleGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _adminRuleGroupAdminRuleCollectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, data, cancellationToken);
-                var operation = new NetworkArmOperation<AdminRuleGroupResource>(Response.FromValue(new AdminRuleGroupResource(Client, response), response.GetRawResponse()));
+                var operation = new NetworkArmOperation<AdminRuleGroupResource>(Response.FromValue(new AdminRuleGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _adminRuleGroupAdminRuleCollectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AdminRuleGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AdminRuleGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network
                 var response = _adminRuleGroupAdminRuleCollectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AdminRuleGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AdminRuleGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _adminRuleGroupAdminRuleCollectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _adminRuleGroupAdminRuleCollectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AdminRuleGroupResource(Client, AdminRuleGroupData.DeserializeAdminRuleGroupData(e)), _adminRuleGroupAdminRuleCollectionsClientDiagnostics, Pipeline, "AdminRuleGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AdminRuleGroupData.DeserializeAdminRuleGroupData(e); return new AdminRuleGroupResource(Client, data, data.Id); }, _adminRuleGroupAdminRuleCollectionsClientDiagnostics, Pipeline, "AdminRuleGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _adminRuleGroupAdminRuleCollectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _adminRuleGroupAdminRuleCollectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AdminRuleGroupResource(Client, AdminRuleGroupData.DeserializeAdminRuleGroupData(e)), _adminRuleGroupAdminRuleCollectionsClientDiagnostics, Pipeline, "AdminRuleGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AdminRuleGroupData.DeserializeAdminRuleGroupData(e); return new AdminRuleGroupResource(Client, data, data.Id); }, _adminRuleGroupAdminRuleCollectionsClientDiagnostics, Pipeline, "AdminRuleGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

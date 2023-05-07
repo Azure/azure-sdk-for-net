@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _securityPartnerProviderRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, securityPartnerProviderName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityPartnerProviderResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityPartnerProviderResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Network
                 var response = _securityPartnerProviderRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, securityPartnerProviderName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityPartnerProviderResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityPartnerProviderResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityPartnerProviderRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityPartnerProviderRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityPartnerProviderResource(Client, SecurityPartnerProviderData.DeserializeSecurityPartnerProviderData(e)), _securityPartnerProviderClientDiagnostics, Pipeline, "SecurityPartnerProviderCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityPartnerProviderData.DeserializeSecurityPartnerProviderData(e); return new SecurityPartnerProviderResource(Client, data, data.Id); }, _securityPartnerProviderClientDiagnostics, Pipeline, "SecurityPartnerProviderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityPartnerProviderRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityPartnerProviderRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityPartnerProviderResource(Client, SecurityPartnerProviderData.DeserializeSecurityPartnerProviderData(e)), _securityPartnerProviderClientDiagnostics, Pipeline, "SecurityPartnerProviderCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SecurityPartnerProviderData.DeserializeSecurityPartnerProviderData(e); return new SecurityPartnerProviderResource(Client, data, data.Id); }, _securityPartnerProviderClientDiagnostics, Pipeline, "SecurityPartnerProviderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

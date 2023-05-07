@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.PrivateDns
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PrivateDnsZoneData.DeserializePrivateDnsZoneData(document.RootElement);
-            return new PrivateDnsZoneResource(_client, data);
+            return new PrivateDnsZoneResource(_client, data, data.Id);
         }
 
         async ValueTask<PrivateDnsZoneResource> IOperationSource<PrivateDnsZoneResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PrivateDnsZoneData.DeserializePrivateDnsZoneData(document.RootElement);
-            return new PrivateDnsZoneResource(_client, data);
+            return new PrivateDnsZoneResource(_client, data, data.Id);
         }
     }
 }

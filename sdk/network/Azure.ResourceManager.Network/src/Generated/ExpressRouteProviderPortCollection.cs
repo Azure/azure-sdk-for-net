@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRouteProviderPortRestClient.ExpressRouteProviderPortAsync(Id.SubscriptionId, providerport, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteProviderPortResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteProviderPortResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRouteProviderPortRestClient.ExpressRouteProviderPort(Id.SubscriptionId, providerport, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteProviderPortResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteProviderPortResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network
         public virtual AsyncPageable<ExpressRouteProviderPortResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortExpressRouteProviderPortsLocationRestClient.CreateListRequest(Id.SubscriptionId, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ExpressRouteProviderPortResource(Client, ExpressRouteProviderPortData.DeserializeExpressRouteProviderPortData(e)), _expressRouteProviderPortExpressRouteProviderPortsLocationClientDiagnostics, Pipeline, "ExpressRouteProviderPortCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = ExpressRouteProviderPortData.DeserializeExpressRouteProviderPortData(e); return new ExpressRouteProviderPortResource(Client, data, data.Id); }, _expressRouteProviderPortExpressRouteProviderPortsLocationClientDiagnostics, Pipeline, "ExpressRouteProviderPortCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Network
         public virtual Pageable<ExpressRouteProviderPortResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortExpressRouteProviderPortsLocationRestClient.CreateListRequest(Id.SubscriptionId, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ExpressRouteProviderPortResource(Client, ExpressRouteProviderPortData.DeserializeExpressRouteProviderPortData(e)), _expressRouteProviderPortExpressRouteProviderPortsLocationClientDiagnostics, Pipeline, "ExpressRouteProviderPortCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = ExpressRouteProviderPortData.DeserializeExpressRouteProviderPortData(e); return new ExpressRouteProviderPortResource(Client, data, data.Id); }, _expressRouteProviderPortExpressRouteProviderPortsLocationClientDiagnostics, Pipeline, "ExpressRouteProviderPortCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

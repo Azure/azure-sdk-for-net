@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MonitorPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MonitorPrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MonitorPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MonitorPrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<MonitorPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MonitorPrivateEndpointConnectionResource(Client, MonitorPrivateEndpointConnectionData.DeserializeMonitorPrivateEndpointConnectionData(e)), _monitorPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MonitorPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = MonitorPrivateEndpointConnectionData.DeserializeMonitorPrivateEndpointConnectionData(e); return new MonitorPrivateEndpointConnectionResource(Client, data, data.Id); }, _monitorPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MonitorPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<MonitorPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MonitorPrivateEndpointConnectionResource(Client, MonitorPrivateEndpointConnectionData.DeserializeMonitorPrivateEndpointConnectionData(e)), _monitorPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MonitorPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = MonitorPrivateEndpointConnectionData.DeserializeMonitorPrivateEndpointConnectionData(e); return new MonitorPrivateEndpointConnectionResource(Client, data, data.Id); }, _monitorPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MonitorPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

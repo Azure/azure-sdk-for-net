@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _dataCollectionRuleAssociationRestClient.CreateAsync(Id, associationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<DataCollectionRuleAssociationResource>(Response.FromValue(new DataCollectionRuleAssociationResource(Client, response), response.GetRawResponse()));
+                var operation = new MonitorArmOperation<DataCollectionRuleAssociationResource>(Response.FromValue(new DataCollectionRuleAssociationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _dataCollectionRuleAssociationRestClient.Create(Id, associationName, data, cancellationToken);
-                var operation = new MonitorArmOperation<DataCollectionRuleAssociationResource>(Response.FromValue(new DataCollectionRuleAssociationResource(Client, response), response.GetRawResponse()));
+                var operation = new MonitorArmOperation<DataCollectionRuleAssociationResource>(Response.FromValue(new DataCollectionRuleAssociationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _dataCollectionRuleAssociationRestClient.GetAsync(Id, associationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataCollectionRuleAssociationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataCollectionRuleAssociationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _dataCollectionRuleAssociationRestClient.Get(Id, associationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataCollectionRuleAssociationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataCollectionRuleAssociationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataCollectionRuleAssociationRestClient.CreateListByResourceRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataCollectionRuleAssociationRestClient.CreateListByResourceNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataCollectionRuleAssociationResource(Client, DataCollectionRuleAssociationData.DeserializeDataCollectionRuleAssociationData(e)), _dataCollectionRuleAssociationClientDiagnostics, Pipeline, "DataCollectionRuleAssociationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DataCollectionRuleAssociationData.DeserializeDataCollectionRuleAssociationData(e); return new DataCollectionRuleAssociationResource(Client, data, data.Id); }, _dataCollectionRuleAssociationClientDiagnostics, Pipeline, "DataCollectionRuleAssociationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataCollectionRuleAssociationRestClient.CreateListByResourceRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataCollectionRuleAssociationRestClient.CreateListByResourceNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataCollectionRuleAssociationResource(Client, DataCollectionRuleAssociationData.DeserializeDataCollectionRuleAssociationData(e)), _dataCollectionRuleAssociationClientDiagnostics, Pipeline, "DataCollectionRuleAssociationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DataCollectionRuleAssociationData.DeserializeDataCollectionRuleAssociationData(e); return new DataCollectionRuleAssociationResource(Client, data, data.Id); }, _dataCollectionRuleAssociationClientDiagnostics, Pipeline, "DataCollectionRuleAssociationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

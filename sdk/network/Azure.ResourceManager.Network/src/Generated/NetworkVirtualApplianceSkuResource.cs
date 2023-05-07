@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "NetworkVirtualApplianceSkuResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal NetworkVirtualApplianceSkuResource(ArmClient client, NetworkVirtualApplianceSkuData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal NetworkVirtualApplianceSkuResource(ArmClient client, NetworkVirtualApplianceSkuData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _networkVirtualApplianceSkuVirtualApplianceSkusRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkVirtualApplianceSkuResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkVirtualApplianceSkuResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Network
                 var response = _networkVirtualApplianceSkuVirtualApplianceSkusRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkVirtualApplianceSkuResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkVirtualApplianceSkuResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

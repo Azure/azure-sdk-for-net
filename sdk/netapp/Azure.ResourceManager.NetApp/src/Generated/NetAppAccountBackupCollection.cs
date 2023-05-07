@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetApp
                 var response = await _netAppAccountBackupAccountBackupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetAppAccountBackupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetAppAccountBackupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.NetApp
                 var response = _netAppAccountBackupAccountBackupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetAppAccountBackupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetAppAccountBackupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual AsyncPageable<NetAppAccountBackupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppAccountBackupAccountBackupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new NetAppAccountBackupResource(Client, NetAppBackupData.DeserializeNetAppBackupData(e)), _netAppAccountBackupAccountBackupsClientDiagnostics, Pipeline, "NetAppAccountBackupCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = NetAppBackupData.DeserializeNetAppBackupData(e); return new NetAppAccountBackupResource(Client, data, data.Id); }, _netAppAccountBackupAccountBackupsClientDiagnostics, Pipeline, "NetAppAccountBackupCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual Pageable<NetAppAccountBackupResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppAccountBackupAccountBackupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new NetAppAccountBackupResource(Client, NetAppBackupData.DeserializeNetAppBackupData(e)), _netAppAccountBackupAccountBackupsClientDiagnostics, Pipeline, "NetAppAccountBackupCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = NetAppBackupData.DeserializeNetAppBackupData(e); return new NetAppAccountBackupResource(Client, data, data.Id); }, _netAppAccountBackupAccountBackupsClientDiagnostics, Pipeline, "NetAppAccountBackupCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

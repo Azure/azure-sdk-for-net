@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.PostgreSql
                 var response = await _postgreSqlConfigurationConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PostgreSqlConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.PostgreSql
                 var response = _postgreSqlConfigurationConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PostgreSqlConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.PostgreSql
         public virtual AsyncPageable<PostgreSqlConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlConfigurationConfigurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PostgreSqlConfigurationResource(Client, PostgreSqlConfigurationData.DeserializePostgreSqlConfigurationData(e)), _postgreSqlConfigurationConfigurationsClientDiagnostics, Pipeline, "PostgreSqlConfigurationCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = PostgreSqlConfigurationData.DeserializePostgreSqlConfigurationData(e); return new PostgreSqlConfigurationResource(Client, data, data.Id); }, _postgreSqlConfigurationConfigurationsClientDiagnostics, Pipeline, "PostgreSqlConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.PostgreSql
         public virtual Pageable<PostgreSqlConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlConfigurationConfigurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new PostgreSqlConfigurationResource(Client, PostgreSqlConfigurationData.DeserializePostgreSqlConfigurationData(e)), _postgreSqlConfigurationConfigurationsClientDiagnostics, Pipeline, "PostgreSqlConfigurationCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = PostgreSqlConfigurationData.DeserializePostgreSqlConfigurationData(e); return new PostgreSqlConfigurationResource(Client, data, data.Id); }, _postgreSqlConfigurationConfigurationsClientDiagnostics, Pipeline, "PostgreSqlConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

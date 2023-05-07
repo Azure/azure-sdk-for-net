@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.MySql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MySqlPrivateEndpointConnectionData.DeserializeMySqlPrivateEndpointConnectionData(document.RootElement);
-            return new MySqlPrivateEndpointConnectionResource(_client, data);
+            return new MySqlPrivateEndpointConnectionResource(_client, data, data.Id);
         }
 
         async ValueTask<MySqlPrivateEndpointConnectionResource> IOperationSource<MySqlPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MySqlPrivateEndpointConnectionData.DeserializeMySqlPrivateEndpointConnectionData(document.RootElement);
-            return new MySqlPrivateEndpointConnectionResource(_client, data);
+            return new MySqlPrivateEndpointConnectionResource(_client, data, data.Id);
         }
     }
 }

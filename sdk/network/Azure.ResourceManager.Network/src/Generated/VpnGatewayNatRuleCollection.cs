@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _vpnGatewayNatRuleNatRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, natRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VpnGatewayNatRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VpnGatewayNatRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network
                 var response = _vpnGatewayNatRuleNatRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, natRuleName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VpnGatewayNatRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VpnGatewayNatRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vpnGatewayNatRuleNatRulesRestClient.CreateListByVpnGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vpnGatewayNatRuleNatRulesRestClient.CreateListByVpnGatewayNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VpnGatewayNatRuleResource(Client, VpnGatewayNatRuleData.DeserializeVpnGatewayNatRuleData(e)), _vpnGatewayNatRuleNatRulesClientDiagnostics, Pipeline, "VpnGatewayNatRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = VpnGatewayNatRuleData.DeserializeVpnGatewayNatRuleData(e); return new VpnGatewayNatRuleResource(Client, data, data.Id); }, _vpnGatewayNatRuleNatRulesClientDiagnostics, Pipeline, "VpnGatewayNatRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vpnGatewayNatRuleNatRulesRestClient.CreateListByVpnGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vpnGatewayNatRuleNatRulesRestClient.CreateListByVpnGatewayNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VpnGatewayNatRuleResource(Client, VpnGatewayNatRuleData.DeserializeVpnGatewayNatRuleData(e)), _vpnGatewayNatRuleNatRulesClientDiagnostics, Pipeline, "VpnGatewayNatRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = VpnGatewayNatRuleData.DeserializeVpnGatewayNatRuleData(e); return new VpnGatewayNatRuleResource(Client, data, data.Id); }, _vpnGatewayNatRuleNatRulesClientDiagnostics, Pipeline, "VpnGatewayNatRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

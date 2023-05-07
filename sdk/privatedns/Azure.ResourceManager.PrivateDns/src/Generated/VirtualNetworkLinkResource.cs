@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.PrivateDns
         /// <summary> Initializes a new instance of the <see cref = "VirtualNetworkLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VirtualNetworkLinkResource(ArmClient client, VirtualNetworkLinkData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal VirtualNetworkLinkResource(ArmClient client, VirtualNetworkLinkData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.PrivateDns
                 var response = await _virtualNetworkLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualNetworkLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualNetworkLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.PrivateDns
                 var response = _virtualNetworkLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualNetworkLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualNetworkLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -331,7 +332,7 @@ namespace Azure.ResourceManager.PrivateDns
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _virtualNetworkLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new VirtualNetworkLinkResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new VirtualNetworkLinkResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -385,7 +386,7 @@ namespace Azure.ResourceManager.PrivateDns
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _virtualNetworkLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new VirtualNetworkLinkResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new VirtualNetworkLinkResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -438,7 +439,7 @@ namespace Azure.ResourceManager.PrivateDns
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _virtualNetworkLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new VirtualNetworkLinkResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new VirtualNetworkLinkResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -487,7 +488,7 @@ namespace Azure.ResourceManager.PrivateDns
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _virtualNetworkLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new VirtualNetworkLinkResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new VirtualNetworkLinkResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -535,7 +536,7 @@ namespace Azure.ResourceManager.PrivateDns
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _virtualNetworkLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new VirtualNetworkLinkResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new VirtualNetworkLinkResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -587,7 +588,7 @@ namespace Azure.ResourceManager.PrivateDns
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _virtualNetworkLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new VirtualNetworkLinkResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new VirtualNetworkLinkResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {

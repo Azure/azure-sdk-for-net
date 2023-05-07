@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 var response = await _simGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, simGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SimGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SimGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 var response = _simGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, simGroupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SimGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SimGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _simGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _simGroupRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SimGroupResource(Client, SimGroupData.DeserializeSimGroupData(e)), _simGroupClientDiagnostics, Pipeline, "SimGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SimGroupData.DeserializeSimGroupData(e); return new SimGroupResource(Client, data, data.Id); }, _simGroupClientDiagnostics, Pipeline, "SimGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _simGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _simGroupRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SimGroupResource(Client, SimGroupData.DeserializeSimGroupData(e)), _simGroupClientDiagnostics, Pipeline, "SimGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SimGroupData.DeserializeSimGroupData(e); return new SimGroupResource(Client, data, data.Id); }, _simGroupClientDiagnostics, Pipeline, "SimGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

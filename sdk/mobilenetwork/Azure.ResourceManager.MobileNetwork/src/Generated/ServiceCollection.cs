@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 var response = await _serviceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 var response = _serviceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceRestClient.CreateListByMobileNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceResource(Client, ServiceData.DeserializeServiceData(e)), _serviceClientDiagnostics, Pipeline, "ServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceData.DeserializeServiceData(e); return new ServiceResource(Client, data, data.Id); }, _serviceClientDiagnostics, Pipeline, "ServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceRestClient.CreateListByMobileNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceResource(Client, ServiceData.DeserializeServiceData(e)), _serviceClientDiagnostics, Pipeline, "ServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ServiceData.DeserializeServiceData(e); return new ServiceResource(Client, data, data.Id); }, _serviceClientDiagnostics, Pipeline, "ServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

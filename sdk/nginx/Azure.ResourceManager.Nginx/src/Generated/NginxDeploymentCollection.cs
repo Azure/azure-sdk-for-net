@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Nginx
                 var response = await _nginxDeploymentDeploymentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, deploymentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NginxDeploymentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NginxDeploymentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Nginx
                 var response = _nginxDeploymentDeploymentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, deploymentName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NginxDeploymentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NginxDeploymentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Nginx
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nginxDeploymentDeploymentsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nginxDeploymentDeploymentsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NginxDeploymentResource(Client, NginxDeploymentData.DeserializeNginxDeploymentData(e)), _nginxDeploymentDeploymentsClientDiagnostics, Pipeline, "NginxDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = NginxDeploymentData.DeserializeNginxDeploymentData(e); return new NginxDeploymentResource(Client, data, data.Id); }, _nginxDeploymentDeploymentsClientDiagnostics, Pipeline, "NginxDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Nginx
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nginxDeploymentDeploymentsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nginxDeploymentDeploymentsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NginxDeploymentResource(Client, NginxDeploymentData.DeserializeNginxDeploymentData(e)), _nginxDeploymentDeploymentsClientDiagnostics, Pipeline, "NginxDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = NginxDeploymentData.DeserializeNginxDeploymentData(e); return new NginxDeploymentResource(Client, data, data.Id); }, _nginxDeploymentDeploymentsClientDiagnostics, Pipeline, "NginxDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

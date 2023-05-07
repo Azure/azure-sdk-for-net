@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SubnetData.DeserializeSubnetData(document.RootElement);
-            return new SubnetResource(_client, data);
+            return new SubnetResource(_client, data, data.Id);
         }
 
         async ValueTask<SubnetResource> IOperationSource<SubnetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SubnetData.DeserializeSubnetData(document.RootElement);
-            return new SubnetResource(_client, data);
+            return new SubnetResource(_client, data, data.Id);
         }
     }
 }

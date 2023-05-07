@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualNetworkPeeringData.DeserializeVirtualNetworkPeeringData(document.RootElement);
-            return new VirtualNetworkPeeringResource(_client, data);
+            return new VirtualNetworkPeeringResource(_client, data, data.Id);
         }
 
         async ValueTask<VirtualNetworkPeeringResource> IOperationSource<VirtualNetworkPeeringResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualNetworkPeeringData.DeserializeVirtualNetworkPeeringData(document.RootElement);
-            return new VirtualNetworkPeeringResource(_client, data);
+            return new VirtualNetworkPeeringResource(_client, data, data.Id);
         }
     }
 }

@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.PostgreSql
                 var response = await _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PostgreSqlServerSecurityAlertPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlServerSecurityAlertPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.PostgreSql
                 var response = _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PostgreSqlServerSecurityAlertPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlServerSecurityAlertPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.PostgreSql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlServerSecurityAlertPolicyResource(Client, PostgreSqlServerSecurityAlertPolicyData.DeserializePostgreSqlServerSecurityAlertPolicyData(e)), _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics, Pipeline, "PostgreSqlServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PostgreSqlServerSecurityAlertPolicyData.DeserializePostgreSqlServerSecurityAlertPolicyData(e); return new PostgreSqlServerSecurityAlertPolicyResource(Client, data, data.Id); }, _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics, Pipeline, "PostgreSqlServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.PostgreSql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlServerSecurityAlertPolicyResource(Client, PostgreSqlServerSecurityAlertPolicyData.DeserializePostgreSqlServerSecurityAlertPolicyData(e)), _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics, Pipeline, "PostgreSqlServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PostgreSqlServerSecurityAlertPolicyData.DeserializePostgreSqlServerSecurityAlertPolicyData(e); return new PostgreSqlServerSecurityAlertPolicyResource(Client, data, data.Id); }, _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics, Pipeline, "PostgreSqlServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

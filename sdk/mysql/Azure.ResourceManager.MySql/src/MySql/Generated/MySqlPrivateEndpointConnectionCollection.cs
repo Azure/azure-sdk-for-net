@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.MySql
                 var response = await _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MySqlPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlPrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.MySql
                 var response = _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MySqlPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlPrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.MySql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlPrivateEndpointConnectionResource(Client, MySqlPrivateEndpointConnectionData.DeserializeMySqlPrivateEndpointConnectionData(e)), _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MySqlPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = MySqlPrivateEndpointConnectionData.DeserializeMySqlPrivateEndpointConnectionData(e); return new MySqlPrivateEndpointConnectionResource(Client, data, data.Id); }, _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MySqlPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.MySql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlPrivateEndpointConnectionResource(Client, MySqlPrivateEndpointConnectionData.DeserializeMySqlPrivateEndpointConnectionData(e)), _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MySqlPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = MySqlPrivateEndpointConnectionData.DeserializeMySqlPrivateEndpointConnectionData(e); return new MySqlPrivateEndpointConnectionResource(Client, data, data.Id); }, _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MySqlPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApplicationGatewayWafDynamicManifestResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApplicationGatewayWafDynamicManifestResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network
                 var response = _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApplicationGatewayWafDynamicManifestResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApplicationGatewayWafDynamicManifestResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayWafDynamicManifestRestClient.CreateGetRequest(Id.SubscriptionId, new AzureLocation(_location));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationGatewayWafDynamicManifestRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApplicationGatewayWafDynamicManifestResource(Client, ApplicationGatewayWafDynamicManifestData.DeserializeApplicationGatewayWafDynamicManifestData(e)), _applicationGatewayWafDynamicManifestClientDiagnostics, Pipeline, "ApplicationGatewayWafDynamicManifestCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ApplicationGatewayWafDynamicManifestData.DeserializeApplicationGatewayWafDynamicManifestData(e); return new ApplicationGatewayWafDynamicManifestResource(Client, data, data.Id); }, _applicationGatewayWafDynamicManifestClientDiagnostics, Pipeline, "ApplicationGatewayWafDynamicManifestCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayWafDynamicManifestRestClient.CreateGetRequest(Id.SubscriptionId, new AzureLocation(_location));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationGatewayWafDynamicManifestRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApplicationGatewayWafDynamicManifestResource(Client, ApplicationGatewayWafDynamicManifestData.DeserializeApplicationGatewayWafDynamicManifestData(e)), _applicationGatewayWafDynamicManifestClientDiagnostics, Pipeline, "ApplicationGatewayWafDynamicManifestCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ApplicationGatewayWafDynamicManifestData.DeserializeApplicationGatewayWafDynamicManifestData(e); return new ApplicationGatewayWafDynamicManifestResource(Client, data, data.Id); }, _applicationGatewayWafDynamicManifestClientDiagnostics, Pipeline, "ApplicationGatewayWafDynamicManifestCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

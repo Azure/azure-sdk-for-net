@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _alertRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ruleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<AlertRuleResource>(Response.FromValue(new AlertRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new MonitorArmOperation<AlertRuleResource>(Response.FromValue(new AlertRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _alertRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ruleName, data, cancellationToken);
-                var operation = new MonitorArmOperation<AlertRuleResource>(Response.FromValue(new AlertRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new MonitorArmOperation<AlertRuleResource>(Response.FromValue(new AlertRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _alertRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AlertRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AlertRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _alertRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AlertRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AlertRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<AlertRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _alertRuleRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AlertRuleResource(Client, AlertRuleData.DeserializeAlertRuleData(e)), _alertRuleClientDiagnostics, Pipeline, "AlertRuleCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = AlertRuleData.DeserializeAlertRuleData(e); return new AlertRuleResource(Client, data, data.Id); }, _alertRuleClientDiagnostics, Pipeline, "AlertRuleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<AlertRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _alertRuleRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AlertRuleResource(Client, AlertRuleData.DeserializeAlertRuleData(e)), _alertRuleClientDiagnostics, Pipeline, "AlertRuleCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = AlertRuleData.DeserializeAlertRuleData(e); return new AlertRuleResource(Client, data, data.Id); }, _alertRuleClientDiagnostics, Pipeline, "AlertRuleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

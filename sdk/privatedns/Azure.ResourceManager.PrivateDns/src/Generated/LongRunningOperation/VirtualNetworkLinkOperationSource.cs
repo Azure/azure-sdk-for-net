@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.PrivateDns
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualNetworkLinkData.DeserializeVirtualNetworkLinkData(document.RootElement);
-            return new VirtualNetworkLinkResource(_client, data);
+            return new VirtualNetworkLinkResource(_client, data, data.Id);
         }
 
         async ValueTask<VirtualNetworkLinkResource> IOperationSource<VirtualNetworkLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualNetworkLinkData.DeserializeVirtualNetworkLinkData(document.RootElement);
-            return new VirtualNetworkLinkResource(_client, data);
+            return new VirtualNetworkLinkResource(_client, data, data.Id);
         }
     }
 }

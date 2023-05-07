@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = HubIPConfigurationData.DeserializeHubIPConfigurationData(document.RootElement);
-            return new HubIPConfigurationResource(_client, data);
+            return new HubIPConfigurationResource(_client, data, data.Id);
         }
 
         async ValueTask<HubIPConfigurationResource> IOperationSource<HubIPConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = HubIPConfigurationData.DeserializeHubIPConfigurationData(document.RootElement);
-            return new HubIPConfigurationResource(_client, data);
+            return new HubIPConfigurationResource(_client, data, data.Id);
         }
     }
 }

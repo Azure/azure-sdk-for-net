@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualHubRouteTableV2Data.DeserializeVirtualHubRouteTableV2Data(document.RootElement);
-            return new VirtualHubRouteTableV2Resource(_client, data);
+            return new VirtualHubRouteTableV2Resource(_client, data, data.Id);
         }
 
         async ValueTask<VirtualHubRouteTableV2Resource> IOperationSource<VirtualHubRouteTableV2Resource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualHubRouteTableV2Data.DeserializeVirtualHubRouteTableV2Data(document.RootElement);
-            return new VirtualHubRouteTableV2Resource(_client, data);
+            return new VirtualHubRouteTableV2Resource(_client, data, data.Id);
         }
     }
 }

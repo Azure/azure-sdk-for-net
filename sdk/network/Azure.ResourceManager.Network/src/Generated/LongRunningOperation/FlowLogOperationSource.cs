@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = FlowLogData.DeserializeFlowLogData(document.RootElement);
-            return new FlowLogResource(_client, data);
+            return new FlowLogResource(_client, data, data.Id);
         }
 
         async ValueTask<FlowLogResource> IOperationSource<FlowLogResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = FlowLogData.DeserializeFlowLogData(document.RootElement);
-            return new FlowLogResource(_client, data);
+            return new FlowLogResource(_client, data, data.Id);
         }
     }
 }

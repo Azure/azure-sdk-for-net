@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.PostgreSql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PostgreSqlVirtualNetworkRuleData.DeserializePostgreSqlVirtualNetworkRuleData(document.RootElement);
-            return new PostgreSqlVirtualNetworkRuleResource(_client, data);
+            return new PostgreSqlVirtualNetworkRuleResource(_client, data, data.Id);
         }
 
         async ValueTask<PostgreSqlVirtualNetworkRuleResource> IOperationSource<PostgreSqlVirtualNetworkRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PostgreSqlVirtualNetworkRuleData.DeserializePostgreSqlVirtualNetworkRuleData(document.RootElement);
-            return new PostgreSqlVirtualNetworkRuleResource(_client, data);
+            return new PostgreSqlVirtualNetworkRuleResource(_client, data, data.Id);
         }
     }
 }

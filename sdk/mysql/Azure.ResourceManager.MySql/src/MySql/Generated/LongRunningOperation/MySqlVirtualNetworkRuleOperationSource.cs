@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.MySql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MySqlVirtualNetworkRuleData.DeserializeMySqlVirtualNetworkRuleData(document.RootElement);
-            return new MySqlVirtualNetworkRuleResource(_client, data);
+            return new MySqlVirtualNetworkRuleResource(_client, data, data.Id);
         }
 
         async ValueTask<MySqlVirtualNetworkRuleResource> IOperationSource<MySqlVirtualNetworkRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MySqlVirtualNetworkRuleData.DeserializeMySqlVirtualNetworkRuleData(document.RootElement);
-            return new MySqlVirtualNetworkRuleResource(_client, data);
+            return new MySqlVirtualNetworkRuleResource(_client, data, data.Id);
         }
     }
 }

@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 var response = await _prefixListGlobalRulestackResourcePrefixListGlobalRulestackRestClient.GetAsync(Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrefixListGlobalRulestackResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrefixListGlobalRulestackResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 var response = _prefixListGlobalRulestackResourcePrefixListGlobalRulestackRestClient.Get(Id.Name, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrefixListGlobalRulestackResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrefixListGlobalRulestackResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _prefixListGlobalRulestackResourcePrefixListGlobalRulestackRestClient.CreateListRequest(Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _prefixListGlobalRulestackResourcePrefixListGlobalRulestackRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PrefixListGlobalRulestackResource(Client, PrefixListGlobalRulestackResourceData.DeserializePrefixListGlobalRulestackResourceData(e)), _prefixListGlobalRulestackResourcePrefixListGlobalRulestackClientDiagnostics, Pipeline, "PrefixListGlobalRulestackResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PrefixListGlobalRulestackResourceData.DeserializePrefixListGlobalRulestackResourceData(e); return new PrefixListGlobalRulestackResource(Client, data, data.Id); }, _prefixListGlobalRulestackResourcePrefixListGlobalRulestackClientDiagnostics, Pipeline, "PrefixListGlobalRulestackResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _prefixListGlobalRulestackResourcePrefixListGlobalRulestackRestClient.CreateListRequest(Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _prefixListGlobalRulestackResourcePrefixListGlobalRulestackRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrefixListGlobalRulestackResource(Client, PrefixListGlobalRulestackResourceData.DeserializePrefixListGlobalRulestackResourceData(e)), _prefixListGlobalRulestackResourcePrefixListGlobalRulestackClientDiagnostics, Pipeline, "PrefixListGlobalRulestackResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PrefixListGlobalRulestackResourceData.DeserializePrefixListGlobalRulestackResourceData(e); return new PrefixListGlobalRulestackResource(Client, data, data.Id); }, _prefixListGlobalRulestackResourcePrefixListGlobalRulestackClientDiagnostics, Pipeline, "PrefixListGlobalRulestackResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

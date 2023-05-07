@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.NetApp
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetAppAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetAppAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetAppAccountResource(Client, NetAppAccountData.DeserializeNetAppAccountData(e)), NetAppAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetAppAccounts", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = NetAppAccountData.DeserializeNetAppAccountData(e); return new NetAppAccountResource(Client, data, data.Id); }, NetAppAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetAppAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.NetApp
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetAppAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetAppAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetAppAccountResource(Client, NetAppAccountData.DeserializeNetAppAccountData(e)), NetAppAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetAppAccounts", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = NetAppAccountData.DeserializeNetAppAccountData(e); return new NetAppAccountResource(Client, data, data.Id); }, NetAppAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetAppAccounts", "value", "nextLink", cancellationToken);
         }
     }
 }

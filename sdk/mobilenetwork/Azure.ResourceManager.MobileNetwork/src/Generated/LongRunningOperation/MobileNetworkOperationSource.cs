@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MobileNetworkData.DeserializeMobileNetworkData(document.RootElement);
-            return new MobileNetworkResource(_client, data);
+            return new MobileNetworkResource(_client, data, data.Id);
         }
 
         async ValueTask<MobileNetworkResource> IOperationSource<MobileNetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MobileNetworkData.DeserializeMobileNetworkData(document.RootElement);
-            return new MobileNetworkResource(_client, data);
+            return new MobileNetworkResource(_client, data, data.Id);
         }
     }
 }

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.PostgreSql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PostgreSqlServerSecurityAlertPolicyData.DeserializePostgreSqlServerSecurityAlertPolicyData(document.RootElement);
-            return new PostgreSqlServerSecurityAlertPolicyResource(_client, data);
+            return new PostgreSqlServerSecurityAlertPolicyResource(_client, data, data.Id);
         }
 
         async ValueTask<PostgreSqlServerSecurityAlertPolicyResource> IOperationSource<PostgreSqlServerSecurityAlertPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PostgreSqlServerSecurityAlertPolicyData.DeserializePostgreSqlServerSecurityAlertPolicyData(document.RootElement);
-            return new PostgreSqlServerSecurityAlertPolicyResource(_client, data);
+            return new PostgreSqlServerSecurityAlertPolicyResource(_client, data, data.Id);
         }
     }
 }

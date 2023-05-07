@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = FirewallPolicyRuleCollectionGroupData.DeserializeFirewallPolicyRuleCollectionGroupData(document.RootElement);
-            return new FirewallPolicyRuleCollectionGroupResource(_client, data);
+            return new FirewallPolicyRuleCollectionGroupResource(_client, data, data.Id);
         }
 
         async ValueTask<FirewallPolicyRuleCollectionGroupResource> IOperationSource<FirewallPolicyRuleCollectionGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = FirewallPolicyRuleCollectionGroupData.DeserializeFirewallPolicyRuleCollectionGroupData(document.RootElement);
-            return new FirewallPolicyRuleCollectionGroupResource(_client, data);
+            return new FirewallPolicyRuleCollectionGroupResource(_client, data, data.Id);
         }
     }
 }

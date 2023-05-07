@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Orbital
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = OrbitalSpacecraftData.DeserializeOrbitalSpacecraftData(document.RootElement);
-            return new OrbitalSpacecraftResource(_client, data);
+            return new OrbitalSpacecraftResource(_client, data, data.Id);
         }
 
         async ValueTask<OrbitalSpacecraftResource> IOperationSource<OrbitalSpacecraftResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = OrbitalSpacecraftData.DeserializeOrbitalSpacecraftData(document.RootElement);
-            return new OrbitalSpacecraftResource(_client, data);
+            return new OrbitalSpacecraftResource(_client, data, data.Id);
         }
     }
 }

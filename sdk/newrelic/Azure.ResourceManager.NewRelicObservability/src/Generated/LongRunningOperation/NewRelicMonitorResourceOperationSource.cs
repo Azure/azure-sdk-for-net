@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NewRelicMonitorResourceData.DeserializeNewRelicMonitorResourceData(document.RootElement);
-            return new NewRelicMonitorResource(_client, data);
+            return new NewRelicMonitorResource(_client, data, data.Id);
         }
 
         async ValueTask<NewRelicMonitorResource> IOperationSource<NewRelicMonitorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NewRelicMonitorResourceData.DeserializeNewRelicMonitorResourceData(document.RootElement);
-            return new NewRelicMonitorResource(_client, data);
+            return new NewRelicMonitorResource(_client, data, data.Id);
         }
     }
 }

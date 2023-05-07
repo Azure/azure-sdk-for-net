@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.NetApp
                 var response = await _netAppAccountAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetAppAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetAppAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.NetApp
                 var response = _netAppAccountAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetAppAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetAppAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.NetApp
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppAccountAccountsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _netAppAccountAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetAppAccountResource(Client, NetAppAccountData.DeserializeNetAppAccountData(e)), _netAppAccountAccountsClientDiagnostics, Pipeline, "NetAppAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = NetAppAccountData.DeserializeNetAppAccountData(e); return new NetAppAccountResource(Client, data, data.Id); }, _netAppAccountAccountsClientDiagnostics, Pipeline, "NetAppAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.NetApp
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppAccountAccountsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _netAppAccountAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetAppAccountResource(Client, NetAppAccountData.DeserializeNetAppAccountData(e)), _netAppAccountAccountsClientDiagnostics, Pipeline, "NetAppAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = NetAppAccountData.DeserializeNetAppAccountData(e); return new NetAppAccountResource(Client, data, data.Id); }, _netAppAccountAccountsClientDiagnostics, Pipeline, "NetAppAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

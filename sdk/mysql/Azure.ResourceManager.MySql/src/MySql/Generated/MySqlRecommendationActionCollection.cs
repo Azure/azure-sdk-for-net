@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MySql
                 var response = await _mySqlRecommendationActionRecommendedActionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MySqlRecommendationActionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlRecommendationActionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MySql
                 var response = _mySqlRecommendationActionRecommendedActionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MySqlRecommendationActionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlRecommendationActionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MySql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlRecommendationActionRecommendedActionsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sessionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlRecommendationActionRecommendedActionsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sessionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlRecommendationActionResource(Client, MySqlRecommendationActionData.DeserializeMySqlRecommendationActionData(e)), _mySqlRecommendationActionRecommendedActionsClientDiagnostics, Pipeline, "MySqlRecommendationActionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = MySqlRecommendationActionData.DeserializeMySqlRecommendationActionData(e); return new MySqlRecommendationActionResource(Client, data, data.Id); }, _mySqlRecommendationActionRecommendedActionsClientDiagnostics, Pipeline, "MySqlRecommendationActionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.MySql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlRecommendationActionRecommendedActionsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sessionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlRecommendationActionRecommendedActionsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sessionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlRecommendationActionResource(Client, MySqlRecommendationActionData.DeserializeMySqlRecommendationActionData(e)), _mySqlRecommendationActionRecommendedActionsClientDiagnostics, Pipeline, "MySqlRecommendationActionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = MySqlRecommendationActionData.DeserializeMySqlRecommendationActionData(e); return new MySqlRecommendationActionResource(Client, data, data.Id); }, _mySqlRecommendationActionRecommendedActionsClientDiagnostics, Pipeline, "MySqlRecommendationActionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

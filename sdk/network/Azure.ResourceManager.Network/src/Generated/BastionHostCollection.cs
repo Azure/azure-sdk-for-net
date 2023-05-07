@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _bastionHostRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, bastionHostName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BastionHostResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BastionHostResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Network
                 var response = _bastionHostRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, bastionHostName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BastionHostResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BastionHostResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _bastionHostRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _bastionHostRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BastionHostResource(Client, BastionHostData.DeserializeBastionHostData(e)), _bastionHostClientDiagnostics, Pipeline, "BastionHostCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = BastionHostData.DeserializeBastionHostData(e); return new BastionHostResource(Client, data, data.Id); }, _bastionHostClientDiagnostics, Pipeline, "BastionHostCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _bastionHostRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _bastionHostRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BastionHostResource(Client, BastionHostData.DeserializeBastionHostData(e)), _bastionHostClientDiagnostics, Pipeline, "BastionHostCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = BastionHostData.DeserializeBastionHostData(e); return new BastionHostResource(Client, data, data.Id); }, _bastionHostClientDiagnostics, Pipeline, "BastionHostCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

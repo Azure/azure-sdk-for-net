@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Initializes a new instance of the <see cref = "MonitorPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MonitorPrivateLinkResource(ArmClient client, MonitorPrivateLinkResourceData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal MonitorPrivateLinkResource(ArmClient client, MonitorPrivateLinkResourceData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _monitorPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MonitorPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MonitorPrivateLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _monitorPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MonitorPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MonitorPrivateLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

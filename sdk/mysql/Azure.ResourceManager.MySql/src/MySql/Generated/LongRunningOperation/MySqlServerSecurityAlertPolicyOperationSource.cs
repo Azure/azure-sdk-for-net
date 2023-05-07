@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.MySql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MySqlServerSecurityAlertPolicyData.DeserializeMySqlServerSecurityAlertPolicyData(document.RootElement);
-            return new MySqlServerSecurityAlertPolicyResource(_client, data);
+            return new MySqlServerSecurityAlertPolicyResource(_client, data, data.Id);
         }
 
         async ValueTask<MySqlServerSecurityAlertPolicyResource> IOperationSource<MySqlServerSecurityAlertPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MySqlServerSecurityAlertPolicyData.DeserializeMySqlServerSecurityAlertPolicyData(document.RootElement);
-            return new MySqlServerSecurityAlertPolicyResource(_client, data);
+            return new MySqlServerSecurityAlertPolicyResource(_client, data, data.Id);
         }
     }
 }

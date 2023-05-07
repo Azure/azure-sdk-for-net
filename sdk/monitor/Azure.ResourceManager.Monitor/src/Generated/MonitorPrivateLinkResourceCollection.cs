@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _monitorPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MonitorPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MonitorPrivateLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _monitorPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MonitorPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MonitorPrivateLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<MonitorPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitorPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MonitorPrivateLinkResource(Client, MonitorPrivateLinkResourceData.DeserializeMonitorPrivateLinkResourceData(e)), _monitorPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "MonitorPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = MonitorPrivateLinkResourceData.DeserializeMonitorPrivateLinkResourceData(e); return new MonitorPrivateLinkResource(Client, data, data.Id); }, _monitorPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "MonitorPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<MonitorPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitorPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MonitorPrivateLinkResource(Client, MonitorPrivateLinkResourceData.DeserializeMonitorPrivateLinkResourceData(e)), _monitorPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "MonitorPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = MonitorPrivateLinkResourceData.DeserializeMonitorPrivateLinkResourceData(e); return new MonitorPrivateLinkResource(Client, data, data.Id); }, _monitorPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "MonitorPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

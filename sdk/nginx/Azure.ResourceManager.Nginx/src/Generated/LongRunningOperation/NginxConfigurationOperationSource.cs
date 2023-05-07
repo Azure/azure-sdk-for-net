@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Nginx
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NginxConfigurationData.DeserializeNginxConfigurationData(document.RootElement);
-            return new NginxConfigurationResource(_client, data);
+            return new NginxConfigurationResource(_client, data, data.Id);
         }
 
         async ValueTask<NginxConfigurationResource> IOperationSource<NginxConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NginxConfigurationData.DeserializeNginxConfigurationData(document.RootElement);
-            return new NginxConfigurationResource(_client, data);
+            return new NginxConfigurationResource(_client, data, data.Id);
         }
     }
 }

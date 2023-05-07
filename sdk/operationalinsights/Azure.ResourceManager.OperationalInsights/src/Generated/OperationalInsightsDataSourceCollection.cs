@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = await _operationalInsightsDataSourceDataSourcesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataSourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsDataSourceResource>(Response.FromValue(new OperationalInsightsDataSourceResource(Client, response), response.GetRawResponse()));
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsDataSourceResource>(Response.FromValue(new OperationalInsightsDataSourceResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = _operationalInsightsDataSourceDataSourcesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataSourceName, data, cancellationToken);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsDataSourceResource>(Response.FromValue(new OperationalInsightsDataSourceResource(Client, response), response.GetRawResponse()));
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsDataSourceResource>(Response.FromValue(new OperationalInsightsDataSourceResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 var response = await _operationalInsightsDataSourceDataSourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataSourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OperationalInsightsDataSourceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OperationalInsightsDataSourceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 var response = _operationalInsightsDataSourceDataSourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataSourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OperationalInsightsDataSourceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OperationalInsightsDataSourceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsDataSourceDataSourcesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _operationalInsightsDataSourceDataSourcesRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OperationalInsightsDataSourceResource(Client, OperationalInsightsDataSourceData.DeserializeOperationalInsightsDataSourceData(e)), _operationalInsightsDataSourceDataSourcesClientDiagnostics, Pipeline, "OperationalInsightsDataSourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = OperationalInsightsDataSourceData.DeserializeOperationalInsightsDataSourceData(e); return new OperationalInsightsDataSourceResource(Client, data, data.Id); }, _operationalInsightsDataSourceDataSourcesClientDiagnostics, Pipeline, "OperationalInsightsDataSourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsDataSourceDataSourcesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _operationalInsightsDataSourceDataSourcesRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OperationalInsightsDataSourceResource(Client, OperationalInsightsDataSourceData.DeserializeOperationalInsightsDataSourceData(e)), _operationalInsightsDataSourceDataSourcesClientDiagnostics, Pipeline, "OperationalInsightsDataSourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = OperationalInsightsDataSourceData.DeserializeOperationalInsightsDataSourceData(e); return new OperationalInsightsDataSourceResource(Client, data, data.Id); }, _operationalInsightsDataSourceDataSourcesClientDiagnostics, Pipeline, "OperationalInsightsDataSourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

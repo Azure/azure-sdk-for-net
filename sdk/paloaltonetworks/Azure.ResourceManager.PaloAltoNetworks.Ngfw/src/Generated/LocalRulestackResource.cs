@@ -46,7 +46,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <summary> Initializes a new instance of the <see cref = "LocalRulestackResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal LocalRulestackResource(ArmClient client, LocalRulestackResourceData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal LocalRulestackResource(ArmClient client, LocalRulestackResourceData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -324,7 +325,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 var response = await _localRulestackResourceLocalRulestacksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LocalRulestackResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LocalRulestackResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -356,7 +357,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 var response = _localRulestackResourceLocalRulestacksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LocalRulestackResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LocalRulestackResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -458,7 +459,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             try
             {
                 var response = await _localRulestackResourceLocalRulestacksRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new LocalRulestackResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LocalRulestackResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -492,7 +493,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             try
             {
                 var response = _localRulestackResourceLocalRulestacksRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new LocalRulestackResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LocalRulestackResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1099,7 +1100,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _localRulestackResourceLocalRulestacksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new LocalRulestackResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new LocalRulestackResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -1153,7 +1154,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _localRulestackResourceLocalRulestacksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new LocalRulestackResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new LocalRulestackResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -1206,7 +1207,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _localRulestackResourceLocalRulestacksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new LocalRulestackResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new LocalRulestackResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -1255,7 +1256,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _localRulestackResourceLocalRulestacksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new LocalRulestackResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new LocalRulestackResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -1303,7 +1304,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _localRulestackResourceLocalRulestacksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new LocalRulestackResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new LocalRulestackResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -1355,7 +1356,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _localRulestackResourceLocalRulestacksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new LocalRulestackResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new LocalRulestackResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {

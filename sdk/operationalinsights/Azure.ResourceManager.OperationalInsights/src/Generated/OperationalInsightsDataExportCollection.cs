@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = await _operationalInsightsDataExportDataExportsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataExportName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsDataExportResource>(Response.FromValue(new OperationalInsightsDataExportResource(Client, response), response.GetRawResponse()));
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsDataExportResource>(Response.FromValue(new OperationalInsightsDataExportResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = _operationalInsightsDataExportDataExportsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataExportName, data, cancellationToken);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsDataExportResource>(Response.FromValue(new OperationalInsightsDataExportResource(Client, response), response.GetRawResponse()));
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsDataExportResource>(Response.FromValue(new OperationalInsightsDataExportResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 var response = await _operationalInsightsDataExportDataExportsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataExportName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OperationalInsightsDataExportResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OperationalInsightsDataExportResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 var response = _operationalInsightsDataExportDataExportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataExportName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OperationalInsightsDataExportResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OperationalInsightsDataExportResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual AsyncPageable<OperationalInsightsDataExportResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsDataExportDataExportsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new OperationalInsightsDataExportResource(Client, OperationalInsightsDataExportData.DeserializeOperationalInsightsDataExportData(e)), _operationalInsightsDataExportDataExportsClientDiagnostics, Pipeline, "OperationalInsightsDataExportCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = OperationalInsightsDataExportData.DeserializeOperationalInsightsDataExportData(e); return new OperationalInsightsDataExportResource(Client, data, data.Id); }, _operationalInsightsDataExportDataExportsClientDiagnostics, Pipeline, "OperationalInsightsDataExportCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual Pageable<OperationalInsightsDataExportResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsDataExportDataExportsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new OperationalInsightsDataExportResource(Client, OperationalInsightsDataExportData.DeserializeOperationalInsightsDataExportData(e)), _operationalInsightsDataExportDataExportsClientDiagnostics, Pipeline, "OperationalInsightsDataExportCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = OperationalInsightsDataExportData.DeserializeOperationalInsightsDataExportData(e); return new OperationalInsightsDataExportResource(Client, data, data.Id); }, _operationalInsightsDataExportDataExportsClientDiagnostics, Pipeline, "OperationalInsightsDataExportCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

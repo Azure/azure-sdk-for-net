@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = await _nestedResourceTypeThirdSkuSkusRestClient.CreateOrUpdateNestedResourceTypeThirdAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation<NestedResourceTypeThirdSkuResource>(Response.FromValue(new NestedResourceTypeThirdSkuResource(Client, response), response.GetRawResponse()));
+                var operation = new ProviderHubArmOperation<NestedResourceTypeThirdSkuResource>(Response.FromValue(new NestedResourceTypeThirdSkuResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = _nestedResourceTypeThirdSkuSkusRestClient.CreateOrUpdateNestedResourceTypeThird(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, data, cancellationToken);
-                var operation = new ProviderHubArmOperation<NestedResourceTypeThirdSkuResource>(Response.FromValue(new NestedResourceTypeThirdSkuResource(Client, response), response.GetRawResponse()));
+                var operation = new ProviderHubArmOperation<NestedResourceTypeThirdSkuResource>(Response.FromValue(new NestedResourceTypeThirdSkuResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ProviderHub
                 var response = await _nestedResourceTypeThirdSkuSkusRestClient.GetNestedResourceTypeThirdAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NestedResourceTypeThirdSkuResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NestedResourceTypeThirdSkuResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ProviderHub
                 var response = _nestedResourceTypeThirdSkuSkusRestClient.GetNestedResourceTypeThird(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird, sku, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NestedResourceTypeThirdSkuResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NestedResourceTypeThirdSkuResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nestedResourceTypeThirdSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeThirdRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nestedResourceTypeThirdSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeThirdNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NestedResourceTypeThirdSkuResource(Client, ResourceTypeSkuData.DeserializeResourceTypeSkuData(e)), _nestedResourceTypeThirdSkuSkusClientDiagnostics, Pipeline, "NestedResourceTypeThirdSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ResourceTypeSkuData.DeserializeResourceTypeSkuData(e); return new NestedResourceTypeThirdSkuResource(Client, data, data.Id); }, _nestedResourceTypeThirdSkuSkusClientDiagnostics, Pipeline, "NestedResourceTypeThirdSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nestedResourceTypeThirdSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeThirdRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nestedResourceTypeThirdSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeThirdNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NestedResourceTypeThirdSkuResource(Client, ResourceTypeSkuData.DeserializeResourceTypeSkuData(e)), _nestedResourceTypeThirdSkuSkusClientDiagnostics, Pipeline, "NestedResourceTypeThirdSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ResourceTypeSkuData.DeserializeResourceTypeSkuData(e); return new NestedResourceTypeThirdSkuResource(Client, data, data.Id); }, _nestedResourceTypeThirdSkuSkusClientDiagnostics, Pipeline, "NestedResourceTypeThirdSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

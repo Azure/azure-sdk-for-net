@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.NetApp
                 var response = await _netAppVolumeQuotaRuleVolumeQuotaRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, volumeQuotaRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetAppVolumeQuotaRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetAppVolumeQuotaRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.NetApp
                 var response = _netAppVolumeQuotaRuleVolumeQuotaRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, volumeQuotaRuleName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetAppVolumeQuotaRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetAppVolumeQuotaRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual AsyncPageable<NetAppVolumeQuotaRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeQuotaRuleVolumeQuotaRulesRestClient.CreateListByVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new NetAppVolumeQuotaRuleResource(Client, NetAppVolumeQuotaRuleData.DeserializeNetAppVolumeQuotaRuleData(e)), _netAppVolumeQuotaRuleVolumeQuotaRulesClientDiagnostics, Pipeline, "NetAppVolumeQuotaRuleCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = NetAppVolumeQuotaRuleData.DeserializeNetAppVolumeQuotaRuleData(e); return new NetAppVolumeQuotaRuleResource(Client, data, data.Id); }, _netAppVolumeQuotaRuleVolumeQuotaRulesClientDiagnostics, Pipeline, "NetAppVolumeQuotaRuleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual Pageable<NetAppVolumeQuotaRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeQuotaRuleVolumeQuotaRulesRestClient.CreateListByVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new NetAppVolumeQuotaRuleResource(Client, NetAppVolumeQuotaRuleData.DeserializeNetAppVolumeQuotaRuleData(e)), _netAppVolumeQuotaRuleVolumeQuotaRulesClientDiagnostics, Pipeline, "NetAppVolumeQuotaRuleCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = NetAppVolumeQuotaRuleData.DeserializeNetAppVolumeQuotaRuleData(e); return new NetAppVolumeQuotaRuleResource(Client, data, data.Id); }, _netAppVolumeQuotaRuleVolumeQuotaRulesClientDiagnostics, Pipeline, "NetAppVolumeQuotaRuleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

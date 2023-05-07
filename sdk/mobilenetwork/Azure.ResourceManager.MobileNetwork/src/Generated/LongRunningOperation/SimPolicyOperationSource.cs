@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SimPolicyData.DeserializeSimPolicyData(document.RootElement);
-            return new SimPolicyResource(_client, data);
+            return new SimPolicyResource(_client, data, data.Id);
         }
 
         async ValueTask<SimPolicyResource> IOperationSource<SimPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SimPolicyData.DeserializeSimPolicyData(document.RootElement);
-            return new SimPolicyResource(_client, data);
+            return new SimPolicyResource(_client, data, data.Id);
         }
     }
 }

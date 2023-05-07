@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _vpnGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VpnGatewayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VpnGatewayResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Network
                 var response = _vpnGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VpnGatewayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VpnGatewayResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vpnGatewayRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vpnGatewayRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VpnGatewayResource(Client, VpnGatewayData.DeserializeVpnGatewayData(e)), _vpnGatewayClientDiagnostics, Pipeline, "VpnGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = VpnGatewayData.DeserializeVpnGatewayData(e); return new VpnGatewayResource(Client, data, data.Id); }, _vpnGatewayClientDiagnostics, Pipeline, "VpnGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vpnGatewayRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vpnGatewayRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VpnGatewayResource(Client, VpnGatewayData.DeserializeVpnGatewayData(e)), _vpnGatewayClientDiagnostics, Pipeline, "VpnGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = VpnGatewayData.DeserializeVpnGatewayData(e); return new VpnGatewayResource(Client, data, data.Id); }, _vpnGatewayClientDiagnostics, Pipeline, "VpnGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

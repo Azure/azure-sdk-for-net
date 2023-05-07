@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.NetApp
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NetAppAccountData.DeserializeNetAppAccountData(document.RootElement);
-            return new NetAppAccountResource(_client, data);
+            return new NetAppAccountResource(_client, data, data.Id);
         }
 
         async ValueTask<NetAppAccountResource> IOperationSource<NetAppAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NetAppAccountData.DeserializeNetAppAccountData(document.RootElement);
-            return new NetAppAccountResource(_client, data);
+            return new NetAppAccountResource(_client, data, data.Id);
         }
     }
 }

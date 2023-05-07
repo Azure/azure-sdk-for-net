@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualHubData.DeserializeVirtualHubData(document.RootElement);
-            return new VirtualHubResource(_client, data);
+            return new VirtualHubResource(_client, data, data.Id);
         }
 
         async ValueTask<VirtualHubResource> IOperationSource<VirtualHubResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualHubData.DeserializeVirtualHubData(document.RootElement);
-            return new VirtualHubResource(_client, data);
+            return new VirtualHubResource(_client, data, data.Id);
         }
     }
 }

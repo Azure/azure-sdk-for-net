@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _azureWebCategoryWebCategoriesRestClient.GetAsync(Id.SubscriptionId, name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AzureWebCategoryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AzureWebCategoryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network
                 var response = _azureWebCategoryWebCategoriesRestClient.Get(Id.SubscriptionId, name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AzureWebCategoryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AzureWebCategoryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureWebCategoryWebCategoriesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureWebCategoryWebCategoriesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureWebCategoryResource(Client, AzureWebCategoryData.DeserializeAzureWebCategoryData(e)), _azureWebCategoryWebCategoriesClientDiagnostics, Pipeline, "AzureWebCategoryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AzureWebCategoryData.DeserializeAzureWebCategoryData(e); return new AzureWebCategoryResource(Client, data, data.Id); }, _azureWebCategoryWebCategoriesClientDiagnostics, Pipeline, "AzureWebCategoryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureWebCategoryWebCategoriesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureWebCategoryWebCategoriesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureWebCategoryResource(Client, AzureWebCategoryData.DeserializeAzureWebCategoryData(e)), _azureWebCategoryWebCategoriesClientDiagnostics, Pipeline, "AzureWebCategoryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AzureWebCategoryData.DeserializeAzureWebCategoryData(e); return new AzureWebCategoryResource(Client, data, data.Id); }, _azureWebCategoryWebCategoriesClientDiagnostics, Pipeline, "AzureWebCategoryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

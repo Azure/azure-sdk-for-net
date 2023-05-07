@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(document.RootElement);
-            return new ExpressRouteCrossConnectionResource(_client, data);
+            return new ExpressRouteCrossConnectionResource(_client, data, data.Id);
         }
 
         async ValueTask<ExpressRouteCrossConnectionResource> IOperationSource<ExpressRouteCrossConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(document.RootElement);
-            return new ExpressRouteCrossConnectionResource(_client, data);
+            return new ExpressRouteCrossConnectionResource(_client, data, data.Id);
         }
     }
 }

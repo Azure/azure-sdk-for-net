@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = await _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataSourceType, data, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedStorageAccountsResource>(Response.FromValue(new OperationalInsightsLinkedStorageAccountsResource(Client, response), response.GetRawResponse()));
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedStorageAccountsResource>(Response.FromValue(new OperationalInsightsLinkedStorageAccountsResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataSourceType, data, cancellationToken);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedStorageAccountsResource>(Response.FromValue(new OperationalInsightsLinkedStorageAccountsResource(Client, response), response.GetRawResponse()));
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedStorageAccountsResource>(Response.FromValue(new OperationalInsightsLinkedStorageAccountsResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 var response = await _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataSourceType, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OperationalInsightsLinkedStorageAccountsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OperationalInsightsLinkedStorageAccountsResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 var response = _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataSourceType, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OperationalInsightsLinkedStorageAccountsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OperationalInsightsLinkedStorageAccountsResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual AsyncPageable<OperationalInsightsLinkedStorageAccountsResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new OperationalInsightsLinkedStorageAccountsResource(Client, OperationalInsightsLinkedStorageAccountsData.DeserializeOperationalInsightsLinkedStorageAccountsData(e)), _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsClientDiagnostics, Pipeline, "OperationalInsightsLinkedStorageAccountsCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = OperationalInsightsLinkedStorageAccountsData.DeserializeOperationalInsightsLinkedStorageAccountsData(e); return new OperationalInsightsLinkedStorageAccountsResource(Client, data, data.Id); }, _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsClientDiagnostics, Pipeline, "OperationalInsightsLinkedStorageAccountsCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual Pageable<OperationalInsightsLinkedStorageAccountsResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new OperationalInsightsLinkedStorageAccountsResource(Client, OperationalInsightsLinkedStorageAccountsData.DeserializeOperationalInsightsLinkedStorageAccountsData(e)), _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsClientDiagnostics, Pipeline, "OperationalInsightsLinkedStorageAccountsCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = OperationalInsightsLinkedStorageAccountsData.DeserializeOperationalInsightsLinkedStorageAccountsData(e); return new OperationalInsightsLinkedStorageAccountsResource(Client, data, data.Id); }, _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsClientDiagnostics, Pipeline, "OperationalInsightsLinkedStorageAccountsCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

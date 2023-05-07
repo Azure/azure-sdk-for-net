@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _natGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, natGatewayName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NatGatewayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NatGatewayResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
                 var response = _natGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, natGatewayName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NatGatewayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NatGatewayResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _natGatewayRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _natGatewayRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NatGatewayResource(Client, NatGatewayData.DeserializeNatGatewayData(e)), _natGatewayClientDiagnostics, Pipeline, "NatGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = NatGatewayData.DeserializeNatGatewayData(e); return new NatGatewayResource(Client, data, data.Id); }, _natGatewayClientDiagnostics, Pipeline, "NatGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _natGatewayRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _natGatewayRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NatGatewayResource(Client, NatGatewayData.DeserializeNatGatewayData(e)), _natGatewayClientDiagnostics, Pipeline, "NatGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = NatGatewayData.DeserializeNatGatewayData(e); return new NatGatewayResource(Client, data, data.Id); }, _natGatewayClientDiagnostics, Pipeline, "NatGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

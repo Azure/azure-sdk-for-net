@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _networkVirtualApplianceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkVirtualApplianceName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkVirtualApplianceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkVirtualApplianceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
                 var response = _networkVirtualApplianceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkVirtualApplianceName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkVirtualApplianceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkVirtualApplianceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkVirtualApplianceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkVirtualApplianceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkVirtualApplianceResource(Client, NetworkVirtualApplianceData.DeserializeNetworkVirtualApplianceData(e)), _networkVirtualApplianceClientDiagnostics, Pipeline, "NetworkVirtualApplianceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = NetworkVirtualApplianceData.DeserializeNetworkVirtualApplianceData(e); return new NetworkVirtualApplianceResource(Client, data, data.Id); }, _networkVirtualApplianceClientDiagnostics, Pipeline, "NetworkVirtualApplianceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkVirtualApplianceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkVirtualApplianceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkVirtualApplianceResource(Client, NetworkVirtualApplianceData.DeserializeNetworkVirtualApplianceData(e)), _networkVirtualApplianceClientDiagnostics, Pipeline, "NetworkVirtualApplianceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = NetworkVirtualApplianceData.DeserializeNetworkVirtualApplianceData(e); return new NetworkVirtualApplianceResource(Client, data, data.Id); }, _networkVirtualApplianceClientDiagnostics, Pipeline, "NetworkVirtualApplianceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

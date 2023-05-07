@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Monitor
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MonitorPrivateEndpointConnectionData.DeserializeMonitorPrivateEndpointConnectionData(document.RootElement);
-            return new MonitorPrivateEndpointConnectionResource(_client, data);
+            return new MonitorPrivateEndpointConnectionResource(_client, data, data.Id);
         }
 
         async ValueTask<MonitorPrivateEndpointConnectionResource> IOperationSource<MonitorPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MonitorPrivateEndpointConnectionData.DeserializeMonitorPrivateEndpointConnectionData(document.RootElement);
-            return new MonitorPrivateEndpointConnectionResource(_client, data);
+            return new MonitorPrivateEndpointConnectionResource(_client, data, data.Id);
         }
     }
 }

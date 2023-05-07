@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _applicationGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApplicationGatewayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApplicationGatewayResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Network
                 var response = _applicationGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationGatewayName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApplicationGatewayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApplicationGatewayResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationGatewayRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApplicationGatewayResource(Client, ApplicationGatewayData.DeserializeApplicationGatewayData(e)), _applicationGatewayClientDiagnostics, Pipeline, "ApplicationGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ApplicationGatewayData.DeserializeApplicationGatewayData(e); return new ApplicationGatewayResource(Client, data, data.Id); }, _applicationGatewayClientDiagnostics, Pipeline, "ApplicationGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationGatewayRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApplicationGatewayResource(Client, ApplicationGatewayData.DeserializeApplicationGatewayData(e)), _applicationGatewayClientDiagnostics, Pipeline, "ApplicationGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ApplicationGatewayData.DeserializeApplicationGatewayData(e); return new ApplicationGatewayResource(Client, data, data.Id); }, _applicationGatewayClientDiagnostics, Pipeline, "ApplicationGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

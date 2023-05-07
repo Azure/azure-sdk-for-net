@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _networkInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkInterfaceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
                 var response = _networkInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkInterfaceName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkInterfaceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkInterfaceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkInterfaceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkInterfaceResource(Client, NetworkInterfaceData.DeserializeNetworkInterfaceData(e)), _networkInterfaceClientDiagnostics, Pipeline, "NetworkInterfaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = NetworkInterfaceData.DeserializeNetworkInterfaceData(e); return new NetworkInterfaceResource(Client, data, data.Id); }, _networkInterfaceClientDiagnostics, Pipeline, "NetworkInterfaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkInterfaceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkInterfaceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkInterfaceResource(Client, NetworkInterfaceData.DeserializeNetworkInterfaceData(e)), _networkInterfaceClientDiagnostics, Pipeline, "NetworkInterfaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = NetworkInterfaceData.DeserializeNetworkInterfaceData(e); return new NetworkInterfaceResource(Client, data, data.Id); }, _networkInterfaceClientDiagnostics, Pipeline, "NetworkInterfaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

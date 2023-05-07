@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.MySql
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MySqlServerKeyData.DeserializeMySqlServerKeyData(document.RootElement);
-            return new MySqlServerKeyResource(_client, data);
+            return new MySqlServerKeyResource(_client, data, data.Id);
         }
 
         async ValueTask<MySqlServerKeyResource> IOperationSource<MySqlServerKeyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MySqlServerKeyData.DeserializeMySqlServerKeyData(document.RootElement);
-            return new MySqlServerKeyResource(_client, data);
+            return new MySqlServerKeyResource(_client, data, data.Id);
         }
     }
 }

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NetworkInterfaceData.DeserializeNetworkInterfaceData(document.RootElement);
-            return new NetworkInterfaceResource(_client, data);
+            return new NetworkInterfaceResource(_client, data, data.Id);
         }
 
         async ValueTask<NetworkInterfaceResource> IOperationSource<NetworkInterfaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NetworkInterfaceData.DeserializeNetworkInterfaceData(document.RootElement);
-            return new NetworkInterfaceResource(_client, data);
+            return new NetworkInterfaceResource(_client, data, data.Id);
         }
     }
 }

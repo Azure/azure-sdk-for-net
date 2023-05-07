@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = await _customRolloutRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Name, rolloutName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation<CustomRolloutResource>(Response.FromValue(new CustomRolloutResource(Client, response), response.GetRawResponse()));
+                var operation = new ProviderHubArmOperation<CustomRolloutResource>(Response.FromValue(new CustomRolloutResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = _customRolloutRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Name, rolloutName, data, cancellationToken);
-                var operation = new ProviderHubArmOperation<CustomRolloutResource>(Response.FromValue(new CustomRolloutResource(Client, response), response.GetRawResponse()));
+                var operation = new ProviderHubArmOperation<CustomRolloutResource>(Response.FromValue(new CustomRolloutResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ProviderHub
                 var response = await _customRolloutRestClient.GetAsync(Id.SubscriptionId, Id.Name, rolloutName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CustomRolloutResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CustomRolloutResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ProviderHub
                 var response = _customRolloutRestClient.Get(Id.SubscriptionId, Id.Name, rolloutName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CustomRolloutResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CustomRolloutResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customRolloutRestClient.CreateListByProviderRegistrationRequest(Id.SubscriptionId, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customRolloutRestClient.CreateListByProviderRegistrationNextPageRequest(nextLink, Id.SubscriptionId, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomRolloutResource(Client, CustomRolloutData.DeserializeCustomRolloutData(e)), _customRolloutClientDiagnostics, Pipeline, "CustomRolloutCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = CustomRolloutData.DeserializeCustomRolloutData(e); return new CustomRolloutResource(Client, data, data.Id); }, _customRolloutClientDiagnostics, Pipeline, "CustomRolloutCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customRolloutRestClient.CreateListByProviderRegistrationRequest(Id.SubscriptionId, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customRolloutRestClient.CreateListByProviderRegistrationNextPageRequest(nextLink, Id.SubscriptionId, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomRolloutResource(Client, CustomRolloutData.DeserializeCustomRolloutData(e)), _customRolloutClientDiagnostics, Pipeline, "CustomRolloutCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = CustomRolloutData.DeserializeCustomRolloutData(e); return new CustomRolloutResource(Client, data, data.Id); }, _customRolloutClientDiagnostics, Pipeline, "CustomRolloutCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = IPAllocationData.DeserializeIPAllocationData(document.RootElement);
-            return new IPAllocationResource(_client, data);
+            return new IPAllocationResource(_client, data, data.Id);
         }
 
         async ValueTask<IPAllocationResource> IOperationSource<IPAllocationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = IPAllocationData.DeserializeIPAllocationData(document.RootElement);
-            return new IPAllocationResource(_client, data);
+            return new IPAllocationResource(_client, data, data.Id);
         }
     }
 }

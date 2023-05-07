@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MySql
                 var response = await _mySqlAdvisorAdvisorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advisorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MySqlAdvisorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlAdvisorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MySql
                 var response = _mySqlAdvisorAdvisorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advisorName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MySqlAdvisorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlAdvisorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.MySql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlAdvisorAdvisorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlAdvisorAdvisorsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlAdvisorResource(Client, MySqlAdvisorData.DeserializeMySqlAdvisorData(e)), _mySqlAdvisorAdvisorsClientDiagnostics, Pipeline, "MySqlAdvisorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = MySqlAdvisorData.DeserializeMySqlAdvisorData(e); return new MySqlAdvisorResource(Client, data, data.Id); }, _mySqlAdvisorAdvisorsClientDiagnostics, Pipeline, "MySqlAdvisorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.MySql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlAdvisorAdvisorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlAdvisorAdvisorsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlAdvisorResource(Client, MySqlAdvisorData.DeserializeMySqlAdvisorData(e)), _mySqlAdvisorAdvisorsClientDiagnostics, Pipeline, "MySqlAdvisorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = MySqlAdvisorData.DeserializeMySqlAdvisorData(e); return new MySqlAdvisorResource(Client, data, data.Id); }, _mySqlAdvisorAdvisorsClientDiagnostics, Pipeline, "MySqlAdvisorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

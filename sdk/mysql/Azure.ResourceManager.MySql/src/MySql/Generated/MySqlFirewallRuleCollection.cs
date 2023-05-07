@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.MySql
                 var response = await _mySqlFirewallRuleFirewallRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MySqlFirewallRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlFirewallRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.MySql
                 var response = _mySqlFirewallRuleFirewallRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MySqlFirewallRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlFirewallRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.MySql
         public virtual AsyncPageable<MySqlFirewallRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFirewallRuleFirewallRulesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MySqlFirewallRuleResource(Client, MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(e)), _mySqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "MySqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(e); return new MySqlFirewallRuleResource(Client, data, data.Id); }, _mySqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "MySqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.MySql
         public virtual Pageable<MySqlFirewallRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFirewallRuleFirewallRulesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MySqlFirewallRuleResource(Client, MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(e)), _mySqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "MySqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(e); return new MySqlFirewallRuleResource(Client, data, data.Id); }, _mySqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "MySqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

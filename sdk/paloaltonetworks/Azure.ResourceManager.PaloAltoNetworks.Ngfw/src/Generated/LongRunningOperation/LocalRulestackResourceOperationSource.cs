@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = LocalRulestackResourceData.DeserializeLocalRulestackResourceData(document.RootElement);
-            return new LocalRulestackResource(_client, data);
+            return new LocalRulestackResource(_client, data, data.Id);
         }
 
         async ValueTask<LocalRulestackResource> IOperationSource<LocalRulestackResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = LocalRulestackResourceData.DeserializeLocalRulestackResourceData(document.RootElement);
-            return new LocalRulestackResource(_client, data);
+            return new LocalRulestackResource(_client, data, data.Id);
         }
     }
 }

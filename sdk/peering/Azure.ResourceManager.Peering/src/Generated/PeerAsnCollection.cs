@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Peering
             try
             {
                 var response = await _peerAsnRestClient.CreateOrUpdateAsync(Id.SubscriptionId, peerAsnName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PeeringArmOperation<PeerAsnResource>(Response.FromValue(new PeerAsnResource(Client, response), response.GetRawResponse()));
+                var operation = new PeeringArmOperation<PeerAsnResource>(Response.FromValue(new PeerAsnResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Peering
             try
             {
                 var response = _peerAsnRestClient.CreateOrUpdate(Id.SubscriptionId, peerAsnName, data, cancellationToken);
-                var operation = new PeeringArmOperation<PeerAsnResource>(Response.FromValue(new PeerAsnResource(Client, response), response.GetRawResponse()));
+                var operation = new PeeringArmOperation<PeerAsnResource>(Response.FromValue(new PeerAsnResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Peering
                 var response = await _peerAsnRestClient.GetAsync(Id.SubscriptionId, peerAsnName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PeerAsnResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PeerAsnResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Peering
                 var response = _peerAsnRestClient.Get(Id.SubscriptionId, peerAsnName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PeerAsnResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PeerAsnResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _peerAsnRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _peerAsnRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PeerAsnResource(Client, PeerAsnData.DeserializePeerAsnData(e)), _peerAsnClientDiagnostics, Pipeline, "PeerAsnCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PeerAsnData.DeserializePeerAsnData(e); return new PeerAsnResource(Client, data, data.Id); }, _peerAsnClientDiagnostics, Pipeline, "PeerAsnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _peerAsnRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _peerAsnRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PeerAsnResource(Client, PeerAsnData.DeserializePeerAsnData(e)), _peerAsnClientDiagnostics, Pipeline, "PeerAsnCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PeerAsnData.DeserializePeerAsnData(e); return new PeerAsnResource(Client, data, data.Id); }, _peerAsnClientDiagnostics, Pipeline, "PeerAsnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

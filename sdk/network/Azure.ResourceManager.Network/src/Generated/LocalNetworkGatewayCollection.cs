@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _localNetworkGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, localNetworkGatewayName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LocalNetworkGatewayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LocalNetworkGatewayResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Network
                 var response = _localNetworkGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, localNetworkGatewayName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LocalNetworkGatewayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LocalNetworkGatewayResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localNetworkGatewayRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localNetworkGatewayRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LocalNetworkGatewayResource(Client, LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(e)), _localNetworkGatewayClientDiagnostics, Pipeline, "LocalNetworkGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(e); return new LocalNetworkGatewayResource(Client, data, data.Id); }, _localNetworkGatewayClientDiagnostics, Pipeline, "LocalNetworkGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localNetworkGatewayRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localNetworkGatewayRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LocalNetworkGatewayResource(Client, LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(e)), _localNetworkGatewayClientDiagnostics, Pipeline, "LocalNetworkGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(e); return new LocalNetworkGatewayResource(Client, data, data.Id); }, _localNetworkGatewayClientDiagnostics, Pipeline, "LocalNetworkGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

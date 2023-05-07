@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _expressRouteCircuitAuthorizationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteCircuitAuthorizationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCircuitAuthorizationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network
                 var response = _expressRouteCircuitAuthorizationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExpressRouteCircuitAuthorizationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCircuitAuthorizationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteCircuitAuthorizationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expressRouteCircuitAuthorizationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteCircuitAuthorizationResource(Client, ExpressRouteCircuitAuthorizationData.DeserializeExpressRouteCircuitAuthorizationData(e)), _expressRouteCircuitAuthorizationClientDiagnostics, Pipeline, "ExpressRouteCircuitAuthorizationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ExpressRouteCircuitAuthorizationData.DeserializeExpressRouteCircuitAuthorizationData(e); return new ExpressRouteCircuitAuthorizationResource(Client, data, data.Id); }, _expressRouteCircuitAuthorizationClientDiagnostics, Pipeline, "ExpressRouteCircuitAuthorizationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteCircuitAuthorizationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expressRouteCircuitAuthorizationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteCircuitAuthorizationResource(Client, ExpressRouteCircuitAuthorizationData.DeserializeExpressRouteCircuitAuthorizationData(e)), _expressRouteCircuitAuthorizationClientDiagnostics, Pipeline, "ExpressRouteCircuitAuthorizationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ExpressRouteCircuitAuthorizationData.DeserializeExpressRouteCircuitAuthorizationData(e); return new ExpressRouteCircuitAuthorizationResource(Client, data, data.Id); }, _expressRouteCircuitAuthorizationClientDiagnostics, Pipeline, "ExpressRouteCircuitAuthorizationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

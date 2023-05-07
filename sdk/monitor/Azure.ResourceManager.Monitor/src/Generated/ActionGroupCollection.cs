@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _actionGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, actionGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<ActionGroupResource>(Response.FromValue(new ActionGroupResource(Client, response), response.GetRawResponse()));
+                var operation = new MonitorArmOperation<ActionGroupResource>(Response.FromValue(new ActionGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _actionGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, actionGroupName, data, cancellationToken);
-                var operation = new MonitorArmOperation<ActionGroupResource>(Response.FromValue(new ActionGroupResource(Client, response), response.GetRawResponse()));
+                var operation = new MonitorArmOperation<ActionGroupResource>(Response.FromValue(new ActionGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = await _actionGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, actionGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ActionGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ActionGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Monitor
                 var response = _actionGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, actionGroupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ActionGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ActionGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<ActionGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _actionGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ActionGroupResource(Client, ActionGroupData.DeserializeActionGroupData(e)), _actionGroupClientDiagnostics, Pipeline, "ActionGroupCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = ActionGroupData.DeserializeActionGroupData(e); return new ActionGroupResource(Client, data, data.Id); }, _actionGroupClientDiagnostics, Pipeline, "ActionGroupCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<ActionGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _actionGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ActionGroupResource(Client, ActionGroupData.DeserializeActionGroupData(e)), _actionGroupClientDiagnostics, Pipeline, "ActionGroupCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = ActionGroupData.DeserializeActionGroupData(e); return new ActionGroupResource(Client, data, data.Id); }, _actionGroupClientDiagnostics, Pipeline, "ActionGroupCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.NetApp
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CapacityPoolData.DeserializeCapacityPoolData(document.RootElement);
-            return new CapacityPoolResource(_client, data);
+            return new CapacityPoolResource(_client, data, data.Id);
         }
 
         async ValueTask<CapacityPoolResource> IOperationSource<CapacityPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CapacityPoolData.DeserializeCapacityPoolData(document.RootElement);
-            return new CapacityPoolResource(_client, data);
+            return new CapacityPoolResource(_client, data, data.Id);
         }
     }
 }

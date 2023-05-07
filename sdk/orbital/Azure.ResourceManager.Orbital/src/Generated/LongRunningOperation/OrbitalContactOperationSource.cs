@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Orbital
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = OrbitalContactData.DeserializeOrbitalContactData(document.RootElement);
-            return new OrbitalContactResource(_client, data);
+            return new OrbitalContactResource(_client, data, data.Id);
         }
 
         async ValueTask<OrbitalContactResource> IOperationSource<OrbitalContactResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = OrbitalContactData.DeserializeOrbitalContactData(document.RootElement);
-            return new OrbitalContactResource(_client, data);
+            return new OrbitalContactResource(_client, data, data.Id);
         }
     }
 }

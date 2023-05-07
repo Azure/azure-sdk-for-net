@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _cloudServiceSwapVipSwapRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CloudServiceSwapResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CloudServiceSwapResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Network
                 var response = _cloudServiceSwapVipSwapRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CloudServiceSwapResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CloudServiceSwapResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network
         public virtual AsyncPageable<CloudServiceSwapResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceSwapVipSwapRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CloudServiceSwapResource(Client, CloudServiceSwapData.DeserializeCloudServiceSwapData(e)), _cloudServiceSwapVipSwapClientDiagnostics, Pipeline, "CloudServiceSwapCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = CloudServiceSwapData.DeserializeCloudServiceSwapData(e); return new CloudServiceSwapResource(Client, data, data.Id); }, _cloudServiceSwapVipSwapClientDiagnostics, Pipeline, "CloudServiceSwapCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Network
         public virtual Pageable<CloudServiceSwapResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceSwapVipSwapRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CloudServiceSwapResource(Client, CloudServiceSwapData.DeserializeCloudServiceSwapData(e)), _cloudServiceSwapVipSwapClientDiagnostics, Pipeline, "CloudServiceSwapCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = CloudServiceSwapData.DeserializeCloudServiceSwapData(e); return new CloudServiceSwapResource(Client, data, data.Id); }, _cloudServiceSwapVipSwapClientDiagnostics, Pipeline, "CloudServiceSwapCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

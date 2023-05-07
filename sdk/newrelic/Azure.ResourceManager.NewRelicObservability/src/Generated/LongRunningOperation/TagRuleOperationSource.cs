@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = TagRuleData.DeserializeTagRuleData(document.RootElement);
-            return new TagRuleResource(_client, data);
+            return new TagRuleResource(_client, data, data.Id);
         }
 
         async ValueTask<TagRuleResource> IOperationSource<TagRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = TagRuleData.DeserializeTagRuleData(document.RootElement);
-            return new TagRuleResource(_client, data);
+            return new TagRuleResource(_client, data, data.Id);
         }
     }
 }

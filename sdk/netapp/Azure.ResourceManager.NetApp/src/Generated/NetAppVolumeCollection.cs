@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.NetApp
                 var response = await _netAppVolumeVolumesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetAppVolumeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetAppVolumeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.NetApp
                 var response = _netAppVolumeVolumesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetAppVolumeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetAppVolumeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.NetApp
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeVolumesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _netAppVolumeVolumesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetAppVolumeResource(Client, NetAppVolumeData.DeserializeNetAppVolumeData(e)), _netAppVolumeVolumesClientDiagnostics, Pipeline, "NetAppVolumeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = NetAppVolumeData.DeserializeNetAppVolumeData(e); return new NetAppVolumeResource(Client, data, data.Id); }, _netAppVolumeVolumesClientDiagnostics, Pipeline, "NetAppVolumeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.NetApp
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeVolumesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _netAppVolumeVolumesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetAppVolumeResource(Client, NetAppVolumeData.DeserializeNetAppVolumeData(e)), _netAppVolumeVolumesClientDiagnostics, Pipeline, "NetAppVolumeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = NetAppVolumeData.DeserializeNetAppVolumeData(e); return new NetAppVolumeResource(Client, data, data.Id); }, _netAppVolumeVolumesClientDiagnostics, Pipeline, "NetAppVolumeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

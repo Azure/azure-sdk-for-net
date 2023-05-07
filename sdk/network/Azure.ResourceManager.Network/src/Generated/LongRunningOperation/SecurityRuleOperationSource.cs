@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SecurityRuleData.DeserializeSecurityRuleData(document.RootElement);
-            return new SecurityRuleResource(_client, data);
+            return new SecurityRuleResource(_client, data, data.Id);
         }
 
         async ValueTask<SecurityRuleResource> IOperationSource<SecurityRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SecurityRuleData.DeserializeSecurityRuleData(document.RootElement);
-            return new SecurityRuleResource(_client, data);
+            return new SecurityRuleResource(_client, data, data.Id);
         }
     }
 }

@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <summary> Initializes a new instance of the <see cref = "GlobalRulestackResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal GlobalRulestackResource(ArmClient client, GlobalRulestackResourceData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal GlobalRulestackResource(ArmClient client, GlobalRulestackResourceData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -376,7 +377,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 var response = await _globalRulestackResourceGlobalRulestackRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GlobalRulestackResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GlobalRulestackResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -408,7 +409,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 var response = _globalRulestackResourceGlobalRulestackRestClient.Get(Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GlobalRulestackResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GlobalRulestackResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -510,7 +511,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             try
             {
                 var response = await _globalRulestackResourceGlobalRulestackRestClient.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new GlobalRulestackResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GlobalRulestackResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -544,7 +545,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             try
             {
                 var response = _globalRulestackResourceGlobalRulestackRestClient.Update(Id.Name, patch, cancellationToken);
-                return Response.FromValue(new GlobalRulestackResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GlobalRulestackResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

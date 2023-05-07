@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DedicatedCapacityData.DeserializeDedicatedCapacityData(document.RootElement);
-            return new DedicatedCapacityResource(_client, data);
+            return new DedicatedCapacityResource(_client, data, new ResourceIdentifier(data.Id));
         }
 
         async ValueTask<DedicatedCapacityResource> IOperationSource<DedicatedCapacityResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DedicatedCapacityData.DeserializeDedicatedCapacityData(document.RootElement);
-            return new DedicatedCapacityResource(_client, data);
+            return new DedicatedCapacityResource(_client, data, new ResourceIdentifier(data.Id));
         }
     }
 }

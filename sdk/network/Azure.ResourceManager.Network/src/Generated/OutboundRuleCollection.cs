@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _outboundRuleLoadBalancerOutboundRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OutboundRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OutboundRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network
                 var response = _outboundRuleLoadBalancerOutboundRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OutboundRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OutboundRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _outboundRuleLoadBalancerOutboundRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _outboundRuleLoadBalancerOutboundRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OutboundRuleResource(Client, OutboundRuleData.DeserializeOutboundRuleData(e)), _outboundRuleLoadBalancerOutboundRulesClientDiagnostics, Pipeline, "OutboundRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = OutboundRuleData.DeserializeOutboundRuleData(e); return new OutboundRuleResource(Client, data, data.Id); }, _outboundRuleLoadBalancerOutboundRulesClientDiagnostics, Pipeline, "OutboundRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _outboundRuleLoadBalancerOutboundRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _outboundRuleLoadBalancerOutboundRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OutboundRuleResource(Client, OutboundRuleData.DeserializeOutboundRuleData(e)), _outboundRuleLoadBalancerOutboundRulesClientDiagnostics, Pipeline, "OutboundRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = OutboundRuleData.DeserializeOutboundRuleData(e); return new OutboundRuleResource(Client, data, data.Id); }, _outboundRuleLoadBalancerOutboundRulesClientDiagnostics, Pipeline, "OutboundRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

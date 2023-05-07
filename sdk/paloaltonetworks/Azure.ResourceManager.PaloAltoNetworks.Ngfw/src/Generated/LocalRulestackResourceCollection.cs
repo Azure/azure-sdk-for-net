@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 var response = await _localRulestackResourceLocalRulestacksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, localRulestackName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LocalRulestackResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LocalRulestackResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 var response = _localRulestackResourceLocalRulestacksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, localRulestackName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LocalRulestackResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LocalRulestackResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackResourceLocalRulestacksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localRulestackResourceLocalRulestacksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackResource(Client, LocalRulestackResourceData.DeserializeLocalRulestackResourceData(e)), _localRulestackResourceLocalRulestacksClientDiagnostics, Pipeline, "LocalRulestackResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = LocalRulestackResourceData.DeserializeLocalRulestackResourceData(e); return new LocalRulestackResource(Client, data, data.Id); }, _localRulestackResourceLocalRulestacksClientDiagnostics, Pipeline, "LocalRulestackResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackResourceLocalRulestacksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localRulestackResourceLocalRulestacksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackResource(Client, LocalRulestackResourceData.DeserializeLocalRulestackResourceData(e)), _localRulestackResourceLocalRulestacksClientDiagnostics, Pipeline, "LocalRulestackResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = LocalRulestackResourceData.DeserializeLocalRulestackResourceData(e); return new LocalRulestackResource(Client, data, data.Id); }, _localRulestackResourceLocalRulestacksClientDiagnostics, Pipeline, "LocalRulestackResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

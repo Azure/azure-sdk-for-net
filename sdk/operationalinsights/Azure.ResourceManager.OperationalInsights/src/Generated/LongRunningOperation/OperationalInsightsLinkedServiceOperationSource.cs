@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = OperationalInsightsLinkedServiceData.DeserializeOperationalInsightsLinkedServiceData(document.RootElement);
-            return new OperationalInsightsLinkedServiceResource(_client, data);
+            return new OperationalInsightsLinkedServiceResource(_client, data, data.Id);
         }
 
         async ValueTask<OperationalInsightsLinkedServiceResource> IOperationSource<OperationalInsightsLinkedServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = OperationalInsightsLinkedServiceData.DeserializeOperationalInsightsLinkedServiceData(document.RootElement);
-            return new OperationalInsightsLinkedServiceResource(_client, data);
+            return new OperationalInsightsLinkedServiceResource(_client, data, data.Id);
         }
     }
 }

@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _virtualWanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualWanName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualWanResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualWanResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Network
                 var response = _virtualWanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualWanName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualWanResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualWanResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualWanRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualWanRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualWanResource(Client, VirtualWanData.DeserializeVirtualWanData(e)), _virtualWanClientDiagnostics, Pipeline, "VirtualWanCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = VirtualWanData.DeserializeVirtualWanData(e); return new VirtualWanResource(Client, data, data.Id); }, _virtualWanClientDiagnostics, Pipeline, "VirtualWanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualWanRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualWanRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualWanResource(Client, VirtualWanData.DeserializeVirtualWanData(e)), _virtualWanClientDiagnostics, Pipeline, "VirtualWanCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = VirtualWanData.DeserializeVirtualWanData(e); return new VirtualWanResource(Client, data, data.Id); }, _virtualWanClientDiagnostics, Pipeline, "VirtualWanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

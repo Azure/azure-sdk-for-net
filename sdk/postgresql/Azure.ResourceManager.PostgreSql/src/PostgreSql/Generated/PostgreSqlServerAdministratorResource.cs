@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.PostgreSql
         /// <summary> Initializes a new instance of the <see cref = "PostgreSqlServerAdministratorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PostgreSqlServerAdministratorResource(ArmClient client, PostgreSqlServerAdministratorData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal PostgreSqlServerAdministratorResource(ArmClient client, PostgreSqlServerAdministratorData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.PostgreSql
                 var response = await _postgreSqlServerAdministratorServerAdministratorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PostgreSqlServerAdministratorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlServerAdministratorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.PostgreSql
                 var response = _postgreSqlServerAdministratorServerAdministratorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PostgreSqlServerAdministratorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlServerAdministratorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

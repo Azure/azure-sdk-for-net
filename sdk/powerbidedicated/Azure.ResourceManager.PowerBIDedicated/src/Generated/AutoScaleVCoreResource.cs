@@ -46,7 +46,8 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <summary> Initializes a new instance of the <see cref = "AutoScaleVCoreResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AutoScaleVCoreResource(ArmClient client, AutoScaleVCoreData data) : this(client, new ResourceIdentifier(data.Id))
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal AutoScaleVCoreResource(ArmClient client, AutoScaleVCoreData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 var response = await _autoScaleVCoreRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutoScaleVCoreResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutoScaleVCoreResource(Client, response.Value, new ResourceIdentifier(response.Value.Id)), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 var response = _autoScaleVCoreRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AutoScaleVCoreResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutoScaleVCoreResource(Client, response.Value, new ResourceIdentifier(response.Value.Id)), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -246,7 +247,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             try
             {
                 var response = await _autoScaleVCoreRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new AutoScaleVCoreResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutoScaleVCoreResource(Client, response.Value, new ResourceIdentifier(response.Value.Id)), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -280,7 +281,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             try
             {
                 var response = _autoScaleVCoreRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new AutoScaleVCoreResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutoScaleVCoreResource(Client, response.Value, new ResourceIdentifier(response.Value.Id)), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -321,7 +322,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _autoScaleVCoreRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AutoScaleVCoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new AutoScaleVCoreResource(Client, originalResponse.Value, new ResourceIdentifier(originalResponse.Value.Id)), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -375,7 +376,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _autoScaleVCoreRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new AutoScaleVCoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new AutoScaleVCoreResource(Client, originalResponse.Value, new ResourceIdentifier(originalResponse.Value.Id)), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -428,7 +429,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _autoScaleVCoreRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AutoScaleVCoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new AutoScaleVCoreResource(Client, originalResponse.Value, new ResourceIdentifier(originalResponse.Value.Id)), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -477,7 +478,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _autoScaleVCoreRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new AutoScaleVCoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new AutoScaleVCoreResource(Client, originalResponse.Value, new ResourceIdentifier(originalResponse.Value.Id)), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -525,7 +526,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _autoScaleVCoreRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AutoScaleVCoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new AutoScaleVCoreResource(Client, originalResponse.Value, new ResourceIdentifier(originalResponse.Value.Id)), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -577,7 +578,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _autoScaleVCoreRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new AutoScaleVCoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new AutoScaleVCoreResource(Client, originalResponse.Value, new ResourceIdentifier(originalResponse.Value.Id)), originalResponse.GetRawResponse());
                 }
                 else
                 {

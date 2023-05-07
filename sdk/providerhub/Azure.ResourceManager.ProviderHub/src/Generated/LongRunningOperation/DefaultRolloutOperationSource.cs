@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ProviderHub
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DefaultRolloutData.DeserializeDefaultRolloutData(document.RootElement);
-            return new DefaultRolloutResource(_client, data);
+            return new DefaultRolloutResource(_client, data, data.Id);
         }
 
         async ValueTask<DefaultRolloutResource> IOperationSource<DefaultRolloutResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DefaultRolloutData.DeserializeDefaultRolloutData(document.RootElement);
-            return new DefaultRolloutResource(_client, data);
+            return new DefaultRolloutResource(_client, data, data.Id);
         }
     }
 }

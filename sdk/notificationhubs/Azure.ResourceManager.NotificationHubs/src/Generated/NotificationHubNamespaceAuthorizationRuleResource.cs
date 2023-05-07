@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <summary> Initializes a new instance of the <see cref = "NotificationHubNamespaceAuthorizationRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal NotificationHubNamespaceAuthorizationRuleResource(ArmClient client, NotificationHubAuthorizationRuleData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal NotificationHubNamespaceAuthorizationRuleResource(ArmClient client, NotificationHubAuthorizationRuleData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 var response = await _notificationHubNamespaceAuthorizationRuleNamespacesRestClient.GetAuthorizationRuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 var response = _notificationHubNamespaceAuthorizationRuleNamespacesRestClient.GetAuthorizationRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -245,7 +246,7 @@ namespace Azure.ResourceManager.NotificationHubs
             try
             {
                 var response = await _notificationHubNamespaceAuthorizationRuleNamespacesRestClient.CreateOrUpdateAuthorizationRuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NotificationHubsArmOperation<NotificationHubNamespaceAuthorizationRuleResource>(Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new NotificationHubsArmOperation<NotificationHubNamespaceAuthorizationRuleResource>(Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,7 +284,7 @@ namespace Azure.ResourceManager.NotificationHubs
             try
             {
                 var response = _notificationHubNamespaceAuthorizationRuleNamespacesRestClient.CreateOrUpdateAuthorizationRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new NotificationHubsArmOperation<NotificationHubNamespaceAuthorizationRuleResource>(Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new NotificationHubsArmOperation<NotificationHubNamespaceAuthorizationRuleResource>(Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

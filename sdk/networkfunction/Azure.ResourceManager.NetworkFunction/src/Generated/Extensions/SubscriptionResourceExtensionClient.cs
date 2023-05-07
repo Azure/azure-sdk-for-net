@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetworkFunction
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AzureTrafficCollectorsBySubscriptionRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzureTrafficCollectorsBySubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureTrafficCollectorResource(Client, AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(e)), AzureTrafficCollectorsBySubscriptionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAzureTrafficCollectors", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(e); return new AzureTrafficCollectorResource(Client, data, data.Id); }, AzureTrafficCollectorsBySubscriptionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAzureTrafficCollectors", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NetworkFunction
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AzureTrafficCollectorsBySubscriptionRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzureTrafficCollectorsBySubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureTrafficCollectorResource(Client, AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(e)), AzureTrafficCollectorsBySubscriptionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAzureTrafficCollectors", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(e); return new AzureTrafficCollectorResource(Client, data, data.Id); }, AzureTrafficCollectorsBySubscriptionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAzureTrafficCollectors", "value", "nextLink", cancellationToken);
         }
     }
 }

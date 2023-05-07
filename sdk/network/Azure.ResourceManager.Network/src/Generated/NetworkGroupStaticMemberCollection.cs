@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkGroupStaticMemberStaticMembersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, staticMemberName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<NetworkGroupStaticMemberResource>(Response.FromValue(new NetworkGroupStaticMemberResource(Client, response), response.GetRawResponse()));
+                var operation = new NetworkArmOperation<NetworkGroupStaticMemberResource>(Response.FromValue(new NetworkGroupStaticMemberResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkGroupStaticMemberStaticMembersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, staticMemberName, data, cancellationToken);
-                var operation = new NetworkArmOperation<NetworkGroupStaticMemberResource>(Response.FromValue(new NetworkGroupStaticMemberResource(Client, response), response.GetRawResponse()));
+                var operation = new NetworkArmOperation<NetworkGroupStaticMemberResource>(Response.FromValue(new NetworkGroupStaticMemberResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _networkGroupStaticMemberStaticMembersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, staticMemberName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkGroupStaticMemberResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkGroupStaticMemberResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network
                 var response = _networkGroupStaticMemberStaticMembersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, staticMemberName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkGroupStaticMemberResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkGroupStaticMemberResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkGroupStaticMemberStaticMembersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkGroupStaticMemberStaticMembersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkGroupStaticMemberResource(Client, NetworkGroupStaticMemberData.DeserializeNetworkGroupStaticMemberData(e)), _networkGroupStaticMemberStaticMembersClientDiagnostics, Pipeline, "NetworkGroupStaticMemberCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = NetworkGroupStaticMemberData.DeserializeNetworkGroupStaticMemberData(e); return new NetworkGroupStaticMemberResource(Client, data, data.Id); }, _networkGroupStaticMemberStaticMembersClientDiagnostics, Pipeline, "NetworkGroupStaticMemberCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkGroupStaticMemberStaticMembersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkGroupStaticMemberStaticMembersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkGroupStaticMemberResource(Client, NetworkGroupStaticMemberData.DeserializeNetworkGroupStaticMemberData(e)), _networkGroupStaticMemberStaticMembersClientDiagnostics, Pipeline, "NetworkGroupStaticMemberCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = NetworkGroupStaticMemberData.DeserializeNetworkGroupStaticMemberData(e); return new NetworkGroupStaticMemberResource(Client, data, data.Id); }, _networkGroupStaticMemberStaticMembersClientDiagnostics, Pipeline, "NetworkGroupStaticMemberCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

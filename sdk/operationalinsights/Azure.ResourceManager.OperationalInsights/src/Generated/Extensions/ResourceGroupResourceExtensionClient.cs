@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = await LogAnalyticsQueryPackQueryPacksRestClient.CreateOrUpdateWithoutNameAsync(Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new LogAnalyticsQueryPackResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogAnalyticsQueryPackResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = LogAnalyticsQueryPackQueryPacksRestClient.CreateOrUpdateWithoutName(Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken);
-                return Response.FromValue(new LogAnalyticsQueryPackResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogAnalyticsQueryPackResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual AsyncPageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspacesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new OperationalInsightsWorkspaceResource(Client, OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(e)), DeletedWorkspacesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetDeletedWorkspaces", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(e); return new OperationalInsightsWorkspaceResource(Client, data, data.Id); }, DeletedWorkspacesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetDeletedWorkspaces", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual Pageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new OperationalInsightsWorkspaceResource(Client, OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(e)), DeletedWorkspacesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetDeletedWorkspaces", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(e); return new OperationalInsightsWorkspaceResource(Client, data, data.Id); }, DeletedWorkspacesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetDeletedWorkspaces", "value", null, cancellationToken);
         }
     }
 }
