@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_PoolsGet()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/Pools_Get.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Pools_Get.json
             // this example is just showing the usage of "Pools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -33,10 +33,42 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this PoolResource created on azure
             // for more information of creating PoolResource, please refer to the document of PoolResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
-            string projectName = "{projectName}";
-            string poolName = "{poolName}";
+            string projectName = "DevProject";
+            string poolName = "DevPool";
+            ResourceIdentifier poolResourceId = PoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, poolName);
+            PoolResource pool = client.GetPoolResource(poolResourceId);
+
+            // invoke the operation
+            PoolResource result = await pool.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Pools_GetUnhealthyStatus
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_PoolsGetUnhealthyStatus()
+        {
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Pools_GetUnhealthyStatus.json
+            // this example is just showing the usage of "Pools_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PoolResource created on azure
+            // for more information of creating PoolResource, please refer to the document of PoolResource
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string resourceGroupName = "rg1";
+            string projectName = "DevProject";
+            string poolName = "DevPool";
             ResourceIdentifier poolResourceId = PoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, poolName);
             PoolResource pool = client.GetPoolResource(poolResourceId);
 
@@ -55,7 +87,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_PoolsUpdate()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/Pools_Patch.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Pools_Patch.json
             // this example is just showing the usage of "Pools_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,10 +97,10 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this PoolResource created on azure
             // for more information of creating PoolResource, please refer to the document of PoolResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
-            string projectName = "{projectName}";
-            string poolName = "{poolName}";
+            string projectName = "DevProject";
+            string poolName = "DevPool";
             ResourceIdentifier poolResourceId = PoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, poolName);
             PoolResource pool = client.GetPoolResource(poolResourceId);
 
@@ -92,7 +124,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_PoolsDelete()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/Pools_Delete.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Pools_Delete.json
             // this example is just showing the usage of "Pools_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -102,15 +134,43 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this PoolResource created on azure
             // for more information of creating PoolResource, please refer to the document of PoolResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
-            string projectName = "{projectName}";
+            string projectName = "DevProject";
             string poolName = "poolName";
             ResourceIdentifier poolResourceId = PoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, poolName);
             PoolResource pool = client.GetPoolResource(poolResourceId);
 
             // invoke the operation
             await pool.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // Pools_RefreshStatus
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task RunHealthChecks_PoolsRefreshStatus()
+        {
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Pools_RunHealthChecks.json
+            // this example is just showing the usage of "Pools_RunHealthChecks" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PoolResource created on azure
+            // for more information of creating PoolResource, please refer to the document of PoolResource
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string resourceGroupName = "rg1";
+            string projectName = "DevProject";
+            string poolName = "DevPool";
+            ResourceIdentifier poolResourceId = PoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, poolName);
+            PoolResource pool = client.GetPoolResource(poolResourceId);
+
+            // invoke the operation
+            await pool.RunHealthChecksAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }

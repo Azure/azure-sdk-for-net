@@ -14,15 +14,15 @@ using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Samples
 {
-    public partial class Sample_ProjectAttachedNetworkConnectionCollection
+    public partial class Sample_AllowedEnvironmentTypeCollection
     {
-        // AttachedNetworks_ListByProject
+        // ProjectAllowedEnvironmentTypes_List
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_AttachedNetworksListByProject()
+        public async Task GetAll_ProjectAllowedEnvironmentTypesList()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/AttachedNetworks_ListByProject.json
-            // this example is just showing the usage of "AttachedNetworks_ListByProject" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/ProjectAllowedEnvironmentTypes_List.json
+            // this example is just showing the usage of "ProjectAllowedEnvironmentTypes_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -33,19 +33,19 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // for more information of creating ProjectResource, please refer to the document of ProjectResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
-            string projectName = "DevProject";
+            string projectName = "Contoso";
             ResourceIdentifier projectResourceId = ProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
             ProjectResource project = client.GetProjectResource(projectResourceId);
 
-            // get the collection of this ProjectAttachedNetworkConnectionResource
-            ProjectAttachedNetworkConnectionCollection collection = project.GetProjectAttachedNetworkConnections();
+            // get the collection of this AllowedEnvironmentTypeResource
+            AllowedEnvironmentTypeCollection collection = project.GetAllowedEnvironmentTypes();
 
             // invoke the operation and iterate over the result
-            await foreach (ProjectAttachedNetworkConnectionResource item in collection.GetAllAsync())
+            await foreach (AllowedEnvironmentTypeResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AttachedNetworkConnectionData resourceData = item.Data;
+                AllowedEnvironmentTypeData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.DevCenter.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // AttachedNetworks_GetByProject
+        // ProjectAllowedEnvironmentTypes_Get
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_AttachedNetworksGetByProject()
+        public async Task Get_ProjectAllowedEnvironmentTypesGet()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/AttachedNetworks_GetByProject.json
-            // this example is just showing the usage of "AttachedNetworks_GetByProject" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/ProjectAllowedEnvironmentTypes_Get.json
+            // this example is just showing the usage of "ProjectAllowedEnvironmentTypes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -70,31 +70,31 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // for more information of creating ProjectResource, please refer to the document of ProjectResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
-            string projectName = "DevProject";
+            string projectName = "Contoso";
             ResourceIdentifier projectResourceId = ProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
             ProjectResource project = client.GetProjectResource(projectResourceId);
 
-            // get the collection of this ProjectAttachedNetworkConnectionResource
-            ProjectAttachedNetworkConnectionCollection collection = project.GetProjectAttachedNetworkConnections();
+            // get the collection of this AllowedEnvironmentTypeResource
+            AllowedEnvironmentTypeCollection collection = project.GetAllowedEnvironmentTypes();
 
             // invoke the operation
-            string attachedNetworkConnectionName = "network-uswest3";
-            ProjectAttachedNetworkConnectionResource result = await collection.GetAsync(attachedNetworkConnectionName);
+            string environmentTypeName = "DevTest";
+            AllowedEnvironmentTypeResource result = await collection.GetAsync(environmentTypeName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AttachedNetworkConnectionData resourceData = result.Data;
+            AllowedEnvironmentTypeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AttachedNetworks_GetByProject
+        // ProjectAllowedEnvironmentTypes_Get
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_AttachedNetworksGetByProject()
+        public async Task Exists_ProjectAllowedEnvironmentTypesGet()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/AttachedNetworks_GetByProject.json
-            // this example is just showing the usage of "AttachedNetworks_GetByProject" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/ProjectAllowedEnvironmentTypes_Get.json
+            // this example is just showing the usage of "ProjectAllowedEnvironmentTypes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -105,16 +105,16 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // for more information of creating ProjectResource, please refer to the document of ProjectResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
-            string projectName = "DevProject";
+            string projectName = "Contoso";
             ResourceIdentifier projectResourceId = ProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
             ProjectResource project = client.GetProjectResource(projectResourceId);
 
-            // get the collection of this ProjectAttachedNetworkConnectionResource
-            ProjectAttachedNetworkConnectionCollection collection = project.GetProjectAttachedNetworkConnections();
+            // get the collection of this AllowedEnvironmentTypeResource
+            AllowedEnvironmentTypeCollection collection = project.GetAllowedEnvironmentTypes();
 
             // invoke the operation
-            string attachedNetworkConnectionName = "network-uswest3";
-            bool result = await collection.ExistsAsync(attachedNetworkConnectionName);
+            string environmentTypeName = "DevTest";
+            bool result = await collection.ExistsAsync(environmentTypeName);
 
             Console.WriteLine($"Succeeded: {result}");
         }

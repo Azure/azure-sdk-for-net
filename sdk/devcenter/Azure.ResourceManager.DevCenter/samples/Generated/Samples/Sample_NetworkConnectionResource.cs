@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetNetworkConnections_NetworkConnectionsListBySubscription()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/NetworkConnections_ListBySubscription.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/NetworkConnections_ListBySubscription.json
             // this example is just showing the usage of "NetworkConnections_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_NetworkConnectionsGet()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/NetworkConnections_Get.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/NetworkConnections_Get.json
             // this example is just showing the usage of "NetworkConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this NetworkConnectionResource created on azure
             // for more information of creating NetworkConnectionResource, please refer to the document of NetworkConnectionResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string networkConnectionName = "uswest3network";
             ResourceIdentifier networkConnectionResourceId = NetworkConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkConnectionName);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_NetworkConnectionsUpdate()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/NetworkConnections_Patch.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/NetworkConnections_Patch.json
             // this example is just showing the usage of "NetworkConnections_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this NetworkConnectionResource created on azure
             // for more information of creating NetworkConnectionResource, please refer to the document of NetworkConnectionResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string networkConnectionName = "uswest3network";
             ResourceIdentifier networkConnectionResourceId = NetworkConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkConnectionName);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_NetworkConnectionsDelete()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/NetworkConnections_Delete.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/NetworkConnections_Delete.json
             // this example is just showing the usage of "NetworkConnections_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -133,9 +133,9 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this NetworkConnectionResource created on azure
             // for more information of creating NetworkConnectionResource, please refer to the document of NetworkConnectionResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
-            string networkConnectionName = "{networkConnectionName}";
+            string networkConnectionName = "eastusnetwork";
             ResourceIdentifier networkConnectionResourceId = NetworkConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkConnectionName);
             NetworkConnectionResource networkConnection = client.GetNetworkConnectionResource(networkConnectionResourceId);
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task RunHealthChecks_NetworkConnectionsRunHealthChecks()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/NetworkConnections_RunHealthChecks.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/NetworkConnections_RunHealthChecks.json
             // this example is just showing the usage of "NetworkConnections_RunHealthChecks" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -160,14 +160,44 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this NetworkConnectionResource created on azure
             // for more information of creating NetworkConnectionResource, please refer to the document of NetworkConnectionResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string networkConnectionName = "uswest3network";
             ResourceIdentifier networkConnectionResourceId = NetworkConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkConnectionName);
             NetworkConnectionResource networkConnection = client.GetNetworkConnectionResource(networkConnectionResourceId);
 
             // invoke the operation
-            await networkConnection.RunHealthChecksAsync();
+            await networkConnection.RunHealthChecksAsync(WaitUntil.Completed);
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // ListOutboundNetworkDependencies
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetOutboundNetworkDependenciesEndpoints_ListOutboundNetworkDependencies()
+        {
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/NetworkConnections_ListOutboundNetworkDependenciesEndpoints.json
+            // this example is just showing the usage of "NetworkConnections_ListOutboundNetworkDependenciesEndpoints" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkConnectionResource created on azure
+            // for more information of creating NetworkConnectionResource, please refer to the document of NetworkConnectionResource
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string resourceGroupName = "rg1";
+            string networkConnectionName = "uswest3network";
+            ResourceIdentifier networkConnectionResourceId = NetworkConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkConnectionName);
+            NetworkConnectionResource networkConnection = client.GetNetworkConnectionResource(networkConnectionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (OutboundEnvironmentEndpoint item in networkConnection.GetOutboundNetworkDependenciesEndpointsAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
             Console.WriteLine($"Succeeded");
         }
