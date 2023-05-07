@@ -763,10 +763,10 @@ namespace Azure.Core.Json
 #endif
 
             // If it's not already there, we'll add a change to this element's JsonElement instead.
-            Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(GetRawBytes())!;
+            Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(GetRawBytes(), _root.SerializerOptions)!;
             dict[name] = value;
 
-            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(dict);
+            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(dict, _root.SerializerOptions);
             JsonElement newElement = JsonDocument.Parse(bytes).RootElement;
 
             int index = Changes.AddChange(_path, newElement, true);
@@ -795,10 +795,10 @@ namespace Azure.Core.Json
                 throw new InvalidOperationException($"Object does not have property: '{name}'.");
             }
 
-            Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(GetRawBytes())!;
+            Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(GetRawBytes(), _root.SerializerOptions)!;
             dict.Remove(name);
 
-            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(dict);
+            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(dict, _root.SerializerOptions);
             JsonElement newElement = JsonDocument.Parse(bytes).RootElement;
 
             Changes.AddChange(_path, newElement, true);

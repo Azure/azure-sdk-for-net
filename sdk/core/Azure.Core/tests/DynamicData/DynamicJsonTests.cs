@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using NUnit.Framework;
 
@@ -291,6 +292,175 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual("hi", (string)jsonData.Foo);
             Assert.AreEqual(2, (int)jsonData.Bar);
+        }
+
+        [Test]
+        public void CanAddPocoProperty()
+        {
+            dynamic value = BinaryData.FromBytes("""
+                {
+                    "foo": 1
+                }
+                """u8.ToArray()).ToDynamicFromJson();
+
+            JsonDataTests.SampleModel model = new()
+            {
+                Message = "hi",
+                Number = 2,
+            };
+
+            value.Model = model;
+
+            Assert.IsTrue(value.Foo == 1);
+            Assert.IsTrue(value.foo == 1);
+            Assert.IsTrue(value.Model.Message == "hi");
+            Assert.IsTrue(value.model.message == "hi");
+            Assert.IsTrue(value.Model.Number == 2);
+            Assert.IsTrue(value.model.number == 2);
+
+            RequestContent content = RequestContent.Create(value);
+            Stream stream = new MemoryStream();
+            content.WriteTo(stream, default);
+            stream.Flush();
+            stream.Position = 0;
+
+            BinaryData data = BinaryData.FromStream(stream);
+            dynamic roundTripValue = data.ToDynamicFromJson();
+
+            Assert.IsTrue(roundTripValue.foo == value.Foo);
+            Assert.IsTrue(roundTripValue.model.message == value.Model.Message);
+            Assert.IsTrue(roundTripValue.model.number == value.Model.Number);
+
+            Assert.AreEqual(model, (JsonDataTests.SampleModel)roundTripValue.model);
+            Assert.AreEqual(model, (JsonDataTests.SampleModel)roundTripValue.Model);
+            Assert.AreEqual(model, (JsonDataTests.SampleModel)value.model);
+            Assert.AreEqual(model, (JsonDataTests.SampleModel)value.Model);
+        }
+
+        [Test]
+        public void CanAddNestedPocoProperty()
+        {
+            dynamic value = BinaryData.FromBytes("""
+                {
+                    "foo": 1
+                }
+                """u8.ToArray()).ToDynamicFromJson();
+
+            ParentModel model = new ParentModel()
+            {
+                Name = "Parent",
+                Value = new ChildModel()
+                {
+                    Message = "Child",
+                    Number = 1
+                }
+            };
+
+            value.Model = model;
+
+            Assert.IsTrue(value.Foo == 1);
+            Assert.IsTrue(value.foo == 1);
+            Assert.IsTrue(value.Model.Name == "Parent");
+            Assert.IsTrue(value.model.name == "Parent");
+            Assert.IsTrue(value.Model.Value.Message == "Child");
+            Assert.IsTrue(value.model.value.message == "Child");
+
+            // Test serialization
+            BinaryData jdocBuffer = MutableJsonDocumentTests.GetWriteToBuffer(JsonDocument.Parse(value.ToString()));
+            BinaryData dataBuffer = GetWriteToBuffer(value);
+
+            Assert.AreEqual(jdocBuffer.ToString(), dataBuffer.ToString());
+            Assert.IsTrue(jdocBuffer.ToMemory().Span.SequenceEqual(dataBuffer.ToMemory().Span),
+                "JsonDocument buffer does not match MutableJsonDocument buffer.");
+
+            // Test deserialization
+            BinaryData bd = BinaryData.FromString(value.ToString());
+            dynamic roundTripValue = bd.ToDynamicFromJson();
+            Assert.AreEqual(model.Value, (ChildModel)roundTripValue.Model.Value);
+            Assert.AreEqual(model, (ParentModel)roundTripValue.Model);
+        }
+
+        [Test]
+        public void CanSetNestedPocoProperty()
+        {
+            dynamic value = BinaryData.FromBytes("""
+                {
+                    "foo": 1
+                }
+                """u8.ToArray()).ToDynamicFromJson();
+
+            ParentModel model = new ParentModel()
+            {
+                Name = "Parent",
+                Value = new ChildModel()
+                {
+                    Message = "Child",
+                    Number = 1
+                }
+            };
+
+            value.Foo = model;
+
+            Assert.IsTrue(value.Foo.Name == "Parent");
+            Assert.IsTrue(value.foo.name == "Parent");
+            Assert.IsTrue(value.Foo.Value.Message == "Child");
+            Assert.IsTrue(value.foo.value.message == "Child");
+
+            // Test serialization
+            BinaryData jdocBuffer = MutableJsonDocumentTests.GetWriteToBuffer(JsonDocument.Parse(value.ToString()));
+            BinaryData dataBuffer = GetWriteToBuffer(value);
+
+            Assert.AreEqual(jdocBuffer.ToString(), dataBuffer.ToString());
+            Assert.IsTrue(jdocBuffer.ToMemory().Span.SequenceEqual(dataBuffer.ToMemory().Span),
+                "JsonDocument buffer does not match MutableJsonDocument buffer.");
+
+            // Test deserialization
+            BinaryData bd = BinaryData.FromString(value.ToString());
+            dynamic roundTripValue = bd.ToDynamicFromJson();
+            Assert.AreEqual(model.Value, (ChildModel)roundTripValue.Foo.Value);
+            Assert.AreEqual(model, (ParentModel)roundTripValue.Foo);
+        }
+
+        [Test]
+        public void RoundTripSerializeDoesntMapPascalJsonToCamelCSharp()
+        {
+            dynamic value = BinaryData.FromBytes("""
+                {
+                    "Foo": 1
+                }
+                """u8.ToArray()).ToDynamicFromJson();
+
+            camelCaseModel model = new()
+            {
+                message = "camel",
+                number = 1
+            };
+
+            value.Foo = model;
+
+            // Deserialize shouldn't map the values
+            //Assert.IsFalse(model, (camelCaseModel)value.Foo);
+
+            //// Test serialization
+            //BinaryData jdocBuffer = MutableJsonDocumentTests.GetWriteToBuffer(JsonDocument.Parse(value.ToString()));
+            //BinaryData dataBuffer = GetWriteToBuffer(value);
+
+            //Assert.AreEqual(jdocBuffer.ToString(), dataBuffer.ToString());
+            //Assert.IsTrue(jdocBuffer.ToMemory().Span.SequenceEqual(dataBuffer.ToMemory().Span),
+            //    "JsonDocument buffer does not match MutableJsonDocument buffer.");
+
+            //// Test deserialization
+            //BinaryData bd = BinaryData.FromString(value.ToString());
+            //dynamic roundTripValue = bd.ToDynamicFromJson();
+            //Assert.AreEqual(model, (ParentModel)roundTripValue.Foo);
+        }
+
+        internal static BinaryData GetWriteToBuffer(dynamic data)
+        {
+            using MemoryStream stream = new();
+            data.WriteTo(stream);
+            stream.Position = 0;
+            return BinaryData.FromStream(stream);
         }
 
         [Test]
@@ -935,6 +1105,58 @@ namespace Azure.Core.Tests
 
         internal class CustomType
         {
+        }
+
+#pragma warning disable CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
+        internal class ParentModel : IEquatable<ParentModel>
+#pragma warning disable CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
+        {
+            public string Name { get; set; }
+            public ChildModel Value { get; set; }
+
+            public override bool Equals(object obj)
+            {
+                ParentModel other = obj as ParentModel;
+                if (other == null)
+                {
+                    return false;
+                }
+
+                return Equals(other);
+            }
+
+            public bool Equals(ParentModel obj)
+            {
+                return Name == obj.Name && Value.Equals(obj.Value);
+            }
+        }
+
+        internal class ChildModel : IEquatable<ChildModel>
+        {
+            public string Message { get; set; }
+            public int Number { get; set; }
+
+            public override bool Equals(object obj)
+            {
+                ChildModel other = obj as ChildModel;
+                if (other == null)
+                {
+                    return false;
+                }
+
+                return Equals(other);
+            }
+
+            public bool Equals(ChildModel obj)
+            {
+                return Message == obj.Message && Number == obj.Number;
+            }
+        }
+
+        internal class camelCaseModel
+        {
+            public string message { get; set; }
+            public int number { get; set; }
         }
         #endregion
     }
