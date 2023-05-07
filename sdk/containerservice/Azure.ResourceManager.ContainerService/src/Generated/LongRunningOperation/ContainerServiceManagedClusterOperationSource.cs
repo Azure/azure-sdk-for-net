@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ContainerService
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ContainerServiceManagedClusterData.DeserializeContainerServiceManagedClusterData(document.RootElement);
-            return new ContainerServiceManagedClusterResource(_client, data);
+            return new ContainerServiceManagedClusterResource(_client, data, data.Id);
         }
 
         async ValueTask<ContainerServiceManagedClusterResource> IOperationSource<ContainerServiceManagedClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ContainerServiceManagedClusterData.DeserializeContainerServiceManagedClusterData(document.RootElement);
-            return new ContainerServiceManagedClusterResource(_client, data);
+            return new ContainerServiceManagedClusterResource(_client, data, data.Id);
         }
     }
 }

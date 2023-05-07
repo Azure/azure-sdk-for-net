@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = await _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient.GetByLocationAsync(Id.SubscriptionId, new AzureLocation(Id.Name), instanceId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RestorableCosmosDBAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RestorableCosmosDBAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient.GetByLocation(Id.SubscriptionId, new AzureLocation(Id.Name), instanceId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RestorableCosmosDBAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RestorableCosmosDBAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<RestorableCosmosDBAccountResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new RestorableCosmosDBAccountResource(Client, RestorableCosmosDBAccountData.DeserializeRestorableCosmosDBAccountData(e)), _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = RestorableCosmosDBAccountData.DeserializeRestorableCosmosDBAccountData(e); return new RestorableCosmosDBAccountResource(Client, data, data.Id); }, _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<RestorableCosmosDBAccountResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new RestorableCosmosDBAccountResource(Client, RestorableCosmosDBAccountData.DeserializeRestorableCosmosDBAccountData(e)), _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = RestorableCosmosDBAccountData.DeserializeRestorableCosmosDBAccountData(e); return new RestorableCosmosDBAccountResource(Client, data, data.Id); }, _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

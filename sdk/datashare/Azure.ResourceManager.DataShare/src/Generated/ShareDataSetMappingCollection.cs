@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = await _shareDataSetMappingDataSetMappingsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataSetMappingName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataShareArmOperation<ShareDataSetMappingResource>(Response.FromValue(new ShareDataSetMappingResource(Client, response), response.GetRawResponse()));
+                var operation = new DataShareArmOperation<ShareDataSetMappingResource>(Response.FromValue(new ShareDataSetMappingResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = _shareDataSetMappingDataSetMappingsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataSetMappingName, data, cancellationToken);
-                var operation = new DataShareArmOperation<ShareDataSetMappingResource>(Response.FromValue(new ShareDataSetMappingResource(Client, response), response.GetRawResponse()));
+                var operation = new DataShareArmOperation<ShareDataSetMappingResource>(Response.FromValue(new ShareDataSetMappingResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataShare
                 var response = await _shareDataSetMappingDataSetMappingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataSetMappingName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ShareDataSetMappingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ShareDataSetMappingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataShare
                 var response = _shareDataSetMappingDataSetMappingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataSetMappingName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ShareDataSetMappingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ShareDataSetMappingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareDataSetMappingDataSetMappingsRestClient.CreateListByShareSubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareDataSetMappingDataSetMappingsRestClient.CreateListByShareSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ShareDataSetMappingResource(Client, ShareDataSetMappingData.DeserializeShareDataSetMappingData(e)), _shareDataSetMappingDataSetMappingsClientDiagnostics, Pipeline, "ShareDataSetMappingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ShareDataSetMappingData.DeserializeShareDataSetMappingData(e); return new ShareDataSetMappingResource(Client, data, data.Id); }, _shareDataSetMappingDataSetMappingsClientDiagnostics, Pipeline, "ShareDataSetMappingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareDataSetMappingDataSetMappingsRestClient.CreateListByShareSubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareDataSetMappingDataSetMappingsRestClient.CreateListByShareSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ShareDataSetMappingResource(Client, ShareDataSetMappingData.DeserializeShareDataSetMappingData(e)), _shareDataSetMappingDataSetMappingsClientDiagnostics, Pipeline, "ShareDataSetMappingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ShareDataSetMappingData.DeserializeShareDataSetMappingData(e); return new ShareDataSetMappingResource(Client, data, data.Id); }, _shareDataSetMappingDataSetMappingsClientDiagnostics, Pipeline, "ShareDataSetMappingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

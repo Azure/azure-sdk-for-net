@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DiagnosticProactiveLogCollectionSettingData.DeserializeDiagnosticProactiveLogCollectionSettingData(document.RootElement);
-            return new DiagnosticProactiveLogCollectionSettingResource(_client, data);
+            return new DiagnosticProactiveLogCollectionSettingResource(_client, data, data.Id);
         }
 
         async ValueTask<DiagnosticProactiveLogCollectionSettingResource> IOperationSource<DiagnosticProactiveLogCollectionSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DiagnosticProactiveLogCollectionSettingData.DeserializeDiagnosticProactiveLogCollectionSettingData(document.RootElement);
-            return new DiagnosticProactiveLogCollectionSettingResource(_client, data);
+            return new DiagnosticProactiveLogCollectionSettingResource(_client, data, data.Id);
         }
     }
 }

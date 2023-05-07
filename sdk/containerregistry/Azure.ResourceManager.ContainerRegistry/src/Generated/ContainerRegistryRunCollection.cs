@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 var response = await _containerRegistryRunRunsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerRegistryRunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryRunResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 var response = _containerRegistryRunRunsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerRegistryRunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryRunResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryRunRunsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryRunRunsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryRunResource(Client, ContainerRegistryRunData.DeserializeContainerRegistryRunData(e)), _containerRegistryRunRunsClientDiagnostics, Pipeline, "ContainerRegistryRunCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ContainerRegistryRunData.DeserializeContainerRegistryRunData(e); return new ContainerRegistryRunResource(Client, data, data.Id); }, _containerRegistryRunRunsClientDiagnostics, Pipeline, "ContainerRegistryRunCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryRunRunsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryRunRunsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryRunResource(Client, ContainerRegistryRunData.DeserializeContainerRegistryRunData(e)), _containerRegistryRunRunsClientDiagnostics, Pipeline, "ContainerRegistryRunCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ContainerRegistryRunData.DeserializeContainerRegistryRunData(e); return new ContainerRegistryRunResource(Client, data, data.Id); }, _containerRegistryRunRunsClientDiagnostics, Pipeline, "ContainerRegistryRunCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

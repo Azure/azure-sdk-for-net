@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Compute
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CapacityReservationData.DeserializeCapacityReservationData(document.RootElement);
-            return new CapacityReservationResource(_client, data);
+            return new CapacityReservationResource(_client, data, data.Id);
         }
 
         async ValueTask<CapacityReservationResource> IOperationSource<CapacityReservationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CapacityReservationData.DeserializeCapacityReservationData(document.RootElement);
-            return new CapacityReservationResource(_client, data);
+            return new CapacityReservationResource(_client, data, data.Id);
         }
     }
 }

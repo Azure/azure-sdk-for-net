@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = BandwidthScheduleData.DeserializeBandwidthScheduleData(document.RootElement);
-            return new BandwidthScheduleResource(_client, data);
+            return new BandwidthScheduleResource(_client, data, data.Id);
         }
 
         async ValueTask<BandwidthScheduleResource> IOperationSource<BandwidthScheduleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = BandwidthScheduleData.DeserializeBandwidthScheduleData(document.RootElement);
-            return new BandwidthScheduleResource(_client, data);
+            return new BandwidthScheduleResource(_client, data, data.Id);
         }
     }
 }

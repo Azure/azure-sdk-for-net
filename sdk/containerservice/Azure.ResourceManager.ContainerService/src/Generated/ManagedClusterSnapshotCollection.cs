@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = await _managedClusterSnapshotRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation<ManagedClusterSnapshotResource>(Response.FromValue(new ManagedClusterSnapshotResource(Client, response), response.GetRawResponse()));
+                var operation = new ContainerServiceArmOperation<ManagedClusterSnapshotResource>(Response.FromValue(new ManagedClusterSnapshotResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = _managedClusterSnapshotRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken);
-                var operation = new ContainerServiceArmOperation<ManagedClusterSnapshotResource>(Response.FromValue(new ManagedClusterSnapshotResource(Client, response), response.GetRawResponse()));
+                var operation = new ContainerServiceArmOperation<ManagedClusterSnapshotResource>(Response.FromValue(new ManagedClusterSnapshotResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ContainerService
                 var response = await _managedClusterSnapshotRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedClusterSnapshotResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedClusterSnapshotResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ContainerService
                 var response = _managedClusterSnapshotRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedClusterSnapshotResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedClusterSnapshotResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedClusterSnapshotRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedClusterSnapshotRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedClusterSnapshotResource(Client, ManagedClusterSnapshotData.DeserializeManagedClusterSnapshotData(e)), _managedClusterSnapshotClientDiagnostics, Pipeline, "ManagedClusterSnapshotCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ManagedClusterSnapshotData.DeserializeManagedClusterSnapshotData(e); return new ManagedClusterSnapshotResource(Client, data, data.Id); }, _managedClusterSnapshotClientDiagnostics, Pipeline, "ManagedClusterSnapshotCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedClusterSnapshotRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedClusterSnapshotRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedClusterSnapshotResource(Client, ManagedClusterSnapshotData.DeserializeManagedClusterSnapshotData(e)), _managedClusterSnapshotClientDiagnostics, Pipeline, "ManagedClusterSnapshotCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ManagedClusterSnapshotData.DeserializeManagedClusterSnapshotData(e); return new ManagedClusterSnapshotResource(Client, data, data.Id); }, _managedClusterSnapshotClientDiagnostics, Pipeline, "ManagedClusterSnapshotCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

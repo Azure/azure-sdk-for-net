@@ -46,7 +46,8 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> Initializes a new instance of the <see cref = "ContainerServiceFleetResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ContainerServiceFleetResource(ArmClient client, ContainerServiceFleetData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal ContainerServiceFleetResource(ArmClient client, ContainerServiceFleetData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.ContainerService
                 var response = await _containerServiceFleetFleetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerServiceFleetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceFleetResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -197,7 +198,7 @@ namespace Azure.ResourceManager.ContainerService
                 var response = _containerServiceFleetFleetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerServiceFleetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceFleetResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -302,7 +303,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = await _containerServiceFleetFleetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ContainerServiceFleetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceFleetResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -337,7 +338,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = _containerServiceFleetFleetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken);
-                return Response.FromValue(new ContainerServiceFleetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceFleetResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -438,7 +439,7 @@ namespace Azure.ResourceManager.ContainerService
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _containerServiceFleetFleetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ContainerServiceFleetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new ContainerServiceFleetResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -492,7 +493,7 @@ namespace Azure.ResourceManager.ContainerService
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _containerServiceFleetFleetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ContainerServiceFleetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new ContainerServiceFleetResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -545,7 +546,7 @@ namespace Azure.ResourceManager.ContainerService
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _containerServiceFleetFleetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ContainerServiceFleetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new ContainerServiceFleetResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -594,7 +595,7 @@ namespace Azure.ResourceManager.ContainerService
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _containerServiceFleetFleetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ContainerServiceFleetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new ContainerServiceFleetResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -642,7 +643,7 @@ namespace Azure.ResourceManager.ContainerService
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _containerServiceFleetFleetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ContainerServiceFleetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new ContainerServiceFleetResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -694,7 +695,7 @@ namespace Azure.ResourceManager.ContainerService
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _containerServiceFleetFleetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ContainerServiceFleetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new ContainerServiceFleetResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {

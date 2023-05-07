@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Confluent
                 var response = await _confluentOrganizationOrganizationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Confluent
                 var response = _confluentOrganizationOrganizationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Confluent
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfluentOrganizationResource(Client, ConfluentOrganizationData.DeserializeConfluentOrganizationData(e)), _confluentOrganizationOrganizationClientDiagnostics, Pipeline, "ConfluentOrganizationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ConfluentOrganizationData.DeserializeConfluentOrganizationData(e); return new ConfluentOrganizationResource(Client, data, data.Id); }, _confluentOrganizationOrganizationClientDiagnostics, Pipeline, "ConfluentOrganizationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Confluent
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfluentOrganizationResource(Client, ConfluentOrganizationData.DeserializeConfluentOrganizationData(e)), _confluentOrganizationOrganizationClientDiagnostics, Pipeline, "ConfluentOrganizationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ConfluentOrganizationData.DeserializeConfluentOrganizationData(e); return new ConfluentOrganizationResource(Client, data, data.Id); }, _confluentOrganizationOrganizationClientDiagnostics, Pipeline, "ConfluentOrganizationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

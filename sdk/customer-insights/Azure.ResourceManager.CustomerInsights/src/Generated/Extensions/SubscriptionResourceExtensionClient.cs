@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HubRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HubRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HubResource(Client, HubData.DeserializeHubData(e)), HubClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHubs", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = HubData.DeserializeHubData(e); return new HubResource(Client, data, data.Id); }, HubClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHubs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HubRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HubRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HubResource(Client, HubData.DeserializeHubData(e)), HubClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHubs", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = HubData.DeserializeHubData(e); return new HubResource(Client, data, data.Id); }, HubClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHubs", "value", "nextLink", cancellationToken);
         }
     }
 }

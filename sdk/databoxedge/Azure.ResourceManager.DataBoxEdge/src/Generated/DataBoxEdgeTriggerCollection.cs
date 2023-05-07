@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 var response = await _dataBoxEdgeTriggerTriggersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataBoxEdgeTriggerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataBoxEdgeTriggerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 var response = _dataBoxEdgeTriggerTriggersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataBoxEdgeTriggerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataBoxEdgeTriggerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeTriggerTriggersRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeTriggerTriggersRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeTriggerResource(Client, DataBoxEdgeTriggerData.DeserializeDataBoxEdgeTriggerData(e)), _dataBoxEdgeTriggerTriggersClientDiagnostics, Pipeline, "DataBoxEdgeTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DataBoxEdgeTriggerData.DeserializeDataBoxEdgeTriggerData(e); return new DataBoxEdgeTriggerResource(Client, data, data.Id); }, _dataBoxEdgeTriggerTriggersClientDiagnostics, Pipeline, "DataBoxEdgeTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeTriggerTriggersRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeTriggerTriggersRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeTriggerResource(Client, DataBoxEdgeTriggerData.DeserializeDataBoxEdgeTriggerData(e)), _dataBoxEdgeTriggerTriggersClientDiagnostics, Pipeline, "DataBoxEdgeTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DataBoxEdgeTriggerData.DeserializeDataBoxEdgeTriggerData(e); return new DataBoxEdgeTriggerResource(Client, data, data.Id); }, _dataBoxEdgeTriggerTriggersClientDiagnostics, Pipeline, "DataBoxEdgeTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

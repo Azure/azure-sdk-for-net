@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 var response = await _vMwareDatastoreDatastoresRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, datastoreName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VMwareDatastoreResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VMwareDatastoreResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 var response = _vMwareDatastoreDatastoresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, datastoreName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VMwareDatastoreResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VMwareDatastoreResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vMwareDatastoreDatastoresRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vMwareDatastoreDatastoresRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VMwareDatastoreResource(Client, VMwareDatastoreData.DeserializeVMwareDatastoreData(e)), _vMwareDatastoreDatastoresClientDiagnostics, Pipeline, "VMwareDatastoreCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = VMwareDatastoreData.DeserializeVMwareDatastoreData(e); return new VMwareDatastoreResource(Client, data, data.Id); }, _vMwareDatastoreDatastoresClientDiagnostics, Pipeline, "VMwareDatastoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vMwareDatastoreDatastoresRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vMwareDatastoreDatastoresRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VMwareDatastoreResource(Client, VMwareDatastoreData.DeserializeVMwareDatastoreData(e)), _vMwareDatastoreDatastoresClientDiagnostics, Pipeline, "VMwareDatastoreCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = VMwareDatastoreData.DeserializeVMwareDatastoreData(e); return new VMwareDatastoreResource(Client, data, data.Id); }, _vMwareDatastoreDatastoresClientDiagnostics, Pipeline, "VMwareDatastoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

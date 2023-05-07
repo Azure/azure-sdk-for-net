@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = await _gremlinDatabaseGremlinResourcesRestClient.GetGremlinDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GremlinDatabaseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GremlinDatabaseResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = _gremlinDatabaseGremlinResourcesRestClient.GetGremlinDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GremlinDatabaseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GremlinDatabaseResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<GremlinDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gremlinDatabaseGremlinResourcesRestClient.CreateListGremlinDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new GremlinDatabaseResource(Client, GremlinDatabaseData.DeserializeGremlinDatabaseData(e)), _gremlinDatabaseGremlinResourcesClientDiagnostics, Pipeline, "GremlinDatabaseCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = GremlinDatabaseData.DeserializeGremlinDatabaseData(e); return new GremlinDatabaseResource(Client, data, data.Id); }, _gremlinDatabaseGremlinResourcesClientDiagnostics, Pipeline, "GremlinDatabaseCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<GremlinDatabaseResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gremlinDatabaseGremlinResourcesRestClient.CreateListGremlinDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new GremlinDatabaseResource(Client, GremlinDatabaseData.DeserializeGremlinDatabaseData(e)), _gremlinDatabaseGremlinResourcesClientDiagnostics, Pipeline, "GremlinDatabaseCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = GremlinDatabaseData.DeserializeGremlinDatabaseData(e); return new GremlinDatabaseResource(Client, data, data.Id); }, _gremlinDatabaseGremlinResourcesClientDiagnostics, Pipeline, "GremlinDatabaseCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

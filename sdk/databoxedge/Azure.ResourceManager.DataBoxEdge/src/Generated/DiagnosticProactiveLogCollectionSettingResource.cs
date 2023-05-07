@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <summary> Initializes a new instance of the <see cref = "DiagnosticProactiveLogCollectionSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DiagnosticProactiveLogCollectionSettingResource(ArmClient client, DiagnosticProactiveLogCollectionSettingData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal DiagnosticProactiveLogCollectionSettingResource(ArmClient client, DiagnosticProactiveLogCollectionSettingData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 var response = await _diagnosticProactiveLogCollectionSettingDiagnosticSettingsRestClient.GetDiagnosticProactiveLogCollectionSettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DiagnosticProactiveLogCollectionSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiagnosticProactiveLogCollectionSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 var response = _diagnosticProactiveLogCollectionSettingDiagnosticSettingsRestClient.GetDiagnosticProactiveLogCollectionSettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DiagnosticProactiveLogCollectionSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiagnosticProactiveLogCollectionSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

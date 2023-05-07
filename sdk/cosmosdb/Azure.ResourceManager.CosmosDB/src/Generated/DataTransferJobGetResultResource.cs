@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Initializes a new instance of the <see cref = "DataTransferJobGetResultResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataTransferJobGetResultResource(ArmClient client, DataTransferJobGetResultData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal DataTransferJobGetResultResource(ArmClient client, DataTransferJobGetResultData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = await _dataTransferJobGetResultDataTransferJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataTransferJobGetResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataTransferJobGetResultResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = _dataTransferJobGetResultDataTransferJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataTransferJobGetResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataTransferJobGetResultResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _dataTransferJobGetResultDataTransferJobsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<DataTransferJobGetResultResource>(Response.FromValue(new DataTransferJobGetResultResource(Client, response), response.GetRawResponse()));
+                var operation = new CosmosDBArmOperation<DataTransferJobGetResultResource>(Response.FromValue(new DataTransferJobGetResultResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -215,7 +216,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _dataTransferJobGetResultDataTransferJobsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<DataTransferJobGetResultResource>(Response.FromValue(new DataTransferJobGetResultResource(Client, response), response.GetRawResponse()));
+                var operation = new CosmosDBArmOperation<DataTransferJobGetResultResource>(Response.FromValue(new DataTransferJobGetResultResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -248,7 +249,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _dataTransferJobGetResultDataTransferJobsRestClient.PauseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DataTransferJobGetResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataTransferJobGetResultResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -278,7 +279,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _dataTransferJobGetResultDataTransferJobsRestClient.Pause(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new DataTransferJobGetResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataTransferJobGetResultResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -308,7 +309,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _dataTransferJobGetResultDataTransferJobsRestClient.ResumeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DataTransferJobGetResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataTransferJobGetResultResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -338,7 +339,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _dataTransferJobGetResultDataTransferJobsRestClient.Resume(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new DataTransferJobGetResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataTransferJobGetResultResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -368,7 +369,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _dataTransferJobGetResultDataTransferJobsRestClient.CancelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DataTransferJobGetResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataTransferJobGetResultResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -398,7 +399,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _dataTransferJobGetResultDataTransferJobsRestClient.Cancel(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new DataTransferJobGetResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataTransferJobGetResultResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

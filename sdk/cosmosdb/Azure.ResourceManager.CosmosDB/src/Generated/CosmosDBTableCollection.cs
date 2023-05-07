@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = await _cosmosDBTableTableResourcesRestClient.GetTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CosmosDBTableResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CosmosDBTableResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = _cosmosDBTableTableResourcesRestClient.GetTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CosmosDBTableResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CosmosDBTableResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CosmosDBTableResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBTableTableResourcesRestClient.CreateListTablesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBTableResource(Client, CosmosDBTableData.DeserializeCosmosDBTableData(e)), _cosmosDBTableTableResourcesClientDiagnostics, Pipeline, "CosmosDBTableCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = CosmosDBTableData.DeserializeCosmosDBTableData(e); return new CosmosDBTableResource(Client, data, data.Id); }, _cosmosDBTableTableResourcesClientDiagnostics, Pipeline, "CosmosDBTableCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CosmosDBTableResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBTableTableResourcesRestClient.CreateListTablesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBTableResource(Client, CosmosDBTableData.DeserializeCosmosDBTableData(e)), _cosmosDBTableTableResourcesClientDiagnostics, Pipeline, "CosmosDBTableCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = CosmosDBTableData.DeserializeCosmosDBTableData(e); return new CosmosDBTableResource(Client, data, data.Id); }, _cosmosDBTableTableResourcesClientDiagnostics, Pipeline, "CosmosDBTableCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

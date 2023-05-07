@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.CosmosDB
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CosmosDBPrivateEndpointConnectionData.DeserializeCosmosDBPrivateEndpointConnectionData(document.RootElement);
-            return new CosmosDBPrivateEndpointConnectionResource(_client, data);
+            return new CosmosDBPrivateEndpointConnectionResource(_client, data, data.Id);
         }
 
         async ValueTask<CosmosDBPrivateEndpointConnectionResource> IOperationSource<CosmosDBPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CosmosDBPrivateEndpointConnectionData.DeserializeCosmosDBPrivateEndpointConnectionData(document.RootElement);
-            return new CosmosDBPrivateEndpointConnectionResource(_client, data);
+            return new CosmosDBPrivateEndpointConnectionResource(_client, data, data.Id);
         }
     }
 }

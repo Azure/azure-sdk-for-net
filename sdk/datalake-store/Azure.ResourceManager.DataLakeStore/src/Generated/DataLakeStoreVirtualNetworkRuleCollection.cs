@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataLakeStore
             try
             {
                 var response = await _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DataLakeStoreArmOperation<DataLakeStoreVirtualNetworkRuleResource>(Response.FromValue(new DataLakeStoreVirtualNetworkRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new DataLakeStoreArmOperation<DataLakeStoreVirtualNetworkRuleResource>(Response.FromValue(new DataLakeStoreVirtualNetworkRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataLakeStore
             try
             {
                 var response = _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, content, cancellationToken);
-                var operation = new DataLakeStoreArmOperation<DataLakeStoreVirtualNetworkRuleResource>(Response.FromValue(new DataLakeStoreVirtualNetworkRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new DataLakeStoreArmOperation<DataLakeStoreVirtualNetworkRuleResource>(Response.FromValue(new DataLakeStoreVirtualNetworkRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 var response = await _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataLakeStoreVirtualNetworkRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataLakeStoreVirtualNetworkRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 var response = _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataLakeStoreVirtualNetworkRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataLakeStoreVirtualNetworkRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataLakeStore
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataLakeStoreVirtualNetworkRuleResource(Client, DataLakeStoreVirtualNetworkRuleData.DeserializeDataLakeStoreVirtualNetworkRuleData(e)), _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, "DataLakeStoreVirtualNetworkRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DataLakeStoreVirtualNetworkRuleData.DeserializeDataLakeStoreVirtualNetworkRuleData(e); return new DataLakeStoreVirtualNetworkRuleResource(Client, data, data.Id); }, _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, "DataLakeStoreVirtualNetworkRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DataLakeStore
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataLakeStoreVirtualNetworkRuleResource(Client, DataLakeStoreVirtualNetworkRuleData.DeserializeDataLakeStoreVirtualNetworkRuleData(e)), _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, "DataLakeStoreVirtualNetworkRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DataLakeStoreVirtualNetworkRuleData.DeserializeDataLakeStoreVirtualNetworkRuleData(e); return new DataLakeStoreVirtualNetworkRuleResource(Client, data, data.Id); }, _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, "DataLakeStoreVirtualNetworkRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

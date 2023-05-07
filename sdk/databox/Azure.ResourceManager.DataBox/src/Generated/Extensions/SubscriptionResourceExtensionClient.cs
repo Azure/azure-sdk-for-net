@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataBox
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataBoxJobJobsRestClient.CreateListRequest(Id.SubscriptionId, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataBoxJobJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxJobResource(Client, DataBoxJobData.DeserializeDataBoxJobData(e)), DataBoxJobJobsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataBoxJobs", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DataBoxJobData.DeserializeDataBoxJobData(e); return new DataBoxJobResource(Client, data, data.Id); }, DataBoxJobJobsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataBoxJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataBox
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataBoxJobJobsRestClient.CreateListRequest(Id.SubscriptionId, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataBoxJobJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxJobResource(Client, DataBoxJobData.DeserializeDataBoxJobData(e)), DataBoxJobJobsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataBoxJobs", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DataBoxJobData.DeserializeDataBoxJobData(e); return new DataBoxJobResource(Client, data, data.Id); }, DataBoxJobJobsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataBoxJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

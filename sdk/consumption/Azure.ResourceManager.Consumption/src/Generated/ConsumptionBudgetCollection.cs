@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Consumption
             try
             {
                 var response = await _consumptionBudgetBudgetsRestClient.CreateOrUpdateAsync(Id, budgetName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ConsumptionArmOperation<ConsumptionBudgetResource>(Response.FromValue(new ConsumptionBudgetResource(Client, response), response.GetRawResponse()));
+                var operation = new ConsumptionArmOperation<ConsumptionBudgetResource>(Response.FromValue(new ConsumptionBudgetResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Consumption
             try
             {
                 var response = _consumptionBudgetBudgetsRestClient.CreateOrUpdate(Id, budgetName, data, cancellationToken);
-                var operation = new ConsumptionArmOperation<ConsumptionBudgetResource>(Response.FromValue(new ConsumptionBudgetResource(Client, response), response.GetRawResponse()));
+                var operation = new ConsumptionArmOperation<ConsumptionBudgetResource>(Response.FromValue(new ConsumptionBudgetResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Consumption
                 var response = await _consumptionBudgetBudgetsRestClient.GetAsync(Id, budgetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ConsumptionBudgetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConsumptionBudgetResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Consumption
                 var response = _consumptionBudgetBudgetsRestClient.Get(Id, budgetName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ConsumptionBudgetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConsumptionBudgetResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Consumption
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _consumptionBudgetBudgetsRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _consumptionBudgetBudgetsRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConsumptionBudgetResource(Client, ConsumptionBudgetData.DeserializeConsumptionBudgetData(e)), _consumptionBudgetBudgetsClientDiagnostics, Pipeline, "ConsumptionBudgetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ConsumptionBudgetData.DeserializeConsumptionBudgetData(e); return new ConsumptionBudgetResource(Client, data, data.Id); }, _consumptionBudgetBudgetsClientDiagnostics, Pipeline, "ConsumptionBudgetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Consumption
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _consumptionBudgetBudgetsRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _consumptionBudgetBudgetsRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConsumptionBudgetResource(Client, ConsumptionBudgetData.DeserializeConsumptionBudgetData(e)), _consumptionBudgetBudgetsClientDiagnostics, Pipeline, "ConsumptionBudgetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ConsumptionBudgetData.DeserializeConsumptionBudgetData(e); return new ConsumptionBudgetResource(Client, data, data.Id); }, _consumptionBudgetBudgetsClientDiagnostics, Pipeline, "ConsumptionBudgetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

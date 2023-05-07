@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> Initializes a new instance of the <see cref = "DatabaseMigrationSqlMIResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DatabaseMigrationSqlMIResource(ArmClient client, DatabaseMigrationSqlMIData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal DatabaseMigrationSqlMIResource(ArmClient client, DatabaseMigrationSqlMIData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.DataMigration
                 var response = await _databaseMigrationSqlMIDatabaseMigrationsSqlMIRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DatabaseMigrationSqlMIResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DatabaseMigrationSqlMIResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.DataMigration
                 var response = _databaseMigrationSqlMIDatabaseMigrationsSqlMIRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, migrationOperationId, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DatabaseMigrationSqlMIResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DatabaseMigrationSqlMIResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

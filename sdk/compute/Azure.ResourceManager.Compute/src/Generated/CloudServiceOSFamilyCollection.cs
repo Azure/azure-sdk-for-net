@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _cloudServiceOSFamilyCloudServiceOperatingSystemsRestClient.GetOSFamilyAsync(Id.SubscriptionId, new AzureLocation(_location), osFamilyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CloudServiceOSFamilyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CloudServiceOSFamilyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _cloudServiceOSFamilyCloudServiceOperatingSystemsRestClient.GetOSFamily(Id.SubscriptionId, new AzureLocation(_location), osFamilyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CloudServiceOSFamilyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CloudServiceOSFamilyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceOSFamilyCloudServiceOperatingSystemsRestClient.CreateListOSFamiliesRequest(Id.SubscriptionId, new AzureLocation(_location));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudServiceOSFamilyCloudServiceOperatingSystemsRestClient.CreateListOSFamiliesNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudServiceOSFamilyResource(Client, CloudServiceOSFamilyData.DeserializeCloudServiceOSFamilyData(e)), _cloudServiceOSFamilyCloudServiceOperatingSystemsClientDiagnostics, Pipeline, "CloudServiceOSFamilyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = CloudServiceOSFamilyData.DeserializeCloudServiceOSFamilyData(e); return new CloudServiceOSFamilyResource(Client, data, data.Id); }, _cloudServiceOSFamilyCloudServiceOperatingSystemsClientDiagnostics, Pipeline, "CloudServiceOSFamilyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceOSFamilyCloudServiceOperatingSystemsRestClient.CreateListOSFamiliesRequest(Id.SubscriptionId, new AzureLocation(_location));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudServiceOSFamilyCloudServiceOperatingSystemsRestClient.CreateListOSFamiliesNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudServiceOSFamilyResource(Client, CloudServiceOSFamilyData.DeserializeCloudServiceOSFamilyData(e)), _cloudServiceOSFamilyCloudServiceOperatingSystemsClientDiagnostics, Pipeline, "CloudServiceOSFamilyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = CloudServiceOSFamilyData.DeserializeCloudServiceOSFamilyData(e); return new CloudServiceOSFamilyResource(Client, data, data.Id); }, _cloudServiceOSFamilyCloudServiceOperatingSystemsClientDiagnostics, Pipeline, "CloudServiceOSFamilyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

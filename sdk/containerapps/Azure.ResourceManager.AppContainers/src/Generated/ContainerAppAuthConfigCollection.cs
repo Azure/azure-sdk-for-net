@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = await _containerAppAuthConfigContainerAppsAuthConfigsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authConfigName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation<ContainerAppAuthConfigResource>(Response.FromValue(new ContainerAppAuthConfigResource(Client, response), response.GetRawResponse()));
+                var operation = new AppContainersArmOperation<ContainerAppAuthConfigResource>(Response.FromValue(new ContainerAppAuthConfigResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = _containerAppAuthConfigContainerAppsAuthConfigsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authConfigName, data, cancellationToken);
-                var operation = new AppContainersArmOperation<ContainerAppAuthConfigResource>(Response.FromValue(new ContainerAppAuthConfigResource(Client, response), response.GetRawResponse()));
+                var operation = new AppContainersArmOperation<ContainerAppAuthConfigResource>(Response.FromValue(new ContainerAppAuthConfigResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppContainers
                 var response = await _containerAppAuthConfigContainerAppsAuthConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authConfigName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerAppAuthConfigResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppAuthConfigResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppContainers
                 var response = _containerAppAuthConfigContainerAppsAuthConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authConfigName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerAppAuthConfigResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppAuthConfigResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppAuthConfigContainerAppsAuthConfigsRestClient.CreateListByContainerAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppAuthConfigContainerAppsAuthConfigsRestClient.CreateListByContainerAppNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppAuthConfigResource(Client, ContainerAppAuthConfigData.DeserializeContainerAppAuthConfigData(e)), _containerAppAuthConfigContainerAppsAuthConfigsClientDiagnostics, Pipeline, "ContainerAppAuthConfigCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ContainerAppAuthConfigData.DeserializeContainerAppAuthConfigData(e); return new ContainerAppAuthConfigResource(Client, data, data.Id); }, _containerAppAuthConfigContainerAppsAuthConfigsClientDiagnostics, Pipeline, "ContainerAppAuthConfigCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppAuthConfigContainerAppsAuthConfigsRestClient.CreateListByContainerAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppAuthConfigContainerAppsAuthConfigsRestClient.CreateListByContainerAppNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppAuthConfigResource(Client, ContainerAppAuthConfigData.DeserializeContainerAppAuthConfigData(e)), _containerAppAuthConfigContainerAppsAuthConfigsClientDiagnostics, Pipeline, "ContainerAppAuthConfigCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ContainerAppAuthConfigData.DeserializeContainerAppAuthConfigData(e); return new ContainerAppAuthConfigResource(Client, data, data.Id); }, _containerAppAuthConfigContainerAppsAuthConfigsClientDiagnostics, Pipeline, "ContainerAppAuthConfigCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

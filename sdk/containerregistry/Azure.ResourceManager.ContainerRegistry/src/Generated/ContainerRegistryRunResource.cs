@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> Initializes a new instance of the <see cref = "ContainerRegistryRunResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ContainerRegistryRunResource(ArmClient client, ContainerRegistryRunData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal ContainerRegistryRunResource(ArmClient client, ContainerRegistryRunData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 var response = await _containerRegistryRunRunsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerRegistryRunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryRunResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 var response = _containerRegistryRunRunsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerRegistryRunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryRunResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

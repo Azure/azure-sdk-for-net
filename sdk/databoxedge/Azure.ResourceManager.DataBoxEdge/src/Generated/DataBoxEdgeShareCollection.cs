@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 var response = await _dataBoxEdgeShareSharesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataBoxEdgeShareResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataBoxEdgeShareResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 var response = _dataBoxEdgeShareSharesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataBoxEdgeShareResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataBoxEdgeShareResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeShareSharesRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeShareSharesRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeShareResource(Client, DataBoxEdgeShareData.DeserializeDataBoxEdgeShareData(e)), _dataBoxEdgeShareSharesClientDiagnostics, Pipeline, "DataBoxEdgeShareCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DataBoxEdgeShareData.DeserializeDataBoxEdgeShareData(e); return new DataBoxEdgeShareResource(Client, data, data.Id); }, _dataBoxEdgeShareSharesClientDiagnostics, Pipeline, "DataBoxEdgeShareCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeShareSharesRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeShareSharesRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeShareResource(Client, DataBoxEdgeShareData.DeserializeDataBoxEdgeShareData(e)), _dataBoxEdgeShareSharesClientDiagnostics, Pipeline, "DataBoxEdgeShareCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DataBoxEdgeShareData.DeserializeDataBoxEdgeShareData(e); return new DataBoxEdgeShareResource(Client, data, data.Id); }, _dataBoxEdgeShareSharesClientDiagnostics, Pipeline, "DataBoxEdgeShareCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

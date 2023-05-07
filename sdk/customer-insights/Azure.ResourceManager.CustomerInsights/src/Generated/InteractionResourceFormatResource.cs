@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <summary> Initializes a new instance of the <see cref = "InteractionResourceFormatResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal InteractionResourceFormatResource(ArmClient client, InteractionResourceFormatData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal InteractionResourceFormatResource(ArmClient client, InteractionResourceFormatData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 var response = await _interactionResourceFormatInteractionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, localeCode, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new InteractionResourceFormatResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new InteractionResourceFormatResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 var response = _interactionResourceFormatInteractionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, localeCode, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new InteractionResourceFormatResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new InteractionResourceFormatResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

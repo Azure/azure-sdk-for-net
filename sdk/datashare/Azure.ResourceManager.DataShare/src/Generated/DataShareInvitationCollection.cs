@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = await _dataShareInvitationInvitationsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, invitationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataShareArmOperation<DataShareInvitationResource>(Response.FromValue(new DataShareInvitationResource(Client, response), response.GetRawResponse()));
+                var operation = new DataShareArmOperation<DataShareInvitationResource>(Response.FromValue(new DataShareInvitationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = _dataShareInvitationInvitationsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, invitationName, data, cancellationToken);
-                var operation = new DataShareArmOperation<DataShareInvitationResource>(Response.FromValue(new DataShareInvitationResource(Client, response), response.GetRawResponse()));
+                var operation = new DataShareArmOperation<DataShareInvitationResource>(Response.FromValue(new DataShareInvitationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataShare
                 var response = await _dataShareInvitationInvitationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, invitationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataShareInvitationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataShareInvitationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataShare
                 var response = _dataShareInvitationInvitationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, invitationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataShareInvitationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataShareInvitationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareInvitationInvitationsRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareInvitationInvitationsRestClient.CreateListByShareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataShareInvitationResource(Client, DataShareInvitationData.DeserializeDataShareInvitationData(e)), _dataShareInvitationInvitationsClientDiagnostics, Pipeline, "DataShareInvitationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DataShareInvitationData.DeserializeDataShareInvitationData(e); return new DataShareInvitationResource(Client, data, data.Id); }, _dataShareInvitationInvitationsClientDiagnostics, Pipeline, "DataShareInvitationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareInvitationInvitationsRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareInvitationInvitationsRestClient.CreateListByShareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataShareInvitationResource(Client, DataShareInvitationData.DeserializeDataShareInvitationData(e)), _dataShareInvitationInvitationsClientDiagnostics, Pipeline, "DataShareInvitationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DataShareInvitationData.DeserializeDataShareInvitationData(e); return new DataShareInvitationResource(Client, data, data.Id); }, _dataShareInvitationInvitationsClientDiagnostics, Pipeline, "DataShareInvitationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

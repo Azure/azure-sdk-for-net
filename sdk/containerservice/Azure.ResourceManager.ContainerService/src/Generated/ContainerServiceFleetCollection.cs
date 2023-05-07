@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ContainerService
                 var response = await _containerServiceFleetFleetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, fleetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerServiceFleetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceFleetResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ContainerService
                 var response = _containerServiceFleetFleetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, fleetName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerServiceFleetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceFleetResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceFleetFleetsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceFleetFleetsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceFleetResource(Client, ContainerServiceFleetData.DeserializeContainerServiceFleetData(e)), _containerServiceFleetFleetsClientDiagnostics, Pipeline, "ContainerServiceFleetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ContainerServiceFleetData.DeserializeContainerServiceFleetData(e); return new ContainerServiceFleetResource(Client, data, data.Id); }, _containerServiceFleetFleetsClientDiagnostics, Pipeline, "ContainerServiceFleetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceFleetFleetsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceFleetFleetsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceFleetResource(Client, ContainerServiceFleetData.DeserializeContainerServiceFleetData(e)), _containerServiceFleetFleetsClientDiagnostics, Pipeline, "ContainerServiceFleetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ContainerServiceFleetData.DeserializeContainerServiceFleetData(e); return new ContainerServiceFleetResource(Client, data, data.Id); }, _containerServiceFleetFleetsClientDiagnostics, Pipeline, "ContainerServiceFleetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

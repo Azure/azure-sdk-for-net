@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DataShare
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DataShareAccountData.DeserializeDataShareAccountData(document.RootElement);
-            return new DataShareAccountResource(_client, data);
+            return new DataShareAccountResource(_client, data, data.Id);
         }
 
         async ValueTask<DataShareAccountResource> IOperationSource<DataShareAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DataShareAccountData.DeserializeDataShareAccountData(document.RootElement);
-            return new DataShareAccountResource(_client, data);
+            return new DataShareAccountResource(_client, data, data.Id);
         }
     }
 }

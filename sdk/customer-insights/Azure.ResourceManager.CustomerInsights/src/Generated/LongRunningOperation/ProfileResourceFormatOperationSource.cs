@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ProfileResourceFormatData.DeserializeProfileResourceFormatData(document.RootElement);
-            return new ProfileResourceFormatResource(_client, data);
+            return new ProfileResourceFormatResource(_client, data, data.Id);
         }
 
         async ValueTask<ProfileResourceFormatResource> IOperationSource<ProfileResourceFormatResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ProfileResourceFormatData.DeserializeProfileResourceFormatData(document.RootElement);
-            return new ProfileResourceFormatResource(_client, data);
+            return new ProfileResourceFormatResource(_client, data, data.Id);
         }
     }
 }

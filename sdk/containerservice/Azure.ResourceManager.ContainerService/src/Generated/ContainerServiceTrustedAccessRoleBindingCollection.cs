@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = await _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, trustedAccessRoleBindingName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation<ContainerServiceTrustedAccessRoleBindingResource>(Response.FromValue(new ContainerServiceTrustedAccessRoleBindingResource(Client, response), response.GetRawResponse()));
+                var operation = new ContainerServiceArmOperation<ContainerServiceTrustedAccessRoleBindingResource>(Response.FromValue(new ContainerServiceTrustedAccessRoleBindingResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, trustedAccessRoleBindingName, data, cancellationToken);
-                var operation = new ContainerServiceArmOperation<ContainerServiceTrustedAccessRoleBindingResource>(Response.FromValue(new ContainerServiceTrustedAccessRoleBindingResource(Client, response), response.GetRawResponse()));
+                var operation = new ContainerServiceArmOperation<ContainerServiceTrustedAccessRoleBindingResource>(Response.FromValue(new ContainerServiceTrustedAccessRoleBindingResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ContainerService
                 var response = await _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, trustedAccessRoleBindingName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerServiceTrustedAccessRoleBindingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceTrustedAccessRoleBindingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ContainerService
                 var response = _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, trustedAccessRoleBindingName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerServiceTrustedAccessRoleBindingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceTrustedAccessRoleBindingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceTrustedAccessRoleBindingResource(Client, ContainerServiceTrustedAccessRoleBindingData.DeserializeContainerServiceTrustedAccessRoleBindingData(e)), _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics, Pipeline, "ContainerServiceTrustedAccessRoleBindingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ContainerServiceTrustedAccessRoleBindingData.DeserializeContainerServiceTrustedAccessRoleBindingData(e); return new ContainerServiceTrustedAccessRoleBindingResource(Client, data, data.Id); }, _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics, Pipeline, "ContainerServiceTrustedAccessRoleBindingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceTrustedAccessRoleBindingResource(Client, ContainerServiceTrustedAccessRoleBindingData.DeserializeContainerServiceTrustedAccessRoleBindingData(e)), _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics, Pipeline, "ContainerServiceTrustedAccessRoleBindingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ContainerServiceTrustedAccessRoleBindingData.DeserializeContainerServiceTrustedAccessRoleBindingData(e); return new ContainerServiceTrustedAccessRoleBindingResource(Client, data, data.Id); }, _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics, Pipeline, "ContainerServiceTrustedAccessRoleBindingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

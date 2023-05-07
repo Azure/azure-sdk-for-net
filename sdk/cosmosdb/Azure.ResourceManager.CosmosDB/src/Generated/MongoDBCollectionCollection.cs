@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = await _mongoDBCollectionMongoDBResourcesRestClient.GetMongoDBCollectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MongoDBCollectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MongoDBCollectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = _mongoDBCollectionMongoDBResourcesRestClient.GetMongoDBCollection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MongoDBCollectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MongoDBCollectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<MongoDBCollectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoDBCollectionMongoDBResourcesRestClient.CreateListMongoDBCollectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MongoDBCollectionResource(Client, MongoDBCollectionData.DeserializeMongoDBCollectionData(e)), _mongoDBCollectionMongoDBResourcesClientDiagnostics, Pipeline, "MongoDBCollectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = MongoDBCollectionData.DeserializeMongoDBCollectionData(e); return new MongoDBCollectionResource(Client, data, data.Id); }, _mongoDBCollectionMongoDBResourcesClientDiagnostics, Pipeline, "MongoDBCollectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<MongoDBCollectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoDBCollectionMongoDBResourcesRestClient.CreateListMongoDBCollectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MongoDBCollectionResource(Client, MongoDBCollectionData.DeserializeMongoDBCollectionData(e)), _mongoDBCollectionMongoDBResourcesClientDiagnostics, Pipeline, "MongoDBCollectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = MongoDBCollectionData.DeserializeMongoDBCollectionData(e); return new MongoDBCollectionResource(Client, data, data.Id); }, _mongoDBCollectionMongoDBResourcesClientDiagnostics, Pipeline, "MongoDBCollectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

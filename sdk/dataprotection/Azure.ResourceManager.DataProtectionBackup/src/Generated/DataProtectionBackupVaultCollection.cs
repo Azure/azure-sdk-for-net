@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 var response = await _dataProtectionBackupVaultBackupVaultsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataProtectionBackupVaultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataProtectionBackupVaultResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 var response = _dataProtectionBackupVaultBackupVaultsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataProtectionBackupVaultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataProtectionBackupVaultResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataProtectionBackupVaultBackupVaultsRestClient.CreateGetInResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataProtectionBackupVaultBackupVaultsRestClient.CreateGetInResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupVaultResource(Client, DataProtectionBackupVaultData.DeserializeDataProtectionBackupVaultData(e)), _dataProtectionBackupVaultBackupVaultsClientDiagnostics, Pipeline, "DataProtectionBackupVaultCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DataProtectionBackupVaultData.DeserializeDataProtectionBackupVaultData(e); return new DataProtectionBackupVaultResource(Client, data, data.Id); }, _dataProtectionBackupVaultBackupVaultsClientDiagnostics, Pipeline, "DataProtectionBackupVaultCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataProtectionBackupVaultBackupVaultsRestClient.CreateGetInResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataProtectionBackupVaultBackupVaultsRestClient.CreateGetInResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupVaultResource(Client, DataProtectionBackupVaultData.DeserializeDataProtectionBackupVaultData(e)), _dataProtectionBackupVaultBackupVaultsClientDiagnostics, Pipeline, "DataProtectionBackupVaultCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DataProtectionBackupVaultData.DeserializeDataProtectionBackupVaultData(e); return new DataProtectionBackupVaultResource(Client, data, data.Id); }, _dataProtectionBackupVaultBackupVaultsClientDiagnostics, Pipeline, "DataProtectionBackupVaultCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

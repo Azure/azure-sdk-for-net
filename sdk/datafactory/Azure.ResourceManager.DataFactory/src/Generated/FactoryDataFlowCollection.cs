@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = await _factoryDataFlowDataFlowsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataFlowName, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<FactoryDataFlowResource>(Response.FromValue(new FactoryDataFlowResource(Client, response), response.GetRawResponse()));
+                var operation = new DataFactoryArmOperation<FactoryDataFlowResource>(Response.FromValue(new FactoryDataFlowResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = _factoryDataFlowDataFlowsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataFlowName, data, ifMatch, cancellationToken);
-                var operation = new DataFactoryArmOperation<FactoryDataFlowResource>(Response.FromValue(new FactoryDataFlowResource(Client, response), response.GetRawResponse()));
+                var operation = new DataFactoryArmOperation<FactoryDataFlowResource>(Response.FromValue(new FactoryDataFlowResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataFactory
                 var response = await _factoryDataFlowDataFlowsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataFlowName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FactoryDataFlowResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FactoryDataFlowResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DataFactory
                 var response = _factoryDataFlowDataFlowsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataFlowName, ifNoneMatch, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FactoryDataFlowResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FactoryDataFlowResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryDataFlowDataFlowsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _factoryDataFlowDataFlowsRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FactoryDataFlowResource(Client, FactoryDataFlowData.DeserializeFactoryDataFlowData(e)), _factoryDataFlowDataFlowsClientDiagnostics, Pipeline, "FactoryDataFlowCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = FactoryDataFlowData.DeserializeFactoryDataFlowData(e); return new FactoryDataFlowResource(Client, data, data.Id); }, _factoryDataFlowDataFlowsClientDiagnostics, Pipeline, "FactoryDataFlowCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryDataFlowDataFlowsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _factoryDataFlowDataFlowsRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FactoryDataFlowResource(Client, FactoryDataFlowData.DeserializeFactoryDataFlowData(e)), _factoryDataFlowDataFlowsClientDiagnostics, Pipeline, "FactoryDataFlowCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = FactoryDataFlowData.DeserializeFactoryDataFlowData(e); return new FactoryDataFlowResource(Client, data, data.Id); }, _factoryDataFlowDataFlowsClientDiagnostics, Pipeline, "FactoryDataFlowCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

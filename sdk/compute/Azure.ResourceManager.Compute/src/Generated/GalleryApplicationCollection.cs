@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _galleryApplicationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GalleryApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GalleryApplicationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _galleryApplicationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryApplicationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GalleryApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GalleryApplicationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryApplicationRestClient.CreateListByGalleryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _galleryApplicationRestClient.CreateListByGalleryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GalleryApplicationResource(Client, GalleryApplicationData.DeserializeGalleryApplicationData(e)), _galleryApplicationClientDiagnostics, Pipeline, "GalleryApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = GalleryApplicationData.DeserializeGalleryApplicationData(e); return new GalleryApplicationResource(Client, data, data.Id); }, _galleryApplicationClientDiagnostics, Pipeline, "GalleryApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryApplicationRestClient.CreateListByGalleryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _galleryApplicationRestClient.CreateListByGalleryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GalleryApplicationResource(Client, GalleryApplicationData.DeserializeGalleryApplicationData(e)), _galleryApplicationClientDiagnostics, Pipeline, "GalleryApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = GalleryApplicationData.DeserializeGalleryApplicationData(e); return new GalleryApplicationResource(Client, data, data.Id); }, _galleryApplicationClientDiagnostics, Pipeline, "GalleryApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

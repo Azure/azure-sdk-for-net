@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Compute
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedDiskData.DeserializeManagedDiskData(document.RootElement);
-            return new ManagedDiskResource(_client, data);
+            return new ManagedDiskResource(_client, data, data.Id);
         }
 
         async ValueTask<ManagedDiskResource> IOperationSource<ManagedDiskResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedDiskData.DeserializeManagedDiskData(document.RootElement);
-            return new ManagedDiskResource(_client, data);
+            return new ManagedDiskResource(_client, data, data.Id);
         }
     }
 }

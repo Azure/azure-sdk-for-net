@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Compute
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DiskEncryptionSetData.DeserializeDiskEncryptionSetData(document.RootElement);
-            return new DiskEncryptionSetResource(_client, data);
+            return new DiskEncryptionSetResource(_client, data, data.Id);
         }
 
         async ValueTask<DiskEncryptionSetResource> IOperationSource<DiskEncryptionSetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DiskEncryptionSetData.DeserializeDiskEncryptionSetData(document.RootElement);
-            return new DiskEncryptionSetResource(_client, data);
+            return new DiskEncryptionSetResource(_client, data, data.Id);
         }
     }
 }

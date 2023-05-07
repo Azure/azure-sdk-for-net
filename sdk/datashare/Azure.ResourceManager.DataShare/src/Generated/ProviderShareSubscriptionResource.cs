@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.DataShare
         /// <summary> Initializes a new instance of the <see cref = "ProviderShareSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ProviderShareSubscriptionResource(ArmClient client, ProviderShareSubscriptionData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal ProviderShareSubscriptionResource(ArmClient client, ProviderShareSubscriptionData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.DataShare
                 var response = await _providerShareSubscriptionRestClient.GetByShareAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProviderShareSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProviderShareSubscriptionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.DataShare
                 var response = _providerShareSubscriptionRestClient.GetByShare(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProviderShareSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProviderShareSubscriptionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = await _providerShareSubscriptionRestClient.AdjustAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ProviderShareSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProviderShareSubscriptionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -209,7 +210,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = _providerShareSubscriptionRestClient.Adjust(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                return Response.FromValue(new ProviderShareSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProviderShareSubscriptionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -243,7 +244,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = await _providerShareSubscriptionRestClient.ReinstateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ProviderShareSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProviderShareSubscriptionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -277,7 +278,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = _providerShareSubscriptionRestClient.Reinstate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                return Response.FromValue(new ProviderShareSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProviderShareSubscriptionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

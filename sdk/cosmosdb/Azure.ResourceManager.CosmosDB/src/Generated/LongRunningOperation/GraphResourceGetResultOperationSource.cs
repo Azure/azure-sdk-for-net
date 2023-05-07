@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.CosmosDB
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = GraphResourceGetResultData.DeserializeGraphResourceGetResultData(document.RootElement);
-            return new GraphResourceGetResultResource(_client, data);
+            return new GraphResourceGetResultResource(_client, data, data.Id);
         }
 
         async ValueTask<GraphResourceGetResultResource> IOperationSource<GraphResourceGetResultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = GraphResourceGetResultData.DeserializeGraphResourceGetResultData(document.RootElement);
-            return new GraphResourceGetResultResource(_client, data);
+            return new GraphResourceGetResultResource(_client, data, data.Id);
         }
     }
 }

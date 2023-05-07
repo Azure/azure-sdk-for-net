@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = await _hybridIdentityMetadataHybridIdentityMetadataRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ConnectedVMwarevSphereArmOperation<HybridIdentityMetadataResource>(Response.FromValue(new HybridIdentityMetadataResource(Client, response), response.GetRawResponse()));
+                var operation = new ConnectedVMwarevSphereArmOperation<HybridIdentityMetadataResource>(Response.FromValue(new HybridIdentityMetadataResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = _hybridIdentityMetadataHybridIdentityMetadataRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataName, data, cancellationToken);
-                var operation = new ConnectedVMwarevSphereArmOperation<HybridIdentityMetadataResource>(Response.FromValue(new HybridIdentityMetadataResource(Client, response), response.GetRawResponse()));
+                var operation = new ConnectedVMwarevSphereArmOperation<HybridIdentityMetadataResource>(Response.FromValue(new HybridIdentityMetadataResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 var response = await _hybridIdentityMetadataHybridIdentityMetadataRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridIdentityMetadataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridIdentityMetadataResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 var response = _hybridIdentityMetadataHybridIdentityMetadataRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HybridIdentityMetadataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridIdentityMetadataResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridIdentityMetadataHybridIdentityMetadataRestClient.CreateListByVmRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridIdentityMetadataHybridIdentityMetadataRestClient.CreateListByVmNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridIdentityMetadataResource(Client, HybridIdentityMetadataData.DeserializeHybridIdentityMetadataData(e)), _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics, Pipeline, "HybridIdentityMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = HybridIdentityMetadataData.DeserializeHybridIdentityMetadataData(e); return new HybridIdentityMetadataResource(Client, data, data.Id); }, _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics, Pipeline, "HybridIdentityMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridIdentityMetadataHybridIdentityMetadataRestClient.CreateListByVmRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridIdentityMetadataHybridIdentityMetadataRestClient.CreateListByVmNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridIdentityMetadataResource(Client, HybridIdentityMetadataData.DeserializeHybridIdentityMetadataData(e)), _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics, Pipeline, "HybridIdentityMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = HybridIdentityMetadataData.DeserializeHybridIdentityMetadataData(e); return new HybridIdentityMetadataResource(Client, data, data.Id); }, _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics, Pipeline, "HybridIdentityMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

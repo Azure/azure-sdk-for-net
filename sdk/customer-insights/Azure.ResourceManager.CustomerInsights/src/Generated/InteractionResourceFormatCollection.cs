@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 var response = await _interactionResourceFormatInteractionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, interactionName, localeCode, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new InteractionResourceFormatResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new InteractionResourceFormatResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 var response = _interactionResourceFormatInteractionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, interactionName, localeCode, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new InteractionResourceFormatResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new InteractionResourceFormatResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _interactionResourceFormatInteractionsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _interactionResourceFormatInteractionsRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new InteractionResourceFormatResource(Client, InteractionResourceFormatData.DeserializeInteractionResourceFormatData(e)), _interactionResourceFormatInteractionsClientDiagnostics, Pipeline, "InteractionResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = InteractionResourceFormatData.DeserializeInteractionResourceFormatData(e); return new InteractionResourceFormatResource(Client, data, data.Id); }, _interactionResourceFormatInteractionsClientDiagnostics, Pipeline, "InteractionResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _interactionResourceFormatInteractionsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _interactionResourceFormatInteractionsRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new InteractionResourceFormatResource(Client, InteractionResourceFormatData.DeserializeInteractionResourceFormatData(e)), _interactionResourceFormatInteractionsClientDiagnostics, Pipeline, "InteractionResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = InteractionResourceFormatData.DeserializeInteractionResourceFormatData(e); return new InteractionResourceFormatResource(Client, data, data.Id); }, _interactionResourceFormatInteractionsClientDiagnostics, Pipeline, "InteractionResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

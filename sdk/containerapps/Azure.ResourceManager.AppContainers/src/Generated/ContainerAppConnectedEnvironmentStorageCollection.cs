@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = await _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentStorageResource>(Response.FromValue(new ContainerAppConnectedEnvironmentStorageResource(Client, response), response.GetRawResponse()));
+                var operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentStorageResource>(Response.FromValue(new ContainerAppConnectedEnvironmentStorageResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, data, cancellationToken);
-                var operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentStorageResource>(Response.FromValue(new ContainerAppConnectedEnvironmentStorageResource(Client, response), response.GetRawResponse()));
+                var operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentStorageResource>(Response.FromValue(new ContainerAppConnectedEnvironmentStorageResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppContainers
                 var response = await _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerAppConnectedEnvironmentStorageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppConnectedEnvironmentStorageResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppContainers
                 var response = _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerAppConnectedEnvironmentStorageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppConnectedEnvironmentStorageResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppContainers
         public virtual AsyncPageable<ContainerAppConnectedEnvironmentStorageResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ContainerAppConnectedEnvironmentStorageResource(Client, ContainerAppConnectedEnvironmentStorageData.DeserializeContainerAppConnectedEnvironmentStorageData(e)), _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentStorageCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = ContainerAppConnectedEnvironmentStorageData.DeserializeContainerAppConnectedEnvironmentStorageData(e); return new ContainerAppConnectedEnvironmentStorageResource(Client, data, data.Id); }, _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentStorageCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.AppContainers
         public virtual Pageable<ContainerAppConnectedEnvironmentStorageResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ContainerAppConnectedEnvironmentStorageResource(Client, ContainerAppConnectedEnvironmentStorageData.DeserializeContainerAppConnectedEnvironmentStorageData(e)), _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentStorageCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = ContainerAppConnectedEnvironmentStorageData.DeserializeContainerAppConnectedEnvironmentStorageData(e); return new ContainerAppConnectedEnvironmentStorageResource(Client, data, data.Id); }, _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentStorageCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 var response = await _guestAgentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GuestAgentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GuestAgentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 var response = _guestAgentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GuestAgentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GuestAgentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _guestAgentRestClient.CreateListByVmRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _guestAgentRestClient.CreateListByVmNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GuestAgentResource(Client, GuestAgentData.DeserializeGuestAgentData(e)), _guestAgentClientDiagnostics, Pipeline, "GuestAgentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = GuestAgentData.DeserializeGuestAgentData(e); return new GuestAgentResource(Client, data, data.Id); }, _guestAgentClientDiagnostics, Pipeline, "GuestAgentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _guestAgentRestClient.CreateListByVmRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _guestAgentRestClient.CreateListByVmNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GuestAgentResource(Client, GuestAgentData.DeserializeGuestAgentData(e)), _guestAgentClientDiagnostics, Pipeline, "GuestAgentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = GuestAgentData.DeserializeGuestAgentData(e); return new GuestAgentResource(Client, data, data.Id); }, _guestAgentClientDiagnostics, Pipeline, "GuestAgentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

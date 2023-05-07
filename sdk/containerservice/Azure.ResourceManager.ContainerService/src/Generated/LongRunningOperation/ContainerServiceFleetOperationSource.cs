@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ContainerService
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ContainerServiceFleetData.DeserializeContainerServiceFleetData(document.RootElement);
-            return new ContainerServiceFleetResource(_client, data);
+            return new ContainerServiceFleetResource(_client, data, data.Id);
         }
 
         async ValueTask<ContainerServiceFleetResource> IOperationSource<ContainerServiceFleetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ContainerServiceFleetData.DeserializeContainerServiceFleetData(document.RootElement);
-            return new ContainerServiceFleetResource(_client, data);
+            return new ContainerServiceFleetResource(_client, data, data.Id);
         }
     }
 }

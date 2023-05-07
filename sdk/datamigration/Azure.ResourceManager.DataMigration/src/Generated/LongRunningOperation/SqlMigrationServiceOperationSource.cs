@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DataMigration
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SqlMigrationServiceData.DeserializeSqlMigrationServiceData(document.RootElement);
-            return new SqlMigrationServiceResource(_client, data);
+            return new SqlMigrationServiceResource(_client, data, data.Id);
         }
 
         async ValueTask<SqlMigrationServiceResource> IOperationSource<SqlMigrationServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SqlMigrationServiceData.DeserializeSqlMigrationServiceData(document.RootElement);
-            return new SqlMigrationServiceResource(_client, data);
+            return new SqlMigrationServiceResource(_client, data, data.Id);
         }
     }
 }

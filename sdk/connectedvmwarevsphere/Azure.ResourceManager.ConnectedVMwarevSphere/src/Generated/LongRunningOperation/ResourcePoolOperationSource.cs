@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ResourcePoolData.DeserializeResourcePoolData(document.RootElement);
-            return new ResourcePoolResource(_client, data);
+            return new ResourcePoolResource(_client, data, data.Id);
         }
 
         async ValueTask<ResourcePoolResource> IOperationSource<ResourcePoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ResourcePoolData.DeserializeResourcePoolData(document.RootElement);
-            return new ResourcePoolResource(_client, data);
+            return new ResourcePoolResource(_client, data, data.Id);
         }
     }
 }

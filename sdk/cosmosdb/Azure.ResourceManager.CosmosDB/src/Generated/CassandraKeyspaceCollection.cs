@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = await _cassandraKeyspaceCassandraResourcesRestClient.GetCassandraKeyspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyspaceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CassandraKeyspaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CassandraKeyspaceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = _cassandraKeyspaceCassandraResourcesRestClient.GetCassandraKeyspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyspaceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CassandraKeyspaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CassandraKeyspaceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CassandraKeyspaceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraKeyspaceCassandraResourcesRestClient.CreateListCassandraKeyspacesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CassandraKeyspaceResource(Client, CassandraKeyspaceData.DeserializeCassandraKeyspaceData(e)), _cassandraKeyspaceCassandraResourcesClientDiagnostics, Pipeline, "CassandraKeyspaceCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = CassandraKeyspaceData.DeserializeCassandraKeyspaceData(e); return new CassandraKeyspaceResource(Client, data, data.Id); }, _cassandraKeyspaceCassandraResourcesClientDiagnostics, Pipeline, "CassandraKeyspaceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CassandraKeyspaceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraKeyspaceCassandraResourcesRestClient.CreateListCassandraKeyspacesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CassandraKeyspaceResource(Client, CassandraKeyspaceData.DeserializeCassandraKeyspaceData(e)), _cassandraKeyspaceCassandraResourcesClientDiagnostics, Pipeline, "CassandraKeyspaceCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = CassandraKeyspaceData.DeserializeCassandraKeyspaceData(e); return new CassandraKeyspaceResource(Client, data, data.Id); }, _cassandraKeyspaceCassandraResourcesClientDiagnostics, Pipeline, "CassandraKeyspaceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

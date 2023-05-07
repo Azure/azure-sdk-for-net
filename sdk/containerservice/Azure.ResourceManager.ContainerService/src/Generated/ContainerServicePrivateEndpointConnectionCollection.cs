@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = await _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation<ContainerServicePrivateEndpointConnectionResource>(Response.FromValue(new ContainerServicePrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var operation = new ContainerServiceArmOperation<ContainerServicePrivateEndpointConnectionResource>(Response.FromValue(new ContainerServicePrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new ContainerServiceArmOperation<ContainerServicePrivateEndpointConnectionResource>(Response.FromValue(new ContainerServicePrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var operation = new ContainerServiceArmOperation<ContainerServicePrivateEndpointConnectionResource>(Response.FromValue(new ContainerServicePrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ContainerService
                 var response = await _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerServicePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServicePrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ContainerService
                 var response = _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerServicePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServicePrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ContainerService
         public virtual AsyncPageable<ContainerServicePrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ContainerServicePrivateEndpointConnectionResource(Client, ContainerServicePrivateEndpointConnectionData.DeserializeContainerServicePrivateEndpointConnectionData(e)), _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "ContainerServicePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = ContainerServicePrivateEndpointConnectionData.DeserializeContainerServicePrivateEndpointConnectionData(e); return new ContainerServicePrivateEndpointConnectionResource(Client, data, data.Id); }, _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "ContainerServicePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ContainerService
         public virtual Pageable<ContainerServicePrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ContainerServicePrivateEndpointConnectionResource(Client, ContainerServicePrivateEndpointConnectionData.DeserializeContainerServicePrivateEndpointConnectionData(e)), _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "ContainerServicePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = ContainerServicePrivateEndpointConnectionData.DeserializeContainerServicePrivateEndpointConnectionData(e); return new ContainerServicePrivateEndpointConnectionResource(Client, data, data.Id); }, _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "ContainerServicePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

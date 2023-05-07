@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <summary> Initializes a new instance of the <see cref = "DataLakeStoreAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataLakeStoreAccountResource(ArmClient client, DataLakeStoreAccountData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal DataLakeStoreAccountResource(ArmClient client, DataLakeStoreAccountData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -270,7 +271,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 var response = await _dataLakeStoreAccountAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataLakeStoreAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataLakeStoreAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -302,7 +303,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 var response = _dataLakeStoreAccountAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataLakeStoreAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataLakeStoreAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 response.Value.Id = CommunityGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, location, publicGalleryName);
-                return Response.FromValue(new CommunityGalleryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CommunityGalleryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 response.Value.Id = CommunityGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, location, publicGalleryName);
-                return Response.FromValue(new CommunityGalleryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CommunityGalleryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = await _dataBoxEdgeDeviceDevicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, deviceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeDeviceResource>(Response.FromValue(new DataBoxEdgeDeviceResource(Client, response), response.GetRawResponse()));
+                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeDeviceResource>(Response.FromValue(new DataBoxEdgeDeviceResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = _dataBoxEdgeDeviceDevicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, deviceName, data, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeDeviceResource>(Response.FromValue(new DataBoxEdgeDeviceResource(Client, response), response.GetRawResponse()));
+                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeDeviceResource>(Response.FromValue(new DataBoxEdgeDeviceResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 var response = await _dataBoxEdgeDeviceDevicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, deviceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataBoxEdgeDeviceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataBoxEdgeDeviceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 var response = _dataBoxEdgeDeviceDevicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, deviceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataBoxEdgeDeviceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataBoxEdgeDeviceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeDeviceDevicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeDeviceDevicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeDeviceResource(Client, DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(e)), _dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(e); return new DataBoxEdgeDeviceResource(Client, data, data.Id); }, _dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeDeviceDevicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeDeviceDevicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeDeviceResource(Client, DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(e)), _dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(e); return new DataBoxEdgeDeviceResource(Client, data, data.Id); }, _dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.CosmosDB
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MongoDBRoleDefinitionData.DeserializeMongoDBRoleDefinitionData(document.RootElement);
-            return new MongoDBRoleDefinitionResource(_client, data);
+            return new MongoDBRoleDefinitionResource(_client, data, data.Id);
         }
 
         async ValueTask<MongoDBRoleDefinitionResource> IOperationSource<MongoDBRoleDefinitionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MongoDBRoleDefinitionData.DeserializeMongoDBRoleDefinitionData(document.RootElement);
-            return new MongoDBRoleDefinitionResource(_client, data);
+            return new MongoDBRoleDefinitionResource(_client, data, data.Id);
         }
     }
 }

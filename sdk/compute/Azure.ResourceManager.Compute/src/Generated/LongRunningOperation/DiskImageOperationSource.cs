@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Compute
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DiskImageData.DeserializeDiskImageData(document.RootElement);
-            return new DiskImageResource(_client, data);
+            return new DiskImageResource(_client, data, data.Id);
         }
 
         async ValueTask<DiskImageResource> IOperationSource<DiskImageResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DiskImageData.DeserializeDiskImageData(document.RootElement);
-            return new DiskImageResource(_client, data);
+            return new DiskImageResource(_client, data, data.Id);
         }
     }
 }

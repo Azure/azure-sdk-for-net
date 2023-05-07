@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _galleryApplicationVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplicationVersionName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GalleryApplicationVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GalleryApplicationVersionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _galleryApplicationVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplicationVersionName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GalleryApplicationVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GalleryApplicationVersionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryApplicationVersionRestClient.CreateListByGalleryApplicationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _galleryApplicationVersionRestClient.CreateListByGalleryApplicationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GalleryApplicationVersionResource(Client, GalleryApplicationVersionData.DeserializeGalleryApplicationVersionData(e)), _galleryApplicationVersionClientDiagnostics, Pipeline, "GalleryApplicationVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = GalleryApplicationVersionData.DeserializeGalleryApplicationVersionData(e); return new GalleryApplicationVersionResource(Client, data, data.Id); }, _galleryApplicationVersionClientDiagnostics, Pipeline, "GalleryApplicationVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryApplicationVersionRestClient.CreateListByGalleryApplicationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _galleryApplicationVersionRestClient.CreateListByGalleryApplicationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GalleryApplicationVersionResource(Client, GalleryApplicationVersionData.DeserializeGalleryApplicationVersionData(e)), _galleryApplicationVersionClientDiagnostics, Pipeline, "GalleryApplicationVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = GalleryApplicationVersionData.DeserializeGalleryApplicationVersionData(e); return new GalleryApplicationVersionResource(Client, data, data.Id); }, _galleryApplicationVersionClientDiagnostics, Pipeline, "GalleryApplicationVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

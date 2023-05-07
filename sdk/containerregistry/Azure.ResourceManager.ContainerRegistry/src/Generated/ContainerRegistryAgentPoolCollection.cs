@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 var response = await _containerRegistryAgentPoolAgentPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerRegistryAgentPoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryAgentPoolResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 var response = _containerRegistryAgentPoolAgentPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerRegistryAgentPoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryAgentPoolResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryAgentPoolAgentPoolsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryAgentPoolAgentPoolsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryAgentPoolResource(Client, ContainerRegistryAgentPoolData.DeserializeContainerRegistryAgentPoolData(e)), _containerRegistryAgentPoolAgentPoolsClientDiagnostics, Pipeline, "ContainerRegistryAgentPoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ContainerRegistryAgentPoolData.DeserializeContainerRegistryAgentPoolData(e); return new ContainerRegistryAgentPoolResource(Client, data, data.Id); }, _containerRegistryAgentPoolAgentPoolsClientDiagnostics, Pipeline, "ContainerRegistryAgentPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryAgentPoolAgentPoolsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryAgentPoolAgentPoolsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryAgentPoolResource(Client, ContainerRegistryAgentPoolData.DeserializeContainerRegistryAgentPoolData(e)), _containerRegistryAgentPoolAgentPoolsClientDiagnostics, Pipeline, "ContainerRegistryAgentPoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ContainerRegistryAgentPoolData.DeserializeContainerRegistryAgentPoolData(e); return new ContainerRegistryAgentPoolResource(Client, data, data.Id); }, _containerRegistryAgentPoolAgentPoolsClientDiagnostics, Pipeline, "ContainerRegistryAgentPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

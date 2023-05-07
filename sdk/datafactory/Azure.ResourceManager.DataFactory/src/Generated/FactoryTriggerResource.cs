@@ -46,7 +46,8 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary> Initializes a new instance of the <see cref = "FactoryTriggerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal FactoryTriggerResource(ArmClient client, FactoryTriggerData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal FactoryTriggerResource(ArmClient client, FactoryTriggerData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory
                 var response = await _factoryTriggerTriggersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FactoryTriggerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FactoryTriggerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.DataFactory
                 var response = _factoryTriggerTriggersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FactoryTriggerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FactoryTriggerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -252,7 +253,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = await _factoryTriggerTriggersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<FactoryTriggerResource>(Response.FromValue(new FactoryTriggerResource(Client, response), response.GetRawResponse()));
+                var operation = new DataFactoryArmOperation<FactoryTriggerResource>(Response.FromValue(new FactoryTriggerResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -291,7 +292,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = _factoryTriggerTriggersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
-                var operation = new DataFactoryArmOperation<FactoryTriggerResource>(Response.FromValue(new FactoryTriggerResource(Client, response), response.GetRawResponse()));
+                var operation = new DataFactoryArmOperation<FactoryTriggerResource>(Response.FromValue(new FactoryTriggerResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

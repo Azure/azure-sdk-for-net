@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerRegistryRegistriesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerRegistryRegistriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryResource(Client, ContainerRegistryData.DeserializeContainerRegistryData(e)), ContainerRegistryRegistriesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerRegistries", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ContainerRegistryData.DeserializeContainerRegistryData(e); return new ContainerRegistryResource(Client, data, data.Id); }, ContainerRegistryRegistriesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerRegistries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerRegistryRegistriesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerRegistryRegistriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryResource(Client, ContainerRegistryData.DeserializeContainerRegistryData(e)), ContainerRegistryRegistriesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerRegistries", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ContainerRegistryData.DeserializeContainerRegistryData(e); return new ContainerRegistryResource(Client, data, data.Id); }, ContainerRegistryRegistriesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerRegistries", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 var response = await _dataBoxEdgeUserUsersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataBoxEdgeUserResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataBoxEdgeUserResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 var response = _dataBoxEdgeUserUsersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataBoxEdgeUserResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataBoxEdgeUserResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeUserUsersRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeUserUsersRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeUserResource(Client, DataBoxEdgeUserData.DeserializeDataBoxEdgeUserData(e)), _dataBoxEdgeUserUsersClientDiagnostics, Pipeline, "DataBoxEdgeUserCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DataBoxEdgeUserData.DeserializeDataBoxEdgeUserData(e); return new DataBoxEdgeUserResource(Client, data, data.Id); }, _dataBoxEdgeUserUsersClientDiagnostics, Pipeline, "DataBoxEdgeUserCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeUserUsersRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeUserUsersRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeUserResource(Client, DataBoxEdgeUserData.DeserializeDataBoxEdgeUserData(e)), _dataBoxEdgeUserUsersClientDiagnostics, Pipeline, "DataBoxEdgeUserCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DataBoxEdgeUserData.DeserializeDataBoxEdgeUserData(e); return new DataBoxEdgeUserResource(Client, data, data.Id); }, _dataBoxEdgeUserUsersClientDiagnostics, Pipeline, "DataBoxEdgeUserCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

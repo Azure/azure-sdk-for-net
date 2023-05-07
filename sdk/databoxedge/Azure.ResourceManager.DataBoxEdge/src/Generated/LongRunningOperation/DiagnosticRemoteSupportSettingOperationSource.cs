@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DiagnosticRemoteSupportSettingData.DeserializeDiagnosticRemoteSupportSettingData(document.RootElement);
-            return new DiagnosticRemoteSupportSettingResource(_client, data);
+            return new DiagnosticRemoteSupportSettingResource(_client, data, data.Id);
         }
 
         async ValueTask<DiagnosticRemoteSupportSettingResource> IOperationSource<DiagnosticRemoteSupportSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DiagnosticRemoteSupportSettingData.DeserializeDiagnosticRemoteSupportSettingData(document.RootElement);
-            return new DiagnosticRemoteSupportSettingResource(_client, data);
+            return new DiagnosticRemoteSupportSettingResource(_client, data, data.Id);
         }
     }
 }

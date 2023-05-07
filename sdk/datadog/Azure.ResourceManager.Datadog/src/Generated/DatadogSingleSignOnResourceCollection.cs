@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Datadog
                 var response = await _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DatadogSingleSignOnResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DatadogSingleSignOnResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Datadog
                 var response = _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DatadogSingleSignOnResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DatadogSingleSignOnResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Datadog
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DatadogSingleSignOnResource(Client, DatadogSingleSignOnResourceData.DeserializeDatadogSingleSignOnResourceData(e)), _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics, Pipeline, "DatadogSingleSignOnResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DatadogSingleSignOnResourceData.DeserializeDatadogSingleSignOnResourceData(e); return new DatadogSingleSignOnResource(Client, data, data.Id); }, _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics, Pipeline, "DatadogSingleSignOnResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Datadog
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DatadogSingleSignOnResource(Client, DatadogSingleSignOnResourceData.DeserializeDatadogSingleSignOnResourceData(e)), _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics, Pipeline, "DatadogSingleSignOnResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DatadogSingleSignOnResourceData.DeserializeDatadogSingleSignOnResourceData(e); return new DatadogSingleSignOnResource(Client, data, data.Id); }, _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics, Pipeline, "DatadogSingleSignOnResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

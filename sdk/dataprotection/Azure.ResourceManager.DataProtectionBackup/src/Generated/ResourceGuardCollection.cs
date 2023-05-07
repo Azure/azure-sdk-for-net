@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             try
             {
                 var response = await _resourceGuardRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceGuardsName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataProtectionBackupArmOperation<ResourceGuardResource>(Response.FromValue(new ResourceGuardResource(Client, response), response.GetRawResponse()));
+                var operation = new DataProtectionBackupArmOperation<ResourceGuardResource>(Response.FromValue(new ResourceGuardResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             try
             {
                 var response = _resourceGuardRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, resourceGuardsName, data, cancellationToken);
-                var operation = new DataProtectionBackupArmOperation<ResourceGuardResource>(Response.FromValue(new ResourceGuardResource(Client, response), response.GetRawResponse()));
+                var operation = new DataProtectionBackupArmOperation<ResourceGuardResource>(Response.FromValue(new ResourceGuardResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 var response = await _resourceGuardRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceGuardsName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceGuardResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceGuardResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 var response = _resourceGuardRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceGuardsName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceGuardResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceGuardResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetResourcesInResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetResourcesInResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceGuardResource(Client, ResourceGuardData.DeserializeResourceGuardData(e)), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ResourceGuardData.DeserializeResourceGuardData(e); return new ResourceGuardResource(Client, data, data.Id); }, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetResourcesInResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetResourcesInResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceGuardResource(Client, ResourceGuardData.DeserializeResourceGuardData(e)), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ResourceGuardData.DeserializeResourceGuardData(e); return new ResourceGuardResource(Client, data, data.Id); }, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

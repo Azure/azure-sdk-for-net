@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <summary> Initializes a new instance of the <see cref = "ViewResourceFormatResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ViewResourceFormatResource(ArmClient client, ViewResourceFormatData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal ViewResourceFormatResource(ArmClient client, ViewResourceFormatData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 var response = await _viewResourceFormatViewsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ViewResourceFormatResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ViewResourceFormatResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 var response = _viewResourceFormatViewsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ViewResourceFormatResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ViewResourceFormatResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -260,7 +261,7 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = await _viewResourceFormatViewsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomerInsightsArmOperation<ViewResourceFormatResource>(Response.FromValue(new ViewResourceFormatResource(Client, response), response.GetRawResponse()));
+                var operation = new CustomerInsightsArmOperation<ViewResourceFormatResource>(Response.FromValue(new ViewResourceFormatResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -298,7 +299,7 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = _viewResourceFormatViewsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new CustomerInsightsArmOperation<ViewResourceFormatResource>(Response.FromValue(new ViewResourceFormatResource(Client, response), response.GetRawResponse()));
+                var operation = new CustomerInsightsArmOperation<ViewResourceFormatResource>(Response.FromValue(new ViewResourceFormatResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

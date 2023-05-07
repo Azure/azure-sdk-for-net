@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DataBoxEdgeRoleAddonData.DeserializeDataBoxEdgeRoleAddonData(document.RootElement);
-            return new DataBoxEdgeRoleAddonResource(_client, data);
+            return new DataBoxEdgeRoleAddonResource(_client, data, data.Id);
         }
 
         async ValueTask<DataBoxEdgeRoleAddonResource> IOperationSource<DataBoxEdgeRoleAddonResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DataBoxEdgeRoleAddonData.DeserializeDataBoxEdgeRoleAddonData(document.RootElement);
-            return new DataBoxEdgeRoleAddonResource(_client, data);
+            return new DataBoxEdgeRoleAddonResource(_client, data, data.Id);
         }
     }
 }

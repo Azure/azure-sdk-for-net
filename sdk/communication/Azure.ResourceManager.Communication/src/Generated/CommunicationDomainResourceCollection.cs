@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Communication
                 var response = await _communicationDomainResourceDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CommunicationDomainResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CommunicationDomainResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Communication
                 var response = _communicationDomainResourceDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CommunicationDomainResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CommunicationDomainResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Communication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _communicationDomainResourceDomainsRestClient.CreateListByEmailServiceResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _communicationDomainResourceDomainsRestClient.CreateListByEmailServiceResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CommunicationDomainResource(Client, CommunicationDomainResourceData.DeserializeCommunicationDomainResourceData(e)), _communicationDomainResourceDomainsClientDiagnostics, Pipeline, "CommunicationDomainResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = CommunicationDomainResourceData.DeserializeCommunicationDomainResourceData(e); return new CommunicationDomainResource(Client, data, data.Id); }, _communicationDomainResourceDomainsClientDiagnostics, Pipeline, "CommunicationDomainResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Communication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _communicationDomainResourceDomainsRestClient.CreateListByEmailServiceResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _communicationDomainResourceDomainsRestClient.CreateListByEmailServiceResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CommunicationDomainResource(Client, CommunicationDomainResourceData.DeserializeCommunicationDomainResourceData(e)), _communicationDomainResourceDomainsClientDiagnostics, Pipeline, "CommunicationDomainResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = CommunicationDomainResourceData.DeserializeCommunicationDomainResourceData(e); return new CommunicationDomainResource(Client, data, data.Id); }, _communicationDomainResourceDomainsClientDiagnostics, Pipeline, "CommunicationDomainResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 var response = await _linkResourceFormatLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LinkResourceFormatResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LinkResourceFormatResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 var response = _linkResourceFormatLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LinkResourceFormatResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LinkResourceFormatResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _linkResourceFormatLinksRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _linkResourceFormatLinksRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LinkResourceFormatResource(Client, LinkResourceFormatData.DeserializeLinkResourceFormatData(e)), _linkResourceFormatLinksClientDiagnostics, Pipeline, "LinkResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = LinkResourceFormatData.DeserializeLinkResourceFormatData(e); return new LinkResourceFormatResource(Client, data, data.Id); }, _linkResourceFormatLinksClientDiagnostics, Pipeline, "LinkResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _linkResourceFormatLinksRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _linkResourceFormatLinksRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LinkResourceFormatResource(Client, LinkResourceFormatData.DeserializeLinkResourceFormatData(e)), _linkResourceFormatLinksClientDiagnostics, Pipeline, "LinkResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = LinkResourceFormatData.DeserializeLinkResourceFormatData(e); return new LinkResourceFormatResource(Client, data, data.Id); }, _linkResourceFormatLinksClientDiagnostics, Pipeline, "LinkResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

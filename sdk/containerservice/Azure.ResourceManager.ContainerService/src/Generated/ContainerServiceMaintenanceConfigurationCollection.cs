@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = await _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation<ContainerServiceMaintenanceConfigurationResource>(Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response), response.GetRawResponse()));
+                var operation = new ContainerServiceArmOperation<ContainerServiceMaintenanceConfigurationResource>(Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, data, cancellationToken);
-                var operation = new ContainerServiceArmOperation<ContainerServiceMaintenanceConfigurationResource>(Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response), response.GetRawResponse()));
+                var operation = new ContainerServiceArmOperation<ContainerServiceMaintenanceConfigurationResource>(Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ContainerService
                 var response = await _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ContainerService
                 var response = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateListByManagedClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateListByManagedClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceMaintenanceConfigurationResource(Client, ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(e)), _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics, Pipeline, "ContainerServiceMaintenanceConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(e); return new ContainerServiceMaintenanceConfigurationResource(Client, data, data.Id); }, _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics, Pipeline, "ContainerServiceMaintenanceConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateListByManagedClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateListByManagedClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceMaintenanceConfigurationResource(Client, ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(e)), _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics, Pipeline, "ContainerServiceMaintenanceConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(e); return new ContainerServiceMaintenanceConfigurationResource(Client, data, data.Id); }, _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics, Pipeline, "ContainerServiceMaintenanceConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

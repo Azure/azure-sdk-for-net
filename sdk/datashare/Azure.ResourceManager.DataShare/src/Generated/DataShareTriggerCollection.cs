@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataShare
                 var response = await _dataShareTriggerTriggersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, triggerName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataShareTriggerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataShareTriggerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataShare
                 var response = _dataShareTriggerTriggersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, triggerName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataShareTriggerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataShareTriggerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareTriggerTriggersRestClient.CreateListByShareSubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareTriggerTriggersRestClient.CreateListByShareSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataShareTriggerResource(Client, DataShareTriggerData.DeserializeDataShareTriggerData(e)), _dataShareTriggerTriggersClientDiagnostics, Pipeline, "DataShareTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DataShareTriggerData.DeserializeDataShareTriggerData(e); return new DataShareTriggerResource(Client, data, data.Id); }, _dataShareTriggerTriggersClientDiagnostics, Pipeline, "DataShareTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareTriggerTriggersRestClient.CreateListByShareSubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareTriggerTriggersRestClient.CreateListByShareSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataShareTriggerResource(Client, DataShareTriggerData.DeserializeDataShareTriggerData(e)), _dataShareTriggerTriggersClientDiagnostics, Pipeline, "DataShareTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DataShareTriggerData.DeserializeDataShareTriggerData(e); return new DataShareTriggerResource(Client, data, data.Id); }, _dataShareTriggerTriggersClientDiagnostics, Pipeline, "DataShareTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

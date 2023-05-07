@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 var response = await _resourcePoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourcePoolName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourcePoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourcePoolResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 var response = _resourcePoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourcePoolName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourcePoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourcePoolResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourcePoolRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourcePoolRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourcePoolResource(Client, ResourcePoolData.DeserializeResourcePoolData(e)), _resourcePoolClientDiagnostics, Pipeline, "ResourcePoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ResourcePoolData.DeserializeResourcePoolData(e); return new ResourcePoolResource(Client, data, data.Id); }, _resourcePoolClientDiagnostics, Pipeline, "ResourcePoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourcePoolRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourcePoolRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourcePoolResource(Client, ResourcePoolData.DeserializeResourcePoolData(e)), _resourcePoolClientDiagnostics, Pipeline, "ResourcePoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ResourcePoolData.DeserializeResourcePoolData(e); return new ResourcePoolResource(Client, data, data.Id); }, _resourcePoolClientDiagnostics, Pipeline, "ResourcePoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

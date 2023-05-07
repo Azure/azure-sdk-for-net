@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Initializes a new instance of the <see cref = "CosmosDBLocationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CosmosDBLocationResource(ArmClient client, CosmosDBLocationData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal CosmosDBLocationResource(ArmClient client, CosmosDBLocationData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -159,7 +160,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = await _cosmosDBLocationLocationsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CosmosDBLocationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CosmosDBLocationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -191,7 +192,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = _cosmosDBLocationLocationsRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CosmosDBLocationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CosmosDBLocationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

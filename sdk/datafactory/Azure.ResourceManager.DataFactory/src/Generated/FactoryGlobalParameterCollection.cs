@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = await _factoryGlobalParameterGlobalParametersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalParameterName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<FactoryGlobalParameterResource>(Response.FromValue(new FactoryGlobalParameterResource(Client, response), response.GetRawResponse()));
+                var operation = new DataFactoryArmOperation<FactoryGlobalParameterResource>(Response.FromValue(new FactoryGlobalParameterResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = _factoryGlobalParameterGlobalParametersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalParameterName, data, cancellationToken);
-                var operation = new DataFactoryArmOperation<FactoryGlobalParameterResource>(Response.FromValue(new FactoryGlobalParameterResource(Client, response), response.GetRawResponse()));
+                var operation = new DataFactoryArmOperation<FactoryGlobalParameterResource>(Response.FromValue(new FactoryGlobalParameterResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataFactory
                 var response = await _factoryGlobalParameterGlobalParametersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalParameterName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FactoryGlobalParameterResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FactoryGlobalParameterResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataFactory
                 var response = _factoryGlobalParameterGlobalParametersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalParameterName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FactoryGlobalParameterResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FactoryGlobalParameterResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryGlobalParameterGlobalParametersRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _factoryGlobalParameterGlobalParametersRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FactoryGlobalParameterResource(Client, FactoryGlobalParameterData.DeserializeFactoryGlobalParameterData(e)), _factoryGlobalParameterGlobalParametersClientDiagnostics, Pipeline, "FactoryGlobalParameterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = FactoryGlobalParameterData.DeserializeFactoryGlobalParameterData(e); return new FactoryGlobalParameterResource(Client, data, data.Id); }, _factoryGlobalParameterGlobalParametersClientDiagnostics, Pipeline, "FactoryGlobalParameterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryGlobalParameterGlobalParametersRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _factoryGlobalParameterGlobalParametersRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FactoryGlobalParameterResource(Client, FactoryGlobalParameterData.DeserializeFactoryGlobalParameterData(e)), _factoryGlobalParameterGlobalParametersClientDiagnostics, Pipeline, "FactoryGlobalParameterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = FactoryGlobalParameterData.DeserializeFactoryGlobalParameterData(e); return new FactoryGlobalParameterResource(Client, data, data.Id); }, _factoryGlobalParameterGlobalParametersClientDiagnostics, Pipeline, "FactoryGlobalParameterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

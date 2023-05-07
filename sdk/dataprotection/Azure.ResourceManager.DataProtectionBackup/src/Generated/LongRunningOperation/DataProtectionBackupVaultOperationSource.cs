@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DataProtectionBackupVaultData.DeserializeDataProtectionBackupVaultData(document.RootElement);
-            return new DataProtectionBackupVaultResource(_client, data);
+            return new DataProtectionBackupVaultResource(_client, data, data.Id);
         }
 
         async ValueTask<DataProtectionBackupVaultResource> IOperationSource<DataProtectionBackupVaultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DataProtectionBackupVaultData.DeserializeDataProtectionBackupVaultData(document.RootElement);
-            return new DataProtectionBackupVaultResource(_client, data);
+            return new DataProtectionBackupVaultResource(_client, data, data.Id);
         }
     }
 }

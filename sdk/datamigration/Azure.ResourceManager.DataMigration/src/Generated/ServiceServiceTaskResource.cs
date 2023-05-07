@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> Initializes a new instance of the <see cref = "ServiceServiceTaskResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ServiceServiceTaskResource(ArmClient client, ProjectTaskData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal ServiceServiceTaskResource(ArmClient client, ProjectTaskData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DataMigration
                 var response = await _serviceServiceTaskServiceTasksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.DataMigration
                 var response = _serviceServiceTaskServiceTasksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -247,7 +248,7 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = await _serviceServiceTaskServiceTasksRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -281,7 +282,7 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = _serviceServiceTaskServiceTasksRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -311,7 +312,7 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = await _serviceServiceTaskServiceTasksRestClient.CancelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -341,7 +342,7 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = _serviceServiceTaskServiceTasksRestClient.Cancel(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.CosmosDB
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CassandraViewGetResultData.DeserializeCassandraViewGetResultData(document.RootElement);
-            return new CassandraViewGetResultResource(_client, data);
+            return new CassandraViewGetResultResource(_client, data, data.Id);
         }
 
         async ValueTask<CassandraViewGetResultResource> IOperationSource<CassandraViewGetResultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CassandraViewGetResultData.DeserializeCassandraViewGetResultData(document.RootElement);
-            return new CassandraViewGetResultResource(_client, data);
+            return new CassandraViewGetResultResource(_client, data, data.Id);
         }
     }
 }

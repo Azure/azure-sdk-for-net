@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 var response = await _dataProtectionBackupInstanceBackupInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupInstanceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataProtectionBackupInstanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataProtectionBackupInstanceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 var response = _dataProtectionBackupInstanceBackupInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupInstanceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataProtectionBackupInstanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataProtectionBackupInstanceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataProtectionBackupInstanceBackupInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataProtectionBackupInstanceBackupInstancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupInstanceResource(Client, DataProtectionBackupInstanceData.DeserializeDataProtectionBackupInstanceData(e)), _dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, "DataProtectionBackupInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DataProtectionBackupInstanceData.DeserializeDataProtectionBackupInstanceData(e); return new DataProtectionBackupInstanceResource(Client, data, data.Id); }, _dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, "DataProtectionBackupInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataProtectionBackupInstanceBackupInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataProtectionBackupInstanceBackupInstancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupInstanceResource(Client, DataProtectionBackupInstanceData.DeserializeDataProtectionBackupInstanceData(e)), _dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, "DataProtectionBackupInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DataProtectionBackupInstanceData.DeserializeDataProtectionBackupInstanceData(e); return new DataProtectionBackupInstanceResource(Client, data, data.Id); }, _dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, "DataProtectionBackupInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

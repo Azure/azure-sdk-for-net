@@ -60,7 +60,8 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary> Initializes a new instance of the <see cref = "DataFactoryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataFactoryResource(ArmClient client, DataFactoryData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal DataFactoryResource(ArmClient client, DataFactoryData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -635,7 +636,7 @@ namespace Azure.ResourceManager.DataFactory
                 var response = await _dataFactoryFactoriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifNoneMatch, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataFactoryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataFactoryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -668,7 +669,7 @@ namespace Azure.ResourceManager.DataFactory
                 var response = _dataFactoryFactoriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifNoneMatch, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataFactoryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataFactoryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -770,7 +771,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = await _dataFactoryFactoriesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DataFactoryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataFactoryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -804,7 +805,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = _dataFactoryFactoriesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new DataFactoryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataFactoryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1355,7 +1356,7 @@ namespace Azure.ResourceManager.DataFactory
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryTriggerTriggersRestClient.CreateQueryByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new FactoryTriggerResource(Client, FactoryTriggerData.DeserializeFactoryTriggerData(e)), _factoryTriggerTriggersClientDiagnostics, Pipeline, "DataFactoryResource.GetTriggers", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = FactoryTriggerData.DeserializeFactoryTriggerData(e); return new FactoryTriggerResource(Client, data, data.Id); }, _factoryTriggerTriggersClientDiagnostics, Pipeline, "DataFactoryResource.GetTriggers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1380,7 +1381,7 @@ namespace Azure.ResourceManager.DataFactory
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryTriggerTriggersRestClient.CreateQueryByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new FactoryTriggerResource(Client, FactoryTriggerData.DeserializeFactoryTriggerData(e)), _factoryTriggerTriggersClientDiagnostics, Pipeline, "DataFactoryResource.GetTriggers", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = FactoryTriggerData.DeserializeFactoryTriggerData(e); return new FactoryTriggerResource(Client, data, data.Id); }, _factoryTriggerTriggersClientDiagnostics, Pipeline, "DataFactoryResource.GetTriggers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1839,7 +1840,7 @@ namespace Azure.ResourceManager.DataFactory
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _dataFactoryFactoriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DataFactoryResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new DataFactoryResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -1893,7 +1894,7 @@ namespace Azure.ResourceManager.DataFactory
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _dataFactoryFactoriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new DataFactoryResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new DataFactoryResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -1946,7 +1947,7 @@ namespace Azure.ResourceManager.DataFactory
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _dataFactoryFactoriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DataFactoryResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new DataFactoryResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -1995,7 +1996,7 @@ namespace Azure.ResourceManager.DataFactory
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _dataFactoryFactoriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new DataFactoryResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new DataFactoryResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -2043,7 +2044,7 @@ namespace Azure.ResourceManager.DataFactory
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _dataFactoryFactoriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DataFactoryResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new DataFactoryResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -2095,7 +2096,7 @@ namespace Azure.ResourceManager.DataFactory
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _dataFactoryFactoriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new DataFactoryResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new DataFactoryResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {

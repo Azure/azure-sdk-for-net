@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataShare
                 var response = await _dataShareAccountAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataShareAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataShareAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataShare
                 var response = _dataShareAccountAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataShareAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataShareAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareAccountAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataShareAccountResource(Client, DataShareAccountData.DeserializeDataShareAccountData(e)), _dataShareAccountAccountsClientDiagnostics, Pipeline, "DataShareAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DataShareAccountData.DeserializeDataShareAccountData(e); return new DataShareAccountResource(Client, data, data.Id); }, _dataShareAccountAccountsClientDiagnostics, Pipeline, "DataShareAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareAccountAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataShareAccountResource(Client, DataShareAccountData.DeserializeDataShareAccountData(e)), _dataShareAccountAccountsClientDiagnostics, Pipeline, "DataShareAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DataShareAccountData.DeserializeDataShareAccountData(e); return new DataShareAccountResource(Client, data, data.Id); }, _dataShareAccountAccountsClientDiagnostics, Pipeline, "DataShareAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

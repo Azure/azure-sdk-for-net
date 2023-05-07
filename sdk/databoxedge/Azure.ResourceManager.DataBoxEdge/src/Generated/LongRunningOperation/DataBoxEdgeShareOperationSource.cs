@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DataBoxEdgeShareData.DeserializeDataBoxEdgeShareData(document.RootElement);
-            return new DataBoxEdgeShareResource(_client, data);
+            return new DataBoxEdgeShareResource(_client, data, data.Id);
         }
 
         async ValueTask<DataBoxEdgeShareResource> IOperationSource<DataBoxEdgeShareResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DataBoxEdgeShareData.DeserializeDataBoxEdgeShareData(document.RootElement);
-            return new DataBoxEdgeShareResource(_client, data);
+            return new DataBoxEdgeShareResource(_client, data, data.Id);
         }
     }
 }

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = await _shareSubscriptionRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, shareSubscriptionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataShareArmOperation<ShareSubscriptionResource>(Response.FromValue(new ShareSubscriptionResource(Client, response), response.GetRawResponse()));
+                var operation = new DataShareArmOperation<ShareSubscriptionResource>(Response.FromValue(new ShareSubscriptionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = _shareSubscriptionRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, shareSubscriptionName, data, cancellationToken);
-                var operation = new DataShareArmOperation<ShareSubscriptionResource>(Response.FromValue(new ShareSubscriptionResource(Client, response), response.GetRawResponse()));
+                var operation = new DataShareArmOperation<ShareSubscriptionResource>(Response.FromValue(new ShareSubscriptionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataShare
                 var response = await _shareSubscriptionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, shareSubscriptionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ShareSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ShareSubscriptionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataShare
                 var response = _shareSubscriptionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, shareSubscriptionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ShareSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ShareSubscriptionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ShareSubscriptionResource(Client, ShareSubscriptionData.DeserializeShareSubscriptionData(e)), _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ShareSubscriptionData.DeserializeShareSubscriptionData(e); return new ShareSubscriptionResource(Client, data, data.Id); }, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ShareSubscriptionResource(Client, ShareSubscriptionData.DeserializeShareSubscriptionData(e)), _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ShareSubscriptionData.DeserializeShareSubscriptionData(e); return new ShareSubscriptionResource(Client, data, data.Id); }, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

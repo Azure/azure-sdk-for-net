@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = await _cosmosDBLocationLocationsRestClient.GetAsync(Id.SubscriptionId, location, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CosmosDBLocationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CosmosDBLocationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = _cosmosDBLocationLocationsRestClient.Get(Id.SubscriptionId, location, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CosmosDBLocationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CosmosDBLocationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CosmosDBLocationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBLocationLocationsRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBLocationResource(Client, CosmosDBLocationData.DeserializeCosmosDBLocationData(e)), _cosmosDBLocationLocationsClientDiagnostics, Pipeline, "CosmosDBLocationCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = CosmosDBLocationData.DeserializeCosmosDBLocationData(e); return new CosmosDBLocationResource(Client, data, data.Id); }, _cosmosDBLocationLocationsClientDiagnostics, Pipeline, "CosmosDBLocationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CosmosDBLocationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBLocationLocationsRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBLocationResource(Client, CosmosDBLocationData.DeserializeCosmosDBLocationData(e)), _cosmosDBLocationLocationsClientDiagnostics, Pipeline, "CosmosDBLocationCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = CosmosDBLocationData.DeserializeCosmosDBLocationData(e); return new CosmosDBLocationResource(Client, data, data.Id); }, _cosmosDBLocationLocationsClientDiagnostics, Pipeline, "CosmosDBLocationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

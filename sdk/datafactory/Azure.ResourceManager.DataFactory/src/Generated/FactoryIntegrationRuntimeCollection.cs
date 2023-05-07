@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = await _factoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<FactoryIntegrationRuntimeResource>(Response.FromValue(new FactoryIntegrationRuntimeResource(Client, response), response.GetRawResponse()));
+                var operation = new DataFactoryArmOperation<FactoryIntegrationRuntimeResource>(Response.FromValue(new FactoryIntegrationRuntimeResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = _factoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, data, ifMatch, cancellationToken);
-                var operation = new DataFactoryArmOperation<FactoryIntegrationRuntimeResource>(Response.FromValue(new FactoryIntegrationRuntimeResource(Client, response), response.GetRawResponse()));
+                var operation = new DataFactoryArmOperation<FactoryIntegrationRuntimeResource>(Response.FromValue(new FactoryIntegrationRuntimeResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataFactory
                 var response = await _factoryIntegrationRuntimeIntegrationRuntimesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FactoryIntegrationRuntimeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FactoryIntegrationRuntimeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DataFactory
                 var response = _factoryIntegrationRuntimeIntegrationRuntimesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, ifNoneMatch, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FactoryIntegrationRuntimeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FactoryIntegrationRuntimeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _factoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FactoryIntegrationRuntimeResource(Client, FactoryIntegrationRuntimeData.DeserializeFactoryIntegrationRuntimeData(e)), _factoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, "FactoryIntegrationRuntimeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = FactoryIntegrationRuntimeData.DeserializeFactoryIntegrationRuntimeData(e); return new FactoryIntegrationRuntimeResource(Client, data, data.Id); }, _factoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, "FactoryIntegrationRuntimeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _factoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FactoryIntegrationRuntimeResource(Client, FactoryIntegrationRuntimeData.DeserializeFactoryIntegrationRuntimeData(e)), _factoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, "FactoryIntegrationRuntimeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = FactoryIntegrationRuntimeData.DeserializeFactoryIntegrationRuntimeData(e); return new FactoryIntegrationRuntimeResource(Client, data, data.Id); }, _factoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, "FactoryIntegrationRuntimeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

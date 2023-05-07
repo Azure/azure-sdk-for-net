@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = await _mongoDBRoleDefinitionMongoDBResourcesRestClient.GetMongoRoleDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MongoDBRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MongoDBRoleDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = _mongoDBRoleDefinitionMongoDBResourcesRestClient.GetMongoRoleDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MongoDBRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MongoDBRoleDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<MongoDBRoleDefinitionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoDBRoleDefinitionMongoDBResourcesRestClient.CreateListMongoRoleDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MongoDBRoleDefinitionResource(Client, MongoDBRoleDefinitionData.DeserializeMongoDBRoleDefinitionData(e)), _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics, Pipeline, "MongoDBRoleDefinitionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = MongoDBRoleDefinitionData.DeserializeMongoDBRoleDefinitionData(e); return new MongoDBRoleDefinitionResource(Client, data, data.Id); }, _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics, Pipeline, "MongoDBRoleDefinitionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<MongoDBRoleDefinitionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoDBRoleDefinitionMongoDBResourcesRestClient.CreateListMongoRoleDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MongoDBRoleDefinitionResource(Client, MongoDBRoleDefinitionData.DeserializeMongoDBRoleDefinitionData(e)), _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics, Pipeline, "MongoDBRoleDefinitionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = MongoDBRoleDefinitionData.DeserializeMongoDBRoleDefinitionData(e); return new MongoDBRoleDefinitionResource(Client, data, data.Id); }, _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics, Pipeline, "MongoDBRoleDefinitionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

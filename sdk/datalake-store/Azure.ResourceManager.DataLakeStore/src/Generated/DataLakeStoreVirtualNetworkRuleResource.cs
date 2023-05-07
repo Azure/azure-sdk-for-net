@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <summary> Initializes a new instance of the <see cref = "DataLakeStoreVirtualNetworkRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataLakeStoreVirtualNetworkRuleResource(ArmClient client, DataLakeStoreVirtualNetworkRuleData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal DataLakeStoreVirtualNetworkRuleResource(ArmClient client, DataLakeStoreVirtualNetworkRuleData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 var response = await _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataLakeStoreVirtualNetworkRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataLakeStoreVirtualNetworkRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 var response = _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataLakeStoreVirtualNetworkRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataLakeStoreVirtualNetworkRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.DataLakeStore
             try
             {
                 var response = await _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DataLakeStoreVirtualNetworkRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataLakeStoreVirtualNetworkRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -278,7 +279,7 @@ namespace Azure.ResourceManager.DataLakeStore
             try
             {
                 var response = _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new DataLakeStoreVirtualNetworkRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataLakeStoreVirtualNetworkRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

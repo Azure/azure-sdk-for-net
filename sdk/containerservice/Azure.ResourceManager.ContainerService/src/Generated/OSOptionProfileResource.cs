@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> Initializes a new instance of the <see cref = "OSOptionProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal OSOptionProfileResource(ArmClient client, OSOptionProfileData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal OSOptionProfileResource(ArmClient client, OSOptionProfileData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.ContainerService
                 var response = await _osOptionProfileManagedClustersRestClient.GetOSOptionsAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), resourceType, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OSOptionProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OSOptionProfileResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.ContainerService
                 var response = _osOptionProfileManagedClustersRestClient.GetOSOptions(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), resourceType, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OSOptionProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OSOptionProfileResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

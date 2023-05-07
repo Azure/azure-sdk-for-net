@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = await _containerAppManagedEnvironmentCertificateCertificatesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentCertificateResource>(Response.FromValue(new ContainerAppManagedEnvironmentCertificateResource(Client, response), response.GetRawResponse()));
+                var operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentCertificateResource>(Response.FromValue(new ContainerAppManagedEnvironmentCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = _containerAppManagedEnvironmentCertificateCertificatesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, cancellationToken);
-                var operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentCertificateResource>(Response.FromValue(new ContainerAppManagedEnvironmentCertificateResource(Client, response), response.GetRawResponse()));
+                var operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentCertificateResource>(Response.FromValue(new ContainerAppManagedEnvironmentCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppContainers
                 var response = await _containerAppManagedEnvironmentCertificateCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerAppManagedEnvironmentCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppManagedEnvironmentCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppContainers
                 var response = _containerAppManagedEnvironmentCertificateCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerAppManagedEnvironmentCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppManagedEnvironmentCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentCertificateCertificatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppManagedEnvironmentCertificateCertificatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppManagedEnvironmentCertificateResource(Client, ContainerAppCertificateData.DeserializeContainerAppCertificateData(e)), _containerAppManagedEnvironmentCertificateCertificatesClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ContainerAppCertificateData.DeserializeContainerAppCertificateData(e); return new ContainerAppManagedEnvironmentCertificateResource(Client, data, data.Id); }, _containerAppManagedEnvironmentCertificateCertificatesClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentCertificateCertificatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppManagedEnvironmentCertificateCertificatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppManagedEnvironmentCertificateResource(Client, ContainerAppCertificateData.DeserializeContainerAppCertificateData(e)), _containerAppManagedEnvironmentCertificateCertificatesClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ContainerAppCertificateData.DeserializeContainerAppCertificateData(e); return new ContainerAppManagedEnvironmentCertificateResource(Client, data, data.Id); }, _containerAppManagedEnvironmentCertificateCertificatesClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

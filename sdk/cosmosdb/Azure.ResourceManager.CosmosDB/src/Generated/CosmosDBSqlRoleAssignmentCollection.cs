@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = await _cosmosDBSqlRoleAssignmentSqlResourcesRestClient.GetSqlRoleAssignmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleAssignmentId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CosmosDBSqlRoleAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CosmosDBSqlRoleAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = _cosmosDBSqlRoleAssignmentSqlResourcesRestClient.GetSqlRoleAssignment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleAssignmentId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CosmosDBSqlRoleAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CosmosDBSqlRoleAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CosmosDBSqlRoleAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlRoleAssignmentSqlResourcesRestClient.CreateListSqlRoleAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlRoleAssignmentResource(Client, CosmosDBSqlRoleAssignmentData.DeserializeCosmosDBSqlRoleAssignmentData(e)), _cosmosDBSqlRoleAssignmentSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlRoleAssignmentCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = CosmosDBSqlRoleAssignmentData.DeserializeCosmosDBSqlRoleAssignmentData(e); return new CosmosDBSqlRoleAssignmentResource(Client, data, data.Id); }, _cosmosDBSqlRoleAssignmentSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlRoleAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CosmosDBSqlRoleAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlRoleAssignmentSqlResourcesRestClient.CreateListSqlRoleAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlRoleAssignmentResource(Client, CosmosDBSqlRoleAssignmentData.DeserializeCosmosDBSqlRoleAssignmentData(e)), _cosmosDBSqlRoleAssignmentSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlRoleAssignmentCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = CosmosDBSqlRoleAssignmentData.DeserializeCosmosDBSqlRoleAssignmentData(e); return new CosmosDBSqlRoleAssignmentResource(Client, data, data.Id); }, _cosmosDBSqlRoleAssignmentSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlRoleAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

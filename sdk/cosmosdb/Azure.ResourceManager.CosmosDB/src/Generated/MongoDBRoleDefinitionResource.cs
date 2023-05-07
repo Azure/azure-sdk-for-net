@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Initializes a new instance of the <see cref = "MongoDBRoleDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MongoDBRoleDefinitionResource(ArmClient client, MongoDBRoleDefinitionData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal MongoDBRoleDefinitionResource(ArmClient client, MongoDBRoleDefinitionData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = await _mongoDBRoleDefinitionMongoDBResourcesRestClient.GetMongoRoleDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MongoDBRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MongoDBRoleDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = _mongoDBRoleDefinitionMongoDBResourcesRestClient.GetMongoRoleDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MongoDBRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MongoDBRoleDefinitionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

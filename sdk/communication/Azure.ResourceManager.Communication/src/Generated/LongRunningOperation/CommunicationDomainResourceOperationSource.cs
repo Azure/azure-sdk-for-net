@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Communication
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CommunicationDomainResourceData.DeserializeCommunicationDomainResourceData(document.RootElement);
-            return new CommunicationDomainResource(_client, data);
+            return new CommunicationDomainResource(_client, data, data.Id);
         }
 
         async ValueTask<CommunicationDomainResource> IOperationSource<CommunicationDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CommunicationDomainResourceData.DeserializeCommunicationDomainResourceData(document.RootElement);
-            return new CommunicationDomainResource(_client, data);
+            return new CommunicationDomainResource(_client, data, data.Id);
         }
     }
 }

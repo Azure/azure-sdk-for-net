@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of the <see cref = "VirtualMachineExtensionImageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VirtualMachineExtensionImageResource(ArmClient client, VirtualMachineExtensionImageData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal VirtualMachineExtensionImageResource(ArmClient client, VirtualMachineExtensionImageData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _virtualMachineExtensionImageRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Parent.Name), Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualMachineExtensionImageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineExtensionImageResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _virtualMachineExtensionImageRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Parent.Name), Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualMachineExtensionImageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineExtensionImageResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

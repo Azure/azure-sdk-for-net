@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.AppContainers
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ContainerAppData.DeserializeContainerAppData(document.RootElement);
-            return new ContainerAppResource(_client, data);
+            return new ContainerAppResource(_client, data, data.Id);
         }
 
         async ValueTask<ContainerAppResource> IOperationSource<ContainerAppResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ContainerAppData.DeserializeContainerAppData(document.RootElement);
-            return new ContainerAppResource(_client, data);
+            return new ContainerAppResource(_client, data, data.Id);
         }
     }
 }

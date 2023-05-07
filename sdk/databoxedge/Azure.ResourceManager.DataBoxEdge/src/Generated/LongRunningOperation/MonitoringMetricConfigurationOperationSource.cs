@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MonitoringMetricConfigurationData.DeserializeMonitoringMetricConfigurationData(document.RootElement);
-            return new MonitoringMetricConfigurationResource(_client, data);
+            return new MonitoringMetricConfigurationResource(_client, data, data.Id);
         }
 
         async ValueTask<MonitoringMetricConfigurationResource> IOperationSource<MonitoringMetricConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MonitoringMetricConfigurationData.DeserializeMonitoringMetricConfigurationData(document.RootElement);
-            return new MonitoringMetricConfigurationResource(_client, data);
+            return new MonitoringMetricConfigurationResource(_client, data, data.Id);
         }
     }
 }

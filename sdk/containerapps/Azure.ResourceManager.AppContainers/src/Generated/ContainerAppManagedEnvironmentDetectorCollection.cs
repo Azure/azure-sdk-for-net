@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppContainers
                 var response = await _containerAppManagedEnvironmentDetectorManagedEnvironmentDiagnosticsRestClient.GetDetectorAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerAppManagedEnvironmentDetectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppManagedEnvironmentDetectorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppContainers
                 var response = _containerAppManagedEnvironmentDetectorManagedEnvironmentDiagnosticsRestClient.GetDetector(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerAppManagedEnvironmentDetectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppManagedEnvironmentDetectorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppContainers
         public virtual AsyncPageable<ContainerAppManagedEnvironmentDetectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentDetectorManagedEnvironmentDiagnosticsRestClient.CreateListDetectorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ContainerAppManagedEnvironmentDetectorResource(Client, ContainerAppDiagnosticData.DeserializeContainerAppDiagnosticData(e)), _containerAppManagedEnvironmentDetectorManagedEnvironmentDiagnosticsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentDetectorCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = ContainerAppDiagnosticData.DeserializeContainerAppDiagnosticData(e); return new ContainerAppManagedEnvironmentDetectorResource(Client, data, data.Id); }, _containerAppManagedEnvironmentDetectorManagedEnvironmentDiagnosticsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentDetectorCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppContainers
         public virtual Pageable<ContainerAppManagedEnvironmentDetectorResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentDetectorManagedEnvironmentDiagnosticsRestClient.CreateListDetectorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ContainerAppManagedEnvironmentDetectorResource(Client, ContainerAppDiagnosticData.DeserializeContainerAppDiagnosticData(e)), _containerAppManagedEnvironmentDetectorManagedEnvironmentDiagnosticsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentDetectorCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = ContainerAppDiagnosticData.DeserializeContainerAppDiagnosticData(e); return new ContainerAppManagedEnvironmentDetectorResource(Client, data, data.Id); }, _containerAppManagedEnvironmentDetectorManagedEnvironmentDiagnosticsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentDetectorCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

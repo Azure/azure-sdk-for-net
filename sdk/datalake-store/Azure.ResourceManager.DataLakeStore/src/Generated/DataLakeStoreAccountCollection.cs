@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 var response = await _dataLakeStoreAccountAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataLakeStoreAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataLakeStoreAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 var response = _dataLakeStoreAccountAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataLakeStoreAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataLakeStoreAccountResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

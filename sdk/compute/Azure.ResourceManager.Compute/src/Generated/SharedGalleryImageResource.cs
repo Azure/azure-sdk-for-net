@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of the <see cref = "SharedGalleryImageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SharedGalleryImageResource(ArmClient client, SharedGalleryImageData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal SharedGalleryImageResource(ArmClient client, SharedGalleryImageData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.Compute
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 response.Value.Id = CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name);
-                return Response.FromValue(new SharedGalleryImageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SharedGalleryImageResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -196,7 +197,7 @@ namespace Azure.ResourceManager.Compute
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 response.Value.Id = CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name);
-                return Response.FromValue(new SharedGalleryImageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SharedGalleryImageResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

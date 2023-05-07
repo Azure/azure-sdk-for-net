@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 var response = await _vMwareHostHostsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, hostName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VMwareHostResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VMwareHostResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 var response = _vMwareHostHostsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, hostName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VMwareHostResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VMwareHostResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vMwareHostHostsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vMwareHostHostsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VMwareHostResource(Client, VMwareHostData.DeserializeVMwareHostData(e)), _vMwareHostHostsClientDiagnostics, Pipeline, "VMwareHostCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = VMwareHostData.DeserializeVMwareHostData(e); return new VMwareHostResource(Client, data, data.Id); }, _vMwareHostHostsClientDiagnostics, Pipeline, "VMwareHostCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vMwareHostHostsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vMwareHostHostsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VMwareHostResource(Client, VMwareHostData.DeserializeVMwareHostData(e)), _vMwareHostHostsClientDiagnostics, Pipeline, "VMwareHostCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = VMwareHostData.DeserializeVMwareHostData(e); return new VMwareHostResource(Client, data, data.Id); }, _vMwareHostHostsClientDiagnostics, Pipeline, "VMwareHostCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

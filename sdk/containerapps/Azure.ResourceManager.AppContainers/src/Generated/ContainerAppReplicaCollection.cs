@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppContainers
                 var response = await _containerAppReplicaContainerAppsRevisionReplicasRestClient.GetReplicaAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerAppReplicaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppReplicaResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppContainers
                 var response = _containerAppReplicaContainerAppsRevisionReplicasRestClient.GetReplica(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerAppReplicaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppReplicaResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppContainers
         public virtual AsyncPageable<ContainerAppReplicaResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppReplicaContainerAppsRevisionReplicasRestClient.CreateListReplicasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ContainerAppReplicaResource(Client, ContainerAppReplicaData.DeserializeContainerAppReplicaData(e)), _containerAppReplicaContainerAppsRevisionReplicasClientDiagnostics, Pipeline, "ContainerAppReplicaCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = ContainerAppReplicaData.DeserializeContainerAppReplicaData(e); return new ContainerAppReplicaResource(Client, data, data.Id); }, _containerAppReplicaContainerAppsRevisionReplicasClientDiagnostics, Pipeline, "ContainerAppReplicaCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppContainers
         public virtual Pageable<ContainerAppReplicaResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppReplicaContainerAppsRevisionReplicasRestClient.CreateListReplicasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ContainerAppReplicaResource(Client, ContainerAppReplicaData.DeserializeContainerAppReplicaData(e)), _containerAppReplicaContainerAppsRevisionReplicasClientDiagnostics, Pipeline, "ContainerAppReplicaCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = ContainerAppReplicaData.DeserializeContainerAppReplicaData(e); return new ContainerAppReplicaResource(Client, data, data.Id); }, _containerAppReplicaContainerAppsRevisionReplicasClientDiagnostics, Pipeline, "ContainerAppReplicaCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

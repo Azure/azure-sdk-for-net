@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 response.Value.Id = SharedGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName);
-                return Response.FromValue(new SharedGalleryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SharedGalleryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 response.Value.Id = SharedGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName);
-                return Response.FromValue(new SharedGalleryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SharedGalleryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sharedGalleryRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location), sharedTo);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sharedGalleryRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), sharedTo);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SharedGalleryResource(Client, SharedGalleryData.DeserializeSharedGalleryData(e)), _sharedGalleryClientDiagnostics, Pipeline, "SharedGalleryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SharedGalleryData.DeserializeSharedGalleryData(e); return new SharedGalleryResource(Client, data, data.Id); }, _sharedGalleryClientDiagnostics, Pipeline, "SharedGalleryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sharedGalleryRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location), sharedTo);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sharedGalleryRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), sharedTo);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SharedGalleryResource(Client, SharedGalleryData.DeserializeSharedGalleryData(e)), _sharedGalleryClientDiagnostics, Pipeline, "SharedGalleryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SharedGalleryData.DeserializeSharedGalleryData(e); return new SharedGalleryResource(Client, data, data.Id); }, _sharedGalleryClientDiagnostics, Pipeline, "SharedGalleryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

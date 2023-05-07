@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.CosmosDB
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = GremlinGraphData.DeserializeGremlinGraphData(document.RootElement);
-            return new GremlinGraphResource(_client, data);
+            return new GremlinGraphResource(_client, data, data.Id);
         }
 
         async ValueTask<GremlinGraphResource> IOperationSource<GremlinGraphResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = GremlinGraphData.DeserializeGremlinGraphData(document.RootElement);
-            return new GremlinGraphResource(_client, data);
+            return new GremlinGraphResource(_client, data, data.Id);
         }
     }
 }

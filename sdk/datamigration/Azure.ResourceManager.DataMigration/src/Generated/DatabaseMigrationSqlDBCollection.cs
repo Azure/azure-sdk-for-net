@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DataMigration
                 var response = await _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, sqlDBInstanceName, targetDBName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DatabaseMigrationSqlDBResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DatabaseMigrationSqlDBResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.DataMigration
                 var response = _databaseMigrationSqlDBDatabaseMigrationsSqlDBRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, sqlDBInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DatabaseMigrationSqlDBResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DatabaseMigrationSqlDBResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

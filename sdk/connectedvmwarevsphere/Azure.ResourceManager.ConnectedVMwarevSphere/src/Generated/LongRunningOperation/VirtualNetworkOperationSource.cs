@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualNetworkData.DeserializeVirtualNetworkData(document.RootElement);
-            return new VirtualNetworkResource(_client, data);
+            return new VirtualNetworkResource(_client, data, data.Id);
         }
 
         async ValueTask<VirtualNetworkResource> IOperationSource<VirtualNetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualNetworkData.DeserializeVirtualNetworkData(document.RootElement);
-            return new VirtualNetworkResource(_client, data);
+            return new VirtualNetworkResource(_client, data, data.Id);
         }
     }
 }

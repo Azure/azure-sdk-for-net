@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DataBoxEdgeOrderData.DeserializeDataBoxEdgeOrderData(document.RootElement);
-            return new DataBoxEdgeOrderResource(_client, data);
+            return new DataBoxEdgeOrderResource(_client, data, data.Id);
         }
 
         async ValueTask<DataBoxEdgeOrderResource> IOperationSource<DataBoxEdgeOrderResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DataBoxEdgeOrderData.DeserializeDataBoxEdgeOrderData(document.RootElement);
-            return new DataBoxEdgeOrderResource(_client, data);
+            return new DataBoxEdgeOrderResource(_client, data, data.Id);
         }
     }
 }

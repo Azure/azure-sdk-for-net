@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 var response = await _dataBoxEdgeJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataBoxEdgeJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataBoxEdgeJobResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 var response = _dataBoxEdgeJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataBoxEdgeJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataBoxEdgeJobResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

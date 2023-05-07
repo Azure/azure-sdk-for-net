@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.CosmosDB
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CosmosDBSqlContainerData.DeserializeCosmosDBSqlContainerData(document.RootElement);
-            return new CosmosDBSqlContainerResource(_client, data);
+            return new CosmosDBSqlContainerResource(_client, data, data.Id);
         }
 
         async ValueTask<CosmosDBSqlContainerResource> IOperationSource<CosmosDBSqlContainerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CosmosDBSqlContainerData.DeserializeCosmosDBSqlContainerData(document.RootElement);
-            return new CosmosDBSqlContainerResource(_client, data);
+            return new CosmosDBSqlContainerResource(_client, data, data.Id);
         }
     }
 }

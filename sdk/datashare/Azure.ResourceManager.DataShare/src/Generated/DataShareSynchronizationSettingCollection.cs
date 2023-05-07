@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = await _dataShareSynchronizationSettingSynchronizationSettingsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, synchronizationSettingName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataShareArmOperation<DataShareSynchronizationSettingResource>(Response.FromValue(new DataShareSynchronizationSettingResource(Client, response), response.GetRawResponse()));
+                var operation = new DataShareArmOperation<DataShareSynchronizationSettingResource>(Response.FromValue(new DataShareSynchronizationSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = _dataShareSynchronizationSettingSynchronizationSettingsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, synchronizationSettingName, data, cancellationToken);
-                var operation = new DataShareArmOperation<DataShareSynchronizationSettingResource>(Response.FromValue(new DataShareSynchronizationSettingResource(Client, response), response.GetRawResponse()));
+                var operation = new DataShareArmOperation<DataShareSynchronizationSettingResource>(Response.FromValue(new DataShareSynchronizationSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataShare
                 var response = await _dataShareSynchronizationSettingSynchronizationSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, synchronizationSettingName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataShareSynchronizationSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataShareSynchronizationSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataShare
                 var response = _dataShareSynchronizationSettingSynchronizationSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, synchronizationSettingName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataShareSynchronizationSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataShareSynchronizationSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareSynchronizationSettingSynchronizationSettingsRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareSynchronizationSettingSynchronizationSettingsRestClient.CreateListByShareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataShareSynchronizationSettingResource(Client, DataShareSynchronizationSettingData.DeserializeDataShareSynchronizationSettingData(e)), _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics, Pipeline, "DataShareSynchronizationSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DataShareSynchronizationSettingData.DeserializeDataShareSynchronizationSettingData(e); return new DataShareSynchronizationSettingResource(Client, data, data.Id); }, _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics, Pipeline, "DataShareSynchronizationSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareSynchronizationSettingSynchronizationSettingsRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareSynchronizationSettingSynchronizationSettingsRestClient.CreateListByShareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataShareSynchronizationSettingResource(Client, DataShareSynchronizationSettingData.DeserializeDataShareSynchronizationSettingData(e)), _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics, Pipeline, "DataShareSynchronizationSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DataShareSynchronizationSettingData.DeserializeDataShareSynchronizationSettingData(e); return new DataShareSynchronizationSettingResource(Client, data, data.Id); }, _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics, Pipeline, "DataShareSynchronizationSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

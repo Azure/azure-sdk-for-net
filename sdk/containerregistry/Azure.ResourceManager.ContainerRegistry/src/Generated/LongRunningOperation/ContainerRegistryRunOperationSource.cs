@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ContainerRegistryRunData.DeserializeContainerRegistryRunData(document.RootElement);
-            return new ContainerRegistryRunResource(_client, data);
+            return new ContainerRegistryRunResource(_client, data, data.Id);
         }
 
         async ValueTask<ContainerRegistryRunResource> IOperationSource<ContainerRegistryRunResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ContainerRegistryRunData.DeserializeContainerRegistryRunData(document.RootElement);
-            return new ContainerRegistryRunResource(_client, data);
+            return new ContainerRegistryRunResource(_client, data, data.Id);
         }
     }
 }

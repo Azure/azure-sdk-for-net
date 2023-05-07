@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = await _cosmosDBSqlClientEncryptionKeySqlResourcesRestClient.GetClientEncryptionKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientEncryptionKeyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CosmosDBSqlClientEncryptionKeyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CosmosDBSqlClientEncryptionKeyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = _cosmosDBSqlClientEncryptionKeySqlResourcesRestClient.GetClientEncryptionKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientEncryptionKeyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CosmosDBSqlClientEncryptionKeyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CosmosDBSqlClientEncryptionKeyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CosmosDBSqlClientEncryptionKeyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlClientEncryptionKeySqlResourcesRestClient.CreateListClientEncryptionKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlClientEncryptionKeyResource(Client, CosmosDBSqlClientEncryptionKeyData.DeserializeCosmosDBSqlClientEncryptionKeyData(e)), _cosmosDBSqlClientEncryptionKeySqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlClientEncryptionKeyCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = CosmosDBSqlClientEncryptionKeyData.DeserializeCosmosDBSqlClientEncryptionKeyData(e); return new CosmosDBSqlClientEncryptionKeyResource(Client, data, data.Id); }, _cosmosDBSqlClientEncryptionKeySqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlClientEncryptionKeyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CosmosDBSqlClientEncryptionKeyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlClientEncryptionKeySqlResourcesRestClient.CreateListClientEncryptionKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlClientEncryptionKeyResource(Client, CosmosDBSqlClientEncryptionKeyData.DeserializeCosmosDBSqlClientEncryptionKeyData(e)), _cosmosDBSqlClientEncryptionKeySqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlClientEncryptionKeyCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = CosmosDBSqlClientEncryptionKeyData.DeserializeCosmosDBSqlClientEncryptionKeyData(e); return new CosmosDBSqlClientEncryptionKeyResource(Client, data, data.Id); }, _cosmosDBSqlClientEncryptionKeySqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlClientEncryptionKeyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

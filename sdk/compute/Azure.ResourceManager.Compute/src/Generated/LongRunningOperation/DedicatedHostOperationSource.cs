@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Compute
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DedicatedHostData.DeserializeDedicatedHostData(document.RootElement);
-            return new DedicatedHostResource(_client, data);
+            return new DedicatedHostResource(_client, data, data.Id);
         }
 
         async ValueTask<DedicatedHostResource> IOperationSource<DedicatedHostResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DedicatedHostData.DeserializeDedicatedHostData(document.RootElement);
-            return new DedicatedHostResource(_client, data);
+            return new DedicatedHostResource(_client, data, data.Id);
         }
     }
 }

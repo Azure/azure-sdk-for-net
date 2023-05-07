@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _cloudServiceOSVersionCloudServiceOperatingSystemsRestClient.GetOSVersionAsync(Id.SubscriptionId, new AzureLocation(_location), osVersionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CloudServiceOSVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CloudServiceOSVersionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _cloudServiceOSVersionCloudServiceOperatingSystemsRestClient.GetOSVersion(Id.SubscriptionId, new AzureLocation(_location), osVersionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CloudServiceOSVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CloudServiceOSVersionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceOSVersionCloudServiceOperatingSystemsRestClient.CreateListOSVersionsRequest(Id.SubscriptionId, new AzureLocation(_location));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudServiceOSVersionCloudServiceOperatingSystemsRestClient.CreateListOSVersionsNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudServiceOSVersionResource(Client, CloudServiceOSVersionData.DeserializeCloudServiceOSVersionData(e)), _cloudServiceOSVersionCloudServiceOperatingSystemsClientDiagnostics, Pipeline, "CloudServiceOSVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = CloudServiceOSVersionData.DeserializeCloudServiceOSVersionData(e); return new CloudServiceOSVersionResource(Client, data, data.Id); }, _cloudServiceOSVersionCloudServiceOperatingSystemsClientDiagnostics, Pipeline, "CloudServiceOSVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceOSVersionCloudServiceOperatingSystemsRestClient.CreateListOSVersionsRequest(Id.SubscriptionId, new AzureLocation(_location));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudServiceOSVersionCloudServiceOperatingSystemsRestClient.CreateListOSVersionsNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudServiceOSVersionResource(Client, CloudServiceOSVersionData.DeserializeCloudServiceOSVersionData(e)), _cloudServiceOSVersionCloudServiceOperatingSystemsClientDiagnostics, Pipeline, "CloudServiceOSVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = CloudServiceOSVersionData.DeserializeCloudServiceOSVersionData(e); return new CloudServiceOSVersionResource(Client, data, data.Id); }, _cloudServiceOSVersionCloudServiceOperatingSystemsClientDiagnostics, Pipeline, "CloudServiceOSVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 var response = await _profileResourceFormatProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, localeCode, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProfileResourceFormatResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProfileResourceFormatResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 var response = _profileResourceFormatProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, localeCode, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProfileResourceFormatResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProfileResourceFormatResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _profileResourceFormatProfilesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _profileResourceFormatProfilesRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProfileResourceFormatResource(Client, ProfileResourceFormatData.DeserializeProfileResourceFormatData(e)), _profileResourceFormatProfilesClientDiagnostics, Pipeline, "ProfileResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ProfileResourceFormatData.DeserializeProfileResourceFormatData(e); return new ProfileResourceFormatResource(Client, data, data.Id); }, _profileResourceFormatProfilesClientDiagnostics, Pipeline, "ProfileResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _profileResourceFormatProfilesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _profileResourceFormatProfilesRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProfileResourceFormatResource(Client, ProfileResourceFormatData.DeserializeProfileResourceFormatData(e)), _profileResourceFormatProfilesClientDiagnostics, Pipeline, "ProfileResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ProfileResourceFormatData.DeserializeProfileResourceFormatData(e); return new ProfileResourceFormatResource(Client, data, data.Id); }, _profileResourceFormatProfilesClientDiagnostics, Pipeline, "ProfileResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

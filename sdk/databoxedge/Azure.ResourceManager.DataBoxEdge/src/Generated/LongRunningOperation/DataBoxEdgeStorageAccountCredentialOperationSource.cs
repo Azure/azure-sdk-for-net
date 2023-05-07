@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DataBoxEdgeStorageAccountCredentialData.DeserializeDataBoxEdgeStorageAccountCredentialData(document.RootElement);
-            return new DataBoxEdgeStorageAccountCredentialResource(_client, data);
+            return new DataBoxEdgeStorageAccountCredentialResource(_client, data, data.Id);
         }
 
         async ValueTask<DataBoxEdgeStorageAccountCredentialResource> IOperationSource<DataBoxEdgeStorageAccountCredentialResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DataBoxEdgeStorageAccountCredentialData.DeserializeDataBoxEdgeStorageAccountCredentialData(document.RootElement);
-            return new DataBoxEdgeStorageAccountCredentialResource(_client, data);
+            return new DataBoxEdgeStorageAccountCredentialResource(_client, data, data.Id);
         }
     }
 }

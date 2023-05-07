@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 var response = await _kpiResourceFormatKpiRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kpiName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new KpiResourceFormatResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KpiResourceFormatResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 var response = _kpiResourceFormatKpiRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kpiName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new KpiResourceFormatResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KpiResourceFormatResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kpiResourceFormatKpiRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kpiResourceFormatKpiRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KpiResourceFormatResource(Client, KpiResourceFormatData.DeserializeKpiResourceFormatData(e)), _kpiResourceFormatKpiClientDiagnostics, Pipeline, "KpiResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = KpiResourceFormatData.DeserializeKpiResourceFormatData(e); return new KpiResourceFormatResource(Client, data, data.Id); }, _kpiResourceFormatKpiClientDiagnostics, Pipeline, "KpiResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kpiResourceFormatKpiRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kpiResourceFormatKpiRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KpiResourceFormatResource(Client, KpiResourceFormatData.DeserializeKpiResourceFormatData(e)), _kpiResourceFormatKpiClientDiagnostics, Pipeline, "KpiResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = KpiResourceFormatData.DeserializeKpiResourceFormatData(e); return new KpiResourceFormatResource(Client, data, data.Id); }, _kpiResourceFormatKpiClientDiagnostics, Pipeline, "KpiResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = await _serviceProjectTaskTasksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataMigrationArmOperation<ServiceProjectTaskResource>(Response.FromValue(new ServiceProjectTaskResource(Client, response), response.GetRawResponse()));
+                var operation = new DataMigrationArmOperation<ServiceProjectTaskResource>(Response.FromValue(new ServiceProjectTaskResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = _serviceProjectTaskTasksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskName, data, cancellationToken);
-                var operation = new DataMigrationArmOperation<ServiceProjectTaskResource>(Response.FromValue(new ServiceProjectTaskResource(Client, response), response.GetRawResponse()));
+                var operation = new DataMigrationArmOperation<ServiceProjectTaskResource>(Response.FromValue(new ServiceProjectTaskResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataMigration
                 var response = await _serviceProjectTaskTasksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceProjectTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceProjectTaskResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataMigration
                 var response = _serviceProjectTaskTasksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceProjectTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceProjectTaskResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceProjectTaskTasksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceProjectTaskTasksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskType);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceProjectTaskResource(Client, ProjectTaskData.DeserializeProjectTaskData(e)), _serviceProjectTaskTasksClientDiagnostics, Pipeline, "ServiceProjectTaskCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ProjectTaskData.DeserializeProjectTaskData(e); return new ServiceProjectTaskResource(Client, data, data.Id); }, _serviceProjectTaskTasksClientDiagnostics, Pipeline, "ServiceProjectTaskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceProjectTaskTasksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceProjectTaskTasksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskType);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceProjectTaskResource(Client, ProjectTaskData.DeserializeProjectTaskData(e)), _serviceProjectTaskTasksClientDiagnostics, Pipeline, "ServiceProjectTaskCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ProjectTaskData.DeserializeProjectTaskData(e); return new ServiceProjectTaskResource(Client, data, data.Id); }, _serviceProjectTaskTasksClientDiagnostics, Pipeline, "ServiceProjectTaskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

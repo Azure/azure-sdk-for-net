@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <summary> Initializes a new instance of the <see cref = "DataLakeStoreTrustedIdProviderResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataLakeStoreTrustedIdProviderResource(ArmClient client, DataLakeStoreTrustedIdProviderData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal DataLakeStoreTrustedIdProviderResource(ArmClient client, DataLakeStoreTrustedIdProviderData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 var response = await _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataLakeStoreTrustedIdProviderResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataLakeStoreTrustedIdProviderResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 var response = _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataLakeStoreTrustedIdProviderResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataLakeStoreTrustedIdProviderResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.DataLakeStore
             try
             {
                 var response = await _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DataLakeStoreTrustedIdProviderResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataLakeStoreTrustedIdProviderResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -278,7 +279,7 @@ namespace Azure.ResourceManager.DataLakeStore
             try
             {
                 var response = _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new DataLakeStoreTrustedIdProviderResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataLakeStoreTrustedIdProviderResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

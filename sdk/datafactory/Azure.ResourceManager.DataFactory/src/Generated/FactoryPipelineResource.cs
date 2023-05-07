@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary> Initializes a new instance of the <see cref = "FactoryPipelineResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal FactoryPipelineResource(ArmClient client, FactoryPipelineData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal FactoryPipelineResource(ArmClient client, FactoryPipelineData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory
                 var response = await _factoryPipelinePipelinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FactoryPipelineResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FactoryPipelineResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory
                 var response = _factoryPipelinePipelinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FactoryPipelineResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FactoryPipelineResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = await _factoryPipelinePipelinesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<FactoryPipelineResource>(Response.FromValue(new FactoryPipelineResource(Client, response), response.GetRawResponse()));
+                var operation = new DataFactoryArmOperation<FactoryPipelineResource>(Response.FromValue(new FactoryPipelineResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -288,7 +289,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = _factoryPipelinePipelinesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
-                var operation = new DataFactoryArmOperation<FactoryPipelineResource>(Response.FromValue(new FactoryPipelineResource(Client, response), response.GetRawResponse()));
+                var operation = new DataFactoryArmOperation<FactoryPipelineResource>(Response.FromValue(new FactoryPipelineResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

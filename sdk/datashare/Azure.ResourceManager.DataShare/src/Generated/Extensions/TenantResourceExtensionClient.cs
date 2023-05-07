@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = await DataShareConsumerInvitationConsumerInvitationsRestClient.RejectInvitationAsync(location, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DataShareConsumerInvitationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataShareConsumerInvitationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = DataShareConsumerInvitationConsumerInvitationsRestClient.RejectInvitation(location, data, cancellationToken);
-                return Response.FromValue(new DataShareConsumerInvitationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataShareConsumerInvitationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

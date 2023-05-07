@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VCenterData.DeserializeVCenterData(document.RootElement);
-            return new VCenterResource(_client, data);
+            return new VCenterResource(_client, data, data.Id);
         }
 
         async ValueTask<VCenterResource> IOperationSource<VCenterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VCenterData.DeserializeVCenterData(document.RootElement);
-            return new VCenterResource(_client, data);
+            return new VCenterResource(_client, data, data.Id);
         }
     }
 }

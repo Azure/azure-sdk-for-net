@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ContainerService
                 var response = await _containerServiceFleetMemberFleetMembersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fleetMemberName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerServiceFleetMemberResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceFleetMemberResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ContainerService
                 var response = _containerServiceFleetMemberFleetMembersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fleetMemberName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerServiceFleetMemberResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceFleetMemberResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceFleetMemberFleetMembersRestClient.CreateListByFleetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceFleetMemberFleetMembersRestClient.CreateListByFleetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceFleetMemberResource(Client, ContainerServiceFleetMemberData.DeserializeContainerServiceFleetMemberData(e)), _containerServiceFleetMemberFleetMembersClientDiagnostics, Pipeline, "ContainerServiceFleetMemberCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ContainerServiceFleetMemberData.DeserializeContainerServiceFleetMemberData(e); return new ContainerServiceFleetMemberResource(Client, data, data.Id); }, _containerServiceFleetMemberFleetMembersClientDiagnostics, Pipeline, "ContainerServiceFleetMemberCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceFleetMemberFleetMembersRestClient.CreateListByFleetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceFleetMemberFleetMembersRestClient.CreateListByFleetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceFleetMemberResource(Client, ContainerServiceFleetMemberData.DeserializeContainerServiceFleetMemberData(e)), _containerServiceFleetMemberFleetMembersClientDiagnostics, Pipeline, "ContainerServiceFleetMemberCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ContainerServiceFleetMemberData.DeserializeContainerServiceFleetMemberData(e); return new ContainerServiceFleetMemberResource(Client, data, data.Id); }, _containerServiceFleetMemberFleetMembersClientDiagnostics, Pipeline, "ContainerServiceFleetMemberCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

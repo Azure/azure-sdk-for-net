@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Confluent
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ConfluentOrganizationData.DeserializeConfluentOrganizationData(document.RootElement);
-            return new ConfluentOrganizationResource(_client, data);
+            return new ConfluentOrganizationResource(_client, data, data.Id);
         }
 
         async ValueTask<ConfluentOrganizationResource> IOperationSource<ConfluentOrganizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ConfluentOrganizationData.DeserializeConfluentOrganizationData(document.RootElement);
-            return new ConfluentOrganizationResource(_client, data);
+            return new ConfluentOrganizationResource(_client, data, data.Id);
         }
     }
 }

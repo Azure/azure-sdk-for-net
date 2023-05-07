@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = await _gremlinGraphGremlinResourcesRestClient.GetGremlinGraphAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GremlinGraphResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GremlinGraphResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = _gremlinGraphGremlinResourcesRestClient.GetGremlinGraph(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, graphName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GremlinGraphResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GremlinGraphResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<GremlinGraphResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gremlinGraphGremlinResourcesRestClient.CreateListGremlinGraphsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new GremlinGraphResource(Client, GremlinGraphData.DeserializeGremlinGraphData(e)), _gremlinGraphGremlinResourcesClientDiagnostics, Pipeline, "GremlinGraphCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = GremlinGraphData.DeserializeGremlinGraphData(e); return new GremlinGraphResource(Client, data, data.Id); }, _gremlinGraphGremlinResourcesClientDiagnostics, Pipeline, "GremlinGraphCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<GremlinGraphResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gremlinGraphGremlinResourcesRestClient.CreateListGremlinGraphsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new GremlinGraphResource(Client, GremlinGraphData.DeserializeGremlinGraphData(e)), _gremlinGraphGremlinResourcesClientDiagnostics, Pipeline, "GremlinGraphCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = GremlinGraphData.DeserializeGremlinGraphData(e); return new GremlinGraphResource(Client, data, data.Id); }, _gremlinGraphGremlinResourcesClientDiagnostics, Pipeline, "GremlinGraphCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

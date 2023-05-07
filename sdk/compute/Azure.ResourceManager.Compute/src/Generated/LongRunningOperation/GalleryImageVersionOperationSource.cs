@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Compute
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = GalleryImageVersionData.DeserializeGalleryImageVersionData(document.RootElement);
-            return new GalleryImageVersionResource(_client, data);
+            return new GalleryImageVersionResource(_client, data, data.Id);
         }
 
         async ValueTask<GalleryImageVersionResource> IOperationSource<GalleryImageVersionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = GalleryImageVersionData.DeserializeGalleryImageVersionData(document.RootElement);
-            return new GalleryImageVersionResource(_client, data);
+            return new GalleryImageVersionResource(_client, data, data.Id);
         }
     }
 }

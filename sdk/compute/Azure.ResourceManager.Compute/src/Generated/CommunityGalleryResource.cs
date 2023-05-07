@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of the <see cref = "CommunityGalleryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CommunityGalleryResource(ArmClient client, CommunityGalleryData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal CommunityGalleryResource(ArmClient client, CommunityGalleryData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.Compute
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 response.Value.Id = CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name);
-                return Response.FromValue(new CommunityGalleryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CommunityGalleryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -197,7 +198,7 @@ namespace Azure.ResourceManager.Compute
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 response.Value.Id = CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name);
-                return Response.FromValue(new CommunityGalleryResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CommunityGalleryResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

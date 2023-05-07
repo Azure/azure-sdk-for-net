@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Communication
                 var response = await _communicationServiceResourceCommunicationServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CommunicationServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CommunicationServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Communication
                 var response = _communicationServiceResourceCommunicationServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CommunicationServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CommunicationServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Communication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _communicationServiceResourceCommunicationServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _communicationServiceResourceCommunicationServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CommunicationServiceResource(Client, CommunicationServiceResourceData.DeserializeCommunicationServiceResourceData(e)), _communicationServiceResourceCommunicationServicesClientDiagnostics, Pipeline, "CommunicationServiceResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = CommunicationServiceResourceData.DeserializeCommunicationServiceResourceData(e); return new CommunicationServiceResource(Client, data, data.Id); }, _communicationServiceResourceCommunicationServicesClientDiagnostics, Pipeline, "CommunicationServiceResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Communication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _communicationServiceResourceCommunicationServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _communicationServiceResourceCommunicationServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CommunicationServiceResource(Client, CommunicationServiceResourceData.DeserializeCommunicationServiceResourceData(e)), _communicationServiceResourceCommunicationServicesClientDiagnostics, Pipeline, "CommunicationServiceResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = CommunicationServiceResourceData.DeserializeCommunicationServiceResourceData(e); return new CommunicationServiceResource(Client, data, data.Id); }, _communicationServiceResourceCommunicationServicesClientDiagnostics, Pipeline, "CommunicationServiceResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

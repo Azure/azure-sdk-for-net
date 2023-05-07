@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Confluent
             try
             {
                 var response = await ValidationsRestClient.ValidateOrganizationAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Confluent
             try
             {
                 var response = ValidationsRestClient.ValidateOrganization(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken);
-                return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

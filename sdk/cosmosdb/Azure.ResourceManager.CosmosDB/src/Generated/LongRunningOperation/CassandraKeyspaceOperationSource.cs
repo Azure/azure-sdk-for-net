@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.CosmosDB
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CassandraKeyspaceData.DeserializeCassandraKeyspaceData(document.RootElement);
-            return new CassandraKeyspaceResource(_client, data);
+            return new CassandraKeyspaceResource(_client, data, data.Id);
         }
 
         async ValueTask<CassandraKeyspaceResource> IOperationSource<CassandraKeyspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CassandraKeyspaceData.DeserializeCassandraKeyspaceData(document.RootElement);
-            return new CassandraKeyspaceResource(_client, data);
+            return new CassandraKeyspaceResource(_client, data, data.Id);
         }
     }
 }

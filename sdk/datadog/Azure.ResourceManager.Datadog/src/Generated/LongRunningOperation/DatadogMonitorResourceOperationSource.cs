@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Datadog
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DatadogMonitorResourceData.DeserializeDatadogMonitorResourceData(document.RootElement);
-            return new DatadogMonitorResource(_client, data);
+            return new DatadogMonitorResource(_client, data, data.Id);
         }
 
         async ValueTask<DatadogMonitorResource> IOperationSource<DatadogMonitorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DatadogMonitorResourceData.DeserializeDatadogMonitorResourceData(document.RootElement);
-            return new DatadogMonitorResource(_client, data);
+            return new DatadogMonitorResource(_client, data, data.Id);
         }
     }
 }

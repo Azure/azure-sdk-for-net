@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Communication
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = EmailServiceResourceData.DeserializeEmailServiceResourceData(document.RootElement);
-            return new EmailServiceResource(_client, data);
+            return new EmailServiceResource(_client, data, data.Id);
         }
 
         async ValueTask<EmailServiceResource> IOperationSource<EmailServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = EmailServiceResourceData.DeserializeEmailServiceResourceData(document.RootElement);
-            return new EmailServiceResource(_client, data);
+            return new EmailServiceResource(_client, data, data.Id);
         }
     }
 }

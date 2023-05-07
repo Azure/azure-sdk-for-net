@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DataBox
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DataBoxJobData.DeserializeDataBoxJobData(document.RootElement);
-            return new DataBoxJobResource(_client, data);
+            return new DataBoxJobResource(_client, data, data.Id);
         }
 
         async ValueTask<DataBoxJobResource> IOperationSource<DataBoxJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DataBoxJobData.DeserializeDataBoxJobData(document.RootElement);
-            return new DataBoxJobResource(_client, data);
+            return new DataBoxJobResource(_client, data, data.Id);
         }
     }
 }

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 var response = await _dataProtectionBackupJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataProtectionBackupJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataProtectionBackupJobResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 var response = _dataProtectionBackupJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataProtectionBackupJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataProtectionBackupJobResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataProtectionBackupJobJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataProtectionBackupJobJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupJobResource(Client, DataProtectionBackupJobData.DeserializeDataProtectionBackupJobData(e)), _dataProtectionBackupJobJobsClientDiagnostics, Pipeline, "DataProtectionBackupJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DataProtectionBackupJobData.DeserializeDataProtectionBackupJobData(e); return new DataProtectionBackupJobResource(Client, data, data.Id); }, _dataProtectionBackupJobJobsClientDiagnostics, Pipeline, "DataProtectionBackupJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataProtectionBackupJobJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataProtectionBackupJobJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupJobResource(Client, DataProtectionBackupJobData.DeserializeDataProtectionBackupJobData(e)), _dataProtectionBackupJobJobsClientDiagnostics, Pipeline, "DataProtectionBackupJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DataProtectionBackupJobData.DeserializeDataProtectionBackupJobData(e); return new DataProtectionBackupJobResource(Client, data, data.Id); }, _dataProtectionBackupJobJobsClientDiagnostics, Pipeline, "DataProtectionBackupJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = KpiResourceFormatData.DeserializeKpiResourceFormatData(document.RootElement);
-            return new KpiResourceFormatResource(_client, data);
+            return new KpiResourceFormatResource(_client, data, data.Id);
         }
 
         async ValueTask<KpiResourceFormatResource> IOperationSource<KpiResourceFormatResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = KpiResourceFormatData.DeserializeKpiResourceFormatData(document.RootElement);
-            return new KpiResourceFormatResource(_client, data);
+            return new KpiResourceFormatResource(_client, data, data.Id);
         }
     }
 }

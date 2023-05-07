@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 var response = await _relationshipResourceFormatRelationshipsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relationshipName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RelationshipResourceFormatResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RelationshipResourceFormatResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 var response = _relationshipResourceFormatRelationshipsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relationshipName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RelationshipResourceFormatResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RelationshipResourceFormatResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _relationshipResourceFormatRelationshipsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _relationshipResourceFormatRelationshipsRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RelationshipResourceFormatResource(Client, RelationshipResourceFormatData.DeserializeRelationshipResourceFormatData(e)), _relationshipResourceFormatRelationshipsClientDiagnostics, Pipeline, "RelationshipResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = RelationshipResourceFormatData.DeserializeRelationshipResourceFormatData(e); return new RelationshipResourceFormatResource(Client, data, data.Id); }, _relationshipResourceFormatRelationshipsClientDiagnostics, Pipeline, "RelationshipResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _relationshipResourceFormatRelationshipsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _relationshipResourceFormatRelationshipsRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RelationshipResourceFormatResource(Client, RelationshipResourceFormatData.DeserializeRelationshipResourceFormatData(e)), _relationshipResourceFormatRelationshipsClientDiagnostics, Pipeline, "RelationshipResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = RelationshipResourceFormatData.DeserializeRelationshipResourceFormatData(e); return new RelationshipResourceFormatResource(Client, data, data.Id); }, _relationshipResourceFormatRelationshipsClientDiagnostics, Pipeline, "RelationshipResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DataLakeStore
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DataLakeStoreAccountData.DeserializeDataLakeStoreAccountData(document.RootElement);
-            return new DataLakeStoreAccountResource(_client, data);
+            return new DataLakeStoreAccountResource(_client, data, data.Id);
         }
 
         async ValueTask<DataLakeStoreAccountResource> IOperationSource<DataLakeStoreAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DataLakeStoreAccountData.DeserializeDataLakeStoreAccountData(document.RootElement);
-            return new DataLakeStoreAccountResource(_client, data);
+            return new DataLakeStoreAccountResource(_client, data, data.Id);
         }
     }
 }

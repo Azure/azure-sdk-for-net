@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _computePrivateEndpointConnectionDiskAccessesRestClient.GetAPrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ComputePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComputePrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _computePrivateEndpointConnectionDiskAccessesRestClient.GetAPrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ComputePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComputePrivateEndpointConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _computePrivateEndpointConnectionDiskAccessesRestClient.CreateListPrivateEndpointConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _computePrivateEndpointConnectionDiskAccessesRestClient.CreateListPrivateEndpointConnectionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ComputePrivateEndpointConnectionResource(Client, ComputePrivateEndpointConnectionData.DeserializeComputePrivateEndpointConnectionData(e)), _computePrivateEndpointConnectionDiskAccessesClientDiagnostics, Pipeline, "ComputePrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = ComputePrivateEndpointConnectionData.DeserializeComputePrivateEndpointConnectionData(e); return new ComputePrivateEndpointConnectionResource(Client, data, data.Id); }, _computePrivateEndpointConnectionDiskAccessesClientDiagnostics, Pipeline, "ComputePrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _computePrivateEndpointConnectionDiskAccessesRestClient.CreateListPrivateEndpointConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _computePrivateEndpointConnectionDiskAccessesRestClient.CreateListPrivateEndpointConnectionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ComputePrivateEndpointConnectionResource(Client, ComputePrivateEndpointConnectionData.DeserializeComputePrivateEndpointConnectionData(e)), _computePrivateEndpointConnectionDiskAccessesClientDiagnostics, Pipeline, "ComputePrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = ComputePrivateEndpointConnectionData.DeserializeComputePrivateEndpointConnectionData(e); return new ComputePrivateEndpointConnectionResource(Client, data, data.Id); }, _computePrivateEndpointConnectionDiskAccessesClientDiagnostics, Pipeline, "ComputePrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

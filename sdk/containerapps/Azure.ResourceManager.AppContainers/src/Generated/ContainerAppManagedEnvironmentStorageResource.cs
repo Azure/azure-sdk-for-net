@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Initializes a new instance of the <see cref = "ContainerAppManagedEnvironmentStorageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ContainerAppManagedEnvironmentStorageResource(ArmClient client, ContainerAppManagedEnvironmentStorageData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal ContainerAppManagedEnvironmentStorageResource(ArmClient client, ContainerAppManagedEnvironmentStorageData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.AppContainers
                 var response = await _containerAppManagedEnvironmentStorageManagedEnvironmentsStoragesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerAppManagedEnvironmentStorageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppManagedEnvironmentStorageResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.AppContainers
                 var response = _containerAppManagedEnvironmentStorageManagedEnvironmentsStoragesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ContainerAppManagedEnvironmentStorageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppManagedEnvironmentStorageResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = await _containerAppManagedEnvironmentStorageManagedEnvironmentsStoragesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentStorageResource>(Response.FromValue(new ContainerAppManagedEnvironmentStorageResource(Client, response), response.GetRawResponse()));
+                var operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentStorageResource>(Response.FromValue(new ContainerAppManagedEnvironmentStorageResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,7 +283,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = _containerAppManagedEnvironmentStorageManagedEnvironmentsStoragesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentStorageResource>(Response.FromValue(new ContainerAppManagedEnvironmentStorageResource(Client, response), response.GetRawResponse()));
+                var operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentStorageResource>(Response.FromValue(new ContainerAppManagedEnvironmentStorageResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualMachineTemplateData.DeserializeVirtualMachineTemplateData(document.RootElement);
-            return new VirtualMachineTemplateResource(_client, data);
+            return new VirtualMachineTemplateResource(_client, data, data.Id);
         }
 
         async ValueTask<VirtualMachineTemplateResource> IOperationSource<VirtualMachineTemplateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualMachineTemplateData.DeserializeVirtualMachineTemplateData(document.RootElement);
-            return new VirtualMachineTemplateResource(_client, data);
+            return new VirtualMachineTemplateResource(_client, data, data.Id);
         }
     }
 }
