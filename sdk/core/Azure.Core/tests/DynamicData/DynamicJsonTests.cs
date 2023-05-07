@@ -421,40 +421,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual(model, (ParentModel)roundTripValue.Foo);
         }
 
-        [Test]
-        public void RoundTripSerializeDoesntMapPascalJsonToCamelCSharp()
-        {
-            dynamic value = BinaryData.FromBytes("""
-                {
-                    "Foo": 1
-                }
-                """u8.ToArray()).ToDynamicFromJson();
-
-            camelCaseModel model = new()
-            {
-                message = "camel",
-                number = 1
-            };
-
-            value.Foo = model;
-
-            // Deserialize shouldn't map the values
-            //Assert.IsFalse(model, (camelCaseModel)value.Foo);
-
-            //// Test serialization
-            //BinaryData jdocBuffer = MutableJsonDocumentTests.GetWriteToBuffer(JsonDocument.Parse(value.ToString()));
-            //BinaryData dataBuffer = GetWriteToBuffer(value);
-
-            //Assert.AreEqual(jdocBuffer.ToString(), dataBuffer.ToString());
-            //Assert.IsTrue(jdocBuffer.ToMemory().Span.SequenceEqual(dataBuffer.ToMemory().Span),
-            //    "JsonDocument buffer does not match MutableJsonDocument buffer.");
-
-            //// Test deserialization
-            //BinaryData bd = BinaryData.FromString(value.ToString());
-            //dynamic roundTripValue = bd.ToDynamicFromJson();
-            //Assert.AreEqual(model, (ParentModel)roundTripValue.Foo);
-        }
-
         internal static BinaryData GetWriteToBuffer(dynamic data)
         {
             using MemoryStream stream = new();
@@ -1153,10 +1119,25 @@ namespace Azure.Core.Tests
             }
         }
 
-        internal class camelCaseModel
+        internal class camelCaseModel : IEquatable<camelCaseModel>
         {
             public string message { get; set; }
             public int number { get; set; }
+            public override bool Equals(object obj)
+            {
+                camelCaseModel other = obj as camelCaseModel;
+                if (other == null)
+                {
+                    return false;
+                }
+
+                return Equals(other);
+            }
+
+            public bool Equals(camelCaseModel obj)
+            {
+                return message == obj.message && number == obj.number;
+            }
         }
         #endregion
     }
