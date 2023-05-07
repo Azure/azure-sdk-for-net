@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteSlotPremierAddOnWebAppsRestClient.AddPremierAddOnSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOnName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<WebSiteSlotPremierAddOnResource>(Response.FromValue(new WebSiteSlotPremierAddOnResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<WebSiteSlotPremierAddOnResource>(Response.FromValue(new WebSiteSlotPremierAddOnResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteSlotPremierAddOnWebAppsRestClient.AddPremierAddOnSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOnName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<WebSiteSlotPremierAddOnResource>(Response.FromValue(new WebSiteSlotPremierAddOnResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<WebSiteSlotPremierAddOnResource>(Response.FromValue(new WebSiteSlotPremierAddOnResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _webSiteSlotPremierAddOnWebAppsRestClient.GetPremierAddOnSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOnName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteSlotPremierAddOnResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotPremierAddOnResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _webSiteSlotPremierAddOnWebAppsRestClient.GetPremierAddOnSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOnName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteSlotPremierAddOnResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotPremierAddOnResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

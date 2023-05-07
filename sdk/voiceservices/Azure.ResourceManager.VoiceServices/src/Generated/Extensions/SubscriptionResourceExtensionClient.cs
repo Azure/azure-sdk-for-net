@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.VoiceServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CommunicationsGatewayRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommunicationsGatewayRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CommunicationsGatewayResource(Client, CommunicationsGatewayData.DeserializeCommunicationsGatewayData(e)), CommunicationsGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCommunicationsGateways", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = CommunicationsGatewayData.DeserializeCommunicationsGatewayData(e); return new CommunicationsGatewayResource(Client, data, data.Id); }, CommunicationsGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCommunicationsGateways", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.VoiceServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CommunicationsGatewayRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommunicationsGatewayRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CommunicationsGatewayResource(Client, CommunicationsGatewayData.DeserializeCommunicationsGatewayData(e)), CommunicationsGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCommunicationsGateways", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = CommunicationsGatewayData.DeserializeCommunicationsGatewayData(e); return new CommunicationsGatewayResource(Client, data, data.Id); }, CommunicationsGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCommunicationsGateways", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

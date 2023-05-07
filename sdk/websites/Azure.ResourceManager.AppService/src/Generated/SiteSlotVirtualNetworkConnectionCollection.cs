@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteSlotVirtualNetworkConnectionWebAppsRestClient.CreateOrUpdateVnetConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vnetName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteSlotVirtualNetworkConnectionResource>(Response.FromValue(new SiteSlotVirtualNetworkConnectionResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<SiteSlotVirtualNetworkConnectionResource>(Response.FromValue(new SiteSlotVirtualNetworkConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteSlotVirtualNetworkConnectionWebAppsRestClient.CreateOrUpdateVnetConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vnetName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteSlotVirtualNetworkConnectionResource>(Response.FromValue(new SiteSlotVirtualNetworkConnectionResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<SiteSlotVirtualNetworkConnectionResource>(Response.FromValue(new SiteSlotVirtualNetworkConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteSlotVirtualNetworkConnectionWebAppsRestClient.GetVnetConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vnetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotVirtualNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotVirtualNetworkConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteSlotVirtualNetworkConnectionWebAppsRestClient.GetVnetConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vnetName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotVirtualNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotVirtualNetworkConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppService
         public virtual AsyncPageable<SiteSlotVirtualNetworkConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotVirtualNetworkConnectionWebAppsRestClient.CreateListVnetConnectionsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SiteSlotVirtualNetworkConnectionResource(Client, AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(e)), _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics, Pipeline, "SiteSlotVirtualNetworkConnectionCollection.GetAll", "", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(e); return new SiteSlotVirtualNetworkConnectionResource(Client, data, data.Id); }, _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics, Pipeline, "SiteSlotVirtualNetworkConnectionCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.AppService
         public virtual Pageable<SiteSlotVirtualNetworkConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotVirtualNetworkConnectionWebAppsRestClient.CreateListVnetConnectionsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SiteSlotVirtualNetworkConnectionResource(Client, AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(e)), _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics, Pipeline, "SiteSlotVirtualNetworkConnectionCollection.GetAll", "", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(e); return new SiteSlotVirtualNetworkConnectionResource(Client, data, data.Id); }, _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics, Pipeline, "SiteSlotVirtualNetworkConnectionCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>

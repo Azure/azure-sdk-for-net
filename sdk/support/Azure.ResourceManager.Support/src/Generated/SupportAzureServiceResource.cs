@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.Support
         /// <summary> Initializes a new instance of the <see cref = "SupportAzureServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SupportAzureServiceResource(ArmClient client, SupportAzureServiceData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal SupportAzureServiceResource(ArmClient client, SupportAzureServiceData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.Support
                 var response = await _supportAzureServiceServicesRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SupportAzureServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SupportAzureServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -195,7 +196,7 @@ namespace Azure.ResourceManager.Support
                 var response = _supportAzureServiceServicesRestClient.Get(Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SupportAzureServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SupportAzureServiceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

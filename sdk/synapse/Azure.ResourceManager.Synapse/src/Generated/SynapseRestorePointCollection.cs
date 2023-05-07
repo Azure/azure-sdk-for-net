@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = await _synapseRestorePointSqlPoolRestorePointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restorePointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseRestorePointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseRestorePointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = _synapseRestorePointSqlPoolRestorePointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restorePointName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseRestorePointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseRestorePointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseRestorePointSqlPoolRestorePointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseRestorePointSqlPoolRestorePointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseRestorePointResource(Client, SynapseRestorePointData.DeserializeSynapseRestorePointData(e)), _synapseRestorePointSqlPoolRestorePointsClientDiagnostics, Pipeline, "SynapseRestorePointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SynapseRestorePointData.DeserializeSynapseRestorePointData(e); return new SynapseRestorePointResource(Client, data, data.Id); }, _synapseRestorePointSqlPoolRestorePointsClientDiagnostics, Pipeline, "SynapseRestorePointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseRestorePointSqlPoolRestorePointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseRestorePointSqlPoolRestorePointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseRestorePointResource(Client, SynapseRestorePointData.DeserializeSynapseRestorePointData(e)), _synapseRestorePointSqlPoolRestorePointsClientDiagnostics, Pipeline, "SynapseRestorePointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SynapseRestorePointData.DeserializeSynapseRestorePointData(e); return new SynapseRestorePointResource(Client, data, data.Id); }, _synapseRestorePointSqlPoolRestorePointsClientDiagnostics, Pipeline, "SynapseRestorePointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

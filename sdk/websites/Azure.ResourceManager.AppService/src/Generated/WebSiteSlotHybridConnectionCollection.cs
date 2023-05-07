@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteSlotHybridConnectionWebAppsRestClient.CreateOrUpdateRelayServiceConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, entityName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<WebSiteSlotHybridConnectionResource>(Response.FromValue(new WebSiteSlotHybridConnectionResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<WebSiteSlotHybridConnectionResource>(Response.FromValue(new WebSiteSlotHybridConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteSlotHybridConnectionWebAppsRestClient.CreateOrUpdateRelayServiceConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, entityName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<WebSiteSlotHybridConnectionResource>(Response.FromValue(new WebSiteSlotHybridConnectionResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<WebSiteSlotHybridConnectionResource>(Response.FromValue(new WebSiteSlotHybridConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _webSiteSlotHybridConnectionWebAppsRestClient.GetRelayServiceConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, entityName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteSlotHybridConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotHybridConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _webSiteSlotHybridConnectionWebAppsRestClient.GetRelayServiceConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, entityName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteSlotHybridConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotHybridConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

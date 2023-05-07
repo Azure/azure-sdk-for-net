@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = await _synapseReplicationLinkSqlPoolReplicationLinksRestClient.GetByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseReplicationLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseReplicationLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = _synapseReplicationLinkSqlPoolReplicationLinksRestClient.GetByName(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseReplicationLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseReplicationLinkResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseReplicationLinkSqlPoolReplicationLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseReplicationLinkSqlPoolReplicationLinksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseReplicationLinkResource(Client, SynapseReplicationLinkData.DeserializeSynapseReplicationLinkData(e)), _synapseReplicationLinkSqlPoolReplicationLinksClientDiagnostics, Pipeline, "SynapseReplicationLinkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SynapseReplicationLinkData.DeserializeSynapseReplicationLinkData(e); return new SynapseReplicationLinkResource(Client, data, data.Id); }, _synapseReplicationLinkSqlPoolReplicationLinksClientDiagnostics, Pipeline, "SynapseReplicationLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseReplicationLinkSqlPoolReplicationLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseReplicationLinkSqlPoolReplicationLinksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseReplicationLinkResource(Client, SynapseReplicationLinkData.DeserializeSynapseReplicationLinkData(e)), _synapseReplicationLinkSqlPoolReplicationLinksClientDiagnostics, Pipeline, "SynapseReplicationLinkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SynapseReplicationLinkData.DeserializeSynapseReplicationLinkData(e); return new SynapseReplicationLinkResource(Client, data, data.Id); }, _synapseReplicationLinkSqlPoolReplicationLinksClientDiagnostics, Pipeline, "SynapseReplicationLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

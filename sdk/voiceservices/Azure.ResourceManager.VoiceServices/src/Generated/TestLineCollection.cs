@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.VoiceServices
                 var response = await _testLineRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, testLineName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TestLineResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TestLineResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.VoiceServices
                 var response = _testLineRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, testLineName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TestLineResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TestLineResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.VoiceServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _testLineRestClient.CreateListByCommunicationsGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _testLineRestClient.CreateListByCommunicationsGatewayNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TestLineResource(Client, TestLineData.DeserializeTestLineData(e)), _testLineClientDiagnostics, Pipeline, "TestLineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = TestLineData.DeserializeTestLineData(e); return new TestLineResource(Client, data, data.Id); }, _testLineClientDiagnostics, Pipeline, "TestLineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.VoiceServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _testLineRestClient.CreateListByCommunicationsGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _testLineRestClient.CreateListByCommunicationsGatewayNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TestLineResource(Client, TestLineData.DeserializeTestLineData(e)), _testLineClientDiagnostics, Pipeline, "TestLineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = TestLineData.DeserializeTestLineData(e); return new TestLineResource(Client, data, data.Id); }, _testLineClientDiagnostics, Pipeline, "TestLineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

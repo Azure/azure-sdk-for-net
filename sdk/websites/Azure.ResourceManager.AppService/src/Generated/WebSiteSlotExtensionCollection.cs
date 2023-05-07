@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _webSiteSlotExtensionWebAppsRestClient.GetSiteExtensionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteSlotExtensionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotExtensionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _webSiteSlotExtensionWebAppsRestClient.GetSiteExtensionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteSlotExtensionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotExtensionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotExtensionWebAppsRestClient.CreateListSiteExtensionsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteSlotExtensionWebAppsRestClient.CreateListSiteExtensionsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteSlotExtensionResource(Client, SiteExtensionInfoData.DeserializeSiteExtensionInfoData(e)), _webSiteSlotExtensionWebAppsClientDiagnostics, Pipeline, "WebSiteSlotExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SiteExtensionInfoData.DeserializeSiteExtensionInfoData(e); return new WebSiteSlotExtensionResource(Client, data, data.Id); }, _webSiteSlotExtensionWebAppsClientDiagnostics, Pipeline, "WebSiteSlotExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotExtensionWebAppsRestClient.CreateListSiteExtensionsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteSlotExtensionWebAppsRestClient.CreateListSiteExtensionsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteSlotExtensionResource(Client, SiteExtensionInfoData.DeserializeSiteExtensionInfoData(e)), _webSiteSlotExtensionWebAppsClientDiagnostics, Pipeline, "WebSiteSlotExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SiteExtensionInfoData.DeserializeSiteExtensionInfoData(e); return new WebSiteSlotExtensionResource(Client, data, data.Id); }, _webSiteSlotExtensionWebAppsClientDiagnostics, Pipeline, "WebSiteSlotExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

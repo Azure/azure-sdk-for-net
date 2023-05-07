@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteDiagnosticDetectorDiagnosticsRestClient.GetSiteDetectorAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteDiagnosticDetectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteDiagnosticDetectorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteDiagnosticDetectorDiagnosticsRestClient.GetSiteDetector(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteDiagnosticDetectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteDiagnosticDetectorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteDiagnosticDetectorDiagnosticsRestClient.CreateListSiteDetectorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteDiagnosticDetectorDiagnosticsRestClient.CreateListSiteDetectorsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteDiagnosticDetectorResource(Client, DetectorDefinitionResourceData.DeserializeDetectorDefinitionResourceData(e)), _siteDiagnosticDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteDiagnosticDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DetectorDefinitionResourceData.DeserializeDetectorDefinitionResourceData(e); return new SiteDiagnosticDetectorResource(Client, data, data.Id); }, _siteDiagnosticDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteDiagnosticDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteDiagnosticDetectorDiagnosticsRestClient.CreateListSiteDetectorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteDiagnosticDetectorDiagnosticsRestClient.CreateListSiteDetectorsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteDiagnosticDetectorResource(Client, DetectorDefinitionResourceData.DeserializeDetectorDefinitionResourceData(e)), _siteDiagnosticDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteDiagnosticDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DetectorDefinitionResourceData.DeserializeDetectorDefinitionResourceData(e); return new SiteDiagnosticDetectorResource(Client, data, data.Id); }, _siteDiagnosticDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteDiagnosticDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

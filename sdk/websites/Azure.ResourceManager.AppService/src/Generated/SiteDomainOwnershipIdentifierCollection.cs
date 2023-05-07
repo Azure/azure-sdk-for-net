@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteDomainOwnershipIdentifierWebAppsRestClient.CreateOrUpdateDomainOwnershipIdentifierAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainOwnershipIdentifierName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteDomainOwnershipIdentifierResource>(Response.FromValue(new SiteDomainOwnershipIdentifierResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<SiteDomainOwnershipIdentifierResource>(Response.FromValue(new SiteDomainOwnershipIdentifierResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteDomainOwnershipIdentifierWebAppsRestClient.CreateOrUpdateDomainOwnershipIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainOwnershipIdentifierName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteDomainOwnershipIdentifierResource>(Response.FromValue(new SiteDomainOwnershipIdentifierResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<SiteDomainOwnershipIdentifierResource>(Response.FromValue(new SiteDomainOwnershipIdentifierResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteDomainOwnershipIdentifierWebAppsRestClient.GetDomainOwnershipIdentifierAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainOwnershipIdentifierName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteDomainOwnershipIdentifierResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteDomainOwnershipIdentifierResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteDomainOwnershipIdentifierWebAppsRestClient.GetDomainOwnershipIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainOwnershipIdentifierName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteDomainOwnershipIdentifierResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteDomainOwnershipIdentifierResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteDomainOwnershipIdentifierWebAppsRestClient.CreateListDomainOwnershipIdentifiersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteDomainOwnershipIdentifierWebAppsRestClient.CreateListDomainOwnershipIdentifiersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteDomainOwnershipIdentifierResource(Client, AppServiceIdentifierData.DeserializeAppServiceIdentifierData(e)), _siteDomainOwnershipIdentifierWebAppsClientDiagnostics, Pipeline, "SiteDomainOwnershipIdentifierCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AppServiceIdentifierData.DeserializeAppServiceIdentifierData(e); return new SiteDomainOwnershipIdentifierResource(Client, data, data.Id); }, _siteDomainOwnershipIdentifierWebAppsClientDiagnostics, Pipeline, "SiteDomainOwnershipIdentifierCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteDomainOwnershipIdentifierWebAppsRestClient.CreateListDomainOwnershipIdentifiersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteDomainOwnershipIdentifierWebAppsRestClient.CreateListDomainOwnershipIdentifiersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteDomainOwnershipIdentifierResource(Client, AppServiceIdentifierData.DeserializeAppServiceIdentifierData(e)), _siteDomainOwnershipIdentifierWebAppsClientDiagnostics, Pipeline, "SiteDomainOwnershipIdentifierCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AppServiceIdentifierData.DeserializeAppServiceIdentifierData(e); return new SiteDomainOwnershipIdentifierResource(Client, data, data.Id); }, _siteDomainOwnershipIdentifierWebAppsClientDiagnostics, Pipeline, "SiteDomainOwnershipIdentifierCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

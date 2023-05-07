@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <summary> Initializes a new instance of the <see cref = "HealthMonitorStateChangeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal HealthMonitorStateChangeResource(ArmClient client, HealthMonitorStateChangeData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal HealthMonitorStateChangeResource(ArmClient client, HealthMonitorStateChangeData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 var response = await _healthMonitorStateChangeHealthMonitorsRestClient.GetStateChangeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.GetLastType(), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HealthMonitorStateChangeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HealthMonitorStateChangeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 var response = _healthMonitorStateChangeHealthMonitorsRestClient.GetStateChange(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.GetLastType(), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HealthMonitorStateChangeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HealthMonitorStateChangeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

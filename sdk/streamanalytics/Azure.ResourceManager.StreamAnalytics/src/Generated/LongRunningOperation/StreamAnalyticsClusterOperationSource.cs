@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(document.RootElement);
-            return new StreamAnalyticsClusterResource(_client, data);
+            return new StreamAnalyticsClusterResource(_client, data, data.Id);
         }
 
         async ValueTask<StreamAnalyticsClusterResource> IOperationSource<StreamAnalyticsClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(document.RootElement);
-            return new StreamAnalyticsClusterResource(_client, data);
+            return new StreamAnalyticsClusterResource(_client, data, data.Id);
         }
     }
 }

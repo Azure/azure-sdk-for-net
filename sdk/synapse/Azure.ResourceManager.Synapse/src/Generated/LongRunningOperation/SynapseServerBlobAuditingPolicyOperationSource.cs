@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Synapse
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SynapseServerBlobAuditingPolicyData.DeserializeSynapseServerBlobAuditingPolicyData(document.RootElement);
-            return new SynapseServerBlobAuditingPolicyResource(_client, data);
+            return new SynapseServerBlobAuditingPolicyResource(_client, data, data.Id);
         }
 
         async ValueTask<SynapseServerBlobAuditingPolicyResource> IOperationSource<SynapseServerBlobAuditingPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SynapseServerBlobAuditingPolicyData.DeserializeSynapseServerBlobAuditingPolicyData(document.RootElement);
-            return new SynapseServerBlobAuditingPolicyResource(_client, data);
+            return new SynapseServerBlobAuditingPolicyResource(_client, data, data.Id);
         }
     }
 }

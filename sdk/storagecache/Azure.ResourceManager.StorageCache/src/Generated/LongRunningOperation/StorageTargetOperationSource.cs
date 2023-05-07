@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.StorageCache
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = StorageTargetData.DeserializeStorageTargetData(document.RootElement);
-            return new StorageTargetResource(_client, data);
+            return new StorageTargetResource(_client, data, data.Id);
         }
 
         async ValueTask<StorageTargetResource> IOperationSource<StorageTargetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = StorageTargetData.DeserializeStorageTargetData(document.RootElement);
-            return new StorageTargetResource(_client, data);
+            return new StorageTargetResource(_client, data, data.Id);
         }
     }
 }

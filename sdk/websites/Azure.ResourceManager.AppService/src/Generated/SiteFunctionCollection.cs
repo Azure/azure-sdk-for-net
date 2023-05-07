@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteFunctionWebAppsRestClient.GetFunctionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteFunctionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteFunctionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteFunctionWebAppsRestClient.GetFunction(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteFunctionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteFunctionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteFunctionWebAppsRestClient.CreateListFunctionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteFunctionWebAppsRestClient.CreateListFunctionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteFunctionResource(Client, FunctionEnvelopeData.DeserializeFunctionEnvelopeData(e)), _siteFunctionWebAppsClientDiagnostics, Pipeline, "SiteFunctionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = FunctionEnvelopeData.DeserializeFunctionEnvelopeData(e); return new SiteFunctionResource(Client, data, data.Id); }, _siteFunctionWebAppsClientDiagnostics, Pipeline, "SiteFunctionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteFunctionWebAppsRestClient.CreateListFunctionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteFunctionWebAppsRestClient.CreateListFunctionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteFunctionResource(Client, FunctionEnvelopeData.DeserializeFunctionEnvelopeData(e)), _siteFunctionWebAppsClientDiagnostics, Pipeline, "SiteFunctionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = FunctionEnvelopeData.DeserializeFunctionEnvelopeData(e); return new SiteFunctionResource(Client, data, data.Id); }, _siteFunctionWebAppsClientDiagnostics, Pipeline, "SiteFunctionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

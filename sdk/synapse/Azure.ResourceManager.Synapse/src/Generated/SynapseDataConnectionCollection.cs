@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = await _synapseDataConnectionKustoPoolDataConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, dataConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseDataConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseDataConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = _synapseDataConnectionKustoPoolDataConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, dataConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseDataConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseDataConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseDataConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseDataConnectionKustoPoolDataConnectionsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseDataConnectionResource(Client, SynapseDataConnectionData.DeserializeSynapseDataConnectionData(e)), _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics, Pipeline, "SynapseDataConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = SynapseDataConnectionData.DeserializeSynapseDataConnectionData(e); return new SynapseDataConnectionResource(Client, data, data.Id); }, _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics, Pipeline, "SynapseDataConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseDataConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseDataConnectionKustoPoolDataConnectionsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseDataConnectionResource(Client, SynapseDataConnectionData.DeserializeSynapseDataConnectionData(e)), _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics, Pipeline, "SynapseDataConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = SynapseDataConnectionData.DeserializeSynapseDataConnectionData(e); return new SynapseDataConnectionResource(Client, data, data.Id); }, _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics, Pipeline, "SynapseDataConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

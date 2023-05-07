@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = await _synapseServerBlobAuditingPolicyWorkspaceManagedSqlServerBlobAuditingPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseServerBlobAuditingPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseServerBlobAuditingPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = _synapseServerBlobAuditingPolicyWorkspaceManagedSqlServerBlobAuditingPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseServerBlobAuditingPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseServerBlobAuditingPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseServerBlobAuditingPolicyWorkspaceManagedSqlServerBlobAuditingPoliciesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseServerBlobAuditingPolicyWorkspaceManagedSqlServerBlobAuditingPoliciesRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseServerBlobAuditingPolicyResource(Client, SynapseServerBlobAuditingPolicyData.DeserializeSynapseServerBlobAuditingPolicyData(e)), _synapseServerBlobAuditingPolicyWorkspaceManagedSqlServerBlobAuditingPoliciesClientDiagnostics, Pipeline, "SynapseServerBlobAuditingPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SynapseServerBlobAuditingPolicyData.DeserializeSynapseServerBlobAuditingPolicyData(e); return new SynapseServerBlobAuditingPolicyResource(Client, data, data.Id); }, _synapseServerBlobAuditingPolicyWorkspaceManagedSqlServerBlobAuditingPoliciesClientDiagnostics, Pipeline, "SynapseServerBlobAuditingPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseServerBlobAuditingPolicyWorkspaceManagedSqlServerBlobAuditingPoliciesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseServerBlobAuditingPolicyWorkspaceManagedSqlServerBlobAuditingPoliciesRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseServerBlobAuditingPolicyResource(Client, SynapseServerBlobAuditingPolicyData.DeserializeSynapseServerBlobAuditingPolicyData(e)), _synapseServerBlobAuditingPolicyWorkspaceManagedSqlServerBlobAuditingPoliciesClientDiagnostics, Pipeline, "SynapseServerBlobAuditingPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SynapseServerBlobAuditingPolicyData.DeserializeSynapseServerBlobAuditingPolicyData(e); return new SynapseServerBlobAuditingPolicyResource(Client, data, data.Id); }, _synapseServerBlobAuditingPolicyWorkspaceManagedSqlServerBlobAuditingPoliciesClientDiagnostics, Pipeline, "SynapseServerBlobAuditingPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

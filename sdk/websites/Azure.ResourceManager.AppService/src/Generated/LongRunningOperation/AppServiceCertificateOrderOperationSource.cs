@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.AppService
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AppServiceCertificateOrderData.DeserializeAppServiceCertificateOrderData(document.RootElement);
-            return new AppServiceCertificateOrderResource(_client, data);
+            return new AppServiceCertificateOrderResource(_client, data, data.Id);
         }
 
         async ValueTask<AppServiceCertificateOrderResource> IOperationSource<AppServiceCertificateOrderResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AppServiceCertificateOrderData.DeserializeAppServiceCertificateOrderData(document.RootElement);
-            return new AppServiceCertificateOrderResource(_client, data);
+            return new AppServiceCertificateOrderResource(_client, data, data.Id);
         }
     }
 }

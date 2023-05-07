@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Support
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SupportTicketData.DeserializeSupportTicketData(document.RootElement);
-            return new SupportTicketResource(_client, data);
+            return new SupportTicketResource(_client, data, data.Id);
         }
 
         async ValueTask<SupportTicketResource> IOperationSource<SupportTicketResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SupportTicketData.DeserializeSupportTicketData(document.RootElement);
-            return new SupportTicketResource(_client, data);
+            return new SupportTicketResource(_client, data, data.Id);
         }
     }
 }

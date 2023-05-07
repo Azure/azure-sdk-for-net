@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.Subscription
         /// <summary> Initializes a new instance of the <see cref = "SubscriptionAliasResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SubscriptionAliasResource(ArmClient client, SubscriptionAliasData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal SubscriptionAliasResource(ArmClient client, SubscriptionAliasData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Subscription
                 var response = await _subscriptionAliasAliasRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionAliasResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionAliasResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.Subscription
                 var response = _subscriptionAliasAliasRestClient.Get(Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionAliasResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionAliasResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

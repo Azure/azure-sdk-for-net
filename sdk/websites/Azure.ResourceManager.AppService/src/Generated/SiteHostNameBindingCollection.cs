@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteHostNameBindingWebAppsRestClient.CreateOrUpdateHostNameBindingAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteHostNameBindingResource>(Response.FromValue(new SiteHostNameBindingResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<SiteHostNameBindingResource>(Response.FromValue(new SiteHostNameBindingResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteHostNameBindingWebAppsRestClient.CreateOrUpdateHostNameBinding(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteHostNameBindingResource>(Response.FromValue(new SiteHostNameBindingResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<SiteHostNameBindingResource>(Response.FromValue(new SiteHostNameBindingResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteHostNameBindingWebAppsRestClient.GetHostNameBindingAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteHostNameBindingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteHostNameBindingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteHostNameBindingWebAppsRestClient.GetHostNameBinding(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteHostNameBindingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteHostNameBindingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteHostNameBindingWebAppsRestClient.CreateListHostNameBindingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteHostNameBindingWebAppsRestClient.CreateListHostNameBindingsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteHostNameBindingResource(Client, HostNameBindingData.DeserializeHostNameBindingData(e)), _siteHostNameBindingWebAppsClientDiagnostics, Pipeline, "SiteHostNameBindingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = HostNameBindingData.DeserializeHostNameBindingData(e); return new SiteHostNameBindingResource(Client, data, data.Id); }, _siteHostNameBindingWebAppsClientDiagnostics, Pipeline, "SiteHostNameBindingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteHostNameBindingWebAppsRestClient.CreateListHostNameBindingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteHostNameBindingWebAppsRestClient.CreateListHostNameBindingsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteHostNameBindingResource(Client, HostNameBindingData.DeserializeHostNameBindingData(e)), _siteHostNameBindingWebAppsClientDiagnostics, Pipeline, "SiteHostNameBindingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = HostNameBindingData.DeserializeHostNameBindingData(e); return new SiteHostNameBindingResource(Client, data, data.Id); }, _siteHostNameBindingWebAppsClientDiagnostics, Pipeline, "SiteHostNameBindingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

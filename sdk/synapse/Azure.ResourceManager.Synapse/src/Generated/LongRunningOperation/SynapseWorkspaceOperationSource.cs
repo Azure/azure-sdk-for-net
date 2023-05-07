@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Synapse
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SynapseWorkspaceData.DeserializeSynapseWorkspaceData(document.RootElement);
-            return new SynapseWorkspaceResource(_client, data);
+            return new SynapseWorkspaceResource(_client, data, data.Id);
         }
 
         async ValueTask<SynapseWorkspaceResource> IOperationSource<SynapseWorkspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SynapseWorkspaceData.DeserializeSynapseWorkspaceData(document.RootElement);
-            return new SynapseWorkspaceResource(_client, data);
+            return new SynapseWorkspaceResource(_client, data, data.Id);
         }
     }
 }

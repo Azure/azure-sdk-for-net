@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Synapse
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SynapseAttachedDatabaseConfigurationData.DeserializeSynapseAttachedDatabaseConfigurationData(document.RootElement);
-            return new SynapseAttachedDatabaseConfigurationResource(_client, data);
+            return new SynapseAttachedDatabaseConfigurationResource(_client, data, data.Id);
         }
 
         async ValueTask<SynapseAttachedDatabaseConfigurationResource> IOperationSource<SynapseAttachedDatabaseConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SynapseAttachedDatabaseConfigurationData.DeserializeSynapseAttachedDatabaseConfigurationData(document.RootElement);
-            return new SynapseAttachedDatabaseConfigurationResource(_client, data);
+            return new SynapseAttachedDatabaseConfigurationResource(_client, data, data.Id);
         }
     }
 }

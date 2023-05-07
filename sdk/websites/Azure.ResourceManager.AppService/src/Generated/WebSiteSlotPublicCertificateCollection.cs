@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteSlotPublicCertificateWebAppsRestClient.CreateOrUpdatePublicCertificateSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, publicCertificateName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<WebSiteSlotPublicCertificateResource>(Response.FromValue(new WebSiteSlotPublicCertificateResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<WebSiteSlotPublicCertificateResource>(Response.FromValue(new WebSiteSlotPublicCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteSlotPublicCertificateWebAppsRestClient.CreateOrUpdatePublicCertificateSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, publicCertificateName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<WebSiteSlotPublicCertificateResource>(Response.FromValue(new WebSiteSlotPublicCertificateResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<WebSiteSlotPublicCertificateResource>(Response.FromValue(new WebSiteSlotPublicCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _webSiteSlotPublicCertificateWebAppsRestClient.GetPublicCertificateSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, publicCertificateName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteSlotPublicCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotPublicCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _webSiteSlotPublicCertificateWebAppsRestClient.GetPublicCertificateSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, publicCertificateName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteSlotPublicCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotPublicCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotPublicCertificateWebAppsRestClient.CreateListPublicCertificatesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteSlotPublicCertificateWebAppsRestClient.CreateListPublicCertificatesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteSlotPublicCertificateResource(Client, PublicCertificateData.DeserializePublicCertificateData(e)), _webSiteSlotPublicCertificateWebAppsClientDiagnostics, Pipeline, "WebSiteSlotPublicCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = PublicCertificateData.DeserializePublicCertificateData(e); return new WebSiteSlotPublicCertificateResource(Client, data, data.Id); }, _webSiteSlotPublicCertificateWebAppsClientDiagnostics, Pipeline, "WebSiteSlotPublicCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotPublicCertificateWebAppsRestClient.CreateListPublicCertificatesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteSlotPublicCertificateWebAppsRestClient.CreateListPublicCertificatesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteSlotPublicCertificateResource(Client, PublicCertificateData.DeserializePublicCertificateData(e)), _webSiteSlotPublicCertificateWebAppsClientDiagnostics, Pipeline, "WebSiteSlotPublicCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = PublicCertificateData.DeserializePublicCertificateData(e); return new WebSiteSlotPublicCertificateResource(Client, data, data.Id); }, _webSiteSlotPublicCertificateWebAppsClientDiagnostics, Pipeline, "WebSiteSlotPublicCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

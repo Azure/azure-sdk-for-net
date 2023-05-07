@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.Subscription
         /// <summary> Initializes a new instance of the <see cref = "BillingAccountPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BillingAccountPolicyResource(ArmClient client, BillingAccountPolicyData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal BillingAccountPolicyResource(ArmClient client, BillingAccountPolicyData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Subscription
                 var response = await _billingAccountPolicyBillingAccountRestClient.GetPolicyAsync(Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BillingAccountPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingAccountPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Subscription
                 var response = _billingAccountPolicyBillingAccountRestClient.GetPolicy(Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BillingAccountPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingAccountPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

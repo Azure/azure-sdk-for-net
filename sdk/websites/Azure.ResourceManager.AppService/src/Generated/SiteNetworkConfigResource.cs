@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "SiteNetworkConfigResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteNetworkConfigResource(ArmClient client, SwiftVirtualNetworkData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal SiteNetworkConfigResource(ArmClient client, SwiftVirtualNetworkData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteNetworkConfigWebAppsRestClient.GetSwiftVirtualNetworkConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteNetworkConfigResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteNetworkConfigResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteNetworkConfigWebAppsRestClient.GetSwiftVirtualNetworkConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteNetworkConfigResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteNetworkConfigResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteNetworkConfigWebAppsRestClient.UpdateSwiftVirtualNetworkConnectionWithCheckAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SiteNetworkConfigResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteNetworkConfigResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -279,7 +280,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteNetworkConfigWebAppsRestClient.UpdateSwiftVirtualNetworkConnectionWithCheck(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                return Response.FromValue(new SiteNetworkConfigResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteNetworkConfigResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -315,7 +316,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteNetworkConfigWebAppsRestClient.CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteNetworkConfigResource>(Response.FromValue(new SiteNetworkConfigResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<SiteNetworkConfigResource>(Response.FromValue(new SiteNetworkConfigResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -354,7 +355,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteNetworkConfigWebAppsRestClient.CreateOrUpdateSwiftVirtualNetworkConnectionWithCheck(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteNetworkConfigResource>(Response.FromValue(new SiteNetworkConfigResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<SiteNetworkConfigResource>(Response.FromValue(new SiteNetworkConfigResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

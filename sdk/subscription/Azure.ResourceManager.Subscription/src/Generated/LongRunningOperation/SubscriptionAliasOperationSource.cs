@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Subscription
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SubscriptionAliasData.DeserializeSubscriptionAliasData(document.RootElement);
-            return new SubscriptionAliasResource(_client, data);
+            return new SubscriptionAliasResource(_client, data, data.Id);
         }
 
         async ValueTask<SubscriptionAliasResource> IOperationSource<SubscriptionAliasResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SubscriptionAliasData.DeserializeSubscriptionAliasData(document.RootElement);
-            return new SubscriptionAliasResource(_client, data);
+            return new SubscriptionAliasResource(_client, data, data.Id);
         }
     }
 }

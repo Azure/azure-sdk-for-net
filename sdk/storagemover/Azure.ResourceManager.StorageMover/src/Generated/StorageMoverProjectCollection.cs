@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.StorageMover
             try
             {
                 var response = await _storageMoverProjectProjectsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageMoverArmOperation<StorageMoverProjectResource>(Response.FromValue(new StorageMoverProjectResource(Client, response), response.GetRawResponse()));
+                var operation = new StorageMoverArmOperation<StorageMoverProjectResource>(Response.FromValue(new StorageMoverProjectResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.StorageMover
             try
             {
                 var response = _storageMoverProjectProjectsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, data, cancellationToken);
-                var operation = new StorageMoverArmOperation<StorageMoverProjectResource>(Response.FromValue(new StorageMoverProjectResource(Client, response), response.GetRawResponse()));
+                var operation = new StorageMoverArmOperation<StorageMoverProjectResource>(Response.FromValue(new StorageMoverProjectResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.StorageMover
                 var response = await _storageMoverProjectProjectsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StorageMoverProjectResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageMoverProjectResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.StorageMover
                 var response = _storageMoverProjectProjectsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StorageMoverProjectResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageMoverProjectResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.StorageMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageMoverProjectProjectsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageMoverProjectProjectsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageMoverProjectResource(Client, StorageMoverProjectData.DeserializeStorageMoverProjectData(e)), _storageMoverProjectProjectsClientDiagnostics, Pipeline, "StorageMoverProjectCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = StorageMoverProjectData.DeserializeStorageMoverProjectData(e); return new StorageMoverProjectResource(Client, data, data.Id); }, _storageMoverProjectProjectsClientDiagnostics, Pipeline, "StorageMoverProjectCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.StorageMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageMoverProjectProjectsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageMoverProjectProjectsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageMoverProjectResource(Client, StorageMoverProjectData.DeserializeStorageMoverProjectData(e)), _storageMoverProjectProjectsClientDiagnostics, Pipeline, "StorageMoverProjectCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = StorageMoverProjectData.DeserializeStorageMoverProjectData(e); return new StorageMoverProjectResource(Client, data, data.Id); }, _storageMoverProjectProjectsClientDiagnostics, Pipeline, "StorageMoverProjectCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

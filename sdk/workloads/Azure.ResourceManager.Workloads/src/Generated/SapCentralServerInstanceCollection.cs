@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Workloads
                 var response = await _sapCentralServerInstanceSapCentralInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, centralInstanceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SapCentralServerInstanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SapCentralServerInstanceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Workloads
                 var response = _sapCentralServerInstanceSapCentralInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, centralInstanceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SapCentralServerInstanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SapCentralServerInstanceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapCentralServerInstanceSapCentralInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sapCentralServerInstanceSapCentralInstancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapCentralServerInstanceResource(Client, SapCentralServerInstanceData.DeserializeSapCentralServerInstanceData(e)), _sapCentralServerInstanceSapCentralInstancesClientDiagnostics, Pipeline, "SapCentralServerInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SapCentralServerInstanceData.DeserializeSapCentralServerInstanceData(e); return new SapCentralServerInstanceResource(Client, data, data.Id); }, _sapCentralServerInstanceSapCentralInstancesClientDiagnostics, Pipeline, "SapCentralServerInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapCentralServerInstanceSapCentralInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sapCentralServerInstanceSapCentralInstancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapCentralServerInstanceResource(Client, SapCentralServerInstanceData.DeserializeSapCentralServerInstanceData(e)), _sapCentralServerInstanceSapCentralInstancesClientDiagnostics, Pipeline, "SapCentralServerInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SapCentralServerInstanceData.DeserializeSapCentralServerInstanceData(e); return new SapCentralServerInstanceResource(Client, data, data.Id); }, _sapCentralServerInstanceSapCentralInstancesClientDiagnostics, Pipeline, "SapCentralServerInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

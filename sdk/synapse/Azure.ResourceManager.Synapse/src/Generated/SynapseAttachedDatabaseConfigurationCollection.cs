@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = await _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, attachedDatabaseConfigurationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseAttachedDatabaseConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseAttachedDatabaseConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, attachedDatabaseConfigurationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseAttachedDatabaseConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseAttachedDatabaseConfigurationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseAttachedDatabaseConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsRestClient.CreateListByKustoPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseAttachedDatabaseConfigurationResource(Client, SynapseAttachedDatabaseConfigurationData.DeserializeSynapseAttachedDatabaseConfigurationData(e)), _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, "SynapseAttachedDatabaseConfigurationCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = SynapseAttachedDatabaseConfigurationData.DeserializeSynapseAttachedDatabaseConfigurationData(e); return new SynapseAttachedDatabaseConfigurationResource(Client, data, data.Id); }, _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, "SynapseAttachedDatabaseConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseAttachedDatabaseConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsRestClient.CreateListByKustoPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseAttachedDatabaseConfigurationResource(Client, SynapseAttachedDatabaseConfigurationData.DeserializeSynapseAttachedDatabaseConfigurationData(e)), _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, "SynapseAttachedDatabaseConfigurationCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = SynapseAttachedDatabaseConfigurationData.DeserializeSynapseAttachedDatabaseConfigurationData(e); return new SynapseAttachedDatabaseConfigurationResource(Client, data, data.Id); }, _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, "SynapseAttachedDatabaseConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

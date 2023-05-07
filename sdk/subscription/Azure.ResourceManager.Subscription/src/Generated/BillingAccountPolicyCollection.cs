@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Subscription
                 var response = await _billingAccountPolicyBillingAccountRestClient.GetPolicyAsync(billingAccountId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BillingAccountPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingAccountPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Subscription
                 var response = _billingAccountPolicyBillingAccountRestClient.GetPolicy(billingAccountId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BillingAccountPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingAccountPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

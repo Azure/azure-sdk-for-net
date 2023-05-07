@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.TrafficManager
             try
             {
                 var response = await _trafficManagerProfileProfilesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, profileName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new TrafficManagerArmOperation<TrafficManagerProfileResource>(Response.FromValue(new TrafficManagerProfileResource(Client, response), response.GetRawResponse()));
+                var operation = new TrafficManagerArmOperation<TrafficManagerProfileResource>(Response.FromValue(new TrafficManagerProfileResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.TrafficManager
             try
             {
                 var response = _trafficManagerProfileProfilesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, profileName, data, cancellationToken);
-                var operation = new TrafficManagerArmOperation<TrafficManagerProfileResource>(Response.FromValue(new TrafficManagerProfileResource(Client, response), response.GetRawResponse()));
+                var operation = new TrafficManagerArmOperation<TrafficManagerProfileResource>(Response.FromValue(new TrafficManagerProfileResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.TrafficManager
                 var response = await _trafficManagerProfileProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, profileName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TrafficManagerProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TrafficManagerProfileResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.TrafficManager
                 var response = _trafficManagerProfileProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, profileName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TrafficManagerProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TrafficManagerProfileResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.TrafficManager
         public virtual AsyncPageable<TrafficManagerProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _trafficManagerProfileProfilesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new TrafficManagerProfileResource(Client, TrafficManagerProfileData.DeserializeTrafficManagerProfileData(e)), _trafficManagerProfileProfilesClientDiagnostics, Pipeline, "TrafficManagerProfileCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = TrafficManagerProfileData.DeserializeTrafficManagerProfileData(e); return new TrafficManagerProfileResource(Client, data, data.Id); }, _trafficManagerProfileProfilesClientDiagnostics, Pipeline, "TrafficManagerProfileCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.TrafficManager
         public virtual Pageable<TrafficManagerProfileResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _trafficManagerProfileProfilesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new TrafficManagerProfileResource(Client, TrafficManagerProfileData.DeserializeTrafficManagerProfileData(e)), _trafficManagerProfileProfilesClientDiagnostics, Pipeline, "TrafficManagerProfileCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = TrafficManagerProfileData.DeserializeTrafficManagerProfileData(e); return new TrafficManagerProfileResource(Client, data, data.Id); }, _trafficManagerProfileProfilesClientDiagnostics, Pipeline, "TrafficManagerProfileCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

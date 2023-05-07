@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteHybridConnectionWebAppsRestClient.CreateOrUpdateRelayServiceConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<WebSiteHybridConnectionResource>(Response.FromValue(new WebSiteHybridConnectionResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<WebSiteHybridConnectionResource>(Response.FromValue(new WebSiteHybridConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteHybridConnectionWebAppsRestClient.CreateOrUpdateRelayServiceConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<WebSiteHybridConnectionResource>(Response.FromValue(new WebSiteHybridConnectionResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<WebSiteHybridConnectionResource>(Response.FromValue(new WebSiteHybridConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _webSiteHybridConnectionWebAppsRestClient.GetRelayServiceConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteHybridConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteHybridConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _webSiteHybridConnectionWebAppsRestClient.GetRelayServiceConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteHybridConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteHybridConnectionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

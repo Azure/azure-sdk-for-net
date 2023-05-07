@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = await _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsPrivateEndpointResource>(Response.FromValue(new StreamAnalyticsPrivateEndpointResource(Client, response), response.GetRawResponse()));
+                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsPrivateEndpointResource>(Response.FromValue(new StreamAnalyticsPrivateEndpointResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsPrivateEndpointResource>(Response.FromValue(new StreamAnalyticsPrivateEndpointResource(Client, response), response.GetRawResponse()));
+                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsPrivateEndpointResource>(Response.FromValue(new StreamAnalyticsPrivateEndpointResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 var response = await _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StreamAnalyticsPrivateEndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StreamAnalyticsPrivateEndpointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 var response = _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StreamAnalyticsPrivateEndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StreamAnalyticsPrivateEndpointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsPrivateEndpointResource(Client, StreamAnalyticsPrivateEndpointData.DeserializeStreamAnalyticsPrivateEndpointData(e)), _streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics, Pipeline, "StreamAnalyticsPrivateEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = StreamAnalyticsPrivateEndpointData.DeserializeStreamAnalyticsPrivateEndpointData(e); return new StreamAnalyticsPrivateEndpointResource(Client, data, data.Id); }, _streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics, Pipeline, "StreamAnalyticsPrivateEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsPrivateEndpointResource(Client, StreamAnalyticsPrivateEndpointData.DeserializeStreamAnalyticsPrivateEndpointData(e)), _streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics, Pipeline, "StreamAnalyticsPrivateEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = StreamAnalyticsPrivateEndpointData.DeserializeStreamAnalyticsPrivateEndpointData(e); return new StreamAnalyticsPrivateEndpointResource(Client, data, data.Id); }, _streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics, Pipeline, "StreamAnalyticsPrivateEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

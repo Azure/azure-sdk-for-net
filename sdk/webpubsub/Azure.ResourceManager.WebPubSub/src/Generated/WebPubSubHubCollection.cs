@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.WebPubSub
                 var response = await _webPubSubHubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hubName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebPubSubHubResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebPubSubHubResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.WebPubSub
                 var response = _webPubSubHubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hubName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebPubSubHubResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebPubSubHubResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubHubRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webPubSubHubRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebPubSubHubResource(Client, WebPubSubHubData.DeserializeWebPubSubHubData(e)), _webPubSubHubClientDiagnostics, Pipeline, "WebPubSubHubCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = WebPubSubHubData.DeserializeWebPubSubHubData(e); return new WebPubSubHubResource(Client, data, data.Id); }, _webPubSubHubClientDiagnostics, Pipeline, "WebPubSubHubCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubHubRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webPubSubHubRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebPubSubHubResource(Client, WebPubSubHubData.DeserializeWebPubSubHubData(e)), _webPubSubHubClientDiagnostics, Pipeline, "WebPubSubHubCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = WebPubSubHubData.DeserializeWebPubSubHubData(e); return new WebPubSubHubResource(Client, data, data.Id); }, _webPubSubHubClientDiagnostics, Pipeline, "WebPubSubHubCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

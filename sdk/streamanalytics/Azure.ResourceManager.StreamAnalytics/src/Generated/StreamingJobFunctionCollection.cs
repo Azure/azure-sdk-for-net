@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = await _streamingJobFunctionFunctionsRestClient.CreateOrReplaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new StreamAnalyticsArmOperation<StreamingJobFunctionResource>(Response.FromValue(new StreamingJobFunctionResource(Client, response), response.GetRawResponse()));
+                var operation = new StreamAnalyticsArmOperation<StreamingJobFunctionResource>(Response.FromValue(new StreamingJobFunctionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = _streamingJobFunctionFunctionsRestClient.CreateOrReplace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new StreamAnalyticsArmOperation<StreamingJobFunctionResource>(Response.FromValue(new StreamingJobFunctionResource(Client, response), response.GetRawResponse()));
+                var operation = new StreamAnalyticsArmOperation<StreamingJobFunctionResource>(Response.FromValue(new StreamingJobFunctionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 var response = await _streamingJobFunctionFunctionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StreamingJobFunctionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StreamingJobFunctionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 var response = _streamingJobFunctionFunctionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, functionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StreamingJobFunctionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StreamingJobFunctionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingJobFunctionFunctionsRestClient.CreateListByStreamingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingJobFunctionFunctionsRestClient.CreateListByStreamingJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamingJobFunctionResource(Client, StreamingJobFunctionData.DeserializeStreamingJobFunctionData(e)), _streamingJobFunctionFunctionsClientDiagnostics, Pipeline, "StreamingJobFunctionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = StreamingJobFunctionData.DeserializeStreamingJobFunctionData(e); return new StreamingJobFunctionResource(Client, data, data.Id); }, _streamingJobFunctionFunctionsClientDiagnostics, Pipeline, "StreamingJobFunctionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingJobFunctionFunctionsRestClient.CreateListByStreamingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingJobFunctionFunctionsRestClient.CreateListByStreamingJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamingJobFunctionResource(Client, StreamingJobFunctionData.DeserializeStreamingJobFunctionData(e)), _streamingJobFunctionFunctionsClientDiagnostics, Pipeline, "StreamingJobFunctionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = StreamingJobFunctionData.DeserializeStreamingJobFunctionData(e); return new StreamingJobFunctionResource(Client, data, data.Id); }, _streamingJobFunctionFunctionsClientDiagnostics, Pipeline, "StreamingJobFunctionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

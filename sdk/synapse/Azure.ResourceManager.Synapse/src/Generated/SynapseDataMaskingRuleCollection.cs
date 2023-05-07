@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseDataMaskingRuleDataMaskingRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, dataMaskingRuleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseDataMaskingRuleResource>(Response.FromValue(new SynapseDataMaskingRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new SynapseArmOperation<SynapseDataMaskingRuleResource>(Response.FromValue(new SynapseDataMaskingRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseDataMaskingRuleDataMaskingRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, dataMaskingRuleName, data, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseDataMaskingRuleResource>(Response.FromValue(new SynapseDataMaskingRuleResource(Client, response), response.GetRawResponse()));
+                var operation = new SynapseArmOperation<SynapseDataMaskingRuleResource>(Response.FromValue(new SynapseDataMaskingRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = await _synapseDataMaskingRuleDataMaskingRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, dataMaskingRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseDataMaskingRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseDataMaskingRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = _synapseDataMaskingRuleDataMaskingRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, dataMaskingRuleName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseDataMaskingRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseDataMaskingRuleResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseDataMaskingRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseDataMaskingRuleDataMaskingRulesRestClient.CreateListBySqlPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseDataMaskingRuleResource(Client, SynapseDataMaskingRuleData.DeserializeSynapseDataMaskingRuleData(e)), _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics, Pipeline, "SynapseDataMaskingRuleCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = SynapseDataMaskingRuleData.DeserializeSynapseDataMaskingRuleData(e); return new SynapseDataMaskingRuleResource(Client, data, data.Id); }, _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics, Pipeline, "SynapseDataMaskingRuleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseDataMaskingRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseDataMaskingRuleDataMaskingRulesRestClient.CreateListBySqlPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseDataMaskingRuleResource(Client, SynapseDataMaskingRuleData.DeserializeSynapseDataMaskingRuleData(e)), _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics, Pipeline, "SynapseDataMaskingRuleCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = SynapseDataMaskingRuleData.DeserializeSynapseDataMaskingRuleData(e); return new SynapseDataMaskingRuleResource(Client, data, data.Id); }, _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics, Pipeline, "SynapseDataMaskingRuleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.StorageSync
         /// <summary> Initializes a new instance of the <see cref = "StorageSyncRegisteredServerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal StorageSyncRegisteredServerResource(ArmClient client, StorageSyncRegisteredServerData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal StorageSyncRegisteredServerResource(ArmClient client, StorageSyncRegisteredServerData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.StorageSync
                 var response = await _storageSyncRegisteredServerRegisteredServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StorageSyncRegisteredServerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageSyncRegisteredServerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.StorageSync
                 var response = _storageSyncRegisteredServerRegisteredServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StorageSyncRegisteredServerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageSyncRegisteredServerResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

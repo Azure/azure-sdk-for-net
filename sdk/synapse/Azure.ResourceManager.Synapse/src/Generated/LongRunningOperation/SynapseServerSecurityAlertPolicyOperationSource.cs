@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Synapse
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SynapseServerSecurityAlertPolicyData.DeserializeSynapseServerSecurityAlertPolicyData(document.RootElement);
-            return new SynapseServerSecurityAlertPolicyResource(_client, data);
+            return new SynapseServerSecurityAlertPolicyResource(_client, data, data.Id);
         }
 
         async ValueTask<SynapseServerSecurityAlertPolicyResource> IOperationSource<SynapseServerSecurityAlertPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SynapseServerSecurityAlertPolicyData.DeserializeSynapseServerSecurityAlertPolicyData(document.RootElement);
-            return new SynapseServerSecurityAlertPolicyResource(_client, data);
+            return new SynapseServerSecurityAlertPolicyResource(_client, data, data.Id);
         }
     }
 }

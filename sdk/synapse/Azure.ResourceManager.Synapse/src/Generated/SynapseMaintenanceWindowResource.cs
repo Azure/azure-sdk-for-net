@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Synapse
         /// <summary> Initializes a new instance of the <see cref = "SynapseMaintenanceWindowResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SynapseMaintenanceWindowResource(ArmClient client, SynapseMaintenanceWindowData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal SynapseMaintenanceWindowResource(ArmClient client, SynapseMaintenanceWindowData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = await _synapseMaintenanceWindowSqlPoolMaintenanceWindowsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseMaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseMaintenanceWindowResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = _synapseMaintenanceWindowSqlPoolMaintenanceWindowsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseMaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseMaintenanceWindowResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

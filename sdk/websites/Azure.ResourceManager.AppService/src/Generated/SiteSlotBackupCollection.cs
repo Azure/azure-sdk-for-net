@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteSlotBackupWebAppsRestClient.GetBackupStatusSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotBackupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotBackupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteSlotBackupWebAppsRestClient.GetBackupStatusSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotBackupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotBackupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotBackupWebAppsRestClient.CreateListBackupsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotBackupWebAppsRestClient.CreateListBackupsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteSlotBackupResource(Client, WebAppBackupData.DeserializeWebAppBackupData(e)), _siteSlotBackupWebAppsClientDiagnostics, Pipeline, "SiteSlotBackupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = WebAppBackupData.DeserializeWebAppBackupData(e); return new SiteSlotBackupResource(Client, data, data.Id); }, _siteSlotBackupWebAppsClientDiagnostics, Pipeline, "SiteSlotBackupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotBackupWebAppsRestClient.CreateListBackupsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotBackupWebAppsRestClient.CreateListBackupsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteSlotBackupResource(Client, WebAppBackupData.DeserializeWebAppBackupData(e)), _siteSlotBackupWebAppsClientDiagnostics, Pipeline, "SiteSlotBackupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = WebAppBackupData.DeserializeWebAppBackupData(e); return new SiteSlotBackupResource(Client, data, data.Id); }, _siteSlotBackupWebAppsClientDiagnostics, Pipeline, "SiteSlotBackupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

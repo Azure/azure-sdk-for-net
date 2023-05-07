@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Synapse
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SynapseEncryptionProtectorData.DeserializeSynapseEncryptionProtectorData(document.RootElement);
-            return new SynapseEncryptionProtectorResource(_client, data);
+            return new SynapseEncryptionProtectorResource(_client, data, data.Id);
         }
 
         async ValueTask<SynapseEncryptionProtectorResource> IOperationSource<SynapseEncryptionProtectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SynapseEncryptionProtectorData.DeserializeSynapseEncryptionProtectorData(document.RootElement);
-            return new SynapseEncryptionProtectorResource(_client, data);
+            return new SynapseEncryptionProtectorResource(_client, data, data.Id);
         }
     }
 }

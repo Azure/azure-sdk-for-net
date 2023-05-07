@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _appServiceSourceControlRestClient.UpdateSourceControlAsync(sourceControlType, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<AppServiceSourceControlResource>(Response.FromValue(new AppServiceSourceControlResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<AppServiceSourceControlResource>(Response.FromValue(new AppServiceSourceControlResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _appServiceSourceControlRestClient.UpdateSourceControl(sourceControlType, data, cancellationToken);
-                var operation = new AppServiceArmOperation<AppServiceSourceControlResource>(Response.FromValue(new AppServiceSourceControlResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<AppServiceSourceControlResource>(Response.FromValue(new AppServiceSourceControlResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _appServiceSourceControlRestClient.GetSourceControlAsync(sourceControlType, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppServiceSourceControlResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppServiceSourceControlResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _appServiceSourceControlRestClient.GetSourceControl(sourceControlType, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppServiceSourceControlResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppServiceSourceControlResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceSourceControlRestClient.CreateListSourceControlsRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceSourceControlRestClient.CreateListSourceControlsNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppServiceSourceControlResource(Client, AppServiceSourceControlData.DeserializeAppServiceSourceControlData(e)), _appServiceSourceControlClientDiagnostics, Pipeline, "AppServiceSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AppServiceSourceControlData.DeserializeAppServiceSourceControlData(e); return new AppServiceSourceControlResource(Client, data, data.Id); }, _appServiceSourceControlClientDiagnostics, Pipeline, "AppServiceSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceSourceControlRestClient.CreateListSourceControlsRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceSourceControlRestClient.CreateListSourceControlsNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppServiceSourceControlResource(Client, AppServiceSourceControlData.DeserializeAppServiceSourceControlData(e)), _appServiceSourceControlClientDiagnostics, Pipeline, "AppServiceSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AppServiceSourceControlData.DeserializeAppServiceSourceControlData(e); return new AppServiceSourceControlResource(Client, data, data.Id); }, _appServiceSourceControlClientDiagnostics, Pipeline, "AppServiceSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

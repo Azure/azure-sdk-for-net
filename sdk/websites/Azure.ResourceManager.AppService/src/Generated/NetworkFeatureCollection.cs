@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _networkFeatureWebAppsRestClient.ListNetworkFeaturesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, view, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkFeatureResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkFeatureResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _networkFeatureWebAppsRestClient.ListNetworkFeaturesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, view, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkFeatureResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkFeatureResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

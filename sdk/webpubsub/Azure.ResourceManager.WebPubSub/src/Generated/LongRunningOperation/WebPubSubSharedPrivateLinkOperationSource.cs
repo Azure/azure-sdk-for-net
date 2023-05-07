@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.WebPubSub
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = WebPubSubSharedPrivateLinkData.DeserializeWebPubSubSharedPrivateLinkData(document.RootElement);
-            return new WebPubSubSharedPrivateLinkResource(_client, data);
+            return new WebPubSubSharedPrivateLinkResource(_client, data, data.Id);
         }
 
         async ValueTask<WebPubSubSharedPrivateLinkResource> IOperationSource<WebPubSubSharedPrivateLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = WebPubSubSharedPrivateLinkData.DeserializeWebPubSubSharedPrivateLinkData(document.RootElement);
-            return new WebPubSubSharedPrivateLinkResource(_client, data);
+            return new WebPubSubSharedPrivateLinkResource(_client, data, data.Id);
         }
     }
 }

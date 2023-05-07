@@ -46,7 +46,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <summary> Initializes a new instance of the <see cref = "StreamingJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal StreamingJobResource(ArmClient client, StreamingJobData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal StreamingJobResource(ArmClient client, StreamingJobData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -325,7 +326,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 var response = await _streamingJobRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StreamingJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StreamingJobResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -358,7 +359,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 var response = _streamingJobRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StreamingJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StreamingJobResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -461,7 +462,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = await _streamingJobRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new StreamingJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StreamingJobResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -496,7 +497,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = _streamingJobRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, ifMatch, cancellationToken);
-                return Response.FromValue(new StreamingJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StreamingJobResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -745,7 +746,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _streamingJobRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new StreamingJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new StreamingJobResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -799,7 +800,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _streamingJobRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new StreamingJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new StreamingJobResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -852,7 +853,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _streamingJobRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new StreamingJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new StreamingJobResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -901,7 +902,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _streamingJobRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new StreamingJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new StreamingJobResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -949,7 +950,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalResponse = await _streamingJobRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new StreamingJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new StreamingJobResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {
@@ -1001,7 +1002,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                     var originalResponse = _streamingJobRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new StreamingJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    return Response.FromValue(new StreamingJobResource(Client, originalResponse.Value, originalResponse.Value.Id), originalResponse.GetRawResponse());
                 }
                 else
                 {

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = await _streamingJobTransformationTransformationsRestClient.CreateOrReplaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformationName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new StreamAnalyticsArmOperation<StreamingJobTransformationResource>(Response.FromValue(new StreamingJobTransformationResource(Client, response), response.GetRawResponse()));
+                var operation = new StreamAnalyticsArmOperation<StreamingJobTransformationResource>(Response.FromValue(new StreamingJobTransformationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = _streamingJobTransformationTransformationsRestClient.CreateOrReplace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformationName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new StreamAnalyticsArmOperation<StreamingJobTransformationResource>(Response.FromValue(new StreamingJobTransformationResource(Client, response), response.GetRawResponse()));
+                var operation = new StreamAnalyticsArmOperation<StreamingJobTransformationResource>(Response.FromValue(new StreamingJobTransformationResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 var response = await _streamingJobTransformationTransformationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StreamingJobTransformationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StreamingJobTransformationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 var response = _streamingJobTransformationTransformationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StreamingJobTransformationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StreamingJobTransformationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

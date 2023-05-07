@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.VoiceServices
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CommunicationsGatewayData.DeserializeCommunicationsGatewayData(document.RootElement);
-            return new CommunicationsGatewayResource(_client, data);
+            return new CommunicationsGatewayResource(_client, data, data.Id);
         }
 
         async ValueTask<CommunicationsGatewayResource> IOperationSource<CommunicationsGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CommunicationsGatewayData.DeserializeCommunicationsGatewayData(document.RootElement);
-            return new CommunicationsGatewayResource(_client, data);
+            return new CommunicationsGatewayResource(_client, data, data.Id);
         }
     }
 }

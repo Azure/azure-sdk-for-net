@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Workloads
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SapDatabaseInstanceData.DeserializeSapDatabaseInstanceData(document.RootElement);
-            return new SapDatabaseInstanceResource(_client, data);
+            return new SapDatabaseInstanceResource(_client, data, data.Id);
         }
 
         async ValueTask<SapDatabaseInstanceResource> IOperationSource<SapDatabaseInstanceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SapDatabaseInstanceData.DeserializeSapDatabaseInstanceData(document.RootElement);
-            return new SapDatabaseInstanceResource(_client, data);
+            return new SapDatabaseInstanceResource(_client, data, data.Id);
         }
     }
 }

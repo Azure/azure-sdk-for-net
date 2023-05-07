@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _staticSiteBuildStaticSitesRestClient.GetStaticSiteBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StaticSiteBuildResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StaticSiteBuildResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _staticSiteBuildStaticSitesRestClient.GetStaticSiteBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StaticSiteBuildResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StaticSiteBuildResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteBuildStaticSitesRestClient.CreateGetStaticSiteBuildsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteBuildStaticSitesRestClient.CreateGetStaticSiteBuildsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StaticSiteBuildResource(Client, StaticSiteBuildData.DeserializeStaticSiteBuildData(e)), _staticSiteBuildStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = StaticSiteBuildData.DeserializeStaticSiteBuildData(e); return new StaticSiteBuildResource(Client, data, data.Id); }, _staticSiteBuildStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteBuildStaticSitesRestClient.CreateGetStaticSiteBuildsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteBuildStaticSitesRestClient.CreateGetStaticSiteBuildsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StaticSiteBuildResource(Client, StaticSiteBuildData.DeserializeStaticSiteBuildData(e)), _staticSiteBuildStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = StaticSiteBuildData.DeserializeStaticSiteBuildData(e); return new StaticSiteBuildResource(Client, data, data.Id); }, _staticSiteBuildStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

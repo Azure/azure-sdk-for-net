@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = await _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, principalAssignmentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseClusterPrincipalAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseClusterPrincipalAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, principalAssignmentName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseClusterPrincipalAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseClusterPrincipalAssignmentResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseClusterPrincipalAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseClusterPrincipalAssignmentResource(Client, SynapseClusterPrincipalAssignmentData.DeserializeSynapseClusterPrincipalAssignmentData(e)), _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics, Pipeline, "SynapseClusterPrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = SynapseClusterPrincipalAssignmentData.DeserializeSynapseClusterPrincipalAssignmentData(e); return new SynapseClusterPrincipalAssignmentResource(Client, data, data.Id); }, _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics, Pipeline, "SynapseClusterPrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseClusterPrincipalAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseClusterPrincipalAssignmentResource(Client, SynapseClusterPrincipalAssignmentData.DeserializeSynapseClusterPrincipalAssignmentData(e)), _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics, Pipeline, "SynapseClusterPrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = SynapseClusterPrincipalAssignmentData.DeserializeSynapseClusterPrincipalAssignmentData(e); return new SynapseClusterPrincipalAssignmentResource(Client, data, data.Id); }, _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics, Pipeline, "SynapseClusterPrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

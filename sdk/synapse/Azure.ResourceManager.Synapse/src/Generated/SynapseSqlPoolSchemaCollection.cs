@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = await _synapseSqlPoolSchemaSqlPoolSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseSqlPoolSchemaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseSqlPoolSchemaResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = _synapseSqlPoolSchemaSqlPoolSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseSqlPoolSchemaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseSqlPoolSchemaResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSqlPoolSchemaSqlPoolSchemasRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseSqlPoolSchemaSqlPoolSchemasRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseSqlPoolSchemaResource(Client, SynapseSqlPoolSchemaData.DeserializeSynapseSqlPoolSchemaData(e)), _synapseSqlPoolSchemaSqlPoolSchemasClientDiagnostics, Pipeline, "SynapseSqlPoolSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SynapseSqlPoolSchemaData.DeserializeSynapseSqlPoolSchemaData(e); return new SynapseSqlPoolSchemaResource(Client, data, data.Id); }, _synapseSqlPoolSchemaSqlPoolSchemasClientDiagnostics, Pipeline, "SynapseSqlPoolSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSqlPoolSchemaSqlPoolSchemasRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseSqlPoolSchemaSqlPoolSchemasRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseSqlPoolSchemaResource(Client, SynapseSqlPoolSchemaData.DeserializeSynapseSqlPoolSchemaData(e)), _synapseSqlPoolSchemaSqlPoolSchemasClientDiagnostics, Pipeline, "SynapseSqlPoolSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SynapseSqlPoolSchemaData.DeserializeSynapseSqlPoolSchemaData(e); return new SynapseSqlPoolSchemaResource(Client, data, data.Id); }, _synapseSqlPoolSchemaSqlPoolSchemasClientDiagnostics, Pipeline, "SynapseSqlPoolSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.StorageSync
                 var response = await _cloudEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cloudEndpointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CloudEndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CloudEndpointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.StorageSync
                 var response = _cloudEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cloudEndpointName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CloudEndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CloudEndpointResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.StorageSync
         public virtual AsyncPageable<CloudEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudEndpointRestClient.CreateListBySyncGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CloudEndpointResource(Client, CloudEndpointData.DeserializeCloudEndpointData(e)), _cloudEndpointClientDiagnostics, Pipeline, "CloudEndpointCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = CloudEndpointData.DeserializeCloudEndpointData(e); return new CloudEndpointResource(Client, data, data.Id); }, _cloudEndpointClientDiagnostics, Pipeline, "CloudEndpointCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.StorageSync
         public virtual Pageable<CloudEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudEndpointRestClient.CreateListBySyncGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CloudEndpointResource(Client, CloudEndpointData.DeserializeCloudEndpointData(e)), _cloudEndpointClientDiagnostics, Pipeline, "CloudEndpointCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = CloudEndpointData.DeserializeCloudEndpointData(e); return new CloudEndpointResource(Client, data, data.Id); }, _cloudEndpointClientDiagnostics, Pipeline, "CloudEndpointCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.TrafficManager
                 var response = await _trafficManagerHeatMapHeatMapRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, heatMapType, topLeft, botRight, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TrafficManagerHeatMapResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TrafficManagerHeatMapResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.TrafficManager
                 var response = _trafficManagerHeatMapHeatMapRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, heatMapType, topLeft, botRight, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TrafficManagerHeatMapResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TrafficManagerHeatMapResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

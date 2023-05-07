@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Workloads
                 var response = await _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationInstanceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SapApplicationServerInstanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SapApplicationServerInstanceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Workloads
                 var response = _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationInstanceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SapApplicationServerInstanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SapApplicationServerInstanceResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapApplicationServerInstanceResource(Client, SapApplicationServerInstanceData.DeserializeSapApplicationServerInstanceData(e)), _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics, Pipeline, "SapApplicationServerInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SapApplicationServerInstanceData.DeserializeSapApplicationServerInstanceData(e); return new SapApplicationServerInstanceResource(Client, data, data.Id); }, _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics, Pipeline, "SapApplicationServerInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapApplicationServerInstanceResource(Client, SapApplicationServerInstanceData.DeserializeSapApplicationServerInstanceData(e)), _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics, Pipeline, "SapApplicationServerInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SapApplicationServerInstanceData.DeserializeSapApplicationServerInstanceData(e); return new SapApplicationServerInstanceResource(Client, data, data.Id); }, _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics, Pipeline, "SapApplicationServerInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

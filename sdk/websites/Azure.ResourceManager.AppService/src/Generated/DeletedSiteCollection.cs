@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _deletedSiteGlobalRestClient.GetDeletedWebAppAsync(Id.SubscriptionId, deletedSiteId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeletedSiteResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedSiteResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _deletedSiteGlobalRestClient.GetDeletedWebApp(Id.SubscriptionId, deletedSiteId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeletedSiteResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedSiteResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deletedSiteDeletedWebAppsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deletedSiteDeletedWebAppsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeletedSiteResource(Client, DeletedSiteData.DeserializeDeletedSiteData(e)), _deletedSiteDeletedWebAppsClientDiagnostics, Pipeline, "DeletedSiteCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DeletedSiteData.DeserializeDeletedSiteData(e); return new DeletedSiteResource(Client, data, data.Id); }, _deletedSiteDeletedWebAppsClientDiagnostics, Pipeline, "DeletedSiteCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deletedSiteDeletedWebAppsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deletedSiteDeletedWebAppsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeletedSiteResource(Client, DeletedSiteData.DeserializeDeletedSiteData(e)), _deletedSiteDeletedWebAppsClientDiagnostics, Pipeline, "DeletedSiteCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DeletedSiteData.DeserializeDeletedSiteData(e); return new DeletedSiteResource(Client, data, data.Id); }, _deletedSiteDeletedWebAppsClientDiagnostics, Pipeline, "DeletedSiteCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

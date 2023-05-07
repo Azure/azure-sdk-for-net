@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteSlotDiagnosticDiagnosticsRestClient.GetSiteDiagnosticCategorySlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, diagnosticCategory, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotDiagnosticResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDiagnosticResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteSlotDiagnosticDiagnosticsRestClient.GetSiteDiagnosticCategorySlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, diagnosticCategory, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotDiagnosticResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDiagnosticResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotDiagnosticDiagnosticsRestClient.CreateListSiteDiagnosticCategoriesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotDiagnosticDiagnosticsRestClient.CreateListSiteDiagnosticCategoriesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteSlotDiagnosticResource(Client, DiagnosticCategoryData.DeserializeDiagnosticCategoryData(e)), _siteSlotDiagnosticDiagnosticsClientDiagnostics, Pipeline, "SiteSlotDiagnosticCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = DiagnosticCategoryData.DeserializeDiagnosticCategoryData(e); return new SiteSlotDiagnosticResource(Client, data, data.Id); }, _siteSlotDiagnosticDiagnosticsClientDiagnostics, Pipeline, "SiteSlotDiagnosticCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotDiagnosticDiagnosticsRestClient.CreateListSiteDiagnosticCategoriesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotDiagnosticDiagnosticsRestClient.CreateListSiteDiagnosticCategoriesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteSlotDiagnosticResource(Client, DiagnosticCategoryData.DeserializeDiagnosticCategoryData(e)), _siteSlotDiagnosticDiagnosticsClientDiagnostics, Pipeline, "SiteSlotDiagnosticCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = DiagnosticCategoryData.DeserializeDiagnosticCategoryData(e); return new SiteSlotDiagnosticResource(Client, data, data.Id); }, _siteSlotDiagnosticDiagnosticsClientDiagnostics, Pipeline, "SiteSlotDiagnosticCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

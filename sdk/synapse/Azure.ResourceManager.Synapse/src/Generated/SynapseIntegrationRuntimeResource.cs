@@ -60,7 +60,8 @@ namespace Azure.ResourceManager.Synapse
         /// <summary> Initializes a new instance of the <see cref = "SynapseIntegrationRuntimeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SynapseIntegrationRuntimeResource(ArmClient client, SynapseIntegrationRuntimeData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal SynapseIntegrationRuntimeResource(ArmClient client, SynapseIntegrationRuntimeData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = await _synapseIntegrationRuntimeIntegrationRuntimesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseIntegrationRuntimeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseIntegrationRuntimeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -176,7 +177,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = _synapseIntegrationRuntimeIntegrationRuntimesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseIntegrationRuntimeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseIntegrationRuntimeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -278,7 +279,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseIntegrationRuntimeIntegrationRuntimesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SynapseIntegrationRuntimeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseIntegrationRuntimeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -312,7 +313,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseIntegrationRuntimeIntegrationRuntimesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new SynapseIntegrationRuntimeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseIntegrationRuntimeResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

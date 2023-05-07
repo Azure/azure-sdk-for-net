@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StorageMover
                 var response = await _jobRunRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobRunName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobRunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new JobRunResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.StorageMover
                 var response = _jobRunRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobRunName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobRunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new JobRunResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.StorageMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jobRunRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobRunRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new JobRunResource(Client, JobRunData.DeserializeJobRunData(e)), _jobRunClientDiagnostics, Pipeline, "JobRunCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = JobRunData.DeserializeJobRunData(e); return new JobRunResource(Client, data, data.Id); }, _jobRunClientDiagnostics, Pipeline, "JobRunCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.StorageMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jobRunRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobRunRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new JobRunResource(Client, JobRunData.DeserializeJobRunData(e)), _jobRunClientDiagnostics, Pipeline, "JobRunCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = JobRunData.DeserializeJobRunData(e); return new JobRunResource(Client, data, data.Id); }, _jobRunClientDiagnostics, Pipeline, "JobRunCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

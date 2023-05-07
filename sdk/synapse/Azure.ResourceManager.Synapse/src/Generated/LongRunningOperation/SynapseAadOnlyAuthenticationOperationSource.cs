@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Synapse
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SynapseAadOnlyAuthenticationData.DeserializeSynapseAadOnlyAuthenticationData(document.RootElement);
-            return new SynapseAadOnlyAuthenticationResource(_client, data);
+            return new SynapseAadOnlyAuthenticationResource(_client, data, data.Id);
         }
 
         async ValueTask<SynapseAadOnlyAuthenticationResource> IOperationSource<SynapseAadOnlyAuthenticationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SynapseAadOnlyAuthenticationData.DeserializeSynapseAadOnlyAuthenticationData(document.RootElement);
-            return new SynapseAadOnlyAuthenticationResource(_client, data);
+            return new SynapseAadOnlyAuthenticationResource(_client, data, data.Id);
         }
     }
 }

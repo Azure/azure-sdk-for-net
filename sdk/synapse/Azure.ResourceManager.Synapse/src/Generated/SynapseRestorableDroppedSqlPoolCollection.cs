@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = await _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorableDroppedSqlPoolId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseRestorableDroppedSqlPoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseRestorableDroppedSqlPoolResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorableDroppedSqlPoolId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseRestorableDroppedSqlPoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseRestorableDroppedSqlPoolResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseRestorableDroppedSqlPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseRestorableDroppedSqlPoolResource(Client, SynapseRestorableDroppedSqlPoolData.DeserializeSynapseRestorableDroppedSqlPoolData(e)), _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsClientDiagnostics, Pipeline, "SynapseRestorableDroppedSqlPoolCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = SynapseRestorableDroppedSqlPoolData.DeserializeSynapseRestorableDroppedSqlPoolData(e); return new SynapseRestorableDroppedSqlPoolResource(Client, data, data.Id); }, _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsClientDiagnostics, Pipeline, "SynapseRestorableDroppedSqlPoolCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseRestorableDroppedSqlPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseRestorableDroppedSqlPoolResource(Client, SynapseRestorableDroppedSqlPoolData.DeserializeSynapseRestorableDroppedSqlPoolData(e)), _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsClientDiagnostics, Pipeline, "SynapseRestorableDroppedSqlPoolCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = SynapseRestorableDroppedSqlPoolData.DeserializeSynapseRestorableDroppedSqlPoolData(e); return new SynapseRestorableDroppedSqlPoolResource(Client, data, data.Id); }, _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsClientDiagnostics, Pipeline, "SynapseRestorableDroppedSqlPoolCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

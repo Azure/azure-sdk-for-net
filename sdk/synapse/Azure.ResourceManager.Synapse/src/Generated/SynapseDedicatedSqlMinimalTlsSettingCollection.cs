@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = await _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dedicatedSQLminimalTlsSettingsName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseDedicatedSqlMinimalTlsSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseDedicatedSqlMinimalTlsSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dedicatedSQLminimalTlsSettingsName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseDedicatedSqlMinimalTlsSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseDedicatedSqlMinimalTlsSettingResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseDedicatedSqlMinimalTlsSettingResource(Client, SynapseDedicatedSqlMinimalTlsSettingData.DeserializeSynapseDedicatedSqlMinimalTlsSettingData(e)), _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsClientDiagnostics, Pipeline, "SynapseDedicatedSqlMinimalTlsSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SynapseDedicatedSqlMinimalTlsSettingData.DeserializeSynapseDedicatedSqlMinimalTlsSettingData(e); return new SynapseDedicatedSqlMinimalTlsSettingResource(Client, data, data.Id); }, _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsClientDiagnostics, Pipeline, "SynapseDedicatedSqlMinimalTlsSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseDedicatedSqlMinimalTlsSettingResource(Client, SynapseDedicatedSqlMinimalTlsSettingData.DeserializeSynapseDedicatedSqlMinimalTlsSettingData(e)), _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsClientDiagnostics, Pipeline, "SynapseDedicatedSqlMinimalTlsSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SynapseDedicatedSqlMinimalTlsSettingData.DeserializeSynapseDedicatedSqlMinimalTlsSettingData(e); return new SynapseDedicatedSqlMinimalTlsSettingResource(Client, data, data.Id); }, _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsClientDiagnostics, Pipeline, "SynapseDedicatedSqlMinimalTlsSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

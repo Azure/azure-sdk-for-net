@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _hostingEnvironmentRecommendationRecommendationsRestClient.GetRuleDetailsByHostingEnvironmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HostingEnvironmentRecommendationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HostingEnvironmentRecommendationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _hostingEnvironmentRecommendationRecommendationsRestClient.GetRuleDetailsByHostingEnvironment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HostingEnvironmentRecommendationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HostingEnvironmentRecommendationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

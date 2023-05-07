@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = await _synapseDataWarehouseUserActivitySqlPoolDataWarehouseUserActivitiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseDataWarehouseUserActivityResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseDataWarehouseUserActivityResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = _synapseDataWarehouseUserActivitySqlPoolDataWarehouseUserActivitiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseDataWarehouseUserActivityResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseDataWarehouseUserActivityResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Synapse
         /// <summary> Initializes a new instance of the <see cref = "SynapseWorkloadGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SynapseWorkloadGroupResource(ArmClient client, SynapseWorkloadGroupData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal SynapseWorkloadGroupResource(ArmClient client, SynapseWorkloadGroupData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = await _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseWorkloadGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseWorkloadGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -194,7 +195,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseWorkloadGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseWorkloadGroupResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

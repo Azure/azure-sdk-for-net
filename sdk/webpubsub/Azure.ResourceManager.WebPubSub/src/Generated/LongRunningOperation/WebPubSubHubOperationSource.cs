@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.WebPubSub
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = WebPubSubHubData.DeserializeWebPubSubHubData(document.RootElement);
-            return new WebPubSubHubResource(_client, data);
+            return new WebPubSubHubResource(_client, data, data.Id);
         }
 
         async ValueTask<WebPubSubHubResource> IOperationSource<WebPubSubHubResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = WebPubSubHubData.DeserializeWebPubSubHubData(document.RootElement);
-            return new WebPubSubHubResource(_client, data);
+            return new WebPubSubHubResource(_client, data, data.Id);
         }
     }
 }

@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Subscription
                 var response = await _subscriptionAliasAliasRestClient.GetAsync(aliasName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionAliasResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionAliasResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Subscription
                 var response = _subscriptionAliasAliasRestClient.Get(aliasName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionAliasResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionAliasResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Subscription
         public virtual AsyncPageable<SubscriptionAliasResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionAliasAliasRestClient.CreateListRequest();
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SubscriptionAliasResource(Client, SubscriptionAliasData.DeserializeSubscriptionAliasData(e)), _subscriptionAliasAliasClientDiagnostics, Pipeline, "SubscriptionAliasCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = SubscriptionAliasData.DeserializeSubscriptionAliasData(e); return new SubscriptionAliasResource(Client, data, data.Id); }, _subscriptionAliasAliasClientDiagnostics, Pipeline, "SubscriptionAliasCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Subscription
         public virtual Pageable<SubscriptionAliasResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionAliasAliasRestClient.CreateListRequest();
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SubscriptionAliasResource(Client, SubscriptionAliasData.DeserializeSubscriptionAliasData(e)), _subscriptionAliasAliasClientDiagnostics, Pipeline, "SubscriptionAliasCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = SubscriptionAliasData.DeserializeSubscriptionAliasData(e); return new SubscriptionAliasResource(Client, data, data.Id); }, _subscriptionAliasAliasClientDiagnostics, Pipeline, "SubscriptionAliasCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

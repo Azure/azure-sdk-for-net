@@ -46,7 +46,8 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "WebSiteSlotResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal WebSiteSlotResource(ArmClient client, WebSiteData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal WebSiteSlotResource(ArmClient client, WebSiteData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -1356,7 +1357,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _webSiteSlotWebAppsRestClient.GetSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteSlotResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1388,7 +1389,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _webSiteSlotWebAppsRestClient.GetSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteSlotResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1494,7 +1495,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteSlotWebAppsRestClient.UpdateSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, info, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new WebSiteSlotResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1528,7 +1529,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteSlotWebAppsRestClient.UpdateSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, info, cancellationToken);
-                return Response.FromValue(new WebSiteSlotResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

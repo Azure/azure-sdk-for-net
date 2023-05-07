@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "PublishingUserResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PublishingUserResource(ArmClient client, PublishingUserData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal PublishingUserResource(ArmClient client, PublishingUserData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _publishingUserRestClient.GetPublishingUserAsync(cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PublishingUserResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PublishingUserResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _publishingUserRestClient.GetPublishingUser(cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PublishingUserResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PublishingUserResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _publishingUserRestClient.UpdatePublishingUserAsync(data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<PublishingUserResource>(Response.FromValue(new PublishingUserResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<PublishingUserResource>(Response.FromValue(new PublishingUserResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -215,7 +216,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _publishingUserRestClient.UpdatePublishingUser(data, cancellationToken);
-                var operation = new AppServiceArmOperation<PublishingUserResource>(Response.FromValue(new PublishingUserResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<PublishingUserResource>(Response.FromValue(new PublishingUserResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

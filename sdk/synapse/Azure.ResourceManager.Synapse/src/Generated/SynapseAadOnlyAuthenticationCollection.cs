@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = await _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, azureADOnlyAuthenticationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseAadOnlyAuthenticationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseAadOnlyAuthenticationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, azureADOnlyAuthenticationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseAadOnlyAuthenticationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseAadOnlyAuthenticationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseAadOnlyAuthenticationResource(Client, SynapseAadOnlyAuthenticationData.DeserializeSynapseAadOnlyAuthenticationData(e)), _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsClientDiagnostics, Pipeline, "SynapseAadOnlyAuthenticationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SynapseAadOnlyAuthenticationData.DeserializeSynapseAadOnlyAuthenticationData(e); return new SynapseAadOnlyAuthenticationResource(Client, data, data.Id); }, _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsClientDiagnostics, Pipeline, "SynapseAadOnlyAuthenticationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseAadOnlyAuthenticationResource(Client, SynapseAadOnlyAuthenticationData.DeserializeSynapseAadOnlyAuthenticationData(e)), _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsClientDiagnostics, Pipeline, "SynapseAadOnlyAuthenticationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SynapseAadOnlyAuthenticationData.DeserializeSynapseAadOnlyAuthenticationData(e); return new SynapseAadOnlyAuthenticationResource(Client, data, data.Id); }, _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsClientDiagnostics, Pipeline, "SynapseAadOnlyAuthenticationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

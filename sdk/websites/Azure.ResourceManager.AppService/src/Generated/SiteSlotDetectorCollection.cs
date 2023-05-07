@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteSlotDetectorDiagnosticsRestClient.GetSiteDetectorResponseSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotDetectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDetectorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteSlotDetectorDiagnosticsRestClient.GetSiteDetectorResponseSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotDetectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDetectorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotDetectorDiagnosticsRestClient.CreateListSiteDetectorResponsesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotDetectorDiagnosticsRestClient.CreateListSiteDetectorResponsesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteSlotDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _siteSlotDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteSlotDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AppServiceDetectorData.DeserializeAppServiceDetectorData(e); return new SiteSlotDetectorResource(Client, data, data.Id); }, _siteSlotDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteSlotDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotDetectorDiagnosticsRestClient.CreateListSiteDetectorResponsesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotDetectorDiagnosticsRestClient.CreateListSiteDetectorResponsesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteSlotDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _siteSlotDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteSlotDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AppServiceDetectorData.DeserializeAppServiceDetectorData(e); return new SiteSlotDetectorResource(Client, data, data.Id); }, _siteSlotDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteSlotDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

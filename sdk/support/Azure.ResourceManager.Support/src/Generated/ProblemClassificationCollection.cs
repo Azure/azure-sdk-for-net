@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Support
                 var response = await _problemClassificationRestClient.GetAsync(Id.Name, problemClassificationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProblemClassificationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProblemClassificationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Support
                 var response = _problemClassificationRestClient.Get(Id.Name, problemClassificationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProblemClassificationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProblemClassificationResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Support
         public virtual AsyncPageable<ProblemClassificationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _problemClassificationRestClient.CreateListRequest(Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ProblemClassificationResource(Client, ProblemClassificationData.DeserializeProblemClassificationData(e)), _problemClassificationClientDiagnostics, Pipeline, "ProblemClassificationCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => { var data = ProblemClassificationData.DeserializeProblemClassificationData(e); return new ProblemClassificationResource(Client, data, data.Id); }, _problemClassificationClientDiagnostics, Pipeline, "ProblemClassificationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Support
         public virtual Pageable<ProblemClassificationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _problemClassificationRestClient.CreateListRequest(Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ProblemClassificationResource(Client, ProblemClassificationData.DeserializeProblemClassificationData(e)), _problemClassificationClientDiagnostics, Pipeline, "ProblemClassificationCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => { var data = ProblemClassificationData.DeserializeProblemClassificationData(e); return new ProblemClassificationResource(Client, data, data.Id); }, _problemClassificationClientDiagnostics, Pipeline, "ProblemClassificationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = await _synapseSqlPoolColumnSqlPoolColumnsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, columnName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseSqlPoolColumnResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseSqlPoolColumnResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = _synapseSqlPoolColumnSqlPoolColumnsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, columnName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseSqlPoolColumnResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseSqlPoolColumnResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSqlPoolColumnSqlPoolTableColumnsRestClient.CreateListByTableNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseSqlPoolColumnSqlPoolTableColumnsRestClient.CreateListByTableNameNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseSqlPoolColumnResource(Client, SynapseSqlPoolColumnData.DeserializeSynapseSqlPoolColumnData(e)), _synapseSqlPoolColumnSqlPoolTableColumnsClientDiagnostics, Pipeline, "SynapseSqlPoolColumnCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SynapseSqlPoolColumnData.DeserializeSynapseSqlPoolColumnData(e); return new SynapseSqlPoolColumnResource(Client, data, data.Id); }, _synapseSqlPoolColumnSqlPoolTableColumnsClientDiagnostics, Pipeline, "SynapseSqlPoolColumnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSqlPoolColumnSqlPoolTableColumnsRestClient.CreateListByTableNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseSqlPoolColumnSqlPoolTableColumnsRestClient.CreateListByTableNameNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseSqlPoolColumnResource(Client, SynapseSqlPoolColumnData.DeserializeSynapseSqlPoolColumnData(e)), _synapseSqlPoolColumnSqlPoolTableColumnsClientDiagnostics, Pipeline, "SynapseSqlPoolColumnCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SynapseSqlPoolColumnData.DeserializeSynapseSqlPoolColumnData(e); return new SynapseSqlPoolColumnResource(Client, data, data.Id); }, _synapseSqlPoolColumnSqlPoolTableColumnsClientDiagnostics, Pipeline, "SynapseSqlPoolColumnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

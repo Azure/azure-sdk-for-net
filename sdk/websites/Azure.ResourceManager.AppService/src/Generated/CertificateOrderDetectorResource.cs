@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "CertificateOrderDetectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CertificateOrderDetectorResource(ArmClient client, AppServiceDetectorData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal CertificateOrderDetectorResource(ArmClient client, AppServiceDetectorData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.GetAppServiceCertificateOrderDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CertificateOrderDetectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CertificateOrderDetectorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.GetAppServiceCertificateOrderDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, startTime, endTime, timeGrain, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CertificateOrderDetectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CertificateOrderDetectorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

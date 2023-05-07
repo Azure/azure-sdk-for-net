@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.AppService
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SiteExtensionInfoData.DeserializeSiteExtensionInfoData(document.RootElement);
-            return new WebSiteExtensionResource(_client, data);
+            return new WebSiteExtensionResource(_client, data, data.Id);
         }
 
         async ValueTask<WebSiteExtensionResource> IOperationSource<WebSiteExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SiteExtensionInfoData.DeserializeSiteExtensionInfoData(document.RootElement);
-            return new WebSiteExtensionResource(_client, data);
+            return new WebSiteExtensionResource(_client, data, data.Id);
         }
     }
 }

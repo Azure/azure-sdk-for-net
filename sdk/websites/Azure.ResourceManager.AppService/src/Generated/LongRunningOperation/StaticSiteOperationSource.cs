@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.AppService
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = StaticSiteData.DeserializeStaticSiteData(document.RootElement);
-            return new StaticSiteResource(_client, data);
+            return new StaticSiteResource(_client, data, data.Id);
         }
 
         async ValueTask<StaticSiteResource> IOperationSource<StaticSiteResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = StaticSiteData.DeserializeStaticSiteData(document.RootElement);
-            return new StaticSiteResource(_client, data);
+            return new StaticSiteResource(_client, data, data.Id);
         }
     }
 }

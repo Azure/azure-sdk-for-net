@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.VoiceServices
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = TestLineData.DeserializeTestLineData(document.RootElement);
-            return new TestLineResource(_client, data);
+            return new TestLineResource(_client, data, data.Id);
         }
 
         async ValueTask<TestLineResource> IOperationSource<TestLineResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = TestLineData.DeserializeTestLineData(document.RootElement);
-            return new TestLineResource(_client, data);
+            return new TestLineResource(_client, data, data.Id);
         }
     }
 }

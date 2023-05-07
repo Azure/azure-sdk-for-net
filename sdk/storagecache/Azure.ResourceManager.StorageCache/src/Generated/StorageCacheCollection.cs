@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.StorageCache
                 var response = await _storageCacheCachesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cacheName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StorageCacheResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageCacheResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.StorageCache
                 var response = _storageCacheCachesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cacheName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StorageCacheResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageCacheResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageCacheCachesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageCacheCachesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), _storageCacheCachesClientDiagnostics, Pipeline, "StorageCacheCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = StorageCacheData.DeserializeStorageCacheData(e); return new StorageCacheResource(Client, data, data.Id); }, _storageCacheCachesClientDiagnostics, Pipeline, "StorageCacheCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageCacheCachesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageCacheCachesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), _storageCacheCachesClientDiagnostics, Pipeline, "StorageCacheCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = StorageCacheData.DeserializeStorageCacheData(e); return new StorageCacheResource(Client, data, data.Id); }, _storageCacheCachesClientDiagnostics, Pipeline, "StorageCacheCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

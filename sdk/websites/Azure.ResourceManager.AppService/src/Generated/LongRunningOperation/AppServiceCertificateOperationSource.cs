@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.AppService
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AppServiceCertificateData.DeserializeAppServiceCertificateData(document.RootElement);
-            return new AppServiceCertificateResource(_client, data);
+            return new AppServiceCertificateResource(_client, data, data.Id);
         }
 
         async ValueTask<AppServiceCertificateResource> IOperationSource<AppServiceCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AppServiceCertificateData.DeserializeAppServiceCertificateData(document.RootElement);
-            return new AppServiceCertificateResource(_client, data);
+            return new AppServiceCertificateResource(_client, data, data.Id);
         }
     }
 }

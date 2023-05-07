@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.AppService
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AppServicePlanData.DeserializeAppServicePlanData(document.RootElement);
-            return new AppServicePlanResource(_client, data);
+            return new AppServicePlanResource(_client, data, data.Id);
         }
 
         async ValueTask<AppServicePlanResource> IOperationSource<AppServicePlanResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AppServicePlanData.DeserializeAppServicePlanData(document.RootElement);
-            return new AppServicePlanResource(_client, data);
+            return new AppServicePlanResource(_client, data, data.Id);
         }
     }
 }

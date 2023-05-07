@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.TrafficManager
         /// <summary> Initializes a new instance of the <see cref = "TrafficManagerHeatMapResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TrafficManagerHeatMapResource(ArmClient client, TrafficManagerHeatMapData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal TrafficManagerHeatMapResource(ArmClient client, TrafficManagerHeatMapData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.TrafficManager
                 var response = await _trafficManagerHeatMapHeatMapRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, topLeft, botRight, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TrafficManagerHeatMapResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TrafficManagerHeatMapResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.TrafficManager
                 var response = _trafficManagerHeatMapHeatMapRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, topLeft, botRight, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TrafficManagerHeatMapResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TrafficManagerHeatMapResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

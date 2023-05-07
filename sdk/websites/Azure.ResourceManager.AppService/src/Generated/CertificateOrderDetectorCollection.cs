@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.GetAppServiceCertificateOrderDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CertificateOrderDetectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CertificateOrderDetectorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.GetAppServiceCertificateOrderDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CertificateOrderDetectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CertificateOrderDetectorResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.CreateListAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.CreateListAppServiceCertificateOrderDetectorResponseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CertificateOrderDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics, Pipeline, "CertificateOrderDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AppServiceDetectorData.DeserializeAppServiceDetectorData(e); return new CertificateOrderDetectorResource(Client, data, data.Id); }, _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics, Pipeline, "CertificateOrderDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.CreateListAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.CreateListAppServiceCertificateOrderDetectorResponseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CertificateOrderDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics, Pipeline, "CertificateOrderDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AppServiceDetectorData.DeserializeAppServiceDetectorData(e); return new CertificateOrderDetectorResource(Client, data, data.Id); }, _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics, Pipeline, "CertificateOrderDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

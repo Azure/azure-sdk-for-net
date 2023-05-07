@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = await _synapseSqlPoolConnectionPolicySqlPoolConnectionPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseSqlPoolConnectionPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseSqlPoolConnectionPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = _synapseSqlPoolConnectionPolicySqlPoolConnectionPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionPolicyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseSqlPoolConnectionPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseSqlPoolConnectionPolicyResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

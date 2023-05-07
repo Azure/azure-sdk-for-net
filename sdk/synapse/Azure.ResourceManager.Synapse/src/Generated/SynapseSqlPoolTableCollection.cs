@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = await _synapseSqlPoolTableSqlPoolTablesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tableName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseSqlPoolTableResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseSqlPoolTableResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = _synapseSqlPoolTableSqlPoolTablesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tableName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseSqlPoolTableResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseSqlPoolTableResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSqlPoolTableSqlPoolTablesRestClient.CreateListBySchemaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseSqlPoolTableSqlPoolTablesRestClient.CreateListBySchemaNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseSqlPoolTableResource(Client, SynapseSqlPoolTableData.DeserializeSynapseSqlPoolTableData(e)), _synapseSqlPoolTableSqlPoolTablesClientDiagnostics, Pipeline, "SynapseSqlPoolTableCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SynapseSqlPoolTableData.DeserializeSynapseSqlPoolTableData(e); return new SynapseSqlPoolTableResource(Client, data, data.Id); }, _synapseSqlPoolTableSqlPoolTablesClientDiagnostics, Pipeline, "SynapseSqlPoolTableCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSqlPoolTableSqlPoolTablesRestClient.CreateListBySchemaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseSqlPoolTableSqlPoolTablesRestClient.CreateListBySchemaNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseSqlPoolTableResource(Client, SynapseSqlPoolTableData.DeserializeSynapseSqlPoolTableData(e)), _synapseSqlPoolTableSqlPoolTablesClientDiagnostics, Pipeline, "SynapseSqlPoolTableCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SynapseSqlPoolTableData.DeserializeSynapseSqlPoolTableData(e); return new SynapseSqlPoolTableResource(Client, data, data.Id); }, _synapseSqlPoolTableSqlPoolTablesClientDiagnostics, Pipeline, "SynapseSqlPoolTableCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

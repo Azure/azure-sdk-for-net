@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, transparentDataEncryptionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseTransparentDataEncryptionResource>(Response.FromValue(new SynapseTransparentDataEncryptionResource(Client, response), response.GetRawResponse()));
+                var operation = new SynapseArmOperation<SynapseTransparentDataEncryptionResource>(Response.FromValue(new SynapseTransparentDataEncryptionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, transparentDataEncryptionName, data, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseTransparentDataEncryptionResource>(Response.FromValue(new SynapseTransparentDataEncryptionResource(Client, response), response.GetRawResponse()));
+                var operation = new SynapseArmOperation<SynapseTransparentDataEncryptionResource>(Response.FromValue(new SynapseTransparentDataEncryptionResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = await _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, transparentDataEncryptionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseTransparentDataEncryptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseTransparentDataEncryptionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, transparentDataEncryptionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseTransparentDataEncryptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseTransparentDataEncryptionResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseTransparentDataEncryptionResource(Client, SynapseTransparentDataEncryptionData.DeserializeSynapseTransparentDataEncryptionData(e)), _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsClientDiagnostics, Pipeline, "SynapseTransparentDataEncryptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SynapseTransparentDataEncryptionData.DeserializeSynapseTransparentDataEncryptionData(e); return new SynapseTransparentDataEncryptionResource(Client, data, data.Id); }, _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsClientDiagnostics, Pipeline, "SynapseTransparentDataEncryptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseTransparentDataEncryptionResource(Client, SynapseTransparentDataEncryptionData.DeserializeSynapseTransparentDataEncryptionData(e)), _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsClientDiagnostics, Pipeline, "SynapseTransparentDataEncryptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SynapseTransparentDataEncryptionData.DeserializeSynapseTransparentDataEncryptionData(e); return new SynapseTransparentDataEncryptionResource(Client, data, data.Id); }, _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsClientDiagnostics, Pipeline, "SynapseTransparentDataEncryptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Synapse
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SynapseIPFirewallRuleInfoData.DeserializeSynapseIPFirewallRuleInfoData(document.RootElement);
-            return new SynapseIPFirewallRuleInfoResource(_client, data);
+            return new SynapseIPFirewallRuleInfoResource(_client, data, data.Id);
         }
 
         async ValueTask<SynapseIPFirewallRuleInfoResource> IOperationSource<SynapseIPFirewallRuleInfoResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SynapseIPFirewallRuleInfoData.DeserializeSynapseIPFirewallRuleInfoData(document.RootElement);
-            return new SynapseIPFirewallRuleInfoResource(_client, data);
+            return new SynapseIPFirewallRuleInfoResource(_client, data, data.Id);
         }
     }
 }

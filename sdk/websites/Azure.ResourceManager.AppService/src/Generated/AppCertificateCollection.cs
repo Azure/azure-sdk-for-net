@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _appCertificateCertificatesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<AppCertificateResource>(Response.FromValue(new AppCertificateResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<AppCertificateResource>(Response.FromValue(new AppCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _appCertificateCertificatesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<AppCertificateResource>(Response.FromValue(new AppCertificateResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<AppCertificateResource>(Response.FromValue(new AppCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _appCertificateCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _appCertificateCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppCertificateResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appCertificateCertificatesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appCertificateCertificatesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppCertificateResource(Client, AppCertificateData.DeserializeAppCertificateData(e)), _appCertificateCertificatesClientDiagnostics, Pipeline, "AppCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = AppCertificateData.DeserializeAppCertificateData(e); return new AppCertificateResource(Client, data, data.Id); }, _appCertificateCertificatesClientDiagnostics, Pipeline, "AppCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appCertificateCertificatesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appCertificateCertificatesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppCertificateResource(Client, AppCertificateData.DeserializeAppCertificateData(e)), _appCertificateCertificatesClientDiagnostics, Pipeline, "AppCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = AppCertificateData.DeserializeAppCertificateData(e); return new AppCertificateResource(Client, data, data.Id); }, _appCertificateCertificatesClientDiagnostics, Pipeline, "AppCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

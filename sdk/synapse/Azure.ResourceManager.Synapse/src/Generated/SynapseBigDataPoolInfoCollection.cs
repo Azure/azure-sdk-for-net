@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = await _synapseBigDataPoolInfoBigDataPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bigDataPoolName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseBigDataPoolInfoResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseBigDataPoolInfoResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = _synapseBigDataPoolInfoBigDataPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bigDataPoolName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SynapseBigDataPoolInfoResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SynapseBigDataPoolInfoResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseBigDataPoolInfoBigDataPoolsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseBigDataPoolInfoBigDataPoolsRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseBigDataPoolInfoResource(Client, SynapseBigDataPoolInfoData.DeserializeSynapseBigDataPoolInfoData(e)), _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics, Pipeline, "SynapseBigDataPoolInfoCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => { var data = SynapseBigDataPoolInfoData.DeserializeSynapseBigDataPoolInfoData(e); return new SynapseBigDataPoolInfoResource(Client, data, data.Id); }, _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics, Pipeline, "SynapseBigDataPoolInfoCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseBigDataPoolInfoBigDataPoolsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseBigDataPoolInfoBigDataPoolsRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseBigDataPoolInfoResource(Client, SynapseBigDataPoolInfoData.DeserializeSynapseBigDataPoolInfoData(e)), _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics, Pipeline, "SynapseBigDataPoolInfoCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => { var data = SynapseBigDataPoolInfoData.DeserializeSynapseBigDataPoolInfoData(e); return new SynapseBigDataPoolInfoResource(Client, data, data.Id); }, _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics, Pipeline, "SynapseBigDataPoolInfoCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

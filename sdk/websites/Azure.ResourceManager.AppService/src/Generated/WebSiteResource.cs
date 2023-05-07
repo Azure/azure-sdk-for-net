@@ -51,7 +51,8 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "WebSiteResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal WebSiteResource(ArmClient client, WebSiteData data) : this(client, data.Id)
+        /// <param name="id"> The resource identifier of the resource. </param>
+        internal WebSiteResource(ArmClient client, WebSiteData data, ResourceIdentifier id) : this(client, id)
         {
             HasData = true;
             _data = data;
@@ -1423,7 +1424,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _webSiteWebAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1455,7 +1456,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _webSiteWebAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1561,7 +1562,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteWebAppsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, info, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new WebSiteResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1595,7 +1596,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteWebAppsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, info, cancellationToken);
-                return Response.FromValue(new WebSiteResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSiteResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -4047,7 +4048,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteWebAppsRestClient.GetMigrateMySqlStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new MigrateMySqlStatusResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MigrateMySqlStatusResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -4077,7 +4078,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteWebAppsRestClient.GetMigrateMySqlStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new MigrateMySqlStatusResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MigrateMySqlStatusResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -4112,7 +4113,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteWebAppsRestClient.ListNetworkFeaturesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, view, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new NetworkFeatureResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkFeatureResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -4147,7 +4148,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteWebAppsRestClient.ListNetworkFeatures(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, view, cancellationToken);
-                return Response.FromValue(new NetworkFeatureResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkFeatureResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

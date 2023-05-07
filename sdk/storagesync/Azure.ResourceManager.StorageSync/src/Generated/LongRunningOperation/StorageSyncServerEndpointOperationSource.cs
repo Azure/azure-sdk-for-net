@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.StorageSync
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = StorageSyncServerEndpointData.DeserializeStorageSyncServerEndpointData(document.RootElement);
-            return new StorageSyncServerEndpointResource(_client, data);
+            return new StorageSyncServerEndpointResource(_client, data, data.Id);
         }
 
         async ValueTask<StorageSyncServerEndpointResource> IOperationSource<StorageSyncServerEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = StorageSyncServerEndpointData.DeserializeStorageSyncServerEndpointData(document.RootElement);
-            return new StorageSyncServerEndpointResource(_client, data);
+            return new StorageSyncServerEndpointResource(_client, data, data.Id);
         }
     }
 }

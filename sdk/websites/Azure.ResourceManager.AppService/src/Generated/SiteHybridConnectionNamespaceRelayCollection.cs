@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteHybridConnectionNamespaceRelayWebAppsRestClient.CreateOrUpdateHybridConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namespaceName, relayName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteHybridConnectionNamespaceRelayResource>(Response.FromValue(new SiteHybridConnectionNamespaceRelayResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<SiteHybridConnectionNamespaceRelayResource>(Response.FromValue(new SiteHybridConnectionNamespaceRelayResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteHybridConnectionNamespaceRelayWebAppsRestClient.CreateOrUpdateHybridConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namespaceName, relayName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteHybridConnectionNamespaceRelayResource>(Response.FromValue(new SiteHybridConnectionNamespaceRelayResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<SiteHybridConnectionNamespaceRelayResource>(Response.FromValue(new SiteHybridConnectionNamespaceRelayResource(Client, response.Value, response.Value.Id), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteHybridConnectionNamespaceRelayWebAppsRestClient.GetHybridConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namespaceName, relayName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteHybridConnectionNamespaceRelayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteHybridConnectionNamespaceRelayResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteHybridConnectionNamespaceRelayWebAppsRestClient.GetHybridConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namespaceName, relayName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteHybridConnectionNamespaceRelayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteHybridConnectionNamespaceRelayResource(Client, response.Value, response.Value.Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

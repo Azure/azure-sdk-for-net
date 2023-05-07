@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.AppService
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AppServiceWorkerPoolData.DeserializeAppServiceWorkerPoolData(document.RootElement);
-            return new HostingEnvironmentWorkerPoolResource(_client, data);
+            return new HostingEnvironmentWorkerPoolResource(_client, data, data.Id);
         }
 
         async ValueTask<HostingEnvironmentWorkerPoolResource> IOperationSource<HostingEnvironmentWorkerPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AppServiceWorkerPoolData.DeserializeAppServiceWorkerPoolData(document.RootElement);
-            return new HostingEnvironmentWorkerPoolResource(_client, data);
+            return new HostingEnvironmentWorkerPoolResource(_client, data, data.Id);
         }
     }
 }

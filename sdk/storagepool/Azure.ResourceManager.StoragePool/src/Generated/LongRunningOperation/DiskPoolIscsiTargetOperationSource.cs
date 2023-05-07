@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.StoragePool
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DiskPoolIscsiTargetData.DeserializeDiskPoolIscsiTargetData(document.RootElement);
-            return new DiskPoolIscsiTargetResource(_client, data);
+            return new DiskPoolIscsiTargetResource(_client, data, data.Id);
         }
 
         async ValueTask<DiskPoolIscsiTargetResource> IOperationSource<DiskPoolIscsiTargetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DiskPoolIscsiTargetData.DeserializeDiskPoolIscsiTargetData(document.RootElement);
-            return new DiskPoolIscsiTargetResource(_client, data);
+            return new DiskPoolIscsiTargetResource(_client, data, data.Id);
         }
     }
 }
