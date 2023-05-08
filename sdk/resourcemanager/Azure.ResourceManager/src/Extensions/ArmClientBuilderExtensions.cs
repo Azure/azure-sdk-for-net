@@ -7,7 +7,7 @@ using Azure.ResourceManager;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary>
-    /// Extension methods to add <see cref="ArmClientOptions"/> client to clients builder.
+    /// Extension methods to add <see cref="ArmClient"/> client to clients builder.
     /// </summary>
     public static class ArmClientBuilderExtensions
     {
