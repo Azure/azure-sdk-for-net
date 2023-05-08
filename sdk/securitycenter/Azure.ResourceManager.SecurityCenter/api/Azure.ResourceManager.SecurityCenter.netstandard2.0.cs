@@ -4519,6 +4519,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public int? HighSeverityFailedRulesCount { get { throw null; } set { } }
         public bool? IsBaselineApplied { get { throw null; } set { } }
+        public System.DateTimeOffset? LastScanOn { get { throw null; } set { } }
         public int? LowSeverityFailedRulesCount { get { throw null; } set { } }
         public int? MediumSeverityFailedRulesCount { get { throw null; } set { } }
         public string Server { get { throw null; } set { } }

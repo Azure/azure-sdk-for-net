@@ -9,9 +9,10 @@ generate-model-factory: false
 csharp: true
 library-name: SecurityCenter
 namespace: Azure.ResourceManager.SecurityCenter
-require: https://github.com/Azure/azure-rest-api-specs/blob/f7386016ed8edfdc59d00003c1298afa6966842c/specification/security/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/da459cd725e11aa72e7fbc3b65d523b6e2b6453b/specification/security/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+tag: package-preview-2023-02-only
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
