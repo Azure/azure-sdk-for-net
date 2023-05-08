@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DevCenter.Tests
     public class CatalogOperationsTests : DevCenterManagementTestBase
     {
         public CatalogOperationsTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)
         {
         }
 
         [Test]
-        ////[PlaybackOnly("")]
+        [PlaybackOnly("")]
         public async Task CatalogResourceFull()
         {
             ResourceIdentifier devCenterId = new ResourceIdentifier(TestEnvironment.DefaultDevCenterId);
