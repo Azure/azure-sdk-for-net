@@ -1085,7 +1085,7 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                return change.Value?.ToString() ?? "null";
+                return change.AsString();
             }
 
             // Account for changes to descendants of this element as well
