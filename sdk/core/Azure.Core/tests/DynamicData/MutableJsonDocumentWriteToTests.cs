@@ -787,13 +787,15 @@ namespace Azure.Core.Tests
             yield return new object[] { "42", (byte)42, (byte)43, (byte)44 };
             yield return new object[] { "42", (sbyte)42, (sbyte)43, (sbyte)44 };
             yield return new object[] { "42", (short)42, (short)43, (short)44 };
-            yield return new object[] {"42", (ushort)42, (ushort)43, (ushort)44 };
+            yield return new object[] { "42", (ushort)42, (ushort)43, (ushort)44 };
             yield return new object[] { "42", 42, 43, 44 };
-            yield return new object[] {"42", 42u, 43u, 44u };
-            yield return new object[] {"42", 42L, 43L, 44L };
-            yield return new object[] {"42", 42ul, 43ul, 44ul };
+            yield return new object[] { "42", 42u, 43u, 44u };
+            yield return new object[] { "42", 42L, 43L, 44L };
+            yield return new object[] { "42", 42ul, 43ul, 44ul };
+#if NETCOREAPP
             yield return new object[] { "42.1", 42.1f, 43.1f, 44.1f };
             yield return new object[] { "42.1", 42.1d, 43.1d, 44.1d };
+#endif
             yield return new object[] { "42.1", 42.1m, 43.1m, 44.1m };
         }
         #endregion
