@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
 
             string resourceName = "sdktest-catalog";
 
-            // Create a DevBox Definition resource
+            // Create a Catalog resource
 
             var catalogData = new CatalogData()
             {

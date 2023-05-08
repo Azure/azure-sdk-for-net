@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
 
             string resourceName = "sdktestgallery";
 
-            // Create a DevBox Definition resource
+            // Create a Gallery resource
 
             var galleryData = new GalleryData()
             {
