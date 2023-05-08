@@ -218,7 +218,7 @@ namespace Azure.Identity.Tests
         {
             using (new TestEnvVar(environmentVars))
             {
-                var cred = new EnvironmentCredential(new EnvironmentCredentialOptions { DisableAuthorityValidationAndInstanceDiscovery = true });
+                var cred = new EnvironmentCredential(new EnvironmentCredentialOptions { DisableInstanceDiscovery = true });
                 bool DisableInstanceDiscovery = CredentialTestHelpers.ExtractMsalDisableInstanceDiscoveryProperty(cred);
                 Assert.IsTrue(DisableInstanceDiscovery);
             }
@@ -231,7 +231,7 @@ namespace Azure.Identity.Tests
         {
             using (new TestEnvVar(environmentVars))
             {
-                var cred = new EnvironmentCredential(new EnvironmentCredentialOptions { DisableAuthorityValidationAndInstanceDiscovery = false });
+                var cred = new EnvironmentCredential(new EnvironmentCredentialOptions { DisableInstanceDiscovery = false });
                 bool DisableInstanceDiscovery = CredentialTestHelpers.ExtractMsalDisableInstanceDiscoveryProperty(cred);
                 Assert.IsFalse(DisableInstanceDiscovery);
             }

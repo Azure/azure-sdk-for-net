@@ -463,7 +463,7 @@ namespace Azure.Identity.Tests
                 ExcludeAzureCliCredential = availableCredential != typeof(AzureCliCredential),
                 ExcludeAzurePowerShellCredential = availableCredential != typeof(AzurePowerShellCredential),
                 ExcludeInteractiveBrowserCredential = availableCredential != typeof(InteractiveBrowserCredential),
-                DisableAuthorityValidationAndInstanceDiscovery = disableInstanceDiscovery
+                DisableInstanceDiscovery = disableInstanceDiscovery
             };
         }
 
