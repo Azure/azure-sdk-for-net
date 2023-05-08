@@ -3623,6 +3623,7 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class GalleryImageIdentifier
     {
+        public GalleryImageIdentifier() { }
         public GalleryImageIdentifier(string publisher, string offer, string sku) { }
         public string Offer { get { throw null; } set { } }
         public string Publisher { get { throw null; } set { } }
