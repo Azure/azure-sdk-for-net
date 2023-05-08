@@ -22,10 +22,15 @@ namespace Azure.Core.Dynamic
     [JsonConverter(typeof(JsonConverter))]
     public sealed partial class DynamicData : IDisposable
     {
-        internal static JsonSerializerOptions DefaultSerializerOptions = new JsonSerializerOptions()
+        internal static JsonSerializerOptions DefaultSerializerOptions = new()
         {
             PropertyNameCaseInsensitive = true,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            Converters = {
+                new DynamicDataDateTimeConverter(),
+                new DynamicDataDateTimeOffsetConverter(),
+                new DynamicDataTimeSpanConverter()
+            }
         };
 
         private static readonly MethodInfo GetPropertyMethod = typeof(DynamicData).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;

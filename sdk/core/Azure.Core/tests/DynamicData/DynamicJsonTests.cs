@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text.Json;
 using NUnit.Framework;
@@ -966,7 +967,7 @@ namespace Azure.Core.Tests
         public void CanExplicitCastToDateTime()
         {
             DateTime dateTime = DateTime.Now;
-            string dateTimeString = MutableJsonElementTests.FormatDateTime(dateTime);
+            string dateTimeString = FormatDateTime(dateTime);
             dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson();
 
             // Get from parsed JSON
@@ -989,12 +990,12 @@ namespace Azure.Core.Tests
             Assert.IsTrue((DateTime)json.Bar == barValue);
 
             // Also works as a string
-            string fooValueString = MutableJsonElementTests.FormatDateTime(fooValue);
+            string fooValueString = FormatDateTime(fooValue);
             Assert.AreEqual(fooValueString, (string)json.Foo);
             Assert.IsTrue(fooValueString == json.Foo);
             Assert.IsTrue(json.Foo == fooValueString);
 
-            string barValueString = MutableJsonElementTests.FormatDateTime(barValue);
+            string barValueString = FormatDateTime(barValue);
             Assert.AreEqual(barValueString, (string)json.Bar);
             Assert.IsTrue(barValueString == json.Bar);
             Assert.IsTrue(json.Bar == barValueString);
@@ -1008,7 +1009,7 @@ namespace Azure.Core.Tests
         public void CanExplicitCastToDateTimeOffset()
         {
             DateTimeOffset dateTime = DateTimeOffset.Now;
-            string dateTimeString = MutableJsonElementTests.FormatDateTimeOffset(dateTime);
+            string dateTimeString = FormatDateTimeOffset(dateTime);
             dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson();
 
             // Get from parsed JSON
@@ -1031,12 +1032,12 @@ namespace Azure.Core.Tests
             Assert.IsTrue((DateTimeOffset)json.Bar == barValue);
 
             // Also works as a string
-            string fooValueString = MutableJsonElementTests.FormatDateTimeOffset(fooValue);
+            string fooValueString = FormatDateTimeOffset(fooValue);
             Assert.AreEqual(fooValueString, (string)json.Foo);
             Assert.IsTrue(fooValueString == json.Foo);
             Assert.IsTrue(json.Foo == fooValueString);
 
-            string barValueString = MutableJsonElementTests.FormatDateTimeOffset(barValue);
+            string barValueString = FormatDateTimeOffset(barValue);
             Assert.AreEqual(barValueString, (string)json.Bar);
             Assert.IsTrue(barValueString == json.Bar);
             Assert.IsTrue(json.Bar == barValueString);
@@ -1044,6 +1045,49 @@ namespace Azure.Core.Tests
             // Doesn't work for non-string change
             json.Foo = "false";
             Assert.Throws<InvalidCastException>(() => { DateTimeOffset d = (DateTimeOffset)json.Foo; });
+        }
+
+        [Test]
+        public void CanCastToComplexType()
+        {
+            ComplexModel model = new ComplexModel()
+            {
+                EnumProperty = TestEnum.Third,
+                UriProperty = new Uri("https://www.example.com"),
+                NullableProperty = null,
+                CharProperty = 'a',
+                DateTimeProperty = DateTime.UtcNow,
+                TimeProperty = DateTime.UtcNow.TimeOfDay
+            };
+
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson();
+            json.Foo = model;
+
+            // Get from parsed JSON
+            Assert.AreEqual(model, (ComplexModel)json.Foo);
+
+            // Get from added value
+            json.Bar = model;
+            Assert.AreEqual(model, (ComplexModel)json.Bar);
+        }
+
+        #region Helpers
+        internal static dynamic GetDynamicJson(string json)
+        {
+            return new BinaryData(json).ToDynamicFromJson();
+        }
+
+        private const string RoundtripZFormat = "yyyy-MM-ddTHH:mm:ss.fffffffZ";
+        internal static string FormatDateTime(DateTime d)
+        {
+            // From: https://github.com/Azure/autorest.csharp/blob/d835b0b7bffae08c1037ccc5824e928eaac55b96/src/assets/Generator.Shared/TypeFormatters.cs#LL19C84-L23C11
+            return ((DateTimeOffset)d).ToUniversalTime().ToString(RoundtripZFormat, CultureInfo.InvariantCulture);
+        }
+
+        internal static string FormatDateTimeOffset(DateTimeOffset d)
+        {
+            // From: https://github.com/Azure/autorest.csharp/blob/d835b0b7bffae08c1037ccc5824e928eaac55b96/src/assets/Generator.Shared/TypeFormatters.cs#L29
+            return d.ToUniversalTime().ToString(RoundtripZFormat, CultureInfo.InvariantCulture);
         }
 
         public static IEnumerable<object[]> NumberValues()
@@ -1061,12 +1105,6 @@ namespace Azure.Core.Tests
             yield return new object[] { "42.1", 42.1f, 43.1f, 44.1f, false /* don't test range */ };
             yield return new object[] { "42.1", 42.1d, 43.1d, 44.1d, false /* don't test range */ };
             yield return new object[] { "42.1", 42.1m, 43.1m, 44.1m, false /* don't test range */ };
-        }
-
-        #region Helpers
-        internal static dynamic GetDynamicJson(string json)
-        {
-            return new BinaryData(json).ToDynamicFromJson();
         }
 
         internal class CustomType
@@ -1117,6 +1155,45 @@ namespace Azure.Core.Tests
             {
                 return Message == obj.Message && Number == obj.Number;
             }
+        }
+
+        internal class ComplexModel : IEquatable<ComplexModel>
+        {
+            public TestEnum EnumProperty { get; set; }
+            public Uri UriProperty { get; set; }
+            public int? NullableProperty { get; set; }
+            public char CharProperty { get; set; }
+            public DateTime DateTimeProperty { get; set; }
+            public TimeSpan TimeProperty { get; set; }
+
+            public override bool Equals(object obj)
+            {
+                ComplexModel other = obj as ComplexModel;
+                if (other == null)
+                {
+                    return false;
+                }
+
+                return Equals(other);
+            }
+
+            public bool Equals(ComplexModel obj)
+            {
+                return
+                    EnumProperty == obj.EnumProperty &&
+                    UriProperty == obj.UriProperty &&
+                    NullableProperty == obj.NullableProperty &&
+                    CharProperty == obj.CharProperty &&
+                    DateTimeProperty == obj.DateTimeProperty &&
+                    TimeProperty == obj.TimeProperty;
+            }
+        }
+
+        internal enum TestEnum
+        {
+            First,
+            Second,
+            Third
         }
         #endregion
     }
