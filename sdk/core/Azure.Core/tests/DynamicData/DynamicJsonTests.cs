@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text.Json;
 using NUnit.Framework;
 
@@ -717,6 +718,213 @@ namespace Azure.Core.Tests
 
             Exception e = Assert.Throws<InvalidCastException>(() => { var value = (int)json.Foo; });
             Assert.That(e.Message.Contains(JsonValueKind.True.ToString()));
+        }
+
+        [Test]
+        public void CanCastToByte()
+        {
+            dynamic json = BinaryData.FromString("""
+                {
+                  "foo" : 42
+                }
+                """).ToDynamicFromJson();
+
+            // Get from parsed JSON
+            Assert.AreEqual((byte)42, (byte)json.Foo);
+            Assert.IsTrue(((byte)42) == json.Foo);
+
+            // Get from assigned existing value
+            json.Foo = (byte)43;
+            Assert.AreEqual((byte)43, (byte)json.Foo);
+            Assert.IsTrue(((byte)43) == json.Foo);
+
+            // Get from added value
+            json.Bar = (byte)44;
+            Assert.AreEqual((byte)44, (byte)json.Bar);
+            Assert.IsTrue(((byte)44) == json.Bar);
+
+            // Doesn't work if number change is outside byte range
+            json.Foo = 256;
+            Assert.Throws<InvalidCastException>(() => { byte b = json.Foo; });
+
+            // Doesn't work for non-number change
+            json.Foo = "string";
+            Assert.Throws<InvalidCastException>(() => { byte b = json.Foo; });
+        }
+
+        [TestCaseSource(nameof(NumberValues))]
+        public void CanCastToNumber<T, U>(string serializedX, T x, T y, T z, U invalid)
+        {
+            dynamic json = BinaryData.FromString($"{{\"foo\" : {serializedX}}}").ToDynamicFromJson();
+
+            // Get from parsed JSON
+            Assert.AreEqual(x, (T)json.Foo);
+            Assert.IsTrue(x == json.Foo);
+            Assert.IsTrue(json.Foo == x);
+
+            // Get from assigned existing value
+            json.Foo = y;
+            Assert.AreEqual(y, (T)json.Foo);
+            Assert.IsTrue(y == json.Foo);
+            Assert.IsTrue(json.Foo == y);
+
+            // Get from added value
+            json.Bar = z;
+            Assert.AreEqual(z, (T)json.Bar);
+            Assert.IsTrue(z == json.Bar);
+            Assert.IsTrue(json.Bar == z);
+
+            // Doesn't work if number change is outside T range
+            // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/integral-numeric-types
+            if (invalid is bool testRange && testRange)
+            {
+                json.Foo = invalid;
+                Assert.Throws<InvalidCastException>(() => { T b = json.Foo; });
+            }
+
+            // Doesn't work for non-number change
+            json.Foo = "string";
+            Assert.Throws<InvalidCastException>(() => { T b = json.Foo; });
+        }
+
+        [Test]
+        public void CanExplicitCastToGuid()
+        {
+            Guid guid = Guid.NewGuid();
+            dynamic json = BinaryData.FromString($"{{\"foo\" : \"{guid}\"}}").ToDynamicFromJson();
+
+            // Get from parsed JSON
+            Assert.AreEqual(guid, (Guid)json.Foo);
+            Assert.IsTrue(guid == (Guid)json.Foo);
+            Assert.IsTrue((Guid)json.Foo == guid);
+
+            // Get from assigned existing value
+            Guid fooValue = Guid.NewGuid();
+            json.Foo = fooValue;
+            Assert.AreEqual(fooValue, (Guid)json.Foo);
+            Assert.IsTrue(fooValue == (Guid)json.Foo);
+            Assert.IsTrue((Guid)json.Foo == fooValue);
+
+            // Get from added value
+            Guid barValue = Guid.NewGuid();
+            json.Bar = barValue;
+            Assert.AreEqual(barValue, (Guid)json.Bar);
+            Assert.IsTrue(barValue == (Guid)json.Bar);
+            Assert.IsTrue((Guid)json.Bar == barValue);
+
+            // Also works as a string
+            Assert.AreEqual(fooValue.ToString(), (string)json.Foo);
+            Assert.IsTrue(fooValue.ToString() == json.Foo);
+            Assert.IsTrue(json.Foo == fooValue.ToString());
+
+            Assert.AreEqual(barValue.ToString(), (string)json.Bar);
+            Assert.IsTrue(barValue.ToString() == json.Bar);
+            Assert.IsTrue(json.Bar == barValue.ToString());
+
+            // Doesn't work for non-string change
+            json.Foo = "false";
+            Assert.Throws<InvalidCastException>(() => { Guid g = (Guid)json.Foo; });
+        }
+
+        [Test]
+        public void CanExplicitCastToDateTime()
+        {
+            DateTime dateTime = DateTime.Now;
+            string dateTimeString = MutableJsonElementTests.FormatDateTime(dateTime);
+            dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson();
+
+            // Get from parsed JSON
+            Assert.AreEqual(dateTime, (DateTime)json.Foo);
+            Assert.IsTrue(dateTime == (DateTime)json.Foo);
+            Assert.IsTrue((DateTime)json.Foo == dateTime);
+
+            // Get from assigned existing value
+            DateTime fooValue = DateTime.Now.AddDays(1);
+            json.Foo = fooValue;
+            Assert.AreEqual(fooValue, (DateTime)json.Foo);
+            Assert.IsTrue(fooValue == (DateTime)json.Foo);
+            Assert.IsTrue((DateTime)json.Foo == fooValue);
+
+            // Get from added value
+            DateTime barValue = DateTime.Now.AddDays(2);
+            json.Bar = barValue;
+            Assert.AreEqual(barValue, (DateTime)json.Bar);
+            Assert.IsTrue(barValue == (DateTime)json.Bar);
+            Assert.IsTrue((DateTime)json.Bar == barValue);
+
+            // Also works as a string
+            string fooValueString = MutableJsonElementTests.FormatDateTime(fooValue);
+            Assert.AreEqual(fooValueString, (string)json.Foo);
+            Assert.IsTrue(fooValueString == json.Foo);
+            Assert.IsTrue(json.Foo == fooValueString);
+
+            string barValueString = MutableJsonElementTests.FormatDateTime(barValue);
+            Assert.AreEqual(barValueString, (string)json.Bar);
+            Assert.IsTrue(barValueString == json.Bar);
+            Assert.IsTrue(json.Bar == barValueString);
+
+            // Doesn't work for non-string change
+            json.Foo = "false";
+            Assert.Throws<InvalidCastException>(() => { DateTime g = (DateTime)json.Foo; });
+        }
+
+        [Test]
+        public void CanExplicitCastToDateTimeOffset()
+        {
+            DateTimeOffset dateTime = DateTimeOffset.Now;
+            string dateTimeString = MutableJsonElementTests.FormatDateTimeOffset(dateTime);
+            dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson();
+
+            // Get from parsed JSON
+            Assert.AreEqual(dateTime, (DateTimeOffset)json.Foo);
+            Assert.IsTrue(dateTime == (DateTimeOffset)json.Foo);
+            Assert.IsTrue((DateTimeOffset)json.Foo == dateTime);
+
+            // Get from assigned existing value
+            DateTimeOffset fooValue = DateTimeOffset.Now.AddDays(1);
+            json.Foo = fooValue;
+            Assert.AreEqual(fooValue, (DateTimeOffset)json.Foo);
+            Assert.IsTrue(fooValue == (DateTimeOffset)json.Foo);
+            Assert.IsTrue((DateTimeOffset)json.Foo == fooValue);
+
+            // Get from added value
+            DateTimeOffset barValue = DateTimeOffset.Now.AddDays(2);
+            json.Bar = barValue;
+            Assert.AreEqual(barValue, (DateTimeOffset)json.Bar);
+            Assert.IsTrue(barValue == (DateTimeOffset)json.Bar);
+            Assert.IsTrue((DateTimeOffset)json.Bar == barValue);
+
+            // Also works as a string
+            string fooValueString = MutableJsonElementTests.FormatDateTimeOffset(fooValue);
+            Assert.AreEqual(fooValueString, (string)json.Foo);
+            Assert.IsTrue(fooValueString == json.Foo);
+            Assert.IsTrue(json.Foo == fooValueString);
+
+            string barValueString = MutableJsonElementTests.FormatDateTimeOffset(barValue);
+            Assert.AreEqual(barValueString, (string)json.Bar);
+            Assert.IsTrue(barValueString == json.Bar);
+            Assert.IsTrue(json.Bar == barValueString);
+
+            // Doesn't work for non-string change
+            json.Foo = "false";
+            Assert.Throws<InvalidCastException>(() => { DateTimeOffset d = (DateTimeOffset)json.Foo; });
+        }
+
+        public static IEnumerable<object[]> NumberValues()
+        {
+            // Valid ranges:
+            // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/integral-numeric-types
+            yield return new object[] { "42", (byte)42, (byte)43, (byte)44, 256 };
+            yield return new object[] { "42", (sbyte)42, (sbyte)43, (sbyte)44, 128 };
+            yield return new object[] { "42", (short)42, (short)43, (short)44, 32768 };
+            yield return new object[] { "42", (ushort)42, (ushort)43, (ushort)44, 65536 };
+            yield return new object[] { "42", 42, 43, 44, 2147483648 };
+            yield return new object[] { "42", 42u, 43u, 44u, 4294967296 };
+            yield return new object[] { "42", 42L, 43L, 44L, 9223372036854775808 };
+            yield return new object[] { "42", 42ul, 43ul, 44ul, -1 };
+            yield return new object[] { "42.1", 42.1f, 43.1f, 44.1f, false /* don't test range */ };
+            yield return new object[] { "42.1", 42.1d, 43.1d, 44.1d, false /* don't test range */ };
+            yield return new object[] { "42.1", 42.1m, 43.1m, 44.1m, false /* don't test range */ };
         }
 
         #region Helpers

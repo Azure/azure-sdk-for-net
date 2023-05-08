@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Text.Json;
 
 namespace Azure.Core.Json
@@ -21,26 +20,29 @@ namespace Azure.Core.Json
         /// </summary>
         public bool ReplacesJsonElement { get; set; }
 
-        internal Utf8JsonReader GetReader()
-        {
-            if (!ReplacesJsonElement)
-            {
-                // This change doesn't represent a new node, so we shouldn't need a new reader.
-                throw new InvalidOperationException("Unable to get Utf8JsonReader for this change.");
-            }
-
-            return MutableJsonElement.GetReaderForElement(AsJsonElement());
-        }
+        private JsonElement? _serializedValue;
 
         internal JsonElement AsJsonElement()
         {
-            if (Value is JsonElement)
+            if (_serializedValue != null)
             {
-                return (JsonElement)Value;
+                return _serializedValue.Value;
+            }
+
+            if (Value is JsonElement element)
+            {
+                _serializedValue = element;
+                return element;
             }
 
             byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(Value);
-            return JsonDocument.Parse(bytes).RootElement;
+            _serializedValue = JsonDocument.Parse(bytes).RootElement;
+            return _serializedValue.Value;
+        }
+
+        internal string AsString()
+        {
+            return AsJsonElement().ToString() ?? "null";
         }
 
         public override string ToString()

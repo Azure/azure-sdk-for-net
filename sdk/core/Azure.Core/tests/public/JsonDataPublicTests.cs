@@ -170,10 +170,10 @@ namespace Azure.Core.Tests.Public
         {
             var json = new BinaryData("5.5").ToDynamicFromJson();
             dynamic jsonData = json;
-            Assert.Throws<FormatException>(() => _ = (int)json);
-            Assert.Throws<FormatException>(() => _ = (int)jsonData);
-            Assert.Throws<FormatException>(() => _ = (long)json);
-            Assert.Throws<FormatException>(() => _ = (long)jsonData);
+            Assert.Throws<InvalidCastException>(() => _ = (int)json);
+            Assert.Throws<InvalidCastException>(() => _ = (int)jsonData);
+            Assert.Throws<InvalidCastException>(() => _ = (long)json);
+            Assert.Throws<InvalidCastException>(() => _ = (long)jsonData);
         }
 
         [Test]
@@ -203,8 +203,8 @@ namespace Azure.Core.Tests.Public
             dynamic jsonData = json;
             Assert.AreEqual(34028234663852885981170418348451692544000d, (double)jsonData);
             Assert.AreEqual(34028234663852885981170418348451692544000d, (double)json);
-            Assert.Throws<FormatException>(() => _ = (float)json);
-            Assert.Throws<FormatException>(() => _ = (float)jsonData);
+            Assert.Throws<InvalidCastException>(() => _ = (float)json);
+            Assert.Throws<InvalidCastException>(() => _ = (float)jsonData);
         }
 
         [Test]
@@ -212,8 +212,8 @@ namespace Azure.Core.Tests.Public
         {
             var json = new BinaryData("3402823466385288598").ToDynamicFromJson();
             dynamic jsonData = json;
-            Assert.Throws<FormatException>(() => _ = (int)json);
-            Assert.Throws<FormatException>(() => _ = (int)jsonData);
+            Assert.Throws<InvalidCastException>(() => _ = (int)json);
+            Assert.Throws<InvalidCastException>(() => _ = (int)jsonData);
             Assert.AreEqual(3402823466385288598L, (long)jsonData);
             Assert.AreEqual(3402823466385288598L, (long)json);
             Assert.AreEqual(3402823466385288598D, (double)jsonData);
@@ -232,8 +232,8 @@ namespace Azure.Core.Tests.Public
             var doc = JsonDocument.Parse("-34028234663852885981170418348451692544000");
             doc.RootElement.GetSingle();
 
-            Assert.Throws<FormatException>(() => _ = (float)json);
-            Assert.Throws<FormatException>(() => _ = (float)jsonData);
+            Assert.Throws<InvalidCastException>(() => _ = (float)json);
+            Assert.Throws<InvalidCastException>(() => _ = (float)jsonData);
             Assert.AreEqual(-34028234663852885981170418348451692544000d, (double)jsonData);
             Assert.AreEqual(-34028234663852885981170418348451692544000d, (double)json);
         }
@@ -243,8 +243,8 @@ namespace Azure.Core.Tests.Public
         {
             var json = new BinaryData("-3402823466385288598").ToDynamicFromJson();
             dynamic jsonData = json;
-            Assert.Throws<FormatException>(() => _ = (int)json);
-            Assert.Throws<FormatException>(() => _ = (int)jsonData);
+            Assert.Throws<InvalidCastException>(() => _ = (int)json);
+            Assert.Throws<InvalidCastException>(() => _ = (int)jsonData);
             Assert.AreEqual(-3402823466385288598L, (long)jsonData);
             Assert.AreEqual(-3402823466385288598L, (long)json);
             Assert.AreEqual(-3402823466385288598D, (double)jsonData);
