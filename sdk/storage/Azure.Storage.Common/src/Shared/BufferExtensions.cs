@@ -30,6 +30,13 @@ namespace Azure.Storage
             return new DisposableRentedArray<T>(pool, array);
         }
 
+        public static IDisposable RentAsMemoryDisposable<T>(this ArrayPool<T> pool, int minimumLength, out Memory<T> memory)
+        {
+            IDisposable result = pool.RentDisposable(minimumLength, out T[] array);
+            memory = new Memory<T>(array, 0, minimumLength);
+            return result;
+        }
+
         /// <summary>
         /// Fluent API to clear the contents of an array to the default value at every index.
         /// </summary>
