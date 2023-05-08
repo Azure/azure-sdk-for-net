@@ -35,9 +35,10 @@ namespace Azure.Core.Json
 
         internal JsonElement AsJsonElement()
         {
-            if (Value is JsonElement)
+            if (Value is JsonElement element)
             {
-                return (JsonElement)Value;
+                _serializedValue = element;
+                return element;
             }
 
             if (_serializedValue == null)
@@ -47,6 +48,11 @@ namespace Azure.Core.Json
             }
 
             return _serializedValue.Value;
+        }
+
+        internal string AsString()
+        {
+            return AsJsonElement().ToString() ?? "null";
         }
 
         public override string ToString()
