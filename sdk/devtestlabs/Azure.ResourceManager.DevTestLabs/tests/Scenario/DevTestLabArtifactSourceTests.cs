@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
     internal class DevTestLabArtifactSourceTests : DevTestLabsManagementTestBase
     {
         private DevTestLabArtifactSourceCollection _artifactSourceCollection;
-        public DevTestLabArtifactSourceTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public DevTestLabArtifactSourceTests(bool isAsync) : base(isAsync)
         {
         }
 

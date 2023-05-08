@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
     internal class DevTestLabArmTemplateTests : DevTestLabsManagementTestBase
     {
         private DevTestLabArmTemplateCollection _armTemplateCollection;
-        public DevTestLabArmTemplateTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public DevTestLabArmTemplateTests(bool isAsync) : base(isAsync)
         {
         }
 

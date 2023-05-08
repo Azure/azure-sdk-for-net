@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
 {
     internal class DevTestLabTests : DevTestLabsManagementTestBase
     {
-        private DevTestLabCollection _devTestLabCollections;
-        public DevTestLabTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        private DevTestLabCollection _devTestLabCollections = null;
+        public DevTestLabTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -25,21 +25,6 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
         {
             TestResourceGroup = await CreateResourceGroup();
             _devTestLabCollections = TestResourceGroup.GetDevTestLabs();
-        }
-
-        [RecordedTest]
-        [Ignore("manually test")]
-        public async Task GetAll()
-        {
-            var subscription = await Client.GetDefaultSubscriptionAsync();
-            var lro = await subscription.GetResourceGroups().GetAsync("DevTestLabRG");
-            var list = await lro.Value.GetDevTestLabs().GetAllAsync().ToEnumerableAsync();
-
-            var lab = list[1];
-
-            var artifactSources = await lab.GetDevTestLabArtifactSources().GetAllAsync().ToEnumerableAsync();
-            var armTemplates = await artifactSources[1].GetDevTestLabArmTemplates().GetAllAsync().ToEnumerableAsync();
-            var artifacts = await artifactSources[0].GetDevTestLabArtifacts().GetAllAsync().ToEnumerableAsync();
         }
 
         [RecordedTest]
