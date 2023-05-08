@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            NamingPatternType namingPatternType = "Unknown";
+            SapNamingPatternType namingPatternType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("namingPatternType"u8))
                 {
-                    namingPatternType = new NamingPatternType(property.Value.GetString());
+                    namingPatternType = new SapNamingPatternType(property.Value.GetString());
                     continue;
                 }
             }

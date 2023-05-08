@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetLanguagesAsync(string,string,string,ETag?,RequestContext)">
+    </member>
+    <member name="GetLanguages(string,string,string,ETag?,RequestContext)">
+    </member>
+    <member name="TranslateAsync(IEnumerable{string},RequestContent,string,string,string,string,string,string,bool?,bool?,string,string,string,bool?,RequestContext)">
+    </member>
+    <member name="Translate(IEnumerable{string},RequestContent,string,string,string,string,string,string,bool?,bool?,string,string,string,bool?,RequestContext)">
+    </member>
+    <member name="TransliterateAsync(string,string,string,RequestContent,string,RequestContext)">
+    </member>
+    <member name="Transliterate(string,string,string,RequestContent,string,RequestContext)">
+    </member>
+    <member name="FindSentenceBoundariesAsync(RequestContent,string,string,string,RequestContext)">
+    </member>
+    <member name="FindSentenceBoundaries(RequestContent,string,string,string,RequestContext)">
+    </member>
+    <member name="LookupDictionaryEntriesAsync(string,string,RequestContent,string,RequestContext)">
+    </member>
+    <member name="LookupDictionaryEntries(string,string,RequestContent,string,RequestContext)">
+    </member>
+    <member name="LookupDictionaryExamplesAsync(string,string,RequestContent,string,RequestContext)">
+    </member>
+    <member name="LookupDictionaryExamples(string,string,RequestContent,string,RequestContext)">
+    </member>
+  </members>
+</doc>

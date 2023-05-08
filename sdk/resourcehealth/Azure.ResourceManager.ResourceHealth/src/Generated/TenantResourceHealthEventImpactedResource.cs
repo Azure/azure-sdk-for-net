@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ResourceHealth
     /// A Class representing a TenantResourceHealthEventImpactedResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TenantResourceHealthEventImpactedResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetTenantResourceHealthEventImpactedResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantEventResource" /> using the GetTenantResourceHealthEventImpactedResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResourceHealthEventResource" /> using the GetTenantResourceHealthEventImpactedResource method.
     /// </summary>
     public partial class TenantResourceHealthEventImpactedResource : ArmResource
     {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResourceHealth
 
         private readonly ClientDiagnostics _tenantResourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics;
         private readonly ImpactedResourcesRestOperations _tenantResourceHealthEventImpactedResourceImpactedResourcesRestClient;
-        private readonly EventImpactedResourceData _data;
+        private readonly ResourceHealthEventImpactedResourceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="TenantResourceHealthEventImpactedResource"/> class for mocking. </summary>
         protected TenantResourceHealthEventImpactedResource()
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> Initializes a new instance of the <see cref = "TenantResourceHealthEventImpactedResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TenantResourceHealthEventImpactedResource(ArmClient client, EventImpactedResourceData data) : this(client, data.Id)
+        internal TenantResourceHealthEventImpactedResource(ArmClient client, ResourceHealthEventImpactedResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ResourceHealth
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual EventImpactedResourceData Data
+        public virtual ResourceHealthEventImpactedResourceData Data
         {
             get
             {

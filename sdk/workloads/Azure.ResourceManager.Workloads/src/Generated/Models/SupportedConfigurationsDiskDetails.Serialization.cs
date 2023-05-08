@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<DiskSku> sku = default;
+            Optional<SapDiskSku> sku = default;
             Optional<long> sizeGB = default;
             Optional<long> minimumSupportedDiskCount = default;
             Optional<long> maximumSupportedDiskCount = default;
@@ -31,17 +31,15 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = DiskSku.DeserializeDiskSku(property.Value);
+                    sku = SapDiskSku.DeserializeSapDiskSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sizeGB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sizeGB = property.Value.GetInt64();
@@ -51,7 +49,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minimumSupportedDiskCount = property.Value.GetInt64();
@@ -61,7 +58,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maximumSupportedDiskCount = property.Value.GetInt64();
@@ -71,7 +67,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     iopsReadWrite = property.Value.GetInt64();
@@ -81,7 +76,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mbpsReadWrite = property.Value.GetInt64();

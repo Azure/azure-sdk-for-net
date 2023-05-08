@@ -1,6 +1,13 @@
 # Release History
 
-## 12.14.0-beta.1 (Unreleased)
+## 12.15.0-beta.1 (Unreleased)
+- Added support for service version 2023-01-03.
+- Added AccessRights property to ShareFileHandle.
+
+## 12.14.0 (2023-04-11)
+- Includes all features from 12.14.0-beta.1.
+
+## 12.14.0-beta.1 (2023-03-28)
 - Added support for service version 2022-11-02.
 - Added support OAuth.
 - Added support for Trailing Dot.

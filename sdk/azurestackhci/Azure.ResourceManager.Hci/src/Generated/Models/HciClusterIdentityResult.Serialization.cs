@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.Hci.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             aadClientId = property0.Value.GetGuid();
@@ -48,7 +47,6 @@ namespace Azure.ResourceManager.Hci.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             aadTenantId = property0.Value.GetGuid();
@@ -58,7 +56,6 @@ namespace Azure.ResourceManager.Hci.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             aadServicePrincipalObjectId = property0.Value.GetGuid();
@@ -68,7 +65,6 @@ namespace Azure.ResourceManager.Hci.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             aadApplicationObjectId = property0.Value.GetGuid();

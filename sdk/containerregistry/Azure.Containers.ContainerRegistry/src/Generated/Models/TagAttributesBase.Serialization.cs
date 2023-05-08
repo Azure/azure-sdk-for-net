@@ -62,7 +62,6 @@ namespace Azure.Containers.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deleteEnabled = property0.Value.GetBoolean();
@@ -72,7 +71,6 @@ namespace Azure.Containers.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             writeEnabled = property0.Value.GetBoolean();
@@ -82,7 +80,6 @@ namespace Azure.Containers.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             listEnabled = property0.Value.GetBoolean();
@@ -92,7 +89,6 @@ namespace Azure.Containers.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             readEnabled = property0.Value.GetBoolean();

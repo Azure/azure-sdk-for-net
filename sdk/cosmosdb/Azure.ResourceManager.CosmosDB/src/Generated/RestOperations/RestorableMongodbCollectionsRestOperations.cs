@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-15";
+            _apiVersion = apiVersion ?? "2022-11-15-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, AzureLocation location, Guid instanceId, string restorableMongoDBDatabaseRid)
+        internal HttpMessage CreateListRequest(string subscriptionId, AzureLocation location, Guid instanceId, string restorableMongoDBDatabaseRid, string startTime, string endTime)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -56,6 +56,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 uri.AppendQuery("restorableMongodbDatabaseRid", restorableMongoDBDatabaseRid, true);
             }
+            if (startTime != null)
+            {
+                uri.AppendQuery("startTime", startTime, true);
+            }
+            if (endTime != null)
+            {
+                uri.AppendQuery("endTime", endTime, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -67,14 +75,16 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="restorableMongoDBDatabaseRid"> The resource ID of the MongoDB database. </param>
+        /// <param name="startTime"> Restorable MongoDB collections event feed start time. </param>
+        /// <param name="endTime"> Restorable MongoDB collections event feed end time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RestorableMongoDBCollectionsListResult>> ListAsync(string subscriptionId, AzureLocation location, Guid instanceId, string restorableMongoDBDatabaseRid = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RestorableMongoDBCollectionsListResult>> ListAsync(string subscriptionId, AzureLocation location, Guid instanceId, string restorableMongoDBDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListRequest(subscriptionId, location, instanceId, restorableMongoDBDatabaseRid);
+            using var message = CreateListRequest(subscriptionId, location, instanceId, restorableMongoDBDatabaseRid, startTime, endTime);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -95,14 +105,16 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="restorableMongoDBDatabaseRid"> The resource ID of the MongoDB database. </param>
+        /// <param name="startTime"> Restorable MongoDB collections event feed start time. </param>
+        /// <param name="endTime"> Restorable MongoDB collections event feed end time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RestorableMongoDBCollectionsListResult> List(string subscriptionId, AzureLocation location, Guid instanceId, string restorableMongoDBDatabaseRid = null, CancellationToken cancellationToken = default)
+        public Response<RestorableMongoDBCollectionsListResult> List(string subscriptionId, AzureLocation location, Guid instanceId, string restorableMongoDBDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListRequest(subscriptionId, location, instanceId, restorableMongoDBDatabaseRid);
+            using var message = CreateListRequest(subscriptionId, location, instanceId, restorableMongoDBDatabaseRid, startTime, endTime);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
