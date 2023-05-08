@@ -6,16 +6,6 @@
 
 - Added new properties `ComputerName`, `OSName`, `OSVersion` and `HyperVGeneration` to `VirtualMachineScaleSetVmInstanceView` class
 - Added new value `StandardSsdLrs` to `ImageStorageAccountType`
-- Compute RP to `2023-03-01` (AvailabilitySets, VirtualMachines, VirtualMachineScaleSets, etc)
-  - Added new method `Reapply` for `VirtualMachineScaleSet` class.
-  - Added new method `ListAvailabeSizes` for `DedicatedHost` class.
-  - Added new parameter `expand` for `VirtualMachine` List methods.
-  - Added new parameter `hibernate` for `VirtualMachineScaleSet` deallocate methods.
-  - Added new parameters `PriorityMixPolicy` and `SpotRestorePolicy` for `VirtualMachineScaleSet` update methods.
-  - Added new property `BypassPlatformSafetyChecksOnUserSchedule` for `VirtualMachine` class.
-  - Added new property `SecurityPostureReference` to `VirtualMachineScaleSet` class.
-  - Added new properties `OutputBlobManagedIdentity` and `ErrorBlobManagedIdentity` to `RunCommand` class.
-  - Added new properties `RestorePointEncryption`, `SourceDiskRestorePoint` , `HyperVGeneration` and `WriteAcceleratorEnabled` for `RestorePoint` class.
 
 ### Breaking Changes
 
