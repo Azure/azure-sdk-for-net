@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.DevCenter.Tests
                 Status = EnvironmentTypeEnableStatus.Enabled,
             };
 
-            // TODO: Helper method for these two
             data.UserRoleAssignments[TestEnvironment.TestUserOid] = new UserRoleAssignmentValue(new Dictionary<string, EnvironmentRole> { { "4cbf0b6c-e750-441c-98a7-10da8387e4d6", new EnvironmentRole() } });
             data.CreatorRoleAssignment = new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(new Dictionary<string, EnvironmentRole> { { "4cbf0b6c-e750-441c-98a7-10da8387e4d6", new EnvironmentRole() } });
 
