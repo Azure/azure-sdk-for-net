@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_VirtualHubGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualHubGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualHubGet.json
             // this example is just showing the usage of "VirtualHubs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_VirtualHubUpdate()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualHubUpdateTags.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualHubUpdateTags.json
             // this example is just showing the usage of "VirtualHubs_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_VirtualHubDelete()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualHubDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualHubDelete.json
             // this example is just showing the usage of "VirtualHubs_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualHubs_VirtualHubList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualHubList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualHubList.json
             // this example is just showing the usage of "VirtualHubs_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetEffectiveVirtualHubRoutes_EffectiveRoutesForAConnectionResource()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/EffectiveRoutesListForConnection.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/EffectiveRoutesListForConnection.json
             // this example is just showing the usage of "VirtualHubs_GetEffectiveVirtualHubRoutes" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetEffectiveVirtualHubRoutes_EffectiveRoutesForARouteTableResource()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/EffectiveRoutesListForRouteTable.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/EffectiveRoutesListForRouteTable.json
             // this example is just showing the usage of "VirtualHubs_GetEffectiveVirtualHubRoutes" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetEffectiveVirtualHubRoutes_EffectiveRoutesForTheVirtualHub()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/EffectiveRoutesListForVirtualHub.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/EffectiveRoutesListForVirtualHub.json
             // this example is just showing the usage of "VirtualHubs_GetEffectiveVirtualHubRoutes" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -236,6 +236,70 @@ namespace Azure.ResourceManager.Network.Samples
             // invoke the operation
             EffectiveRoutesContent content = null;
             await virtualHub.GetEffectiveVirtualHubRoutesAsync(WaitUntil.Completed, content: content);
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // Inbound Routes for the Virtual Hub on a Particular Connection
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetInboundRoutes_InboundRoutesForTheVirtualHubOnAParticularConnection()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/GetInboundRoutes.json
+            // this example is just showing the usage of "VirtualHubs_GetInboundRoutes" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualHubResource created on azure
+            // for more information of creating VirtualHubResource, please refer to the document of VirtualHubResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string virtualHubName = "virtualHub1";
+            ResourceIdentifier virtualHubResourceId = VirtualHubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualHubName);
+            VirtualHubResource virtualHub = client.GetVirtualHubResource(virtualHubResourceId);
+
+            // invoke the operation
+            VirtualHubInboundRoutesContent content = new VirtualHubInboundRoutesContent()
+            {
+                ResourceUri = new Uri("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/expressRouteGateways/exrGw1/expressRouteConnections/exrConn1"),
+                ConnectionType = "ExpressRouteConnection",
+            };
+            await virtualHub.GetInboundRoutesAsync(WaitUntil.Completed, content);
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // Outbound Routes for the Virtual Hub on a Particular Connection
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetOutboundRoutes_OutboundRoutesForTheVirtualHubOnAParticularConnection()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/GetOutboundRoutes.json
+            // this example is just showing the usage of "VirtualHubs_GetOutboundRoutes" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualHubResource created on azure
+            // for more information of creating VirtualHubResource, please refer to the document of VirtualHubResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string virtualHubName = "virtualHub1";
+            ResourceIdentifier virtualHubResourceId = VirtualHubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualHubName);
+            VirtualHubResource virtualHub = client.GetVirtualHubResource(virtualHubResourceId);
+
+            // invoke the operation
+            VirtualHubOutboundRoutesContent content = new VirtualHubOutboundRoutesContent()
+            {
+                ResourceUri = new Uri("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/expressRouteGateways/exrGw1/expressRouteConnections/exrConn1"),
+                ConnectionType = "ExpressRouteConnection",
+            };
+            await virtualHub.GetOutboundRoutesAsync(WaitUntil.Completed, content);
 
             Console.WriteLine($"Succeeded");
         }

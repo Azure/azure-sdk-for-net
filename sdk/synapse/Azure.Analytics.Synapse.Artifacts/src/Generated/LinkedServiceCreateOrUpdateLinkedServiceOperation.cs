@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         internal LinkedServiceCreateOrUpdateLinkedServiceOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             IOperation<LinkedServiceResource> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
-            _operation = new OperationInternal<LinkedServiceResource>(clientDiagnostics, nextLinkOperation, response, "LinkedServiceCreateOrUpdateLinkedServiceOperation");
+            _operation = new OperationInternal<LinkedServiceResource>(nextLinkOperation, clientDiagnostics, response, "LinkedServiceCreateOrUpdateLinkedServiceOperation");
         }
 
         /// <inheritdoc />

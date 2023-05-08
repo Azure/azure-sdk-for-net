@@ -8,12 +8,15 @@
     <ApiCompatVersion>1.2.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Application Configuration;Data;AppConfig;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);3021;AZC0007;AZC0006</NoWarn>
+    <NoWarn>$(NoWarn);3021;AZC0007;AZC0006;AZC0010</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    <!--Temp until Azure.Core 1.32.0 ships-->
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <!--End Temp-->
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>

@@ -41,13 +41,13 @@ namespace Azure.Messaging.ServiceBus.Administration
             _port = GetPort(_fullyQualifiedNamespace);
         }
 
-        internal async Task ThrowIfRequestFailedAsync(Request request, Response response)
+        internal void ThrowIfRequestFailed(Request request, Response response)
         {
             if ((response.Status >= 200) && (response.Status < 400))
             {
                 return;
             }
-            RequestFailedException ex = await _diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+            RequestFailedException ex = new RequestFailedException(response);
             if (response.Status == (int)HttpStatusCode.Unauthorized)
             {
                 throw new UnauthorizedAccessException(
@@ -274,7 +274,7 @@ namespace Azure.Messaging.ServiceBus.Administration
 
             Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
-            await ThrowIfRequestFailedAsync(request, response).ConfigureAwait(false);
+            ThrowIfRequestFailed(request, response);
             return response;
         }
 

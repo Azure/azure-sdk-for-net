@@ -64,6 +64,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="path"></param>
         public LocalFileStorageResource(string path)
         {
+            Argument.AssertNotNullOrWhiteSpace(path, nameof(path));
             _path = path;
         }
 
@@ -103,7 +104,7 @@ namespace Azure.Storage.DataMovement
                 File.SetAttributes(_path, attributes | FileAttributes.Temporary);
                 return Task.CompletedTask;
             }
-            throw new IOException($"File path `{_path}` already exists. Cannot overwite file.");
+            throw Errors.LocalFileAlreadyExists(_path);
         }
 
         /// <summary>

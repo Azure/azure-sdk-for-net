@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Added the `GetRawResponse` method to `RequestFailedException`.
+- Added overloads of `Operation<T>.WaitForCompletion` and `Operation.WaitForCompletionResponse` that take a `DelayStrategy`.
+
 ### Breaking Changes
 
 ### Bugs Fixed

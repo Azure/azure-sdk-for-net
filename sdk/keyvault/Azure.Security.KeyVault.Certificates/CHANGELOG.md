@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Added `CertificateProperties.X509ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `CertificateProperties.X509Thumbprint` has been hidden but is still available.
+
 ### Breaking Changes
 
 ### Bugs Fixed

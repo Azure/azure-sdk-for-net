@@ -173,7 +173,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                     // To use a key contained within a secret, the "get" permission is required to retrieve the key material.
                     return Response.FromValue<T>(default, response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(response);
+                    throw new RequestFailedException(response);
             }
         }
 
