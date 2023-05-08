@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class HealthcareEntitiesDocumentResultInternal : IUtf8JsonSerializable
+    internal partial class HealthcareEntitiesDocumentResult : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -31,11 +31,6 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(FhirBundle))
-            {
-                writer.WritePropertyName("fhirBundle"u8);
-                FhirBundle.WriteTo(writer);
-            }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("warnings"u8);
@@ -53,7 +48,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static HealthcareEntitiesDocumentResultInternal DeserializeHealthcareEntitiesDocumentResultInternal(JsonElement element)
+        internal static HealthcareEntitiesDocumentResult DeserializeHealthcareEntitiesDocumentResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -61,7 +56,6 @@ namespace Azure.AI.TextAnalytics.Models
             }
             IList<HealthcareEntityInternal> entities = default;
             IList<HealthcareRelationInternal> relations = default;
-            Optional<JsonElement> fhirBundle = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
@@ -85,11 +79,6 @@ namespace Azure.AI.TextAnalytics.Models
                         array.Add(HealthcareRelationInternal.DeserializeHealthcareRelationInternal(item));
                     }
                     relations = array;
-                    continue;
-                }
-                if (property.NameEquals("fhirBundle"u8))
-                {
-                    fhirBundle = property.Value.Clone();
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -117,7 +106,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new HealthcareEntitiesDocumentResultInternal(id, warnings, Optional.ToNullable(statistics), entities, relations, fhirBundle);
+            return new HealthcareEntitiesDocumentResult(id, warnings, Optional.ToNullable(statistics), entities, relations);
         }
     }
 }

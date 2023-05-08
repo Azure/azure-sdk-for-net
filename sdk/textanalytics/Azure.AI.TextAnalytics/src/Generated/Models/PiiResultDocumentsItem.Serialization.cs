@@ -12,16 +12,13 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class EntityLinkingResultWithDetectedLanguage : IUtf8JsonSerializable
+    internal partial class PiiResultDocumentsItem : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DetectedLanguage))
-            {
-                writer.WritePropertyName("detectedLanguage"u8);
-                writer.WriteObjectValue(DetectedLanguage.Value);
-            }
+            writer.WritePropertyName("redactedText"u8);
+            writer.WriteStringValue(RedactedText);
             writer.WritePropertyName("entities"u8);
             writer.WriteStartArray();
             foreach (var item in Entities)
@@ -46,34 +43,30 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static EntityLinkingResultWithDetectedLanguage DeserializeEntityLinkingResultWithDetectedLanguage(JsonElement element)
+        internal static PiiResultDocumentsItem DeserializePiiResultDocumentsItem(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DetectedLanguageInternal> detectedLanguage = default;
-            IList<LinkedEntity> entities = default;
+            string redactedText = default;
+            IList<Entity> entities = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("detectedLanguage"u8))
+                if (property.NameEquals("redactedText"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    detectedLanguage = DetectedLanguageInternal.DeserializeDetectedLanguageInternal(property.Value);
+                    redactedText = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("entities"u8))
                 {
-                    List<LinkedEntity> array = new List<LinkedEntity>();
+                    List<Entity> array = new List<Entity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LinkedEntity.DeserializeLinkedEntity(item));
+                        array.Add(Entity.DeserializeEntity(item));
                     }
                     entities = array;
                     continue;
@@ -103,7 +96,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new EntityLinkingResultWithDetectedLanguage(id, warnings, Optional.ToNullable(statistics), entities, Optional.ToNullable(detectedLanguage));
+            return new PiiResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), redactedText, entities);
         }
     }
 }

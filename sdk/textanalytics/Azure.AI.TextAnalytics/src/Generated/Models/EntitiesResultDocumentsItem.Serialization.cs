@@ -12,19 +12,14 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class AbstractiveSummaryDocumentResultWithDetectedLanguage : IUtf8JsonSerializable
+    internal partial class EntitiesResultDocumentsItem : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DetectedLanguage))
-            {
-                writer.WritePropertyName("detectedLanguage"u8);
-                writer.WriteObjectValue(DetectedLanguage.Value);
-            }
-            writer.WritePropertyName("summaries"u8);
+            writer.WritePropertyName("entities"u8);
             writer.WriteStartArray();
-            foreach (var item in Summaries)
+            foreach (var item in Entities)
             {
                 writer.WriteObjectValue(item);
             }
@@ -46,36 +41,26 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static AbstractiveSummaryDocumentResultWithDetectedLanguage DeserializeAbstractiveSummaryDocumentResultWithDetectedLanguage(JsonElement element)
+        internal static EntitiesResultDocumentsItem DeserializeEntitiesResultDocumentsItem(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DetectedLanguageInternal> detectedLanguage = default;
-            IList<AbstractiveSummaryInternal> summaries = default;
+            IList<Entity> entities = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("detectedLanguage"u8))
+                if (property.NameEquals("entities"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    detectedLanguage = DetectedLanguageInternal.DeserializeDetectedLanguageInternal(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("summaries"u8))
-                {
-                    List<AbstractiveSummaryInternal> array = new List<AbstractiveSummaryInternal>();
+                    List<Entity> array = new List<Entity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AbstractiveSummaryInternal.DeserializeAbstractiveSummaryInternal(item));
+                        array.Add(Entity.DeserializeEntity(item));
                     }
-                    summaries = array;
+                    entities = array;
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -103,7 +88,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AbstractiveSummaryDocumentResultWithDetectedLanguage(id, warnings, Optional.ToNullable(statistics), summaries, Optional.ToNullable(detectedLanguage));
+            return new EntitiesResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), entities);
         }
     }
 }

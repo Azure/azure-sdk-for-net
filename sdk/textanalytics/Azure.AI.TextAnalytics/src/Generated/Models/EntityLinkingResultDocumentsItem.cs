@@ -7,40 +7,33 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    /// <summary> The EntitiesDocumentResult. </summary>
-    internal partial class EntitiesDocumentResult : DocumentResult
+    /// <summary> The EntityLinkingResultDocumentsItem. </summary>
+    internal partial class EntityLinkingResultDocumentsItem : LinkedEntitiesDocumentResult
     {
-        /// <summary> Initializes a new instance of EntitiesDocumentResult. </summary>
+        /// <summary> Initializes a new instance of EntityLinkingResultDocumentsItem. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
-        /// <param name="entities"> Recognized entities in the document. </param>
+        /// <param name="entities"> Recognized well known entities in the document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="entities"/> is null. </exception>
-        public EntitiesDocumentResult(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<Entity> entities) : base(id, warnings)
+        public EntityLinkingResultDocumentsItem(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<LinkedEntity> entities) : base(id, warnings, entities)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(warnings, nameof(warnings));
             Argument.AssertNotNull(entities, nameof(entities));
-
-            Entities = entities.ToList();
         }
 
-        /// <summary> Initializes a new instance of EntitiesDocumentResult. </summary>
+        /// <summary> Initializes a new instance of EntityLinkingResultDocumentsItem. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
-        /// <param name="entities"> Recognized entities in the document. </param>
-        internal EntitiesDocumentResult(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<Entity> entities) : base(id, warnings, statistics)
+        /// <param name="entities"> Recognized well known entities in the document. </param>
+        internal EntityLinkingResultDocumentsItem(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<LinkedEntity> entities) : base(id, warnings, statistics, entities)
         {
-            Entities = entities;
         }
-
-        /// <summary> Recognized entities in the document. </summary>
-        public IList<Entity> Entities { get; }
     }
 }

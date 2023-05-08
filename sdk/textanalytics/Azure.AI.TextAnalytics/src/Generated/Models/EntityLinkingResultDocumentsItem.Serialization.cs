@@ -12,16 +12,11 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage : IUtf8JsonSerializable
+    internal partial class EntityLinkingResultDocumentsItem : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DetectedLanguage))
-            {
-                writer.WritePropertyName("detectedLanguage"u8);
-                writer.WriteStringValue(DetectedLanguage);
-            }
             writer.WritePropertyName("entities"u8);
             writer.WriteStartArray();
             foreach (var item in Entities)
@@ -29,18 +24,6 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("relations"u8);
-            writer.WriteStartArray();
-            foreach (var item in Relations)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
-            if (Optional.IsDefined(FhirBundle))
-            {
-                writer.WritePropertyName("fhirBundle"u8);
-                FhirBundle.WriteTo(writer);
-            }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("warnings"u8);
@@ -58,49 +41,26 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage DeserializeHealthcareEntitiesDocumentResultWithDocumentDetectedLanguage(JsonElement element)
+        internal static EntityLinkingResultDocumentsItem DeserializeEntityLinkingResultDocumentsItem(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> detectedLanguage = default;
-            IList<HealthcareEntityInternal> entities = default;
-            IList<HealthcareRelationInternal> relations = default;
-            Optional<JsonElement> fhirBundle = default;
+            IList<LinkedEntity> entities = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("detectedLanguage"u8))
-                {
-                    detectedLanguage = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("entities"u8))
                 {
-                    List<HealthcareEntityInternal> array = new List<HealthcareEntityInternal>();
+                    List<LinkedEntity> array = new List<LinkedEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareEntityInternal.DeserializeHealthcareEntityInternal(item));
+                        array.Add(LinkedEntity.DeserializeLinkedEntity(item));
                     }
                     entities = array;
-                    continue;
-                }
-                if (property.NameEquals("relations"u8))
-                {
-                    List<HealthcareRelationInternal> array = new List<HealthcareRelationInternal>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(HealthcareRelationInternal.DeserializeHealthcareRelationInternal(item));
-                    }
-                    relations = array;
-                    continue;
-                }
-                if (property.NameEquals("fhirBundle"u8))
-                {
-                    fhirBundle = property.Value.Clone();
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -128,7 +88,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage(id, warnings, Optional.ToNullable(statistics), entities, relations, fhirBundle, detectedLanguage.Value);
+            return new EntityLinkingResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), entities);
         }
     }
 }
