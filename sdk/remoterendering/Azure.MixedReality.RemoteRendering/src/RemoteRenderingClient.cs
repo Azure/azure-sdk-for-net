@@ -26,9 +26,9 @@ namespace Azure.MixedReality.RemoteRendering
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoteRenderingClient" /> class.
         /// </summary>
-        /// <param name="remoteRenderingEndpoint">The rendering service endpoint. This determines the region in which the rendering VM is created.</param>
+        /// <param name="remoteRenderingEndpoint">The rendering service endpoint. This determines the region in which the rendering VM is created. (e.g. https://remoterendering.eastus.mixedreality.azure.com)</param>
         /// <param name="accountId">The Azure Remote Rendering account identifier.</param>
-        /// <param name="accountDomain">The Azure Remote Rendering account domain.</param>
+        /// <param name="accountDomain">The Azure Remote Rendering account domain. (e.g. eastus.mixedreality.azure.com)</param>
         /// <param name="keyCredential">The Azure Remote Rendering account primary or secondary key credential.</param>
         public RemoteRenderingClient(Uri remoteRenderingEndpoint, Guid accountId, string accountDomain, AzureKeyCredential keyCredential)
             : this(remoteRenderingEndpoint, accountId, accountDomain, new MixedRealityAccountKeyCredential(accountId, keyCredential), null) { }
@@ -36,9 +36,9 @@ namespace Azure.MixedReality.RemoteRendering
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoteRenderingClient" /> class.
         /// </summary>
-        /// <param name="remoteRenderingEndpoint">The rendering service endpoint. This determines the region in which the rendering VM is created.</param>
+        /// <param name="remoteRenderingEndpoint">The rendering service endpoint. This determines the region in which the rendering VM is created. (e.g. https://remoterendering.eastus.mixedreality.azure.com)</param>
         /// <param name="accountId">The Azure Remote Rendering account identifier.</param>
-        /// <param name="accountDomain">The Azure Remote Rendering account domain.</param>
+        /// <param name="accountDomain">The Azure Remote Rendering account domain. (e.g. eastus.mixedreality.azure.com)</param>
         /// <param name="keyCredential">The Azure Remote Rendering account primary or secondary key credential.</param>
         /// <param name="options">The options.</param>
         public RemoteRenderingClient(Uri remoteRenderingEndpoint, Guid accountId, string accountDomain, AzureKeyCredential keyCredential, RemoteRenderingClientOptions options)
@@ -47,9 +47,9 @@ namespace Azure.MixedReality.RemoteRendering
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoteRenderingClient" /> class.
         /// </summary>
-        /// <param name="remoteRenderingEndpoint">The rendering service endpoint. This determines the region in which the rendering VM is created.</param>
+        /// <param name="remoteRenderingEndpoint">The rendering service endpoint. This determines the region in which the rendering VM is created. (e.g. https://remoterendering.eastus.mixedreality.azure.com)</param>
         /// <param name="accountId">The Azure Remote Rendering account identifier.</param>
-        /// <param name="accountDomain">The Azure Remote Rendering account domain.</param>
+        /// <param name="accountDomain">The Azure Remote Rendering account domain. (e.g. eastus.mixedreality.azure.com)</param>
         /// <param name="accessToken">An access token used to access the specified Azure Remote Rendering account.</param>
         /// <param name="options">The options.</param>
         public RemoteRenderingClient(Uri remoteRenderingEndpoint, Guid accountId, string accountDomain, AccessToken accessToken, RemoteRenderingClientOptions options = null)
@@ -58,9 +58,9 @@ namespace Azure.MixedReality.RemoteRendering
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoteRenderingClient" /> class.
         /// </summary>
-        /// <param name="remoteRenderingEndpoint">The rendering service endpoint. This determines the region in which the rendering VM is created.</param>
+        /// <param name="remoteRenderingEndpoint">The rendering service endpoint. This determines the region in which the rendering VM is created. (e.g. https://remoterendering.eastus.mixedreality.azure.com)</param>
         /// <param name="accountId">The Azure Remote Rendering account identifier.</param>
-        /// <param name="accountDomain">The Azure Remote Rendering account domain.</param>
+        /// <param name="accountDomain">The Azure Remote Rendering account domain. (e.g. eastus.mixedreality.azure.com)</param>
         /// <param name="credential">The credential used to access the Mixed Reality service.</param>
         /// <param name="options">The options.</param>
         public RemoteRenderingClient(Uri remoteRenderingEndpoint, Guid accountId, string accountDomain, TokenCredential credential, RemoteRenderingClientOptions options = null)
