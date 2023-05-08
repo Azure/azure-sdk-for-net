@@ -5,7 +5,6 @@
 ### Features Added
 
 ### Breaking Changes
-- Renamed the `DisableInstanceDiscovery` options property to `DisableAuthorityValidationAndInstanceDiscovery`.
 - Changed visibility of all environment variable based properties on `EnvironmentCredentialOptions` to internal. These options are again only configurable via environment variables.
 
 ### Bugs Fixed
