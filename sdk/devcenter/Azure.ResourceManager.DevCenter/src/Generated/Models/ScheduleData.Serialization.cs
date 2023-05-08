@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.DevCenter
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TypePropertiesType))
+            if (Optional.IsDefined(ScheduledType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(TypePropertiesType.Value.ToString());
+                writer.WriteStringValue(ScheduledType.Value.ToString());
             }
             if (Optional.IsDefined(Frequency))
             {

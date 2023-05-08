@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
             string scheduleName = "autoShutdown";
             ScheduleData data = new ScheduleData()
             {
-                TypePropertiesType = ScheduledType.StopDevBox,
+                ScheduledType = ScheduledType.StopDevBox,
                 Frequency = ScheduledFrequency.Daily,
                 Time = "17:30",
                 TimeZone = "America/Los_Angeles",

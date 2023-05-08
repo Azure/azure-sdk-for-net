@@ -37,8 +37,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
 
             var scheduleData = new ScheduleData()
             {
-                // TODO: Rename TypePropertiesType to ScheduleType
-                TypePropertiesType = ScheduledType.StopDevBox,
+                ScheduledType = ScheduledType.StopDevBox,
                 Frequency = ScheduledFrequency.Daily,
                 State = ScheduleEnableStatus.Enabled,
                 Time = "17:30",

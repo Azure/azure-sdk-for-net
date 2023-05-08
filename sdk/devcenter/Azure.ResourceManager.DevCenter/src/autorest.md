@@ -50,6 +50,7 @@ rename-rules:
 
 rename-mapping:
   DevCenterSku: DevCenterSkuDetails
+  TypePropertiesType: ScheduledType
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/attachednetworks: AttachedNetworkConnection
@@ -61,4 +62,11 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/devboxdefinitions: ProjectDevBoxDefinition
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/devboxdefinitions/{devBoxDefinitionName}: ProjectDevBoxDefinition
 
+
+### Directive renaming "type" property of ScheduleUpdateProperties to "ScheduledType" (to avoid it being generated as TypePropertiesType)
+directive:
+  from: swagger-document
+  where: "$.definitions.ScheduleUpdateProperties.properties.type"
+  transform: >
+    $["x-ms-client-name"] = "ScheduledType";
 ```
