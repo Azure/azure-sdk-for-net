@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_SchedulesGetByPool()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/Schedules_Get.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Schedules_Get.json
             // this example is just showing the usage of "Schedules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this ScheduleResource created on azure
             // for more information of creating ScheduleResource, please refer to the document of ScheduleResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string projectName = "TestProject";
             string poolName = "DevPool";
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_SchedulesUpdate()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/Schedules_Patch.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Schedules_Patch.json
             // this example is just showing the usage of "Schedules_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this ScheduleResource created on azure
             // for more information of creating ScheduleResource, please refer to the document of ScheduleResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string projectName = "TestProject";
             string poolName = "DevPool";
@@ -79,9 +79,14 @@ namespace Azure.ResourceManager.DevCenter.Samples
             {
                 Time = "18:00",
             };
-            await schedule.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<ScheduleResource> lro = await schedule.UpdateAsync(WaitUntil.Completed, patch);
+            ScheduleResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ScheduleData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         // Schedules_Delete
@@ -89,7 +94,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_SchedulesDelete()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/Schedules_Delete.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Schedules_Delete.json
             // this example is just showing the usage of "Schedules_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -99,7 +104,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this ScheduleResource created on azure
             // for more information of creating ScheduleResource, please refer to the document of ScheduleResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string projectName = "TestProject";
             string poolName = "DevPool";

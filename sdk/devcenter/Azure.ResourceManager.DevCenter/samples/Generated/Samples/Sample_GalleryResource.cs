@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GalleriesGet()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/Galleries_Get.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Galleries_Get.json
             // this example is just showing the usage of "Galleries_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this GalleryResource created on azure
             // for more information of creating GalleryResource, please refer to the document of GalleryResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
-            string galleryName = "{galleryName}";
+            string galleryName = "StandardGallery";
             ResourceIdentifier galleryResourceId = GalleryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, galleryName);
             GalleryResource gallery = client.GetGalleryResource(galleryResourceId);
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_GalleriesCreateOrUpdate()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/Galleries_Create.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Galleries_Create.json
             // this example is just showing the usage of "Galleries_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this GalleryResource created on azure
             // for more information of creating GalleryResource, please refer to the document of GalleryResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
-            string galleryName = "{galleryName}";
+            string galleryName = "StandardGallery";
             ResourceIdentifier galleryResourceId = GalleryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, galleryName);
             GalleryResource gallery = client.GetGalleryResource(galleryResourceId);
 
             // invoke the operation
             GalleryData data = new GalleryData()
             {
-                GalleryResourceId = "/subscriptions/{subscriptionId}/resourceGroups/rg1/providers/Microsoft.Compute/galleries/{galleryName}",
+                GalleryResourceId = "/subscriptions/0ac520ee-14c0-480f-b6c9-0a90c58ffff/resourceGroups/rg1/providers/Microsoft.Compute/galleries/StandardGallery",
             };
             ArmOperation<GalleryResource> lro = await gallery.UpdateAsync(WaitUntil.Completed, data);
             GalleryResource result = lro.Value;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_GalleriesDelete()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/Galleries_Delete.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Galleries_Delete.json
             // this example is just showing the usage of "Galleries_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this GalleryResource created on azure
             // for more information of creating GalleryResource, please refer to the document of GalleryResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
-            string galleryName = "{galleryName}";
+            string galleryName = "StandardGallery";
             ResourceIdentifier galleryResourceId = GalleryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, galleryName);
             GalleryResource gallery = client.GetGalleryResource(galleryResourceId);
 

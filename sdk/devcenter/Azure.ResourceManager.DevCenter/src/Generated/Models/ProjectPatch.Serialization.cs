@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsDefined(MaxDevBoxesPerUser))
+            {
+                writer.WritePropertyName("maxDevBoxesPerUser"u8);
+                writer.WriteNumberValue(MaxDevBoxesPerUser.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

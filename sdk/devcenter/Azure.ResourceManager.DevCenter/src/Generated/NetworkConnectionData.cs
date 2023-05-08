@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="healthCheckStatus"> Overall health status of the network connection. Health checks are run on creation, update, and periodically to validate the network connection. </param>
         /// <param name="networkingResourceGroupName"> The name for resource group where NICs will be placed. </param>
         /// <param name="domainJoinType"> AAD Join type. </param>
-        internal NetworkConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string subnetId, string domainName, string organizationUnit, string domainUsername, string domainPassword, string provisioningState, HealthCheckStatus? healthCheckStatus, string networkingResourceGroupName, DomainJoinType? domainJoinType) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string subnetId, string domainName, string organizationUnit, string domainUsername, string domainPassword, ProvisioningState? provisioningState, HealthCheckStatus? healthCheckStatus, string networkingResourceGroupName, DomainJoinType? domainJoinType) : base(id, name, resourceType, systemData, tags, location)
         {
             SubnetId = subnetId;
             DomainName = domainName;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> The password for the account used to join domain. </summary>
         public string DomainPassword { get; set; }
         /// <summary> The provisioning state of the resource. </summary>
-        public string ProvisioningState { get; }
+        public ProvisioningState? ProvisioningState { get; }
         /// <summary> Overall health status of the network connection. Health checks are run on creation, update, and periodically to validate the network connection. </summary>
         public HealthCheckStatus? HealthCheckStatus { get; }
         /// <summary> The name for resource group where NICs will be placed. </summary>

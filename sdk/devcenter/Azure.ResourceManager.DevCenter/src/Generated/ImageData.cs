@@ -33,7 +33,8 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="sku"> The SKU name for the image. </param>
         /// <param name="recommendedMachineConfiguration"> The recommended machine configuration to use with the image. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal ImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string publisher, string offer, string sku, RecommendedMachineConfiguration recommendedMachineConfiguration, string provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="hibernateSupport"> Indicates whether this image has hibernate enabled. Not all images are capable of supporting hibernation. To find out more see https://aka.ms/devbox/hibernate. </param>
+        internal ImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string publisher, string offer, string sku, RecommendedMachineConfiguration recommendedMachineConfiguration, ProvisioningState? provisioningState, HibernateSupport? hibernateSupport) : base(id, name, resourceType, systemData)
         {
             Description = description;
             Publisher = publisher;
@@ -41,6 +42,7 @@ namespace Azure.ResourceManager.DevCenter
             Sku = sku;
             RecommendedMachineConfiguration = recommendedMachineConfiguration;
             ProvisioningState = provisioningState;
+            HibernateSupport = hibernateSupport;
         }
 
         /// <summary> The description of the image. </summary>
@@ -54,6 +56,8 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> The recommended machine configuration to use with the image. </summary>
         public RecommendedMachineConfiguration RecommendedMachineConfiguration { get; }
         /// <summary> The provisioning state of the resource. </summary>
-        public string ProvisioningState { get; }
+        public ProvisioningState? ProvisioningState { get; }
+        /// <summary> Indicates whether this image has hibernate enabled. Not all images are capable of supporting hibernation. To find out more see https://aka.ms/devbox/hibernate. </summary>
+        public HibernateSupport? HibernateSupport { get; }
     }
 }

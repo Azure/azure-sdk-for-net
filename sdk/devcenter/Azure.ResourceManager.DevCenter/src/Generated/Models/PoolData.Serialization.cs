@@ -53,6 +53,11 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("localAdministrator"u8);
                 writer.WriteStringValue(LocalAdministrator.Value.ToString());
             }
+            if (Optional.IsDefined(StopOnDisconnect))
+            {
+                writer.WritePropertyName("stopOnDisconnect"u8);
+                writer.WriteObjectValue(StopOnDisconnect);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -73,7 +78,10 @@ namespace Azure.ResourceManager.DevCenter
             Optional<string> networkConnectionName = default;
             Optional<LicenseType> licenseType = default;
             Optional<LocalAdminStatus> localAdministrator = default;
-            Optional<string> provisioningState = default;
+            Optional<StopOnDisconnectConfiguration> stopOnDisconnect = default;
+            Optional<HealthStatus> healthStatus = default;
+            Optional<IReadOnlyList<HealthStatusDetail>> healthStatusDetails = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -156,16 +164,52 @@ namespace Azure.ResourceManager.DevCenter
                             localAdministrator = new LocalAdminStatus(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("stopOnDisconnect"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            stopOnDisconnect = StopOnDisconnectConfiguration.DeserializeStopOnDisconnectConfiguration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("healthStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            healthStatus = new HealthStatus(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("healthStatusDetails"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<HealthStatusDetail> array = new List<HealthStatusDetail>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(HealthStatusDetail.DeserializeHealthStatusDetail(item));
+                            }
+                            healthStatusDetails = array;
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new PoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, devBoxDefinitionName.Value, networkConnectionName.Value, Optional.ToNullable(licenseType), Optional.ToNullable(localAdministrator), provisioningState.Value);
+            return new PoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, devBoxDefinitionName.Value, networkConnectionName.Value, Optional.ToNullable(licenseType), Optional.ToNullable(localAdministrator), stopOnDisconnect.Value, Optional.ToNullable(healthStatus), Optional.ToList(healthStatusDetails), Optional.ToNullable(provisioningState));
         }
     }
 }

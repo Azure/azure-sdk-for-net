@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-01-preview";
+            _apiVersion = apiVersion ?? "2023-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Lists schedules for a pool. </summary>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="projectName"> The name of the project. </param>
         /// <param name="poolName"> Name of the pool. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Lists schedules for a pool. </summary>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="projectName"> The name of the project. </param>
         /// <param name="poolName"> Name of the pool. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
@@ -157,8 +157,8 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Gets a schedule resource. </summary>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="projectName"> The name of the project. </param>
         /// <param name="poolName"> Name of the pool. </param>
         /// <param name="scheduleName"> The name of the schedule that uniquely identifies it. </param>
@@ -193,8 +193,8 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Gets a schedule resource. </summary>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="projectName"> The name of the project. </param>
         /// <param name="poolName"> Name of the pool. </param>
         /// <param name="scheduleName"> The name of the schedule that uniquely identifies it. </param>
@@ -261,8 +261,8 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Creates or updates a Schedule. </summary>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="projectName"> The name of the project. </param>
         /// <param name="poolName"> Name of the pool. </param>
         /// <param name="scheduleName"> The name of the schedule that uniquely identifies it. </param>
@@ -284,6 +284,7 @@ namespace Azure.ResourceManager.DevCenter
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
+                case 200:
                 case 201:
                     return message.Response;
                 default:
@@ -292,8 +293,8 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Creates or updates a Schedule. </summary>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="projectName"> The name of the project. </param>
         /// <param name="poolName"> Name of the pool. </param>
         /// <param name="scheduleName"> The name of the schedule that uniquely identifies it. </param>
@@ -315,6 +316,7 @@ namespace Azure.ResourceManager.DevCenter
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
+                case 200:
                 case 201:
                     return message.Response;
                 default:
@@ -355,8 +357,8 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Partially updates a Scheduled. </summary>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="projectName"> The name of the project. </param>
         /// <param name="poolName"> Name of the pool. </param>
         /// <param name="scheduleName"> The name of the schedule that uniquely identifies it. </param>
@@ -378,6 +380,7 @@ namespace Azure.ResourceManager.DevCenter
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                     return message.Response;
                 default:
@@ -386,8 +389,8 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Partially updates a Scheduled. </summary>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="projectName"> The name of the project. </param>
         /// <param name="poolName"> Name of the pool. </param>
         /// <param name="scheduleName"> The name of the schedule that uniquely identifies it. </param>
@@ -409,6 +412,7 @@ namespace Azure.ResourceManager.DevCenter
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                     return message.Response;
                 default:
@@ -445,8 +449,8 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Deletes a Scheduled. </summary>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="projectName"> The name of the project. </param>
         /// <param name="poolName"> Name of the pool. </param>
         /// <param name="scheduleName"> The name of the schedule that uniquely identifies it. </param>
@@ -476,8 +480,8 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Deletes a Scheduled. </summary>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="projectName"> The name of the project. </param>
         /// <param name="poolName"> Name of the pool. </param>
         /// <param name="scheduleName"> The name of the schedule that uniquely identifies it. </param>
@@ -522,8 +526,8 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Lists schedules for a pool. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="projectName"> The name of the project. </param>
         /// <param name="poolName"> Name of the pool. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
@@ -556,8 +560,8 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Lists schedules for a pool. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the Azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="projectName"> The name of the project. </param>
         /// <param name="poolName"> Name of the pool. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>

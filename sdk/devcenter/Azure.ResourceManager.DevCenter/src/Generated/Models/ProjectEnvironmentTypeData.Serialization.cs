@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.DevCenter
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> deploymentTargetId = default;
-            Optional<EnableStatus> status = default;
+            Optional<EnvironmentTypeEnableStatus> status = default;
             Optional<ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment> creatorRoleAssignment = default;
             Optional<IDictionary<string, UserRoleAssignmentValue>> userRoleAssignments = default;
-            Optional<string> provisioningState = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            status = new EnableStatus(property0.Value.GetString());
+                            status = new EnvironmentTypeEnableStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("creatorRoleAssignment"u8))
@@ -188,14 +188,18 @@ namespace Azure.ResourceManager.DevCenter
                         }
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ProjectEnvironmentTypeData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, deploymentTargetId.Value, Optional.ToNullable(status), creatorRoleAssignment.Value, Optional.ToDictionary(userRoleAssignments), provisioningState.Value);
+            return new ProjectEnvironmentTypeData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, deploymentTargetId.Value, Optional.ToNullable(status), creatorRoleAssignment.Value, Optional.ToDictionary(userRoleAssignments), Optional.ToNullable(provisioningState));
         }
     }
 }

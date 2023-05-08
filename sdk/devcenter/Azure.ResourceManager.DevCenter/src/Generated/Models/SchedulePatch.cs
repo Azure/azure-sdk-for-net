@@ -24,6 +24,6 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> The IANA timezone id at which the schedule should execute. </summary>
         public string TimeZone { get; set; }
         /// <summary> Indicates whether or not this scheduled task is enabled. </summary>
-        public EnableStatus? State { get; set; }
+        public ScheduleEnableStatus? State { get; set; }
     }
 }

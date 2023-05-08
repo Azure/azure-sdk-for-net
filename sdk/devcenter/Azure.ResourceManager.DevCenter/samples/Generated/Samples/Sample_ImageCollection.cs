@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ImagesListByGallery()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/Images_ListByGallery.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Images_ListByGallery.json
             // this example is just showing the usage of "Images_ListByGallery" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this GalleryResource created on azure
             // for more information of creating GalleryResource, please refer to the document of GalleryResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
             string galleryName = "DevGallery";
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ImagesGet()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/Images_Get.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Images_Get.json
             // this example is just showing the usage of "Images_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this GalleryResource created on azure
             // for more information of creating GalleryResource, please refer to the document of GalleryResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
             string galleryName = "DefaultDevGallery";
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
             ImageCollection collection = gallery.GetImages();
 
             // invoke the operation
-            string imageName = "{imageName}";
+            string imageName = "ContosoBaseImage";
             ImageResource result = await collection.GetAsync(imageName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_ImagesGet()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/Images_Get.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Images_Get.json
             // this example is just showing the usage of "Images_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this GalleryResource created on azure
             // for more information of creating GalleryResource, please refer to the document of GalleryResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
             string galleryName = "DefaultDevGallery";
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
             ImageCollection collection = gallery.GetImages();
 
             // invoke the operation
-            string imageName = "{imageName}";
+            string imageName = "ContosoBaseImage";
             bool result = await collection.ExistsAsync(imageName);
 
             Console.WriteLine($"Succeeded: {result}");

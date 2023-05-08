@@ -9,8 +9,7 @@ generate-model-factory: false
 csharp: true
 library-name: DevCenter
 namespace: Azure.ResourceManager.DevCenter
-# default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/1b3b9c1dd4d2c875997ea0b392dc71418fb1f28d/specification/devcenter/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/07c55de803057861912799405580ea9d022853fc/specification/devcenter/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -62,4 +61,11 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/devboxdefinitions: ProjectDevBoxDefinition
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/devboxdefinitions/{devBoxDefinitionName}: ProjectDevBoxDefinition
 
+
+### Directive renaming "type" property of ScheduleUpdateProperties to "ScheduledType" (to avoid it being generated as TypePropertiesType)
+directive:
+  from: swagger-document
+  where: "$.definitions.ScheduleUpdateProperties.properties.type"
+  transform: >
+    $["x-ms-client-name"] = "ScheduledType";
 ```

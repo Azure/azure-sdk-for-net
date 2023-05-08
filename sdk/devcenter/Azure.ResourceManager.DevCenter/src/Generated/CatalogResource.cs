@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _catalogRestClient.SyncAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation(_catalogClientDiagnostics, Pipeline, _catalogRestClient.CreateSyncRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevCenterArmOperation(_catalogClientDiagnostics, Pipeline, _catalogRestClient.CreateSyncRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _catalogRestClient.Sync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DevCenterArmOperation(_catalogClientDiagnostics, Pipeline, _catalogRestClient.CreateSyncRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevCenterArmOperation(_catalogClientDiagnostics, Pipeline, _catalogRestClient.CreateSyncRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-01-preview";
+            _apiVersion = apiVersion ?? "2023-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Gets the current status of an async operation. </summary>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The Azure region. </param>
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Gets the current status of an async operation. </summary>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The Azure region. </param>
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

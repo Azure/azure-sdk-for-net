@@ -6,6 +6,7 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager.DevCenter.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
@@ -28,14 +29,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="galleryResourceId"> The resource ID of the backing Azure Compute Gallery. </param>
-        internal GalleryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, string galleryResourceId) : base(id, name, resourceType, systemData)
+        internal GalleryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, string galleryResourceId) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             GalleryResourceId = galleryResourceId;
         }
 
         /// <summary> The provisioning state of the resource. </summary>
-        public string ProvisioningState { get; }
+        public ProvisioningState? ProvisioningState { get; }
         /// <summary> The resource ID of the backing Azure Compute Gallery. </summary>
         public string GalleryResourceId { get; set; }
     }

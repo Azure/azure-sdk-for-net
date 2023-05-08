@@ -21,5 +21,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public DevCenterSku Sku { get; set; }
         /// <summary> The storage type used for the Operating System disk of Dev Boxes created using this definition. </summary>
         public string OSStorageType { get; set; }
+        /// <summary> Indicates whether Dev Boxes created with this definition are capable of hibernation. Not all images are capable of supporting hibernation. To find out more see https://aka.ms/devbox/hibernate. </summary>
+        public HibernateSupport? HibernateSupport { get; set; }
     }
 }

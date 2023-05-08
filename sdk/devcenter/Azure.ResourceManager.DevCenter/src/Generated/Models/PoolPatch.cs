@@ -23,5 +23,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public LicenseType? LicenseType { get; set; }
         /// <summary> Indicates whether owners of Dev Boxes in this pool are added as local administrators on the Dev Box. </summary>
         public LocalAdminStatus? LocalAdministrator { get; set; }
+        /// <summary> Stop on disconnect configuration settings for Dev Boxes created in this pool. </summary>
+        public StopOnDisconnectConfiguration StopOnDisconnect { get; set; }
     }
 }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_EnvironmentTypesGet()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/EnvironmentTypes_Get.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/EnvironmentTypes_Get.json
             // this example is just showing the usage of "EnvironmentTypes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this EnvironmentTypeResource created on azure
             // for more information of creating EnvironmentTypeResource, please refer to the document of EnvironmentTypeResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
-            string environmentTypeName = "{environmentTypeName}";
+            string environmentTypeName = "DevTest";
             ResourceIdentifier environmentTypeResourceId = EnvironmentTypeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, environmentTypeName);
             EnvironmentTypeResource environmentType = client.GetEnvironmentTypeResource(environmentTypeResourceId);
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_EnvironmentTypesUpdate()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/EnvironmentTypes_Patch.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/EnvironmentTypes_Patch.json
             // this example is just showing the usage of "EnvironmentTypes_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this EnvironmentTypeResource created on azure
             // for more information of creating EnvironmentTypeResource, please refer to the document of EnvironmentTypeResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
-            string environmentTypeName = "{environmentTypeName}";
+            string environmentTypeName = "DevTest";
             ResourceIdentifier environmentTypeResourceId = EnvironmentTypeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, environmentTypeName);
             EnvironmentTypeResource environmentType = client.GetEnvironmentTypeResource(environmentTypeResourceId);
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_EnvironmentTypesDelete()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/EnvironmentTypes_Delete.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/EnvironmentTypes_Delete.json
             // this example is just showing the usage of "EnvironmentTypes_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this EnvironmentTypeResource created on azure
             // for more information of creating EnvironmentTypeResource, please refer to the document of EnvironmentTypeResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
-            string environmentTypeName = "{environmentTypeName}";
+            string environmentTypeName = "DevTest";
             ResourceIdentifier environmentTypeResourceId = EnvironmentTypeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, environmentTypeName);
             EnvironmentTypeResource environmentType = client.GetEnvironmentTypeResource(environmentTypeResourceId);
 

@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("osStorageType"u8);
                 writer.WriteStringValue(OSStorageType);
             }
+            if (Optional.IsDefined(HibernateSupport))
+            {
+                writer.WritePropertyName("hibernateSupport"u8);
+                writer.WriteStringValue(HibernateSupport.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -67,7 +72,8 @@ namespace Azure.ResourceManager.DevCenter
             Optional<ImageReference> imageReference = default;
             Optional<DevCenterSku> sku = default;
             Optional<string> osStorageType = default;
-            Optional<string> provisioningState = default;
+            Optional<HibernateSupport> hibernateSupport = default;
+            Optional<ProvisioningState> provisioningState = default;
             Optional<ImageValidationStatus> imageValidationStatus = default;
             Optional<ImageValidationErrorDetails> imageValidationErrorDetails = default;
             Optional<ImageReference> activeImageReference = default;
@@ -148,9 +154,22 @@ namespace Azure.ResourceManager.DevCenter
                             osStorageType = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("hibernateSupport"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            hibernateSupport = new HibernateSupport(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("imageValidationStatus"u8))
@@ -184,7 +203,7 @@ namespace Azure.ResourceManager.DevCenter
                     continue;
                 }
             }
-            return new DevBoxDefinitionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, imageReference.Value, sku.Value, osStorageType.Value, provisioningState.Value, Optional.ToNullable(imageValidationStatus), imageValidationErrorDetails.Value, activeImageReference.Value);
+            return new DevBoxDefinitionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, imageReference.Value, sku.Value, osStorageType.Value, Optional.ToNullable(hibernateSupport), Optional.ToNullable(provisioningState), Optional.ToNullable(imageValidationStatus), imageValidationErrorDetails.Value, activeImageReference.Value);
         }
     }
 }

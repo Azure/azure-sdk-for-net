@@ -19,5 +19,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public string DevCenterId { get; set; }
         /// <summary> Description of the project. </summary>
         public string Description { get; set; }
+        /// <summary> When specified, limits the maximum number of Dev Boxes a single user can create across all pools in the project. This will have no effect on existing Dev Boxes when reduced. </summary>
+        public int? MaxDevBoxesPerUser { get; set; }
     }
 }
