@@ -46,7 +46,7 @@ namespace Azure.Core.Json
                 return element;
             }
 
-            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(Value, SerializationOptions);
+            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(Value, SerializerOptions);
             _serializedValue = JsonDocument.Parse(bytes).RootElement;
             return _serializedValue.Value;
         }
