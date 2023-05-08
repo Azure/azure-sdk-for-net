@@ -1,6 +1,312 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
+    <member name="MatchTrialsAsync(WaitUntil,TrialMatcherData,string,DateTimeOffset?,CancellationToken)">
+<example>
+This sample shows how to call MatchTrialsAsync with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ClinicalMatchingClient(endpoint, credential);
+
+var trialMatcherData = new TrialMatcherData(new PatientRecord[] 
+{
+    new PatientRecord("<id>")
+{
+        Info = new PatientInfo()
+{
+            Sex = PatientInfoSex.Female,
+            BirthDate = DateTimeOffset.UtcNow,
+            ClinicalInfo = 
+{
+                new ClinicalCodedElement("<system>", "<code>")
+{
+                    Name = "<Name>",
+                    Value = "<Value>",
+                }
+            },
+        },
+        Data = 
+{
+            new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(DocumentContentSourceType.Inline, "<value>"))
+{
+                ClinicalType = ClinicalDocumentType.Consultation,
+                Language = "<Language>",
+                CreatedDateTime = DateTimeOffset.UtcNow,
+            }
+        },
+    }
+})
+{
+    Configuration = new TrialMatcherModelConfiguration(new ClinicalTrials()
+{
+        CustomTrials = 
+{
+            new ClinicalTrialDetails("<id>", new ClinicalTrialMetadata(new string[] 
+{
+                "<null>"
+            })
+{
+                Phases = 
+{
+                    ClinicalTrialPhase.NotApplicable
+                },
+                StudyType = ClinicalTrialStudyType.Interventional,
+                RecruitmentStatus = ClinicalTrialRecruitmentStatus.UnknownStatus,
+                Sponsors = 
+{
+                    "<null>"
+                },
+                Contacts = 
+{
+                    new ContactDetails()
+{
+                        Name = "<Name>",
+                        Email = "<Email>",
+                        Phone = "<Phone>",
+                    }
+                },
+                Facilities = 
+{
+                    new ClinicalTrialResearchFacility("<name>", "<countryOrRegion>")
+{
+                        City = "<City>",
+                        State = "<State>",
+                    }
+                },
+            })
+{
+                EligibilityCriteriaText = "<EligibilityCriteriaText>",
+                Demographics = new ClinicalTrialDemographics()
+{
+                    AcceptedSex = ClinicalTrialAcceptedSex.All,
+                    AcceptedAgeRange = new AcceptedAgeRange()
+{
+                        MinimumAge = new AcceptedAge(AgeUnit.Years, 3.14f),
+                    },
+                },
+            }
+        },
+        RegistryFilters = 
+{
+            new ClinicalTrialRegistryFilter()
+{
+                Conditions = 
+{
+                    "<null>"
+                },
+                StudyTypes = 
+{
+                    ClinicalTrialStudyType.Interventional
+                },
+                RecruitmentStatuses = 
+{
+                    ClinicalTrialRecruitmentStatus.UnknownStatus
+                },
+                Sponsors = 
+{
+                    "<null>"
+                },
+                Phases = 
+{
+                    ClinicalTrialPhase.NotApplicable
+                },
+                Purposes = 
+{
+                    ClinicalTrialPurpose.NotApplicable
+                },
+                Ids = 
+{
+                    "<null>"
+                },
+                Sources = 
+{
+                    ClinicalTrialSource.Custom
+                },
+                FacilityNames = 
+{
+                    "<null>"
+                },
+                FacilityLocations = 
+{
+                    new GeographicLocation("<countryOrRegion>")
+{
+                        City = "<City>",
+                        State = "<State>",
+                    }
+                },
+                FacilityAreas = 
+{
+                    new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJsonGeometryType.Point, new float[] 
+{
+                        3.14f
+                    }), new AreaProperties(GeoJsonPropertiesSubType.Circle, 3.14))
+                },
+            }
+        },
+    })
+{
+        Verbose = true,
+        IncludeEvidence = true,
+    },
+};
+var operation = await client.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData, "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+]]></code>
+</example>
+    </member>
+    <member name="MatchTrials(WaitUntil,TrialMatcherData,string,DateTimeOffset?,CancellationToken)">
+<example>
+This sample shows how to call MatchTrials with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ClinicalMatchingClient(endpoint, credential);
+
+var trialMatcherData = new TrialMatcherData(new PatientRecord[] 
+{
+    new PatientRecord("<id>")
+{
+        Info = new PatientInfo()
+{
+            Sex = PatientInfoSex.Female,
+            BirthDate = DateTimeOffset.UtcNow,
+            ClinicalInfo = 
+{
+                new ClinicalCodedElement("<system>", "<code>")
+{
+                    Name = "<Name>",
+                    Value = "<Value>",
+                }
+            },
+        },
+        Data = 
+{
+            new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(DocumentContentSourceType.Inline, "<value>"))
+{
+                ClinicalType = ClinicalDocumentType.Consultation,
+                Language = "<Language>",
+                CreatedDateTime = DateTimeOffset.UtcNow,
+            }
+        },
+    }
+})
+{
+    Configuration = new TrialMatcherModelConfiguration(new ClinicalTrials()
+{
+        CustomTrials = 
+{
+            new ClinicalTrialDetails("<id>", new ClinicalTrialMetadata(new string[] 
+{
+                "<null>"
+            })
+{
+                Phases = 
+{
+                    ClinicalTrialPhase.NotApplicable
+                },
+                StudyType = ClinicalTrialStudyType.Interventional,
+                RecruitmentStatus = ClinicalTrialRecruitmentStatus.UnknownStatus,
+                Sponsors = 
+{
+                    "<null>"
+                },
+                Contacts = 
+{
+                    new ContactDetails()
+{
+                        Name = "<Name>",
+                        Email = "<Email>",
+                        Phone = "<Phone>",
+                    }
+                },
+                Facilities = 
+{
+                    new ClinicalTrialResearchFacility("<name>", "<countryOrRegion>")
+{
+                        City = "<City>",
+                        State = "<State>",
+                    }
+                },
+            })
+{
+                EligibilityCriteriaText = "<EligibilityCriteriaText>",
+                Demographics = new ClinicalTrialDemographics()
+{
+                    AcceptedSex = ClinicalTrialAcceptedSex.All,
+                    AcceptedAgeRange = new AcceptedAgeRange()
+{
+                        MinimumAge = new AcceptedAge(AgeUnit.Years, 3.14f),
+                    },
+                },
+            }
+        },
+        RegistryFilters = 
+{
+            new ClinicalTrialRegistryFilter()
+{
+                Conditions = 
+{
+                    "<null>"
+                },
+                StudyTypes = 
+{
+                    ClinicalTrialStudyType.Interventional
+                },
+                RecruitmentStatuses = 
+{
+                    ClinicalTrialRecruitmentStatus.UnknownStatus
+                },
+                Sponsors = 
+{
+                    "<null>"
+                },
+                Phases = 
+{
+                    ClinicalTrialPhase.NotApplicable
+                },
+                Purposes = 
+{
+                    ClinicalTrialPurpose.NotApplicable
+                },
+                Ids = 
+{
+                    "<null>"
+                },
+                Sources = 
+{
+                    ClinicalTrialSource.Custom
+                },
+                FacilityNames = 
+{
+                    "<null>"
+                },
+                FacilityLocations = 
+{
+                    new GeographicLocation("<countryOrRegion>")
+{
+                        City = "<City>",
+                        State = "<State>",
+                    }
+                },
+                FacilityAreas = 
+{
+                    new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJsonGeometryType.Point, new float[] 
+{
+                        3.14f
+                    }), new AreaProperties(GeoJsonPropertiesSubType.Circle, 3.14))
+                },
+            }
+        },
+    })
+{
+        Verbose = true,
+        IncludeEvidence = true,
+    },
+};
+var operation = client.MatchTrials(WaitUntil.Completed, trialMatcherData, "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+]]></code>
+</example>
+    </member>
     <member name="MatchTrialsAsync(WaitUntil,RequestContent,string,DateTimeOffset?,RequestContext)">
 <example>
 This sample shows how to call MatchTrialsAsync with required parameters and request content, and how to parse the result.
