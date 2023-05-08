@@ -266,7 +266,7 @@ namespace Azure.Core.Tests.Public
         public void RoundtripObjects()
         {
             SampleModel model = new SampleModel("Hello World", 5);
-            BinaryData serialized = new(model, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+            BinaryData serialized = new(model);
             SampleModel deserialized = (SampleModel)serialized.ToDynamicFromJson();
             Assert.AreEqual(model, deserialized);
         }
