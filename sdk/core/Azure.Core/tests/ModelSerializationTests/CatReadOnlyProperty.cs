@@ -22,16 +22,19 @@ namespace Azure.Core.Tests.ModelSerializationTests
             RawData = rawData;
         }
 
-        public bool HasWhiskers { get; set; } = true;
+        public bool HasWhiskers { get; private set; } = true;
 
         #region Serialization
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
-            if (options.IgnoreReadOnlyProperties)
+            if (!options.IgnoreReadOnlyProperties)
             {
                 writer.WritePropertyName("latinName"u8);
                 writer.WriteStringValue(LatinName);
+
+                writer.WritePropertyName("hasWhiskers"u8);
+                writer.WriteBooleanValue(HasWhiskers);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -39,10 +42,8 @@ namespace Azure.Core.Tests.ModelSerializationTests
             writer.WriteBooleanValue(IsHungry);
             writer.WritePropertyName("weight"u8);
             writer.WriteNumberValue(Weight);
-            writer.WritePropertyName("hasWhiskers"u8);
-            writer.WriteBooleanValue(HasWhiskers);
 
-            if (options.IgnoreAdditionalProperties)
+            if (!options.IgnoreAdditionalProperties)
             {
                 //write out the raw data
                 foreach (var property in RawData)
@@ -84,18 +85,18 @@ namespace Azure.Core.Tests.ModelSerializationTests
                     latinName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hasWhiskers"u8))
-                {
-                    hasWhiskers = property.Value.GetBoolean();
-                    continue;
-                }
+
                 if (property.NameEquals("isHungry"u8))
                 {
                     isHungry = property.Value.GetBoolean();
                     continue;
                 }
-
-                if (options.IgnoreAdditionalProperties)
+                if (property.NameEquals("hasWhiskers"u8))
+                {
+                    hasWhiskers = property.Value.GetBoolean();
+                    continue;
+                }
+                if (!options.IgnoreAdditionalProperties)
                 {
                     //this means its an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -117,6 +118,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
                 this.IsHungry = model.IsHungry;
                 this.HasWhiskers = model.HasWhiskers;
                 this.IsHungry = model.IsHungry;
+                this.RawData = model.RawData;
                 bytesConsumed = stream.Length;
                 return true;
             }
