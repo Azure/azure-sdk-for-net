@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
             var projectResponse = await Client.GetProjectResource(projectId).GetAsync();
             var projectResource = projectResponse.Value;
 
-            var poolResource = await projectResource.GetPoolAsync(poolId.Name);
+            var poolResource = await Client.GetPoolResource(poolId).GetAsync();
             ScheduleCollection resourceCollection = poolResource.Value.GetSchedules();
 
             string resourceName = "default";
