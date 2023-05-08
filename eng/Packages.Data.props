@@ -100,7 +100,7 @@
     <PackageReference Update="Azure.Storage.Common" Version="12.15.0" />
     <PackageReference Update="Azure.Storage.Blobs" Version="12.16.0" />
     <PackageReference Update="Azure.Storage.Queues" Version="12.14.0" />
-    <PackageReference Update="Azure.ResourceManager" Version="1.4.0" />
+    <PackageReference Update="Azure.ResourceManager" Version="1.5.0" />
 
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.1" />
