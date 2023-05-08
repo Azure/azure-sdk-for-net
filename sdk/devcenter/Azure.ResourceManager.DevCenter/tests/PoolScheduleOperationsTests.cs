@@ -25,9 +25,6 @@ namespace Azure.ResourceManager.DevCenter.Tests
             ResourceIdentifier projectId = new ResourceIdentifier(TestEnvironment.DefaultProjectId);
             ResourceIdentifier poolId = new ResourceIdentifier(TestEnvironment.DefaultPoolId);
 
-            var projectResponse = await Client.GetProjectResource(projectId).GetAsync();
-            var projectResource = projectResponse.Value;
-
             var poolResource = await Client.GetPoolResource(poolId).GetAsync();
             ScheduleCollection resourceCollection = poolResource.Value.GetSchedules();
 
