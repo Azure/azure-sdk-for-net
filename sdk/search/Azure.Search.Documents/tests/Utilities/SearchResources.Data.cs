@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Tests
                     new SearchableField("hotelName") { IsFilterable = true, IsSortable = true },
                     new SearchableField("description") { AnalyzerName = LexicalAnalyzerName.EnLucene },
                     new SearchableField("descriptionFr") { AnalyzerName = LexicalAnalyzerName.FrLucene },
-                    new SearchField("DescriptionVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
+                    new SearchField("descriptionVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
                     {
                         IsSearchable = true,
                         Dimensions = 1536,
@@ -154,6 +154,7 @@ namespace Azure.Search.Documents.Tests
                     HotelId = "3",
                     Description = "Very popular hotel in town",
                     DescriptionFr = "Hôtel le plus populaire en ville",
+                    DescriptionVector = VectorSearchEmbeddings.Hotel3VectorizeDescription,
                     HotelName = "EconoStay",
                     Category = "Budget",
                     Tags = new[] { "wifi", "budget" },
@@ -169,6 +170,7 @@ namespace Azure.Search.Documents.Tests
                     HotelId = "4",
                     Description = "Pretty good hotel",
                     DescriptionFr = "Assez bon hôtel",
+                    DescriptionVector = VectorSearchEmbeddings.Hotel4VectorizeDescription,
                     HotelName = "Express Rooms",
                     Category = "Budget",
                     Tags = new[] { "wifi", "budget" },
@@ -184,6 +186,7 @@ namespace Azure.Search.Documents.Tests
                     HotelId = "5",
                     Description = "Another good hotel",
                     DescriptionFr = "Un autre bon hôtel",
+                    DescriptionVector = VectorSearchEmbeddings.Hotel5VectorizeDescription,
                     HotelName = "Comfy Place",
                     Category = "Budget",
                     Tags = new[] { "wifi", "budget" },
@@ -206,6 +209,7 @@ namespace Azure.Search.Documents.Tests
                 {
                     HotelId = "6",
                     Description = "Surprisingly expensive. Model suites have an ocean-view.",
+                    DescriptionVector = VectorSearchEmbeddings.Hotel6VectorizeDescription,
                     LastRenovationDate = null
                 },
                 new Hotel()
@@ -213,13 +217,15 @@ namespace Azure.Search.Documents.Tests
                     HotelId = "7",
                     Description = "Modern architecture, very polite staff and very clean. Also very affordable.",
                     DescriptionFr = "Architecture moderne, personnel poli et très propre. Aussi très abordable.",
+                    DescriptionVector = VectorSearchEmbeddings.Hotel7VectorizeDescription,
                     HotelName = "Modern Stay"
                 },
                 new Hotel()
                 {
                     HotelId = "8",
                     Description = "Has some road noise and is next to the very police station. Bathrooms had morel coverings.",
-                    DescriptionFr = "Il y a du bruit de la route et se trouve à côté de la station de police. Les salles de bain avaient des revêtements de morilles."
+                    DescriptionFr = "Il y a du bruit de la route et se trouve à côté de la station de police. Les salles de bain avaient des revêtements de morilles.",
+                    DescriptionVector = VectorSearchEmbeddings.Hotel8VectorizeDescription,
                 },
                 new Hotel()
                 {
@@ -227,6 +233,7 @@ namespace Azure.Search.Documents.Tests
                     HotelName = "Secret Point Motel",
                     Description = "The hotel is ideally located on the main commercial artery of the city in the heart of New York. A few minutes away is Time's Square and the historic centre of the city, as well as other places of interest that make New York one of America's most attractive and cosmopolitan cities.",
                     DescriptionFr = "L'hôtel est idéalement situé sur la principale artère commerciale de la ville en plein cœur de New York. A quelques minutes se trouve la place du temps et le centre historique de la ville, ainsi que d'autres lieux d'intérêt qui font de New York l'une des villes les plus attractives et cosmopolites de l'Amérique.",
+                    DescriptionVector = VectorSearchEmbeddings.Hotel9VectorizeDescription,
                     Category = "Boutique",
                     Tags = new[] { "pool", "air conditioning", "concierge" },
                     ParkingIncluded = false,
@@ -275,6 +282,7 @@ namespace Azure.Search.Documents.Tests
                     HotelName = "Countryside Hotel",
                     Description = "Save up to 50% off traditional hotels.  Free WiFi, great location near downtown, full kitchen, washer & dryer, 24/7 support, bowling alley, fitness center and more.",
                     DescriptionFr = "Économisez jusqu'à 50% sur les hôtels traditionnels.  WiFi gratuit, très bien situé près du centre-ville, cuisine complète, laveuse & sécheuse, support 24/7, bowling, centre de fitness et plus encore.",
+                    DescriptionVector = VectorSearchEmbeddings.Hotel10VectorizeDescription,
                     Category = "Budget",
                     Tags = new[] { "24-hour front desk service", "coffee in lobby", "restaurant" },
                     ParkingIncluded = false,
