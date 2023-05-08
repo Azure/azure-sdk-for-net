@@ -207,7 +207,7 @@ namespace Azure.Search.Documents
         /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async Task<Response<object>> GetAsync(string key, IEnumerable<string> selectedFields = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyDictionary<string, object>>> GetAsync(string key, IEnumerable<string> selectedFields = null, CancellationToken cancellationToken = default)
         {
             if (key == null)
             {
@@ -220,9 +220,21 @@ namespace Azure.Search.Documents
             {
                 case 200:
                     {
-                        object value = default;
+                        IReadOnlyDictionary<string, object> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = document.RootElement.GetObject();
+                        Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                        foreach (var property in document.RootElement.EnumerateObject())
+                        {
+                            if (property.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                dictionary.Add(property.Name, null);
+                            }
+                            else
+                            {
+                                dictionary.Add(property.Name, property.Value.GetObject());
+                            }
+                        }
+                        value = dictionary;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -235,7 +247,7 @@ namespace Azure.Search.Documents
         /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public Response<object> Get(string key, IEnumerable<string> selectedFields = null, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyDictionary<string, object>> Get(string key, IEnumerable<string> selectedFields = null, CancellationToken cancellationToken = default)
         {
             if (key == null)
             {
@@ -248,9 +260,21 @@ namespace Azure.Search.Documents
             {
                 case 200:
                     {
-                        object value = default;
+                        IReadOnlyDictionary<string, object> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = document.RootElement.GetObject();
+                        Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                        foreach (var property in document.RootElement.EnumerateObject())
+                        {
+                            if (property.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                dictionary.Add(property.Name, null);
+                            }
+                            else
+                            {
+                                dictionary.Add(property.Name, property.Value.GetObject());
+                            }
+                        }
+                        value = dictionary;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
