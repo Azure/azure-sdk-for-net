@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
         }
 
         [TestCase]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/36058")]
         public async Task ScheduleApiTests()
         {
             //1.CreateOrUpdate
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             var name = Recording.GenerateAssetName("schedule");
             var name2 = Recording.GenerateAssetName("schedule");
             var name3 = Recording.GenerateAssetName("schedule");
-            var input = ResourceDataHelpers.GetScheduleData(name);
+            var input = ResourceDataHelpers.GetScheduleData(name, Recording.UtcNow.AddDays(1));
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             AutomationScheduleResource schedule = lro.Value;
             Assert.AreEqual(name, schedule.Data.Name);
