@@ -265,10 +265,10 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void RoundtripObjects()
         {
-            var model = new SampleModel("Hello World", 5);
-            var roundtripped = (SampleModel)new BinaryData(model).ToDynamicFromJson();
-
-            Assert.AreEqual(model, roundtripped);
+            SampleModel model = new SampleModel("Hello World", 5);
+            BinaryData serialized = new(model, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+            SampleModel deserialized = (SampleModel)serialized.ToDynamicFromJson();
+            Assert.AreEqual(model, deserialized);
         }
 
         [Test]
