@@ -1,5 +1,33 @@
 namespace Azure.ResourceManager.DevCenter
 {
+    public partial class AllowedEnvironmentTypeCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevCenter.AllowedEnvironmentTypeResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.AllowedEnvironmentTypeResource>, System.Collections.IEnumerable
+    {
+        protected AllowedEnvironmentTypeCollection() { }
+        public virtual Azure.Response<bool> Exists(string environmentTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string environmentTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevCenter.AllowedEnvironmentTypeResource> Get(string environmentTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevCenter.AllowedEnvironmentTypeResource> GetAll(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevCenter.AllowedEnvironmentTypeResource> GetAllAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.AllowedEnvironmentTypeResource>> GetAsync(string environmentTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevCenter.AllowedEnvironmentTypeResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevCenter.AllowedEnvironmentTypeResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DevCenter.AllowedEnvironmentTypeResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.AllowedEnvironmentTypeResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class AllowedEnvironmentTypeData : Azure.ResourceManager.Models.ResourceData
+    {
+        public AllowedEnvironmentTypeData() { }
+        public Azure.ResourceManager.DevCenter.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+    }
+    public partial class AllowedEnvironmentTypeResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected AllowedEnvironmentTypeResource() { }
+        public virtual Azure.ResourceManager.DevCenter.AllowedEnvironmentTypeData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevCenter.AllowedEnvironmentTypeResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.AllowedEnvironmentTypeResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class AttachedNetworkConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevCenter.AttachedNetworkConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.AttachedNetworkConnectionResource>, System.Collections.IEnumerable
     {
         protected AttachedNetworkConnectionCollection() { }
@@ -22,7 +50,7 @@ namespace Azure.ResourceManager.DevCenter
         public Azure.ResourceManager.DevCenter.Models.HealthCheckStatus? HealthCheckStatus { get { throw null; } }
         public string NetworkConnectionId { get { throw null; } set { } }
         public string NetworkConnectionLocation { get { throw null; } }
-        public string ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.ProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class AttachedNetworkConnectionResource : Azure.ResourceManager.ArmResource
     {
@@ -59,7 +87,8 @@ namespace Azure.ResourceManager.DevCenter
         public Azure.ResourceManager.DevCenter.Models.GitCatalog AdoGit { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.GitCatalog GitHub { get { throw null; } set { } }
         public System.DateTimeOffset? LastSyncOn { get { throw null; } }
-        public string ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.CatalogSyncState? SyncState { get { throw null; } }
     }
     public partial class CatalogResource : Azure.ResourceManager.ArmResource
     {
@@ -96,11 +125,12 @@ namespace Azure.ResourceManager.DevCenter
     {
         public DevBoxDefinitionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.DevCenter.Models.ImageReference ActiveImageReference { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.HibernateSupport? HibernateSupport { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.ImageReference ImageReference { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.ImageValidationErrorDetails ImageValidationErrorDetails { get { throw null; } }
         public Azure.ResourceManager.DevCenter.Models.ImageValidationStatus? ImageValidationStatus { get { throw null; } }
         public string OSStorageType { get { throw null; } set { } }
-        public string ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterSku Sku { get { throw null; } set { } }
     }
     public partial class DevBoxDefinitionResource : Azure.ResourceManager.ArmResource
@@ -141,11 +171,15 @@ namespace Azure.ResourceManager.DevCenter
     public partial class DevCenterData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DevCenterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public System.Uri DevCenterUri { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public string ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.ProvisioningState? ProvisioningState { get { throw null; } }
     }
     public static partial class DevCenterExtensions
     {
+        public static Azure.Response<Azure.ResourceManager.DevCenter.Models.CheckNameAvailabilityResponse> ExecuteCheckNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.DevCenter.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.Models.CheckNameAvailabilityResponse>> ExecuteCheckNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.DevCenter.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.DevCenter.AllowedEnvironmentTypeResource GetAllowedEnvironmentTypeResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DevCenter.AttachedNetworkConnectionResource GetAttachedNetworkConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DevCenter.CatalogResource GetCatalogResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DevCenter.DevBoxDefinitionResource GetDevBoxDefinitionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -239,7 +273,7 @@ namespace Azure.ResourceManager.DevCenter
     public partial class EnvironmentTypeData : Azure.ResourceManager.Models.ResourceData
     {
         public EnvironmentTypeData() { }
-        public string ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class EnvironmentTypeResource : Azure.ResourceManager.ArmResource
@@ -281,7 +315,7 @@ namespace Azure.ResourceManager.DevCenter
     {
         public GalleryData() { }
         public string GalleryResourceId { get { throw null; } set { } }
-        public string ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.ProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class GalleryResource : Azure.ResourceManager.ArmResource
     {
@@ -334,8 +368,9 @@ namespace Azure.ResourceManager.DevCenter
     {
         public ImageData() { }
         public string Description { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.HibernateSupport? HibernateSupport { get { throw null; } }
         public string Offer { get { throw null; } }
-        public string ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string Publisher { get { throw null; } }
         public Azure.ResourceManager.DevCenter.Models.RecommendedMachineConfiguration RecommendedMachineConfiguration { get { throw null; } }
         public string Sku { get { throw null; } }
@@ -372,7 +407,7 @@ namespace Azure.ResourceManager.DevCenter
         public bool? ExcludeFromLatest { get { throw null; } }
         public string NamePropertiesName { get { throw null; } }
         public int? OSDiskImageSizeInGb { get { throw null; } }
-        public string ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public System.DateTimeOffset? PublishedOn { get { throw null; } }
     }
     public partial class ImageVersionResource : Azure.ResourceManager.ArmResource
@@ -410,7 +445,7 @@ namespace Azure.ResourceManager.DevCenter
         public Azure.ResourceManager.DevCenter.Models.HealthCheckStatus? HealthCheckStatus { get { throw null; } }
         public string NetworkingResourceGroupName { get { throw null; } set { } }
         public string OrganizationUnit { get { throw null; } set { } }
-        public string ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string SubnetId { get { throw null; } set { } }
     }
     public partial class NetworkConnectionResource : Azure.ResourceManager.ArmResource
@@ -427,10 +462,12 @@ namespace Azure.ResourceManager.DevCenter
         public virtual Azure.Response<Azure.ResourceManager.DevCenter.NetworkConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.NetworkConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DevCenter.HealthCheckStatusDetailResource GetHealthCheckStatusDetail() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevCenter.Models.OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpoints(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevCenter.Models.OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevCenter.NetworkConnectionResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.NetworkConnectionResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response RunHealthChecks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RunHealthChecksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation RunHealthChecks(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RunHealthChecksAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevCenter.NetworkConnectionResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.NetworkConnectionResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevCenter.NetworkConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevCenter.Models.NetworkConnectionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -455,10 +492,13 @@ namespace Azure.ResourceManager.DevCenter
     {
         public PoolData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string DevBoxDefinitionName { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.HealthStatus? HealthStatus { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevCenter.Models.HealthStatusDetail> HealthStatusDetails { get { throw null; } }
         public Azure.ResourceManager.DevCenter.Models.LicenseType? LicenseType { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.LocalAdminStatus? LocalAdministrator { get { throw null; } set { } }
         public string NetworkConnectionName { get { throw null; } set { } }
-        public string ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.StopOnDisconnectConfiguration StopOnDisconnect { get { throw null; } set { } }
     }
     public partial class PoolResource : Azure.ResourceManager.ArmResource
     {
@@ -478,6 +518,8 @@ namespace Azure.ResourceManager.DevCenter
         public virtual Azure.ResourceManager.DevCenter.ScheduleCollection GetSchedules() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevCenter.PoolResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.PoolResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation RunHealthChecks(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RunHealthChecksAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevCenter.PoolResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.PoolResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevCenter.PoolResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevCenter.Models.PoolPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -526,7 +568,9 @@ namespace Azure.ResourceManager.DevCenter
         public ProjectData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string Description { get { throw null; } set { } }
         public string DevCenterId { get { throw null; } set { } }
-        public string ProvisioningState { get { throw null; } }
+        public System.Uri DevCenterUri { get { throw null; } }
+        public int? MaxDevBoxesPerUser { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.ProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class ProjectDevBoxDefinitionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevCenter.ProjectDevBoxDefinitionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.ProjectDevBoxDefinitionResource>, System.Collections.IEnumerable
     {
@@ -571,9 +615,9 @@ namespace Azure.ResourceManager.DevCenter
         public ProjectEnvironmentTypeData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string DeploymentTargetId { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public string ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DevCenter.Models.EnvironmentRole> Roles { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.EnableStatus? Status { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus? Status { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DevCenter.Models.UserRoleAssignmentValue> UserRoleAssignments { get { throw null; } }
     }
     public partial class ProjectEnvironmentTypeResource : Azure.ResourceManager.ArmResource
@@ -608,6 +652,9 @@ namespace Azure.ResourceManager.DevCenter
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevCenter.ProjectResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevCenter.AllowedEnvironmentTypeResource> GetAllowedEnvironmentType(string environmentTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.AllowedEnvironmentTypeResource>> GetAllowedEnvironmentTypeAsync(string environmentTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DevCenter.AllowedEnvironmentTypeCollection GetAllowedEnvironmentTypes() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.ProjectResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevCenter.PoolResource> GetPool(string poolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.PoolResource>> GetPoolAsync(string poolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -647,11 +694,11 @@ namespace Azure.ResourceManager.DevCenter
     {
         public ScheduleData() { }
         public Azure.ResourceManager.DevCenter.Models.ScheduledFrequency? Frequency { get { throw null; } set { } }
-        public string ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.EnableStatus? State { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.ScheduledType? ScheduledType { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.ScheduleEnableStatus? State { get { throw null; } set { } }
         public string Time { get { throw null; } set { } }
         public string TimeZone { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.ScheduledType? TypePropertiesType { get { throw null; } set { } }
     }
     public partial class ScheduleResource : Azure.ResourceManager.ArmResource
     {
@@ -664,8 +711,8 @@ namespace Azure.ResourceManager.DevCenter
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevCenter.ScheduleResource> Get(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.ScheduleResource>> GetAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevCenter.Models.SchedulePatch patch, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevCenter.Models.SchedulePatch patch, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevCenter.ScheduleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevCenter.Models.SchedulePatch patch, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DevCenter.ScheduleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevCenter.Models.SchedulePatch patch, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.DevCenter.Models
@@ -683,9 +730,61 @@ namespace Azure.ResourceManager.DevCenter.Models
         public Azure.ResourceManager.DevCenter.Models.GitCatalog GitHub { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CatalogSyncState : System.IEquatable<Azure.ResourceManager.DevCenter.Models.CatalogSyncState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CatalogSyncState(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.CatalogSyncState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.CatalogSyncState Failed { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.CatalogSyncState InProgress { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.CatalogSyncState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.CatalogSyncState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.CatalogSyncState left, Azure.ResourceManager.DevCenter.Models.CatalogSyncState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.CatalogSyncState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.CatalogSyncState left, Azure.ResourceManager.DevCenter.Models.CatalogSyncState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class CheckNameAvailabilityContent
+    {
+        public CheckNameAvailabilityContent() { }
+        public string Name { get { throw null; } set { } }
+        public string ResourceType { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CheckNameAvailabilityReason : System.IEquatable<Azure.ResourceManager.DevCenter.Models.CheckNameAvailabilityReason>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CheckNameAvailabilityReason(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.CheckNameAvailabilityReason AlreadyExists { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.CheckNameAvailabilityReason Invalid { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.CheckNameAvailabilityReason other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.CheckNameAvailabilityReason left, Azure.ResourceManager.DevCenter.Models.CheckNameAvailabilityReason right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.CheckNameAvailabilityReason (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.CheckNameAvailabilityReason left, Azure.ResourceManager.DevCenter.Models.CheckNameAvailabilityReason right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class CheckNameAvailabilityResponse
+    {
+        internal CheckNameAvailabilityResponse() { }
+        public string Message { get { throw null; } }
+        public bool? NameAvailable { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.CheckNameAvailabilityReason? Reason { get { throw null; } }
+    }
     public partial class DevBoxDefinitionPatch : Azure.ResourceManager.DevCenter.Models.TrackedResourceUpdate
     {
         public DevBoxDefinitionPatch() { }
+        public Azure.ResourceManager.DevCenter.Models.HibernateSupport? HibernateSupport { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.ImageReference ImageReference { get { throw null; } set { } }
         public string OSStorageType { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterSku Sku { get { throw null; } set { } }
@@ -744,29 +843,41 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DomainJoinType left, Azure.ResourceManager.DevCenter.Models.DomainJoinType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.EnableStatus>
+    public partial class EndpointDependency
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EnableStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.EnableStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.EnableStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.EnableStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.EnableStatus left, Azure.ResourceManager.DevCenter.Models.EnableStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.EnableStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.EnableStatus left, Azure.ResourceManager.DevCenter.Models.EnableStatus right) { throw null; }
-        public override string ToString() { throw null; }
+        internal EndpointDependency() { }
+        public string Description { get { throw null; } }
+        public string DomainName { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevCenter.Models.EndpointDetail> EndpointDetails { get { throw null; } }
+    }
+    public partial class EndpointDetail
+    {
+        internal EndpointDetail() { }
+        public int? Port { get { throw null; } }
     }
     public partial class EnvironmentRole
     {
         public EnvironmentRole() { }
         public string Description { get { throw null; } }
         public string RoleName { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EnvironmentTypeEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EnvironmentTypeEnableStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus left, Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus left, Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class EnvironmentTypePatch
     {
@@ -814,14 +925,56 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static bool operator !=(Azure.ResourceManager.DevCenter.Models.HealthCheckStatus left, Azure.ResourceManager.DevCenter.Models.HealthCheckStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HealthStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.HealthStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HealthStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.HealthStatus Healthy { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.HealthStatus Pending { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.HealthStatus Unhealthy { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.HealthStatus Unknown { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.HealthStatus Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.HealthStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.HealthStatus left, Azure.ResourceManager.DevCenter.Models.HealthStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.HealthStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.HealthStatus left, Azure.ResourceManager.DevCenter.Models.HealthStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class HealthStatusDetail
+    {
+        internal HealthStatusDetail() { }
+        public string Code { get { throw null; } }
+        public string Message { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HibernateSupport : System.IEquatable<Azure.ResourceManager.DevCenter.Models.HibernateSupport>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HibernateSupport(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.HibernateSupport Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.HibernateSupport Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.HibernateSupport other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.HibernateSupport left, Azure.ResourceManager.DevCenter.Models.HibernateSupport right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.HibernateSupport (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.HibernateSupport left, Azure.ResourceManager.DevCenter.Models.HibernateSupport right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ImageReference
     {
         public ImageReference() { }
         public string ExactVersion { get { throw null; } }
         public string Id { get { throw null; } set { } }
-        public string Offer { get { throw null; } set { } }
-        public string Publisher { get { throw null; } set { } }
-        public string Sku { get { throw null; } set { } }
     }
     public partial class ImageValidationErrorDetails
     {
@@ -894,23 +1047,17 @@ namespace Azure.ResourceManager.DevCenter.Models
         public string OrganizationUnit { get { throw null; } set { } }
         public string SubnetId { get { throw null; } set { } }
     }
-    public partial class OperationStatus
+    public partial class OperationStatus : Azure.ResourceManager.Models.OperationStatusResult
     {
-        internal OperationStatus() { }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.OperationStatusError Error { get { throw null; } }
-        public string Id { get { throw null; } }
-        public string Name { get { throw null; } }
-        public float? PercentComplete { get { throw null; } }
+        internal OperationStatus() : base (default(string)) { }
         public System.BinaryData Properties { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
-        public string Status { get { throw null; } }
+        public string ResourceId { get { throw null; } }
     }
-    public partial class OperationStatusError
+    public partial class OutboundEnvironmentEndpoint
     {
-        internal OperationStatusError() { }
-        public string Code { get { throw null; } }
-        public string Message { get { throw null; } }
+        internal OutboundEnvironmentEndpoint() { }
+        public string Category { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevCenter.Models.EndpointDependency> Endpoints { get { throw null; } }
     }
     public partial class PoolPatch : Azure.ResourceManager.DevCenter.Models.TrackedResourceUpdate
     {
@@ -919,6 +1066,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public Azure.ResourceManager.DevCenter.Models.LicenseType? LicenseType { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.LocalAdminStatus? LocalAdministrator { get { throw null; } set { } }
         public string NetworkConnectionName { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.StopOnDisconnectConfiguration StopOnDisconnect { get { throw null; } set { } }
     }
     public partial class ProjectEnvironmentTypePatch
     {
@@ -926,7 +1074,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public string DeploymentTargetId { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DevCenter.Models.EnvironmentRole> Roles { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.EnableStatus? Status { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus? Status { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DevCenter.Models.UserRoleAssignmentValue> UserRoleAssignments { get { throw null; } }
     }
@@ -935,6 +1083,39 @@ namespace Azure.ResourceManager.DevCenter.Models
         public ProjectPatch() { }
         public string Description { get { throw null; } set { } }
         public string DevCenterId { get { throw null; } set { } }
+        public int? MaxDevBoxesPerUser { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.DevCenter.Models.ProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.ProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.ProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.ProvisioningState Created { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.ProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.ProvisioningState Deleted { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.ProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.ProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.ProvisioningState MovingResources { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.ProvisioningState NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.ProvisioningState RolloutInProgress { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.ProvisioningState Running { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.ProvisioningState StorageProvisioningFailed { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.ProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.ProvisioningState TransientFailure { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.ProvisioningState Updated { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.ProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.ProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.ProvisioningState left, Azure.ResourceManager.DevCenter.Models.ProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.ProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.ProvisioningState left, Azure.ResourceManager.DevCenter.Models.ProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class RecommendedMachineConfiguration
     {
@@ -982,14 +1163,56 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static bool operator !=(Azure.ResourceManager.DevCenter.Models.ScheduledType left, Azure.ResourceManager.DevCenter.Models.ScheduledType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ScheduleEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.ScheduleEnableStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ScheduleEnableStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.ScheduleEnableStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.ScheduleEnableStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.ScheduleEnableStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.ScheduleEnableStatus left, Azure.ResourceManager.DevCenter.Models.ScheduleEnableStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.ScheduleEnableStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.ScheduleEnableStatus left, Azure.ResourceManager.DevCenter.Models.ScheduleEnableStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class SchedulePatch : Azure.ResourceManager.DevCenter.Models.TrackedResourceUpdate
     {
         public SchedulePatch() { }
         public Azure.ResourceManager.DevCenter.Models.ScheduledFrequency? Frequency { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.ScheduledType? ScheduledType { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.EnableStatus? State { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.ScheduleEnableStatus? State { get { throw null; } set { } }
         public string Time { get { throw null; } set { } }
         public string TimeZone { get { throw null; } set { } }
+    }
+    public partial class StopOnDisconnectConfiguration
+    {
+        public StopOnDisconnectConfiguration() { }
+        public int? GracePeriodMinutes { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.StopOnDisconnectEnableStatus? Status { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StopOnDisconnectEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.StopOnDisconnectEnableStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StopOnDisconnectEnableStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.StopOnDisconnectEnableStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.StopOnDisconnectEnableStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.StopOnDisconnectEnableStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.StopOnDisconnectEnableStatus left, Azure.ResourceManager.DevCenter.Models.StopOnDisconnectEnableStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.StopOnDisconnectEnableStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.StopOnDisconnectEnableStatus left, Azure.ResourceManager.DevCenter.Models.StopOnDisconnectEnableStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class TrackedResourceUpdate
     {
