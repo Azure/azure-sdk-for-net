@@ -145,4 +145,10 @@ override-operation-name:
   Service_ValidateAddress: ValidateAddress
   Service_ValidateInputs: ValidateInputs
   Service_ValidateInputsByResourceGroup: ValidateInputs
+
+directive:
+  - from: databox.json
+    where: $.definitions
+    transform: >
+      $.MitigateJobRequest.required = ["customerResolutionCode"]
 ```

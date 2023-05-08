@@ -14,13 +14,15 @@ namespace Azure.ResourceManager.DataBox.Models
     public partial class MitigateJobContent
     {
         /// <summary> Initializes a new instance of MitigateJobContent. </summary>
-        public MitigateJobContent()
+        /// <param name="customerResolutionCode"> Resolution code for the job. </param>
+        public MitigateJobContent(CustomerResolutionCode customerResolutionCode)
         {
+            CustomerResolutionCode = customerResolutionCode;
             SerialNumberCustomerResolutionMap = new ChangeTrackingDictionary<string, CustomerResolutionCode>();
         }
 
         /// <summary> Resolution code for the job. </summary>
-        public CustomerResolutionCode? CustomerResolutionCode { get; set; }
+        public CustomerResolutionCode CustomerResolutionCode { get; }
         /// <summary> Serial number and the customer resolution code corresponding to each serial number. </summary>
         public IDictionary<string, CustomerResolutionCode> SerialNumberCustomerResolutionMap { get; }
     }
