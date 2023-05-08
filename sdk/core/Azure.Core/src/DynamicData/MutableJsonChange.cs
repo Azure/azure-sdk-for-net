@@ -7,13 +7,16 @@ namespace Azure.Core.Json
 {
     internal struct MutableJsonChange
     {
+        private readonly JsonSerializerOptions _serializerOptions;
+        private JsonElement? _serializedValue;
+
         public MutableJsonChange(string path, int index, object? value, bool replacesJsonElement, JsonSerializerOptions options)
         {
             Path = path;
             Index = index;
             Value = value;
             ReplacesJsonElement = replacesJsonElement;
-            SerializerOptions = options;
+            _serializerOptions = options;
         }
 
         public string Path { get; private set; }
@@ -29,10 +32,6 @@ namespace Azure.Core.Json
         /// </summary>
         public bool ReplacesJsonElement { get; private set; }
 
-        private JsonElement? _serializedValue;
-
-        public JsonSerializerOptions SerializerOptions { get; private set; }
-
         internal JsonElement AsJsonElement()
         {
             if (_serializedValue != null)
@@ -46,7 +45,7 @@ namespace Azure.Core.Json
                 return element;
             }
 
-            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(Value, SerializerOptions);
+            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(Value, _serializerOptions);
             _serializedValue = JsonDocument.Parse(bytes).RootElement;
             return _serializedValue.Value;
         }
