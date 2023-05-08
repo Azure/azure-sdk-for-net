@@ -19,7 +19,8 @@ namespace Azure.Core.Json
         private readonly ReadOnlyMemory<byte> _original;
         private readonly JsonDocument _originalDocument;
 
-        internal JsonSerializerOptions SerializerOptions { get; private set; }
+        private readonly JsonSerializerOptions _serializerOptions;
+        internal JsonSerializerOptions SerializerOptions { get => _serializerOptions; }
 
         private ChangeTracker? _changeTracker;
         internal ChangeTracker Changes
@@ -165,7 +166,7 @@ namespace Azure.Core.Json
         {
             _original = utf8Json;
             _originalDocument = document;
-            SerializerOptions = serializerOptions ?? new JsonSerializerOptions();
+            _serializerOptions = serializerOptions ?? new JsonSerializerOptions();
         }
 
         private static ReadOnlyMemory<byte> GetBytesFromDocument(JsonDocument document)
