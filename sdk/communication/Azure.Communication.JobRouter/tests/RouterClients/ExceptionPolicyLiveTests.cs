@@ -118,10 +118,12 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                         {
                             LabelsToUpsert = labelsToUpsert
                         },
-                        [manualReclassifyActionId] = new ManualReclassifyExceptionAction(createQueueResponse.Value.Id, 1, new List<WorkerSelector>
+                        [manualReclassifyActionId] = new ManualReclassifyExceptionAction
                         {
-                            new WorkerSelector("abc", LabelOperator.Equal, new LabelValue(1))
-                        })
+                            QueueId = createQueueResponse.Value.Id,
+                            Priority = 1,
+                            WorkerSelectors = { new WorkerSelector("abc", LabelOperator.Equal, new LabelValue(1)) }
+                        }
                     }
                 )
             };
