@@ -1,0 +1,1178 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-db5bcfdedc333b4f940b71454e1a4e25-51f8b41eb6fde948-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "3763954050dcca7f5dce5ce800a93551",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "748",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Apr 2023 09:04:37 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6854e85b-f93f-4da7-b548-ea3f34dc14b8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11970",
+        "x-ms-request-id": "6854e85b-f93f-4da7-b548-ea3f34dc14b8",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230426T090437Z:6854e85b-f93f-4da7-b548-ea3f34dc14b8"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-1254",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-7341?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "43",
+        "Content-Type": "application/json",
+        "traceparent": "00-c30f02d446fa5e40b2f806468b75ab1a-23f42017d52f1641-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "2d092d4a5f3fa34367beb720f6454d89",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {
+          "test": "env"
+        },
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "241",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Apr 2023 09:04:38 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "95f5e6a8-10c4-41d2-9539-15f448b3aa2b",
+        "x-ms-ratelimit-remaining-subscription-writes": "1193",
+        "x-ms-request-id": "95f5e6a8-10c4-41d2-9539-15f448b3aa2b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230426T090439Z:95f5e6a8-10c4-41d2-9539-15f448b3aa2b"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341",
+        "name": "testRG-7341",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "tags": {
+          "test": "env"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault2319?api-version=2023-01-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "217",
+        "Content-Type": "application/json",
+        "traceparent": "00-39cbed98cf06124aa35fd3598d815916-4c95188d3f5d7d4c-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataProtectionBackup/1.2.0-alpha.20230425.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "60e6574d240114054871ca3f3faeda5a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "storageSettings": [
+            {
+              "datastoreType": "VaultStore",
+              "type": "ZoneRedundant"
+            },
+            {
+              "datastoreType": "OperationalStore",
+              "type": "ZoneRedundant"
+            }
+          ]
+        },
+        "identity": {
+          "type": "SystemAssigned"
+        },
+        "tags": {},
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault2319/operationStatus/M2I1MTE5NmUtYWRjNC00NGFjLTk1NTktYjYzNzZhY2RkNWFmO2UyMjIzOWI3LTgwZmEtNDI1Zi1iNTY1LTQ1MzJmNTI5YjRlYg==?api-version=2023-01-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "693",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Apr 2023 09:04:43 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-resource-system-data": "{\u0022createdBy\u0022:\u00228e6d47e0-7969-4fde-a62c-4fea4f165e98\u0022,\u0022createdByType\u0022:\u0022Application\u0022,\u0022createdAt\u0022:\u00222023-04-26T09:04:41.1415571Z\u0022,\u0022lastModifiedBy\u0022:\u00228e6d47e0-7969-4fde-a62c-4fea4f165e98\u0022,\u0022lastModifiedByType\u0022:\u0022Application\u0022,\u0022lastModifiedAt\u0022:\u00222023-04-26T09:04:41.1415571Z\u0022}",
+        "x-ms-correlation-request-id": "7739a458-54c8-40c8-8786-c7619cc5ca64",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "95",
+        "x-ms-request-id": "7739a458-54c8-40c8-8786-c7619cc5ca64",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230426T090443Z:7739a458-54c8-40c8-8786-c7619cc5ca64"
+      },
+      "ResponseBody": {
+        "location": "eastus",
+        "tags": {},
+        "identity": {
+          "type": "SystemAssigned",
+          "principalId": "0a55077d-1c8f-4745-ac2c-c17dcf2e4ebb",
+          "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+        },
+        "properties": {
+          "provisioningState": "Provisioning",
+          "storageSettings": [
+            {
+              "datastoreType": "VaultStore",
+              "type": "ZoneRedundant"
+            },
+            {
+              "datastoreType": "OperationalStore",
+              "type": "ZoneRedundant"
+            }
+          ],
+          "isVaultProtectedByResourceGuard": false,
+          "securitySettings": {
+            "softDeleteSettings": {
+              "state": "On",
+              "retentionDurationInDays": 14.0
+            }
+          }
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault2319",
+        "name": "vault2319",
+        "type": "Microsoft.DataProtection/backupVaults"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault2319/operationStatus/M2I1MTE5NmUtYWRjNC00NGFjLTk1NTktYjYzNzZhY2RkNWFmO2UyMjIzOWI3LTgwZmEtNDI1Zi1iNTY1LTQ1MzJmNTI5YjRlYg==?api-version=2023-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-39cbed98cf06124aa35fd3598d815916-efc16e713fb6c94c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "9e04659ecc6409083a4bfa319d7e7772",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "469",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Apr 2023 09:04:43 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e625e1fe-bec6-4179-b273-affbe0cea649",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "996",
+        "x-ms-request-id": "e625e1fe-bec6-4179-b273-affbe0cea649",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230426T090444Z:e625e1fe-bec6-4179-b273-affbe0cea649"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault2319/operationStatus/M2I1MTE5NmUtYWRjNC00NGFjLTk1NTktYjYzNzZhY2RkNWFmO2UyMjIzOWI3LTgwZmEtNDI1Zi1iNTY1LTQ1MzJmNTI5YjRlYg==",
+        "name": "M2I1MTE5NmUtYWRjNC00NGFjLTk1NTktYjYzNzZhY2RkNWFmO2UyMjIzOWI3LTgwZmEtNDI1Zi1iNTY1LTQ1MzJmNTI5YjRlYg==",
+        "status": "Succeeded",
+        "startTime": "2023-04-26T09:04:42.4810229Z",
+        "endTime": "2023-04-26T09:04:43Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault2319?api-version=2023-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-39cbed98cf06124aa35fd3598d815916-dd916ad842132442-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "22f8ea1b09922d99c371ce397a9e8b39",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "690",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Apr 2023 09:04:44 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "836ef53d-0987-4524-be17-769966d97ff9",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "491",
+        "x-ms-request-id": "836ef53d-0987-4524-be17-769966d97ff9",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230426T090445Z:836ef53d-0987-4524-be17-769966d97ff9"
+      },
+      "ResponseBody": {
+        "location": "eastus",
+        "tags": {},
+        "identity": {
+          "type": "SystemAssigned",
+          "principalId": "0a55077d-1c8f-4745-ac2c-c17dcf2e4ebb",
+          "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "storageSettings": [
+            {
+              "datastoreType": "VaultStore",
+              "type": "ZoneRedundant"
+            },
+            {
+              "datastoreType": "OperationalStore",
+              "type": "ZoneRedundant"
+            }
+          ],
+          "isVaultProtectedByResourceGuard": false,
+          "securitySettings": {
+            "softDeleteSettings": {
+              "state": "On",
+              "retentionDurationInDays": 14.0
+            }
+          }
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault2319",
+        "name": "vault2319",
+        "type": "Microsoft.DataProtection/backupVaults"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault2319?api-version=2023-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b02bcadbeb6a5348be28779d03960b80-7248bc26d873f14b-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataProtectionBackup/1.2.0-alpha.20230425.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "daa0b4123ca988f65e4ec6ea2562d713",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "690",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Apr 2023 09:04:44 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "822973a0-7df8-4998-8d20-b57b51643077",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "490",
+        "x-ms-request-id": "822973a0-7df8-4998-8d20-b57b51643077",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230426T090445Z:822973a0-7df8-4998-8d20-b57b51643077"
+      },
+      "ResponseBody": {
+        "location": "eastus",
+        "tags": {},
+        "identity": {
+          "type": "SystemAssigned",
+          "principalId": "0a55077d-1c8f-4745-ac2c-c17dcf2e4ebb",
+          "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "storageSettings": [
+            {
+              "datastoreType": "VaultStore",
+              "type": "ZoneRedundant"
+            },
+            {
+              "datastoreType": "OperationalStore",
+              "type": "ZoneRedundant"
+            }
+          ],
+          "isVaultProtectedByResourceGuard": false,
+          "securitySettings": {
+            "softDeleteSettings": {
+              "state": "On",
+              "retentionDurationInDays": 14.0
+            }
+          }
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault2319",
+        "name": "vault2319",
+        "type": "Microsoft.DataProtection/backupVaults"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault2319?api-version=2023-01-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "217",
+        "Content-Type": "application/json",
+        "traceparent": "00-6619a27db3870342b52abeb6d0f6d374-4dc7862b9adcb54f-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataProtectionBackup/1.2.0-alpha.20230425.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "9e4a374f3c169583cbd7daf2fece8e9b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "storageSettings": [
+            {
+              "datastoreType": "VaultStore",
+              "type": "ZoneRedundant"
+            },
+            {
+              "datastoreType": "OperationalStore",
+              "type": "ZoneRedundant"
+            }
+          ]
+        },
+        "identity": {
+          "type": "SystemAssigned"
+        },
+        "tags": {},
+        "location": "eastus"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "690",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Apr 2023 09:04:47 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-resource-system-data": "{\u0022lastModifiedBy\u0022:\u00228e6d47e0-7969-4fde-a62c-4fea4f165e98\u0022,\u0022lastModifiedByType\u0022:\u0022Application\u0022,\u0022lastModifiedAt\u0022:\u00222023-04-26T09:04:46.1279178Z\u0022}",
+        "x-ms-correlation-request-id": "807919ec-d9ce-4fc2-83c6-4c2b6bc8df56",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "94",
+        "x-ms-request-id": "807919ec-d9ce-4fc2-83c6-4c2b6bc8df56",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230426T090447Z:807919ec-d9ce-4fc2-83c6-4c2b6bc8df56"
+      },
+      "ResponseBody": {
+        "location": "eastus",
+        "tags": {},
+        "identity": {
+          "type": "SystemAssigned",
+          "principalId": "0a55077d-1c8f-4745-ac2c-c17dcf2e4ebb",
+          "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "storageSettings": [
+            {
+              "datastoreType": "VaultStore",
+              "type": "ZoneRedundant"
+            },
+            {
+              "datastoreType": "OperationalStore",
+              "type": "ZoneRedundant"
+            }
+          ],
+          "isVaultProtectedByResourceGuard": false,
+          "securitySettings": {
+            "softDeleteSettings": {
+              "state": "On",
+              "retentionDurationInDays": 14.0
+            }
+          }
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault2319",
+        "name": "vault2319",
+        "type": "Microsoft.DataProtection/backupVaults"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault4741?api-version=2023-01-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "217",
+        "Content-Type": "application/json",
+        "traceparent": "00-0feff7b92fbb8346bbb2281ce3437e71-350d6cb17f84904a-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataProtectionBackup/1.2.0-alpha.20230425.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "43eaba9aec54d623310b0ed261038a8f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "storageSettings": [
+            {
+              "datastoreType": "VaultStore",
+              "type": "ZoneRedundant"
+            },
+            {
+              "datastoreType": "OperationalStore",
+              "type": "ZoneRedundant"
+            }
+          ]
+        },
+        "identity": {
+          "type": "SystemAssigned"
+        },
+        "tags": {},
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault4741/operationStatus/NzkzM2RlOWMtNDIxZS00NWQ1LTliNWUtMjg3MzgxMWEzNTUyOzgwNDA1NjM2LTI2ODEtNGJiYy05NjllLWM0YTAwYjY1NTY4OA==?api-version=2023-01-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "693",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Apr 2023 09:04:51 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-resource-system-data": "{\u0022createdBy\u0022:\u00228e6d47e0-7969-4fde-a62c-4fea4f165e98\u0022,\u0022createdByType\u0022:\u0022Application\u0022,\u0022createdAt\u0022:\u00222023-04-26T09:04:49.6436438Z\u0022,\u0022lastModifiedBy\u0022:\u00228e6d47e0-7969-4fde-a62c-4fea4f165e98\u0022,\u0022lastModifiedByType\u0022:\u0022Application\u0022,\u0022lastModifiedAt\u0022:\u00222023-04-26T09:04:49.6436438Z\u0022}",
+        "x-ms-correlation-request-id": "e5ddb2d2-96ee-487c-b7ac-4ef125974f4d",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "93",
+        "x-ms-request-id": "e5ddb2d2-96ee-487c-b7ac-4ef125974f4d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230426T090452Z:e5ddb2d2-96ee-487c-b7ac-4ef125974f4d"
+      },
+      "ResponseBody": {
+        "location": "eastus",
+        "tags": {},
+        "identity": {
+          "type": "SystemAssigned",
+          "principalId": "5d947a11-899a-4857-8baa-90db9fdf5f87",
+          "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+        },
+        "properties": {
+          "provisioningState": "Provisioning",
+          "storageSettings": [
+            {
+              "datastoreType": "VaultStore",
+              "type": "ZoneRedundant"
+            },
+            {
+              "datastoreType": "OperationalStore",
+              "type": "ZoneRedundant"
+            }
+          ],
+          "isVaultProtectedByResourceGuard": false,
+          "securitySettings": {
+            "softDeleteSettings": {
+              "state": "On",
+              "retentionDurationInDays": 14.0
+            }
+          }
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault4741",
+        "name": "vault4741",
+        "type": "Microsoft.DataProtection/backupVaults"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault4741/operationStatus/NzkzM2RlOWMtNDIxZS00NWQ1LTliNWUtMjg3MzgxMWEzNTUyOzgwNDA1NjM2LTI2ODEtNGJiYy05NjllLWM0YTAwYjY1NTY4OA==?api-version=2023-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0feff7b92fbb8346bbb2281ce3437e71-3dd9145931e51945-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "435879cf4be4d3479d47b8d28ff57df0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "469",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Apr 2023 09:04:52 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "7cd3c3e3-4700-4698-a6e8-56f1218e1782",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "995",
+        "x-ms-request-id": "7cd3c3e3-4700-4698-a6e8-56f1218e1782",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230426T090453Z:7cd3c3e3-4700-4698-a6e8-56f1218e1782"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault4741/operationStatus/NzkzM2RlOWMtNDIxZS00NWQ1LTliNWUtMjg3MzgxMWEzNTUyOzgwNDA1NjM2LTI2ODEtNGJiYy05NjllLWM0YTAwYjY1NTY4OA==",
+        "name": "NzkzM2RlOWMtNDIxZS00NWQ1LTliNWUtMjg3MzgxMWEzNTUyOzgwNDA1NjM2LTI2ODEtNGJiYy05NjllLWM0YTAwYjY1NTY4OA==",
+        "status": "Succeeded",
+        "startTime": "2023-04-26T09:04:51.0440389Z",
+        "endTime": "2023-04-26T09:04:51Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault4741?api-version=2023-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0feff7b92fbb8346bbb2281ce3437e71-aba8cac3c3428348-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "178434e6a383ac1d8538d4e8417d5ff1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "690",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Apr 2023 09:04:52 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "25ddd9ef-79ac-4f8f-8720-eddb7331b959",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "489",
+        "x-ms-request-id": "25ddd9ef-79ac-4f8f-8720-eddb7331b959",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230426T090453Z:25ddd9ef-79ac-4f8f-8720-eddb7331b959"
+      },
+      "ResponseBody": {
+        "location": "eastus",
+        "tags": {},
+        "identity": {
+          "type": "SystemAssigned",
+          "principalId": "5d947a11-899a-4857-8baa-90db9fdf5f87",
+          "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "storageSettings": [
+            {
+              "datastoreType": "VaultStore",
+              "type": "ZoneRedundant"
+            },
+            {
+              "datastoreType": "OperationalStore",
+              "type": "ZoneRedundant"
+            }
+          ],
+          "isVaultProtectedByResourceGuard": false,
+          "securitySettings": {
+            "softDeleteSettings": {
+              "state": "On",
+              "retentionDurationInDays": 14.0
+            }
+          }
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault4741",
+        "name": "vault4741",
+        "type": "Microsoft.DataProtection/backupVaults"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault6978?api-version=2023-01-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "217",
+        "Content-Type": "application/json",
+        "traceparent": "00-d37f2b917111bb4eaa9b8bfaddfeb04a-9ad6bf07ce042c4a-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataProtectionBackup/1.2.0-alpha.20230425.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "e803f2b946ab74abe457c6fb35622278",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "storageSettings": [
+            {
+              "datastoreType": "VaultStore",
+              "type": "ZoneRedundant"
+            },
+            {
+              "datastoreType": "OperationalStore",
+              "type": "ZoneRedundant"
+            }
+          ]
+        },
+        "identity": {
+          "type": "SystemAssigned"
+        },
+        "tags": {},
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault6978/operationStatus/ZjdjMDhkYzgtMWY1MS00MmU2LTg2NWUtMDRkNzA3Y2MzYTJkOzQwNzM5MzY2LTc0MzYtNDBiZC05YzljLWQyZmE1OTEwY2MzMw==?api-version=2023-01-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "693",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Apr 2023 09:04:57 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-resource-system-data": "{\u0022createdBy\u0022:\u00228e6d47e0-7969-4fde-a62c-4fea4f165e98\u0022,\u0022createdByType\u0022:\u0022Application\u0022,\u0022createdAt\u0022:\u00222023-04-26T09:04:55.3155951Z\u0022,\u0022lastModifiedBy\u0022:\u00228e6d47e0-7969-4fde-a62c-4fea4f165e98\u0022,\u0022lastModifiedByType\u0022:\u0022Application\u0022,\u0022lastModifiedAt\u0022:\u00222023-04-26T09:04:55.3155951Z\u0022}",
+        "x-ms-correlation-request-id": "1bac048e-8925-4a52-b33a-cbb7361d6470",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "92",
+        "x-ms-request-id": "1bac048e-8925-4a52-b33a-cbb7361d6470",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230426T090457Z:1bac048e-8925-4a52-b33a-cbb7361d6470"
+      },
+      "ResponseBody": {
+        "location": "eastus",
+        "tags": {},
+        "identity": {
+          "type": "SystemAssigned",
+          "principalId": "dc9d1a5f-7df5-4065-a5a2-1a6552905bd0",
+          "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+        },
+        "properties": {
+          "provisioningState": "Provisioning",
+          "storageSettings": [
+            {
+              "datastoreType": "VaultStore",
+              "type": "ZoneRedundant"
+            },
+            {
+              "datastoreType": "OperationalStore",
+              "type": "ZoneRedundant"
+            }
+          ],
+          "isVaultProtectedByResourceGuard": false,
+          "securitySettings": {
+            "softDeleteSettings": {
+              "state": "On",
+              "retentionDurationInDays": 14.0
+            }
+          }
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault6978",
+        "name": "vault6978",
+        "type": "Microsoft.DataProtection/backupVaults"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault6978/operationStatus/ZjdjMDhkYzgtMWY1MS00MmU2LTg2NWUtMDRkNzA3Y2MzYTJkOzQwNzM5MzY2LTc0MzYtNDBiZC05YzljLWQyZmE1OTEwY2MzMw==?api-version=2023-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-d37f2b917111bb4eaa9b8bfaddfeb04a-3f6d59b19714514d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "9d19c6e895f29f45890f332bdc217622",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "469",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Apr 2023 09:04:58 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9eb4cb54-1973-4ce4-af8e-dd6da2c63c6b",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "994",
+        "x-ms-request-id": "9eb4cb54-1973-4ce4-af8e-dd6da2c63c6b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230426T090458Z:9eb4cb54-1973-4ce4-af8e-dd6da2c63c6b"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault6978/operationStatus/ZjdjMDhkYzgtMWY1MS00MmU2LTg2NWUtMDRkNzA3Y2MzYTJkOzQwNzM5MzY2LTc0MzYtNDBiZC05YzljLWQyZmE1OTEwY2MzMw==",
+        "name": "ZjdjMDhkYzgtMWY1MS00MmU2LTg2NWUtMDRkNzA3Y2MzYTJkOzQwNzM5MzY2LTc0MzYtNDBiZC05YzljLWQyZmE1OTEwY2MzMw==",
+        "status": "Succeeded",
+        "startTime": "2023-04-26T09:04:56.3884786Z",
+        "endTime": "2023-04-26T09:04:57Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault6978?api-version=2023-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-d37f2b917111bb4eaa9b8bfaddfeb04a-86912971e3670a42-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "88fa5b151bbd7f3659d78bff89fffd85",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "690",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Apr 2023 09:04:59 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a5f497ac-addb-4def-93ad-b022777ce461",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "488",
+        "x-ms-request-id": "a5f497ac-addb-4def-93ad-b022777ce461",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230426T090459Z:a5f497ac-addb-4def-93ad-b022777ce461"
+      },
+      "ResponseBody": {
+        "location": "eastus",
+        "tags": {},
+        "identity": {
+          "type": "SystemAssigned",
+          "principalId": "dc9d1a5f-7df5-4065-a5a2-1a6552905bd0",
+          "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "storageSettings": [
+            {
+              "datastoreType": "VaultStore",
+              "type": "ZoneRedundant"
+            },
+            {
+              "datastoreType": "OperationalStore",
+              "type": "ZoneRedundant"
+            }
+          ],
+          "isVaultProtectedByResourceGuard": false,
+          "securitySettings": {
+            "softDeleteSettings": {
+              "state": "On",
+              "retentionDurationInDays": 14.0
+            }
+          }
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault6978",
+        "name": "vault6978",
+        "type": "Microsoft.DataProtection/backupVaults"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults?api-version=2023-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.DataProtectionBackup/1.2.0-alpha.20230425.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "6f12a6c6854958867420b9ab066c4f3a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2084",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Apr 2023 09:04:59 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b957cd62-6329-4d28-bd72-f70ca65906c2",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "487",
+        "x-ms-request-id": "b957cd62-6329-4d28-bd72-f70ca65906c2",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230426T090500Z:b957cd62-6329-4d28-bd72-f70ca65906c2"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "location": "eastus",
+            "tags": {},
+            "identity": {
+              "type": "SystemAssigned",
+              "principalId": "0a55077d-1c8f-4745-ac2c-c17dcf2e4ebb",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "storageSettings": [
+                {
+                  "datastoreType": "VaultStore",
+                  "type": "ZoneRedundant"
+                },
+                {
+                  "datastoreType": "OperationalStore",
+                  "type": "ZoneRedundant"
+                }
+              ],
+              "isVaultProtectedByResourceGuard": false,
+              "securitySettings": {
+                "softDeleteSettings": {
+                  "state": "On",
+                  "retentionDurationInDays": 14.0
+                }
+              }
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault2319",
+            "name": "vault2319",
+            "type": "Microsoft.DataProtection/backupVaults"
+          },
+          {
+            "location": "eastus",
+            "tags": {},
+            "identity": {
+              "type": "SystemAssigned",
+              "principalId": "5d947a11-899a-4857-8baa-90db9fdf5f87",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "storageSettings": [
+                {
+                  "datastoreType": "VaultStore",
+                  "type": "ZoneRedundant"
+                },
+                {
+                  "datastoreType": "OperationalStore",
+                  "type": "ZoneRedundant"
+                }
+              ],
+              "isVaultProtectedByResourceGuard": false,
+              "securitySettings": {
+                "softDeleteSettings": {
+                  "state": "On",
+                  "retentionDurationInDays": 14.0
+                }
+              }
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault4741",
+            "name": "vault4741",
+            "type": "Microsoft.DataProtection/backupVaults"
+          },
+          {
+            "location": "eastus",
+            "tags": {},
+            "identity": {
+              "type": "SystemAssigned",
+              "principalId": "dc9d1a5f-7df5-4065-a5a2-1a6552905bd0",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "storageSettings": [
+                {
+                  "datastoreType": "VaultStore",
+                  "type": "ZoneRedundant"
+                },
+                {
+                  "datastoreType": "OperationalStore",
+                  "type": "ZoneRedundant"
+                }
+              ],
+              "isVaultProtectedByResourceGuard": false,
+              "securitySettings": {
+                "softDeleteSettings": {
+                  "state": "On",
+                  "retentionDurationInDays": 14.0
+                }
+              }
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault6978",
+            "name": "vault6978",
+            "type": "Microsoft.DataProtection/backupVaults"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault2319?api-version=2023-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-df2e962bce8bef4ba050d2bb897173b4-bc98ffbb77fad943-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataProtectionBackup/1.2.0-alpha.20230425.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "1b969b350963cc628f99431a09451589",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "690",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Apr 2023 09:05:00 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3aece776-c5f0-415a-b274-21778bd67288",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "486",
+        "x-ms-request-id": "3aece776-c5f0-415a-b274-21778bd67288",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230426T090500Z:3aece776-c5f0-415a-b274-21778bd67288"
+      },
+      "ResponseBody": {
+        "location": "eastus",
+        "tags": {},
+        "identity": {
+          "type": "SystemAssigned",
+          "principalId": "0a55077d-1c8f-4745-ac2c-c17dcf2e4ebb",
+          "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "storageSettings": [
+            {
+              "datastoreType": "VaultStore",
+              "type": "ZoneRedundant"
+            },
+            {
+              "datastoreType": "OperationalStore",
+              "type": "ZoneRedundant"
+            }
+          ],
+          "isVaultProtectedByResourceGuard": false,
+          "securitySettings": {
+            "softDeleteSettings": {
+              "state": "On",
+              "retentionDurationInDays": 14.0
+            }
+          }
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault2319",
+        "name": "vault2319",
+        "type": "Microsoft.DataProtection/backupVaults"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault23191?api-version=2023-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-bf096cd33707af4a91f91da07b5c7037-669ed8894970f847-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataProtectionBackup/1.2.0-alpha.20230425.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "3665ad12060e90d9d4a1139c618b78ec",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "231",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Apr 2023 09:05:00 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "370f5a32-8ce2-42f7-a79c-4a1454c8a094",
+        "x-ms-failure-cause": "gateway",
+        "x-ms-request-id": "370f5a32-8ce2-42f7-a79c-4a1454c8a094",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230426T090500Z:370f5a32-8ce2-42f7-a79c-4a1454c8a094"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "ResourceNotFound",
+          "message": "The Resource \u0027Microsoft.DataProtection/BackupVaults/vault23191\u0027 under resource group \u0027testRG-7341\u0027 was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault2319?api-version=2023-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-4c95dc8dc691b64292d62d0e24caae10-91e1060bac916e44-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataProtectionBackup/1.2.0-alpha.20230425.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "eeca5188e169bd224346e0af416c4f2e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "690",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Apr 2023 09:05:01 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "94db087e-7582-4953-b897-ff3e3ec5d97a",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "484",
+        "x-ms-request-id": "94db087e-7582-4953-b897-ff3e3ec5d97a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230426T090501Z:94db087e-7582-4953-b897-ff3e3ec5d97a"
+      },
+      "ResponseBody": {
+        "location": "eastus",
+        "tags": {},
+        "identity": {
+          "type": "SystemAssigned",
+          "principalId": "0a55077d-1c8f-4745-ac2c-c17dcf2e4ebb",
+          "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "storageSettings": [
+            {
+              "datastoreType": "VaultStore",
+              "type": "ZoneRedundant"
+            },
+            {
+              "datastoreType": "OperationalStore",
+              "type": "ZoneRedundant"
+            }
+          ],
+          "isVaultProtectedByResourceGuard": false,
+          "securitySettings": {
+            "softDeleteSettings": {
+              "state": "On",
+              "retentionDurationInDays": 14.0
+            }
+          }
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault2319",
+        "name": "vault2319",
+        "type": "Microsoft.DataProtection/backupVaults"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/backupVaults/vault2319?api-version=2023-01-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b0200fe0a6efd948a343944700bef5b9-47748a8c2c7e8244-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataProtectionBackup/1.2.0-alpha.20230425.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "5999300a18072e2cc10546c1f5c66a03",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/locations/eastus/operationStatus/M2I1MTE5NmUtYWRjNC00NGFjLTk1NTktYjYzNzZhY2RkNWFmOzczYTJiYzdhLTk5MWUtNGY2NC1hNTQzLTNjZjg4YWVlYjhlYg==?api-version=2023-01-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Wed, 26 Apr 2023 09:05:02 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DataProtection/locations/eastus/operationResults/M2I1MTE5NmUtYWRjNC00NGFjLTk1NTktYjYzNzZhY2RkNWFmOzczYTJiYzdhLTk5MWUtNGY2NC1hNTQzLTNjZjg4YWVlYjhlYg==?api-version=2023-01-01",
+        "Pragma": "no-cache",
+        "Retry-After": "30",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "7330f0ca-4991-4bae-8ae2-1290c2c48603",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "98",
+        "x-ms-request-id": "7330f0ca-4991-4bae-8ae2-1290c2c48603",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230426T090502Z:7330f0ca-4991-4bae-8ae2-1290c2c48603"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/locations/eastus/operationStatus/M2I1MTE5NmUtYWRjNC00NGFjLTk1NTktYjYzNzZhY2RkNWFmOzczYTJiYzdhLTk5MWUtNGY2NC1hNTQzLTNjZjg4YWVlYjhlYg==?api-version=2023-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-b0200fe0a6efd948a343944700bef5b9-6f4e76943611e346-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "3192e4521ff270e4249b2c639b60c87d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "464",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Apr 2023 09:05:02 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "fffe7936-70aa-4183-aea6-e4f7718aa7c3",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "14997",
+        "x-ms-request-id": "fffe7936-70aa-4183-aea6-e4f7718aa7c3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230426T090503Z:fffe7936-70aa-4183-aea6-e4f7718aa7c3"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/locations/eastus/operationStatus/M2I1MTE5NmUtYWRjNC00NGFjLTk1NTktYjYzNzZhY2RkNWFmOzczYTJiYzdhLTk5MWUtNGY2NC1hNTQzLTNjZjg4YWVlYjhlYg==",
+        "name": "M2I1MTE5NmUtYWRjNC00NGFjLTk1NTktYjYzNzZhY2RkNWFmOzczYTJiYzdhLTk5MWUtNGY2NC1hNTQzLTNjZjg4YWVlYjhlYg==",
+        "status": "Inprogress",
+        "startTime": "2023-04-26T09:05:02.5521569Z",
+        "endTime": "0001-01-01T00:00:00Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/locations/eastus/operationStatus/M2I1MTE5NmUtYWRjNC00NGFjLTk1NTktYjYzNzZhY2RkNWFmOzczYTJiYzdhLTk5MWUtNGY2NC1hNTQzLTNjZjg4YWVlYjhlYg==?api-version=2023-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-b0200fe0a6efd948a343944700bef5b9-761e9e13300dd249-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "ea8edcdb97dae2b31068cd6025630898",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "463",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Apr 2023 09:05:04 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a6693bd3-e651-446e-b00e-caa8fb59b284",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "14996",
+        "x-ms-request-id": "a6693bd3-e651-446e-b00e-caa8fb59b284",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230426T090504Z:a6693bd3-e651-446e-b00e-caa8fb59b284"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7341/providers/Microsoft.DataProtection/locations/eastus/operationStatus/M2I1MTE5NmUtYWRjNC00NGFjLTk1NTktYjYzNzZhY2RkNWFmOzczYTJiYzdhLTk5MWUtNGY2NC1hNTQzLTNjZjg4YWVlYjhlYg==",
+        "name": "M2I1MTE5NmUtYWRjNC00NGFjLTk1NTktYjYzNzZhY2RkNWFmOzczYTJiYzdhLTk5MWUtNGY2NC1hNTQzLTNjZjg4YWVlYjhlYg==",
+        "status": "Succeeded",
+        "startTime": "2023-04-26T09:05:02.5521569Z",
+        "endTime": "2023-04-26T09:05:03Z"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "2092600977",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}
