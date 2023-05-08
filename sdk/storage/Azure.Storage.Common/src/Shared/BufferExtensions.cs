@@ -32,8 +32,25 @@ namespace Azure.Storage
 
         public static IDisposable RentAsMemoryDisposable<T>(this ArrayPool<T> pool, int minimumLength, out Memory<T> memory)
         {
+            if (minimumLength == 0)
+            {
+                memory = Memory<T>.Empty;
+                return null;
+            }
             IDisposable result = pool.RentDisposable(minimumLength, out T[] array);
             memory = new Memory<T>(array, 0, minimumLength);
+            return result;
+        }
+
+        public static IDisposable RentAsSpanDisposable<T>(this ArrayPool<T> pool, int minimumLength, out Span<T> span)
+        {
+            if (minimumLength == 0)
+            {
+                span = Span<T>.Empty;
+                return null;
+            }
+            IDisposable result = pool.RentDisposable(minimumLength, out T[] array);
+            span = new Span<T>(array, 0, minimumLength);
             return result;
         }
 

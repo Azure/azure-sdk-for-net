@@ -48,6 +48,7 @@ namespace Azure.Storage.Blobs
         private readonly StorageChecksumAlgorithm _validationAlgorithm;
         private readonly int _checksumSize;
         private bool UseMasterCrc => _validationAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64;
+        private StorageCrc64HashAlgorithm _masterCrcCalculator = null;
 
         /// <summary>
         /// The validation options to send to individual download requests.
@@ -198,13 +199,13 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Destination wrapped in master crc step if needed (must wait until after encryption wrap check)
-                StorageCrc64HashAlgorithm masterCrcCalculator = null;
                 Memory<byte> composedCrc = default;
                 if (UseMasterCrc)
                 {
-                    masterCrcCalculator = StorageCrc64HashAlgorithm.Create();
-                    destination = ChecksumCalculatingStream.GetWriteStream(destination, masterCrcCalculator.Append);
-                    disposables.Add(_arrayPool.RentAsMemoryDisposable(Constants.StorageCrc64SizeInBytes, out composedCrc));
+                    _masterCrcCalculator = StorageCrc64HashAlgorithm.Create();
+                    destination = ChecksumCalculatingStream.GetWriteStream(destination, _masterCrcCalculator.Append);
+                    disposables.Add(_arrayPool.RentAsMemoryDisposable(
+                        Constants.StorageCrc64SizeInBytes, out composedCrc));
                     composedCrc.Span.Clear();
                 }
 
@@ -214,32 +215,8 @@ namespace Azure.Storage.Blobs
                 long totalLength = ParseRangeTotalLength(initialResponse.Value.Details.ContentRange);
                 if (initialLength == totalLength)
                 {
-                    using (_arrayPool.RentAsMemoryDisposable(_checksumSize, out Memory<byte> partitionChecksum))
-                    {
-                        await CopyToInternal(
-                            initialResponse,
-                            destination,
-                            partitionChecksum,
-                            async,
-                            cancellationToken)
-                            .ConfigureAwait(false);
-                        if (UseMasterCrc)
-                        {
-                            partitionChecksum.CopyTo(composedCrc);
-                        }
-                    }
-
-                    await FlushFinalIfNecessaryInternal(destination, async, cancellationToken).ConfigureAwait(false);
-
-                    if (UseMasterCrc)
-                    {
-                        using (_arrayPool.RentAsMemoryDisposable(Constants.StorageCrc64SizeInBytes, out Memory<byte> masterCrc))
-                        {
-                            masterCrcCalculator.GetCurrentHash(masterCrc.Span);
-                            ValidateFinal(masterCrc, composedCrc);
-                        }
-                    }
-
+                    await HandleOneShotDownload(initialResponse, destination, async, cancellationToken)
+                        .ConfigureAwait(false);
                     return initialResponse.GetRawResponse();
                 }
 
@@ -332,16 +309,8 @@ namespace Azure.Storage.Blobs
                 }
 #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
 
-                if (UseMasterCrc)
-                {
-                    using (_arrayPool.RentAsMemoryDisposable(Constants.StorageCrc64SizeInBytes, out Memory<byte> masterCrc))
-                    {
-                        masterCrcCalculator.GetCurrentHash(masterCrc.Span);
-                        ValidateFinal(masterCrc, composedCrc);
-                    }
-                }
-
-                await FlushFinalIfNecessaryInternal(destination, async, cancellationToken).ConfigureAwait(false);
+                await FinalizeDownloadInternal(destination, composedCrc, async, cancellationToken)
+                    .ConfigureAwait(false);
                 return initialResponse.GetRawResponse();
 
                 // Wait for the first segment in the queue of tasks to complete
@@ -385,6 +354,43 @@ namespace Azure.Storage.Blobs
             finally
             {
                 scope.Dispose();
+            }
+        }
+
+        private async Task HandleOneShotDownload(
+            Response<BlobDownloadStreamingResult> response,
+            Stream destination,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using var _ = _arrayPool.RentAsMemoryDisposable(_checksumSize, out Memory<byte> partitionChecksum);
+            await CopyToInternal(
+                response,
+                destination,
+                partitionChecksum,
+                async,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+            await FinalizeDownloadInternal(destination, partitionChecksum, async, cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        private async Task FinalizeDownloadInternal(
+            Stream destination,
+            Memory<byte> composedCrc,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            await FlushFinalIfNecessaryInternal(destination, async, cancellationToken).ConfigureAwait(false);
+
+            if (UseMasterCrc)
+            {
+                using (_arrayPool.RentAsMemoryDisposable(Constants.StorageCrc64SizeInBytes, out Memory<byte> masterCrc))
+                {
+                    _masterCrcCalculator.GetCurrentHash(masterCrc.Span);
+                    ValidateFinalCrc(composedCrc.Span);
+                }
             }
         }
 
@@ -473,11 +479,14 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        private void ValidateFinal(Memory<byte> masterCrc, Memory<byte> composedCrc)
+        private void ValidateFinalCrc(ReadOnlySpan<byte> composedCrc)
         {
-            if (!masterCrc.Span.SequenceEqual(composedCrc.Span))
+            using var _ = _arrayPool.RentAsSpanDisposable(
+                Constants.StorageCrc64SizeInBytes, out Span<byte> masterCrc);
+            _masterCrcCalculator.GetCurrentHash(masterCrc);
+            if (!masterCrc.SequenceEqual(composedCrc))
             {
-                throw Errors.ChecksumMismatch(masterCrc.Span, composedCrc.Span);
+                throw Errors.ChecksumMismatch(masterCrc, composedCrc);
             }
         }
     }
