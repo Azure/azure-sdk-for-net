@@ -15,9 +15,7 @@ namespace Azure.Communication.PhoneNumbers
     /// </summary>
     public class PhoneNumbersClient
     {
-        internal InternalPhoneNumbersRestClient RestClient { get; }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
+        internal InternalPhoneNumbersClient InternalClient { get; }
         private readonly string _acceptedLanguage;
 
         #region public constructors - all arguments need null check
@@ -92,9 +90,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="apiVersion"> Api Version. </param>
         private PhoneNumbersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string acceptedLanguage, string apiVersion = "2021-03-07")
         {
-            RestClient = new InternalPhoneNumbersRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            InternalClient = new InternalPhoneNumbersClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             _acceptedLanguage = acceptedLanguage;
         }
 
@@ -113,21 +109,8 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
         public virtual async Task<ReleasePhoneNumberOperation> StartReleasePhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(phoneNumber, nameof(phoneNumber));
-
-            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartReleasePhoneNumber)}");
-            scope.Start();
-            try
-            {
-                var originalResponse = await RestClient.ReleasePhoneNumberAsync(phoneNumber, cancellationToken).ConfigureAwait(false);
-                return new ReleasePhoneNumberOperation(
-                    new InternalReleasePhoneNumberOperation(_clientDiagnostics, _pipeline, RestClient.CreateReleasePhoneNumberRequest(phoneNumber).Request, originalResponse));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            var response = await InternalClient.StartReleasePhoneNumberAsync(phoneNumber, cancellationToken).ConfigureAwait(false);
+            return new ReleasePhoneNumberOperation(response);
         }
 
         /// <summary> Releases an purchased phone number. </summary>
@@ -136,21 +119,8 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
         public virtual ReleasePhoneNumberOperation StartReleasePhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(phoneNumber, nameof(phoneNumber));
-
-            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartReleasePhoneNumber)}");
-            scope.Start();
-            try
-            {
-                var originalResponse = RestClient.ReleasePhoneNumber(phoneNumber, cancellationToken);
-                return new ReleasePhoneNumberOperation(
-                    new InternalReleasePhoneNumberOperation(_clientDiagnostics, _pipeline, RestClient.CreateReleasePhoneNumberRequest(phoneNumber).Request, originalResponse));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            var response = InternalClient.StartReleasePhoneNumber(phoneNumber, cancellationToken);
+            return new ReleasePhoneNumberOperation(response);
         }
 
         /// <summary> Updates the capabilities of a phone number. </summary>
@@ -161,20 +131,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
         public virtual async Task<UpdatePhoneNumberCapabilitiesOperation> StartUpdateCapabilitiesAsync(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(phoneNumber, nameof(phoneNumber));
-
-            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartUpdateCapabilities)}");
-            scope.Start();
-            try
-            {
-                var originalResponse = await RestClient.UpdateCapabilitiesAsync(phoneNumber, calling, sms, cancellationToken).ConfigureAwait(false);
-                return new UpdatePhoneNumberCapabilitiesOperation(_clientDiagnostics, _pipeline, RestClient.CreateUpdateCapabilitiesRequest(phoneNumber, calling, sms).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return await InternalClient.StartUpdateCapabilitiesAsync(phoneNumber, calling, sms, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Updates the capabilities of a phone number. </summary>
@@ -185,20 +142,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
         public virtual UpdatePhoneNumberCapabilitiesOperation StartUpdateCapabilities(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(phoneNumber, nameof(phoneNumber));
-
-            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartUpdateCapabilities)}");
-            scope.Start();
-            try
-            {
-                var originalResponse = RestClient.UpdateCapabilities(phoneNumber, calling, sms, cancellationToken);
-                return new UpdatePhoneNumberCapabilitiesOperation(_clientDiagnostics, _pipeline, RestClient.CreateUpdateCapabilitiesRequest(phoneNumber, calling, sms).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return InternalClient.StartUpdateCapabilities(phoneNumber, calling, sms, cancellationToken);
         }
 
         /// <summary> Gets the details of the given purchased phone number. </summary>
@@ -206,17 +150,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PurchasedPhoneNumber>> GetPurchasedPhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumber)}");
-            scope.Start();
-            try
-            {
-                return await RestClient.GetByNumberAsync(phoneNumber, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return await InternalClient.GetByNumberAsync(phoneNumber, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the details of the given purchased phone number. </summary>
@@ -224,17 +158,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PurchasedPhoneNumber> GetPurchasedPhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumber)}");
-            scope.Start();
-            try
-            {
-                return RestClient.GetByNumber(phoneNumber, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return InternalClient.GetByNumber(phoneNumber, cancellationToken);
         }
 
         /// <summary> Purchases phone numbers. </summary>
@@ -242,19 +166,8 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<PurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartPurchasePhoneNumbers)}");
-            scope.Start();
-            try
-            {
-                var originalResponse = await RestClient.PurchasePhoneNumbersAsync(searchId, cancellationToken).ConfigureAwait(false);
-                return new PurchasePhoneNumbersOperation(
-                    new InternalPurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            var response = await InternalClient.StartPurchasePhoneNumbersAsync(searchId, cancellationToken).ConfigureAwait(false);
+            return new PurchasePhoneNumbersOperation(response);
         }
 
         /// <summary> Purchases phone numbers. </summary>
@@ -262,19 +175,8 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual PurchasePhoneNumbersOperation StartPurchasePhoneNumbers(string searchId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartPurchasePhoneNumbers)}");
-            scope.Start();
-            try
-            {
-                var originalResponse = RestClient.PurchasePhoneNumbers(searchId, cancellationToken);
-                return new PurchasePhoneNumbersOperation(
-                    new InternalPurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            var response = InternalClient.StartPurchasePhoneNumbers(searchId, cancellationToken);
+            return new PurchasePhoneNumbersOperation(response);
         }
 
         /// <summary> Search for available phone numbers to purchase. </summary>
@@ -288,22 +190,8 @@ namespace Azure.Communication.PhoneNumbers
         public virtual async Task<SearchAvailablePhoneNumbersOperation> StartSearchAvailablePhoneNumbersAsync(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType,
             PhoneNumberCapabilities capabilities, PhoneNumberSearchOptions options = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(twoLetterIsoCountryName, nameof(twoLetterIsoCountryName));
-            Argument.AssertNotNull(capabilities, nameof(capabilities));
-
-            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartSearchAvailablePhoneNumbers)}");
-            scope.Start();
-            try
-            {
-                var searchRequest = new PhoneNumberSearchRequest(phoneNumberType, phoneNumberAssignmentType, capabilities) { AreaCode = options?.AreaCode, Quantity = options?.Quantity };
-                var originalResponse = await RestClient.SearchAvailablePhoneNumbersAsync(twoLetterIsoCountryName, searchRequest, cancellationToken).ConfigureAwait(false);
-                return new SearchAvailablePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreateSearchAvailablePhoneNumbersRequest(twoLetterIsoCountryName, searchRequest).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            var searchRequest = new PhoneNumberSearchRequest(phoneNumberType, phoneNumberAssignmentType, capabilities) { AreaCode = options?.AreaCode, Quantity = options?.Quantity };
+                return await InternalClient.StartSearchAvailablePhoneNumbersAsync(twoLetterIsoCountryName, searchRequest, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Search for available phone numbers to purchase. </summary>
@@ -317,22 +205,8 @@ namespace Azure.Communication.PhoneNumbers
         public virtual SearchAvailablePhoneNumbersOperation StartSearchAvailablePhoneNumbers(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType,
             PhoneNumberCapabilities capabilities, PhoneNumberSearchOptions options = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(twoLetterIsoCountryName, nameof(twoLetterIsoCountryName));
-            Argument.AssertNotNull(capabilities, nameof(capabilities));
-
-            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartSearchAvailablePhoneNumbers)}");
-            scope.Start();
-            try
-            {
-                var searchRequest = new PhoneNumberSearchRequest(phoneNumberType, phoneNumberAssignmentType, capabilities) { AreaCode = options?.AreaCode, Quantity = options?.Quantity };
-                var originalResponse = RestClient.SearchAvailablePhoneNumbers(twoLetterIsoCountryName, searchRequest, cancellationToken);
-                return new SearchAvailablePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreateSearchAvailablePhoneNumbersRequest(twoLetterIsoCountryName, searchRequest).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            var searchRequest = new PhoneNumberSearchRequest(phoneNumberType, phoneNumberAssignmentType, capabilities) { AreaCode = options?.AreaCode, Quantity = options?.Quantity };
+            return InternalClient.StartSearchAvailablePhoneNumbers(twoLetterIsoCountryName, searchRequest, cancellationToken);
         }
 
         /// <summary> Retrieve the search result details. </summary>
@@ -340,20 +214,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PhoneNumberSearchResult>> GetPhoneNumberSearchResultAsync(string searchId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(searchId, nameof(searchId));
-
-            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPhoneNumberSearchResult)}");
-            scope.Start();
-            try
-            {
-                var response = await RestClient.GetSearchResultAsync(searchId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return await InternalClient.GetSearchResultAsync(searchId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Retrieve the search result details. </summary>
@@ -361,168 +222,35 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PhoneNumberSearchResult> GetPhoneNumberSearchResult(string searchId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(searchId, nameof(searchId));
-
-            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPhoneNumberSearchResult)}");
-            scope.Start();
-            try
-            {
-                var response =  RestClient.GetSearchResult(searchId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return InternalClient.GetSearchResult(searchId, cancellationToken);
         }
 
         /// <summary> Gets the list of all purchased phone numbers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<PurchasedPhoneNumber> GetPurchasedPhoneNumbersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PurchasedPhoneNumber>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumbers)}");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListPhoneNumbersAsync(skip: null, top: null, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.PhoneNumbers, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PurchasedPhoneNumber>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumbers)}");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListPhoneNumbersNextPageAsync(nextLink, skip: null, top: null, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.PhoneNumbers, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            return InternalClient.ListPhoneNumbersAsync(skip: null, top: null, cancellationToken);
         }
 
         /// <summary> Gets the list of all purchased phone numbers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<PurchasedPhoneNumber> GetPurchasedPhoneNumbers(CancellationToken cancellationToken = default)
         {
-            Page<PurchasedPhoneNumber> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumbers)}");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListPhoneNumbers(skip: null, top: null, cancellationToken);
-                    return Page.FromValues(response.Value.PhoneNumbers, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PurchasedPhoneNumber> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumbers)}");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListPhoneNumbersNextPage(nextLink, skip: null, top: null, cancellationToken);
-                    return Page.FromValues(response.Value.PhoneNumbers, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            return InternalClient.ListPhoneNumbers(skip: null, top: null, cancellationToken);
         }
 
         /// <summary> Lists the available countries from which to purchase phone numbers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<PhoneNumberCountry> GetAvailableCountriesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PhoneNumberCountry>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableCountries)}");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListAvailableCountriesAsync( skip: null, maxPageSize: null, acceptLanguage: _acceptedLanguage, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Countries, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PhoneNumberCountry>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumbers)}");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListAvailableCountriesNextPageAsync(nextLink, skip: null, maxPageSize: null, acceptLanguage: _acceptedLanguage, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Countries, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            return InternalClient.ListAvailableCountriesAsync(skip: null, maxPageSize: null, acceptLanguage: _acceptedLanguage, cancellationToken);
         }
 
         /// <summary> Lists the available countries from which to purchase phone numbers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<PhoneNumberCountry> GetAvailableCountries(CancellationToken cancellationToken = default)
         {
-            Page<PhoneNumberCountry> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableCountries)}");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListAvailableCountries(skip: null, maxPageSize: null, acceptLanguage: _acceptedLanguage, cancellationToken);
-                    return Page.FromValues(response.Value.Countries, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PhoneNumberCountry> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumbers)}");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListAvailableCountriesNextPage(nextLink, skip: null, maxPageSize: null, acceptLanguage: _acceptedLanguage, cancellationToken);
-                    return Page.FromValues(response.Value.Countries, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            return InternalClient.ListAvailableCountries(skip: null, maxPageSize: null, acceptLanguage: _acceptedLanguage, cancellationToken);
         }
 
         /// <summary> Lists the available localities (e.g. city or town) in the given country from which to purchase phone numbers. </summary>
@@ -531,37 +259,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<PhoneNumberLocality> GetAvailableLocalitiesAsync(string twoLetterIsoCountryName, string administrativeDivision = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PhoneNumberLocality>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableLocalities)}");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListAvailableLocalitiesAsync(twoLetterIsoCountryName, skip: null, maxPageSize: null, administrativeDivision, acceptLanguage: _acceptedLanguage, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.PhoneNumberLocalitiesValue, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PhoneNumberLocality>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableLocalities)}");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListAvailableLocalitiesNextPageAsync(nextLink, twoLetterIsoCountryName, skip: null, maxPageSize: null, administrativeDivision, acceptLanguage: _acceptedLanguage, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.PhoneNumberLocalitiesValue, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            return InternalClient.ListAvailableLocalitiesAsync(twoLetterIsoCountryName, skip: null, maxPageSize: null, administrativeDivision, acceptLanguage: _acceptedLanguage, cancellationToken);
         }
 
         /// <summary> Lists the available localities (e.g. city or town) in the given country from which to purchase phone numbers. </summary>
@@ -570,37 +268,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<PhoneNumberLocality> GetAvailableLocalities(string twoLetterIsoCountryName, string administrativeDivision = null, CancellationToken cancellationToken = default)
         {
-            Page<PhoneNumberLocality> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableLocalities)}");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListAvailableLocalities(twoLetterIsoCountryName, skip: null, maxPageSize: null, administrativeDivision, acceptLanguage: _acceptedLanguage, cancellationToken);
-                    return Page.FromValues(response.Value.PhoneNumberLocalitiesValue, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PhoneNumberLocality> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableLocalities)}");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListAvailableLocalitiesNextPage(nextLink, twoLetterIsoCountryName, skip: null, maxPageSize: null, administrativeDivision, acceptLanguage: _acceptedLanguage, cancellationToken);
-                    return Page.FromValues(response.Value.PhoneNumberLocalitiesValue, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            return InternalClient.ListAvailableLocalities(twoLetterIsoCountryName, skip: null, maxPageSize: null, administrativeDivision, acceptLanguage: _acceptedLanguage, cancellationToken);
         }
 
         /// <summary> Lists the available area codes within a given country and locality. </summary>
@@ -648,37 +316,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<PhoneNumberOffering> GetAvailableOfferingsAsync(string twoLetterIsoCountryName, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? phoneNumberAssignmentType = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PhoneNumberOffering>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableOfferings)}");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListOfferingsAsync(twoLetterIsoCountryName, skip: null, maxPageSize: null, phoneNumberType, phoneNumberAssignmentType, acceptLanguage: _acceptedLanguage, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.PhoneNumberOfferings, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PhoneNumberOffering>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableOfferings)}");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListOfferingsNextPageAsync(nextLink, twoLetterIsoCountryName, skip: null, maxPageSize: null, phoneNumberType, phoneNumberAssignmentType, acceptLanguage: _acceptedLanguage, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.PhoneNumberOfferings, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            return InternalClient.ListOfferingsAsync(twoLetterIsoCountryName, skip: null, maxPageSize: null, phoneNumberType, phoneNumberAssignmentType, acceptLanguage: _acceptedLanguage, cancellationToken);
         }
 
         /// <summary> Lists the available offerings in the given country. </summary>
@@ -688,37 +326,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<PhoneNumberOffering> GetAvailableOfferings(string twoLetterIsoCountryName, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? phoneNumberAssignmentType = null, CancellationToken cancellationToken = default)
         {
-            Page<PhoneNumberOffering> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableOfferings)}");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListOfferings(twoLetterIsoCountryName, skip: null, maxPageSize: null, phoneNumberType, phoneNumberAssignmentType, acceptLanguage: _acceptedLanguage, cancellationToken);
-                    return Page.FromValues(response.Value.PhoneNumberOfferings, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PhoneNumberOffering> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableOfferings)}");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListOfferingsNextPage(nextLink, twoLetterIsoCountryName, skip: null, maxPageSize: null, phoneNumberType, phoneNumberAssignmentType, acceptLanguage: _acceptedLanguage, cancellationToken);
-                    return Page.FromValues(response.Value.PhoneNumberOfferings, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            return InternalClient.ListOfferings(twoLetterIsoCountryName, skip: null, maxPageSize: null, phoneNumberType, phoneNumberAssignmentType, acceptLanguage: _acceptedLanguage, cancellationToken);
         }
 
         /// <summary> Lists the available area codes within a given country and locality. </summary>
@@ -730,55 +338,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private AsyncPageable<PhoneNumberAreaCode> GetAvailableAreaCodesAsync(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, string administrativeDivision = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PhoneNumberAreaCode>> FirstPageFunc(int? pageSizeHint)
-            {
-                var operationName = "";
-                if (phoneNumberType == "geographic")
-                {
-                    operationName = "GetAvailableAreaCodesGeographic";
-                }
-                else if (phoneNumberType == "tollFree")
-                {
-                    operationName = "GetAvailableAreaCodesTollFree";
-                }
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{operationName}");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListAreaCodesAsync(twoLetterIsoCountryName, phoneNumberType, skip: null, maxPageSize: null, phoneNumberAssignmentType, locality, administrativeDivision, acceptLanguage: _acceptedLanguage, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.AreaCodes, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PhoneNumberAreaCode>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                var operationName = "";
-                if (phoneNumberType == "geographic")
-                {
-                    operationName = "GetAvailableAreaCodesGeographic";
-                }
-                else if (phoneNumberType == "tollFree")
-                {
-                    operationName = "GetAvailableAreaCodesTollFree";
-                }
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{operationName}");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListAreaCodesNextPageAsync(nextLink, twoLetterIsoCountryName, phoneNumberType, skip: null, maxPageSize: null, phoneNumberAssignmentType, locality, administrativeDivision, acceptLanguage: _acceptedLanguage, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.AreaCodes, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            return InternalClient.ListAreaCodesAsync(twoLetterIsoCountryName, phoneNumberType, skip: null, maxPageSize: null, phoneNumberAssignmentType, locality, administrativeDivision, acceptLanguage: _acceptedLanguage, cancellationToken);
         }
 
         /// <summary> Lists the available area codes within a given country and locality. </summary>
@@ -790,55 +350,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private Pageable<PhoneNumberAreaCode> GetAvailableAreaCodes(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, string administrativeDivision = null, CancellationToken cancellationToken = default)
         {
-            Page<PhoneNumberAreaCode> FirstPageFunc(int? pageSizeHint)
-            {
-                var operationName = "";
-                if (phoneNumberType == "geographic")
-                {
-                    operationName = "GetAvailableAreaCodesGeographic";
-                }
-                else if (phoneNumberType == "tollFree")
-                {
-                    operationName = "GetAvailableAreaCodesTollFree";
-                }
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{operationName}");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListAreaCodes(twoLetterIsoCountryName, phoneNumberType, skip: null, maxPageSize: null, phoneNumberAssignmentType, locality, administrativeDivision, acceptLanguage: _acceptedLanguage, cancellationToken);
-                    return Page.FromValues(response.Value.AreaCodes, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PhoneNumberAreaCode> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                var operationName = "";
-                if (phoneNumberType == "geographic")
-                {
-                    operationName = "GetAvailableAreaCodesGeographic";
-                }
-                else if (phoneNumberType == "tollFree")
-                {
-                    operationName = "GetAvailableAreaCodesTollFree";
-                }
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{operationName}");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListAreaCodesNextPage(nextLink, twoLetterIsoCountryName, phoneNumberType, skip: null, maxPageSize: null, phoneNumberAssignmentType, locality, administrativeDivision, acceptLanguage: _acceptedLanguage, cancellationToken);
-                    return Page.FromValues(response.Value.AreaCodes, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            return InternalClient.ListAreaCodes(twoLetterIsoCountryName, phoneNumberType, skip: null, maxPageSize: null, phoneNumberAssignmentType, locality, administrativeDivision, acceptLanguage: _acceptedLanguage, cancellationToken);
         }
     }
 }
