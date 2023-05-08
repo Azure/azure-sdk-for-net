@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Text.Json;
 
 namespace Azure.Core.Json
@@ -25,18 +24,19 @@ namespace Azure.Core.Json
 
         internal JsonElement AsJsonElement()
         {
+            if (_serializedValue != null)
+            {
+                return _serializedValue.Value;
+            }
+
             if (Value is JsonElement element)
             {
                 _serializedValue = element;
                 return element;
             }
 
-            if (_serializedValue == null)
-            {
-                byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(Value);
-                _serializedValue = JsonDocument.Parse(bytes).RootElement;
-            }
-
+            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(Value);
+            _serializedValue = JsonDocument.Parse(bytes).RootElement;
             return _serializedValue.Value;
         }
 

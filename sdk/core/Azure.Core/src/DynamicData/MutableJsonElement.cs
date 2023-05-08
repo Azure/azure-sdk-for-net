@@ -62,7 +62,7 @@ namespace Azure.Core.Json
         /// Looks for a property named propertyName in the current object, returning a value that indicates whether or not such a property exists. When the property exists, its value is assigned to the value argument.
         /// </summary>
         /// <param name="name"></param>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         /// <returns></returns>
         public bool TryGetProperty(string name, out MutableJsonElement value)
         {
@@ -744,7 +744,7 @@ namespace Azure.Core.Json
         /// Set the value of the property with the specified name to the passed-in value.  If the property is not already present, it will be created.
         /// </summary>
         /// <param name="name"></param>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public MutableJsonElement SetProperty(string name, object value)
         {
             if (TryGetProperty(name, out MutableJsonElement element))
@@ -807,7 +807,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(double value)
         {
             EnsureValid();
@@ -818,7 +818,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(int value)
         {
             EnsureValid();
@@ -829,7 +829,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(long value)
         {
             EnsureValid();
@@ -840,7 +840,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(float value)
         {
             EnsureValid();
@@ -851,7 +851,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(string value)
         {
             EnsureValid();
@@ -862,7 +862,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(bool value)
         {
             EnsureValid();
@@ -875,7 +875,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(byte value)
         {
             EnsureValid();
@@ -886,7 +886,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(sbyte value)
         {
             EnsureValid();
@@ -897,7 +897,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(short value)
         {
             EnsureValid();
@@ -908,7 +908,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(ushort value)
         {
             EnsureValid();
@@ -919,7 +919,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(uint value)
         {
             EnsureValid();
@@ -930,7 +930,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(ulong value)
         {
             EnsureValid();
@@ -941,7 +941,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(decimal value)
         {
             EnsureValid();
@@ -952,7 +952,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(Guid value)
         {
             EnsureValid();
@@ -963,7 +963,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(DateTime value)
         {
             EnsureValid();
@@ -974,7 +974,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(DateTimeOffset value)
         {
             EnsureValid();
@@ -985,7 +985,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(object value)
         {
             EnsureValid();
@@ -1058,7 +1058,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(MutableJsonElement value)
         {
             EnsureValid();
