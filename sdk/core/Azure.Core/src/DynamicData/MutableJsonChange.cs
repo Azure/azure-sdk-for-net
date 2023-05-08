@@ -19,18 +19,18 @@ namespace Azure.Core.Json
             _serializerOptions = options;
         }
 
-        public string Path { get; private set; }
+        public string Path { get; }
 
-        public int Index { get; private set; }
+        public int Index { get; }
 
-        public object? Value { get; private set; }
+        public object? Value { get; }
 
         /// <summary>
         /// The change invalidates the existing node's JsonElement
         /// due to changes in JsonValueKind or path structure.
         /// If this is true, Value holds a new JsonElement.
         /// </summary>
-        public bool ReplacesJsonElement { get; private set; }
+        public bool ReplacesJsonElement { get; }
 
         internal JsonElement AsJsonElement()
         {
