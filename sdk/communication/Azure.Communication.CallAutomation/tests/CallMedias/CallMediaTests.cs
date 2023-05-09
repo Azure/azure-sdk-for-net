@@ -182,6 +182,24 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
         }
 
+        [TestCaseSource(nameof(TestData_StartContinuousRecognitionOperationsAsync))]
+        public async Task StartContinuousRecognitionOperationssAsync_Return200Accepted(Func<CallMedia, Task<Response>> operation)
+        {
+            _callMedia = GetCallMedia(200);
+            var result = await operation(_callMedia);
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+        }
+
+        [TestCaseSource(nameof(TestData_StopContinuousRecognitionOperationsAsync))]
+        public async Task StopContinuousRecognitionOperationssAsync_Return200Accepted(Func<CallMedia, Task<Response>> operation)
+        {
+            _callMedia = GetCallMedia(200);
+            var result = await operation(_callMedia);
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+        }
+
         [TestCaseSource(nameof(TestData_PlayOperations))]
         public void MediaOperations_Return202Accepted(Func<CallMedia, Response<PlayResult>> operation)
         {
@@ -219,7 +237,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         }
 
         [TestCaseSource(nameof(TestData_StartContinuousRecognitionOperations))]
-        public void StartContinuousRecognizeOperations_Return200OK(Func<CallMedia, Response> operation)
+        public void StartContinuousRecognitionOperations_Return200OK(Func<CallMedia, Response> operation)
         {
             _callMedia = GetCallMedia(200);
             var result = operation(_callMedia);
@@ -268,6 +286,27 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
         [TestCaseSource(nameof(TestData_SendDtmfOperationsAsync))]
         public void SendDtmfOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response<SendDtmfResult>>> operation)
+        {
+            _callMedia = GetCallMedia(404);
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
+                async () => await operation(_callMedia));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_StartContinuousRecognitionOperationsAsync))]
+        public void StartContinuousRecognitionOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response>> operation)
+        {
+            _callMedia = GetCallMedia(404);
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
+                async () => await operation(_callMedia));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_StopContinuousRecognitionOperationsAsync))]
+
+        public void StopContinuousRecognitionOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response>> operation)
         {
             _callMedia = GetCallMedia(404);
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
@@ -327,7 +366,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         }
 
         [TestCaseSource(nameof(TestData_StartContinuousRecognitionOperations))]
-        public void StartContinuousRecognizeOperations_Return404NotFound(Func<CallMedia, Response> operation)
+        public void StartContinuousRecognitionOperations_Return404NotFound(Func<CallMedia, Response> operation)
         {
             _callMedia = GetCallMedia(404);
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(
@@ -525,6 +564,17 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             };
         }
 
+        private static IEnumerable<object?[]> TestData_StartContinuousRecognitionOperationsAsync()
+        {
+            return new[]
+            {
+                new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.StartContinuousDtmfRecognitionAsync(new CommunicationUserIdentifier("targetUserId"))
+                }
+            };
+        }
+
         private static IEnumerable<object?[]> TestData_StopContinuousRecognitionOperations()
         {
             return new[]
@@ -532,6 +582,17 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 new Func<CallMedia, Response>?[]
                 {
                    callMedia => callMedia.StopContinuousDtmfRecognition(new CommunicationUserIdentifier("targetUserId"))
+                }
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_StopContinuousRecognitionOperationsAsync()
+        {
+            return new[]
+            {
+                new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.StopContinuousDtmfRecognitionAsync(new CommunicationUserIdentifier("targetUserId"))
                 }
             };
         }
