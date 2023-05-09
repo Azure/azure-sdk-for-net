@@ -169,20 +169,20 @@ namespace Azure.Developer.DevCenter.Tests
         [RecordedTest]
         public async Task GetAllEnvironmentsSucceeds()
         {
-            var numberOfEnvironments = await GetAllEnvironemtnsAsync();
+            var numberOfEnvironments = await GetAllEnvironmentsAsync();
 
             if (numberOfEnvironments == 0)
             {
                 await SetUpEnvironmentAsync();
             }
 
-            numberOfEnvironments = await GetAllEnvironemtnsAsync();
+            numberOfEnvironments = await GetAllEnvironmentsAsync();
             Assert.AreEqual(1, numberOfEnvironments);
 
             await DeleteEnvironmentAsync();
         }
 
-        private async Task<int> GetAllEnvironemtnsAsync()
+        private async Task<int> GetAllEnvironmentsAsync()
         {
             var numberOfEnvironments = 0;
             await foreach (BinaryData environmentsData in _environmentsClient.GetAllEnvironmentsAsync(TestEnvironment.ProjectName))
