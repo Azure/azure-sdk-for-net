@@ -124,19 +124,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         protected async Task<ResourceIdentifier> GetSubnetId(string vnetName, VirtualNetworkData vnet)
         {
             ResourceIdentifier subnetID;
-            if (Mode == RecordedTestMode.Playback)
-            {
-                subnetID = SubnetResource.CreateResourceIdentifier(_resourceGroup.Id.SubscriptionId, _resourceGroup.Id.Name, vnetName, "default");
-            }
-            else
-            {
-                using (Recording.DisableRecording())
-                {
-                    VirtualNetworkResource vnetResource = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet)).Value;
-                    var subnetCollection = vnetResource.GetSubnets();
-                    subnetID = vnetResource.Data.Subnets[0].Id;
-                }
-            };
+            VirtualNetworkResource vnetResource = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet)).Value;
+            var subnetCollection = vnetResource.GetSubnets();
+            subnetID = vnetResource.Data.Subnets[0].Id;
             return subnetID;
         }
 

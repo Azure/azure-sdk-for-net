@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         private ResourceIdentifier _databaseAccountIdentifier;
         private CosmosDBAccountResource _databaseAccount;
 
-        public PrivateEndpointConnectionTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public PrivateEndpointConnectionTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -58,7 +58,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
-        [Ignore("Depend on Network which will block the pipeline to release new Network package, disable this case temporary")]
         [RecordedTest]
         public async Task PrivateEndpointConnectionCreateAndUpdate()
         {
@@ -84,7 +83,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual("Approved", privateEndpointConnection.Data.ConnectionState.Status);
         }
 
-        [Ignore("Depend on Network which will block the pipeline to release new Network package, disable this case temporary")]
         [RecordedTest]
         public async Task PrivateEndpointConnectionList()
         {
@@ -96,7 +94,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnections[0]);
         }
 
-        [Ignore("Depend on Network which will block the pipeline to release new Network package, disable this case temporary")]
         [RecordedTest]
         public async Task PrivateEndpointConnectionDelete()
         {
