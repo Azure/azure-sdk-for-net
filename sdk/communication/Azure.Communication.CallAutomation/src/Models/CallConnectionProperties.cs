@@ -52,6 +52,8 @@ namespace Azure.Communication.CallAutomation
             MediaSubscriptionId = callConnectionPropertiesDtoInternal.MediaSubscriptionId;
             SourceIdentity = CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesDtoInternal.SourceIdentity);
             SourceDisplayName = callConnectionPropertiesDtoInternal.SourceDisplayName;
+            CorrelationId = callConnectionPropertiesDtoInternal.CorrelationId;
+            AnsweredByIdentifier = callConnectionPropertiesDtoInternal.AnsweredByIdentifier == null? null:new CommunicationUserIdentifier(callConnectionPropertiesDtoInternal.AnsweredByIdentifier.Id);
 
             if (callConnectionPropertiesDtoInternal.SourceCallerIdNumber != null)
             {
@@ -83,5 +85,13 @@ namespace Azure.Communication.CallAutomation
         /// Source identity.
         /// </summary>
         public CommunicationIdentifier SourceIdentity { get; }
+        /// <summary>
+        /// The correlation ID.
+        /// </summary>
+        public string CorrelationId { get; }
+        /// <summary>
+        /// Identity of the answering entity. Only populated when identity is provided in the request.
+        /// </summary>
+        public CommunicationIdentifier AnsweredByIdentifier { get; }
     }
 }

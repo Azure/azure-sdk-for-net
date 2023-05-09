@@ -48,7 +48,7 @@ namespace Azure.Communication.CallAutomation
             IEnumerable<CommunicationIdentifier> targets = default,
             CallConnectionState callConnectionState = default,
             Uri callbackEndpoint = default,
-            CommunicationIdentifier sourceIdentity = default,
+            CommunicationUserIdentifier sourceIdentity = default,
             PhoneNumberIdentifier sourceCallerIdNumber = default,
             string sourceDisplayName = default,
             string mediaSubscriptionId = default)
