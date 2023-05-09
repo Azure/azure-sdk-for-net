@@ -24,7 +24,8 @@ namespace Azure.Core.Dynamic
                     throw new JsonException($"Failed to read 'string' value at JSON position {reader.Position}.");
 
                 // From: https://github.com/Azure/autorest.csharp/blob/d835b0b7bffae08c1037ccc5824e928eaac55b96/src/assets/Generator.Shared/TypeFormatters.cs#L130
-                return DateTime.Parse(value, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+                DateTime dateTimeValue = DateTime.Parse(value, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+                return dateTimeValue.ToUniversalTime();
             }
 
             public override void Write(

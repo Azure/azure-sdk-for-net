@@ -1057,6 +1057,7 @@ namespace Azure.Core.Tests
                 NullableProperty = null,
                 CharProperty = 'a',
                 DateTimeProperty = DateTime.UtcNow,
+                DateTimeOffsetProperty = DateTimeOffset.UtcNow,
                 TimeProperty = DateTime.UtcNow.TimeOfDay
             };
 
@@ -1164,6 +1165,7 @@ namespace Azure.Core.Tests
             public int? NullableProperty { get; set; }
             public char CharProperty { get; set; }
             public DateTime DateTimeProperty { get; set; }
+            public DateTimeOffset DateTimeOffsetProperty { get; set; }
             public TimeSpan TimeProperty { get; set; }
 
             public override bool Equals(object obj)
@@ -1185,6 +1187,7 @@ namespace Azure.Core.Tests
                     NullableProperty == obj.NullableProperty &&
                     CharProperty == obj.CharProperty &&
                     DateTimeProperty == obj.DateTimeProperty &&
+                    DateTimeOffsetProperty == obj.DateTimeOffsetProperty &&
                     TimeProperty == obj.TimeProperty;
             }
         }
