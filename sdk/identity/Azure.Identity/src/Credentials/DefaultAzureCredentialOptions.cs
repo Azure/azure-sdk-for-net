@@ -178,6 +178,18 @@ namespace Azure.Identity
         /// If multiple accounts are found in the shared token cache and no value is specified, or the specified value matches no accounts in
         /// the cache the SharedTokenCacheCredential will not be used for authentication.
         /// </remarks>
+
+        /// <summary>
+        /// Preview feature only. Will be marked internal when the package version is GA.
+        /// </summary>
+        /// <value></value>
+        #if PREVIEW_FEATURE_FLAG
+        public
+        #else
+        internal
+        #endif
+        string MyPreviewFeatureProperty { get; set; }
+
         public string SharedTokenCacheUsername { get; set; } = EnvironmentVariables.Username;
 
         /// <summary>
