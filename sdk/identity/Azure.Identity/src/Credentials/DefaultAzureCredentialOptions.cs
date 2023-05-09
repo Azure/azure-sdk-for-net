@@ -171,15 +171,6 @@ namespace Azure.Identity
         public IList<string> AdditionallyAllowedTenants { get; internal set; } = EnvironmentVariables.AdditionallyAllowedTenants;
 
         /// <summary>
-        /// Specifies the preferred authentication account to be retrieved from the shared token cache for single sign on authentication with
-        /// development tools. In the case multiple accounts are found in the shared token.
-        /// </summary>
-        /// <remarks>
-        /// If multiple accounts are found in the shared token cache and no value is specified, or the specified value matches no accounts in
-        /// the cache the SharedTokenCacheCredential will not be used for authentication.
-        /// </remarks>
-
-        /// <summary>
         /// Preview feature only. Will be marked internal when the package version is GA.
         /// </summary>
         /// <value></value>
@@ -190,6 +181,14 @@ namespace Azure.Identity
         #endif
         string MyPreviewFeatureProperty { get; set; }
 
+        /// <summary>
+        /// Specifies the preferred authentication account to be retrieved from the shared token cache for single sign on authentication with
+        /// development tools. In the case multiple accounts are found in the shared token.
+        /// </summary>
+        /// <remarks>
+        /// If multiple accounts are found in the shared token cache and no value is specified, or the specified value matches no accounts in
+        /// the cache the SharedTokenCacheCredential will not be used for authentication.
+        /// </remarks>
         public string SharedTokenCacheUsername { get; set; } = EnvironmentVariables.Username;
 
         /// <summary>
