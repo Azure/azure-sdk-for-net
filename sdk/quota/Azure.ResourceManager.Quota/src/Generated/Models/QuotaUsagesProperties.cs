@@ -10,14 +10,14 @@ using System;
 namespace Azure.ResourceManager.Quota.Models
 {
     /// <summary> Usage properties for the specified resource. </summary>
-    public partial class UsagesProperties
+    public partial class QuotaUsagesProperties
     {
-        /// <summary> Initializes a new instance of UsagesProperties. </summary>
-        internal UsagesProperties()
+        /// <summary> Initializes a new instance of QuotaUsagesProperties. </summary>
+        internal QuotaUsagesProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of UsagesProperties. </summary>
+        /// <summary> Initializes a new instance of QuotaUsagesProperties. </summary>
         /// <param name="usages"> The quota limit properties for this resource. </param>
         /// <param name="unit"> The units for the quota usage, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
         /// <param name="name"> Resource name provided by the resource provider. Use this property name when requesting quota. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// </param>
         /// <param name="isQuotaApplicable"> States if quota can be requested for this resource. </param>
         /// <param name="properties"> Additional properties for the specific resource provider. </param>
-        internal UsagesProperties(UsagesObject usages, string unit, ResourceName name, string resourceType, string quotaPeriod, bool? isQuotaApplicable, BinaryData properties)
+        internal QuotaUsagesProperties(QuotaUsagesObject usages, string unit, QuotaRequestResourceName name, string resourceType, TimeSpan? quotaPeriod, bool? isQuotaApplicable, BinaryData properties)
         {
             Usages = usages;
             Unit = unit;
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> The quota limit properties for this resource. </summary>
-        public UsagesObject Usages { get; }
+        public QuotaUsagesObject Usages { get; }
         /// <summary> The units for the quota usage, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </summary>
         public string Unit { get; }
         /// <summary> Resource name provided by the resource provider. Use this property name when requesting quota. </summary>
-        public ResourceName Name { get; }
+        public QuotaRequestResourceName Name { get; }
         /// <summary> The name of the resource type. Optional field. </summary>
         public string ResourceType { get; }
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// *PT1S (per one second).
         /// This parameter is optional because it is not relevant for all resources such as compute.
         /// </summary>
-        public string QuotaPeriod { get; }
+        public TimeSpan? QuotaPeriod { get; }
         /// <summary> States if quota can be requested for this resource. </summary>
         public bool? IsQuotaApplicable { get; }
         /// <summary>

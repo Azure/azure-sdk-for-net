@@ -319,8 +319,8 @@ namespace Azure.ResourceManager.Quota
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OperationResponse> GetQuotaOperationsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="QuotaOperationResult" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<QuotaOperationResult> GetQuotaOperationsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             return GetTenantResourceExtensionClient(tenantResource).GetQuotaOperationsAsync(cancellationToken);
         }
@@ -340,8 +340,8 @@ namespace Azure.ResourceManager.Quota
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OperationResponse> GetQuotaOperations(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="QuotaOperationResult" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<QuotaOperationResult> GetQuotaOperations(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             return GetTenantResourceExtensionClient(tenantResource).GetQuotaOperations(cancellationToken);
         }

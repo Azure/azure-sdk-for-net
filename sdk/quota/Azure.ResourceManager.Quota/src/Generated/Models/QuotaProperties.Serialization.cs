@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Quota.Models
             }
             Optional<LimitJsonObject> limit = default;
             Optional<string> unit = default;
-            Optional<ResourceName> name = default;
+            Optional<QuotaRequestResourceName> name = default;
             Optional<string> resourceType = default;
-            Optional<string> quotaPeriod = default;
+            Optional<TimeSpan> quotaPeriod = default;
             Optional<bool> isQuotaApplicable = default;
             Optional<BinaryData> properties = default;
             foreach (var property in element.EnumerateObject())
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    name = ResourceName.DeserializeResourceName(property.Value);
+                    name = QuotaRequestResourceName.DeserializeQuotaRequestResourceName(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceType"u8))
@@ -88,7 +88,11 @@ namespace Azure.ResourceManager.Quota.Models
                 }
                 if (property.NameEquals("quotaPeriod"u8))
                 {
-                    quotaPeriod = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    quotaPeriod = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (property.NameEquals("isQuotaApplicable"u8))
@@ -110,7 +114,7 @@ namespace Azure.ResourceManager.Quota.Models
                     continue;
                 }
             }
-            return new QuotaProperties(limit.Value, unit.Value, name.Value, resourceType.Value, quotaPeriod.Value, Optional.ToNullable(isQuotaApplicable), properties.Value);
+            return new QuotaProperties(limit.Value, unit.Value, name.Value, resourceType.Value, Optional.ToNullable(quotaPeriod), Optional.ToNullable(isQuotaApplicable), properties.Value);
         }
     }
 }

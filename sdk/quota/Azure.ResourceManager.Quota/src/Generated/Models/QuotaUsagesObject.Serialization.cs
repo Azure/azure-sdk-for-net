@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    public partial class UsagesObject
+    public partial class QuotaUsagesObject
     {
-        internal static UsagesObject DeserializeUsagesObject(JsonElement element)
+        internal static QuotaUsagesObject DeserializeQuotaUsagesObject(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Quota.Models
                     continue;
                 }
             }
-            return new UsagesObject(value, Optional.ToNullable(usagesType));
+            return new QuotaUsagesObject(value, Optional.ToNullable(usagesType));
         }
     }
 }

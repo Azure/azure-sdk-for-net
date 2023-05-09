@@ -7,19 +7,19 @@
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    /// <summary> The OperationResponse. </summary>
-    public partial class OperationResponse
+    /// <summary> The QuotaOperationResult. </summary>
+    public partial class QuotaOperationResult
     {
-        /// <summary> Initializes a new instance of OperationResponse. </summary>
-        internal OperationResponse()
+        /// <summary> Initializes a new instance of QuotaOperationResult. </summary>
+        internal QuotaOperationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationResponse. </summary>
+        /// <summary> Initializes a new instance of QuotaOperationResult. </summary>
         /// <param name="name"></param>
         /// <param name="display"></param>
         /// <param name="origin"></param>
-        internal OperationResponse(string name, OperationDisplay display, string origin)
+        internal QuotaOperationResult(string name, QuotaOperationDisplay display, string origin)
         {
             Name = name;
             Display = display;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <summary> Gets the name. </summary>
         public string Name { get; }
         /// <summary> Gets the display. </summary>
-        public OperationDisplay Display { get; }
+        public QuotaOperationDisplay Display { get; }
         /// <summary> Gets the origin. </summary>
         public string Origin { get; }
     }

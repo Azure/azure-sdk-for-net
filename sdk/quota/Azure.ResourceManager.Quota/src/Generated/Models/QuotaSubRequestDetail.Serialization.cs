@@ -5,25 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    public partial class SubRequest
+    public partial class QuotaSubRequestDetail
     {
-        internal static SubRequest DeserializeSubRequest(JsonElement element)
+        internal static QuotaSubRequestDetail DeserializeQuotaSubRequestDetail(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceName> name = default;
+            Optional<QuotaRequestResourceName> name = default;
             Optional<string> resourceType = default;
             Optional<string> unit = default;
             Optional<QuotaRequestState> provisioningState = default;
             Optional<string> message = default;
-            Optional<string> subRequestId = default;
+            Optional<Guid> subRequestId = default;
             Optional<LimitJsonObject> limit = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    name = ResourceName.DeserializeResourceName(property.Value);
+                    name = QuotaRequestResourceName.DeserializeQuotaRequestResourceName(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceType"u8))
@@ -62,7 +63,11 @@ namespace Azure.ResourceManager.Quota.Models
                 }
                 if (property.NameEquals("subRequestId"u8))
                 {
-                    subRequestId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subRequestId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("limit"u8))
@@ -75,7 +80,7 @@ namespace Azure.ResourceManager.Quota.Models
                     continue;
                 }
             }
-            return new SubRequest(name.Value, resourceType.Value, unit.Value, Optional.ToNullable(provisioningState), message.Value, subRequestId.Value, limit.Value);
+            return new QuotaSubRequestDetail(name.Value, resourceType.Value, unit.Value, Optional.ToNullable(provisioningState), message.Value, Optional.ToNullable(subRequestId), limit.Value);
         }
     }
 }
