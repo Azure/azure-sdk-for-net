@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MetadataEntityData>> value = default;
+            Optional<IReadOnlyList<ResourceHealthMetadataEntityData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    List<MetadataEntityData> array = new List<MetadataEntityData>();
+                    List<ResourceHealthMetadataEntityData> array = new List<ResourceHealthMetadataEntityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetadataEntityData.DeserializeMetadataEntityData(item));
+                        array.Add(ResourceHealthMetadataEntityData.DeserializeResourceHealthMetadataEntityData(item));
                     }
                     value = array;
                     continue;

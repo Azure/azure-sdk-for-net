@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.DataMovement.Models;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -40,6 +41,19 @@ namespace Azure.Storage.DataMovement.Tests
                 Assert.AreEqual(path, storageResource.Path);
                 Assert.AreEqual(ProduceUriType.NoUri, storageResource.CanProduceUri);
             }
+        }
+
+        [Test]
+        public void Ctor_Error()
+        {
+            Assert.Catch<ArgumentException>( () =>
+                new LocalDirectoryStorageResourceContainer(""));
+
+            Assert.Catch<ArgumentException>(() =>
+                new LocalDirectoryStorageResourceContainer("   "));
+
+            Assert.Catch<ArgumentException>(() =>
+                new LocalDirectoryStorageResourceContainer(default));
         }
 
         [Test]

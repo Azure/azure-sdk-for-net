@@ -37,7 +37,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanWriteDateTime()
+        public void CanWriteDateTimeAppConfigValue()
         {
             ReadOnlySpan<byte> json = """
                 {
@@ -524,6 +524,134 @@ namespace Azure.Core.Tests
             MutableJsonDocumentTests.ValidateWriteTo(json, mdoc);
         }
 
+        [Test]
+        public void CanWriteByte()
+        {
+            string json = """
+                {
+                  "foo" : 42
+                }
+                """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            // Get from parsed JSON
+            Assert.AreEqual($"{42}", mdoc.RootElement.GetProperty("foo").ToString());
+
+            // Get from assigned existing value
+            byte newValue = 43;
+            mdoc.RootElement.GetProperty("foo").Set(newValue);
+            Assert.AreEqual($"{newValue}", mdoc.RootElement.GetProperty("foo").ToString());
+
+            // Get from added value
+            mdoc.RootElement.SetProperty("bar", (byte)44);
+            Assert.AreEqual($"{44}", mdoc.RootElement.GetProperty("bar").ToString());
+        }
+
+        [TestCaseSource(nameof(NumberValues))]
+        public void CanWriteNumber<T>(string serializedX, T x, T y, T z)
+        {
+            string json = $"{{\"foo\" : {serializedX}}}";
+
+            // Get from parsed JSON
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            // Get from parsed JSON
+            Assert.AreEqual($"{x}", mdoc.RootElement.GetProperty("foo").ToString());
+            MutableJsonDocumentTests.ValidateWriteTo(json, mdoc);
+
+            // Get from assigned existing value
+            mdoc.RootElement.GetProperty("foo").Set(y);
+            Assert.AreEqual($"{y}", mdoc.RootElement.GetProperty("foo").ToString());
+            MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\" : {y}}}", mdoc);
+
+            // Get from added value
+            mdoc.RootElement.SetProperty("bar", z);
+            Assert.AreEqual($"{z}", mdoc.RootElement.GetProperty("bar").ToString());
+            MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\":{y},\"bar\":{z}}}", mdoc);
+        }
+
+        [Test]
+        public void CanWriteGuid()
+        {
+            Guid guid = Guid.NewGuid();
+            string json = $"{{\"foo\" : \"{guid}\"}}";
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            // Get from parsed JSON
+            Assert.AreEqual($"{guid}", mdoc.RootElement.GetProperty("foo").ToString());
+            MutableJsonDocumentTests.ValidateWriteTo(json, mdoc);
+
+            // Get from assigned existing value
+            Guid fooValue = Guid.NewGuid();
+            mdoc.RootElement.GetProperty("foo").Set(fooValue);
+            Assert.AreEqual($"{fooValue}", mdoc.RootElement.GetProperty("foo").ToString());
+            MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\" : \"{fooValue}\"}}", mdoc);
+
+            // Get from added value
+            Guid barValue = Guid.NewGuid();
+            mdoc.RootElement.SetProperty("bar", barValue);
+            Assert.AreEqual($"{barValue}", mdoc.RootElement.GetProperty("bar").ToString());
+            MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\":\"{fooValue}\",\"bar\":\"{barValue}\"}}", mdoc);
+        }
+
+        [Test]
+        public void CanWriteDateTime()
+        {
+            DateTime dateTime = DateTime.Parse("2023-05-07T21:04:45.1657010-07:00");
+            string dateTimeString = MutableJsonElementTests.FormatDateTime(dateTime);
+            string json = $"{{\"foo\" : \"{dateTimeString}\"}}";
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            // Get from parsed JSON
+            Assert.AreEqual(dateTimeString, mdoc.RootElement.GetProperty("foo").ToString());
+            MutableJsonDocumentTests.ValidateWriteTo(json, mdoc);
+
+            // Get from assigned existing value
+            DateTime fooValue = dateTime.AddDays(1);
+            string fooString = MutableJsonElementTests.FormatDateTime(fooValue);
+            mdoc.RootElement.GetProperty("foo").Set(fooValue);
+            Assert.AreEqual(fooString, mdoc.RootElement.GetProperty("foo").ToString());
+            MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\" : \"{fooString}\"}}", mdoc);
+
+            // Get from added value
+            DateTime barValue = dateTime.AddDays(2);
+            string barString = MutableJsonElementTests.FormatDateTime(barValue);
+            mdoc.RootElement.SetProperty("bar", barValue);
+            Assert.AreEqual(barString, mdoc.RootElement.GetProperty("bar").ToString());
+            MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\":\"{fooString}\",\"bar\":\"{barString}\"}}", mdoc);
+        }
+
+        [Test]
+        public void CanWriteDateTimeOffset()
+        {
+            DateTimeOffset dateTime = DateTimeOffset.Now;
+            string dateTimeString = MutableJsonElementTests.FormatDateTimeOffset(dateTime);
+            string json = $"{{\"foo\" : \"{dateTimeString}\"}}";
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            // Get from parsed JSON
+            Assert.AreEqual(dateTimeString, mdoc.RootElement.GetProperty("foo").ToString());
+            MutableJsonDocumentTests.ValidateWriteTo(json, mdoc);
+
+            // Get from assigned existing value
+            DateTimeOffset fooValue = DateTimeOffset.Now.AddDays(1);
+            string fooString = MutableJsonElementTests.FormatDateTimeOffset(fooValue);
+            mdoc.RootElement.GetProperty("foo").Set(fooValue);
+            Assert.AreEqual(fooString, mdoc.RootElement.GetProperty("foo").ToString());
+            MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\" : \"{fooString}\"}}", mdoc);
+
+            // Get from added value
+            DateTimeOffset barValue = DateTimeOffset.Now.AddDays(2);
+            string barString = MutableJsonElementTests.FormatDateTimeOffset(barValue);
+            mdoc.RootElement.SetProperty("bar", barValue);
+            Assert.AreEqual(barString, mdoc.RootElement.GetProperty("bar").ToString());
+            MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\":\"{fooString}\",\"bar\":\"{barString}\"}}", mdoc);
+        }
+
         public static IEnumerable<dynamic> TestCases()
         {
             yield return """
@@ -650,6 +778,25 @@ namespace Azure.Core.Tests
             public double DoubleProperty { get; set; }
             public TestClass ObjectProperty { get; set; }
             public TestClass[] ArrayProperty { get; set; }
+        }
+
+        public static IEnumerable<object[]> NumberValues()
+        {
+            // Valid ranges:
+            // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/integral-numeric-types
+            yield return new object[] { "42", (byte)42, (byte)43, (byte)44 };
+            yield return new object[] { "42", (sbyte)42, (sbyte)43, (sbyte)44 };
+            yield return new object[] { "42", (short)42, (short)43, (short)44 };
+            yield return new object[] { "42", (ushort)42, (ushort)43, (ushort)44 };
+            yield return new object[] { "42", 42, 43, 44 };
+            yield return new object[] { "42", 42u, 43u, 44u };
+            yield return new object[] { "42", 42L, 43L, 44L };
+            yield return new object[] { "42", 42ul, 43ul, 44ul };
+#if NETCOREAPP
+            yield return new object[] { "42.1", 42.1f, 43.1f, 44.1f };
+            yield return new object[] { "42.1", 42.1d, 43.1d, 44.1d };
+#endif
+            yield return new object[] { "42.1", 42.1m, 43.1m, 44.1m };
         }
         #endregion
     }
