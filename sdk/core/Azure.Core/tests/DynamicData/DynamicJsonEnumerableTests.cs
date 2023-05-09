@@ -23,7 +23,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        [Ignore("BinaryOperation fails to bind in net461.")]
+        [Ignore("BinaryOperation fails to bind in net462.")]
         public void CanConvertToIntEnumerableWithChanges_AddAssign()
         {
             dynamic jsonData = DynamicJsonTests.GetDynamicJson("[0, 1, 2, 3]");

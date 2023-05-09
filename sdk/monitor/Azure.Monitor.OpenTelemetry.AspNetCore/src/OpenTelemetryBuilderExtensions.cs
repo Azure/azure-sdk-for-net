@@ -94,7 +94,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                             .AddAspNetCoreInstrumentation()
                             .AddHttpClientInstrumentation()
                             .AddSqlClientInstrumentation()
-                            .SetSampler(new ApplicationInsightsSampler(1.0F))
+                            .SetSampler(sp =>
+                            {
+                                var options = sp.GetRequiredService<IOptionsMonitor<ApplicationInsightsSamplerOptions>>().Get(Options.DefaultName);
+                                return new ApplicationInsightsSampler(options);
+                            })
                             .AddAzureMonitorTraceExporter());
 
             builder.WithMetrics(b => b

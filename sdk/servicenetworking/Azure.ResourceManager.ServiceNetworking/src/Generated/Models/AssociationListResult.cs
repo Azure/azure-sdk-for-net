@@ -13,7 +13,7 @@ using Azure.ResourceManager.ServiceNetworking;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
-    /// <summary> The response of a Traffic Controller Association list operation. </summary>
+    /// <summary> The response of a Association list operation. </summary>
     internal partial class AssociationListResult
     {
         /// <summary> Initializes a new instance of AssociationListResult. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <summary> Initializes a new instance of AssociationListResult. </summary>
         /// <param name="value"> The Association items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal AssociationListResult(IReadOnlyList<AssociationData> value, string nextLink)
+        internal AssociationListResult(IReadOnlyList<AssociationData> value, Uri nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <summary> The Association items on this page. </summary>
         public IReadOnlyList<AssociationData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

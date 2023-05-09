@@ -3,8 +3,9 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
-using Azure.Core.Dynamic;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -294,6 +295,141 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void CanAddPocoProperty()
+        {
+            dynamic value = BinaryData.FromBytes("""
+                {
+                    "foo": 1
+                }
+                """u8.ToArray()).ToDynamicFromJson();
+
+            JsonDataTests.SampleModel model = new()
+            {
+                Message = "hi",
+                Number = 2,
+            };
+
+            value.Model = model;
+
+            Assert.IsTrue(value.Foo == 1);
+            Assert.IsTrue(value.foo == 1);
+            Assert.IsTrue(value.Model.Message == "hi");
+            Assert.IsTrue(value.model.message == "hi");
+            Assert.IsTrue(value.Model.Number == 2);
+            Assert.IsTrue(value.model.number == 2);
+
+            RequestContent content = RequestContent.Create(value);
+            Stream stream = new MemoryStream();
+            content.WriteTo(stream, default);
+            stream.Flush();
+            stream.Position = 0;
+
+            BinaryData data = BinaryData.FromStream(stream);
+            dynamic roundTripValue = data.ToDynamicFromJson();
+
+            Assert.IsTrue(roundTripValue.foo == value.Foo);
+            Assert.IsTrue(roundTripValue.model.message == value.Model.Message);
+            Assert.IsTrue(roundTripValue.model.number == value.Model.Number);
+
+            Assert.AreEqual(model, (JsonDataTests.SampleModel)roundTripValue.model);
+            Assert.AreEqual(model, (JsonDataTests.SampleModel)roundTripValue.Model);
+            Assert.AreEqual(model, (JsonDataTests.SampleModel)value.model);
+            Assert.AreEqual(model, (JsonDataTests.SampleModel)value.Model);
+        }
+
+        [Test]
+        public void CanAddNestedPocoProperty()
+        {
+            dynamic value = BinaryData.FromBytes("""
+                {
+                    "foo": 1
+                }
+                """u8.ToArray()).ToDynamicFromJson();
+
+            ParentModel model = new ParentModel()
+            {
+                Name = "Parent",
+                Value = new ChildModel()
+                {
+                    Message = "Child",
+                    Number = 1
+                }
+            };
+
+            value.Model = model;
+
+            Assert.IsTrue(value.Foo == 1);
+            Assert.IsTrue(value.foo == 1);
+            Assert.IsTrue(value.Model.Name == "Parent");
+            Assert.IsTrue(value.model.name == "Parent");
+            Assert.IsTrue(value.Model.Value.Message == "Child");
+            Assert.IsTrue(value.model.value.message == "Child");
+
+            // Test serialization
+            BinaryData jdocBuffer = MutableJsonDocumentTests.GetWriteToBuffer(JsonDocument.Parse(value.ToString()));
+            BinaryData dataBuffer = GetWriteToBuffer(value);
+
+            Assert.AreEqual(jdocBuffer.ToString(), dataBuffer.ToString());
+            Assert.IsTrue(jdocBuffer.ToMemory().Span.SequenceEqual(dataBuffer.ToMemory().Span),
+                "JsonDocument buffer does not match MutableJsonDocument buffer.");
+
+            // Test deserialization
+            BinaryData bd = BinaryData.FromString(value.ToString());
+            dynamic roundTripValue = bd.ToDynamicFromJson();
+            Assert.AreEqual(model.Value, (ChildModel)roundTripValue.Model.Value);
+            Assert.AreEqual(model, (ParentModel)roundTripValue.Model);
+        }
+
+        [Test]
+        public void CanSetNestedPocoProperty()
+        {
+            dynamic value = BinaryData.FromBytes("""
+                {
+                    "foo": 1
+                }
+                """u8.ToArray()).ToDynamicFromJson();
+
+            ParentModel model = new ParentModel()
+            {
+                Name = "Parent",
+                Value = new ChildModel()
+                {
+                    Message = "Child",
+                    Number = 1
+                }
+            };
+
+            value.Foo = model;
+
+            Assert.IsTrue(value.Foo.Name == "Parent");
+            Assert.IsTrue(value.foo.name == "Parent");
+            Assert.IsTrue(value.Foo.Value.Message == "Child");
+            Assert.IsTrue(value.foo.value.message == "Child");
+
+            // Test serialization
+            BinaryData jdocBuffer = MutableJsonDocumentTests.GetWriteToBuffer(JsonDocument.Parse(value.ToString()));
+            BinaryData dataBuffer = GetWriteToBuffer(value);
+
+            Assert.AreEqual(jdocBuffer.ToString(), dataBuffer.ToString());
+            Assert.IsTrue(jdocBuffer.ToMemory().Span.SequenceEqual(dataBuffer.ToMemory().Span),
+                "JsonDocument buffer does not match MutableJsonDocument buffer.");
+
+            // Test deserialization
+            BinaryData bd = BinaryData.FromString(value.ToString());
+            dynamic roundTripValue = bd.ToDynamicFromJson();
+            Assert.AreEqual(model.Value, (ChildModel)roundTripValue.Foo.Value);
+            Assert.AreEqual(model, (ParentModel)roundTripValue.Foo);
+        }
+
+        internal static BinaryData GetWriteToBuffer(dynamic data)
+        {
+            using MemoryStream stream = new();
+            data.WriteTo(stream);
+            stream.Position = 0;
+            return BinaryData.FromStream(stream);
+        }
+
+        [Test]
         public void CanCheckOptionalProperty()
         {
             dynamic json = GetDynamicJson("""
@@ -412,52 +548,14 @@ namespace Azure.Core.Tests
         {
             string json = """{ "foo" : 1 }""";
 
-            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(DynamicDataOptions.Default);
-
-            Assert.AreEqual(1, (int)dynamicJson.foo);
-            Assert.AreEqual(1, (int)dynamicJson.Foo);
-        }
-
-        [Test]
-        public void CanGetCamelCasePropertyNoMapping()
-        {
-            string json = """{ "foo" : 1 }""";
-
             dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson();
 
             Assert.AreEqual(1, (int)dynamicJson.foo);
-            Assert.AreEqual(null, dynamicJson.Foo);
-        }
-
-        [Test]
-        public void CanGetCamelCasePropertyPascalGetters()
-        {
-            string json = """{ "foo" : 1 }""";
-
-            DynamicDataOptions options = new()
-            {
-                NameMapping = DynamicDataNameMapping.PascalCaseGetters
-            };
-
-            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(options);
-
-            Assert.AreEqual(1, (int)dynamicJson.foo);
             Assert.AreEqual(1, (int)dynamicJson.Foo);
         }
 
         [Test]
-        public void CanGetCamelCasePropertyPascalGettersCamelSetters()
-        {
-            string json = """{ "foo" : 1 }""";
-
-            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(DynamicDataOptions.Default);
-
-            Assert.AreEqual(1, (int)dynamicJson.foo);
-            Assert.AreEqual(1, (int)dynamicJson.Foo);
-        }
-
-        [Test]
-        public void CanGetPascalCasePropertyNoMapping()
+        public void CannotGetPascalCasePropertyCamelCase()
         {
             string json = """{ "Foo" : 1 }""";
 
@@ -468,34 +566,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanGetPascalCasePropertyPascalGetters()
-        {
-            string json = """{ "Foo" : 1 }""";
-
-            DynamicDataOptions options = new()
-            {
-                NameMapping = DynamicDataNameMapping.PascalCaseGetters
-            };
-
-            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(options);
-
-            Assert.AreEqual(null, dynamicJson.foo);
-            Assert.AreEqual(1, (int)dynamicJson.Foo);
-        }
-
-        [Test]
-        public void CanGetPascalCasePropertyPascalGettersCamelSetters()
-        {
-            string json = """{ "Foo" : 1 }""";
-
-            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(DynamicDataOptions.Default);
-
-            Assert.AreEqual(null, dynamicJson.foo);
-            Assert.AreEqual(1, (int)dynamicJson.Foo);
-        }
-
-        [Test]
-        public void CanSetCamelCaseNoMapping()
+        public void CanSetCamelCaseProperties()
         {
             string json = """{ "foo": 1 }""";
 
@@ -508,12 +579,11 @@ namespace Azure.Core.Tests
             dynamicJson.bar = 3;
 
             Assert.AreEqual(2, (int)dynamicJson.foo);
-            Assert.AreEqual(null, dynamicJson.Foo);
             Assert.AreEqual(3, (int)dynamicJson.bar);
-            Assert.AreEqual(null, dynamicJson.Bar);
 
-            dynamicJson.Foo = 4;
-            dynamicJson.Bar = 5;
+            // Pascal case properties don't clobber camel case ones.
+            dynamicJson["Foo"] = 4;
+            dynamicJson["Bar"] = 5;
 
             Assert.AreEqual(2, (int)dynamicJson.foo);
             Assert.AreEqual(4, (int)dynamicJson.Foo);
@@ -522,48 +592,11 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanSetCamelCasePascalGetters()
+        public void CanSetCamelCasePropertiesWithPascalCaseNames()
         {
             string json = """{ "foo": 1 }""";
 
-            DynamicDataOptions options = new()
-            {
-                NameMapping = DynamicDataNameMapping.PascalCaseGetters
-            };
-            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(options);
-
-            // Existing property access
-            dynamicJson.foo = 2;
-
-            // New property is created as camelCase
-            dynamicJson.bar = 3;
-
-            Assert.AreEqual(2, (int)dynamicJson.foo);
-            Assert.AreEqual(2, (int)dynamicJson.Foo);
-            Assert.AreEqual(3, (int)dynamicJson.bar);
-            Assert.AreEqual(3, (int)dynamicJson.Bar);
-
-            // PascalCase getters find camelCase properties and sets them.
-            dynamicJson.Foo = 4;
-            dynamicJson.Bar = 5;
-
-            // New property is created as PascalCase
-            dynamicJson.Baz = 6;
-
-            Assert.AreEqual(4, (int)dynamicJson.foo);
-            Assert.AreEqual(4, (int)dynamicJson.Foo);
-            Assert.AreEqual(5, (int)dynamicJson.bar);
-            Assert.AreEqual(5, (int)dynamicJson.Bar);
-            Assert.AreEqual(null, dynamicJson.baz);
-            Assert.AreEqual(6, (int)dynamicJson.Baz);
-        }
-
-        [Test]
-        public void CanSetCamelCasePascalGettersCamelSetters()
-        {
-            string json = """{ "foo": 1 }""";
-
-            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(DynamicDataOptions.Default);
+            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson();
 
             // Existing property access
             dynamicJson.foo = 2;
@@ -592,80 +625,42 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanSetPascalCaseNoMapping()
+        public void CanMixPascalCaseAndCamelCaseNames()
         {
             string json = """{ "Foo": 1 }""";
 
             dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson();
 
-            // This adds a new property, since it doesn't find `Foo`.
+            // This adds a new camelCase property, since it doesn't find `Foo`.
             dynamicJson.foo = 2;
 
-            // New property access
-            dynamicJson.bar = 3;
-
-            Assert.AreEqual(2, (int)dynamicJson.foo);
-            Assert.AreEqual(1, (int)dynamicJson.Foo);
-            Assert.AreEqual(3, (int)dynamicJson.bar);
-            Assert.AreEqual(null, dynamicJson.Bar);
-
-            // This updates the PascalCase property and not the camelCase one.
-            dynamicJson.Foo = 4;
-
-            // This creates a new PascalCase property.
-            dynamicJson.Bar = 5;
-
-            Assert.AreEqual(2, (int)dynamicJson.foo);
-            Assert.AreEqual(4, (int)dynamicJson.Foo);
-            Assert.AreEqual(3, (int)dynamicJson.bar);
-            Assert.AreEqual(5, (int)dynamicJson.Bar);
-        }
-
-        [Test]
-        public void CanSetPascalCasePascalGetters()
-        {
-            string json = """{ "Foo": 1 }""";
-
-            DynamicDataOptions options = new()
-            {
-                NameMapping = DynamicDataNameMapping.PascalCaseGetters
-            };
-            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(options);
-
-            // This property doesn't exist, so it creates a new camelCase property.
-            dynamicJson.foo = 2;
-
-            // New property is created as camelCase
+            // This creates a new camelCase property.
             dynamicJson.bar = 3;
 
             Assert.AreEqual(2, (int)dynamicJson.foo);
             Assert.AreEqual(1, (int)dynamicJson.Foo);
             Assert.AreEqual(3, (int)dynamicJson.bar);
             Assert.AreEqual(3, (int)dynamicJson.Bar);
+            Assert.AreEqual(null, dynamicJson["Bar"]);
 
             // This updates the PascalCase property and not the camelCase one.
             dynamicJson.Foo = 4;
 
-            // The PascalCase getter finds `bar`, so it updates the camelCase property.
-            dynamicJson.Bar = 5;
-
-            // New property is created as PascalCase
-            dynamicJson.Baz = 6;
+            // This creates a new PascalCase property.
+            dynamicJson["Bar"] = 5;
 
             Assert.AreEqual(2, (int)dynamicJson.foo);
             Assert.AreEqual(4, (int)dynamicJson.Foo);
-            Assert.AreEqual(5, (int)dynamicJson.bar);
+            Assert.AreEqual(3, (int)dynamicJson.bar);
             Assert.AreEqual(5, (int)dynamicJson.Bar);
-            Assert.AreEqual(null, dynamicJson.baz);
-            Assert.AreEqual(6, (int)dynamicJson.Baz);
         }
 
         [Test]
-        public void CanSetPascalCasePascalGettersCamelSetters()
+        public void CanSetPascalCaseProperties()
         {
             string json = """{ "Foo": 1 }""";
 
-            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(DynamicDataOptions.Default);
+            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson();
 
             // Existing property access does not add a camelCase property.
             dynamicJson.Foo = 2;
@@ -677,17 +672,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual(2, (int)dynamicJson.Foo);
             Assert.AreEqual(3, (int)dynamicJson.bar);
             Assert.AreEqual(3, (int)dynamicJson.Bar);
-        }
-
-        [Test]
-        public void CanPassNameMappingEnumDirectly()
-        {
-            string json = """{ "foo" : 1 }""";
-
-            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(DynamicDataNameMapping.None);
-
-            Assert.AreEqual(1, (int)dynamicJson.foo);
-            Assert.AreEqual(null, dynamicJson.Foo);
         }
 
         [Test]
@@ -707,7 +691,7 @@ namespace Azure.Core.Tests
                 }
                 """;
 
-            dynamic dynamicJson = BinaryData.FromString(json).ToDynamicFromJson(DynamicDataOptions.Default);
+            dynamic dynamicJson = BinaryData.FromString(json).ToDynamicFromJson();
             Assert.IsTrue(dynamicJson.root.child[0].item.leaf);
             Assert.IsTrue(dynamicJson.Root.Child[0].Item.Leaf);
         }
@@ -756,7 +740,7 @@ namespace Azure.Core.Tests
                         }
                     ]
                 }
-                """, DynamicDataNameMapping.PascalCaseGetters);
+                """);
 
             IEnumerable ary = (IEnumerable)jsonData.Array;
             IEnumerator e = ary.GetEnumerator();
@@ -820,7 +804,7 @@ namespace Azure.Core.Tests
                         "index": 2
                     }
                 }
-                """, DynamicDataNameMapping.PascalCaseGetters);
+                """);
 
             IEnumerable ary = (IEnumerable)jsonData;
             IEnumerator e = ary.GetEnumerator();
@@ -849,7 +833,7 @@ namespace Azure.Core.Tests
                     "foo": 1
                 }
                 """
-                ).ToDynamicFromJson(DynamicDataNameMapping.PascalCaseGettersCamelCaseSetters);
+                ).ToDynamicFromJson();
 
             Exception e = Assert.Throws<InvalidCastException>(() => { var value = (bool)json.Foo; });
             Assert.That(e.Message.Contains(JsonValueKind.Number.ToString()));
@@ -864,7 +848,7 @@ namespace Azure.Core.Tests
                     "foo": 1
                 }
                 """
-                ).ToDynamicFromJson(DynamicDataNameMapping.PascalCaseGettersCamelCaseSetters);
+                ).ToDynamicFromJson();
 
             json.Foo = true;
 
@@ -872,14 +856,267 @@ namespace Azure.Core.Tests
             Assert.That(e.Message.Contains(JsonValueKind.True.ToString()));
         }
 
-        #region Helpers
-        internal static dynamic GetDynamicJson(string json, DynamicDataNameMapping nameMapping = default)
+        [Test]
+        public void CanCastToByte()
         {
-            return new BinaryData(json).ToDynamicFromJson(nameMapping);
+            dynamic json = BinaryData.FromString("""
+                {
+                  "foo" : 42
+                }
+                """).ToDynamicFromJson();
+
+            // Get from parsed JSON
+            Assert.AreEqual((byte)42, (byte)json.Foo);
+            Assert.IsTrue(((byte)42) == json.Foo);
+
+            // Get from assigned existing value
+            json.Foo = (byte)43;
+            Assert.AreEqual((byte)43, (byte)json.Foo);
+            Assert.IsTrue(((byte)43) == json.Foo);
+
+            // Get from added value
+            json.Bar = (byte)44;
+            Assert.AreEqual((byte)44, (byte)json.Bar);
+            Assert.IsTrue(((byte)44) == json.Bar);
+
+            // Doesn't work if number change is outside byte range
+            json.Foo = 256;
+            Assert.Throws<InvalidCastException>(() => { byte b = json.Foo; });
+
+            // Doesn't work for non-number change
+            json.Foo = "string";
+            Assert.Throws<InvalidCastException>(() => { byte b = json.Foo; });
+        }
+
+        [TestCaseSource(nameof(NumberValues))]
+        public void CanCastToNumber<T, U>(string serializedX, T x, T y, T z, U invalid)
+        {
+            dynamic json = BinaryData.FromString($"{{\"foo\" : {serializedX}}}").ToDynamicFromJson();
+
+            // Get from parsed JSON
+            Assert.AreEqual(x, (T)json.Foo);
+            Assert.IsTrue(x == json.Foo);
+            Assert.IsTrue(json.Foo == x);
+
+            // Get from assigned existing value
+            json.Foo = y;
+            Assert.AreEqual(y, (T)json.Foo);
+            Assert.IsTrue(y == json.Foo);
+            Assert.IsTrue(json.Foo == y);
+
+            // Get from added value
+            json.Bar = z;
+            Assert.AreEqual(z, (T)json.Bar);
+            Assert.IsTrue(z == json.Bar);
+            Assert.IsTrue(json.Bar == z);
+
+            // Doesn't work if number change is outside T range
+            // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/integral-numeric-types
+            if (invalid is bool testRange && testRange)
+            {
+                json.Foo = invalid;
+                Assert.Throws<InvalidCastException>(() => { T b = json.Foo; });
+            }
+
+            // Doesn't work for non-number change
+            json.Foo = "string";
+            Assert.Throws<InvalidCastException>(() => { T b = json.Foo; });
+        }
+
+        [Test]
+        public void CanExplicitCastToGuid()
+        {
+            Guid guid = Guid.NewGuid();
+            dynamic json = BinaryData.FromString($"{{\"foo\" : \"{guid}\"}}").ToDynamicFromJson();
+
+            // Get from parsed JSON
+            Assert.AreEqual(guid, (Guid)json.Foo);
+            Assert.IsTrue(guid == (Guid)json.Foo);
+            Assert.IsTrue((Guid)json.Foo == guid);
+
+            // Get from assigned existing value
+            Guid fooValue = Guid.NewGuid();
+            json.Foo = fooValue;
+            Assert.AreEqual(fooValue, (Guid)json.Foo);
+            Assert.IsTrue(fooValue == (Guid)json.Foo);
+            Assert.IsTrue((Guid)json.Foo == fooValue);
+
+            // Get from added value
+            Guid barValue = Guid.NewGuid();
+            json.Bar = barValue;
+            Assert.AreEqual(barValue, (Guid)json.Bar);
+            Assert.IsTrue(barValue == (Guid)json.Bar);
+            Assert.IsTrue((Guid)json.Bar == barValue);
+
+            // Also works as a string
+            Assert.AreEqual(fooValue.ToString(), (string)json.Foo);
+            Assert.IsTrue(fooValue.ToString() == json.Foo);
+            Assert.IsTrue(json.Foo == fooValue.ToString());
+
+            Assert.AreEqual(barValue.ToString(), (string)json.Bar);
+            Assert.IsTrue(barValue.ToString() == json.Bar);
+            Assert.IsTrue(json.Bar == barValue.ToString());
+
+            // Doesn't work for non-string change
+            json.Foo = "false";
+            Assert.Throws<InvalidCastException>(() => { Guid g = (Guid)json.Foo; });
+        }
+
+        [Test]
+        public void CanExplicitCastToDateTime()
+        {
+            DateTime dateTime = DateTime.Now;
+            string dateTimeString = MutableJsonElementTests.FormatDateTime(dateTime);
+            dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson();
+
+            // Get from parsed JSON
+            Assert.AreEqual(dateTime, (DateTime)json.Foo);
+            Assert.IsTrue(dateTime == (DateTime)json.Foo);
+            Assert.IsTrue((DateTime)json.Foo == dateTime);
+
+            // Get from assigned existing value
+            DateTime fooValue = DateTime.Now.AddDays(1);
+            json.Foo = fooValue;
+            Assert.AreEqual(fooValue, (DateTime)json.Foo);
+            Assert.IsTrue(fooValue == (DateTime)json.Foo);
+            Assert.IsTrue((DateTime)json.Foo == fooValue);
+
+            // Get from added value
+            DateTime barValue = DateTime.Now.AddDays(2);
+            json.Bar = barValue;
+            Assert.AreEqual(barValue, (DateTime)json.Bar);
+            Assert.IsTrue(barValue == (DateTime)json.Bar);
+            Assert.IsTrue((DateTime)json.Bar == barValue);
+
+            // Also works as a string
+            string fooValueString = MutableJsonElementTests.FormatDateTime(fooValue);
+            Assert.AreEqual(fooValueString, (string)json.Foo);
+            Assert.IsTrue(fooValueString == json.Foo);
+            Assert.IsTrue(json.Foo == fooValueString);
+
+            string barValueString = MutableJsonElementTests.FormatDateTime(barValue);
+            Assert.AreEqual(barValueString, (string)json.Bar);
+            Assert.IsTrue(barValueString == json.Bar);
+            Assert.IsTrue(json.Bar == barValueString);
+
+            // Doesn't work for non-string change
+            json.Foo = "false";
+            Assert.Throws<InvalidCastException>(() => { DateTime g = (DateTime)json.Foo; });
+        }
+
+        [Test]
+        public void CanExplicitCastToDateTimeOffset()
+        {
+            DateTimeOffset dateTime = DateTimeOffset.Now;
+            string dateTimeString = MutableJsonElementTests.FormatDateTimeOffset(dateTime);
+            dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson();
+
+            // Get from parsed JSON
+            Assert.AreEqual(dateTime, (DateTimeOffset)json.Foo);
+            Assert.IsTrue(dateTime == (DateTimeOffset)json.Foo);
+            Assert.IsTrue((DateTimeOffset)json.Foo == dateTime);
+
+            // Get from assigned existing value
+            DateTimeOffset fooValue = DateTimeOffset.Now.AddDays(1);
+            json.Foo = fooValue;
+            Assert.AreEqual(fooValue, (DateTimeOffset)json.Foo);
+            Assert.IsTrue(fooValue == (DateTimeOffset)json.Foo);
+            Assert.IsTrue((DateTimeOffset)json.Foo == fooValue);
+
+            // Get from added value
+            DateTimeOffset barValue = DateTimeOffset.Now.AddDays(2);
+            json.Bar = barValue;
+            Assert.AreEqual(barValue, (DateTimeOffset)json.Bar);
+            Assert.IsTrue(barValue == (DateTimeOffset)json.Bar);
+            Assert.IsTrue((DateTimeOffset)json.Bar == barValue);
+
+            // Also works as a string
+            string fooValueString = MutableJsonElementTests.FormatDateTimeOffset(fooValue);
+            Assert.AreEqual(fooValueString, (string)json.Foo);
+            Assert.IsTrue(fooValueString == json.Foo);
+            Assert.IsTrue(json.Foo == fooValueString);
+
+            string barValueString = MutableJsonElementTests.FormatDateTimeOffset(barValue);
+            Assert.AreEqual(barValueString, (string)json.Bar);
+            Assert.IsTrue(barValueString == json.Bar);
+            Assert.IsTrue(json.Bar == barValueString);
+
+            // Doesn't work for non-string change
+            json.Foo = "false";
+            Assert.Throws<InvalidCastException>(() => { DateTimeOffset d = (DateTimeOffset)json.Foo; });
+        }
+
+        public static IEnumerable<object[]> NumberValues()
+        {
+            // Valid ranges:
+            // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/integral-numeric-types
+            yield return new object[] { "42", (byte)42, (byte)43, (byte)44, 256 };
+            yield return new object[] { "42", (sbyte)42, (sbyte)43, (sbyte)44, 128 };
+            yield return new object[] { "42", (short)42, (short)43, (short)44, 32768 };
+            yield return new object[] { "42", (ushort)42, (ushort)43, (ushort)44, 65536 };
+            yield return new object[] { "42", 42, 43, 44, 2147483648 };
+            yield return new object[] { "42", 42u, 43u, 44u, 4294967296 };
+            yield return new object[] { "42", 42L, 43L, 44L, 9223372036854775808 };
+            yield return new object[] { "42", 42ul, 43ul, 44ul, -1 };
+            yield return new object[] { "42.1", 42.1f, 43.1f, 44.1f, false /* don't test range */ };
+            yield return new object[] { "42.1", 42.1d, 43.1d, 44.1d, false /* don't test range */ };
+            yield return new object[] { "42.1", 42.1m, 43.1m, 44.1m, false /* don't test range */ };
+        }
+
+        #region Helpers
+        internal static dynamic GetDynamicJson(string json)
+        {
+            return new BinaryData(json).ToDynamicFromJson();
         }
 
         internal class CustomType
         {
+        }
+
+#pragma warning disable CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
+        internal class ParentModel : IEquatable<ParentModel>
+#pragma warning disable CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
+        {
+            public string Name { get; set; }
+            public ChildModel Value { get; set; }
+
+            public override bool Equals(object obj)
+            {
+                ParentModel other = obj as ParentModel;
+                if (other == null)
+                {
+                    return false;
+                }
+
+                return Equals(other);
+            }
+
+            public bool Equals(ParentModel obj)
+            {
+                return Name == obj.Name && Value.Equals(obj.Value);
+            }
+        }
+
+        internal class ChildModel : IEquatable<ChildModel>
+        {
+            public string Message { get; set; }
+            public int Number { get; set; }
+
+            public override bool Equals(object obj)
+            {
+                ChildModel other = obj as ChildModel;
+                if (other == null)
+                {
+                    return false;
+                }
+
+                return Equals(other);
+            }
+
+            public bool Equals(ChildModel obj)
+            {
+                return Message == obj.Message && Number == obj.Number;
+            }
         }
         #endregion
     }
