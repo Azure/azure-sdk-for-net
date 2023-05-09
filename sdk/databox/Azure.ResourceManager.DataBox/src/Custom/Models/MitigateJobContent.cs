@@ -6,7 +6,7 @@ namespace Azure.ResourceManager.DataBox.Models
     public partial class MitigateJobContent
     {
         /// <summary> Initializes a new instance of MitigateJobContent. </summary>
-        public MitigateJobContent() : this(CustomerResolutionCode.None)
+        public MitigateJobContent() : this(default)
         {
         }
     }
