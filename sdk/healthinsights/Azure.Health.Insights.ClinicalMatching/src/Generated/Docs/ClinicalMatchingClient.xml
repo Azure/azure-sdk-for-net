@@ -1,6 +1,312 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
+    <member name="MatchTrialsAsync(WaitUntil,TrialMatcherData,string,DateTimeOffset?,CancellationToken)">
+<example>
+This sample shows how to call MatchTrialsAsync with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ClinicalMatchingClient(endpoint, credential);
+
+var trialMatcherData = new TrialMatcherData(new PatientRecord[] 
+{
+    new PatientRecord("<id>")
+{
+        Info = new PatientInfo()
+{
+            Sex = PatientInfoSex.Female,
+            BirthDate = DateTimeOffset.UtcNow,
+            ClinicalInfo = 
+{
+                new ClinicalCodedElement("<system>", "<code>")
+{
+                    Name = "<Name>",
+                    Value = "<Value>",
+                }
+            },
+        },
+        Data = 
+{
+            new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(DocumentContentSourceType.Inline, "<value>"))
+{
+                ClinicalType = ClinicalDocumentType.Consultation,
+                Language = "<Language>",
+                CreatedDateTime = DateTimeOffset.UtcNow,
+            }
+        },
+    }
+})
+{
+    Configuration = new TrialMatcherModelConfiguration(new ClinicalTrials()
+{
+        CustomTrials = 
+{
+            new ClinicalTrialDetails("<id>", new ClinicalTrialMetadata(new string[] 
+{
+                "<null>"
+            })
+{
+                Phases = 
+{
+                    ClinicalTrialPhase.NotApplicable
+                },
+                StudyType = ClinicalTrialStudyType.Interventional,
+                RecruitmentStatus = ClinicalTrialRecruitmentStatus.UnknownStatus,
+                Sponsors = 
+{
+                    "<null>"
+                },
+                Contacts = 
+{
+                    new ContactDetails()
+{
+                        Name = "<Name>",
+                        Email = "<Email>",
+                        Phone = "<Phone>",
+                    }
+                },
+                Facilities = 
+{
+                    new ClinicalTrialResearchFacility("<name>", "<countryOrRegion>")
+{
+                        City = "<City>",
+                        State = "<State>",
+                    }
+                },
+            })
+{
+                EligibilityCriteriaText = "<EligibilityCriteriaText>",
+                Demographics = new ClinicalTrialDemographics()
+{
+                    AcceptedSex = ClinicalTrialAcceptedSex.All,
+                    AcceptedAgeRange = new AcceptedAgeRange()
+{
+                        MinimumAge = new AcceptedAge(AgeUnit.Years, 3.14f),
+                    },
+                },
+            }
+        },
+        RegistryFilters = 
+{
+            new ClinicalTrialRegistryFilter()
+{
+                Conditions = 
+{
+                    "<null>"
+                },
+                StudyTypes = 
+{
+                    ClinicalTrialStudyType.Interventional
+                },
+                RecruitmentStatuses = 
+{
+                    ClinicalTrialRecruitmentStatus.UnknownStatus
+                },
+                Sponsors = 
+{
+                    "<null>"
+                },
+                Phases = 
+{
+                    ClinicalTrialPhase.NotApplicable
+                },
+                Purposes = 
+{
+                    ClinicalTrialPurpose.NotApplicable
+                },
+                Ids = 
+{
+                    "<null>"
+                },
+                Sources = 
+{
+                    ClinicalTrialSource.Custom
+                },
+                FacilityNames = 
+{
+                    "<null>"
+                },
+                FacilityLocations = 
+{
+                    new GeographicLocation("<countryOrRegion>")
+{
+                        City = "<City>",
+                        State = "<State>",
+                    }
+                },
+                FacilityAreas = 
+{
+                    new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJsonGeometryType.Point, new float[] 
+{
+                        3.14f
+                    }), new AreaProperties(GeoJsonPropertiesSubType.Circle, 3.14))
+                },
+            }
+        },
+    })
+{
+        Verbose = true,
+        IncludeEvidence = true,
+    },
+};
+var operation = await client.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData, "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+]]></code>
+</example>
+    </member>
+    <member name="MatchTrials(WaitUntil,TrialMatcherData,string,DateTimeOffset?,CancellationToken)">
+<example>
+This sample shows how to call MatchTrials with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ClinicalMatchingClient(endpoint, credential);
+
+var trialMatcherData = new TrialMatcherData(new PatientRecord[] 
+{
+    new PatientRecord("<id>")
+{
+        Info = new PatientInfo()
+{
+            Sex = PatientInfoSex.Female,
+            BirthDate = DateTimeOffset.UtcNow,
+            ClinicalInfo = 
+{
+                new ClinicalCodedElement("<system>", "<code>")
+{
+                    Name = "<Name>",
+                    Value = "<Value>",
+                }
+            },
+        },
+        Data = 
+{
+            new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(DocumentContentSourceType.Inline, "<value>"))
+{
+                ClinicalType = ClinicalDocumentType.Consultation,
+                Language = "<Language>",
+                CreatedDateTime = DateTimeOffset.UtcNow,
+            }
+        },
+    }
+})
+{
+    Configuration = new TrialMatcherModelConfiguration(new ClinicalTrials()
+{
+        CustomTrials = 
+{
+            new ClinicalTrialDetails("<id>", new ClinicalTrialMetadata(new string[] 
+{
+                "<null>"
+            })
+{
+                Phases = 
+{
+                    ClinicalTrialPhase.NotApplicable
+                },
+                StudyType = ClinicalTrialStudyType.Interventional,
+                RecruitmentStatus = ClinicalTrialRecruitmentStatus.UnknownStatus,
+                Sponsors = 
+{
+                    "<null>"
+                },
+                Contacts = 
+{
+                    new ContactDetails()
+{
+                        Name = "<Name>",
+                        Email = "<Email>",
+                        Phone = "<Phone>",
+                    }
+                },
+                Facilities = 
+{
+                    new ClinicalTrialResearchFacility("<name>", "<countryOrRegion>")
+{
+                        City = "<City>",
+                        State = "<State>",
+                    }
+                },
+            })
+{
+                EligibilityCriteriaText = "<EligibilityCriteriaText>",
+                Demographics = new ClinicalTrialDemographics()
+{
+                    AcceptedSex = ClinicalTrialAcceptedSex.All,
+                    AcceptedAgeRange = new AcceptedAgeRange()
+{
+                        MinimumAge = new AcceptedAge(AgeUnit.Years, 3.14f),
+                    },
+                },
+            }
+        },
+        RegistryFilters = 
+{
+            new ClinicalTrialRegistryFilter()
+{
+                Conditions = 
+{
+                    "<null>"
+                },
+                StudyTypes = 
+{
+                    ClinicalTrialStudyType.Interventional
+                },
+                RecruitmentStatuses = 
+{
+                    ClinicalTrialRecruitmentStatus.UnknownStatus
+                },
+                Sponsors = 
+{
+                    "<null>"
+                },
+                Phases = 
+{
+                    ClinicalTrialPhase.NotApplicable
+                },
+                Purposes = 
+{
+                    ClinicalTrialPurpose.NotApplicable
+                },
+                Ids = 
+{
+                    "<null>"
+                },
+                Sources = 
+{
+                    ClinicalTrialSource.Custom
+                },
+                FacilityNames = 
+{
+                    "<null>"
+                },
+                FacilityLocations = 
+{
+                    new GeographicLocation("<countryOrRegion>")
+{
+                        City = "<City>",
+                        State = "<State>",
+                    }
+                },
+                FacilityAreas = 
+{
+                    new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJsonGeometryType.Point, new float[] 
+{
+                        3.14f
+                    }), new AreaProperties(GeoJsonPropertiesSubType.Circle, 3.14))
+                },
+            }
+        },
+    })
+{
+        Verbose = true,
+        IncludeEvidence = true,
+    },
+};
+var operation = client.MatchTrials(WaitUntil.Completed, trialMatcherData, "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+]]></code>
+</example>
+    </member>
     <member name="MatchTrialsAsync(WaitUntil,RequestContent,string,DateTimeOffset?,RequestContext)">
 <example>
 This sample shows how to call MatchTrialsAsync with required parameters and request content, and how to parse the result.
@@ -19,8 +325,8 @@ var data = new {
 
 var operation = await client.MatchTrialsAsync(WaitUntil.Completed, RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -172,10 +478,10 @@ var data = new {
     },
 };
 
-var operation = await client.MatchTrialsAsync(WaitUntil.Completed, RequestContent.Create(data), "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+var operation = await client.MatchTrialsAsync(WaitUntil.Completed, RequestContent.Create(data), "<repeatabilityRequestId>", DateTimeOffset.UtcNow, new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -224,71 +530,6 @@ Console.WriteLine(result.GetProperty("results").GetProperty("modelVersion").ToSt
 Console.WriteLine(result.GetProperty("results").GetProperty("knowledgeGraphLastUpdateDate").ToString());
 ]]></code>
 </example>
-<remarks>
-Creates a Trial Matcher job with the given request body.
-
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>TrialMatcherData</c>:
-<code>{
-  patients: [
-    {
-      id: string, # Required. A given identifier for the patient. Has to be unique across all patients in a single request.
-      info: {
-        sex: &quot;female&quot; | &quot;male&quot; | &quot;unspecified&quot;, # Optional. The patient&apos;s sex.
-        birthDate: string (date), # Optional. The patient&apos;s date of birth.
-        clinicalInfo: [ClinicalCodedElement], # Optional. Known clinical information for the patient, structured.
-      }, # Optional. Patient structured information, including demographics and known structured clinical information.
-      data: [PatientDocument], # Optional. Patient unstructured clinical data, given as documents.
-    }
-  ], # Required. The list of patients, including their clinical information and data.
-  configuration: {
-    verbose: boolean, # Optional. An indication whether the model should produce verbose output.
-    includeEvidence: boolean, # Optional. An indication whether the model&apos;s output should include evidence for the inferences.
-    clinicalTrials: {
-      customTrials: [ClinicalTrialDetails], # Optional. A list of clinical trials.
-      registryFilters: [ClinicalTrialRegistryFilter], # Optional. A list of filters, each one creating a selection of trials from a given
-clinical trial registry.
-    }, # Required. The clinical trials that the patient(s) should be matched to. &amp;lt;br /&amp;gt;The trial
-selection can be given as a list of custom clinical trials and/or a list of
-filters to known clinical trial registries. In case both are given, the
-resulting trial set is a union of the two sets.
-  }, # Optional. Configuration affecting the Trial Matcher model&apos;s inference.
-}
-</code>
-
-Response Body:
-
-Schema for <c>TrialMatcherResult</c>:
-<code>{
-  jobId: string, # Required. A processing job identifier.
-  createdDateTime: string (date &amp; time), # Required. The date and time when the processing job was created.
-  expirationDateTime: string (date &amp; time), # Required. The date and time when the processing job is set to expire.
-  lastUpdateDateTime: string (date &amp; time), # Required. The date and time when the processing job was last updated.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;partiallyCompleted&quot;, # Required. The status of the processing job.
-  errors: [
-    {
-      code: string, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Required. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: string, # Required. One of a server-defined set of error codes.
-        innererror: InnerError, # Optional. Inner error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. An array of errors, if any errors occurred during the processing job.
-  results: {
-    patients: [TrialMatcherPatientResult], # Required. Results for the patients given in the request.
-    modelVersion: string, # Required. The version of the model used for inference, expressed as the model date.
-    knowledgeGraphLastUpdateDate: string (date), # Optional. The date when the clinical trials knowledge graph was last updated.
-  }, # Optional. The inference results for the Trial Matcher request.
-}
-</code>
-
-</remarks>
     </member>
     <member name="MatchTrials(WaitUntil,RequestContent,string,DateTimeOffset?,RequestContext)">
 <example>
@@ -308,8 +549,8 @@ var data = new {
 
 var operation = client.MatchTrials(WaitUntil.Completed, RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -461,10 +702,10 @@ var data = new {
     },
 };
 
-var operation = client.MatchTrials(WaitUntil.Completed, RequestContent.Create(data), "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+var operation = client.MatchTrials(WaitUntil.Completed, RequestContent.Create(data), "<repeatabilityRequestId>", DateTimeOffset.UtcNow, new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
@@ -513,71 +754,6 @@ Console.WriteLine(result.GetProperty("results").GetProperty("modelVersion").ToSt
 Console.WriteLine(result.GetProperty("results").GetProperty("knowledgeGraphLastUpdateDate").ToString());
 ]]></code>
 </example>
-<remarks>
-Creates a Trial Matcher job with the given request body.
-
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>TrialMatcherData</c>:
-<code>{
-  patients: [
-    {
-      id: string, # Required. A given identifier for the patient. Has to be unique across all patients in a single request.
-      info: {
-        sex: &quot;female&quot; | &quot;male&quot; | &quot;unspecified&quot;, # Optional. The patient&apos;s sex.
-        birthDate: string (date), # Optional. The patient&apos;s date of birth.
-        clinicalInfo: [ClinicalCodedElement], # Optional. Known clinical information for the patient, structured.
-      }, # Optional. Patient structured information, including demographics and known structured clinical information.
-      data: [PatientDocument], # Optional. Patient unstructured clinical data, given as documents.
-    }
-  ], # Required. The list of patients, including their clinical information and data.
-  configuration: {
-    verbose: boolean, # Optional. An indication whether the model should produce verbose output.
-    includeEvidence: boolean, # Optional. An indication whether the model&apos;s output should include evidence for the inferences.
-    clinicalTrials: {
-      customTrials: [ClinicalTrialDetails], # Optional. A list of clinical trials.
-      registryFilters: [ClinicalTrialRegistryFilter], # Optional. A list of filters, each one creating a selection of trials from a given
-clinical trial registry.
-    }, # Required. The clinical trials that the patient(s) should be matched to. &amp;lt;br /&amp;gt;The trial
-selection can be given as a list of custom clinical trials and/or a list of
-filters to known clinical trial registries. In case both are given, the
-resulting trial set is a union of the two sets.
-  }, # Optional. Configuration affecting the Trial Matcher model&apos;s inference.
-}
-</code>
-
-Response Body:
-
-Schema for <c>TrialMatcherResult</c>:
-<code>{
-  jobId: string, # Required. A processing job identifier.
-  createdDateTime: string (date &amp; time), # Required. The date and time when the processing job was created.
-  expirationDateTime: string (date &amp; time), # Required. The date and time when the processing job is set to expire.
-  lastUpdateDateTime: string (date &amp; time), # Required. The date and time when the processing job was last updated.
-  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;partiallyCompleted&quot;, # Required. The status of the processing job.
-  errors: [
-    {
-      code: string, # Required. One of a server-defined set of error codes.
-      message: string, # Required. A human-readable representation of the error.
-      target: string, # Optional. The target of the error.
-      details: [Error], # Required. An array of details about specific errors that led to this reported error.
-      innererror: {
-        code: string, # Required. One of a server-defined set of error codes.
-        innererror: InnerError, # Optional. Inner error.
-      }, # Optional. An object containing more specific information than the current object about the error.
-    }
-  ], # Optional. An array of errors, if any errors occurred during the processing job.
-  results: {
-    patients: [TrialMatcherPatientResult], # Required. Results for the patients given in the request.
-    modelVersion: string, # Required. The version of the model used for inference, expressed as the model date.
-    knowledgeGraphLastUpdateDate: string (date), # Optional. The date when the clinical trials knowledge graph was last updated.
-  }, # Optional. The inference results for the Trial Matcher request.
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>

@@ -36,7 +36,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="serverCallId">The server call id.</param>
         /// <param name="targets">The targets of the call.</param>
         /// <param name="callConnectionState">The state of the call connection.</param>
-        /// <param name="callbackEndpoint">The callback URI.</param>
+        /// <param name="callbackUri">The callback URI.</param>
         /// <param name="sourceIdentity">Source identity.</param>
         /// <param name="sourceCallerIdNumber">Caller ID phone number to appear on the invitee.</param>
         /// <param name="sourceDisplayName">Display name to appear on the invitee.</param>
@@ -47,13 +47,13 @@ namespace Azure.Communication.CallAutomation
             string serverCallId = default,
             IEnumerable<CommunicationIdentifier> targets = default,
             CallConnectionState callConnectionState = default,
-            Uri callbackEndpoint = default,
-            CommunicationUserIdentifier sourceIdentity = default,
+            Uri callbackUri = default,
+            CommunicationIdentifier sourceIdentity = default,
             PhoneNumberIdentifier sourceCallerIdNumber = default,
             string sourceDisplayName = default,
             string mediaSubscriptionId = default)
         {
-            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackEndpoint, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, mediaSubscriptionId);
+            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackUri, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, mediaSubscriptionId);
         }
 
         /// <summary> Initializes a new instance of CallParticipant. </summary>
@@ -101,7 +101,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Initializes a new instance of add participant failed event.
         /// </summary>
-        public static AddParticipantFailedEventData AddParticipantFailed(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
+        public static AddParticipantFailed AddParticipantFailed(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
         {
             var internalObject = new AddParticipantFailedInternal(
                 callConnectionId,
@@ -112,13 +112,13 @@ namespace Azure.Communication.CallAutomation
                 participant: CommunicationIdentifierSerializer.Serialize(participant)
                 );
 
-            return new AddParticipantFailedEventData(internalObject);
+            return new AddParticipantFailed(internalObject);
         }
 
         /// <summary>
         /// Initializes a new instance of add participant success event.
         /// </summary>
-        public static AddParticipantSucceededEventData AddParticipantSucceeded(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
+        public static AddParticipantSucceeded AddParticipantSucceeded(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
         {
             var internalObject = new AddParticipantSucceededInternal(
                 callConnectionId,
@@ -129,13 +129,13 @@ namespace Azure.Communication.CallAutomation
                 participant: CommunicationIdentifierSerializer.Serialize(participant)
                 );
 
-            return new AddParticipantSucceededEventData(internalObject);
+            return new AddParticipantSucceeded(internalObject);
         }
 
         /// <summary>
         /// Initializes a new instance of Participants Updated event.
         /// </summary>
-        public static ParticipantsUpdatedEventData ParticipantsUpdated(string callConnectionId = default, string serverCallId = default, string correlationId = default, IEnumerable<CallParticipant> participants = default, int sequenceNumber = default)
+        public static ParticipantsUpdated ParticipantsUpdated(string callConnectionId = default, string serverCallId = default, string correlationId = default, IEnumerable<CallParticipant> participants = default, int sequenceNumber = default)
         {
             var internalObject = new ParticipantsUpdatedInternal(
                 callConnectionId,
@@ -147,13 +147,13 @@ namespace Azure.Communication.CallAutomation
                     : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted)).ToList()
                 );
 
-            return new ParticipantsUpdatedEventData(internalObject);
+            return new ParticipantsUpdated(internalObject);
         }
 
         /// <summary>
         /// Initializes a new instance of remove participant failed event.
         /// </summary>
-        public static RemoveParticipantFailedEventData RemoveParticipantFailed(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
+        public static RemoveParticipantFailed RemoveParticipantFailed(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
         {
             var internalObject = new RemoveParticipantFailedInternal(
                 callConnectionId,
@@ -164,13 +164,13 @@ namespace Azure.Communication.CallAutomation
                 participant: CommunicationIdentifierSerializer.Serialize(participant)
                 );
 
-            return new RemoveParticipantFailedEventData(internalObject);
+            return new RemoveParticipantFailed(internalObject);
         }
 
         /// <summary>
         /// Initializes a new instance of remove participant success event.
         /// </summary>
-        public static RemoveParticipantSucceededEventData RemoveParticipantSucceeded(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
+        public static RemoveParticipantSucceeded RemoveParticipantSucceeded(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
         {
             var internalObject = new RemoveParticipantSucceededInternal(
                 callConnectionId,
@@ -181,7 +181,7 @@ namespace Azure.Communication.CallAutomation
                 participant: CommunicationIdentifierSerializer.Serialize(participant)
                 );
 
-            return new RemoveParticipantSucceededEventData(internalObject);
+            return new RemoveParticipantSucceeded(internalObject);
         }
 
         /// <summary> Initializes a new instance of RecognizeCompletedInternal. </summary>
@@ -197,10 +197,10 @@ namespace Azure.Communication.CallAutomation
         /// <param name="dtmfResult"> Defines the result for RecognitionType = Dtmf. </param>
         /// <param name="choiceResult"> Defines the result for RecognitionType = Choices. </param>
         /// <param name="speechResult"> Defines the result for RecognitionType = Speech. </param>
-        /// <returns> A new <see cref="CallAutomation.RecognizeCompletedEventData"/> instance for mocking. </returns>
-        public static RecognizeCompletedEventData RecognizeCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, DtmfResult dtmfResult = null, ChoiceResult choiceResult = null, SpeechResult speechResult = null)
+        /// <returns> A new <see cref="CallAutomation.RecognizeCompleted"/> instance for mocking. </returns>
+        public static RecognizeCompleted RecognizeCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, DtmfResult dtmfResult = null, ChoiceResult choiceResult = null, SpeechResult speechResult = null)
         {
-            return new RecognizeCompletedEventData(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, recognitionType, dtmfResult, choiceResult, speechResult);
+            return new RecognizeCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, recognitionType, dtmfResult, choiceResult, speechResult);
         }
 
         /// <summary> Initializes a new instance of RecognizeCompletedInternal. </summary>

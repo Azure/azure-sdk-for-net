@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Qumulo
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public int InitialCapacity { get { throw null; } set { } }
         public Azure.ResourceManager.Qumulo.Models.MarketplaceDetails MarketplaceDetails { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> PrivateIPs { get { throw null; } }
+        public System.Collections.Generic.IList<System.Net.IPAddress> PrivateIPs { get { throw null; } }
         public Azure.ResourceManager.Qumulo.Models.QumuloProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Qumulo.Models.StorageSku StorageSku { get { throw null; } set { } }
         public string UserDetailsEmail { get { throw null; } set { } }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Qumulo.Models
     {
         public FileSystemResourceUpdateProperties() { }
         public System.Uri ClusterLoginUri { get { throw null; } set { } }
-        public string DelegatedSubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DelegatedSubnetId { get { throw null; } set { } }
         public Azure.ResourceManager.Qumulo.Models.MarketplaceDetails MarketplaceDetails { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> PrivateIPs { get { throw null; } }
         public string UserDetailsEmail { get { throw null; } set { } }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Qumulo.Models
     }
     public partial class QumuloUserDetails
     {
-        public QumuloUserDetails(string email) { }
+        public QumuloUserDetails() { }
         public string Email { get { throw null; } set { } }
     }
     public enum StorageSku

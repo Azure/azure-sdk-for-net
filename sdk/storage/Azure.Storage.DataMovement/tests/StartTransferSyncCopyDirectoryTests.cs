@@ -3,10 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -70,7 +68,7 @@ namespace Azure.Storage.DataMovement.Tests
                 new BlobDirectoryStorageResourceContainer(container, destinationBlobPrefix,
                 new BlobStorageResourceContainerOptions()
                 {
-                    CopyMethod = TransferCopyMethod.AsyncCopy,
+                    CopyMethod = TransferCopyMethod.SyncCopy,
                 });
 
             DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
@@ -493,7 +491,11 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Create new source block blob.
             StorageResourceContainer sourceResource = new BlobDirectoryStorageResourceContainer(containerClient, sourceBlobPrefix);
-            StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(containerClient, destBlobPrefix);
+            StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(containerClient, destBlobPrefix,
+                new BlobStorageResourceContainerOptions()
+                {
+                    CopyMethod = TransferCopyMethod.SyncCopy
+                });
 
             // If we want a failure condition to happen
             if (createFailedCondition)
