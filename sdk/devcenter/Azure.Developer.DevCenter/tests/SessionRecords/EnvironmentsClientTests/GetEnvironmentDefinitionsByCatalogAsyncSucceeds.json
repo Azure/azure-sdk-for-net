@@ -1,104 +1,58 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/catalogs/sdk-default-catalog/environmentDefinitions?api-version=2023-01-01-preview",
+      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-4qb444onnk2tc.centraluseuap.devcenter.azure.com/projects/sdk-project-tum3smsgozvm2/catalogs/sdk-default-catalog/environmentDefinitions?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f97171f1ed384b1dad9d81b5799030bf-3796819768434bd8-00",
-        "User-Agent": "azsdk-net-Developer.DevCenter/1.0.0-alpha.20230501.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "28a0e55d37c01981fe88a75472b9c073",
+        "traceparent": "00-849fb8e2deafaaec2e1d9ca688293bac-fb267fa5239e4dfa-00",
+        "User-Agent": "azsdk-net-Developer.DevCenter/1.0.0-alpha.20230508.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e08f789ea588954a96069387e720e85d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Connection": "keep-alive",
-        "Content-Length": "3118",
+        "Content-Length": "1246",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 01 May 2023 21:32:34 GMT",
+        "Date": "Tue, 09 May 2023 00:46:24 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "28a0e55d37c01981fe88a75472b9c073",
-        "x-ms-correlation-request-id": "b4d0975f-bef2-460f-a025-42c82101ee32",
+        "x-ms-client-request-id": "e08f789ea588954a96069387e720e85d",
+        "x-ms-correlation-request-id": "e28094a9-6784-4d29-9b89-5600a8fc1843",
         "X-Rate-Limit-Limit": "1m",
-        "X-Rate-Limit-Remaining": "297",
-        "X-Rate-Limit-Reset": "2023-05-01T21:33:24.2892148Z"
+        "X-Rate-Limit-Remaining": "296",
+        "X-Rate-Limit-Reset": "2023-05-09T00:46:47.6809065Z"
       },
       "ResponseBody": {
         "value": [
           {
-            "id": "8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd:sdk-dc-nfe5imigsvzps:sdk-default-catalog:sandbox",
+            "id": "/projects/sdk-project-tum3smsgozvm2/catalogs/sdk-default-catalog/environmentDefinitions/webapp",
+            "name": "WebApp",
+            "catalogName": "sdk-default-catalog",
+            "description": "Deploys an Azure Web App without a data store",
+            "parameters": [],
+            "parametersSchema": "{\u0022type\u0022:\u0022object\u0022}",
+            "templatePath": "Environments/WebApp/azuredeploy.json"
+          },
+          {
+            "id": "/projects/sdk-project-tum3smsgozvm2/catalogs/sdk-default-catalog/environmentDefinitions/functionapp",
+            "name": "FunctionApp",
+            "catalogName": "sdk-default-catalog",
+            "description": "Deploys an Azure Function App, Storage Account, and Application Insights",
+            "parameters": [],
+            "parametersSchema": "{\u0022type\u0022:\u0022object\u0022}",
+            "templatePath": "Environments/FunctionApp/azuredeploy.json"
+          },
+          {
+            "id": "/projects/sdk-project-tum3smsgozvm2/catalogs/sdk-default-catalog/environmentDefinitions/sandbox",
             "name": "Sandbox",
             "catalogName": "sdk-default-catalog",
             "description": "Deploys an empty sandbox environment",
             "parameters": [],
             "parametersSchema": "{\u0022type\u0022:\u0022object\u0022}",
             "templatePath": "Environments/Sandbox/azuredeploy.json"
-          },
-          {
-            "id": "8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd:sdk-dc-nfe5imigsvzps:sdk-default-catalog:functionapp",
-            "name": "FunctionApp",
-            "catalogName": "sdk-default-catalog",
-            "description": "Deploys an Azure Function App, Storage Account, and Application Insights",
-            "parameters": [
-              {
-                "id": "name",
-                "name": "Name",
-                "description": "Name of the Function App.",
-                "type": "string",
-                "readOnly": false,
-                "required": true,
-                "allowed": []
-              },
-              {
-                "id": "supportsHttpsTrafficOnly",
-                "name": "Supports Https Traffic Only",
-                "description": "Allows https traffic only to Storage Account and Functions App if set to true.",
-                "type": "boolean",
-                "readOnly": false,
-                "required": false,
-                "allowed": []
-              },
-              {
-                "id": "runtime",
-                "name": "Runtime",
-                "description": "The language worker runtime to load in the function app.",
-                "default": "dotnet-isolated",
-                "type": "string",
-                "readOnly": false,
-                "required": false,
-                "allowed": [
-                  "dotnet",
-                  "dotnet-isolated",
-                  "java",
-                  "node",
-                  "powershell",
-                  "python"
-                ]
-              }
-            ],
-            "parametersSchema": "{\u0022type\u0022:\u0022object\u0022,\u0022properties\u0022:{\u0022name\u0022:{\u0022title\u0022:\u0022Name\u0022,\u0022description\u0022:\u0022Name of the Function App.\u0022},\u0022supportsHttpsTrafficOnly\u0022:{\u0022title\u0022:\u0022Supports Https Traffic Only\u0022,\u0022description\u0022:\u0022Allows https traffic only to Storage Account and Functions App if set to true.\u0022},\u0022runtime\u0022:{\u0022title\u0022:\u0022Runtime\u0022,\u0022description\u0022:\u0022The language worker runtime to load in the function app.\u0022,\u0022default\u0022:\u0022dotnet-isolated\u0022,\u0022enum\u0022:[\u0022dotnet\u0022,\u0022dotnet-isolated\u0022,\u0022java\u0022,\u0022node\u0022,\u0022powershell\u0022,\u0022python\u0022]}},\u0022required\u0022:[\u0022name\u0022]}",
-            "templatePath": "Environments/FunctionApp/azuredeploy.json"
-          },
-          {
-            "id": "8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd:sdk-dc-nfe5imigsvzps:sdk-default-catalog:webapp",
-            "name": "WebApp",
-            "catalogName": "sdk-default-catalog",
-            "description": "Deploys an Azure Web App without a data store",
-            "parameters": [
-              {
-                "id": "name",
-                "name": "Name",
-                "description": "Name of the Web App.",
-                "type": "string",
-                "readOnly": false,
-                "required": true,
-                "allowed": []
-              }
-            ],
-            "parametersSchema": "{\u0022type\u0022:\u0022object\u0022,\u0022properties\u0022:{\u0022name\u0022:{\u0022title\u0022:\u0022Name\u0022,\u0022description\u0022:\u0022Name of the Web App.\u0022}},\u0022required\u0022:[\u0022name\u0022]}",
-            "templatePath": "Environments/WebApp/azuredeploy.json"
           }
         ]
       }
@@ -106,8 +60,8 @@
   ],
   "Variables": {
     "DEFAULT_CATALOG_NAME": "sdk-default-catalog",
-    "DEFAULT_PROJECT_NAME": "sdk-project-jo2qjpwybd77m",
-    "DEVCENTER_ENDPOINT": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/",
-    "RandomSeed": "1822662521"
+    "DEFAULT_PROJECT_NAME": "sdk-project-tum3smsgozvm2",
+    "DEVCENTER_ENDPOINT": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-4qb444onnk2tc.centraluseuap.devcenter.azure.com/",
+    "RandomSeed": "385166797"
   }
 }
