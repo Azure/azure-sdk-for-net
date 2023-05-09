@@ -5,14 +5,21 @@
 
 #nullable disable
 
+using System.Threading;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
+        private ClientDiagnostics _availabilityStatusesClientDiagnostics;
+        private AvailabilityStatusesRestOperations _availabilityStatusesRestClient;
+
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
         {
@@ -25,17 +32,68 @@ namespace Azure.ResourceManager.ResourceHealth
         {
         }
 
+        private ClientDiagnostics AvailabilityStatusesClientDiagnostics => _availabilityStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private AvailabilityStatusesRestOperations AvailabilityStatusesRestClient => _availabilityStatusesRestClient ??= new AvailabilityStatusesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of SubscriptionEventResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of SubscriptionEventResources and their operations over a SubscriptionEventResource. </returns>
-        public virtual SubscriptionEventCollection GetSubscriptionEvents()
+        /// <summary> Gets a collection of ResourceHealthEventResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of ResourceHealthEventResources and their operations over a ResourceHealthEventResource. </returns>
+        public virtual ResourceHealthEventCollection GetResourceHealthEvents()
         {
-            return GetCachedClient(Client => new SubscriptionEventCollection(Client, Id));
+            return GetCachedClient(Client => new ResourceHealthEventCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Lists the current availability status for all the resources in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/availabilityStatuses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailabilityStatuses_ListBySubscriptionId</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ResourceHealthAvailabilityStatus" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesBySubscriptionAsync(string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailabilityStatusesRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId, filter, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailabilityStatusesRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId, filter, expand);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus, AvailabilityStatusesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailabilityStatusesBySubscription", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the current availability status for all the resources in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/availabilityStatuses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailabilityStatuses_ListBySubscriptionId</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesBySubscription(string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailabilityStatusesRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId, filter, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailabilityStatusesRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId, filter, expand);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus, AvailabilityStatusesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailabilityStatusesBySubscription", "value", "nextLink", cancellationToken);
         }
     }
 }

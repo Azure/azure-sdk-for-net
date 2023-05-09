@@ -50,7 +50,16 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = apiVersion;
         }
 
-        /// <summary> [Protocol Method] Downloads and returns file Stream as response for the given input filePath. </summary>
+        /// <summary>
+        /// [Protocol Method] Downloads and returns file Stream as response for the given input filePath.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="filePath"> cloud storage path of scene file. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filePath"/> is null. </exception>
@@ -75,7 +84,16 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> [Protocol Method] Downloads and returns file Stream as response for the given input filePath. </summary>
+        /// <summary>
+        /// [Protocol Method] Downloads and returns file Stream as response for the given input filePath.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="filePath"> cloud storage path of scene file. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filePath"/> is null. </exception>
@@ -100,13 +118,22 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> [Protocol Method] Get a satellite data ingestion job. </summary>
+        /// <summary>
+        /// [Protocol Method] Get a satellite data ingestion job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetSatelliteDataIngestionJobDetailsAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetSatelliteDataIngestionJobDetailsAsync(string jobId, RequestContext context = null)
         {
@@ -126,13 +153,22 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> [Protocol Method] Get a satellite data ingestion job. </summary>
+        /// <summary>
+        /// [Protocol Method] Get a satellite data ingestion job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetSatelliteDataIngestionJobDetails(string,RequestContext)']/*" />
         public virtual Response GetSatelliteDataIngestionJobDetails(string jobId, RequestContext context = null)
         {
@@ -152,16 +188,25 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> [Protocol Method] Search for STAC features by collection id, bbox, intersecting geometry, start and end datetime. </summary>
+        /// <summary>
+        /// [Protocol Method] Search for STAC features by collection id, bbox, intersecting geometry, start and end datetime.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="collectionId"> Collection Id to be searched. Allowed values: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="maxpagesize"> Maximum number of features needed (inclusive). Minimum = 1, Maximum = 100, Default value = 10. </param>
         /// <param name="skip"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='SearchFeaturesAsync(string,RequestContent,int?,int?,RequestContext)']/*" />
         public virtual async Task<Response> SearchFeaturesAsync(string collectionId, RequestContent content, int? maxpagesize = null, int? skip = null, RequestContext context = null)
         {
@@ -182,16 +227,25 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> [Protocol Method] Search for STAC features by collection id, bbox, intersecting geometry, start and end datetime. </summary>
+        /// <summary>
+        /// [Protocol Method] Search for STAC features by collection id, bbox, intersecting geometry, start and end datetime.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="collectionId"> Collection Id to be searched. Allowed values: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="maxpagesize"> Maximum number of features needed (inclusive). Minimum = 1, Maximum = 100, Default value = 10. </param>
         /// <param name="skip"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='SearchFeatures(string,RequestContent,int?,int?,RequestContext)']/*" />
         public virtual Response SearchFeatures(string collectionId, RequestContent content, int? maxpagesize = null, int? skip = null, RequestContext context = null)
         {
@@ -212,14 +266,23 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> [Protocol Method] Get a feature(SpatioTemporal Asset Catalog (STAC) Item) for given collection and feature id. </summary>
+        /// <summary>
+        /// [Protocol Method] Get a feature(SpatioTemporal Asset Catalog (STAC) Item) for given collection and feature id.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="collectionId"> Collection Id to be fetched. Allowed values: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;. </param>
         /// <param name="featureId"> Feature Id to be fetched. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="featureId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="featureId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetStacFeatureAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetStacFeatureAsync(string collectionId, string featureId, RequestContext context = null)
         {
@@ -240,14 +303,23 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> [Protocol Method] Get a feature(SpatioTemporal Asset Catalog (STAC) Item) for given collection and feature id. </summary>
+        /// <summary>
+        /// [Protocol Method] Get a feature(SpatioTemporal Asset Catalog (STAC) Item) for given collection and feature id.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="collectionId"> Collection Id to be fetched. Allowed values: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;. </param>
         /// <param name="featureId"> Feature Id to be fetched. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="featureId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="featureId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetStacFeature(string,string,RequestContext)']/*" />
         public virtual Response GetStacFeature(string collectionId, string featureId, RequestContext context = null)
         {
@@ -268,7 +340,16 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> [Protocol Method] Returns a paginated list of scene resources. </summary>
+        /// <summary>
+        /// [Protocol Method] Returns a paginated list of scene resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="provider"> Provider name of scene data. </param>
         /// <param name="partyId"> PartyId. </param>
         /// <param name="boundaryId"> BoundaryId. </param>
@@ -302,7 +383,16 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Scenes.GetScenes", "value", "nextLink", context);
         }
 
-        /// <summary> [Protocol Method] Returns a paginated list of scene resources. </summary>
+        /// <summary>
+        /// [Protocol Method] Returns a paginated list of scene resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="provider"> Provider name of scene data. </param>
         /// <param name="partyId"> PartyId. </param>
         /// <param name="boundaryId"> BoundaryId. </param>
@@ -336,15 +426,24 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Scenes.GetScenes", "value", "nextLink", context);
         }
 
-        /// <summary> [Protocol Method] Create a satellite data ingestion job. </summary>
+        /// <summary>
+        /// [Protocol Method] Create a satellite data ingestion job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> JobId provided by user. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='CreateSatelliteDataIngestionJobAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateSatelliteDataIngestionJobAsync(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {
@@ -365,15 +464,24 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> [Protocol Method] Create a satellite data ingestion job. </summary>
+        /// <summary>
+        /// [Protocol Method] Create a satellite data ingestion job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> JobId provided by user. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='CreateSatelliteDataIngestionJob(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateSatelliteDataIngestionJob(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {

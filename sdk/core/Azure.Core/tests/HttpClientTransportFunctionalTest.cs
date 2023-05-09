@@ -28,7 +28,7 @@ namespace Azure.Core.Tests
 
         protected override HttpPipelineTransport GetTransport(bool https = false, HttpPipelineTransportOptions options = null)
         {
-#if !NET461
+#if !NET462
             if (https)
             {
                 return new HttpClientTransport(options ?? new HttpPipelineTransportOptions { ServerCertificateCustomValidationCallback = _ => true });
@@ -37,19 +37,19 @@ namespace Azure.Core.Tests
             return new HttpClientTransport(options);
         }
 
-#if NET461
+#if NET462
         // These setup and teardown actions require that entire test class be NonParallelizable.
         [OneTimeSetUp]
         public void TestSetup()
         {
-            // No way to disable SSL check per HttpClient on NET461
+            // No way to disable SSL check per HttpClient on NET462
             ServicePointManager.ServerCertificateValidationCallback += certCallback;
         }
 
         [OneTimeTearDown]
         public void TestTeardown()
         {
-            // No way to disable SSL check per HttpClient on NET461
+            // No way to disable SSL check per HttpClient on NET462
             ServicePointManager.ServerCertificateValidationCallback -= certCallback;
         }
 #endif

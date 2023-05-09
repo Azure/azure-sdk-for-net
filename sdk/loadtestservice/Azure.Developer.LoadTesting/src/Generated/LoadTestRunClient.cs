@@ -60,15 +60,24 @@ namespace Azure.Developer.LoadTesting
             _apiVersion = options.Version;
         }
 
-        /// <summary> [Protocol Method] Create and start a new test run with the given name. </summary>
+        /// <summary>
+        /// [Protocol Method] Create and start a new test run with the given name.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="oldTestRunId"> Existing test run identifier that should be rerun, if this is provided, the test will run with the JMX file, configuration and app components from the existing test run. You can override the configuration values for new test run in the request body. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateTestRunAsync(string,RequestContent,string,RequestContext)']/*" />
         internal virtual async Task<Response> CreateOrUpdateTestRunAsync(string testRunId, RequestContent content, string oldTestRunId = null, RequestContext context = null)
         {
@@ -89,15 +98,24 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> [Protocol Method] Create and start a new test run with the given name. </summary>
+        /// <summary>
+        /// [Protocol Method] Create and start a new test run with the given name.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="oldTestRunId"> Existing test run identifier that should be rerun, if this is provided, the test will run with the JMX file, configuration and app components from the existing test run. You can override the configuration values for new test run in the request body. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateTestRun(string,RequestContent,string,RequestContext)']/*" />
         internal virtual Response CreateOrUpdateTestRun(string testRunId, RequestContent content, string oldTestRunId = null, RequestContext context = null)
         {
@@ -118,13 +136,22 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> [Protocol Method] Get test run details by name. </summary>
+        /// <summary>
+        /// [Protocol Method] Get test run details by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetTestRunAsync(string testRunId, RequestContext context = null)
         {
@@ -144,13 +171,22 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> [Protocol Method] Get test run details by name. </summary>
+        /// <summary>
+        /// [Protocol Method] Get test run details by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRun(string,RequestContext)']/*" />
         public virtual Response GetTestRun(string testRunId, RequestContext context = null)
         {
@@ -170,7 +206,16 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> [Protocol Method] Delete a test run by its name. </summary>
+        /// <summary>
+        /// [Protocol Method] Delete a test run by its name.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
@@ -196,7 +241,16 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> [Protocol Method] Delete a test run by its name. </summary>
+        /// <summary>
+        /// [Protocol Method] Delete a test run by its name.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
@@ -222,14 +276,23 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> [Protocol Method] Get test run file by file name. </summary>
+        /// <summary>
+        /// [Protocol Method] Get test run file by file name.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="fileName"> Test run file name with file extension. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunFileAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetTestRunFileAsync(string testRunId, string fileName, RequestContext context = null)
         {
@@ -250,14 +313,23 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> [Protocol Method] Get test run file by file name. </summary>
+        /// <summary>
+        /// [Protocol Method] Get test run file by file name.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="fileName"> Test run file name with file extension. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunFile(string,string,RequestContext)']/*" />
         public virtual Response GetTestRunFile(string testRunId, string fileName, RequestContext context = null)
         {
@@ -278,13 +350,22 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> [Protocol Method] Stop test run by name. </summary>
+        /// <summary>
+        /// [Protocol Method] Stop test run by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='StopTestRunAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> StopTestRunAsync(string testRunId, RequestContext context = null)
         {
@@ -304,13 +385,22 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> [Protocol Method] Stop test run by name. </summary>
+        /// <summary>
+        /// [Protocol Method] Stop test run by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='StopTestRun(string,RequestContext)']/*" />
         public virtual Response StopTestRun(string testRunId, RequestContext context = null)
         {
@@ -330,13 +420,22 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> [Protocol Method] List the metric namespaces for a load test run. </summary>
+        /// <summary>
+        /// [Protocol Method] List the metric namespaces for a load test run.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricNamespacesAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetMetricNamespacesAsync(string testRunId, RequestContext context = null)
         {
@@ -356,13 +455,22 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> [Protocol Method] List the metric namespaces for a load test run. </summary>
+        /// <summary>
+        /// [Protocol Method] List the metric namespaces for a load test run.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricNamespaces(string,RequestContext)']/*" />
         public virtual Response GetMetricNamespaces(string testRunId, RequestContext context = null)
         {
@@ -382,14 +490,23 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> [Protocol Method] List the metric definitions for a load test run. </summary>
+        /// <summary>
+        /// [Protocol Method] List the metric definitions for a load test run.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="metricNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricDefinitionsAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetMetricDefinitionsAsync(string testRunId, string metricNamespace, RequestContext context = null)
         {
@@ -410,14 +527,23 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> [Protocol Method] List the metric definitions for a load test run. </summary>
+        /// <summary>
+        /// [Protocol Method] List the metric definitions for a load test run.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="metricNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricDefinitions(string,string,RequestContext)']/*" />
         public virtual Response GetMetricDefinitions(string testRunId, string metricNamespace, RequestContext context = null)
         {
@@ -438,14 +564,23 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> [Protocol Method] Associate an app component (collection of azure resources) to a test run. </summary>
+        /// <summary>
+        /// [Protocol Method] Associate an app component (collection of azure resources) to a test run
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateAppComponentsAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAppComponentsAsync(string testRunId, RequestContent content, RequestContext context = null)
         {
@@ -466,14 +601,23 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> [Protocol Method] Associate an app component (collection of azure resources) to a test run. </summary>
+        /// <summary>
+        /// [Protocol Method] Associate an app component (collection of azure resources) to a test run
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateAppComponents(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateAppComponents(string testRunId, RequestContent content, RequestContext context = null)
         {
@@ -494,13 +638,22 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> [Protocol Method] Get associated app component (collection of azure resources) for the given test run. </summary>
+        /// <summary>
+        /// [Protocol Method] Get associated app component (collection of azure resources) for the given test run.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetAppComponentsAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetAppComponentsAsync(string testRunId, RequestContext context = null)
         {
@@ -520,13 +673,22 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> [Protocol Method] Get associated app component (collection of azure resources) for the given test run. </summary>
+        /// <summary>
+        /// [Protocol Method] Get associated app component (collection of azure resources) for the given test run.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetAppComponents(string,RequestContext)']/*" />
         public virtual Response GetAppComponents(string testRunId, RequestContext context = null)
         {
@@ -546,14 +708,23 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> [Protocol Method] Configure server metrics for a test run. </summary>
+        /// <summary>
+        /// [Protocol Method] Configure server metrics for a test run
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateServerMetricsConfigAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateServerMetricsConfigAsync(string testRunId, RequestContent content, RequestContext context = null)
         {
@@ -574,14 +745,23 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> [Protocol Method] Configure server metrics for a test run. </summary>
+        /// <summary>
+        /// [Protocol Method] Configure server metrics for a test run
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateServerMetricsConfig(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateServerMetricsConfig(string testRunId, RequestContent content, RequestContext context = null)
         {
@@ -602,13 +782,22 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> [Protocol Method] List server metrics configuration for the given test run. </summary>
+        /// <summary>
+        /// [Protocol Method] List server metrics configuration for the given test run.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetServerMetricsConfigAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetServerMetricsConfigAsync(string testRunId, RequestContext context = null)
         {
@@ -628,13 +817,22 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> [Protocol Method] List server metrics configuration for the given test run. </summary>
+        /// <summary>
+        /// [Protocol Method] List server metrics configuration for the given test run.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetServerMetricsConfig(string,RequestContext)']/*" />
         public virtual Response GetServerMetricsConfig(string testRunId, RequestContext context = null)
         {
@@ -654,7 +852,16 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> [Protocol Method] List the dimension values for the given metric dimension name. </summary>
+        /// <summary>
+        /// [Protocol Method] List the dimension values for the given metric dimension name.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="name"> Dimension name. </param>
         /// <param name="metricName"> Metric name. </param>
@@ -680,7 +887,16 @@ namespace Azure.Developer.LoadTesting
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetMetricDimensionValues", "value", "nextLink", context);
         }
 
-        /// <summary> [Protocol Method] List the dimension values for the given metric dimension name. </summary>
+        /// <summary>
+        /// [Protocol Method] List the dimension values for the given metric dimension name.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="name"> Dimension name. </param>
         /// <param name="metricName"> Metric name. </param>
