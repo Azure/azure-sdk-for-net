@@ -53,7 +53,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     compatibilityLevel = property.Value.GetInt32();
@@ -63,7 +62,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     requiresPreprocessing = property.Value.GetBoolean();

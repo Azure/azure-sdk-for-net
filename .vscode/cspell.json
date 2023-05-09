@@ -276,6 +276,12 @@
       ]
     },
     {
+      "filename": "**/sdk/consumption/**/*",
+      "words": [
+        "payg"
+      ]
+    },
+    {
       "filename": "**/sdk/customer-insights/**/*.cs",
       "words": [
         "kpis"
@@ -302,6 +308,13 @@
       "filename": "**/sdk/datadog/**/*.cs",
       "words": [
         "liftr"
+      ]
+    },
+    {
+      "filename": "**/sdk/newrelic/**/*.cs",
+      "words": [
+        "liftr",
+        "payg"
       ]
     },
     {
@@ -423,6 +436,8 @@
     {
       "filename": "**/sdk/formrecognizer/**/*.cs",
       "words": [
+        "Upca",
+        "Upce",
         "ZhHant"
       ]
     },
@@ -561,7 +576,13 @@
         "Vnets",
         "Vxlan",
         "WAFV",
-        "Wans"
+        "Wans",
+        "Idps",
+        "idps",
+        "Ocsp",
+        "Afri",
+        "Apac",
+        "Latam"
       ]
     },
     {
@@ -705,6 +726,12 @@
       "words": [
         "checkin",
         "regionality"
+      ]
+    },
+    {
+      "filename": "**/sdk/qumulo/**/*",
+      "words": [
+      	"qumulo"
       ]
     },
     {

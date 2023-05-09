@@ -29,7 +29,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = property.Value.GetInt32();
@@ -44,7 +43,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<int> array = new List<int>();
@@ -59,7 +57,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

@@ -54,7 +54,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                         return mappedResponse;
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -79,7 +79,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                         return mappedResponse;
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

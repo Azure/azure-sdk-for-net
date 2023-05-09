@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Analysis.Models
         public static ServerMonitorMode Zero { get; } = new ServerMonitorMode(ZeroValue);
         /// <summary> 1. </summary>
         public static ServerMonitorMode One { get; } = new ServerMonitorMode(OneValue);
+
+        internal int ToSerialInt32() => _value;
+
         /// <summary> Determines if two <see cref="ServerMonitorMode"/> values are the same. </summary>
         public static bool operator ==(ServerMonitorMode left, ServerMonitorMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServerMonitorMode"/> values are not the same. </summary>

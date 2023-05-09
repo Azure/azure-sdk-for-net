@@ -1,14 +1,19 @@
 # Release History
 
-## 4.15.0-beta.1 (Unreleased)
+## 4.16.0 (2023-05-09)
 
 ### Features Added
 
-### Breaking Changes
+- Added `AcsIncomingCallEventData` event.
+- Added `DeliveryStatusDetails` property to `AcsEmailDeliveryReportReceivedEventData` event.
+- Added `HealthCareDicomImageUpdatedEventData` event.
+- Added `PartionName` property to Dicom events.
 
-### Bugs Fixed
+## 4.15.0 (2023-04-13)
 
-### Other Changes
+### Features Added
+
+- Added new Storage events, `StorageTaskCompletedEventData` and `StorageTaskQueuedEventData`.
 
 ## 4.14.1 (2023-03-13)
 

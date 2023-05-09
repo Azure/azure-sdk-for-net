@@ -85,7 +85,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var client = CreateDocumentModelAdministrationClient(out var nonInstrumentedClient);
             var modelId = Recording.GenerateId();
 
-            await using var trainedModel = await CreateDisposableBuildModelAsync(modelId);
+            await using var trainedModel = await BuildDisposableDocumentModelAsync(modelId);
 
             var targetModelId = Recording.GenerateId();
             DocumentModelCopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(targetModelId);
@@ -106,7 +106,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var client = CreateDocumentModelAdministrationClient();
             var modelId = Recording.GenerateId();
 
-            await using var trainedModel = await CreateDisposableBuildModelAsync(modelId);
+            await using var trainedModel = await BuildDisposableDocumentModelAsync(modelId);
 
             var targetModelId = Recording.GenerateId();
             DocumentModelCopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(targetModelId);
@@ -121,6 +121,25 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)]
+        public async Task ClassifyDocumentOperationCanPollFromNewObject()
+        {
+            var client = CreateDocumentAnalysisClient(out var nonInstrumentedClient);
+            var classifierId = Recording.GenerateId();
+            await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync(classifierId);
+            var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.Irs1040);
+
+            var operation = await client.ClassifyDocumentFromUriAsync(WaitUntil.Started, classifierId, uri);
+            var sameOperation = InstrumentOperation(new ClassifyDocumentOperation(operation.Id, nonInstrumentedClient));
+
+            await sameOperation.WaitForCompletionAsync();
+
+            Assert.IsTrue(sameOperation.HasValue);
+            Assert.AreEqual(4, sameOperation.Value.Pages.Count);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)]
         public async Task BuildClassifierOperationCanPollFromNewObject()
         {
             var client = CreateDocumentModelAdministrationClient(out var nonInstrumentedClient);
@@ -136,19 +155,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 { "IRS-1040-B", new ClassifierDocumentTypeDetails(sourceB) }
             };
 
-            BuildDocumentClassifierOperation operation = null;
             BuildDocumentClassifierOperation sameOperation = null;
 
             try
             {
-                operation = await client.BuildDocumentClassifierAsync(WaitUntil.Started, documentTypes, classifierId);
+                var operation = await client.BuildDocumentClassifierAsync(WaitUntil.Started, documentTypes, classifierId);
 
                 sameOperation = InstrumentOperation(new BuildDocumentClassifierOperation(operation.Id, nonInstrumentedClient));
                 await sameOperation.WaitForCompletionAsync();
             }
             finally
             {
-                if (sameOperation.HasValue)
+                if (sameOperation != null && sameOperation.HasValue)
                 {
                     await client.DeleteDocumentClassifierAsync(classifierId);
                 }
@@ -159,6 +177,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)]
         public async Task BuildClassifierOperationPercentageCompletedValue()
         {
             var client = CreateDocumentModelAdministrationClient(out var nonInstrumentedClient);
@@ -186,7 +205,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             }
             finally
             {
-                if (operation.HasValue)
+                if (operation != null && operation.HasValue)
                 {
                     await client.DeleteDocumentClassifierAsync(classifierId);
                 }

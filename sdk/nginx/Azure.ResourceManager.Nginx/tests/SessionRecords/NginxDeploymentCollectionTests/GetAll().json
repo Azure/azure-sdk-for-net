@@ -128,7 +128,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-3551/providers/Microsoft.Network/publicIPAddresses/testPublicIP-5920?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-3551/providers/Microsoft.Network/publicIPAddresses/testPublicIP-5920?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -153,7 +153,7 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "azure-asyncnotification": "Enabled",
-        "azure-asyncoperation": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/12be5eaf-28d4-4d9f-8c53-cf289f027b2b?api-version=2021-02-01",
+        "azure-asyncoperation": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/12be5eaf-28d4-4d9f-8c53-cf289f027b2b?api-version=**",
         "Cache-Control": "no-cache",
         "Content-Length": "659",
         "Content-Type": "application/json; charset=utf-8",
@@ -195,7 +195,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/12be5eaf-28d4-4d9f-8c53-cf289f027b2b?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/12be5eaf-28d4-4d9f-8c53-cf289f027b2b?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -231,7 +231,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-3551/providers/Microsoft.Network/publicIPAddresses/testPublicIP-5920?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-3551/providers/Microsoft.Network/publicIPAddresses/testPublicIP-5920?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -285,7 +285,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-3551/providers/Microsoft.Network/networkSecurityGroups/testNSG-3071?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-3551/providers/Microsoft.Network/networkSecurityGroups/testNSG-3071?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -336,7 +336,7 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "azure-asyncnotification": "Enabled",
-        "azure-asyncoperation": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/db8b3f4c-70cf-4a40-860e-a5ed5a81805c?api-version=2021-02-01",
+        "azure-asyncoperation": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/db8b3f4c-70cf-4a40-860e-a5ed5a81805c?api-version=**",
         "Cache-Control": "no-cache",
         "Content-Length": "8549",
         "Content-Type": "application/json; charset=utf-8",
@@ -550,7 +550,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/db8b3f4c-70cf-4a40-860e-a5ed5a81805c?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/db8b3f4c-70cf-4a40-860e-a5ed5a81805c?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -586,7 +586,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-3551/providers/Microsoft.Network/networkSecurityGroups/testNSG-3071?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-3551/providers/Microsoft.Network/networkSecurityGroups/testNSG-3071?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -811,7 +811,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-3551/providers/Microsoft.Network/virtualNetworks/testVNet-4952?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-3551/providers/Microsoft.Network/virtualNetworks/testVNet-4952?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -902,7 +902,7 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "azure-asyncnotification": "Enabled",
-        "azure-asyncoperation": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/67562598-1599-4b94-be13-07d91ee12d15?api-version=2021-02-01",
+        "azure-asyncoperation": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/67562598-1599-4b94-be13-07d91ee12d15?api-version=**",
         "Cache-Control": "no-cache",
         "Content-Length": "2266",
         "Content-Type": "application/json; charset=utf-8",
@@ -975,7 +975,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/67562598-1599-4b94-be13-07d91ee12d15?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/67562598-1599-4b94-be13-07d91ee12d15?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1011,7 +1011,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-3551/providers/Microsoft.Network/virtualNetworks/testVNet-4952?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-3551/providers/Microsoft.Network/virtualNetworks/testVNet-4952?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1752,7 +1752,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-3551/providers/Microsoft.Network/publicIPAddresses/testPublicIP-115?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-3551/providers/Microsoft.Network/publicIPAddresses/testPublicIP-115?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1777,7 +1777,7 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "azure-asyncnotification": "Enabled",
-        "azure-asyncoperation": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/4b6b6124-e1e4-4f00-b531-23d1047374d1?api-version=2021-02-01",
+        "azure-asyncoperation": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/4b6b6124-e1e4-4f00-b531-23d1047374d1?api-version=**",
         "Cache-Control": "no-cache",
         "Content-Length": "657",
         "Content-Type": "application/json; charset=utf-8",
@@ -1819,7 +1819,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/4b6b6124-e1e4-4f00-b531-23d1047374d1?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/4b6b6124-e1e4-4f00-b531-23d1047374d1?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1855,7 +1855,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-3551/providers/Microsoft.Network/publicIPAddresses/testPublicIP-115?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-3551/providers/Microsoft.Network/publicIPAddresses/testPublicIP-115?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1909,7 +1909,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-3551/providers/Microsoft.Network/networkSecurityGroups/testNSG-6987?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-3551/providers/Microsoft.Network/networkSecurityGroups/testNSG-6987?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1960,7 +1960,7 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "azure-asyncnotification": "Enabled",
-        "azure-asyncoperation": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/617de9e9-d656-44a9-b820-06c917cc768c?api-version=2021-02-01",
+        "azure-asyncoperation": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/617de9e9-d656-44a9-b820-06c917cc768c?api-version=**",
         "Cache-Control": "no-cache",
         "Content-Length": "8549",
         "Content-Type": "application/json; charset=utf-8",
@@ -2174,7 +2174,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/617de9e9-d656-44a9-b820-06c917cc768c?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/617de9e9-d656-44a9-b820-06c917cc768c?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2210,7 +2210,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-3551/providers/Microsoft.Network/networkSecurityGroups/testNSG-6987?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-3551/providers/Microsoft.Network/networkSecurityGroups/testNSG-6987?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2435,7 +2435,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-3551/providers/Microsoft.Network/virtualNetworks/testVNet-3976?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-3551/providers/Microsoft.Network/virtualNetworks/testVNet-3976?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2526,7 +2526,7 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "azure-asyncnotification": "Enabled",
-        "azure-asyncoperation": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/ba66a1b6-3195-4e4c-a491-e42626b04fa6?api-version=2021-02-01",
+        "azure-asyncoperation": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/ba66a1b6-3195-4e4c-a491-e42626b04fa6?api-version=**",
         "Cache-Control": "no-cache",
         "Content-Length": "2263",
         "Content-Type": "application/json; charset=utf-8",
@@ -2599,7 +2599,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/ba66a1b6-3195-4e4c-a491-e42626b04fa6?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/ba66a1b6-3195-4e4c-a491-e42626b04fa6?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2635,7 +2635,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-3551/providers/Microsoft.Network/virtualNetworks/testVNet-3976?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-3551/providers/Microsoft.Network/virtualNetworks/testVNet-3976?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",

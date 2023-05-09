@@ -54,9 +54,12 @@ namespace Azure.ResourceManager.EventHubs
         public Azure.ResourceManager.EventHubs.Models.CaptureDescription CaptureDescription { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public long? MessageRetentionInDays { get { throw null; } set { } }
         public long? PartitionCount { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> PartitionIds { get { throw null; } }
+        public Azure.ResourceManager.EventHubs.Models.RetentionDescription RetentionDescription { get { throw null; } set { } }
         public Azure.ResourceManager.EventHubs.Models.EventHubEntityStatus? Status { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
     }
@@ -545,6 +548,24 @@ namespace Azure.ResourceManager.EventHubs.Models
         public int? IntervalInSeconds { get { throw null; } set { } }
         public int? SizeLimitInBytes { get { throw null; } set { } }
         public bool? SkipEmptyArchives { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CleanupPolicyRetentionDescription : System.IEquatable<Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CleanupPolicyRetentionDescription(string value) { throw null; }
+        public static Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription Compaction { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription Delete { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription left, Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription left, Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ClusterQuotaConfigurationProperties
     {
@@ -1113,5 +1134,12 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static implicit operator Azure.ResourceManager.EventHubs.Models.EventHubsTlsVersion (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.EventHubs.Models.EventHubsTlsVersion left, Azure.ResourceManager.EventHubs.Models.EventHubsTlsVersion right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class RetentionDescription
+    {
+        public RetentionDescription() { }
+        public Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription? CleanupPolicy { get { throw null; } set { } }
+        public long? RetentionTimeInHours { get { throw null; } set { } }
+        public int? TombstoneRetentionTimeInHours { get { throw null; } set { } }
     }
 }

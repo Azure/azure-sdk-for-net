@@ -123,8 +123,7 @@ namespace Azure.Health.Insights.ClinicalMatching.Tests.Samples
             {
                 // Using ClinicalMatchingClient + MatchTrials
                 Operation<TrialMatcherResult> operation = clinicalMatchingClient.MatchTrials(WaitUntil.Completed, trialMatcherData);
-                Response resp = operation.GetRawResponse();
-                trialMatcherResult = TrialMatcherResult.FromResponse(resp);
+                trialMatcherResult = operation.Value;
             }
             catch (Exception ex)
             {

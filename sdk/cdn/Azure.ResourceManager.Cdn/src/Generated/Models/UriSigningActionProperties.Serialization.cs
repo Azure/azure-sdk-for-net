@@ -56,7 +56,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     algorithm = new UriSigningAlgorithm(property.Value.GetString());
@@ -66,7 +65,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<UriSigningParamIdentifier> array = new List<UriSigningParamIdentifier>();

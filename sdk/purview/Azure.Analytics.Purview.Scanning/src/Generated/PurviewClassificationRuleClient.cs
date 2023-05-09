@@ -67,10 +67,19 @@ namespace Azure.Analytics.Purview.Scanning
             _apiVersion = options.Version;
         }
 
-        /// <summary> Get a classification rule. </summary>
+        /// <summary>
+        /// [Protocol Method] Get a classification rule
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='GetPropertiesAsync(RequestContext)']/*" />
         public virtual async Task<Response> GetPropertiesAsync(RequestContext context = null)
         {
@@ -88,10 +97,19 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Get a classification rule. </summary>
+        /// <summary>
+        /// [Protocol Method] Get a classification rule
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='GetProperties(RequestContext)']/*" />
         public virtual Response GetProperties(RequestContext context = null)
         {
@@ -109,11 +127,20 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Creates or Updates a classification rule. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <summary>
+        /// [Protocol Method] Creates or Updates a classification rule
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, RequestContext context = null)
         {
@@ -131,11 +158,20 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Creates or Updates a classification rule. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <summary>
+        /// [Protocol Method] Creates or Updates a classification rule
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='CreateOrUpdate(RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(RequestContent content, RequestContext context = null)
         {
@@ -153,10 +189,19 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Deletes a classification rule. </summary>
+        /// <summary>
+        /// [Protocol Method] Deletes a classification rule
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='DeleteAsync(RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(RequestContext context = null)
         {
@@ -174,10 +219,19 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Deletes a classification rule. </summary>
+        /// <summary>
+        /// [Protocol Method] Deletes a classification rule
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='Delete(RequestContext)']/*" />
         public virtual Response Delete(RequestContext context = null)
         {
@@ -195,14 +249,23 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Sets Classification Action on a specific classification rule version. </summary>
+        /// <summary>
+        /// [Protocol Method] Sets Classification Action on a specific classification rule version.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="classificationRuleVersion"> The Int32 to use. </param>
         /// <param name="action"> The ClassificationAction to use. Allowed values: &quot;Keep&quot; | &quot;Delete&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='TagVersionAsync(Int32,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='TagVersionAsync(int,string,RequestContext)']/*" />
         public virtual async Task<Response> TagVersionAsync(int classificationRuleVersion, string action, RequestContext context = null)
         {
             Argument.AssertNotNull(action, nameof(action));
@@ -221,14 +284,23 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Sets Classification Action on a specific classification rule version. </summary>
+        /// <summary>
+        /// [Protocol Method] Sets Classification Action on a specific classification rule version.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="classificationRuleVersion"> The Int32 to use. </param>
         /// <param name="action"> The ClassificationAction to use. Allowed values: &quot;Keep&quot; | &quot;Delete&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='TagVersion(Int32,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='TagVersion(int,string,RequestContext)']/*" />
         public virtual Response TagVersion(int classificationRuleVersion, string action, RequestContext context = null)
         {
             Argument.AssertNotNull(action, nameof(action));
@@ -247,7 +319,16 @@ namespace Azure.Analytics.Purview.Scanning
             }
         }
 
-        /// <summary> Lists the rule versions of a classification rule. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the rule versions of a classification rule
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -259,7 +340,16 @@ namespace Azure.Analytics.Purview.Scanning
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewClassificationRuleClient.GetVersions", "value", "nextLink", context);
         }
 
-        /// <summary> Lists the rule versions of a classification rule. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the rule versions of a classification rule
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>

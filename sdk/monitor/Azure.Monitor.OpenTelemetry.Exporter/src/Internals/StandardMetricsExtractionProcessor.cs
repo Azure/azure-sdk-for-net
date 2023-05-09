@@ -24,7 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             [StandardMetricConstants.DependencyDurationInstrumentName] = StandardMetricConstants.DependencyDurationMetricIdValue,
         };
 
-        internal AzureMonitorResource? StandardMetricResource => _resource ??= ParentProvider?.GetResource().UpdateRoleNameAndInstance();
+        internal AzureMonitorResource? StandardMetricResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource();
 
         internal StandardMetricsExtractionProcessor()
         {
@@ -81,13 +81,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private void ReportDependencyDurationMetric(Activity activity)
         {
-            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var dependencyTarget = monitorTags.MappedTags.GetDependencyTarget(monitorTags.activityType);
+            var dependencyTarget = activityTagsProcessor.MappedTags.GetDependencyTarget(activityTagsProcessor.activityType);
 
-            var statusCode = AzMonList.GetTagValue(ref monitorTags.MappedTags, SemanticConventions.AttributeHttpStatusCode);
+            var statusCode = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpStatusCode);
 
-            var dependencyType = monitorTags.MappedTags.GetDependencyType(monitorTags.activityType);
+            var dependencyType = activityTagsProcessor.MappedTags.GetDependencyType(activityTagsProcessor.activityType);
 
             TagList tags = default;
             tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.DependencyTargetKey, dependencyTarget));

@@ -19,6 +19,7 @@ These settings apply only when `--tag=release_2_1` is specified on the command l
 require:
   - https://github.com/Azure/azure-rest-api-specs/blob/64484dc8760571a2de7f5cfbc96861e4a0985a54/specification/cognitiveservices/data-plane/FormRecognizer/readme.md
 
+generate-model-factory: false
 generation1-convenience-client: true
 
 directive:
@@ -36,6 +37,7 @@ directive:
         "in": "path",
         "x-ms-skip-url-encoding": true
       });
+
 # Prevent the creation of single-value extensible enums in generated code. The following single-value enums will be generated as string constants.
   - from: swagger-document
     where: $["x-ms-paths"]["/custom/models?op=full"]["get"]["parameters"][0]
@@ -49,10 +51,12 @@ directive:
       $["x-ms-enum"] = {
         "modelAsString": false
       }
+
 # Make AnalyzeResult.readResult optional
   - from: swagger-document
     where: $.definitions.AnalyzeResult
     transform: $.required = ["version"];
+
 # Add nullable annotations
   - from: swagger-document
     where: $.definitions.AnalyzeResult
@@ -85,11 +89,13 @@ directive:
     where: $.definitions.FieldValue
     transform: >
       $.properties.valueObject.additionalProperties["x-nullable"] = true;
+
 # Rename duplicated types
   - from: swagger-document
     where: $.definitions.AnalyzeResult
     transform: >
       $["x-ms-client-name"] = "V2AnalyzeResult"
+
 # Make generated models internal by default
   - from: swagger-document
     where: $.definitions.*
@@ -105,6 +111,7 @@ These settings apply only when `--tag=2023-02-28-preview` is specified on the co
 require:
   - https://github.com/Azure/azure-rest-api-specs/blob/543f1920ac96303cc244d60e1c12f0b56fc646db/specification/cognitiveservices/data-plane/FormRecognizer/readme.md
 
+generate-model-factory: false
 generation1-convenience-client: true
 suppress-abstract-base-class: OperationDetails
 
@@ -114,6 +121,7 @@ directive:
     where: $.definitions.*
     transform: >
       $["x-namespace"] = "Azure.AI.FormRecognizer.DocumentAnalysis"
+
 # Rename operationIds
   - from: swagger-document
     where: $.paths.*
@@ -124,6 +132,7 @@ directive:
             op["operationId"] = prefix + op["operationId"]
           }
       }
+
 # Rename duplicated types
   - from: swagger-document
     where: $.definitions.ModelInfo
@@ -137,6 +146,7 @@ directive:
     where: $.definitions.OperationStatus
     transform: >
       $["x-ms-enum"].name = "DocumentOperationStatus";
+
 # Split identical V2 and V3 enums
   - from: swagger-document
     where: $.definitions.DocumentPage.properties.unit
@@ -146,6 +156,7 @@ directive:
     where: $.definitions.DocumentSelectionMarkState
     transform: >
       $["x-ms-enum"].name = "V3SelectionMarkState";
+
 # Move enums to the DocumentAnalysis namespace
   - from: swagger-document
     where: $.definitions..properties.*
@@ -153,20 +164,30 @@ directive:
       if ($.enum) {
         $["x-namespace"] = "Azure.AI.FormRecognizer.DocumentAnalysis"
       }
+
 # Move QueryStringIndexType to the DocumentAnalysis namespace
   - from: swagger-document
     where: $.parameters.QueryStringIndexType
     transform: >
       $["x-namespace"] = "Azure.AI.FormRecognizer.DocumentAnalysis"
+
 # Setting these input IDs' formats to `uuid` moves the format validation to the client side, changing the type of the Exception thrown in case of error (breaking change).
   - from: swagger-document
     where: $.parameters
     transform: >
       $.PathOperationId.format = undefined;
       $.PathResultId.format = undefined;
+
 # Setting the Operation-Location format to `uuid` produces code that fails during runtime. The extracted header (a string) cannot be converted to `Uri` directly.
   - from: swagger-document
     where: $.paths..Operation-Location
     transform: >
       $.format = undefined;
+
+# Removing new property 'customNeuralDocumentModelBuilds' in ResourceDetails from the list of required properties, otherwise deserialization breaks when calling older service versions.
+  - from: swagger-document
+    where: $.definitions.ResourceDetails.required
+    transform: >
+      $.splice($.indexOf("customNeuralDocumentModelBuilds"), 1);
+      return $;
 ```

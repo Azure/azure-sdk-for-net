@@ -36,6 +36,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     Name = bestWorkerModeDistributionPolicyName
                 });
 
+            AddForCleanup(new Task(async () => await routerClient.DeleteDistributionPolicyAsync(bestWorkerModeDistributionPolicyId)));
             Assert.NotNull(bestWorkerModeDistributionPolicyResponse.Value);
 
             var bestWorkerModeDistributionPolicy = bestWorkerModeDistributionPolicyResponse.Value;
@@ -70,8 +71,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.AreEqual(1, bestWorkerModeDistributionPolicy.Mode.MinConcurrentOffers);
             Assert.AreEqual(2, bestWorkerModeDistributionPolicy.Mode.MaxConcurrentOffers);
             Assert.IsTrue(bestWorkerModeDistributionPolicy.Mode.BypassSelectors);
-
-            AddForCleanup(new Task(async () => await routerClient.DeleteDistributionPolicyAsync(bestWorkerModeDistributionPolicyId)));
         }
 
         [Test]
@@ -96,6 +95,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     Name = bestWorkerModeDistributionPolicyName,
                 });
 
+            AddForCleanup(new Task(async () => await routerClient.DeleteDistributionPolicyAsync(bestWorkerModeDistributionPolicyId)));
             Assert.NotNull(bestWorkerModeDistributionPolicyResponse.Value);
 
             var bestWorkerModeDistributionPolicy = bestWorkerModeDistributionPolicyResponse.Value;
@@ -158,11 +158,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 // any value will be sanitized when recordings are saved
                 Assert.AreEqual("MyKey", azureFuncScoringRule.Credential.FunctionKey);
             }
-
-            AddForCleanup(new Task(async () => await routerClient.DeleteDistributionPolicyAsync(bestWorkerModeDistributionPolicyId)));
-            // test longest idle mode constructors
-
-            // test round robin mode constructors
         }
 
         #endregion best worker mode constructors
@@ -182,6 +177,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     Name = longestIdleModeDistributionPolicyName
                 });
 
+            AddForCleanup(new Task(async () => await routerClient.DeleteDistributionPolicyAsync(longestIdleModeDistributionPolicyId)));
             Assert.NotNull(longestIdleModeDistributionPolicyResponse.Value);
 
             var longestIdleModeDistributionPolicy = longestIdleModeDistributionPolicyResponse.Value;
@@ -202,8 +198,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.AreEqual(1, longestIdleModeDistributionPolicy.Mode.MinConcurrentOffers);
             Assert.AreEqual(2, longestIdleModeDistributionPolicy.Mode.MaxConcurrentOffers);
             Assert.IsTrue(longestIdleModeDistributionPolicy.Mode.BypassSelectors);
-
-            AddForCleanup(new Task(async () => await routerClient.DeleteDistributionPolicyAsync(longestIdleModeDistributionPolicyId)));
         }
 
         #endregion longest idle mode constructors
@@ -225,6 +219,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     Name = roundRobinModeDistributionPolicyName
                 });
 
+            AddForCleanup(new Task(async () => await routerClient.DeleteDistributionPolicyAsync(roundRobinModeDistributionPolicyId)));
             Assert.NotNull(roundRobinModeDistributionPolicyResponse.Value);
 
             var roundRobinModeDistributionPolicy = roundRobinModeDistributionPolicyResponse.Value;
@@ -245,8 +240,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.AreEqual(1, roundRobinModeDistributionPolicy.Mode.MinConcurrentOffers);
             Assert.AreEqual(2, roundRobinModeDistributionPolicy.Mode.MaxConcurrentOffers);
             Assert.IsTrue(roundRobinModeDistributionPolicy.Mode.BypassSelectors);
-
-            AddForCleanup(new Task(async () => await routerClient.DeleteDistributionPolicyAsync(roundRobinModeDistributionPolicyId)));
         }
 
         #endregion round robin mode constructors

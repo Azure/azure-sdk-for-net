@@ -58,7 +58,7 @@ namespace Azure.Storage.DataMovement
         /// Only to be created internally by the transfer manager when someone
         /// provides a valid job plan file to resume from.
         /// </summary>
-        internal DataTransfer(string id, long bytesTransferred)
+        internal DataTransfer(string id, long bytesTransferred = 0)
         {
             _state = new DataTransferState(id, bytesTransferred);
         }
@@ -79,8 +79,21 @@ namespace Azure.Storage.DataMovement
         /// <param name="cancellationToken"></param>
         public async Task AwaitCompletion(CancellationToken cancellationToken = default)
         {
-            cancellationToken.Register(() => _state._completionSource.TrySetCanceled(cancellationToken), useSynchronizationContext: false);
-            await _state._completionSource.Task.ConfigureAwait(false);
+            await _state.CompletionSource.Task.AwaitWithCancellation(cancellationToken);
+        }
+
+        /// <summary>
+        /// Attempts to pause the current Data Transfer.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns>
+        /// Will return false if the data transfer has already been completed.
+        ///
+        /// Will return true if the pause has taken place.
+        /// </returns>
+        public Task<bool> TryPauseAsync(CancellationToken cancellationToken = default)
+        {
+            return _state.TryPauseAsync(cancellationToken);
         }
     }
 }

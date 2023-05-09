@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceHealthStatus = new ResourceHealthStatus(property.Value.GetString());
@@ -58,7 +57,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceHealthDetails> array = new List<ResourceHealthDetails>();

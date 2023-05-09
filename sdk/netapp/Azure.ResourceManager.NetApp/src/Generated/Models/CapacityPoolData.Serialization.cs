@@ -93,7 +93,6 @@ namespace Azure.ResourceManager.NetApp
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -103,7 +102,6 @@ namespace Azure.ResourceManager.NetApp
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -138,7 +136,6 @@ namespace Azure.ResourceManager.NetApp
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -157,7 +154,6 @@ namespace Azure.ResourceManager.NetApp
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             poolId = property0.Value.GetGuid();
@@ -182,7 +178,6 @@ namespace Azure.ResourceManager.NetApp
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             totalThroughputMibps = property0.Value.GetSingle();
@@ -192,7 +187,6 @@ namespace Azure.ResourceManager.NetApp
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             utilizedThroughputMibps = property0.Value.GetSingle();
@@ -202,7 +196,6 @@ namespace Azure.ResourceManager.NetApp
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             qosType = new CapacityPoolQosType(property0.Value.GetString());
@@ -212,7 +205,6 @@ namespace Azure.ResourceManager.NetApp
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             coolAccess = property0.Value.GetBoolean();

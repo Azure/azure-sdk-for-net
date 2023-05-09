@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Azure.Core;
 using System.Threading.Tasks;
 using System.Threading;

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Formula kind. </summary>
-    internal readonly partial struct DocumentFormulaKind : IEquatable<DocumentFormulaKind>
+    public readonly partial struct DocumentFormulaKind : IEquatable<DocumentFormulaKind>
     {
         private readonly string _value;
 

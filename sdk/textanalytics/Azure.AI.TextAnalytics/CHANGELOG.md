@@ -6,6 +6,14 @@
 
 ### Breaking Changes
 
+> Note: The following breaking changes only apply when upgrading from the previous beta versions (5.3.0-beta.*) and do not impact stable versions.
+
+- Removed support for dynamic classification.
+  - Removed the following methods: `TextAnalyticsClient.DynamicClassify` and `TextAnalyticsClient.DynamicClassifyAsync`.
+  - Removed the following methods: `TextAnalyticsClient.DynamicClassifyBatch` and `TextAnalyticsClient.DynamicClassifyBatchAsync`.
+  - Removed the `DynamicClassifyDocumentResultCollection` class.
+  - Removed the `ClassificationType` enum.
+
 ### Bugs Fixed
 
 ### Other Changes

@@ -11,7 +11,7 @@ azure-arm: true
 generate-model-factory: false
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/03261080b3083a9e8cb0b61d840cc8291c596590/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/b06a6f45e472dd07c2e0dab06b1e52dfe2684c88/specification/compute/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -258,6 +258,11 @@ rename-mapping:
   VirtualMachineScaleSet.properties.constrainedMaximumCapacity : IsMaximumCapacityConstrained
   RollingUpgradePolicy.maxSurge : IsMaxSurgeEnabled
   ScheduledEventsProfile: ComputeScheduledEventsProfile
+  ExpandTypeForListVMs: GetVirtualMachineExpandType
+  ExpandTypesForListVm: GetVirtualMachineExpandType
+  SecurityPostureReference: ComputeSecurityPostureReference
+  RestorePointSourceVmStorageProfile.dataDisks: DataDiskList
+  SecurityPostureReference.id: -|arm-id
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
@@ -356,4 +361,8 @@ directive:
   - from: swagger-document
     where: $.definitions.KeyVaultSecretReference
     transform: $["x-csharp-usage"] = "converter";
+  # TODO -- to be removed. This is a temporary workaround because the rename-mapping configuration is not working properly on arrays.
+  - from: restorePoint.json
+    where: $.definitions.RestorePointSourceVMStorageProfile.properties.dataDisks
+    transform: $["x-ms-client-name"] = "DataDiskList";
 ```

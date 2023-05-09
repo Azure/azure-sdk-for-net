@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
                 ServiceUri = new Uri("http://myservice.com"),
                 CustomHeaders =
 {
-["Authorization"] = "Basic 000000000000000000000000000000000000000000000000000",
+["Authorization"] = "******",
 },
                 Status = ContainerRegistryWebhookStatus.Enabled,
                 Scope = "myRepository",

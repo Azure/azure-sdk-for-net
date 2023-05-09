@@ -34,10 +34,19 @@ namespace Azure.Security.ConfidentialLedger
         {
         }
 
-        /// <summary> Gets the constitution used for governance. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the constitution used for governance.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetConstitutionAsync(RequestContext)']/*" />
         public virtual async Task<Response> GetConstitutionAsync(RequestContext context = null)
         {
@@ -55,10 +64,19 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Gets the constitution used for governance. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the constitution used for governance.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetConstitution(RequestContext)']/*" />
         public virtual Response GetConstitution(RequestContext context = null)
         {
@@ -76,10 +94,19 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Gets quotes for all nodes of the Confidential Ledger. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets quotes for all nodes of the Confidential Ledger.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetEnclaveQuotesAsync(RequestContext)']/*" />
         public virtual async Task<Response> GetEnclaveQuotesAsync(RequestContext context = null)
         {
@@ -97,10 +124,19 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Gets quotes for all nodes of the Confidential Ledger. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets quotes for all nodes of the Confidential Ledger.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetEnclaveQuotes(RequestContext)']/*" />
         public virtual Response GetEnclaveQuotes(RequestContext context = null)
         {
@@ -118,14 +154,23 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Writes a ledger entry. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <summary>
+        /// [Protocol Method] Writes a ledger entry.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateLedgerEntryAsync(RequestContent,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateLedgerEntryAsync(RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Response> CreateLedgerEntryAsync(RequestContent content, string collectionId = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -144,14 +189,23 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Writes a ledger entry. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <summary>
+        /// [Protocol Method] Writes a ledger entry.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateLedgerEntry(RequestContent,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateLedgerEntry(RequestContent,string,RequestContext)']/*" />
         public virtual Response CreateLedgerEntry(RequestContent content, string collectionId = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -170,15 +224,24 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Gets the ledger entry at the specified transaction id. A collection id may optionally be specified to indicate the collection from which to fetch the value. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the ledger entry at the specified transaction id. A collection id may optionally be specified to indicate the collection from which to fetch the value.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntryAsync(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntryAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetLedgerEntryAsync(string transactionId, string collectionId = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
@@ -197,15 +260,24 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Gets the ledger entry at the specified transaction id. A collection id may optionally be specified to indicate the collection from which to fetch the value. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the ledger entry at the specified transaction id. A collection id may optionally be specified to indicate the collection from which to fetch the value.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntry(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntry(string,string,RequestContext)']/*" />
         public virtual Response GetLedgerEntry(string transactionId, string collectionId = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
@@ -224,14 +296,23 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Gets a receipt certifying ledger contents at a particular transaction id. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets a receipt certifying ledger contents at a particular transaction id.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetReceiptAsync(String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetReceiptAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetReceiptAsync(string transactionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
@@ -250,14 +331,23 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Gets a receipt certifying ledger contents at a particular transaction id. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets a receipt certifying ledger contents at a particular transaction id.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetReceipt(String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetReceipt(string,RequestContext)']/*" />
         public virtual Response GetReceipt(string transactionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
@@ -276,14 +366,23 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Gets the status of an entry identified by a transaction id. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the status of an entry identified by a transaction id.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetTransactionStatusAsync(String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetTransactionStatusAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetTransactionStatusAsync(string transactionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
@@ -302,14 +401,23 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Gets the status of an entry identified by a transaction id. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the status of an entry identified by a transaction id.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetTransactionStatus(String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetTransactionStatus(string,RequestContext)']/*" />
         public virtual Response GetTransactionStatus(string transactionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
@@ -328,12 +436,21 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Gets the current value available in the ledger. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the current value available in the ledger.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetCurrentLedgerEntryAsync(String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetCurrentLedgerEntryAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetCurrentLedgerEntryAsync(string collectionId = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
@@ -350,12 +467,21 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Gets the current value available in the ledger. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the current value available in the ledger.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetCurrentLedgerEntry(String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetCurrentLedgerEntry(string,RequestContext)']/*" />
         public virtual Response GetCurrentLedgerEntry(string collectionId = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
@@ -372,13 +498,22 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Deletes a user from the Confidential Ledger. </summary>
+        /// <summary>
+        /// [Protocol Method] Deletes a user from the Confidential Ledger.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='DeleteUserAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='DeleteUserAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteUserAsync(string userId, RequestContext context = null)
         {
             Argument.AssertNotNull(userId, nameof(userId));
@@ -397,13 +532,22 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Deletes a user from the Confidential Ledger. </summary>
+        /// <summary>
+        /// [Protocol Method] Deletes a user from the Confidential Ledger.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='DeleteUser(String,RequestContext)']/*" />
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='DeleteUser(string,RequestContext)']/*" />
         public virtual Response DeleteUser(string userId, RequestContext context = null)
         {
             Argument.AssertNotNull(userId, nameof(userId));
@@ -422,13 +566,22 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Gets a user. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets a user.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserAsync(String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetUserAsync(string userId, RequestContext context = null)
         {
             Argument.AssertNotNull(userId, nameof(userId));
@@ -447,13 +600,22 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Gets a user. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets a user.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUser(String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUser(string,RequestContext)']/*" />
         public virtual Response GetUser(string userId, RequestContext context = null)
         {
             Argument.AssertNotNull(userId, nameof(userId));
@@ -472,14 +634,23 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Adds a user or updates a user&apos;s fields. </summary>
+        /// <summary>
+        /// [Protocol Method] Adds a user or updates a user&apos;s fields.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateOrUpdateUserAsync(String,RequestContent,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateOrUpdateUserAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateUserAsync(string userId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(userId, nameof(userId));
@@ -499,14 +670,23 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Adds a user or updates a user&apos;s fields. </summary>
+        /// <summary>
+        /// [Protocol Method] Adds a user or updates a user&apos;s fields.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateOrUpdateUser(String,RequestContent,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateOrUpdateUser(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateUser(string userId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(userId, nameof(userId));
@@ -526,7 +706,16 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> Lists the consortium members. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the consortium members.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -538,7 +727,16 @@ namespace Azure.Security.ConfidentialLedger
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetConsortiumMembers", "members", "nextLink", context);
         }
 
-        /// <summary> Lists the consortium members. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the consortium members.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -550,7 +748,16 @@ namespace Azure.Security.ConfidentialLedger
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetConsortiumMembers", "members", "nextLink", context);
         }
 
-        /// <summary> Retrieves a list of collection ids present in the Confidential Ledger. </summary>
+        /// <summary>
+        /// [Protocol Method] Retrieves a list of collection ids present in the Confidential Ledger
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -562,7 +769,16 @@ namespace Azure.Security.ConfidentialLedger
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetCollections", "collections", "nextLink", context);
         }
 
-        /// <summary> Retrieves a list of collection ids present in the Confidential Ledger. </summary>
+        /// <summary>
+        /// [Protocol Method] Retrieves a list of collection ids present in the Confidential Ledger
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -574,14 +790,23 @@ namespace Azure.Security.ConfidentialLedger
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetCollections", "collections", "nextLink", context);
         }
 
-        /// <summary> Gets ledger entries from a collection corresponding to a range. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets ledger entries from a collection corresponding to a range.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
         /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntriesAsync(String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntriesAsync(string,string,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetLedgerEntriesAsync(string collectionId = null, string fromTransactionId = null, string toTransactionId = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLedgerEntriesRequest(collectionId, fromTransactionId, toTransactionId, context);
@@ -589,14 +814,23 @@ namespace Azure.Security.ConfidentialLedger
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetLedgerEntries", "entries", "nextLink", context);
         }
 
-        /// <summary> Gets ledger entries from a collection corresponding to a range. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets ledger entries from a collection corresponding to a range.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
         /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntries(String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntries(string,string,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetLedgerEntries(string collectionId = null, string fromTransactionId = null, string toTransactionId = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLedgerEntriesRequest(collectionId, fromTransactionId, toTransactionId, context);

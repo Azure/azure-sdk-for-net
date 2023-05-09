@@ -112,7 +112,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     packagePath = BinaryData.FromString(property.Value.GetRawText());
@@ -122,7 +121,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new SsisPackageLocationType(property.Value.GetString());
@@ -141,7 +139,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             packagePassword = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
@@ -151,7 +148,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             accessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value);
@@ -161,7 +157,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             configurationPath = BinaryData.FromString(property0.Value.GetRawText());
@@ -171,7 +166,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             configurationAccessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value);
@@ -186,7 +180,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             packageContent = BinaryData.FromString(property0.Value.GetRawText());
@@ -201,7 +194,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SsisChildPackage> array = new List<SsisChildPackage>();

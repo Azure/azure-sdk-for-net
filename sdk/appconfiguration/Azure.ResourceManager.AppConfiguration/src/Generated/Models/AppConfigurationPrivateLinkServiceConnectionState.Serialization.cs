@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new AppConfigurationPrivateLinkServiceConnectionStatus(property.Value.GetString());
@@ -58,7 +57,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     actionsRequired = new AppConfigurationActionsRequired(property.Value.GetString());

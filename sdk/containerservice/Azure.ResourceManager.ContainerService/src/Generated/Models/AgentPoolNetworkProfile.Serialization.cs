@@ -69,7 +69,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContainerServiceIPTag> array = new List<ContainerServiceIPTag>();
@@ -84,7 +83,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AgentPoolNetworkPortRange> array = new List<AgentPoolNetworkPortRange>();
@@ -99,7 +97,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceIdentifier> array = new List<ResourceIdentifier>();

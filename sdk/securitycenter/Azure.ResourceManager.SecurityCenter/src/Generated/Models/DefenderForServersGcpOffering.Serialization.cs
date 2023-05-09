@@ -64,7 +64,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defenderForServers = GcpDefenderForServersInfo.DeserializeGcpDefenderForServersInfo(property.Value);
@@ -74,7 +73,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     arcAutoProvisioning = DefenderForServersGcpOfferingArcAutoProvisioning.DeserializeDefenderForServersGcpOfferingArcAutoProvisioning(property.Value);
@@ -84,7 +82,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vaAutoProvisioning = DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning.DeserializeDefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning(property.Value);
@@ -94,7 +91,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mdeAutoProvisioning = DefenderForServersGcpOfferingMdeAutoProvisioning.DeserializeDefenderForServersGcpOfferingMdeAutoProvisioning(property.Value);
@@ -104,7 +100,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subPlan = DefenderForServersGcpOfferingSubPlan.DeserializeDefenderForServersGcpOfferingSubPlan(property.Value);

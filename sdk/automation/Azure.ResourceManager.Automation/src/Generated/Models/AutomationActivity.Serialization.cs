@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -63,7 +62,6 @@ namespace Azure.ResourceManager.Automation.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<AutomationActivityParameterSet> array = new List<AutomationActivityParameterSet>();
@@ -78,7 +76,6 @@ namespace Azure.ResourceManager.Automation.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<AutomationActivityOutputType> array = new List<AutomationActivityOutputType>();
@@ -93,7 +90,6 @@ namespace Azure.ResourceManager.Automation.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationTime = property0.Value.GetDateTimeOffset("O");
@@ -103,7 +99,6 @@ namespace Azure.ResourceManager.Automation.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModifiedTime = property0.Value.GetDateTimeOffset("O");

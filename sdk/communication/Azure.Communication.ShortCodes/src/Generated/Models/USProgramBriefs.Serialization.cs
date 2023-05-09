@@ -27,7 +27,6 @@ namespace Azure.Communication.ShortCodes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<USProgramBrief> array = new List<USProgramBrief>();

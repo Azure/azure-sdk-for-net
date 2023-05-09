@@ -35,15 +35,24 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
         }
 
-        /// <summary> Creates a new project or updates an existing one. </summary>
+        /// <summary>
+        /// [Protocol Method] Creates a new project or updates an existing one.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='CreateProjectAsync(String,RequestContent,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='CreateProjectAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateProjectAsync(string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -63,15 +72,24 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Creates a new project or updates an existing one. </summary>
+        /// <summary>
+        /// [Protocol Method] Creates a new project or updates an existing one.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='CreateProject(String,RequestContent,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='CreateProject(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateProject(string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -91,14 +109,23 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the details of a project. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the details of a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetProjectAsync(String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetProjectAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetProjectAsync(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -117,14 +144,23 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the details of a project. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the details of a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetProject(String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetProject(string,RequestContext)']/*" />
         public virtual Response GetProject(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -143,15 +179,24 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the details of a deployment. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the details of a deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentAsync(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetDeploymentAsync(string projectName, string deploymentName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -171,15 +216,24 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the details of a deployment. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the details of a deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeployment(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeployment(string,string,RequestContext)']/*" />
         public virtual Response GetDeployment(string projectName, string deploymentName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -199,7 +253,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the status of an existing delete deployment from specific resources job. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing delete deployment from specific resources job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="jobId"> The job ID. </param>
@@ -207,8 +270,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentDeleteFromResourcesStatusAsync(String,String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentDeleteFromResourcesStatusAsync(string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetDeploymentDeleteFromResourcesStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -229,7 +292,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the status of an existing delete deployment from specific resources job. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing delete deployment from specific resources job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="jobId"> The job ID. </param>
@@ -237,8 +309,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentDeleteFromResourcesStatus(String,String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentDeleteFromResourcesStatus(string,string,string,RequestContext)']/*" />
         public virtual Response GetDeploymentDeleteFromResourcesStatus(string projectName, string deploymentName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -259,7 +331,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the status of an existing deployment job. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing deployment job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="jobId"> The job ID. </param>
@@ -267,8 +348,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentJobStatusAsync(String,String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentJobStatusAsync(string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetDeploymentJobStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -289,7 +370,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the status of an existing deployment job. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing deployment job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="jobId"> The job ID. </param>
@@ -297,8 +387,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentJobStatus(String,String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentJobStatus(string,string,string,RequestContext)']/*" />
         public virtual Response GetDeploymentJobStatus(string projectName, string deploymentName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -319,15 +409,24 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the status of an existing swap deployment job. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing swap deployment job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetSwapDeploymentsJobStatusAsync(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetSwapDeploymentsJobStatusAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetSwapDeploymentsJobStatusAsync(string projectName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -347,15 +446,24 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the status of an existing swap deployment job. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing swap deployment job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetSwapDeploymentsJobStatus(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetSwapDeploymentsJobStatus(string,string,RequestContext)']/*" />
         public virtual Response GetSwapDeploymentsJobStatus(string projectName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -375,15 +483,24 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the status of an export job. Once job completes, returns the project metadata, and assets. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the status of an export job. Once job completes, returns the project metadata, and assets.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetExportProjectJobStatusAsync(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetExportProjectJobStatusAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetExportProjectJobStatusAsync(string projectName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -403,15 +520,24 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the status of an export job. Once job completes, returns the project metadata, and assets. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the status of an export job. Once job completes, returns the project metadata, and assets.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetExportProjectJobStatus(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetExportProjectJobStatus(string,string,RequestContext)']/*" />
         public virtual Response GetExportProjectJobStatus(string projectName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -431,15 +557,24 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the status for an import. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the status for an import.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetImportProjectJobStatusAsync(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetImportProjectJobStatusAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetImportProjectJobStatusAsync(string projectName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -459,15 +594,24 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the status for an import. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the status for an import.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetImportProjectJobStatus(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetImportProjectJobStatus(string,string,RequestContext)']/*" />
         public virtual Response GetImportProjectJobStatus(string projectName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -487,15 +631,24 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the details of a trained model. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the details of a trained model.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainedModelAsync(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainedModelAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetTrainedModelAsync(string projectName, string trainedModelLabel, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -515,15 +668,24 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the details of a trained model. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the details of a trained model.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainedModel(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainedModel(string,string,RequestContext)']/*" />
         public virtual Response GetTrainedModel(string projectName, string trainedModelLabel, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -543,7 +705,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Deletes an existing trained model. </summary>
+        /// <summary>
+        /// [Protocol Method] Deletes an existing trained model.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -551,7 +722,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteTrainedModelAsync(String,String,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteTrainedModelAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteTrainedModelAsync(string projectName, string trainedModelLabel, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -571,7 +742,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Deletes an existing trained model. </summary>
+        /// <summary>
+        /// [Protocol Method] Deletes an existing trained model.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -579,7 +759,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteTrainedModel(String,String,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteTrainedModel(string,string,RequestContext)']/*" />
         public virtual Response DeleteTrainedModel(string projectName, string trainedModelLabel, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -599,15 +779,24 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the evaluation summary of a trained model. The summary includes high level performance measurements of the model e.g., F1, Precision, Recall, etc. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the evaluation summary of a trained model. The summary includes high level performance measurements of the model e.g., F1, Precision, Recall, etc.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetModelEvaluationSummaryAsync(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetModelEvaluationSummaryAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetModelEvaluationSummaryAsync(string projectName, string trainedModelLabel, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -627,15 +816,24 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the evaluation summary of a trained model. The summary includes high level performance measurements of the model e.g., F1, Precision, Recall, etc. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the evaluation summary of a trained model. The summary includes high level performance measurements of the model e.g., F1, Precision, Recall, etc.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetModelEvaluationSummary(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetModelEvaluationSummary(string,string,RequestContext)']/*" />
         public virtual Response GetModelEvaluationSummary(string projectName, string trainedModelLabel, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -655,7 +853,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the status for loading a snapshot. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the status for loading a snapshot.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="jobId"> The job ID. </param>
@@ -663,8 +870,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetLoadSnapshotStatusAsync(String,String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetLoadSnapshotStatusAsync(string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetLoadSnapshotStatusAsync(string projectName, string trainedModelLabel, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -685,7 +892,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the status for loading a snapshot. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the status for loading a snapshot.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="jobId"> The job ID. </param>
@@ -693,8 +909,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetLoadSnapshotStatus(String,String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetLoadSnapshotStatus(string,string,string,RequestContext)']/*" />
         public virtual Response GetLoadSnapshotStatus(string projectName, string trainedModelLabel, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -715,15 +931,24 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the status of an existing assign deployment resources job. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing assign deployment resources job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetAssignDeploymentResourcesStatusAsync(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetAssignDeploymentResourcesStatusAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetAssignDeploymentResourcesStatusAsync(string projectName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -743,15 +968,24 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the status of an existing assign deployment resources job. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing assign deployment resources job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetAssignDeploymentResourcesStatus(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetAssignDeploymentResourcesStatus(string,string,RequestContext)']/*" />
         public virtual Response GetAssignDeploymentResourcesStatus(string projectName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -771,15 +1005,24 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the status of an existing unassign deployment resources job. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing unassign deployment resources job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetUnassignDeploymentResourcesStatusAsync(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetUnassignDeploymentResourcesStatusAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetUnassignDeploymentResourcesStatusAsync(string projectName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -799,15 +1042,24 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the status of an existing unassign deployment resources job. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing unassign deployment resources job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetUnassignDeploymentResourcesStatus(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetUnassignDeploymentResourcesStatus(string,string,RequestContext)']/*" />
         public virtual Response GetUnassignDeploymentResourcesStatus(string projectName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -827,15 +1079,24 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the status for a training job. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the status for a training job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainingJobStatusAsync(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainingJobStatusAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetTrainingJobStatusAsync(string projectName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -855,15 +1116,24 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the status for a training job. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the status for a training job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainingJobStatus(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainingJobStatus(string,string,RequestContext)']/*" />
         public virtual Response GetTrainingJobStatus(string projectName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -883,14 +1153,23 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the status for a project deletion job. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the status for a project deletion job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetProjectDeletionJobStatusAsync(String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetProjectDeletionJobStatusAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetProjectDeletionJobStatusAsync(string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -909,14 +1188,23 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the status for a project deletion job. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the status for a project deletion job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetProjectDeletionJobStatus(String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetProjectDeletionJobStatus(string,RequestContext)']/*" />
         public virtual Response GetProjectDeletionJobStatus(string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -935,7 +1223,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Lists the existing projects. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the existing projects.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -947,7 +1244,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetProjects", "value", "nextLink", context);
         }
 
-        /// <summary> Lists the existing projects. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the existing projects.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -959,14 +1265,23 @@ namespace Azure.AI.Language.Conversations.Authoring
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetProjects", "value", "nextLink", context);
         }
 
-        /// <summary> Lists the deployments belonging to a project. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the deployments belonging to a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentsAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentsAsync(string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -976,14 +1291,23 @@ namespace Azure.AI.Language.Conversations.Authoring
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetDeployments", "value", "nextLink", context);
         }
 
-        /// <summary> Lists the deployments belonging to a project. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the deployments belonging to a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeployments(String,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeployments(string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetDeployments(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -993,14 +1317,23 @@ namespace Azure.AI.Language.Conversations.Authoring
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetDeployments", "value", "nextLink", context);
         }
 
-        /// <summary> Lists the trained models belonging to a project. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the trained models belonging to a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainedModelsAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainedModelsAsync(string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetTrainedModelsAsync(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1010,14 +1343,23 @@ namespace Azure.AI.Language.Conversations.Authoring
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetTrainedModels", "value", "nextLink", context);
         }
 
-        /// <summary> Lists the trained models belonging to a project. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the trained models belonging to a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainedModels(String,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainedModels(string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetTrainedModels(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1027,7 +1369,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetTrainedModels", "value", "nextLink", context);
         }
 
-        /// <summary> Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to &quot;Utf16CodeUnit&quot; for .NET strings, which are encoded as UTF-16. Allowed values: &quot;Utf16CodeUnit&quot;. </param>
@@ -1036,7 +1387,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetModelEvaluationResultsAsync(String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetModelEvaluationResultsAsync(string,string,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetModelEvaluationResultsAsync(string projectName, string trainedModelLabel, string stringIndexType = "Utf16CodeUnit", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1048,7 +1399,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetModelEvaluationResults", "value", "nextLink", context);
         }
 
-        /// <summary> Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to &quot;Utf16CodeUnit&quot; for .NET strings, which are encoded as UTF-16. Allowed values: &quot;Utf16CodeUnit&quot;. </param>
@@ -1057,7 +1417,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetModelEvaluationResults(String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetModelEvaluationResults(string,string,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetModelEvaluationResults(string projectName, string trainedModelLabel, string stringIndexType = "Utf16CodeUnit", RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1069,7 +1429,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetModelEvaluationResults", "value", "nextLink", context);
         }
 
-        /// <summary> Lists the deployments resources assigned to the project. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the deployments resources assigned to the project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
@@ -1079,7 +1448,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentResourcesAsync(String,Int32,Int32,Int32,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentResourcesAsync(string,int?,int?,int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetDeploymentResourcesAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1089,7 +1458,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetDeploymentResources", "value", "nextLink", context);
         }
 
-        /// <summary> Lists the deployments resources assigned to the project. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the deployments resources assigned to the project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
@@ -1099,7 +1477,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentResources(String,Int32,Int32,Int32,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentResources(string,int?,int?,int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetDeploymentResources(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1109,14 +1487,23 @@ namespace Azure.AI.Language.Conversations.Authoring
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetDeploymentResources", "value", "nextLink", context);
         }
 
-        /// <summary> Lists the non-expired training jobs created for a project. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the non-expired training jobs created for a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainingJobsAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainingJobsAsync(string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetTrainingJobsAsync(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1126,14 +1513,23 @@ namespace Azure.AI.Language.Conversations.Authoring
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetTrainingJobs", "value", "nextLink", context);
         }
 
-        /// <summary> Lists the non-expired training jobs created for a project. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the non-expired training jobs created for a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainingJobs(String,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainingJobs(string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetTrainingJobs(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1143,14 +1539,23 @@ namespace Azure.AI.Language.Conversations.Authoring
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetTrainingJobs", "value", "nextLink", context);
         }
 
-        /// <summary> Lists the deployments to which an Azure resource is assigned. This doesn&apos;t return deployments belonging to projects owned by this resource. It only returns deployments belonging to projects owned by other resources. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the deployments to which an Azure resource is assigned. This doesn&apos;t return deployments belonging to projects owned by this resource. It only returns deployments belonging to projects owned by other resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetAssignedResourceDeploymentsAsync(Int32,Int32,Int32,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetAssignedResourceDeploymentsAsync(int?,int?,int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAssignedResourceDeploymentsAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssignedResourceDeploymentsRequest(maxCount, skip, maxpagesize, context);
@@ -1158,14 +1563,23 @@ namespace Azure.AI.Language.Conversations.Authoring
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetAssignedResourceDeployments", "value", "nextLink", context);
         }
 
-        /// <summary> Lists the deployments to which an Azure resource is assigned. This doesn&apos;t return deployments belonging to projects owned by this resource. It only returns deployments belonging to projects owned by other resources. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the deployments to which an Azure resource is assigned. This doesn&apos;t return deployments belonging to projects owned by this resource. It only returns deployments belonging to projects owned by other resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetAssignedResourceDeployments(Int32,Int32,Int32,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetAssignedResourceDeployments(int?,int?,int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAssignedResourceDeployments(int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssignedResourceDeploymentsRequest(maxCount, skip, maxpagesize, context);
@@ -1173,13 +1587,22 @@ namespace Azure.AI.Language.Conversations.Authoring
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetAssignedResourceDeployments", "value", "nextLink", context);
         }
 
-        /// <summary> Lists the supported languages for the given project type. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the supported languages for the given project type.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectKind"> The project kind. Allowed values: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetSupportedLanguagesAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetSupportedLanguagesAsync(string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetSupportedLanguagesAsync(string projectKind, RequestContext context = null)
         {
             Argument.AssertNotNull(projectKind, nameof(projectKind));
@@ -1189,13 +1612,22 @@ namespace Azure.AI.Language.Conversations.Authoring
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetSupportedLanguages", "value", "nextLink", context);
         }
 
-        /// <summary> Lists the supported languages for the given project type. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the supported languages for the given project type.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectKind"> The project kind. Allowed values: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetSupportedLanguages(String,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetSupportedLanguages(string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetSupportedLanguages(string projectKind, RequestContext context = null)
         {
             Argument.AssertNotNull(projectKind, nameof(projectKind));
@@ -1205,13 +1637,22 @@ namespace Azure.AI.Language.Conversations.Authoring
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetSupportedLanguages", "value", "nextLink", context);
         }
 
-        /// <summary> Lists the supported prebuilt entities that can be used while creating composed entities. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the supported prebuilt entities that can be used while creating composed entities.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="language"> The language to get supported prebuilt entities for. Required if multilingual is false. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc. </param>
         /// <param name="multilingual"> Whether to get the support prebuilt entities for multilingual or monolingual projects. If true, the language parameter is ignored. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntitiesAsync(String,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntitiesAsync(string,bool?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetSupportedPrebuiltEntitiesAsync(string language = null, bool? multilingual = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedPrebuiltEntitiesRequest(language, multilingual, context);
@@ -1219,13 +1660,22 @@ namespace Azure.AI.Language.Conversations.Authoring
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetSupportedPrebuiltEntities", "value", "nextLink", context);
         }
 
-        /// <summary> Lists the supported prebuilt entities that can be used while creating composed entities. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the supported prebuilt entities that can be used while creating composed entities.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="language"> The language to get supported prebuilt entities for. Required if multilingual is false. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc. </param>
         /// <param name="multilingual"> Whether to get the support prebuilt entities for multilingual or monolingual projects. If true, the language parameter is ignored. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntities(String,Boolean,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntities(string,bool?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetSupportedPrebuiltEntities(string language = null, bool? multilingual = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedPrebuiltEntitiesRequest(language, multilingual, context);
@@ -1233,13 +1683,22 @@ namespace Azure.AI.Language.Conversations.Authoring
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetSupportedPrebuiltEntities", "value", "nextLink", context);
         }
 
-        /// <summary> Lists the support training config version for a given project type. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the support training config version for a given project type.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectKind"> The project kind. Allowed values: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainingConfigVersionsAsync(String,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainingConfigVersionsAsync(string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetTrainingConfigVersionsAsync(string projectKind, RequestContext context = null)
         {
             Argument.AssertNotNull(projectKind, nameof(projectKind));
@@ -1249,13 +1708,22 @@ namespace Azure.AI.Language.Conversations.Authoring
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetTrainingConfigVersions", "value", "nextLink", context);
         }
 
-        /// <summary> Lists the support training config version for a given project type. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the support training config version for a given project type.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="projectKind"> The project kind. Allowed values: &quot;Conversation&quot; | &quot;Orchestration&quot; | &quot;CustomConversationSummarization&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainingConfigVersions(String,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainingConfigVersions(string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetTrainingConfigVersions(string projectKind, RequestContext context = null)
         {
             Argument.AssertNotNull(projectKind, nameof(projectKind));
@@ -1265,15 +1733,24 @@ namespace Azure.AI.Language.Conversations.Authoring
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetTrainingConfigVersions", "value", "nextLink", context);
         }
 
-        /// <summary> Deletes a project. </summary>
+        /// <summary>
+        /// [Protocol Method] Deletes a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteProjectAsync(WaitUntil,String,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteProjectAsync(WaitUntil,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1292,15 +1769,24 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Deletes a project. </summary>
+        /// <summary>
+        /// [Protocol Method] Deletes a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteProject(WaitUntil,String,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteProject(WaitUntil,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> DeleteProject(WaitUntil waitUntil, string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1319,7 +1805,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Triggers a job to export a project&apos;s data. </summary>
+        /// <summary>
+        /// [Protocol Method] Triggers a job to export a project&apos;s data.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: &quot;Conversation&quot; | &quot;Luis&quot;. </param>
@@ -1330,8 +1825,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="stringIndexType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='ExportProjectAsync(WaitUntil,String,String,String,String,String,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='ExportProjectAsync(WaitUntil,string,string,string,string,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> ExportProjectAsync(WaitUntil waitUntil, string projectName, string exportedProjectFormat = null, string assetKind = null, string stringIndexType = "Utf16CodeUnit", string trainedModelLabel = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1351,7 +1846,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Triggers a job to export a project&apos;s data. </summary>
+        /// <summary>
+        /// [Protocol Method] Triggers a job to export a project&apos;s data.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: &quot;Conversation&quot; | &quot;Luis&quot;. </param>
@@ -1362,8 +1866,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="stringIndexType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='ExportProject(WaitUntil,String,String,String,String,String,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='ExportProject(WaitUntil,string,string,string,string,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> ExportProject(WaitUntil waitUntil, string projectName, string exportedProjectFormat = null, string assetKind = null, string stringIndexType = "Utf16CodeUnit", string trainedModelLabel = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1383,17 +1887,26 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Triggers a job to import a project. If a project with the same name already exists, the data of that project is replaced. </summary>
+        /// <summary>
+        /// [Protocol Method] Triggers a job to import a project. If a project with the same name already exists, the data of that project is replaced.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: &quot;Conversation&quot; | &quot;Luis&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='ImportProjectAsync(WaitUntil,String,RequestContent,String,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='ImportProjectAsync(WaitUntil,string,RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> ImportProjectAsync(WaitUntil waitUntil, string projectName, RequestContent content, string exportedProjectFormat = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1413,17 +1926,26 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Triggers a job to import a project. If a project with the same name already exists, the data of that project is replaced. </summary>
+        /// <summary>
+        /// [Protocol Method] Triggers a job to import a project. If a project with the same name already exists, the data of that project is replaced.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: &quot;Conversation&quot; | &quot;Luis&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='ImportProject(WaitUntil,String,RequestContent,String,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='ImportProject(WaitUntil,string,RequestContent,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> ImportProject(WaitUntil waitUntil, string projectName, RequestContent content, string exportedProjectFormat = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1443,16 +1965,25 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Triggers a training job for a project. </summary>
+        /// <summary>
+        /// [Protocol Method] Triggers a training job for a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='TrainAsync(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='TrainAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> TrainAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1472,16 +2003,25 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Triggers a training job for a project. </summary>
+        /// <summary>
+        /// [Protocol Method] Triggers a training job for a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='Train(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='Train(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> Train(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1501,16 +2041,25 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Swaps two existing deployments with each other. </summary>
+        /// <summary>
+        /// [Protocol Method] Swaps two existing deployments with each other.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='SwapDeploymentsAsync(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='SwapDeploymentsAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> SwapDeploymentsAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1530,16 +2079,25 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Swaps two existing deployments with each other. </summary>
+        /// <summary>
+        /// [Protocol Method] Swaps two existing deployments with each other.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='SwapDeployments(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='SwapDeployments(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> SwapDeployments(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1559,17 +2117,26 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Creates a new deployment or replaces an existing one. </summary>
+        /// <summary>
+        /// [Protocol Method] Creates a new deployment or replaces an existing one.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeployProjectAsync(WaitUntil,String,String,RequestContent,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeployProjectAsync(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1590,17 +2157,26 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Creates a new deployment or replaces an existing one. </summary>
+        /// <summary>
+        /// [Protocol Method] Creates a new deployment or replaces an existing one.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeployProject(WaitUntil,String,String,RequestContent,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeployProject(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> DeployProject(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1621,7 +2197,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Deletes a project deployment. </summary>
+        /// <summary>
+        /// [Protocol Method] Deletes a project deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
@@ -1629,8 +2214,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteDeploymentAsync(WaitUntil,String,String,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteDeploymentAsync(WaitUntil,string,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> DeleteDeploymentAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1650,7 +2235,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Deletes a project deployment. </summary>
+        /// <summary>
+        /// [Protocol Method] Deletes a project deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
@@ -1658,8 +2252,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteDeployment(WaitUntil,String,String,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteDeployment(WaitUntil,string,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> DeleteDeployment(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1679,17 +2273,26 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Deletes a project deployment from the specified assigned resources. </summary>
+        /// <summary>
+        /// [Protocol Method] Deletes a project deployment from the specified assigned resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteDeploymentFromResourcesAsync(WaitUntil,String,String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteDeploymentFromResourcesAsync(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation> DeleteDeploymentFromResourcesAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1710,17 +2313,26 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Deletes a project deployment from the specified assigned resources. </summary>
+        /// <summary>
+        /// [Protocol Method] Deletes a project deployment from the specified assigned resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteDeploymentFromResources(WaitUntil,String,String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteDeploymentFromResources(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
         public virtual Operation DeleteDeploymentFromResources(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1741,7 +2353,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Restores the snapshot of this trained model to be the current working directory of the project. </summary>
+        /// <summary>
+        /// [Protocol Method] Restores the snapshot of this trained model to be the current working directory of the project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
@@ -1750,7 +2371,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='LoadSnapshotAsync(WaitUntil,String,String,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='LoadSnapshotAsync(WaitUntil,string,string,RequestContext)']/*" />
         public virtual async Task<Operation> LoadSnapshotAsync(WaitUntil waitUntil, string projectName, string trainedModelLabel, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1770,7 +2391,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Restores the snapshot of this trained model to be the current working directory of the project. </summary>
+        /// <summary>
+        /// [Protocol Method] Restores the snapshot of this trained model to be the current working directory of the project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
@@ -1779,7 +2409,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='LoadSnapshot(WaitUntil,String,String,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='LoadSnapshot(WaitUntil,string,string,RequestContext)']/*" />
         public virtual Operation LoadSnapshot(WaitUntil waitUntil, string projectName, string trainedModelLabel, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1799,16 +2429,25 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Assign new Azure resources to a project to allow deploying new deployments to them. This API is available only via AAD authentication and not supported via subscription key authentication. For more details about AAD authentication, check here: https://learn.microsoft.com/en-us/azure/cognitive-services/authentication?tabs=powershell#authenticate-with-azure-active-directory. </summary>
+        /// <summary>
+        /// [Protocol Method] Assign new Azure resources to a project to allow deploying new deployments to them. This API is available only via AAD authentication and not supported via subscription key authentication. For more details about AAD authentication, check here: https://learn.microsoft.com/en-us/azure/cognitive-services/authentication?tabs=powershell#authenticate-with-azure-active-directory
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='AssignDeploymentResourcesAsync(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='AssignDeploymentResourcesAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation> AssignDeploymentResourcesAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1828,16 +2467,25 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Assign new Azure resources to a project to allow deploying new deployments to them. This API is available only via AAD authentication and not supported via subscription key authentication. For more details about AAD authentication, check here: https://learn.microsoft.com/en-us/azure/cognitive-services/authentication?tabs=powershell#authenticate-with-azure-active-directory. </summary>
+        /// <summary>
+        /// [Protocol Method] Assign new Azure resources to a project to allow deploying new deployments to them. This API is available only via AAD authentication and not supported via subscription key authentication. For more details about AAD authentication, check here: https://learn.microsoft.com/en-us/azure/cognitive-services/authentication?tabs=powershell#authenticate-with-azure-active-directory
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='AssignDeploymentResources(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='AssignDeploymentResources(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual Operation AssignDeploymentResources(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1857,16 +2505,25 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Unassign resources from a project. This disallows deploying new deployments to these resources, and deletes existing deployments assigned to them. </summary>
+        /// <summary>
+        /// [Protocol Method] Unassign resources from a project. This disallows deploying new deployments to these resources, and deletes existing deployments assigned to them.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='UnassignDeploymentResourcesAsync(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='UnassignDeploymentResourcesAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation> UnassignDeploymentResourcesAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1886,16 +2543,25 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Unassign resources from a project. This disallows deploying new deployments to these resources, and deletes existing deployments assigned to them. </summary>
+        /// <summary>
+        /// [Protocol Method] Unassign resources from a project. This disallows deploying new deployments to these resources, and deletes existing deployments assigned to them.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='UnassignDeploymentResources(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='UnassignDeploymentResources(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual Operation UnassignDeploymentResources(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1915,7 +2581,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Triggers a cancellation for a running training job. </summary>
+        /// <summary>
+        /// [Protocol Method] Triggers a cancellation for a running training job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> The job ID. </param>
@@ -1923,8 +2598,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='CancelTrainingJobAsync(WaitUntil,String,String,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='CancelTrainingJobAsync(WaitUntil,string,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CancelTrainingJobAsync(WaitUntil waitUntil, string projectName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1944,7 +2619,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Triggers a cancellation for a running training job. </summary>
+        /// <summary>
+        /// [Protocol Method] Triggers a cancellation for a running training job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="jobId"> The job ID. </param>
@@ -1952,8 +2636,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='CancelTrainingJob(WaitUntil,String,String,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='CancelTrainingJob(WaitUntil,string,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> CancelTrainingJob(WaitUntil waitUntil, string projectName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));

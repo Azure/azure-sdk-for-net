@@ -109,7 +109,12 @@ namespace Azure.Containers.ContainerRegistry
             _acrAuthClient = authenticationClient ?? new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
 
             string defaultScope = (options.Audience?.ToString() ?? ContainerRegistryClient.DefaultScope) + "/.default";
-            _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, _acrAuthClient));
+            HttpPipelineOptions pipelineOptions = new HttpPipelineOptions(options)
+            {
+                RequestFailedDetailsParser = new ContainerRegistryRequestFailedDetailsParser()
+            };
+            pipelineOptions.PerRetryPolicies.Add(new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, _acrAuthClient));
+            _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
             _restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
             _blobRestClient = new ContainerRegistryBlobRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
         }
@@ -364,7 +369,14 @@ namespace Azure.Containers.ContainerRegistry
             catch (Exception e)
             {
                 scope.Failed(e);
-                throw;
+
+                Exception exception = e;
+                if (e is RequestFailedException rfe)
+                {
+                    exception = CreateUploadBlobRequestFailedException(rfe);
+                }
+
+                throw exception;
             }
         }
 
@@ -414,7 +426,15 @@ namespace Azure.Containers.ContainerRegistry
             catch (Exception e)
             {
                 scope.Failed(e);
-                throw;
+
+                Exception exception = e;
+
+                if (e is RequestFailedException rfe)
+                {
+                    exception = CreateUploadBlobRequestFailedException(rfe);
+                }
+
+                throw exception;
             }
         }
 
@@ -483,6 +503,19 @@ namespace Azure.Containers.ContainerRegistry
             {
                 ArrayPool<byte>.Shared.Return(buffer);
             }
+        }
+
+        private const string UploadBlobTroubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/containerregistry/uploadblob/troubleshoot";
+        private static RequestFailedException CreateUploadBlobRequestFailedException(RequestFailedException rfe)
+        {
+            StringBuilder sb = new(rfe.Message);
+            sb.AppendLine();
+            sb.AppendLine(UploadBlobTroubleshooting);
+
+            return new RequestFailedException(rfe.Status,
+                sb.ToString(),
+                rfe.ErrorCode,
+                rfe.InnerException);
         }
 
         /// <summary>
@@ -1045,7 +1078,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                ResponseWithHeaders<Stream, ContainerRegistryBlobDeleteBlobHeaders> blobResult = _blobRestClient.DeleteBlob(_repositoryName, digest, cancellationToken);
+                ResponseWithHeaders<ContainerRegistryBlobDeleteBlobHeaders> blobResult = _blobRestClient.DeleteBlob(_repositoryName, digest, cancellationToken);
                 return blobResult.GetRawResponse();
             }
             catch (Exception e)
@@ -1071,7 +1104,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                ResponseWithHeaders<Stream, ContainerRegistryBlobDeleteBlobHeaders> blobResult = await _blobRestClient.DeleteBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<ContainerRegistryBlobDeleteBlobHeaders> blobResult = await _blobRestClient.DeleteBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
                 return blobResult.GetRawResponse();
             }
             catch (Exception e)

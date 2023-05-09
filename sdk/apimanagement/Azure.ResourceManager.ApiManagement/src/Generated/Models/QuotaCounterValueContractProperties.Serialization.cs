@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     callsCount = property.Value.GetInt32();
@@ -36,7 +35,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kbTransferred = property.Value.GetDouble();

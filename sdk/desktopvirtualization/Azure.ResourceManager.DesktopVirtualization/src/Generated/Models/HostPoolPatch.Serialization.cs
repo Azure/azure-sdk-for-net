@@ -153,7 +153,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -183,7 +182,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -217,7 +215,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxSessionLimit = property0.Value.GetInt32();
@@ -227,7 +224,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             personalDesktopAssignmentType = new PersonalDesktopAssignmentType(property0.Value.GetString());
@@ -237,7 +233,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             loadBalancerType = new HostPoolLoadBalancerType(property0.Value.GetString());
@@ -247,7 +242,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ring = property0.Value.GetInt32();
@@ -257,7 +251,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             validationEnvironment = property0.Value.GetBoolean();
@@ -267,7 +260,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             registrationInfo = HostPoolRegistrationInfoPatch.DeserializeHostPoolRegistrationInfoPatch(property0.Value);
@@ -297,7 +289,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ssoSecretType = new HostPoolSsoSecretType(property0.Value.GetString());
@@ -307,7 +298,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             preferredAppGroupType = new PreferredAppGroupType(property0.Value.GetString());
@@ -317,7 +307,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startVmOnConnect = property0.Value.GetBoolean();
@@ -327,7 +316,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             agentUpdate = AgentUpdatePatchProperties.DeserializeAgentUpdatePatchProperties(property0.Value);

@@ -130,7 +130,6 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -155,7 +154,6 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -174,7 +172,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             messageCount = property0.Value.GetInt64();
@@ -184,7 +181,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdAt = property0.Value.GetDateTimeOffset("O");
@@ -194,7 +190,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             accessedAt = property0.Value.GetDateTimeOffset("O");
@@ -204,7 +199,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             updatedAt = property0.Value.GetDateTimeOffset("O");
@@ -214,7 +208,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             countDetails = MessageCountDetails.DeserializeMessageCountDetails(property0.Value);
@@ -224,7 +217,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lockDuration = property0.Value.GetTimeSpan("P");
@@ -234,7 +226,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requiresSession = property0.Value.GetBoolean();
@@ -244,7 +235,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             defaultMessageTimeToLive = property0.Value.GetTimeSpan("P");
@@ -254,7 +244,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deadLetteringOnFilterEvaluationExceptions = property0.Value.GetBoolean();
@@ -264,7 +253,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deadLetteringOnMessageExpiration = property0.Value.GetBoolean();
@@ -274,7 +262,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             duplicateDetectionHistoryTimeWindow = property0.Value.GetTimeSpan("P");
@@ -284,7 +271,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxDeliveryCount = property0.Value.GetInt32();
@@ -294,7 +280,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = property0.Value.GetString().ToServiceBusMessagingEntityStatus();
@@ -304,7 +289,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableBatchedOperations = property0.Value.GetBoolean();
@@ -314,7 +298,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             autoDeleteOnIdle = property0.Value.GetTimeSpan("P");
@@ -334,7 +317,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isClientAffine = property0.Value.GetBoolean();
@@ -344,7 +326,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clientAffineProperties = ServiceBusClientAffineProperties.DeserializeServiceBusClientAffineProperties(property0.Value);

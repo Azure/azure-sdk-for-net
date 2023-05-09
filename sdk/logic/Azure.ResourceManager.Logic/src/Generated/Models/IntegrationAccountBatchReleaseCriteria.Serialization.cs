@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     messageCount = property.Value.GetInt32();
@@ -58,7 +57,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     batchSize = property.Value.GetInt32();
@@ -68,7 +66,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recurrence = LogicWorkflowTriggerRecurrence.DeserializeLogicWorkflowTriggerRecurrence(property.Value);

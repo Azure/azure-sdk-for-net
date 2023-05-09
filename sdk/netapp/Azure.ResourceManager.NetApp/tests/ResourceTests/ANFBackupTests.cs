@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.NetApp.Tests
         {
         }
 
-        [SetUp]
         public async Task SetUp()
         {
             _resourceGroup = await CreateResourceGroupAsync(location:DefaultLocation);
@@ -42,9 +41,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             capactiyPoolData.Tags.InitializeFrom(DefaultTags);
             _capacityPool = (await _capacityPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, _pool1Name, capactiyPoolData)).Value;
             _volumeCollection = _capacityPool.GetNetAppVolumes();
-
-            DefaultVirtualNetwork = await CreateVirtualNetwork(location:DefaultLocation);
-            _volumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, subnetId: DefaultSubnetId);
+            var volumeName = Recording.GenerateAssetName("volumeName-");
+            await CreateVirtualNetwork(location:DefaultLocation);
+            _volumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId);
             _accountBackupCollection = _netAppAccount.GetNetAppAccountBackups();
             _volumeBackupCollection = _volumeResource.GetNetAppVolumeBackups();
             //getVault id
@@ -94,10 +93,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                             volumePatch.DataProtection = dataProtectionProperties;
                             await _volumeResource.UpdateAsync(WaitUntil.Completed, volumePatch);
                         }
-                        if (Mode != RecordedTestMode.Playback)
-                        {
-                            await Task.Delay(30000);
-                        }
+                        await LiveDelay(30000);
                         if (volume.Data.ProvisioningState.Equals("Succeeded") || volume.Data.ProvisioningState.Equals("Failed"))
                         {
                             await volume.DeleteAsync(WaitUntil.Completed);
@@ -108,42 +104,32 @@ namespace Azure.ResourceManager.NetApp.Tests
                             await volume.DeleteAsync(WaitUntil.Completed);
                         }
                     }
-                    if (Mode != RecordedTestMode.Playback)
-                    {
-                        await Task.Delay(30000);
-                    }
+                    await LiveDelay(30000);
                     await pool.DeleteAsync(WaitUntil.Completed);
                 }
-                if (Mode != RecordedTestMode.Playback)
-                {
-                    await Task.Delay(40000);
-                }
+                await LiveDelay(40000);
                 //remove
                 //await _capacityPool.DeleteAsync(WaitUntil.Completed);
-                if (Mode != RecordedTestMode.Playback)
-                {
-                    await Task.Delay(40000);
-                }
+                //await LiveDelay(40000);
                 NetAppAccountBackupCollection accountBackupCollection = _netAppAccount.GetNetAppAccountBackups();
                 if (!string.IsNullOrWhiteSpace(lastBackupName))
                 {
                     NetAppAccountBackupResource backupResource = await accountBackupCollection.GetAsync(lastBackupName);
                     await backupResource.DeleteAsync(WaitUntil.Completed);
                 }
-                if (Mode != RecordedTestMode.Playback)
-                {
-                    await Task.Delay(20000);
-                }
+                await LiveDelay(20000);
                 await _netAppAccount.DeleteAsync(WaitUntil.Completed);
             }
             _resourceGroup = null;
         }
 
-        [Test]
         [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task CreateDeleteBackup()
         {
+            var backupName = Recording.GenerateAssetName("backup-");
+            var secondBackupName = Recording.GenerateAssetName("secondBackup-");
+            await SetUp();
             Console.WriteLine($"{DateTime.Now} Test CreateDeleteBackup");
             _vaults.Should().HaveCount(1);
             Assert.IsNotNull(_vault);
@@ -155,10 +141,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppVolumePatch volumePatch = new(DefaultLocation);
             volumePatch.DataProtection = dataProtectionProperties;
             NetAppVolumeResource volumeResource1 = (await _volumeResource.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(5000);
-            }
+            await LiveDelay(5000);
             //Validate volume is backup enabled
             NetAppVolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Id.Name);
             Assert.IsNotNull(backupVolumeResource.Data.DataProtection);
@@ -168,16 +151,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(backupPolicyProperties.IsBackupEnabled, backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled);
 
             //create Backup
-            var backupName = Recording.GenerateAssetName("backup-");
             NetAppBackupData backupData = new(DefaultLocation);
             backupData.Label = "adHocBackup";
             NetAppVolumeBackupResource backupResource1 = (await _volumeBackupCollection.CreateOrUpdateAsync(WaitUntil.Completed, backupName, backupData)).Value;
             Assert.IsNotNull(backupResource1);
             Assert.AreEqual(backupName, backupResource1.Id.Name);
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(60000);
-            }
+            await LiveDelay(60000);
             await WaitForBackupSucceeded(_volumeBackupCollection, backupName);
 
             //Validate
@@ -189,70 +168,49 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(404, exception.Status);
             Assert.IsTrue(await _volumeBackupCollection.ExistsAsync(backupName));
             Assert.IsFalse(await _volumeBackupCollection.ExistsAsync(backupName + "1"));
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(5000);
-            }
+            await LiveDelay(5000);
 
             //Check status again
             NetAppVolumeBackupStatus backupStatus = (await _volumeResource.GetBackupStatusAsync()).Value;
             Assert.IsNotNull(backupStatus);
             Assert.AreEqual(NetAppRelationshipStatus.Idle, backupStatus.RelationshipStatus);
             Assert.AreEqual(NetAppMirrorState.Mirrored, backupStatus.MirrorState);
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(120000);
-            }
+            await LiveDelay(120000);
 
             //Delete backup
             //create another Backup
-            var secondBackupName = Recording.GenerateAssetName("secondBackup-");
             NetAppBackupData backupData2 = new(DefaultLocation);
             backupData.Label = "secondAdHocBackup";
             NetAppVolumeBackupResource secondBackupResource1 = (await _volumeBackupCollection.CreateOrUpdateAsync(WaitUntil.Completed, secondBackupName, backupData2)).Value;
             Assert.IsNotNull(secondBackupResource1);
             Assert.AreEqual(secondBackupName, secondBackupResource1.Id.Name);
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(60000);
-            }
+            await LiveDelay(60000);
             await WaitForBackupSucceeded(_volumeBackupCollection, secondBackupName);
             //Test delete action on backup deleting the second backup
             await secondBackupResource1.DeleteAsync(WaitUntil.Completed);
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(40000);
-            }
+            await LiveDelay(40000);
 
             //we cannot delete last backup of existing volume need to delete volume first, or disable backups
             //await _volumeResource.DeleteAsync(WaitUntil.Completed);
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(40000);
-            }
+            //await LiveDelay(40000);
+
             dataProtectionProperties.Backup.IsBackupEnabled = false;
             volumePatch.DataProtection = dataProtectionProperties;
             NetAppVolumeResource volumeResourceUpdated = (await _volumeResource.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(5000);
-            }
+            await LiveDelay(5000);
 
             ////Then we can delete from Account level
             NetAppAccountBackupCollection accountBackupCollection = _netAppAccount.GetNetAppAccountBackups();
             //NetAppAccountBackupResource backupResource = await accountBackupCollection.GetAsync(backupName);
             //await backupResource.DeleteAsync(WaitUntil.Completed);
-            //if (Mode != RecordedTestMode.Playback)
-            //{
-            //    await Task.Delay(5000);
-            //}
+            //await LiveDelay(5000);
+
             //Check deletion
             Assert.IsFalse(await accountBackupCollection.ExistsAsync(backupName));
             exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await accountBackupCollection.GetAsync(backupName); });
             Assert.AreEqual(404, exception.Status);
         }
 
-        [Test]
         [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task UpdateBackup()
@@ -260,6 +218,8 @@ namespace Azure.ResourceManager.NetApp.Tests
             //getVault id
             _vaults.Should().HaveCount(1);
             Assert.IsNotNull(_vault);
+            var backupName = Recording.GenerateAssetName("backup-");
+            await SetUp();
 
             //Update volume to enable backups
             NetAppVolumeBackupConfiguration backupPolicyProperties = new(null, false, _vault.Id, true);
@@ -268,10 +228,8 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppVolumePatch volumePatch = new(DefaultLocation);
             volumePatch.DataProtection = dataProtectionProperties;
             NetAppVolumeResource volumeResource1 = (await _volumeResource.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(5000);
-            }
+            await LiveDelay(5000);
+
             //Validate volume is backup enabled
             NetAppVolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Id.Name);
             Assert.IsNotNull(backupVolumeResource.Data.DataProtection);
@@ -281,7 +239,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(backupPolicyProperties.IsBackupEnabled, backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled);
 
             //create Backup
-            var backupName = Recording.GenerateAssetName("backup-");
             NetAppBackupData backupData = new(DefaultLocation);
             backupData.Label = "adHocBackup";
             NetAppVolumeBackupResource backupResource1 = (await _volumeBackupCollection.CreateOrUpdateAsync(WaitUntil.Completed, backupName, backupData)).Value;
@@ -310,7 +267,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             //Assert.AreEqual(backupPatch.Label, backupResource4.Data.Label);
         }
 
-        [Test]
         [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task ListBackups()
@@ -318,6 +274,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             //getVault id
             _vaults.Should().HaveCount(1);
             Assert.IsNotNull(_vault);
+            var backupName = Recording.GenerateAssetName("backup-");
+            var backupName2 = Recording.GenerateAssetName("backup-");
+            await SetUp();
 
             //Update volume to enable backups
             NetAppVolumeBackupConfiguration backupPolicyProperties = new(null, false, _vault.Id, true);
@@ -326,10 +285,8 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppVolumePatch volumePatch = new(DefaultLocation);
             volumePatch.DataProtection = dataProtectionProperties;
             NetAppVolumeResource volumeResource1 = (await _volumeResource.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(5000);
-            }
+            await LiveDelay(5000);
+
             //Validate volume is backup enabled
             NetAppVolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Id.Name);
             Assert.IsNotNull(backupVolumeResource.Data.DataProtection);
@@ -339,31 +296,23 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(backupPolicyProperties.IsBackupEnabled, backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled);
 
             //create Backup
-            var backupName = Recording.GenerateAssetName("backup-");
             NetAppBackupData backupData = new(DefaultLocation);
             backupData.Label = "adHocBackup";
             NetAppVolumeBackupResource backupResource1 = (await _volumeBackupCollection.CreateOrUpdateAsync(WaitUntil.Completed, backupName, backupData)).Value;
             Assert.IsNotNull(backupResource1);
             Assert.AreEqual(backupName, backupResource1.Id.Name);
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(60000);
-            }
+            await LiveDelay(60000);
             await WaitForBackupSucceeded(_volumeBackupCollection, backupName);
             NetAppVolumeBackupResource backupResource2 = await _volumeBackupCollection.GetAsync(backupName);
 
             //create second Backup
-            var backupName2 = Recording.GenerateAssetName("backup-");
             NetAppBackupData backupData2 = new(DefaultLocation);
             backupData.Label = "adHocBackup2";
             NetAppVolumeBackupResource backup2Resource1 = (await _volumeBackupCollection.CreateOrUpdateAsync(WaitUntil.Completed, backupName2, backupData2)).Value;
             Assert.IsNotNull(backup2Resource1);
             Assert.AreEqual(backupName2, backup2Resource1.Id.Name);
             Assert.AreEqual(backupData2.Label, backup2Resource1.Data.Label);
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(60000);
-            }
+            await LiveDelay(60000);
             await WaitForBackupSucceeded(_volumeBackupCollection, backupName2);
             NetAppVolumeBackupResource backup2Resource2 = await _volumeBackupCollection.GetAsync(backupName2);
 
@@ -383,7 +332,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             backup2Resource3.Should().BeEquivalentTo(backup2Resource2);
         }
 
-        [Test]
         [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task ListAccountBackups()
@@ -391,6 +339,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             //getVault id
             _vaults.Should().HaveCount(1);
             Assert.IsNotNull(_vault);
+            var backupName = Recording.GenerateAssetName("backup-");
+            var backupName2 = Recording.GenerateAssetName("backup-");
+            await SetUp();
 
             //Update volume to enable backups
             NetAppVolumeBackupConfiguration backupPolicyProperties = new(null, false, _vault.Id, true);
@@ -399,10 +350,8 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppVolumePatch volumePatch = new(DefaultLocation);
             volumePatch.DataProtection = dataProtectionProperties;
             NetAppVolumeResource volumeResource1 = (await _volumeResource.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(5000);
-            }
+            await LiveDelay(5000);
+
             //Validate volume is backup enabled
             NetAppVolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Id.Name);
             Assert.IsNotNull(backupVolumeResource.Data.DataProtection);
@@ -412,21 +361,16 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(backupPolicyProperties.IsBackupEnabled, backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled);
 
             //create Backup
-            var backupName = Recording.GenerateAssetName("backup-");
             NetAppBackupData backupData = new(DefaultLocation);
             backupData.Label = "adHocBackup";
             NetAppVolumeBackupResource backupResource1 = (await _volumeBackupCollection.CreateOrUpdateAsync(WaitUntil.Completed, backupName, backupData)).Value;
             Assert.IsNotNull(backupResource1);
             Assert.AreEqual(backupName, backupResource1.Id.Name);
             NetAppVolumeBackupResource backupResource2 = await _volumeBackupCollection.GetAsync(backupName);
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(60000);
-            }
+            await LiveDelay(60000);
             await WaitForBackupSucceeded(_volumeBackupCollection, backupName);
 
             //create second Backup
-            var backupName2 = Recording.GenerateAssetName("backup-");
             NetAppBackupData backupData2 = new(DefaultLocation);
             backupData2.Label = "adHocBackup2";
             NetAppVolumeBackupResource backup2Resource1 = (await _volumeBackupCollection.CreateOrUpdateAsync(WaitUntil.Completed, backupName2, backupData2)).Value;
@@ -434,10 +378,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(backupName2, backup2Resource1.Id.Name);
             Assert.AreEqual(backupData2.Label, backup2Resource1.Data.Label);
             NetAppVolumeBackupResource backup2Resource2 = await _volumeBackupCollection.GetAsync(backupName2);
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(60000);
-            }
+            await LiveDelay(60000);
             await WaitForBackupSucceeded(_volumeBackupCollection, backupName2);
 
             //Validate AccountBackups
@@ -461,7 +402,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             accountBackup2Resource3.Should().BeEquivalentTo(accountBackup2Resource2);
         }
 
-        [Test]
         [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task GetBackupStatus()
@@ -469,6 +409,8 @@ namespace Azure.ResourceManager.NetApp.Tests
             //getVault id
             _vaults.Should().HaveCount(1);
             Assert.IsNotNull(_vault);
+            var backupName = Recording.GenerateAssetName("backup-");
+            await SetUp();
 
             //Update volume to enable backups
             NetAppVolumeBackupConfiguration backupPolicyProperties = new(null, false, _vault.Id, true);
@@ -477,10 +419,8 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppVolumePatch volumePatch = new(DefaultLocation);
             volumePatch.DataProtection = dataProtectionProperties;
             NetAppVolumeResource volumeResource1 = (await _volumeResource.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(5000);
-            }
+            await LiveDelay(5000);
+
             //Validate volume is backup enabled
             NetAppVolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Id.Name);
             Assert.IsNotNull(backupVolumeResource.Data.DataProtection);
@@ -490,7 +430,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(backupPolicyProperties.IsBackupEnabled, backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled);
 
             //create Backup
-            var backupName = Recording.GenerateAssetName("backup-");
             NetAppBackupData backupData = new(DefaultLocation);
             backupData.Label = "adHocBackup";
             NetAppVolumeBackupResource backupResource1 = (await _volumeBackupCollection.CreateOrUpdateAsync(WaitUntil.Completed, backupName, backupData)).Value;
@@ -515,12 +454,14 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(NetAppMirrorState.Mirrored, backupStatus.MirrorState);
         }
 
-        [Test]
         [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task CreateVolumeFromBackupCheckRestoreStatus()
         {
             //getVault id
+            string newVolumeName = Recording.GenerateAssetName("restoredVolume-");
+            var backupName = Recording.GenerateAssetName("backup-");
+            await SetUp();
             _vaults.Should().HaveCount(1);
             Assert.IsNotNull(_vault);
             await WaitForVolumeSucceeded(_volumeCollection, _volumeResource);
@@ -531,10 +472,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppVolumePatch volumePatch = new(DefaultLocation);
             volumePatch.DataProtection = dataProtectionProperties;
             NetAppVolumeResource volumeResource1 = (await _volumeResource.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(5000);
-            }
+            await LiveDelay(5000);
             await WaitForVolumeSucceeded(_volumeCollection, _volumeResource);
 
             //Validate volume is backup enabled
@@ -546,16 +484,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(backupPolicyProperties.IsBackupEnabled, backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled);
 
             //create Backup
-            var backupName = Recording.GenerateAssetName("backup-");
             NetAppBackupData backupData = new(DefaultLocation);
             backupData.Label = "adHocBackup";
             NetAppVolumeBackupResource backupResource1 = (await _volumeBackupCollection.CreateOrUpdateAsync(WaitUntil.Completed, backupName, backupData)).Value;
             Assert.IsNotNull(backupResource1);
             Assert.AreEqual(backupName, backupResource1.Id.Name);
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(40000);
-            }
+            await LiveDelay(40000);
             await WaitForBackupSucceeded(_volumeBackupCollection, backupName);
             //Validate
             NetAppVolumeBackupResource backupResource2 = await _volumeBackupCollection.GetAsync(backupName);
@@ -569,20 +503,13 @@ namespace Azure.ResourceManager.NetApp.Tests
 
             //Restore backup
             //You can restore a backup only to a new volume. You cannot overwrite the existing volume with the backup
-            string newVolumeName = Recording.GenerateAssetName("restoredVolume-");
             NetAppVolumeResource _restoredVolumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: newVolumeName, subnetId: DefaultSubnetId, backupId: backupResource2.Id);
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(40000);
-            }
+            await LiveDelay(40000);
             NetAppVolumeResource newVolumeResource2 = await _volumeCollection.GetAsync(newVolumeName);
             Assert.IsNotNull(newVolumeResource2);
             Assert.AreEqual(newVolumeName, newVolumeResource2.Id.Name);
             await WaitForVolumeSucceeded(_volumeCollection, _restoredVolumeResource);
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(40000);
-            }
+            await LiveDelay(40000);
             //Get restore status
             //RestoreStatus restoreStatus = (await newVolumeResource2.GetVolumeRestoreStatusBackupAsync()).Value;
             //Assert.IsNotNull(restoreStatus);

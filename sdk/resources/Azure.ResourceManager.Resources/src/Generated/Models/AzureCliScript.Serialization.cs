@@ -148,7 +148,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = ArmDeploymentScriptManagedIdentity.DeserializeArmDeploymentScriptManagedIdentity(property.Value);
@@ -163,7 +162,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -198,7 +196,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -217,7 +214,6 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             containerSettings = ContainerConfiguration.DeserializeContainerConfiguration(property0.Value);
@@ -227,7 +223,6 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storageAccountSettings = ScriptStorageConfiguration.DeserializeScriptStorageConfiguration(property0.Value);
@@ -237,7 +232,6 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             cleanupPreference = new ScriptCleanupOptions(property0.Value.GetString());
@@ -247,7 +241,6 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ScriptProvisioningState(property0.Value.GetString());
@@ -257,7 +250,6 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = ScriptStatus.DeserializeScriptStatus(property0.Value);
@@ -267,7 +259,6 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             outputs = BinaryData.FromString(property0.Value.GetRawText());
@@ -277,7 +268,6 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                primaryScriptUri = null;
                                 continue;
                             }
                             primaryScriptUri = new Uri(property0.Value.GetString());
@@ -287,7 +277,6 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<Uri> array = new List<Uri>();
@@ -319,7 +308,6 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ScriptEnvironmentVariable> array = new List<ScriptEnvironmentVariable>();
@@ -344,7 +332,6 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             timeout = property0.Value.GetTimeSpan("P");

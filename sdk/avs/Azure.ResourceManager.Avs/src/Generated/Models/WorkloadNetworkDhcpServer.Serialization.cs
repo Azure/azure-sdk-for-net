@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     leaseTime = property.Value.GetInt64();
@@ -85,7 +84,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -100,7 +98,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new WorkloadNetworkDhcpProvisioningState(property.Value.GetString());
@@ -110,7 +107,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     revision = property.Value.GetInt64();

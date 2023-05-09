@@ -2,12 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using Azure.Core;
-using Azure.Core.Dynamic;
-using System.Collections;
 
 namespace Azure.AI.Language.Conversations.Tests
 {
@@ -34,7 +33,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 },
                 parameters = new
                 {
-                    projectNam = TestEnvironment.ProjectName,
+                    projectName = TestEnvironment.ProjectName,
                     deploymentName = TestEnvironment.DeploymentName,
                 },
                 kind = "Conversation",
@@ -46,7 +45,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // deserialize
-            dynamic conversationalTaskResult = response.Content.ToDynamic(DynamicJsonOptions.AzureDefault);
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson();
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
@@ -80,7 +79,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 },
                 parameters = new
                 {
-                    projectNam = TestEnvironment.OrchestrationProjectName,
+                    projectName = TestEnvironment.OrchestrationProjectName,
                     deploymentName = TestEnvironment.OrchestrationDeploymentName,
                 },
                 kind = "Conversation",
@@ -92,7 +91,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // deserialize
-            dynamic conversationalTaskResult = response.Content.ToDynamic(DynamicJsonOptions.AzureDefault);
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson();
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
@@ -137,7 +136,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 },
                 parameters = new
                 {
-                    projectNam = TestEnvironment.OrchestrationProjectName,
+                    projectName = TestEnvironment.OrchestrationProjectName,
                     deploymentName = TestEnvironment.OrchestrationDeploymentName,
                 },
                 kind = "Conversation",
@@ -149,7 +148,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // deserialize
-            dynamic conversationalTaskResult = response.Content.ToDynamic(DynamicJsonOptions.AzureDefault);
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson();
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
@@ -189,7 +188,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 },
                 parameters = new
                 {
-                    projectNam = TestEnvironment.OrchestrationProjectName,
+                    projectName = TestEnvironment.OrchestrationProjectName,
                     deploymentName = TestEnvironment.OrchestrationDeploymentName,
                 },
                 kind = "Conversation",
@@ -201,7 +200,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // deserialize
-            dynamic conversationalTaskResult = response.Content.ToDynamic(DynamicJsonOptions.AzureDefault);
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson();
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
@@ -256,7 +255,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
 
-            dynamic conversationalTaskResult = response.Content.ToDynamic(DynamicJsonOptions.AzureDefault);
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson();
             Assert.That((string)conversationalTaskResult.Result.Prediction.TopIntent, Is.EqualTo("Send"));
         }
 
@@ -301,28 +300,28 @@ namespace Azure.AI.Language.Conversations.Tests
                             modality = "text",
                         },
                     },
-                    tasks = new[]
+                },
+                tasks = new[]
+                {
+                    new
                     {
-                        new
+                        parameters = new
                         {
-                            parameters = new
+                            summaryAspects = new[]
                             {
-                                summaryAspects = new[]
-                                {
-                                    "issue",
-                                    "resolution",
-                                },
+                                "issue",
+                                "resolution",
                             },
-                            kind = "ConversationalSummarizationTask",
-                            taskName = "1",
                         },
+                        kind = "ConversationalSummarizationTask",
+                        taskName = "1",
                     },
                 },
             };
 
             Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
 
-            dynamic jobResults = analyzeConversationOperation.Value.ToDynamic(DynamicJsonOptions.AzureDefault);
+            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson();
             Assert.NotNull(jobResults);
 
             foreach (dynamic analyzeConversationSummarization in jobResults.Tasks.Items)
@@ -384,11 +383,29 @@ namespace Azure.AI.Language.Conversations.Tests
                         },
                     },
                 },
+                tasks = new[]
+                {
+                    new
+                    {
+                        parameters = new
+                        {
+                            piiCategories = new[]
+                            {
+                                "All"
+                            },
+                            includeAudioRedaction = false,
+                            modelVersion = "2022-05-15-preview",
+                            loggingOptOut = false,
+                        },
+                        kind = "ConversationalPIITask",
+                        taskName = "analyze"
+                    }
+                }
             };
 
             Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
 
-            dynamic jobResults = analyzeConversationOperation.Value.ToDynamic(DynamicJsonOptions.AzureDefault);
+            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson();
             Assert.NotNull(jobResults);
 
             foreach (dynamic analyzeConversationPIIResult in jobResults.Tasks.Items)
@@ -552,7 +569,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
 
-            dynamic jobResults = analyzeConversationOperation.Value.ToDynamic(DynamicJsonOptions.AzureDefault);
+            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson();
             Assert.NotNull(jobResults);
 
             foreach (dynamic result in jobResults.Tasks.Items)

@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identityType = property.Value.GetString().ToCmkIdentityType();
@@ -52,7 +51,6 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     userAssignedIdentityResourceId = new ResourceIdentifier(property.Value.GetString());
