@@ -1,15 +1,16 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.0.2 (2023-05-09)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Added support for service version 2022-12-01.
+- Added changes to support reverse shipping address updates, hardware encryption and customer resolution flows
 
 ### Other Changes
-
+- Added `ReverseShippingDetails` property tp `DataBoxBasicJobDetails`
+- Added `DataBoxDiskGranularCopyLogDetails` property to `DataBoxDiskCopyProgress` 
+- Added `SerialNumberCustomerResolutionMap` property to `MitigateJobContent` which replaces `CustomerResolutionCode`
 ## 1.0.1 (2023-02-16)
 
 ### Other Changes
