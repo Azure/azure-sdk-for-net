@@ -469,11 +469,15 @@ namespace Azure.ResourceManager.DataBox.Models
     public partial class DataBoxOrderPreferences
     {
         public DataBoxOrderPreferences() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.ResourceManager.DataBox.Models.DataBoxDoubleEncryption? DoubleEncryption { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.DataBoxEncryptionPreferences EncryptionPreferences { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> PreferredDataCenterRegion { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.TransportPreferences ReverseTransportPreferences { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> StorageAccountAccessTierPreferences { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.TransportPreferences TransportPreferences { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.ResourceManager.DataBox.Models.TransportShipmentType? TransportPreferencesPreferredShipmentType { get { throw null; } set { } }
     }
     public partial class DataBoxScheduleAvailabilityContent : Azure.ResourceManager.DataBox.Models.ScheduleAvailabilityContent
     {
@@ -621,6 +625,8 @@ namespace Azure.ResourceManager.DataBox.Models
         public Azure.ResourceManager.DataBox.Models.DataBoxSkuName DeviceType { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress ShippingAddress { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.TransportPreferences TransportPreferences { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.ResourceManager.DataBox.Models.TransportShipmentType? TransportPreferencesPreferredShipmentType { get { throw null; } set { } }
     }
     public abstract partial class DataBoxValidationContent
     {
@@ -903,7 +909,8 @@ namespace Azure.ResourceManager.DataBox.Models
     public partial class MitigateJobContent
     {
         public MitigateJobContent() { }
-        public Azure.ResourceManager.DataBox.Models.CustomerResolutionCode? CustomerResolutionCode { get { throw null; } set { } }
+        public MitigateJobContent(Azure.ResourceManager.DataBox.Models.CustomerResolutionCode customerResolutionCode) { }
+        public Azure.ResourceManager.DataBox.Models.CustomerResolutionCode CustomerResolutionCode { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataBox.Models.CustomerResolutionCode> SerialNumberCustomerResolutionMap { get { throw null; } }
     }
     public partial class NotificationPreference
