@@ -44,6 +44,7 @@ namespace Azure.Communication.CallAutomation
     public partial class AnswerCallOptions
     {
         public AnswerCallOptions(string incomingCallContext, System.Uri callbackUri) { }
+        public Azure.Communication.CommunicationUserIdentifier AnsweredByIdentifier { get { throw null; } set { } }
         public System.Uri AzureCognitiveServicesEndpointUrl { get { throw null; } set { } }
         public System.Uri CallbackUri { get { throw null; } }
         public string IncomingCallContext { get { throw null; } }
@@ -223,9 +224,11 @@ namespace Azure.Communication.CallAutomation
     public partial class CallConnectionProperties
     {
         internal CallConnectionProperties() { }
+        public Azure.Communication.CommunicationUserIdentifier AnsweredByIdentifier { get { throw null; } }
         public System.Uri CallbackUri { get { throw null; } }
         public string CallConnectionId { get { throw null; } }
         public Azure.Communication.CallAutomation.CallConnectionState CallConnectionState { get { throw null; } }
+        public string CorrelationId { get { throw null; } }
         public string MediaSubscriptionId { get { throw null; } }
         public string ServerCallId { get { throw null; } }
         public Azure.Communication.PhoneNumberIdentifier SourceCallerIdNumber { get { throw null; } }

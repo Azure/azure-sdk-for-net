@@ -122,10 +122,7 @@
           }
         ],
         "sourceIdentity": {
-          "rawId": "Sanitized",
-          "communicationUser": {
-            "id": "Sanitized"
-          }
+           "id": "Sanitized"
         },
         "customContext": {
           "sipHeaders": {
