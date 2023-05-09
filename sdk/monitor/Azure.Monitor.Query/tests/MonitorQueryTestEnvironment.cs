@@ -27,11 +27,12 @@ namespace Azure.Monitor.Query.Tests
 
         protected override async ValueTask<bool> IsEnvironmentReadyAsync()
         {
+            // Delay for 5 minutes to give time for StorageAccount to initialize
+            Thread.Sleep(300000);
             var client = new LogsQueryClient(Credential);
-            DateTimeOffset RetentionWindowStart = DateTimeOffset.Now;
-            var result = await client.QueryResourceAsync(new ResourceIdentifier(StorageAccountId), "search *", new QueryTimeRange(RetentionWindowStart, TimeSpan.FromDays(15))).ConfigureAwait(false);
+            var result = await client.QueryResourceAsync(new ResourceIdentifier(StorageAccountId), "search *", new QueryTimeRange(DateTimeOffset.Now, TimeSpan.FromDays(15))).ConfigureAwait(false);
 
-            // make sure StorageAccount set-up is complete before beginning testing
+            // Make sure StorageAccount set-up is complete and data is there before beginning testing
             if (result.Value.Table.Rows.Count == 0 || result.Value.Table.Columns.Count == 0)
                 return false;
 
