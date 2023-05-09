@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The Data Collection Rule and Endpoint used for ingestion by default. </summary>
-    public partial class MonitorWorkspaceDefaultIngestionSettings : IngestionSettings
+    public partial class MonitorWorkspaceDefaultIngestionSettings : MonitorWorkspaceIngestionSettings
     {
         /// <summary> Initializes a new instance of MonitorWorkspaceDefaultIngestionSettings. </summary>
         internal MonitorWorkspaceDefaultIngestionSettings()
@@ -18,7 +20,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of MonitorWorkspaceDefaultIngestionSettings. </summary>
         /// <param name="dataCollectionRuleResourceId"> The Azure resource Id of the default data collection rule for this workspace. </param>
         /// <param name="dataCollectionEndpointResourceId"> The Azure resource Id of the default data collection endpoint for this workspace. </param>
-        internal MonitorWorkspaceDefaultIngestionSettings(string dataCollectionRuleResourceId, string dataCollectionEndpointResourceId) : base(dataCollectionRuleResourceId, dataCollectionEndpointResourceId)
+        internal MonitorWorkspaceDefaultIngestionSettings(ResourceIdentifier dataCollectionRuleResourceId, ResourceIdentifier dataCollectionEndpointResourceId) : base(dataCollectionRuleResourceId, dataCollectionEndpointResourceId)
         {
         }
     }

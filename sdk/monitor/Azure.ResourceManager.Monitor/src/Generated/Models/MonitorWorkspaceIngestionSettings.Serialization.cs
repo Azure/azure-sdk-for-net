@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorWorkspaceDefaultIngestionSettings
+    public partial class MonitorWorkspaceIngestionSettings
     {
-        internal static MonitorWorkspaceDefaultIngestionSettings DeserializeMonitorWorkspaceDefaultIngestionSettings(JsonElement element)
+        internal static MonitorWorkspaceIngestionSettings DeserializeMonitorWorkspaceIngestionSettings(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MonitorWorkspaceDefaultIngestionSettings(dataCollectionRuleResourceId.Value, dataCollectionEndpointResourceId.Value);
+            return new MonitorWorkspaceIngestionSettings(dataCollectionRuleResourceId.Value, dataCollectionEndpointResourceId.Value);
         }
     }
 }

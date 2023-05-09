@@ -1523,12 +1523,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Streams { get { throw null; } }
     }
-    public partial class IngestionSettings
-    {
-        internal IngestionSettings() { }
-        public string DataCollectionEndpointResourceId { get { throw null; } }
-        public string DataCollectionRuleResourceId { get { throw null; } }
-    }
     public partial class LocationThresholdRuleCondition : Azure.ResourceManager.Monitor.Models.AlertRuleCondition
     {
         public LocationThresholdRuleCondition(int failedLocationCount) { }
@@ -2243,9 +2237,15 @@ namespace Azure.ResourceManager.Monitor.Models
         public bool? UseAadAuth { get { throw null; } set { } }
         public bool? UseCommonAlertSchema { get { throw null; } set { } }
     }
-    public partial class MonitorWorkspaceDefaultIngestionSettings : Azure.ResourceManager.Monitor.Models.IngestionSettings
+    public partial class MonitorWorkspaceDefaultIngestionSettings : Azure.ResourceManager.Monitor.Models.MonitorWorkspaceIngestionSettings
     {
         internal MonitorWorkspaceDefaultIngestionSettings() { }
+    }
+    public partial class MonitorWorkspaceIngestionSettings
+    {
+        internal MonitorWorkspaceIngestionSettings() { }
+        public Azure.Core.ResourceIdentifier DataCollectionEndpointResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier DataCollectionRuleResourceId { get { throw null; } }
     }
     public partial class MonitorWorkspaceMetricProperties
     {

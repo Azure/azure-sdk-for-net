@@ -281,6 +281,9 @@ rename-mapping:
   AzureMonitorWorkspaceResource: MonitorWorkspaceResource
   AzureMonitorWorkspaceResourceCollection: MonitorWorkspaceResourceCollection
   AzureMonitorWorkspaceResourceData: MonitorWorkspaceResourceData
+  IngestionSettings: MonitorWorkspaceIngestionSettings
+  IngestionSettings.dataCollectionEndpointResourceId: -|arm-id
+  IngestionSettings.dataCollectionRuleResourceId: -|arm-id
   AzureMonitorWorkspaceDefaultIngestionSettings: MonitorWorkspaceDefaultIngestionSettings
   AzureMonitorWorkspaceMetrics: MonitorWorkspaceMetrics
   AzureMonitorWorkspaceResourcePatch: MonitorWorkspaceResourcePatch
