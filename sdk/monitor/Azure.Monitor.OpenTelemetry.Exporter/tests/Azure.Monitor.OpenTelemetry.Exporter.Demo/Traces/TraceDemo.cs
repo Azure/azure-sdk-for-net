@@ -26,6 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
                 { "service.name", "my-service" },
                 { "service.namespace", "my-namespace" },
                 { "service.instance.id", "my-instance" },
+                { "foo", "bar" }
             };
 
             var resourceBuilder = ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes);

@@ -69,7 +69,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             // ASSERT
             Assert.True(telemetryItems?.Any(), "Unit test failed to collect telemetry.");
             this.telemetryOutput.Write(telemetryItems);
-            var telemetryItem = telemetryItems?.Single();
+            var telemetryItem = telemetryItems?.Where(x => x.Name == "Message").Single();
 
             TelemetryItemValidationHelper.AssertMessageTelemetry(
                 telemetryItem: telemetryItem!,
@@ -129,7 +129,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             // ASSERT
             Assert.True(telemetryItems?.Any(), "Unit test failed to collect telemetry.");
             this.telemetryOutput.Write(telemetryItems);
-            var telemetryItem = telemetryItems?.Single();
+            var telemetryItem = telemetryItems?.Where(x => x.Name == "Exception").Single();
 
             TelemetryItemValidationHelper.AssertLog_As_ExceptionTelemetry(
                 telemetryItem: telemetryItem!,
