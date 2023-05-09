@@ -97,10 +97,10 @@ Please note that each sample assumes there is a `REGISTRY_ENDPOINT` environment 
   - [Set artifact properties asynchronously](#set-artifact-properties)
   - [Delete images asynchronously](#delete-images)
 - Blob and manifest operations:
-  - [Upload images]
-  - [Download images]
-  - [Delete manifest]
-  - [Delete blob]
+  - [Upload images](#upload-images)
+  - [Download images](#download-images)
+  - [Delete manifest](#delete-manifest)
+  - [Delete blob](#delete-blob)
 
 ### Advanced authentication
 
