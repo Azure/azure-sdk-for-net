@@ -5,7 +5,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -318,7 +318,7 @@ namespace Azure.Core
             // if this is a fake delete lro with 404, just return response
             if (RequestMethod.Delete == requestmethod && state.RawResponse.Status == 404)
             {
-                return state.RawResponse;
+                return new EmptyResponse(HttpStatusCode.OK);
             }
 
             throw state.OperationFailedException!;
