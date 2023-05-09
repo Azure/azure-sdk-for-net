@@ -53,19 +53,9 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         protected async Task<ResourceIdentifier> GetSubnetID(ResourceGroupResource ResGroup, string VnetName, string SubnetName, VirtualNetworkData VnetData)
         {
             ResourceIdentifier subnetID;
-            if (Mode == RecordedTestMode.Playback)
-            {
-                subnetID = SubnetResource.CreateResourceIdentifier(ResGroup.Id.SubscriptionId, ResGroup.Id.Name, VnetName, SubnetName);
-            }
-            else
-            {
-                using (Recording.DisableRecording())
-                {
-                    var vnetResource = await ResGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, VnetName, VnetData);
-                    var subnetCollection = vnetResource.Value.GetSubnets();
-                    subnetID = vnetResource.Value.Data.Subnets[0].Id;
-                }
-            };
+            var vnetResource = await ResGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, VnetName, VnetData);
+            var subnetCollection = vnetResource.Value.GetSubnets();
+            subnetID = vnetResource.Value.Data.Subnets[0].Id;
             return subnetID;
         }
 
