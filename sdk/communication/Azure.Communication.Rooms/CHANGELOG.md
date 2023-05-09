@@ -11,7 +11,7 @@
 - Changed: Replaced `AddParticipants` and `UpdateParticipants` with `AddOrUpdateParticipants`.
 - Changed: Renamed `RoleType` to `ParticipantRole`.
 - Changed: Renamed `CreatedOn` to `CreatedAt` in `CommunicationRoom`.
-- Removed: Removed `RoomJoinPolicy`, all rooms are invite-only by default.
+- Removed: `RoomJoinPolicy`, all rooms are invite-only by default.
 - Removed: `UpdateRoom` no longer accepts participant list as input.
 
 ## 1.0.0-beta.1 (2022-08-10)
