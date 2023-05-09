@@ -216,7 +216,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         /// <returns>The instrumented <see cref="CallAutomationClientOptions" />.</returns>
         private CallAutomationClientOptions CreateServerCallingClientOptionsWithCorrelationVectorLogs(CommunicationUserIdentifier? source = null)
         {
-            CallAutomationClientOptions callClientOptions = new CallAutomationClientOptions() { Source = new CommunicationUserIdentifier("12345") };
+            CallAutomationClientOptions callClientOptions = new CallAutomationClientOptions() { Source = new CommunicationUserIdentifier("8:acs:1bdaa2b9-9507-4542-bb64-a7b22c00a8d4_00000018-a24c-088a-28f4-343a0d00035a") };
             callClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
             return InstrumentClientOptions(callClientOptions);
         }
