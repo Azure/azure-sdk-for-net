@@ -122,10 +122,7 @@
           }
         ],
         "sourceIdentity": {
-          "rawId": "Sanitized",
-          "communicationUser": {
-            "id": "Sanitized"
-          }
+           "id": "Sanitized"
         },
         "callbackUri": "https://sanitized.skype.com/api/servicebuscallback/events?q=SanitizedSanitized"
       },
