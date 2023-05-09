@@ -4,6 +4,9 @@
 
 ### Features Added
 
+* Added ability to configure sampling percentage using `ApplicationInsightsSamplerOptions`.
+([#36111](https://github.com/Azure/azure-sdk-for-net/pull/3611))
+
 ### Breaking Changes
 
 ### Bugs Fixed
