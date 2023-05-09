@@ -236,12 +236,12 @@ namespace Azure.Developer.DevCenter.Tests
                 }
 
                 envDefinitionsName = envDefinitionsNameJson.ToString();
-                break;
+                if (envDefinitionsName == "Sandbox") break;
             }
 
             var content = new
             {
-                catalogItemName = envDefinitionsName,
+                environmentDefinitionName = envDefinitionsName,
                 catalogName = TestEnvironment.CatalogName,
                 environmentType = TestEnvironment.EnvironmentTypeName,
             };
