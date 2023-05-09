@@ -384,7 +384,7 @@ namespace Azure.Search.Documents.Tests
             HotelName == other.HotelName &&
             Description == other.Description &&
             DescriptionFr == other.DescriptionFr &&
-            DescriptionVector.ToArray().SequenceEqualsNullSafe(other.DescriptionVector.ToArray()) &&
+            DescriptionVector.SequenceEqualsNullSafe(other.DescriptionVector) &&
             Category == other.Category &&
             Tags.SequenceEqualsNullSafe(other.Tags) &&
             ParkingIncluded == other.ParkingIncluded &&
