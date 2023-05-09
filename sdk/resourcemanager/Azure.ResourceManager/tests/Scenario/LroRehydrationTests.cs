@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -55,13 +54,9 @@ namespace Azure.ResourceManager.Tests
             var deleteOpId = deleteOp.Id;
             var rehydratedDeleteOperation = new ArmOperation(Client, deleteOpId);
             var rehydatedDeleteResponse = await rehydratedDeleteOperation.UpdateStatusAsync();
-            Assert.AreEqual(200, deleteResponse.Status);
-            Assert.AreEqual(404, rehydatedDeleteResponse.Status);
-            //TODO: turn 404 to 200
-            Assert.IsFalse(deleteResponse.IsError);
-            Assert.IsTrue(rehydatedDeleteResponse.IsError);
-            //Assert.AreEqual(deleteResponse.ClientRequestId, rehydatedDeleteResponse.ClientRequestId);
-            Assert.AreEqual(deleteResponse.Headers.Count(), rehydatedDeleteResponse.Headers.Count());
+            Assert.AreEqual(deleteResponse.Status, rehydatedDeleteResponse.Status);
+            Assert.AreEqual(deleteResponse.ReasonPhrase, rehydatedDeleteResponse.ReasonPhrase);
+            Assert.AreEqual(deleteResponse.IsError, rehydatedDeleteResponse.IsError);
         }
 
         [TestCase]

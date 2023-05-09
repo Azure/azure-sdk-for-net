@@ -211,6 +211,7 @@
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)EmptyResponse.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
     <!-- *********** Management Client Library Override section ************* -->

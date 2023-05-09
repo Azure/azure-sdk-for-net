@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -20,7 +22,7 @@ namespace Azure.Core
 
         public override string ReasonPhrase { get; }
 
-        public override Stream? ContentStream { get => null; set => throw new System.NotImplementedException(); }
+        public override Stream ContentStream { get => null; set => throw new System.NotImplementedException(); }
         public override string ClientRequestId { get => string.Empty; set => throw new System.NotImplementedException(); }
 
         public override void Dispose()
@@ -28,22 +30,38 @@ namespace Azure.Core
             throw new System.NotImplementedException();
         }
 
-        protected internal override bool ContainsHeader(string name)
+        /// <inheritdoc />
+#if HAS_INTERNALS_VISIBLE_CORE
+        internal
+#endif
+        protected override bool ContainsHeader(string name)
         {
             throw new System.NotImplementedException();
         }
 
-        protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
+        /// <inheritdoc />
+#if HAS_INTERNALS_VISIBLE_CORE
+        internal
+#endif
+        protected override IEnumerable<HttpHeader> EnumerateHeaders()
         {
             throw new System.NotImplementedException();
         }
 
-        protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
+        /// <inheritdoc />
+#if HAS_INTERNALS_VISIBLE_CORE
+        internal
+#endif
+        protected override bool TryGetHeader(string name, out string value)
         {
             throw new System.NotImplementedException();
         }
 
-        protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
+        /// <inheritdoc />
+#if HAS_INTERNALS_VISIBLE_CORE
+        internal
+#endif
+        protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
         {
             throw new System.NotImplementedException();
         }
