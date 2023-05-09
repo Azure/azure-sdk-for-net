@@ -1631,16 +1631,15 @@ namespace Azure.Messaging.EventGrid
         }
 
         /// <summary> Initializes a new instance of AcsIncomingCallCustomContext. </summary>
-        /// <param name="customHeaders"> Custom Headers for incoming call. </param>
         /// <param name="sipHeaders"> Sip Headers for incoming call. </param>
         /// <param name="voipHeaders"> Voip Headers for incoming call. </param>
         /// <returns> A new <see cref="SystemEvents.AcsIncomingCallCustomContext"/> instance for mocking. </returns>
-        public static AcsIncomingCallCustomContext AcsIncomingCallCustomContext(string customHeaders = null, IReadOnlyDictionary<string, string> sipHeaders = null, IReadOnlyDictionary<string, string> voipHeaders = null)
+        public static AcsIncomingCallCustomContext AcsIncomingCallCustomContext(IReadOnlyDictionary<string, string> sipHeaders = null, IReadOnlyDictionary<string, string> voipHeaders = null)
         {
             sipHeaders ??= new Dictionary<string, string>();
             voipHeaders ??= new Dictionary<string, string>();
 
-            return new AcsIncomingCallCustomContext(customHeaders, sipHeaders, voipHeaders);
+            return new AcsIncomingCallCustomContext(sipHeaders, voipHeaders);
         }
 
         /// <summary> Initializes a new instance of AcsUserDisconnectedEventData. </summary>
