@@ -10,13 +10,13 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/newrelic/ci.mgmt.yml
-    - sdk/newrelic/Azure.ResourceManager.NewRelicObservability/
+    - sdk/newrelicobservability/ci.mgmt.yml
+    - sdk/newrelicobservability/Azure.ResourceManager.NewRelicObservability/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: newrelic
+    ServiceDirectory: newrelicobservability
     LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.NewRelicObservability
