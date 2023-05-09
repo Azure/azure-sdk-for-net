@@ -2,7 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
+using System.Threading;
 using Azure.Core.TestFramework;
+using Azure.Core;
 
 namespace Azure.Monitor.Query.Tests
 {
@@ -21,5 +24,18 @@ namespace Azure.Monitor.Query.Tests
         public string ResourceId => GetRecordedVariable("RESOURCE_ID");
         public string StorageAccountName => GetRecordedVariable("STORAGE_ACCOUNT_NAME");
         public string StorageAccountId => GetRecordedVariable("STORAGE_ID");
+
+        protected override async ValueTask<bool> IsEnvironmentReadyAsync()
+        {
+            var client = new LogsQueryClient(Credential);
+            DateTimeOffset RetentionWindowStart = DateTimeOffset.Now;
+            var result = await client.QueryResourceAsync(new ResourceIdentifier(StorageAccountId), "search *", new QueryTimeRange(RetentionWindowStart, TimeSpan.FromDays(15))).ConfigureAwait(false);
+
+            // make sure StorageAccount set-up is complete before beginning testing
+            if (result.Value.Table.Rows.Count == 0 || result.Value.Table.Columns.Count == 0)
+                return false;
+
+            return true;
+        }
     }
 }
