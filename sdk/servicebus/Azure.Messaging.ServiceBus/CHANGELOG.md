@@ -10,7 +10,7 @@
 
 - Removed the 30 second cap applied when opening AMQP links; this allows developers to fully control the timeout for service operations by tuning the `TryTimeout` as appropriate for the application.
 
-- Fixed potential NullReferenceException when using the `ServiceBusProcessor` or `ServiceBusSessionProcessor`.
+- Fixed potential `NullReferenceException` when using the `ServiceBusProcessor` or `ServiceBusSessionProcessor`.
 
 ## 7.13.1 (2023-03-13)
 
