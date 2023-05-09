@@ -384,7 +384,7 @@ namespace Azure.Search.Documents.Tests
             HotelName == other.HotelName &&
             Description == other.Description &&
             DescriptionFr == other.DescriptionFr &&
-            DescriptionVector == other.DescriptionVector &&
+            DescriptionVector.ToArray().SequenceEqualsNullSafe(other.DescriptionVector.ToArray()) &&
             Category == other.Category &&
             Tags.SequenceEqualsNullSafe(other.Tags) &&
             ParkingIncluded == other.ParkingIncluded &&
@@ -403,7 +403,7 @@ namespace Azure.Search.Documents.Tests
             string FormatRoom(HotelRoom room) => $"{{ {room} }}";
             return
                 $"ID: {HotelId}; Name: {HotelName}; Description: {Description}; " +
-                $"Description (French): {DescriptionFr}; Description (Vector): {DescriptionVector};  Category: {Category}; " +
+                $"Description (French): {DescriptionFr}; Category: {Category}; " +
                 $"Tags: {Tags?.ToCommaSeparatedString() ?? "null"}; Parking: {ParkingIncluded}; " +
                 $"Smoking: {SmokingAllowed}; LastRenovationDate: {LastRenovationDate}; Rating: {Rating}; " +
                 $"GeoLocation: [{GeoLocation?.Coordinates.Longitude ?? 0}, {GeoLocation?.Coordinates.Latitude ?? 0}]; " +
@@ -418,7 +418,6 @@ namespace Azure.Search.Documents.Tests
                 ["hotelName"] = HotelName,
                 ["description"] = Description,
                 ["descriptionFr"] = DescriptionFr,
-                ["descriptionVector"] = DescriptionVector,
                 ["category"] = Category,
                 ["tags"] = Tags ?? new object[0],   // OData always gives [] instead of null for collections.
                 ["parkingIncluded"] = ParkingIncluded,
