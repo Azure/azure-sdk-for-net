@@ -74,7 +74,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
             binding.Bind(new TableAttributeBindingProvider(_nameResolver, _accountProvider, _converterManager));
             binding.BindToInput<ParameterBindingData>(CreateParameterBindingData);
-            binding.BindToInput<ParameterBindingData[]>(CreateEnumerable);
+            binding.BindToInput<ParameterBindingData[]>(CreateParameterBindingDataEnumerable);
 
             binding.BindToInput<JArray>(CreateJArray);
         }
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             return entityArray;
         }
 
-        private async Task<ParameterBindingData[]> CreateEnumerable(TableAttribute attribute, ValueBindingContext context)
+        private async Task<ParameterBindingData[]> CreateParameterBindingDataEnumerable(TableAttribute attribute, ValueBindingContext context)
         {
             var table = GetTable(attribute);
 
@@ -197,14 +197,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             if (!string.IsNullOrEmpty(attribute.PartitionKey))
             {
                 var partitionKeyPredicate = TableClient.CreateQueryFilter($"PartitionKey eq {attribute.PartitionKey}");
-                if (!string.IsNullOrEmpty(filter))
-                {
-                    filter = $"{partitionKeyPredicate} and {filter}";
-                }
-                else
-                {
-                    filter = partitionKeyPredicate;
-                }
+                filter = !string.IsNullOrEmpty(filter) ? $"{partitionKeyPredicate} and {filter}" : partitionKeyPredicate;
             }
 
             int? maxPerPage = null;
