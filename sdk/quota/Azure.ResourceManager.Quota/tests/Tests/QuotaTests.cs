@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
                 Properties = new QuotaProperties()
                 {
                     Limit = new LimitObject(10),
-                    Name = new ResourceName()
+                    Name = new QuotaRequestResourceName()
                     {
                         Value = ResourceName,
                     },
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
                 Properties = new QuotaProperties()
                 {
                     Limit = new LimitObject(10),
-                    Name = new ResourceName()
+                    Name = new QuotaRequestResourceName()
                     {
                         Value = "Invalid",
                     },

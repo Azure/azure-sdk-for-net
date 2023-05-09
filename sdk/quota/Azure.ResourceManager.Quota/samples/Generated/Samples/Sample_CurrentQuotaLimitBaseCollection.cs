@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Quota.Samples
                 Properties = new QuotaProperties()
                 {
                     Limit = new LimitObject(10),
-                    Name = new ResourceName()
+                    Name = new QuotaRequestResourceName()
                     {
                         Value = "MinPublicIpInterNetworkPrefixLength",
                     },
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Quota.Samples
                 Properties = new QuotaProperties()
                 {
                     Limit = new LimitObject(10),
-                    Name = new ResourceName()
+                    Name = new QuotaRequestResourceName()
                     {
                         Value = "StandardSkuPublicIpAddresses",
                     },
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Quota.Samples
                 Properties = new QuotaProperties()
                 {
                     Limit = new LimitObject(10),
-                    Name = new ResourceName()
+                    Name = new QuotaRequestResourceName()
                     {
                         Value = "standardFSv2Family",
                     },
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Quota.Samples
                 Properties = new QuotaProperties()
                 {
                     Limit = new LimitObject(10),
-                    Name = new ResourceName()
+                    Name = new QuotaRequestResourceName()
                     {
                         Value = "TotalLowPriorityCores",
                     },
