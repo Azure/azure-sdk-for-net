@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Quota.Models
                 return null;
             }
             int value = default;
-            Optional<UsagesType> usagesType = default;
+            Optional<QuotaUsagesType> usagesType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    usagesType = new UsagesType(property.Value.GetString());
+                    usagesType = new QuotaUsagesType(property.Value.GetString());
                     continue;
                 }
             }

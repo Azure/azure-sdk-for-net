@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Quota.Models
         /// <summary> Initializes a new instance of QuotaProperties. </summary>
         /// <param name="limit">
         /// Resource quota limit properties.
-        /// Please note <see cref="LimitJsonObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LimitObject"/>.
+        /// Please note <see cref="QuotaLimitJsonObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="QuotaLimitObject"/>.
         /// </param>
         /// <param name="unit"> The quota units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
         /// <param name="name"> Resource name provided by the resource provider. Use this property name when requesting quota. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// </param>
         /// <param name="isQuotaApplicable"> States if quota can be requested for this resource. </param>
         /// <param name="properties"> Additional properties for the specific resource provider. </param>
-        internal QuotaProperties(LimitJsonObject limit, string unit, QuotaRequestResourceName name, string resourceType, TimeSpan? quotaPeriod, bool? isQuotaApplicable, BinaryData properties)
+        internal QuotaProperties(QuotaLimitJsonObject limit, string unit, QuotaRequestResourceName name, string resourceType, TimeSpan? quotaPeriod, bool? isQuotaApplicable, BinaryData properties)
         {
             Limit = limit;
             Unit = unit;
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <summary>
         /// Resource quota limit properties.
-        /// Please note <see cref="LimitJsonObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LimitObject"/>.
+        /// Please note <see cref="QuotaLimitJsonObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="QuotaLimitObject"/>.
         /// </summary>
-        public LimitJsonObject Limit { get; set; }
+        public QuotaLimitJsonObject Limit { get; set; }
         /// <summary> The quota units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </summary>
         public string Unit { get; }
         /// <summary> Resource name provided by the resource provider. Use this property name when requesting quota. </summary>

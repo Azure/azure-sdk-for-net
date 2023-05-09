@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="subRequestId"> Quota request ID. </param>
         /// <param name="limit">
         /// Resource quota limit properties.
-        /// Please note <see cref="LimitJsonObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LimitObject"/>.
+        /// Please note <see cref="QuotaLimitJsonObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="QuotaLimitObject"/>.
         /// </param>
-        internal QuotaSubRequestDetail(QuotaRequestResourceName name, string resourceType, string unit, QuotaRequestState? provisioningState, string message, Guid? subRequestId, LimitJsonObject limit)
+        internal QuotaSubRequestDetail(QuotaRequestResourceName name, string resourceType, string unit, QuotaRequestState? provisioningState, string message, Guid? subRequestId, QuotaLimitJsonObject limit)
         {
             Name = name;
             ResourceType = resourceType;
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Quota.Models
         public Guid? SubRequestId { get; }
         /// <summary>
         /// Resource quota limit properties.
-        /// Please note <see cref="LimitJsonObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LimitObject"/>.
+        /// Please note <see cref="QuotaLimitJsonObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="QuotaLimitObject"/>.
         /// </summary>
-        public LimitJsonObject Limit { get; }
+        public QuotaLimitJsonObject Limit { get; }
     }
 }

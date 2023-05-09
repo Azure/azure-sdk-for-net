@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            Optional<LimitJsonObject> limit = default;
+            Optional<QuotaLimitJsonObject> limit = default;
             Optional<string> unit = default;
             Optional<QuotaRequestResourceName> name = default;
             Optional<string> resourceType = default;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    limit = LimitJsonObject.DeserializeLimitJsonObject(property.Value);
+                    limit = QuotaLimitJsonObject.DeserializeQuotaLimitJsonObject(property.Value);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))

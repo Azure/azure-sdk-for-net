@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Quota.Models
             Optional<QuotaRequestState> provisioningState = default;
             Optional<string> message = default;
             Optional<Guid> subRequestId = default;
-            Optional<LimitJsonObject> limit = default;
+            Optional<QuotaLimitJsonObject> limit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    limit = LimitJsonObject.DeserializeLimitJsonObject(property.Value);
+                    limit = QuotaLimitJsonObject.DeserializeQuotaLimitJsonObject(property.Value);
                     continue;
                 }
             }

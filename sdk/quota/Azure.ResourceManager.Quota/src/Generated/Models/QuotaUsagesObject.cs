@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <summary> Initializes a new instance of QuotaUsagesObject. </summary>
         /// <param name="value"> The usages value. </param>
         /// <param name="usagesType"> The quota or usages limit types. </param>
-        internal QuotaUsagesObject(int value, UsagesType? usagesType)
+        internal QuotaUsagesObject(int value, QuotaUsagesType? usagesType)
         {
             Value = value;
             UsagesType = usagesType;
@@ -29,6 +29,6 @@ namespace Azure.ResourceManager.Quota.Models
         /// <summary> The usages value. </summary>
         public int Value { get; }
         /// <summary> The quota or usages limit types. </summary>
-        public UsagesType? UsagesType { get; }
+        public QuotaUsagesType? UsagesType { get; }
     }
 }

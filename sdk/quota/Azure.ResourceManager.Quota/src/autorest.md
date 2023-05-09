@@ -48,6 +48,8 @@ rename-rules:
   Etag: ETag|etag
 
 rename-mapping:
+  LimitJsonObject: QuotaLimitJsonObject
+  LimitObject: QuotaLimitObject
   OperationList: QuotaOperationListResult
   OperationResponse: QuotaOperationResult
   OperationDisplay: QuotaOperationDisplay
@@ -56,7 +58,7 @@ rename-mapping:
   SubRequest.subRequestId: -|uuid
   UsagesObject: QuotaUsagesObject
   UsagesProperties: QuotaUsagesProperties
-  UsagesType: QuotaUsagesType
+  UsagesTypes: QuotaUsagesType
 
 directive:
 # Correct the type of properties
