@@ -1,9 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<TargetFramework>netstandard2.0</TargetFramework>
-		<RepositoryUrl>https://github.com/felipmiguel/AzureDb.Passwordless</RepositoryUrl>
-	</PropertyGroup>
-	<ItemGroup>
-	  <PackageReference Include="Azure.Core" Version="1.31.0" />
-	</ItemGroup>
-</Project>

@@ -1,9 +1,12 @@
-﻿using Microsoft.Azure.Data.Extensions.Core;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using Npgsql;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
 using Azure.Core;
+using Microsoft.Azure.Data.Extensions.Common;
 
 namespace Microsoft.Azure.Data.Extensions.Npgsql
 {
@@ -46,6 +49,9 @@ namespace Microsoft.Azure.Data.Extensions.Npgsql
             return GetAuthenticationTokenAsync(cancellationToken);
         }
 
+        /// <summary>
+        /// Property that holds an implementation of NpgsqlDataSourceBuilder.UsePeriodicPasswordProvider delegate signature.
+        /// </summary>
         public Func<NpgsqlConnectionStringBuilder, CancellationToken, ValueTask<string>> PasswordProvider
         {
             get { return PeriodicPasswordProvider; }

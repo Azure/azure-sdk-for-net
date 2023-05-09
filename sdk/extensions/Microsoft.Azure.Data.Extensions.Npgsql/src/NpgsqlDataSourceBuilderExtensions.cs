@@ -1,16 +1,16 @@
-﻿using Azure.Core;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Core;
 using Microsoft.Azure.Data.Extensions.Npgsql;
-using Npgsql;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Npgsql
 {
     /// <summary>
     /// NpgsqlDataSourceBuilder extensions that simplify the configuration to use AAD authentication when connecting to Azure Database for Postgresql
     /// </summary>
-    public static class NpgsqlDataSourceBuilderExtensions
+    public static partial class NpgsqlDataSourceBuilderExtensions
     {
         /// <summary>
         /// Configures NpgsqlDataSourceBuilder to use AAD authentication to connect to Azure Database for Postgresql using the provided TokenCredential
