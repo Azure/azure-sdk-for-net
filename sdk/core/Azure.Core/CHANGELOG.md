@@ -6,7 +6,6 @@
 
 - Added the `GetRawResponse` method to `RequestFailedException`.
 - Added overloads of `Operation<T>.WaitForCompletion` and `Operation.WaitForCompletionResponse` that take a `DelayStrategy`.
-- Added the `DynamicData` type that provides a `dynamic` layer over raw JSON.  For more information, see [aka.ms/azsdk/net/dynamicdata](https://aka.ms/azsdk/net/dynamicdata).
 
 ## 1.31.0 (2023-04-10)
 
