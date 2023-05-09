@@ -4,6 +4,8 @@
 
 ### Features Added
 
+* Added resource attributes to metric telemetry with a name of `_OTELRESOURCE_`, which includes all attributes as custom dimensions in every transmission to the ingestion service, enabling the storage of resource objects in the `AppResources` table. ([36063](https://github.com/Azure/azure-sdk-for-net/pull/36063))
+
 ### Breaking Changes
 
 ### Bugs Fixed
