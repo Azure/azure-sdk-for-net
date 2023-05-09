@@ -10,7 +10,7 @@
     <NoWarn>$(NoWarn);3021;AZC0011</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-    <!--Conditionally define the PREVIEW_FEATURE_FLAG constant if the-->
+    <!--Conditionally define the PREVIEW_FEATURE_FLAG constant if the version is pre-release-->
   <Choose>
     <When Condition="$([System.String]::Copy('%(Version)').Contains('-'))">
       <PropertyGroup>
