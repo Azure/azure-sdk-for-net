@@ -1,91 +1,152 @@
-# Azure Npgsql client library for .NET
+# Azure client library integration for ASP.NET Core
 
-This section should give out brief introduction of the client library.
+Microsoft.Extensions.Azure provides shared primitives to integrate Azure clients with ASP.NET Core [dependency injection][dependency_injection] and [configuration][configuration] systems.
 
-* First sentence: **Describe the service** briefly. You can usually use the first line of the service's docs landing page for this (Example: [Cosmos DB docs landing page](https://docs.microsoft.com/azure/cosmos-db/)).
-* Next, add a **bulleted list** of the **most common tasks** supported by the package or library, prefaced with "Use the client library for [Product Name] to:". Then, provide code snippets for these tasks in the [Examples](#examples) section later in the document. Keep the task list short but include those tasks most developers need to perform with your package.
-
-  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/.\microsoft.azure.data.extensions\/Azure.Microsoft.Azure.Data.Extensions.Npgsql/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Microsoft.Azure.Data.Extensions.Npgsql) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
+[Source code][source_root] | [Package (NuGet)][package]
 
 ## Getting started
 
-This section should include everything a developer needs to do to install and create their first client connection *very quickly*.
-
 ### Install the package
 
-First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `dotnet add package package-name`, but should enable a developer to successfully install the package from NuGet, npm, or even cloning a GitHub repository.
-
-Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
+Install the ASP.NET Core integration library using [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.Microsoft.Azure.Data.Extensions.Npgsql --prerelease
+dotnet add package Microsoft.Extensions.Azure
 ```
 
-### Prerequisites
+### Register clients
 
-Include a section after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
+Make a call to `AddAzureClients` in your app's `ConfigureServices` method. You can use the provided builder to register client instances with your dependency injection container.
 
-> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
+```C# Snippet:ConfigureServices
+public void ConfigureServices(IServiceCollection services)
+{
+    // Registering policy to use in ConfigureDefaults later
+    services.AddSingleton<DependencyInjectionEnabledPolicy>();
 
-### Authenticate the client
+    services.AddAzureClients(builder => {
+        // Register blob service client and initialize it using the KeyVault section of configuration
+        builder.AddSecretClient(Configuration.GetSection("KeyVault"))
+            // Set the name for this client registration
+            .WithName("NamedBlobClient")
+            // Set the credential for this client registration
+            .WithCredential(new ClientSecretCredential("<tenant_id>", "<client_id>", "<client_secret>"))
+            // Configure the client options
+            .ConfigureOptions(options => options.Retry.MaxRetries = 10);
 
-If your library requires authentication for use, such as for Azure services, include instructions and example code needed for initializing and authenticating.
+        // Adds a secret client using the provided endpoint and default credential set later
+        builder.AddSecretClient(new Uri("http://my.keyvault.com"));
 
-For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
+        // Configures environment credential to be used by default for all clients that require TokenCredential
+        // and doesn't override it on per registration level
+        builder.UseCredential(new EnvironmentCredential());
 
-## Key concepts
+        // This would use configuration for auth and client settings
+        builder.ConfigureDefaults(Configuration.GetSection("Default"));
 
-The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
+        // Configure global retry mode
+        builder.ConfigureDefaults(options => options.Retry.Mode = RetryMode.Exponential);
 
-Include the *Thread safety* and *Additional concepts* sections below at the end of your *Key concepts* section. You may remove or add links depending on what your library makes use of:
+        // Advanced configure global defaults
+        builder.ConfigureDefaults((options, provider) => options.AddPolicy(provider.GetService<DependencyInjectionEnabledPolicy>(), HttpPipelinePosition.PerCall));
 
-### Thread safety
-
-We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
-
-### Additional concepts
-<!-- CLIENT COMMON BAR -->
-[Client options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
-[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
-[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
-[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
-[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
-[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
-<!-- CLIENT COMMON BAR -->
-
-## Examples
-
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/.\microsoft.azure.data.extensions\/Azure.Microsoft.Azure.Data.Extensions.Npgsql/samples).
-
-### <scenario>
-
-You can create a client and call the client's `<operation>` method.
-
-```C# Snippet:Azure_Microsoft_Azure_Data_Extensions_Npgsql_Scenario
-Console.WriteLine("Hello, world!");
+        // Register blob service client and initialize it using the Storage section of configuration
+        builder.AddBlobServiceClient(Configuration.GetSection("Storage"))
+                .WithVersion(BlobClientOptions.ServiceVersion.V2019_02_02);
+    });
+}
 ```
 
-## Troubleshooting
+### Inject clients
 
-Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
+To use the client request the client type from any place that supports Dependency Injection (constructors, Configure calls, `@inject` razor definitions etc.)
 
-Provide information to help developers avoid throttling or other service-enforced errors they might encounter. For example, provide guidance and examples for using retry or connection policies in the API.
+```C# Snippet:Inject
+public void Configure(IApplicationBuilder app, SecretClient secretClient, IAzureClientFactory<BlobServiceClient> blobClientFactory)
+```
 
-If the package or a related package supports it, include tips for logging or enabling instrumentation to help them debug their code.
+### Create named instances
 
-## Next steps
+If client is registered as a named client inject `IAzureClientFactory<T>` and call `CreateClient` passing the name:
 
-* Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/samples` directory.
-* If appropriate, point users to other packages that might be useful.
-* If you think there's a good chance that developers might stumble across your package in error (because they're searching for specific functionality and mistakenly think the package provides that functionality), point them to the packages they might be looking for.
+```C# Snippet:ResolveNamed
+BlobServiceClient blobServiceClient = blobClientFactory.CreateClient("NamedBlobClient");
+```
+
+Configuration file used in the sample above:
+
+``` json
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Debug"
+    }
+  },
+  "AllowedHosts": "*",
+  "Default": {
+    "ClientId": "<client_id>",
+    "ClientSecret": "<client_secret>",
+    "TenantId": "<tenant_id>",
+
+    "TelemetryPolicy": {
+      "ApplicationId": "AppId"
+    }
+  },
+  "KeyVault": {
+    "VaultUri": "<vault_uri>"
+  },
+  "Storage": {
+    "serviceUri": "<service_uri>",
+    "credential": {
+      "accountName": "<account_name>",
+      "accountKey": "<account_key>"
+    }
+  }
+}
+```
+
+### Registering a custom client factory
+
+If you want to take control over how the client instance is created or need to use other dependencies during the client construction use the `AddClient<TClient, TOptions>` method.
+
+Here's and example of how to use `IOptions<T>` instance to construct the client:
+
+```C# Snippet:UsingOptionsForClientConstruction
+public class MyApplicationOptions
+{
+    public Uri KeyVaultEndpoint { get; set; }
+}
+
+public void ConfigureServices(IServiceCollection services)
+{
+    // Configure a custom options instance
+    services.Configure<MyApplicationOptions>(options => options.KeyVaultEndpoint = new Uri("http://localhost/"));
+
+    services.AddAzureClients(builder =>
+    {
+        // Register a client using MyApplicationOptions to get constructor parameters
+        builder.AddClient<SecretClient, SecretClientOptions>((options, credential, provider) =>
+        {
+            var appOptions = provider.GetService<IOptions<MyApplicationOptions>>();
+            return new SecretClient(appOptions.Value.KeyVaultEndpoint, credential, options);
+        });
+    });
+}
+```
 
 ## Contributing
+This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
 
-This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
+When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
+
+This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact opencode@microsoft.com with any additional questions or comments.
+
 
 <!-- LINKS -->
-[style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
-[style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/.\microsoft.azure.data.extensions\/Azure.Microsoft.Azure.Data.Extensions.Npgsql/README.png)
+[source_root]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/extensions/Microsoft.Extensions.Azure/src
+[nuget]: https://www.nuget.org/
+[package]: https://www.nuget.org/packages/Microsoft.Extensions.Azure/
+[configuration]: https://docs.microsoft.com/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.0
+[dependency_injection]: https://docs.microsoft.com/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-3.0
+[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
+[code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/

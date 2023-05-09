@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <Description>This is the Microsoft.Azure.Data.Extensions.Common client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Azure SDK Code Generation Microsoft.Azure.Data.Extensions.Common for Azure Data Plane</AssemblyTitle>
@@ -7,22 +6,18 @@
     <PackageTags>Azure Microsoft.Azure.Data.Extensions.Common</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
-    <!-- Make sure that we don't pull in additional dependencies during build or package -->
-    <ImportDefaultReferences>false</ImportDefaultReferences>
+		<!-- Make sure that we don't pull in additional dependencies during build or package -->
+		<ImportDefaultReferences>false</ImportDefaultReferences>
 
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
- </PropertyGroup>
+
+		<NoWarn>$(NoWarn);AZC0001</NoWarn>
+  </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\Microsoft.Azure.Data.Extensions.Common\src\TokenCredentialBaseAuthenticationProvider.cs" Link="TokenCredentialBaseAuthenticationProvider.cs" />
+		<PackageReference Include="Azure.Core" />
   </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Azure.Core" />
-		<PackageReference Include="Npgsql" />
-  </ItemGroup>
-
 
 </Project>
