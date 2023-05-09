@@ -20,7 +20,7 @@ namespace Azure.Core.Dynamic
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     [JsonConverter(typeof(JsonConverter))]
-    public sealed partial class DynamicData : IDisposable
+    internal sealed partial class DynamicData : IDisposable
     {
         internal static JsonSerializerOptions DefaultSerializerOptions = new JsonSerializerOptions()
         {

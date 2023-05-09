@@ -8,7 +8,7 @@ using Azure.Core.Json;
 
 namespace Azure.Core.Dynamic
 {
-    public partial class DynamicData
+    internal partial class DynamicData
     {
         /// <summary>
         /// An enumerable and enumerator for the properties of a mutable JSON object.

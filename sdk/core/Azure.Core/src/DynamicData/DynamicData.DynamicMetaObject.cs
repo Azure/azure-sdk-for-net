@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.Core.Dynamic
 {
-    public partial class DynamicData : IDynamicMetaObjectProvider
+    internal partial class DynamicData : IDynamicMetaObjectProvider
     {
         /// <inheritdoc />
         DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new MetaObject(parameter, this);

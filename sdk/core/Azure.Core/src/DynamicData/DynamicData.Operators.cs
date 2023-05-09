@@ -9,7 +9,7 @@ using Azure.Core.Json;
 
 namespace Azure.Core.Dynamic
 {
-    public partial class DynamicData
+    internal partial class DynamicData
     {
         // Operators that cast from DynamicData to another type
         private static readonly Dictionary<Type, MethodInfo> CastFromOperators = typeof(DynamicData)

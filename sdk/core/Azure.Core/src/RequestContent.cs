@@ -77,7 +77,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="content">The <see cref="DynamicData"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="DynamicData"/>.</returns>
-        public static RequestContent Create(DynamicData content) => new DynamicDataContent(content);
+        internal static RequestContent Create(DynamicData content) => new DynamicDataContent(content);
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
@@ -98,12 +98,6 @@ namespace Azure.Core
         /// </summary>
         /// <param name="content">The <see cref="BinaryData"/> to use.</param>
         public static implicit operator RequestContent(BinaryData content) => Create(content);
-
-        /// <summary>
-        /// Creates a RequestContent that wraps a <see cref="DynamicData"/>.
-        /// </summary>
-        /// <param name="content">The <see cref="DynamicData"/> to use.</param>
-        public static implicit operator RequestContent(DynamicData content) => Create(content);
 
         /// <summary>
         /// Writes contents of this object to an instance of <see cref="Stream"/>.
