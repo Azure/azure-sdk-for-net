@@ -46,7 +46,8 @@ namespace Azure.ResourceManager.DevCenter
             Optional<SystemData> systemData = default;
             Optional<GitCatalog> gitHub = default;
             Optional<GitCatalog> adoGit = default;
-            Optional<string> provisioningState = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<CatalogSyncState> syncState = default;
             Optional<DateTimeOffset> lastSyncTime = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -103,7 +104,20 @@ namespace Azure.ResourceManager.DevCenter
                         }
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("syncState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            syncState = new CatalogSyncState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("lastSyncTime"u8))
@@ -119,7 +133,7 @@ namespace Azure.ResourceManager.DevCenter
                     continue;
                 }
             }
-            return new CatalogData(id, name, type, systemData.Value, gitHub.Value, adoGit.Value, provisioningState.Value, Optional.ToNullable(lastSyncTime));
+            return new CatalogData(id, name, type, systemData.Value, gitHub.Value, adoGit.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(syncState), Optional.ToNullable(lastSyncTime));
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
 
             AttachedNetworkConnectionCollection resourceCollection = Client.GetDevCenterResource(devCenterId).GetAttachedNetworkConnections();
 
-            string devCenterName = "sdk-attachedNetwork";
+            string attachedNetworkName = "sdk-attachedNetwork";
 
             // Create a AttachedNetworkConnection resource
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
             };
 
             AttachedNetworkConnectionResource createdResource
-                = (await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, devCenterName, devCenterData)).Value;
+                = (await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, attachedNetworkName, devCenterData)).Value;
 
             Assert.NotNull(createdResource);
             Assert.NotNull(createdResource.Data);
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
             Assert.IsTrue(resources.Any(r => r.Id == createdResource.Id));
 
             // Get
-            Response<AttachedNetworkConnectionResource> retrievedAttachedNetworkConnection = await resourceCollection.GetAsync(devCenterName);
+            Response<AttachedNetworkConnectionResource> retrievedAttachedNetworkConnection = await resourceCollection.GetAsync(attachedNetworkName);
             Assert.NotNull(retrievedAttachedNetworkConnection.Value);
             Assert.NotNull(retrievedAttachedNetworkConnection.Value.Data);
 

@@ -6,8 +6,11 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -19,16 +22,32 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
+            Optional<string> resourceId = default;
+            Optional<BinaryData> properties = default;
             Optional<string> id = default;
             Optional<string> name = default;
-            Optional<string> status = default;
+            string status = default;
+            Optional<float> percentComplete = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
-            Optional<float> percentComplete = default;
-            Optional<BinaryData> properties = default;
-            Optional<OperationStatusError> error = default;
+            Optional<IReadOnlyList<OperationStatusResult>> operations = default;
+            Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("resourceId"u8))
+                {
+                    resourceId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
@@ -42,6 +61,15 @@ namespace Azure.ResourceManager.DevCenter.Models
                 if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("percentComplete"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    percentComplete = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("startTime"u8))
@@ -62,22 +90,18 @@ namespace Azure.ResourceManager.DevCenter.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("percentComplete"u8))
+                if (property.NameEquals("operations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    percentComplete = property.Value.GetSingle();
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    List<OperationStatusResult> array = new List<OperationStatusResult>();
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        continue;
+                        array.Add(JsonSerializer.Deserialize<OperationStatusResult>(item.GetRawText()));
                     }
-                    properties = BinaryData.FromString(property.Value.GetRawText());
+                    operations = array;
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -86,11 +110,11 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    error = OperationStatusError.DeserializeOperationStatusError(property.Value);
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
             }
-            return new OperationStatus(id.Value, name.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(percentComplete), properties.Value, error.Value);
+            return new OperationStatus(id.Value, name.Value, status, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(operations), error.Value, resourceId.Value, properties.Value);
         }
     }
 }

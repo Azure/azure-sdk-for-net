@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.DevCenter
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TypePropertiesType))
+            if (Optional.IsDefined(ScheduledType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(TypePropertiesType.Value.ToString());
+                writer.WriteStringValue(ScheduledType.Value.ToString());
             }
             if (Optional.IsDefined(Frequency))
             {
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.DevCenter
             Optional<ScheduledFrequency> frequency = default;
             Optional<string> time = default;
             Optional<string> timeZone = default;
-            Optional<EnableStatus> state = default;
-            Optional<string> provisioningState = default;
+            Optional<ScheduleEnableStatus> state = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -133,19 +133,23 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            state = new EnableStatus(property0.Value.GetString());
+                            state = new ScheduleEnableStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ScheduleData(id, name, type, systemData.Value, Optional.ToNullable(type0), Optional.ToNullable(frequency), time.Value, timeZone.Value, Optional.ToNullable(state), provisioningState.Value);
+            return new ScheduleData(id, name, type, systemData.Value, Optional.ToNullable(type0), Optional.ToNullable(frequency), time.Value, timeZone.Value, Optional.ToNullable(state), Optional.ToNullable(provisioningState));
         }
     }
 }

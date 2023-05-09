@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DevCenter
             Optional<string> organizationUnit = default;
             Optional<string> domainUsername = default;
             Optional<string> domainPassword = default;
-            Optional<string> provisioningState = default;
+            Optional<ProvisioningState> provisioningState = default;
             Optional<HealthCheckStatus> healthCheckStatus = default;
             Optional<string> networkingResourceGroupName = default;
             Optional<DomainJoinType> domainJoinType = default;
@@ -174,7 +174,11 @@ namespace Azure.ResourceManager.DevCenter
                         }
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("healthCheckStatus"u8))
@@ -204,7 +208,7 @@ namespace Azure.ResourceManager.DevCenter
                     continue;
                 }
             }
-            return new NetworkConnectionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, subnetId.Value, domainName.Value, organizationUnit.Value, domainUsername.Value, domainPassword.Value, provisioningState.Value, Optional.ToNullable(healthCheckStatus), networkingResourceGroupName.Value, Optional.ToNullable(domainJoinType));
+            return new NetworkConnectionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, subnetId.Value, domainName.Value, organizationUnit.Value, domainUsername.Value, domainPassword.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(healthCheckStatus), networkingResourceGroupName.Value, Optional.ToNullable(domainJoinType));
         }
     }
 }

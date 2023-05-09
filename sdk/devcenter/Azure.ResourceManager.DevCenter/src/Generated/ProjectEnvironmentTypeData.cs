@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="creatorRoleAssignment"> The role definition assigned to the environment creator on backing resources. </param>
         /// <param name="userRoleAssignments"> Role Assignments created on environment backing resources. This is a mapping from a user object ID to an object of role definition IDs. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal ProjectEnvironmentTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string deploymentTargetId, EnableStatus? status, ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment creatorRoleAssignment, IDictionary<string, UserRoleAssignmentValue> userRoleAssignments, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal ProjectEnvironmentTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string deploymentTargetId, EnvironmentTypeEnableStatus? status, ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment creatorRoleAssignment, IDictionary<string, UserRoleAssignmentValue> userRoleAssignments, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             DeploymentTargetId = deploymentTargetId;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> Id of a subscription that the environment type will be mapped to. The environment&apos;s resources will be deployed into this subscription. </summary>
         public string DeploymentTargetId { get; set; }
         /// <summary> Defines whether this Environment Type can be used in this Project. </summary>
-        public EnableStatus? Status { get; set; }
+        public EnvironmentTypeEnableStatus? Status { get; set; }
         /// <summary> The role definition assigned to the environment creator on backing resources. </summary>
         internal ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment CreatorRoleAssignment { get; set; }
         /// <summary> A map of roles to assign to the environment creator. </summary>
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> Role Assignments created on environment backing resources. This is a mapping from a user object ID to an object of role definition IDs. </summary>
         public IDictionary<string, UserRoleAssignmentValue> UserRoleAssignments { get; }
         /// <summary> The provisioning state of the resource. </summary>
-        public string ProvisioningState { get; }
+        public ProvisioningState? ProvisioningState { get; }
     }
 }

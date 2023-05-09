@@ -22,25 +22,25 @@ namespace Azure.ResourceManager.DevCenter.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string UnknownValue = "Unknown";
         private const string PendingValue = "Pending";
         private const string RunningValue = "Running";
         private const string PassedValue = "Passed";
-        private const string FailedValue = "Failed";
         private const string WarningValue = "Warning";
-        private const string UnknownValue = "Unknown";
+        private const string FailedValue = "Failed";
 
+        /// <summary> Unknown. </summary>
+        public static HealthCheckStatus Unknown { get; } = new HealthCheckStatus(UnknownValue);
         /// <summary> Pending. </summary>
         public static HealthCheckStatus Pending { get; } = new HealthCheckStatus(PendingValue);
         /// <summary> Running. </summary>
         public static HealthCheckStatus Running { get; } = new HealthCheckStatus(RunningValue);
         /// <summary> Passed. </summary>
         public static HealthCheckStatus Passed { get; } = new HealthCheckStatus(PassedValue);
-        /// <summary> Failed. </summary>
-        public static HealthCheckStatus Failed { get; } = new HealthCheckStatus(FailedValue);
         /// <summary> Warning. </summary>
         public static HealthCheckStatus Warning { get; } = new HealthCheckStatus(WarningValue);
-        /// <summary> Unknown. </summary>
-        public static HealthCheckStatus Unknown { get; } = new HealthCheckStatus(UnknownValue);
+        /// <summary> Failed. </summary>
+        public static HealthCheckStatus Failed { get; } = new HealthCheckStatus(FailedValue);
         /// <summary> Determines if two <see cref="HealthCheckStatus"/> values are the same. </summary>
         public static bool operator ==(HealthCheckStatus left, HealthCheckStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HealthCheckStatus"/> values are not the same. </summary>

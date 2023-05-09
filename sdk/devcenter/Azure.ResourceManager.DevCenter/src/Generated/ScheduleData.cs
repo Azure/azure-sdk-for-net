@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="typePropertiesType"> Supported type this scheduled task represents. </param>
+        /// <param name="scheduledType"> Supported type this scheduled task represents. </param>
         /// <param name="frequency"> The frequency of this scheduled task. </param>
         /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
         /// <param name="timeZone"> The IANA timezone id at which the schedule should execute. </param>
         /// <param name="state"> Indicates whether or not this scheduled task is enabled. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal ScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ScheduledType? typePropertiesType, ScheduledFrequency? frequency, string time, string timeZone, EnableStatus? state, string provisioningState) : base(id, name, resourceType, systemData)
+        internal ScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ScheduledType? scheduledType, ScheduledFrequency? frequency, string time, string timeZone, ScheduleEnableStatus? state, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
-            TypePropertiesType = typePropertiesType;
+            ScheduledType = scheduledType;
             Frequency = frequency;
             Time = time;
             TimeZone = timeZone;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Supported type this scheduled task represents. </summary>
-        public ScheduledType? TypePropertiesType { get; set; }
+        public ScheduledType? ScheduledType { get; set; }
         /// <summary> The frequency of this scheduled task. </summary>
         public ScheduledFrequency? Frequency { get; set; }
         /// <summary> The target time to trigger the action. The format is HH:MM. </summary>
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> The IANA timezone id at which the schedule should execute. </summary>
         public string TimeZone { get; set; }
         /// <summary> Indicates whether or not this scheduled task is enabled. </summary>
-        public EnableStatus? State { get; set; }
+        public ScheduleEnableStatus? State { get; set; }
         /// <summary> The provisioning state of the resource. </summary>
-        public string ProvisioningState { get; }
+        public ProvisioningState? ProvisioningState { get; }
     }
 }

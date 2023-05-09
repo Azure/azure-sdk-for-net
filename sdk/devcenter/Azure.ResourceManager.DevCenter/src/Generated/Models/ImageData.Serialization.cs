@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.DevCenter
             Optional<string> offer = default;
             Optional<string> sku = default;
             Optional<RecommendedMachineConfiguration> recommendedMachineConfiguration = default;
-            Optional<string> provisioningState = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<HibernateSupport> hibernateSupport = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -105,14 +106,27 @@ namespace Azure.ResourceManager.DevCenter
                         }
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("hibernateSupport"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            hibernateSupport = new HibernateSupport(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ImageData(id, name, type, systemData.Value, description.Value, publisher.Value, offer.Value, sku.Value, recommendedMachineConfiguration.Value, provisioningState.Value);
+            return new ImageData(id, name, type, systemData.Value, description.Value, publisher.Value, offer.Value, sku.Value, recommendedMachineConfiguration.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(hibernateSupport));
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ImageVersionsListByImage()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/ImageVersions_List.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/ImageVersions_List.json
             // this example is just showing the usage of "ImageVersions_ListByImage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this ImageResource created on azure
             // for more information of creating ImageResource, please refer to the document of ImageResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
             string galleryName = "DefaultDevGallery";
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_VersionsGet()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/ImageVersions_Get.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/ImageVersions_Get.json
             // this example is just showing the usage of "ImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this ImageResource created on azure
             // for more information of creating ImageResource, please refer to the document of ImageResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
             string galleryName = "DefaultDevGallery";
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
             ImageVersionCollection collection = image.GetImageVersions();
 
             // invoke the operation
-            string versionName = "{versionName}";
+            string versionName = "1.0.0";
             ImageVersionResource result = await collection.GetAsync(versionName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_VersionsGet()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/ImageVersions_Get.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/ImageVersions_Get.json
             // this example is just showing the usage of "ImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this ImageResource created on azure
             // for more information of creating ImageResource, please refer to the document of ImageResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
             string galleryName = "DefaultDevGallery";
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
             ImageVersionCollection collection = image.GetImageVersions();
 
             // invoke the operation
-            string versionName = "{versionName}";
+            string versionName = "1.0.0";
             bool result = await collection.ExistsAsync(versionName);
 
             Console.WriteLine($"Succeeded: {result}");

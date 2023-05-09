@@ -5,9 +5,11 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
@@ -42,6 +44,11 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsDefined(MaxDevBoxesPerUser))
+            {
+                writer.WritePropertyName("maxDevBoxesPerUser"u8);
+                writer.WriteNumberValue(MaxDevBoxesPerUser.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -60,7 +67,9 @@ namespace Azure.ResourceManager.DevCenter
             Optional<SystemData> systemData = default;
             Optional<string> devCenterId = default;
             Optional<string> description = default;
-            Optional<string> provisioningState = default;
+            Optional<int> maxDevBoxesPerUser = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<Uri> devCenterUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -125,16 +134,38 @@ namespace Azure.ResourceManager.DevCenter
                             description = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("maxDevBoxesPerUser"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            maxDevBoxesPerUser = property0.Value.GetInt32();
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("devCenterUri"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            devCenterUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ProjectData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, devCenterId.Value, description.Value, provisioningState.Value);
+            return new ProjectData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, devCenterId.Value, description.Value, Optional.ToNullable(maxDevBoxesPerUser), Optional.ToNullable(provisioningState), devCenterUri.Value);
         }
     }
 }

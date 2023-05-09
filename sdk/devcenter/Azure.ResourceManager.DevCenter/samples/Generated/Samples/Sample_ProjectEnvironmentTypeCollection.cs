@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ProjectEnvironmentTypesList()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/ProjectEnvironmentTypes_List.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/ProjectEnvironmentTypes_List.json
             // this example is just showing the usage of "ProjectEnvironmentTypes_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this ProjectResource created on azure
             // for more information of creating ProjectResource, please refer to the document of ProjectResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string projectName = "ContosoProj";
             ResourceIdentifier projectResourceId = ProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ProjectEnvironmentTypesGet()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/ProjectEnvironmentTypes_Get.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/ProjectEnvironmentTypes_Get.json
             // this example is just showing the usage of "ProjectEnvironmentTypes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this ProjectResource created on azure
             // for more information of creating ProjectResource, please refer to the document of ProjectResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string projectName = "ContosoProj";
             ResourceIdentifier projectResourceId = ProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
             ProjectEnvironmentTypeCollection collection = project.GetProjectEnvironmentTypes();
 
             // invoke the operation
-            string environmentTypeName = "{environmentTypeName}";
+            string environmentTypeName = "DevTest";
             ProjectEnvironmentTypeResource result = await collection.GetAsync(environmentTypeName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_ProjectEnvironmentTypesGet()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/ProjectEnvironmentTypes_Get.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/ProjectEnvironmentTypes_Get.json
             // this example is just showing the usage of "ProjectEnvironmentTypes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this ProjectResource created on azure
             // for more information of creating ProjectResource, please refer to the document of ProjectResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string projectName = "ContosoProj";
             ResourceIdentifier projectResourceId = ProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
             ProjectEnvironmentTypeCollection collection = project.GetProjectEnvironmentTypes();
 
             // invoke the operation
-            string environmentTypeName = "{environmentTypeName}";
+            string environmentTypeName = "DevTest";
             bool result = await collection.ExistsAsync(environmentTypeName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_ProjectEnvironmentTypesCreateOrUpdate()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2022-08-01-preview/examples/ProjectEnvironmentTypes_Put.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/ProjectEnvironmentTypes_Put.json
             // this example is just showing the usage of "ProjectEnvironmentTypes_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this ProjectResource created on azure
             // for more information of creating ProjectResource, please refer to the document of ProjectResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string projectName = "ContosoProj";
             ResourceIdentifier projectResourceId = ProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
             ProjectEnvironmentTypeCollection collection = project.GetProjectEnvironmentTypes();
 
             // invoke the operation
-            string environmentTypeName = "{environmentTypeName}";
+            string environmentTypeName = "DevTest";
             ProjectEnvironmentTypeData data = new ProjectEnvironmentTypeData(new AzureLocation("placeholder"))
             {
                 Identity = new ManagedServiceIdentity("UserAssigned")
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 },
                 },
                 DeploymentTargetId = "/subscriptions/00000000-0000-0000-0000-000000000000",
-                Status = EnableStatus.Enabled,
+                Status = EnvironmentTypeEnableStatus.Enabled,
                 Roles =
 {
 ["4cbf0b6c-e750-441c-98a7-10da8387e4d6"] = new EnvironmentRole(),

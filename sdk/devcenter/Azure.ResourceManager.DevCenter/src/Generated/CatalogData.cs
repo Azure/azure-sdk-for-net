@@ -31,12 +31,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="gitHub"> Properties for a GitHub catalog type. </param>
         /// <param name="adoGit"> Properties for an Azure DevOps catalog type. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="syncState"> The synchronization state of the catalog. </param>
         /// <param name="lastSyncOn"> When the catalog was last synced. </param>
-        internal CatalogData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GitCatalog gitHub, GitCatalog adoGit, string provisioningState, DateTimeOffset? lastSyncOn) : base(id, name, resourceType, systemData)
+        internal CatalogData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GitCatalog gitHub, GitCatalog adoGit, ProvisioningState? provisioningState, CatalogSyncState? syncState, DateTimeOffset? lastSyncOn) : base(id, name, resourceType, systemData)
         {
             GitHub = gitHub;
             AdoGit = adoGit;
             ProvisioningState = provisioningState;
+            SyncState = syncState;
             LastSyncOn = lastSyncOn;
         }
 
@@ -45,7 +47,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> Properties for an Azure DevOps catalog type. </summary>
         public GitCatalog AdoGit { get; set; }
         /// <summary> The provisioning state of the resource. </summary>
-        public string ProvisioningState { get; }
+        public ProvisioningState? ProvisioningState { get; }
+        /// <summary> The synchronization state of the catalog. </summary>
+        public CatalogSyncState? SyncState { get; }
         /// <summary> When the catalog was last synced. </summary>
         public DateTimeOffset? LastSyncOn { get; }
     }
