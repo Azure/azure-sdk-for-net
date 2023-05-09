@@ -1,14 +1,16 @@
 # Release History
 
-## 3.0.0-preview.7 (Unreleased)
+## 3.0.0-preview.7 (2023-05-08)
 
-### Features Added
+### New Features
+
+- Updated the code examples for protocol methods to ensure they can always compile
+- Added code examples for convenience methods
+- Added documentation on what protocol methods are on how they should be used
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Removed the `Value` suffix from convenience methods such as `GetMultivariateBatchDetectionResultValue` is now simply an overload of `GetMultivariateBatchDetectionResult`
 
 ## 3.0.0-preview.6 (2022-12-08)
 **Features**
@@ -29,7 +31,7 @@
 - Renamed `listMultivariateModel` to `GetMultivariateModelValues`.
 - Renamed `DetectAnomaly` to `DetectMultivariateBatchAnomaly`
 - Renamed `GetDetectionResult` to `GetMultivariateBatchDetectionResultValue`.
-- Renamed `GetMultivariateModel`to `GetMultivariateModelValue` 
+- Renamed `GetMultivariateModel`to `GetMultivariateModelValue`
 - Renamed `LastDetectAnomaly` to `DetectMultivariateLastAnomaly`.
 - Renamed `DetectRequest` to `UnivariateDetectionOptions`.
 - Renamed `EntireDetectResponse` to `UnivariateEntireDetectionResult`.
