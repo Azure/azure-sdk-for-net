@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
             writer.WritePropertyName("timeZone"u8);
             writer.WriteStringValue(TimeZone);
-            if (Optional.IsDefined(HostPoolType))
+            if (Optional.IsDefined(ScalingHostPoolType))
             {
                 writer.WritePropertyName("hostPoolType"u8);
-                writer.WriteStringValue(HostPoolType.Value.ToString());
+                writer.WriteStringValue(ScalingHostPoolType.Value.ToString());
             }
             if (Optional.IsDefined(ExclusionTag))
             {

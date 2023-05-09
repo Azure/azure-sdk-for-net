@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
             {
                 Description = "Description of Scaling Plan",
                 FriendlyName = "Scaling Plan 1",
-                HostPoolType = ScalingHostPoolType.Pooled,
+                ScalingHostPoolType = ScalingHostPoolType.Pooled,
                 ExclusionTag = "value",
                 Schedules =
 {
@@ -123,20 +123,20 @@ DaysOfWeek =
 {
 ScalingScheduleDaysOfWeekItem.Monday,ScalingScheduleDaysOfWeekItem.Tuesday,ScalingScheduleDaysOfWeekItem.Wednesday,ScalingScheduleDaysOfWeekItem.Thursday,ScalingScheduleDaysOfWeekItem.Friday
 },
-RampUpStartTime = new Time(6,0),
+RampUpStartTime = new ScalingActionTime(6,0),
 RampUpLoadBalancingAlgorithm = SessionHostLoadBalancingAlgorithm.DepthFirst,
 RampUpMinimumHostsPct = 20,
 RampUpCapacityThresholdPct = 80,
-PeakStartTime = new Time(8,0),
+PeakStartTime = new ScalingActionTime(8,0),
 PeakLoadBalancingAlgorithm = SessionHostLoadBalancingAlgorithm.BreadthFirst,
-RampDownStartTime = new Time(18,0),
+RampDownStartTime = new ScalingActionTime(18,0),
 RampDownLoadBalancingAlgorithm = SessionHostLoadBalancingAlgorithm.DepthFirst,
 RampDownMinimumHostsPct = 20,
 RampDownCapacityThresholdPct = 50,
 RampDownForceLogoffUsers = true,
 RampDownWaitTimeMinutes = 30,
 RampDownNotificationMessage = "message",
-OffPeakStartTime = new Time(20,0),
+OffPeakStartTime = new ScalingActionTime(20,0),
 OffPeakLoadBalancingAlgorithm = SessionHostLoadBalancingAlgorithm.DepthFirst,
 }
 },

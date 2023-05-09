@@ -9,13 +9,16 @@ generate-model-factory: false
 csharp: true
 library-name: DesktopVirtualization
 namespace: Azure.ResourceManager.DesktopVirtualization
-require: https://github.com/Azure/azure-rest-api-specs/tree/4a8f4ea29f01468710f00593fe63150dbe030111/specification/desktopvirtualization/resource-manager/readme.md
-tag: package-2022-09
+require: https://github.com/Azure/azure-rest-api-specs/blob/45765fbbfd14084eb7a12ebd099aaeddb2a13173/specification/desktopvirtualization/resource-manager/readme.md
+# tag: package-2022-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+#mgmt-debug: 
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -97,21 +100,31 @@ rename-mapping:
   UpdateState: SessionHostUpdateState
   MsixPackageApplications.rawIcon: -|any
   MsixPackageApplications.rawPng: -|any
+  ScalingPlan.properties.hostPoolType: ScalingHostPoolType
+  Time: ScalingActionTime
+  AgentUpdateProperties: SessionHostAgentUpdateProperties
+  AgentUpdateProperties.useSessionHostLocalTime: DoesUseSessionHostLocalTime
+  AgentUpdatePatchProperties: SessionHostAgentUpdatePatchProperties
+  AgentUpdatePatchProperties.useSessionHostLocalTime: DoesUseSessionHostLocalTime
+  MaintenanceWindowProperties: SessionHostMaintenanceWindowProperties
+
+prepend-rp-prefix:
+  - DayOfWeek
 
 directive:
 # remove this useless allOf so that we will not have a `ResourceModelWithAllowedPropertySetSku` type
-  - from: swagger-document
+  - from: types.json
     where: $.definitions.ResourceModelWithAllowedPropertySet.properties.sku
     transform: >
       return {
           "$ref": "#/definitions/Sku"
         }
 # nullable issue
-  - from: swagger-document
+  - from: desktopvirtualization.json
     where: $.definitions.ApplicationGroupProperties.properties.workspaceArmPath
     transform: $["x-nullable"] = true
 # remove the format so that we can use rename-mapping to change the property type to BinaryData
-  - from: swagger-document
+  - from: desktopvirtualization.json
     where: $.definitions
     transform: >
       delete $.MsixPackageApplications.properties.rawIcon['format'];

@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Optional<HostPoolSsoSecretType> ssoSecretType = default;
             Optional<PreferredAppGroupType> preferredAppGroupType = default;
             Optional<bool> startVmOnConnect = default;
-            Optional<AgentUpdatePatchProperties> agentUpdate = default;
+            Optional<SessionHostAgentUpdatePatchProperties> agentUpdate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             {
                                 continue;
                             }
-                            agentUpdate = AgentUpdatePatchProperties.DeserializeAgentUpdatePatchProperties(property0.Value);
+                            agentUpdate = SessionHostAgentUpdatePatchProperties.DeserializeSessionHostAgentUpdatePatchProperties(property0.Value);
                             continue;
                         }
                     }

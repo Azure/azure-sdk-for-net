@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Maintenance window starting hour and day of week. </summary>
-    public partial class MaintenanceWindowProperties
+    public partial class SessionHostMaintenanceWindowProperties
     {
-        /// <summary> Initializes a new instance of MaintenanceWindowProperties. </summary>
-        public MaintenanceWindowProperties()
+        /// <summary> Initializes a new instance of SessionHostMaintenanceWindowProperties. </summary>
+        public SessionHostMaintenanceWindowProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MaintenanceWindowProperties. </summary>
+        /// <summary> Initializes a new instance of SessionHostMaintenanceWindowProperties. </summary>
         /// <param name="hour"> The update start hour of the day. (0 - 23). </param>
         /// <param name="dayOfWeek"> Day of the week. </param>
-        internal MaintenanceWindowProperties(int? hour, DayOfWeek? dayOfWeek)
+        internal SessionHostMaintenanceWindowProperties(int? hour, DesktopVirtualizationDayOfWeek? dayOfWeek)
         {
             Hour = hour;
             DayOfWeek = dayOfWeek;
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> The update start hour of the day. (0 - 23). </summary>
         public int? Hour { get; set; }
         /// <summary> Day of the week. </summary>
-        public DayOfWeek? DayOfWeek { get; set; }
+        public DesktopVirtualizationDayOfWeek? DayOfWeek { get; set; }
     }
 }

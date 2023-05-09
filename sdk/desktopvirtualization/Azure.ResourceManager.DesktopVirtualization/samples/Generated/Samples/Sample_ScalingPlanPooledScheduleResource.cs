@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
             {
                 DaysOfWeek =
 {
-DayOfWeek.Monday,DayOfWeek.Tuesday,DayOfWeek.Wednesday,DayOfWeek.Thursday,DayOfWeek.Friday
+DesktopVirtualizationDayOfWeek.Monday,DesktopVirtualizationDayOfWeek.Tuesday,DesktopVirtualizationDayOfWeek.Wednesday,DesktopVirtualizationDayOfWeek.Thursday,DesktopVirtualizationDayOfWeek.Friday
 },
                 RampUpLoadBalancingAlgorithm = SessionHostLoadBalancingAlgorithm.DepthFirst,
                 RampUpCapacityThresholdPct = 80,
-                PeakStartTime = new Time(8, 0),
+                PeakStartTime = new ScalingActionTime(8, 0),
                 RampDownLoadBalancingAlgorithm = SessionHostLoadBalancingAlgorithm.DepthFirst,
                 RampDownMinimumHostsPct = 20,
                 RampDownWaitTimeMinutes = 30,

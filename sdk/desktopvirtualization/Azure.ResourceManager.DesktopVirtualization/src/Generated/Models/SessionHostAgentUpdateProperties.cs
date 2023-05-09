@@ -11,34 +11,34 @@ using Azure.Core;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> The session host configuration for updating agent, monitoring agent, and stack component. </summary>
-    public partial class AgentUpdateProperties
+    public partial class SessionHostAgentUpdateProperties
     {
-        /// <summary> Initializes a new instance of AgentUpdateProperties. </summary>
-        public AgentUpdateProperties()
+        /// <summary> Initializes a new instance of SessionHostAgentUpdateProperties. </summary>
+        public SessionHostAgentUpdateProperties()
         {
-            MaintenanceWindows = new ChangeTrackingList<MaintenanceWindowProperties>();
+            MaintenanceWindows = new ChangeTrackingList<SessionHostMaintenanceWindowProperties>();
         }
 
-        /// <summary> Initializes a new instance of AgentUpdateProperties. </summary>
-        /// <param name="sessionHostComponentUpdateType"> The type of maintenance for session host components. </param>
-        /// <param name="useSessionHostLocalTime"> Whether to use localTime of the virtual machine. </param>
+        /// <summary> Initializes a new instance of SessionHostAgentUpdateProperties. </summary>
+        /// <param name="updateType"> The type of maintenance for session host components. </param>
+        /// <param name="doesUseSessionHostLocalTime"> Whether to use localTime of the virtual machine. </param>
         /// <param name="maintenanceWindowTimeZone"> Time zone for maintenance as defined in https://docs.microsoft.com/en-us/dotnet/api/system.timezoneinfo.findsystemtimezonebyid?view=net-5.0. Must be set if useLocalTime is true. </param>
         /// <param name="maintenanceWindows"> List of maintenance windows. Maintenance windows are 2 hours long. </param>
-        internal AgentUpdateProperties(SessionHostComponentUpdateType? sessionHostComponentUpdateType, bool? useSessionHostLocalTime, string maintenanceWindowTimeZone, IList<MaintenanceWindowProperties> maintenanceWindows)
+        internal SessionHostAgentUpdateProperties(SessionHostComponentUpdateType? updateType, bool? doesUseSessionHostLocalTime, string maintenanceWindowTimeZone, IList<SessionHostMaintenanceWindowProperties> maintenanceWindows)
         {
-            SessionHostComponentUpdateType = sessionHostComponentUpdateType;
-            UseSessionHostLocalTime = useSessionHostLocalTime;
+            UpdateType = updateType;
+            DoesUseSessionHostLocalTime = doesUseSessionHostLocalTime;
             MaintenanceWindowTimeZone = maintenanceWindowTimeZone;
             MaintenanceWindows = maintenanceWindows;
         }
 
         /// <summary> The type of maintenance for session host components. </summary>
-        public SessionHostComponentUpdateType? SessionHostComponentUpdateType { get; set; }
+        public SessionHostComponentUpdateType? UpdateType { get; set; }
         /// <summary> Whether to use localTime of the virtual machine. </summary>
-        public bool? UseSessionHostLocalTime { get; set; }
+        public bool? DoesUseSessionHostLocalTime { get; set; }
         /// <summary> Time zone for maintenance as defined in https://docs.microsoft.com/en-us/dotnet/api/system.timezoneinfo.findsystemtimezonebyid?view=net-5.0. Must be set if useLocalTime is true. </summary>
         public string MaintenanceWindowTimeZone { get; set; }
         /// <summary> List of maintenance windows. Maintenance windows are 2 hours long. </summary>
-        public IList<MaintenanceWindowProperties> MaintenanceWindows { get; }
+        public IList<SessionHostMaintenanceWindowProperties> MaintenanceWindows { get; }
     }
 }

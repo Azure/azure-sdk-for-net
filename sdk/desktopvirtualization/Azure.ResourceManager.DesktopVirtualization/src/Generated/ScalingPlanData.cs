@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="description"> Description of scaling plan. </param>
         /// <param name="friendlyName"> User friendly name of scaling plan. </param>
         /// <param name="timeZone"> Timezone of the scaling plan. </param>
-        /// <param name="hostPoolType"> HostPool type for desktop. </param>
+        /// <param name="scalingHostPoolType"> HostPool type for desktop. </param>
         /// <param name="exclusionTag"> Exclusion tag for scaling plan. </param>
         /// <param name="schedules"> List of ScalingPlanPooledSchedule definitions. </param>
         /// <param name="hostPoolReferences"> List of ScalingHostPoolReference definitions. </param>
@@ -54,13 +54,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned. </param>
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="plan"> Gets or sets the plan. </param>
-        internal ScalingPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, string timeZone, ScalingHostPoolType? hostPoolType, string exclusionTag, IList<ScalingSchedule> schedules, IList<ScalingHostPoolReference> hostPoolReferences, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan) : base(id, name, resourceType, systemData, tags, location)
+        internal ScalingPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, string timeZone, ScalingHostPoolType? scalingHostPoolType, string exclusionTag, IList<ScalingSchedule> schedules, IList<ScalingHostPoolReference> hostPoolReferences, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan) : base(id, name, resourceType, systemData, tags, location)
         {
             ObjectId = objectId;
             Description = description;
             FriendlyName = friendlyName;
             TimeZone = timeZone;
-            HostPoolType = hostPoolType;
+            ScalingHostPoolType = scalingHostPoolType;
             ExclusionTag = exclusionTag;
             Schedules = schedules;
             HostPoolReferences = hostPoolReferences;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> Timezone of the scaling plan. </summary>
         public string TimeZone { get; set; }
         /// <summary> HostPool type for desktop. </summary>
-        public ScalingHostPoolType? HostPoolType { get; set; }
+        public ScalingHostPoolType? ScalingHostPoolType { get; set; }
         /// <summary> Exclusion tag for scaling plan. </summary>
         public string ExclusionTag { get; set; }
         /// <summary> List of ScalingPlanPooledSchedule definitions. </summary>

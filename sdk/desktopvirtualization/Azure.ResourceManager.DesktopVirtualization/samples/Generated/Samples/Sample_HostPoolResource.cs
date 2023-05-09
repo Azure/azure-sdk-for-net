@@ -161,21 +161,21 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
                 SsoClientSecretKeyVaultPath = "https://keyvault/secret",
                 SsoSecretType = HostPoolSsoSecretType.SharedKey,
                 StartVmOnConnect = false,
-                AgentUpdate = new AgentUpdatePatchProperties()
+                AgentUpdate = new SessionHostAgentUpdatePatchProperties()
                 {
-                    SessionHostComponentUpdateType = SessionHostComponentUpdateType.Scheduled,
-                    UseSessionHostLocalTime = false,
+                    UpdateType = SessionHostComponentUpdateType.Scheduled,
+                    DoesUseSessionHostLocalTime = false,
                     MaintenanceWindowTimeZone = "Alaskan Standard Time",
                     MaintenanceWindows =
 {
 new MaintenanceWindowPatchProperties()
 {
 Hour = 7,
-DayOfWeek = DayOfWeek.Friday,
+DayOfWeek = DesktopVirtualizationDayOfWeek.Friday,
 },new MaintenanceWindowPatchProperties()
 {
 Hour = 8,
-DayOfWeek = DayOfWeek.Saturday,
+DayOfWeek = DesktopVirtualizationDayOfWeek.Saturday,
 }
 },
                 },

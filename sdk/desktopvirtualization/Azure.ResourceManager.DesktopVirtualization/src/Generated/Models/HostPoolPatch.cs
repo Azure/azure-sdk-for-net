@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="preferredAppGroupType"> The type of preferred application group type, default to Desktop Application Group. </param>
         /// <param name="startVmOnConnect"> The flag to turn on/off StartVMOnConnect feature. </param>
         /// <param name="agentUpdate"> The session host configuration for updating agent, monitoring agent, and stack component. </param>
-        internal HostPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, string friendlyName, string description, string customRdpProperty, int? maxSessionLimit, PersonalDesktopAssignmentType? personalDesktopAssignmentType, HostPoolLoadBalancerType? loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfoPatch registrationInfo, string vmTemplate, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType? preferredAppGroupType, bool? startVmOnConnect, AgentUpdatePatchProperties agentUpdate) : base(id, name, resourceType, systemData)
+        internal HostPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, string friendlyName, string description, string customRdpProperty, int? maxSessionLimit, PersonalDesktopAssignmentType? personalDesktopAssignmentType, HostPoolLoadBalancerType? loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfoPatch registrationInfo, string vmTemplate, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType? preferredAppGroupType, bool? startVmOnConnect, SessionHostAgentUpdatePatchProperties agentUpdate) : base(id, name, resourceType, systemData)
         {
             Tags = tags;
             FriendlyName = friendlyName;
@@ -100,6 +100,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> The flag to turn on/off StartVMOnConnect feature. </summary>
         public bool? StartVmOnConnect { get; set; }
         /// <summary> The session host configuration for updating agent, monitoring agent, and stack component. </summary>
-        public AgentUpdatePatchProperties AgentUpdate { get; set; }
+        public SessionHostAgentUpdatePatchProperties AgentUpdate { get; set; }
     }
 }

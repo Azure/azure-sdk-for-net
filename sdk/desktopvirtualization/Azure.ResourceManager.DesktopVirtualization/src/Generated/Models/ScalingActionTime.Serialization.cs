@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class Time : IUtf8JsonSerializable
+    public partial class ScalingActionTime : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             writer.WriteEndObject();
         }
 
-        internal static Time DeserializeTime(JsonElement element)
+        internal static ScalingActionTime DeserializeScalingActionTime(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     continue;
                 }
             }
-            return new Time(hour, minute);
+            return new ScalingActionTime(hour, minute);
         }
     }
 }

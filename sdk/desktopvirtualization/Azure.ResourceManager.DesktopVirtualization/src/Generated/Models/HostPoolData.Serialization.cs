@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             PreferredAppGroupType preferredAppGroupType = default;
             Optional<bool> startVmOnConnect = default;
             Optional<bool> cloudPCResource = default;
-            Optional<AgentUpdateProperties> agentUpdate = default;
+            Optional<SessionHostAgentUpdateProperties> agentUpdate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"u8))
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             {
                                 continue;
                             }
-                            agentUpdate = AgentUpdateProperties.DeserializeAgentUpdateProperties(property0.Value);
+                            agentUpdate = SessionHostAgentUpdateProperties.DeserializeSessionHostAgentUpdateProperties(property0.Value);
                             continue;
                         }
                     }

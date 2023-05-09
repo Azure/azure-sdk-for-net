@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 return null;
             }
             Optional<int> hour = default;
-            Optional<DayOfWeek> dayOfWeek = default;
+            Optional<DesktopVirtualizationDayOfWeek> dayOfWeek = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hour"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    dayOfWeek = property.Value.GetString().ToDayOfWeek();
+                    dayOfWeek = property.Value.GetString().ToDesktopVirtualizationDayOfWeek();
                     continue;
                 }
             }
