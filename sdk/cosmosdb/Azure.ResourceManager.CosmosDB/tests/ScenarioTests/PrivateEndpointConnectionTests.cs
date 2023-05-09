@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         private ResourceIdentifier _databaseAccountIdentifier;
         private CosmosDBAccountResource _databaseAccount;
 
-        public PrivateEndpointConnectionTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public PrivateEndpointConnectionTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

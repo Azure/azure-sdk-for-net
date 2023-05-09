@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         private string _databaseName;
 
-        public MongoDBDatabaseTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public MongoDBDatabaseTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
