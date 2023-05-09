@@ -127,6 +127,14 @@
             "id": "Sanitized"
           }
         },
+        "customContext": {
+          "sipHeaders": {
+            "userToUser": "Sanitized"
+          },
+          "voipHeaders": {
+            "customHeader": "Sanitized"
+          }
+        },
         "callbackUri": "https://sanitized.skype.com/api/servicebuscallback/events?q=SanitizedSanitized"
       },
       "StatusCode": 201,
