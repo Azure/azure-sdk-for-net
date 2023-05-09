@@ -160,9 +160,8 @@ namespace Azure.Core.Tests.ModelSerializationTests
             }
         }
 
-        public bool TryDeserialize(Stream stream, out long bytesConsumed, SerializableOptions options = default)
+        public void Deserialize(Stream stream, SerializableOptions options = default)
         {
-            bytesConsumed = 0;
             try
             {
                 JsonDocument jsonDocument = JsonDocument.Parse(stream);
@@ -172,12 +171,10 @@ namespace Azure.Core.Tests.ModelSerializationTests
                 this.IsHungry = model.IsHungry;
                 this.Name = model.Name;
                 this.RawData = model.RawData;
-                bytesConsumed = stream.Length;
-                return true;
             }
             catch
             {
-                return false;
+                throw new RequestFailedException("Model could not be deserialized.");
             }
         }
 
@@ -196,7 +193,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             }
             catch
             {
-                throw new RequestFailedException("Model could not be serialized.");
+                throw new RequestFailedException("Model could not be deserialized.");
             }
         }
         #endregion

@@ -160,6 +160,43 @@ namespace Azure.Core.Tests.ModelSerializationTests
                 return false;
             }
         }
+
+        public new void Deserialize(Stream stream, SerializableOptions options = default)
+        {
+            try
+            {
+                JsonDocument jsonDocument = JsonDocument.Parse(stream);
+                var model = DeserializeDogListProperty(jsonDocument.RootElement, options ?? new SerializableOptions());
+                this.Name = model.Name;
+                this.Weight = model.Weight;
+                this.IsHungry = model.IsHungry;
+                this.FoodConsumed = model.FoodConsumed;
+                this.RawData = model.RawData;
+            }
+            catch
+            {
+                throw new RequestFailedException("Model could not be deserialized.");
+            }
+        }
+
+        public new void Serialize(Stream stream, SerializableOptions options = default)
+        {
+            try
+            {
+                JsonWriterOptions jsonWriterOptions = new JsonWriterOptions();
+                if (options.PrettyPrint)
+                {
+                    jsonWriterOptions.Indented = true;
+                }
+                Utf8JsonWriter writer = new Utf8JsonWriter(stream, jsonWriterOptions);
+                ((IUtf8JsonSerializable)this).Write(writer, options ?? new SerializableOptions());
+                writer.Flush();
+            }
+            catch
+            {
+                throw new RequestFailedException("Model could not be deserialized.");
+            }
+        }
         #endregion
     }
 }
