@@ -408,38 +408,32 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //prepare vnet
             string vnetName = Recording.GenerateAssetName("sdktestvnet");
-            if (Mode == RecordedTestMode.Record)
+            var parameters = new VirtualNetworkData
             {
-                using (Recording.DisableRecording())
-                {
-                    var parameters = new VirtualNetworkData
+                Subnets = {
+                    new SubnetData
                     {
-                        Subnets = {
-                            new SubnetData
-                            {
-                                Name = "default1",
-                                AddressPrefix = "10.0.0.0/24",
-                                ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.ServiceBus" } }
-                            },
-                            new SubnetData
-                            {
-                                Name = "default2",
-                                AddressPrefix = "10.0.1.0/24",
-                                ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.ServiceBus" } }
-                            },
-                            new SubnetData
-                            {
-                                Name = "default3",
-                                AddressPrefix = "10.0.2.0/24",
-                                ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.ServiceBus" } }
-                            }
-                        },
-                        Location = "eastus2"
-                    };
-                    parameters.AddressPrefixes.Add("10.0.0.0/16");
-                    VirtualNetworkResource virtualNetwork = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, parameters)).Value;
-                }
-            }
+                        Name = "default1",
+                        AddressPrefix = "10.0.0.0/24",
+                        ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.ServiceBus" } }
+                    },
+                    new SubnetData
+                    {
+                        Name = "default2",
+                        AddressPrefix = "10.0.1.0/24",
+                        ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.ServiceBus" } }
+                    },
+                    new SubnetData
+                    {
+                        Name = "default3",
+                        AddressPrefix = "10.0.2.0/24",
+                        ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.ServiceBus" } }
+                    }
+                },
+                Location = "eastus2"
+            };
+            parameters.AddressPrefixes.Add("10.0.0.0/16");
+            VirtualNetworkResource virtualNetwork = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, parameters)).Value;
 
             //set network rule set
             string subscriptionId = DefaultSubscription.Id.ToString();
