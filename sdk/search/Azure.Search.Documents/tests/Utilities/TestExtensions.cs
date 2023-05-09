@@ -136,7 +136,7 @@ namespace Azure.Search.Documents.Tests
         /// <summary>
         /// Check if two sequences are equal.
         /// </summary>
-        public static bool SequenceEqualsNullSafe<T>(this IList<T> a, IList<T> b) =>
+        public static bool SequenceEqualsNullSafe<T>(this IReadOnlyList<T> a, IReadOnlyList<T> b) =>
             (a == null) ? (b == null || b.Count == 0) : a.SequenceEqual(b ?? new T[0]);
 
         /// <summary>

@@ -3310,6 +3310,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Indexes.Models.SimilarityAlgorithm SimilarityAlgorithm(string oDataType) { throw null; }
         public static Azure.Search.Documents.Models.SuggestResults<T> SuggestResults<T>(System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.SearchSuggestion<T>> results, double? coverage) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.TokenFilter TokenFilter(string oDataType, string name) { throw null; }
+        public static Azure.Search.Documents.Models.Vector Vector(System.Collections.Generic.IEnumerable<float> value = null, int? k = default(int?), string fields = null) { throw null; }
     }
     public enum SearchQueryType
     {
@@ -3433,7 +3434,7 @@ namespace Azure.Search.Documents.Models
         public Vector() { }
         public string Fields { get { throw null; } set { } }
         public int? K { get { throw null; } set { } }
-        public System.Collections.Generic.IList<float> Value { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<float> Value { get { throw null; } set { } }
     }
 }
 namespace Microsoft.Extensions.Azure

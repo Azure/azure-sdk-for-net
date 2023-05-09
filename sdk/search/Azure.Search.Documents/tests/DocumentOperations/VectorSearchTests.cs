@@ -5,15 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2023_07_01_Preview)]
     public partial class VectorSearch : SearchTestBase
     {
         public VectorSearch(bool async, SearchClientOptions.ServiceVersion serviceVersion)
-            : base(async, SearchClientOptions.ServiceVersion.V2023_07_01_Preview, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -31,19 +33,14 @@ namespace Azure.Search.Documents.Tests
         {
             await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
 
-            IList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
+            var vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
             await Task.Delay(TimeSpan.FromSeconds(1));
 
-            var vector = new Vector { K = 3, Fields = "descriptionVector" };
-            foreach (var v in vectorizedResult)
-            {
-                vector.Value.Add(v);
-            }
             Response<SearchResults<Hotel>> response = await resources.GetSearchClient().SearchAsync<Hotel>(
                    null,
                    new SearchOptions
                    {
-                       Vector = vector,
+                       Vector = new Vector { Value = vectorizedResult, K = 3, Fields = "descriptionVector" },
                        Select = { "hotelId", "hotelName" }
                    });
 
@@ -58,18 +55,13 @@ namespace Azure.Search.Documents.Tests
         {
             await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
 
-            IList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
+            var vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
 
-            var vector = new Vector { K = 3, Fields = "descriptionVector" };
-            foreach (var v in vectorizedResult)
-            {
-                vector.Value.Add(v);
-            }
             Response<SearchResults<Hotel>> response = await resources.GetSearchClient().SearchAsync<Hotel>(
                     null,
                     new SearchOptions
                     {
-                        Vector = vector,
+                        Vector = new Vector { Value = vectorizedResult, K = 3, Fields = "descriptionVector" },
                         Filter = "category eq 'Budget'",
                         Select = { "hotelId", "hotelName", "category" }
                     });
@@ -85,18 +77,13 @@ namespace Azure.Search.Documents.Tests
         {
             await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
 
-            IList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
+            var vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
 
-            var vector = new Vector { K = 3, Fields = "descriptionVector" };
-            foreach (var v in vectorizedResult)
-            {
-                vector.Value.Add(v);
-            }
             Response<SearchResults<Hotel>> response = await resources.GetSearchClient().SearchAsync<Hotel>(
                     "Top hotels in town",
                     new SearchOptions
                     {
-                        Vector = vector,
+                        Vector = new Vector { Value = vectorizedResult, K = 3, Fields = "descriptionVector" },
                         Select = { "hotelId", "hotelName" },
                     });
 

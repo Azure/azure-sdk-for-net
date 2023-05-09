@@ -23,15 +23,12 @@ namespace Azure.Search.Documents.Models
         /// <param name="value"> The vector representation of a search query. </param>
         /// <param name="k"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fields"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
-        internal Vector(IList<float> value, int? k, string fields)
+        internal Vector(IReadOnlyList<float> value, int? k, string fields)
         {
             Value = value;
             K = k;
             Fields = fields;
         }
-
-        /// <summary> The vector representation of a search query. </summary>
-        public IList<float> Value { get; }
         /// <summary> Number of nearest neighbors to return as top hits. </summary>
         public int? K { get; set; }
         /// <summary> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </summary>

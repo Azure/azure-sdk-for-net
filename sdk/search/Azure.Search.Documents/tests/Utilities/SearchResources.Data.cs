@@ -343,7 +343,7 @@ namespace Azure.Search.Documents.Tests
         public string DescriptionFr { get; set; }
 
         [JsonPropertyName("descriptionVector")]
-        public IList<float> DescriptionVector { get; set; }
+        public IReadOnlyList<float> DescriptionVector { get; set; }
 
         [JsonPropertyName("category")]
         public string Category { get; set; }

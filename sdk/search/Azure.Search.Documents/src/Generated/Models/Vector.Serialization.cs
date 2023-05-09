@@ -45,7 +45,7 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            Optional<IList<float>> value = default;
+            Optional<IReadOnlyList<float>> value = default;
             Optional<int> k = default;
             Optional<string> fields = default;
             foreach (var property in element.EnumerateObject())
