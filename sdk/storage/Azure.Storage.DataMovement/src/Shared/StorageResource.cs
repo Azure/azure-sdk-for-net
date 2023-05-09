@@ -18,7 +18,7 @@ namespace Azure.Storage.DataMovement
     public abstract class StorageResource : StorageResourceBase
     {
         /// <summary>
-        /// If the storage resource authenticates using OAuth, then we leave this specified.
+        /// Stores the authentication scheme that client authenticates with.
         /// </summary>
         internal ResourceAuthScheme _authScheme;
 

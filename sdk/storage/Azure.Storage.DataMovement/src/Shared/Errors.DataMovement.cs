@@ -1,12 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
 using Azure.Storage.DataMovement;
-using static Azure.Storage.Constants.Sas;
 
 namespace Azure.Storage
 {
