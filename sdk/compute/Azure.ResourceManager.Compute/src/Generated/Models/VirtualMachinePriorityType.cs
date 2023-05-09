@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Specifies the priority for a standalone virtual machine or the virtual machines in the scale set. &lt;br&gt;&lt;br&gt; &apos;Low&apos; enum will be deprecated in the future, please use &apos;Spot&apos; as the enum to deploy Azure Spot VM/VMSS. </summary>
+    /// <summary> Specifies the priority for a standalone virtual machine or the virtual machines in the scale set. &apos;Low&apos; enum will be deprecated in the future, please use &apos;Spot&apos; as the enum to deploy Azure Spot VM/VMSS. </summary>
     public readonly partial struct VirtualMachinePriorityType : IEquatable<VirtualMachinePriorityType>
     {
         private readonly string _value;
