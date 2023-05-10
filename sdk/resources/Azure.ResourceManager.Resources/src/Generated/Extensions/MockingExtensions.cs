@@ -36,8 +36,33 @@ namespace Azure.ResourceManager.Resources.Mocking
             var setupMethod = newMockType.GetMethod("Setup", new[] { parameterType });
 
             // TODO -- need to construct a new expression using the parameter of the new type from the old "expression"
-            var argument = expression.Parameters;
-            setupMethod.Invoke(newMock, new[] { expression });
+            var newExpression = new ChangeTypeVisitor(extensionClientType).ChangeType(expression);
+            setupMethod.Invoke(newMock, new[] { newExpression });
+        }
+
+        internal class ChangeTypeVisitor : ExpressionVisitor
+        {
+            private readonly ParameterExpression _newParameter;
+
+            public ChangeTypeVisitor(Type newType)
+            {
+                _newParameter = Expression.Parameter(newType);
+            }
+
+            protected override Expression VisitParameter(ParameterExpression node)
+            {
+                return _newParameter;
+            }
+
+            protected override Expression VisitInvocation(InvocationExpression node)
+            {
+                return base.VisitInvocation(node);
+            }
+
+            public Expression ChangeType(Expression expression)
+            {
+                return Visit(expression);
+            }
         }
     }
 }
