@@ -544,13 +544,8 @@ namespace Azure.Containers.ContainerRegistry
                 throw new RequestFailedException(response.Status, InvalidContentRangeMessage);
             }
 
-            string[] values = contentRange.Split('/');
-            if (values.Length < 2)
-            {
-                throw new RequestFailedException(response.Status, InvalidContentRangeMessage);
-            }
-
-            if (!long.TryParse(values[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out long size) ||
+            int index = contentRange.IndexOf('/');
+            if (!long.TryParse(contentRange.Substring(index + 1), NumberStyles.Integer, CultureInfo.InvariantCulture, out long size) ||
                 size <= 0)
             {
                 throw new RequestFailedException(response.Status, InvalidContentRangeMessage);
@@ -680,7 +675,7 @@ namespace Azure.Containers.ContainerRegistry
             return reference.StartsWith("sha256:", StringComparison.OrdinalIgnoreCase);
         }
 
-        private static void CheckBlobSize(Response response)
+        private static void CheckContentLength(Response response)
         {
             if (response.Headers.ContentLength == null ||
                 response.Headers.ContentLength <= 0)
@@ -694,7 +689,9 @@ namespace Azure.Containers.ContainerRegistry
             // This check is to address part of the service threat model.
             // If a manifest does not have a proper content length or is too big,
             // it indicates a malicious or faulty service and should not be trusted.
-            int? size = response.Headers.ContentLength ?? throw new RequestFailedException(response.Status, InvalidContentLengthMessage);
+            CheckContentLength(response);
+
+            int? size = response.Headers.ContentLength;
 
             if (size > MaxManifestSize)
             {
@@ -767,7 +764,7 @@ namespace Azure.Containers.ContainerRegistry
                 _blobRestClient.GetBlob(_repositoryName, digest, cancellationToken);
 
             Response response = blobResult.GetRawResponse();
-            CheckBlobSize(response);
+            CheckContentLength(response);
 
             BinaryData data = async ?
                 await BinaryData.FromStreamAsync(blobResult.Value, cancellationToken).ConfigureAwait(false) :
@@ -872,7 +869,7 @@ namespace Azure.Containers.ContainerRegistry
                 _blobRestClient.GetBlob(_repositoryName, digest, cancellationToken);
 
             Response response = blobResult.GetRawResponse();
-            CheckBlobSize(response);
+            CheckContentLength(response);
 
             // Wrap the response Content in a RetriableStream so we
             // can return it before it's finished downloading, but still
