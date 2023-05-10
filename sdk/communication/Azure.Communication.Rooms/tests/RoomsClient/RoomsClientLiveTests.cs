@@ -164,7 +164,9 @@ namespace Azure.Communication.Rooms.Tests
             try
             {
                 AsyncPageable<CommunicationRoom> allActiveRooms = roomsClient.GetRoomsAsync();
-                CommunicationRoom firstActiveRoom = allActiveRooms.GetAsyncEnumerator().Current;
+                List<CommunicationRoom> allActiveRoomsList = await allActiveRooms.ToEnumerableAsync();
+                CommunicationRoom firstActiveRoom = allActiveRoomsList.First();
+                Assert.IsNotNull(firstActiveRoom);
                 Assert.IsNotNull(firstActiveRoom.Id);
                 Assert.IsNotNull(firstActiveRoom.CreatedAt);
                 Assert.IsNotNull(firstActiveRoom.ValidFrom);
