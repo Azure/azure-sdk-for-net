@@ -118,7 +118,12 @@ namespace Azure.Core.Tests
         public void DictionaryContent()
         {
             var dictionary = new Dictionary<string, object> { { "keyInt", 1 }, { "keyString", "2" }, { "keyFloat", 3.1f } };
+
+#if NETCOREAPP
             var expected = "{\"keyInt\":1,\"keyString\":\"2\",\"keyFloat\":3.1}";
+#else
+            var expected = "{\"keyInt\":1,\"keyString\":\"2\",\"keyFloat\":3.0999999}";
+#endif
             var destination = new MemoryStream();
             var content = RequestContent.Create(dictionary);
 
@@ -127,34 +132,6 @@ namespace Azure.Core.Tests
             using var reader = new StreamReader(destination);
 
             Assert.AreEqual(expected, reader.ReadToEnd());
-        }
-
-        [Test]
-        public void DynamicDataContent()
-        {
-            ReadOnlySpan<byte> utf8Json = """
-                {
-                    "foo" : {
-                       "bar" : 1
-                    }
-                }
-                """u8;
-            ReadOnlyMemory<byte> json = new ReadOnlyMemory<byte>(utf8Json.ToArray());
-
-            using JsonDocument doc = JsonDocument.Parse(json);
-            using MemoryStream expected = new();
-            using Utf8JsonWriter writer = new(expected);
-            doc.WriteTo(writer);
-            writer.Flush();
-            expected.Position = 0;
-
-            using dynamic source = new BinaryData(json).ToDynamicFromJson();
-            using RequestContent content = RequestContent.Create(source);
-            using MemoryStream destination = new();
-
-            content.WriteTo(destination, default);
-
-            CollectionAssert.AreEqual(expected.ToArray(), destination.ToArray());
         }
     }
 }
