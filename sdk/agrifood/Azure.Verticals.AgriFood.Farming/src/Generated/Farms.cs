@@ -50,13 +50,22 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = apiVersion;
         }
 
-        /// <summary> [Protocol Method] Get a cascade delete job for specified farm. </summary>
+        /// <summary>
+        /// [Protocol Method] Get a cascade delete job for specified farm.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Farms.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetailsAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestContext context = null)
         {
@@ -76,13 +85,22 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> [Protocol Method] Get a cascade delete job for specified farm. </summary>
+        /// <summary>
+        /// [Protocol Method] Get a cascade delete job for specified farm.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Farms.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetails(string,RequestContext)']/*" />
         public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestContext context = null)
         {
@@ -102,14 +120,23 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> [Protocol Method] Gets a specified farm resource under a particular party. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets a specified farm resource under a particular party.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="partyId"> ID of the associated party resource. </param>
         /// <param name="farmId"> ID of the farm resource. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> or <paramref name="farmId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="farmId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Farms.xml" path="doc/members/member[@name='GetFarmAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetFarmAsync(string partyId, string farmId, RequestContext context = null)
         {
@@ -130,14 +157,23 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> [Protocol Method] Gets a specified farm resource under a particular party. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets a specified farm resource under a particular party.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="partyId"> ID of the associated party resource. </param>
         /// <param name="farmId"> ID of the farm resource. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> or <paramref name="farmId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="farmId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Farms.xml" path="doc/members/member[@name='GetFarm(string,string,RequestContext)']/*" />
         public virtual Response GetFarm(string partyId, string farmId, RequestContext context = null)
         {
@@ -158,15 +194,24 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> [Protocol Method] Creates or updates a farm resource under a particular party. </summary>
+        /// <summary>
+        /// [Protocol Method] Creates or updates a farm resource under a particular party.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="partyId"> Id of the associated party resource. </param>
         /// <param name="farmId"> Id of the farm resource. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="farmId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="farmId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Farms.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string partyId, string farmId, RequestContent content, RequestContext context = null)
         {
@@ -188,15 +233,24 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> [Protocol Method] Creates or updates a farm resource under a particular party. </summary>
+        /// <summary>
+        /// [Protocol Method] Creates or updates a farm resource under a particular party.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="partyId"> Id of the associated party resource. </param>
         /// <param name="farmId"> Id of the farm resource. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="farmId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="farmId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Farms.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string partyId, string farmId, RequestContent content, RequestContext context = null)
         {
@@ -218,7 +272,16 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> [Protocol Method] Deletes a specified farm resource under a particular party. </summary>
+        /// <summary>
+        /// [Protocol Method] Deletes a specified farm resource under a particular party.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="partyId"> Id of the party. </param>
         /// <param name="farmId"> Id of the farm. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -246,7 +309,16 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> [Protocol Method] Deletes a specified farm resource under a particular party. </summary>
+        /// <summary>
+        /// [Protocol Method] Deletes a specified farm resource under a particular party.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="partyId"> Id of the party. </param>
         /// <param name="farmId"> Id of the farm. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -274,7 +346,16 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> [Protocol Method] Returns a paginated list of farm resources across all parties. </summary>
+        /// <summary>
+        /// [Protocol Method] Returns a paginated list of farm resources across all parties.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="farmIds"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
@@ -302,7 +383,16 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Farms.GetFarms", "value", "nextLink", context);
         }
 
-        /// <summary> [Protocol Method] Returns a paginated list of farm resources across all parties. </summary>
+        /// <summary>
+        /// [Protocol Method] Returns a paginated list of farm resources across all parties.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="farmIds"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
@@ -330,7 +420,16 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Farms.GetFarms", "value", "nextLink", context);
         }
 
-        /// <summary> [Protocol Method] Returns a paginated list of farm resources under a particular party. </summary>
+        /// <summary>
+        /// [Protocol Method] Returns a paginated list of farm resources under a particular party.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="ids"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
@@ -363,7 +462,16 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Farms.GetFarmsByPartyId", "value", "nextLink", context);
         }
 
-        /// <summary> [Protocol Method] Returns a paginated list of farm resources under a particular party. </summary>
+        /// <summary>
+        /// [Protocol Method] Returns a paginated list of farm resources under a particular party.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="ids"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
@@ -396,7 +504,16 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Farms.GetFarmsByPartyId", "value", "nextLink", context);
         }
 
-        /// <summary> [Protocol Method] Create a cascade delete job for specified farm. </summary>
+        /// <summary>
+        /// [Protocol Method] Create a cascade delete job for specified farm.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job ID supplied by end user. </param>
         /// <param name="partyId"> ID of the associated party. </param>
@@ -405,7 +522,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="partyId"/> or <paramref name="farmId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/Farms.xml" path="doc/members/member[@name='CreateCascadeDeleteJobAsync(WaitUntil,string,string,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string partyId, string farmId, RequestContext context = null)
         {
@@ -427,7 +544,16 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> [Protocol Method] Create a cascade delete job for specified farm. </summary>
+        /// <summary>
+        /// [Protocol Method] Create a cascade delete job for specified farm.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job ID supplied by end user. </param>
         /// <param name="partyId"> ID of the associated party. </param>
@@ -436,7 +562,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="partyId"/> or <paramref name="farmId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/Farms.xml" path="doc/members/member[@name='CreateCascadeDeleteJob(WaitUntil,string,string,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string partyId, string farmId, RequestContext context = null)
         {

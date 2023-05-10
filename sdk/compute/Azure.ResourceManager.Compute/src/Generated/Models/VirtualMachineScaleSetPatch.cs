@@ -54,5 +54,10 @@ namespace Azure.ResourceManager.Compute.Models
                 ProximityPlacementGroup.Id = value;
             }
         }
+
+        /// <summary> Specifies the desired targets for mixing Spot and Regular priority VMs within the same VMSS Flex instance. </summary>
+        public VirtualMachineScaleSetPriorityMixPolicy PriorityMixPolicy { get; set; }
+        /// <summary> Specifies the Spot Restore properties for the virtual machine scale set. </summary>
+        public SpotRestorePolicy SpotRestorePolicy { get; set; }
     }
 }

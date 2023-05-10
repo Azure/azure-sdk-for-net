@@ -60,10 +60,8 @@ namespace Azure.ResourceManager.ServiceNetworking
     public partial class FrontendData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public FrontendData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.ServiceNetworking.Models.FrontendIPAddressVersion? IPAddressVersion { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceNetworking.Models.FrontendMode? Mode { get { throw null; } set { } }
+        public string Fqdn { get { throw null; } }
         public Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.Core.ResourceIdentifier PublicIPAddressId { get { throw null; } set { } }
     }
     public partial class FrontendResource : Azure.ResourceManager.ArmResource
     {
@@ -151,7 +149,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
     public partial class AssociationPatch
     {
         public AssociationPatch() { }
-        public Azure.ResourceManager.ServiceNetworking.Models.AssociationUpdateProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceNetworking.Models.AssociationType? AssociationType { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -171,46 +170,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         public static bool operator !=(Azure.ResourceManager.ServiceNetworking.Models.AssociationType left, Azure.ResourceManager.ServiceNetworking.Models.AssociationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AssociationUpdateProperties
-    {
-        public AssociationUpdateProperties() { }
-        public Azure.ResourceManager.ServiceNetworking.Models.AssociationType? AssociationType { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
-    }
-    public enum FrontendIPAddressVersion
-    {
-        IPv4 = 0,
-        IPv6 = 1,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FrontendMode : System.IEquatable<Azure.ResourceManager.ServiceNetworking.Models.FrontendMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FrontendMode(string value) { throw null; }
-        public static Azure.ResourceManager.ServiceNetworking.Models.FrontendMode Public { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ServiceNetworking.Models.FrontendMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ServiceNetworking.Models.FrontendMode left, Azure.ResourceManager.ServiceNetworking.Models.FrontendMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ServiceNetworking.Models.FrontendMode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ServiceNetworking.Models.FrontendMode left, Azure.ResourceManager.ServiceNetworking.Models.FrontendMode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class FrontendPatch
     {
         public FrontendPatch() { }
-        public Azure.ResourceManager.ServiceNetworking.Models.FrontendUpdateProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class FrontendUpdateProperties
-    {
-        public FrontendUpdateProperties() { }
-        public Azure.ResourceManager.ServiceNetworking.Models.FrontendIPAddressVersion? IPAddressVersion { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceNetworking.Models.FrontendMode? Mode { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier PublicIPAddressId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState>
@@ -238,7 +201,6 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
     public partial class TrafficControllerPatch
     {
         public TrafficControllerPatch() { }
-        public System.BinaryData Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
 }
