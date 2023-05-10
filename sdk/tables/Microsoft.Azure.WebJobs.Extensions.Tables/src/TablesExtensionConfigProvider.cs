@@ -125,13 +125,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             return table;
         }
 
-        internal Task<ParameterBindingData> CreateParameterBindingData(TableAttribute attribute, ValueBindingContext context)
+        internal ParameterBindingData CreateParameterBindingData(TableAttribute attribute)
         {
             var tableDetails = new TablesParameterBindingDataContent(attribute);
             var tableDetailsBinaryData = new BinaryData(tableDetails);
             var parameterBindingData = new ParameterBindingData("1.0", Constants.ExtensionName, tableDetailsBinaryData, "application/json");
 
-            return Task.FromResult(parameterBindingData);
+            return parameterBindingData;
         }
 
         internal Task<ParameterBindingData> CreateCustomParameterBindingData(TableAttribute attribute, string rowKey)
