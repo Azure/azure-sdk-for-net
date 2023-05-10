@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Tests
         {
             string defaultSubscription = Guid.NewGuid().ToString();
 
-            var configuration = new ConfigurationBuilder()
+            IConfiguration configuration = new ConfigurationBuilder()
                 .AddInMemoryCollection(new[]
                 {
                     new KeyValuePair<string, string>("defaultSubscriptionId", defaultSubscription)
