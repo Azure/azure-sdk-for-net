@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 
-- When a Key Vault is moved to another tenant, client is reauthenticated.
+- When a Key Vault is moved to another tenant, the client is reauthenticated.
 
 ### Other Changes
 
