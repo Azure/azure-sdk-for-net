@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
-using System.Threading;
 using Azure.Core.TestFramework;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Tests
 {

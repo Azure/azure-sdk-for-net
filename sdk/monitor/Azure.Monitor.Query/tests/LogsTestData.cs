@@ -140,20 +140,19 @@ namespace Azure.Monitor.Query.Tests
         private async Task InitializeStorageAccount()
         {
             var client = new LogsQueryClient(_testEnvironment.Credential);
-            bool noData = true;
 
-            while (noData)
+            while (true)
             {
                 var result = await client.QueryResourceAsync(new ResourceIdentifier(_testEnvironment.StorageAccountId), "search *", new QueryTimeRange(DateTimeOffset.Now, TimeSpan.FromDays(15))).ConfigureAwait(false);
                 if (result.Value.Table.Rows.Count > 0 || result.Value.Table.Columns.Count > 0)
                 {
                     // Make sure StorageAccount set-up is complete and data is there before beginning testing
-                    noData = false;
+                    break;
                 }
                 else
                 {
-                    // Delay for 5 minutes to give time for StorageAccount to initialize
-                    Thread.Sleep(300000);
+                    // Delay for 30 seconds to give time for StorageAccount to initialize
+                    await Task.Delay(TimeSpan.FromSeconds(30));
                 }
             }
         }

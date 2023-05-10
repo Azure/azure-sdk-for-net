@@ -1,8 +1,6 @@
 # Release History
 
-
-
-## 1.2.0 (2023-05-09)
+## 1.2.0 (2023-05-10)
 
 Features Generally Available from v1.2.0-beta.1
 
