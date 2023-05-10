@@ -143,8 +143,8 @@ namespace Azure.Monitor.Query.Tests
 
             while (true)
             {
-                var result = await client.QueryResourceAsync(new ResourceIdentifier(_testEnvironment.StorageAccountId), "search *", new QueryTimeRange(DateTimeOffset.Now, TimeSpan.FromDays(15))).ConfigureAwait(false);
-                if (result.Value.Table.Rows.Count > 0 || result.Value.Table.Columns.Count > 0)
+                var result = await client.QueryResourceAsync(new ResourceIdentifier(_testEnvironment.StorageAccountId), "search *", DataTimeRange).ConfigureAwait(false);
+                if (result.Value.Table.Rows.Count > 0 && result.Value.Table.Columns.Count > 0)
                 {
                     // Make sure StorageAccount set-up is complete and data is there before beginning testing
                     break;
