@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.IO.MemoryMappedFiles;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using Azure.Storage.DataMovement.Models.JobPlan;
 
@@ -290,6 +291,19 @@ namespace Azure.Storage.DataMovement
         /// <param name="header">The header which holds the state of the job when it was stopped/paused.</param>
         internal static void VerifyJobPartPlanHeader(this TransferJobInternal job, JobPartPlanHeader header)
         {
+            // Check schema version
+            string schemaVersion = header.Version;
+            if (!DataMovementConstants.PlanFile.SchemaVersion.Equals(schemaVersion))
+            {
+                throw Errors.MismatchSchemaVersionHeader(schemaVersion);
+            }
+
+            // Check transfer id
+            if (!header.TransferId.Equals(job._dataTransfer.Id))
+            {
+                throw Errors.MismatchTransferId(job._dataTransfer.Id, header.TransferId);
+            }
+
             // Check source path
             string passedSourcePath;
             if (job._sourceResource.CanProduceUri == ProduceUriType.ProducesUri)
@@ -310,7 +324,7 @@ namespace Azure.Storage.DataMovement
                 throw Errors.MismatchResumeTransferArguments(nameof(header.SourcePath), header.SourcePath, passedSourcePath);
             }
 
-            // Check destinationPath
+            // Check destination path
             string passedDestinationPath;
             if (job._destinationResource.CanProduceUri == ProduceUriType.ProducesUri)
             {
