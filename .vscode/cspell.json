@@ -314,7 +314,8 @@
     {
       "filename": "**/sdk/newrelic/**/*.cs",
       "words": [
-        "liftr"
+        "liftr",
+        "payg"
       ]
     },
     {

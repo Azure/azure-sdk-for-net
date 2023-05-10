@@ -31,25 +31,25 @@ namespace Azure.ResourceManager.ResourceHealth
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of MetadataEntityResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of MetadataEntityResources and their operations over a MetadataEntityResource. </returns>
-        public virtual MetadataEntityCollection GetMetadataEntities()
+        /// <summary> Gets a collection of ResourceHealthMetadataEntityResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of ResourceHealthMetadataEntityResources and their operations over a ResourceHealthMetadataEntityResource. </returns>
+        public virtual ResourceHealthMetadataEntityCollection GetResourceHealthMetadataEntities()
         {
-            return GetCachedClient(Client => new MetadataEntityCollection(Client, Id));
+            return GetCachedClient(Client => new ResourceHealthMetadataEntityCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of TenantEventResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of TenantEventResources and their operations over a TenantEventResource. </returns>
-        public virtual TenantEventCollection GetTenantEvents()
+        /// <summary> Gets a collection of TenantResourceHealthEventResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of TenantResourceHealthEventResources and their operations over a TenantResourceHealthEventResource. </returns>
+        public virtual TenantResourceHealthEventCollection GetTenantResourceHealthEvents()
         {
-            return GetCachedClient(Client => new TenantEventCollection(Client, Id));
+            return GetCachedClient(Client => new TenantResourceHealthEventCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of EmergingIssuesGetResultResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of EmergingIssuesGetResultResources and their operations over a EmergingIssuesGetResultResource. </returns>
-        public virtual EmergingIssuesGetResultCollection GetEmergingIssuesGetResults()
+        /// <summary> Gets a collection of ServiceEmergingIssueResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of ServiceEmergingIssueResources and their operations over a ServiceEmergingIssueResource. </returns>
+        public virtual ServiceEmergingIssueCollection GetServiceEmergingIssues()
         {
-            return GetCachedClient(Client => new EmergingIssuesGetResultCollection(Client, Id));
+            return GetCachedClient(Client => new ServiceEmergingIssueCollection(Client, Id));
         }
     }
 }

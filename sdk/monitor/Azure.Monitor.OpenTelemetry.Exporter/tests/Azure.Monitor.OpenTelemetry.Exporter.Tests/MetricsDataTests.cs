@@ -184,5 +184,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Throws<ArgumentNullException>(() => new MetricsData(Version, null, metricPoint));
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
+
+        [Fact]
+        public void InitializesResourceMetricsAndProperties()
+        {
+            var metricsData = new MetricsData(Version);
+            Assert.Single(metricsData.Metrics);
+
+            var metricDataPoint = metricsData.Metrics[0];
+            Assert.Equal("_OTELRESOURCE_", metricDataPoint.Name);
+            Assert.Equal(0, metricDataPoint.Value);
+            Assert.Empty(metricsData.Properties);
+        }
     }
 }

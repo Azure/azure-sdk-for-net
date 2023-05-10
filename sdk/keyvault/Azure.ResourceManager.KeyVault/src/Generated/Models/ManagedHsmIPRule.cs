@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    /// <summary> A rule governing the accessibility of a managed hsm pool from a specific ip address or ip range. </summary>
+    /// <summary> A rule governing the accessibility of a managed HSM pool from a specific IP address or IP range. </summary>
     public partial class ManagedHsmIPRule
     {
         /// <summary> Initializes a new instance of ManagedHsmIPRule. </summary>

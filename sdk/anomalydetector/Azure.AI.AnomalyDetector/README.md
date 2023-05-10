@@ -126,14 +126,15 @@ Console.WriteLine("Detecting anomalies in the entire time series.");
 
 try
 {
-    UnivariateEntireDetectionResult result = client.DetectUnivariateEntireSeries(request);
+    Response response = client.DetectUnivariateEntireSeries(request.ToRequestContent());
+    JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 
     bool hasAnomaly = false;
     for (int i = 0; i < request.Series.Count; ++i)
     {
-        if (result.IsAnomaly[i])
+        if (result.GetProperty("isAnomaly")[i].GetBoolean())
         {
-            Console.WriteLine("An anomaly was detected at index: {0}.", i);
+            Console.WriteLine($"An anomaly was detected at index: {i}.");
             hasAnomaly = true;
         }
     }
@@ -144,12 +145,12 @@ try
 }
 catch (RequestFailedException ex)
 {
-    Console.WriteLine(String.Format("Entire detection failed: {0}", ex.Message));
+    Console.WriteLine($"Entire detection failed: {ex.Message}");
     throw;
 }
 catch (Exception ex)
 {
-    Console.WriteLine(String.Format("Detection error. {0}", ex.Message));
+    Console.WriteLine($"Detection error. {ex.Message}");
     throw;
 }
 ```
@@ -175,12 +176,12 @@ try
 }
 catch (RequestFailedException ex)
 {
-    Console.WriteLine(String.Format("Last detection failed: {0}", ex.Message));
+    Console.WriteLine($"Last detection failed: {ex.Message}");
     throw;
 }
 catch (Exception ex)
 {
-    Console.WriteLine(String.Format("Detection error. {0}", ex.Message));
+    Console.WriteLine($"Detection error. {ex.Message}");
     throw;
 }
 ```

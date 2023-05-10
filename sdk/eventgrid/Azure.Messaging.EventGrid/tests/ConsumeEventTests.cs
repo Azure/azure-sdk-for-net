@@ -1658,6 +1658,102 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual(RecordingContentType.Audio, recordingEvent.RecordingContentType);
             Assert.AreEqual(RecordingFormatType.Mp3, recordingEvent.RecordingFormatType);
         }
+
+        [Test]
+        public void ConsumeAcsEmailDeliveryReportReceivedEvent()
+        {
+            string requestContent = @"{
+                ""id"": ""5f04f77c-2a6a-43bd-9b74-576a64c01f9e"",
+                ""topic"": ""/subscriptions/{subscription-id}/resourceGroups/{group-name}/providers/Microsoft.Communication/communicationServices/{communication-services-resource-name}"",
+                ""subject"": ""sender/test2@contoso.org/message/950850f5-bcdf-4315-b77a-6447cf56fac9"",
+                ""data"": {
+                    ""sender"": ""test2@contoso.org"",
+                    ""recipient"": ""test1@contoso.com"",
+                    ""messageId"": ""950850f5-bcdf-4315-b77a-6447cf56fac9"",
+                    ""status"": ""delivered"",
+                    ""deliveryAttemptTimeStamp"": ""2023-02-09T19:46:12.2480265+00:00"",
+                    ""deliveryStatusDetails"": {
+                        ""statusMessage"": ""DestinationMailboxFull""
+                    }
+                },
+                ""eventType"": ""Microsoft.Communication.EmailDeliveryReportReceived"",
+                ""dataVersion"": ""1.0"",
+                ""metadataVersion"": ""1"",
+                ""eventTime"": ""2023-02-09T19:46:12.2478002Z""
+            }";
+
+            EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var emailEvent = eventData as AcsEmailDeliveryReportReceivedEventData;
+            Assert.IsNotNull(emailEvent);
+            Assert.AreEqual("test2@contoso.org", emailEvent.Sender);
+            Assert.AreEqual("test1@contoso.com", emailEvent.Recipient);
+            Assert.AreEqual(AcsEmailDeliveryReportStatus.Delivered, emailEvent.Status);
+            Assert.AreEqual("DestinationMailboxFull", emailEvent.DeliveryStatusDetails.StatusMessage);
+            Assert.AreEqual(DateTimeOffset.Parse("2023-02-09T19:46:12.2480265+00:00"), emailEvent.DeliveryAttemptTimestamp);
+        }
+
+        [Test]
+        public void ConsumeAcsIncomingCallEvent()
+        {
+            string requestContent = @"{
+                ""id"": ""e80026e7-e298-46ba-bc42-dab0eda92581"",
+                ""topic"": ""/subscriptions/{subscription-id}/resourceGroups/{group-name}/providers/Microsoft.Communication/communicationServices/{communication-services-resource-name}"",
+                ""subject"": ""/caller/{caller-id}/recipient/{recipient-id}"",
+                ""data"": {
+                    ""to"": {
+                        ""kind"": ""communicationUser"",
+                        ""rawId"": ""{recipient-id}"",
+                        ""communicationUser"": {
+                            ""id"": ""{recipient-id}""
+                        }
+                    },
+                    ""from"": {
+                        ""kind"": ""communicationUser"",
+                        ""rawId"": ""{caller-id}"",
+                        ""communicationUser"": {
+                            ""id"": ""{caller-id}""
+                        }
+                    },
+                    ""serverCallId"": ""{server-call-id}"",
+                    ""callerDisplayName"": ""VOIP Caller"",
+                    ""customContext"": {
+                        ""sipHeaders"": {
+                            ""userToUser"": ""616d617a6f6e5f6368696;encoding=hex"",
+                            ""X-MS-Custom-myheader1"": ""35567842"",
+                            ""X-MS-Custom-myheader2"": ""customsipheadervalue""
+                        },
+                        ""voipHeaders"": {
+                            ""customHeader"": ""customValue""
+                        }
+                    },
+                    ""incomingCallContext"": ""{incoming-call-contextValue}"",
+                    ""correlationId"": ""correlationId""
+                },
+                ""eventType"": ""Microsoft.Communication.IncomingCall"",
+                ""dataVersion"": ""1.0"",
+                ""metadataVersion"": ""1"",
+                ""eventTime"": ""2023-04-04T17:18:42.5542219Z""
+            }";
+
+            EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var incomingCallEvent = eventData as AcsIncomingCallEventData;
+            Assert.IsNotNull(incomingCallEvent);
+            Assert.AreEqual("{recipient-id}", incomingCallEvent.ToCommunicationIdentifier.CommunicationUser.Id);
+            Assert.AreEqual("{caller-id}", incomingCallEvent.FromCommunicationIdentifier.CommunicationUser.Id);
+            Assert.AreEqual("VOIP Caller", incomingCallEvent.CallerDisplayName);
+            Assert.AreEqual("616d617a6f6e5f6368696;encoding=hex", incomingCallEvent.CustomContext.SipHeaders["userToUser"]);
+            Assert.AreEqual("35567842", incomingCallEvent.CustomContext.SipHeaders["X-MS-Custom-myheader1"]);
+            Assert.AreEqual("customsipheadervalue", incomingCallEvent.CustomContext.SipHeaders["X-MS-Custom-myheader2"]);
+            Assert.AreEqual("customValue", incomingCallEvent.CustomContext.VoipHeaders["customHeader"]);
+            Assert.AreEqual("{incoming-call-contextValue}", incomingCallEvent.IncomingCallContext);
+            Assert.AreEqual("correlationId", incomingCallEvent.CorrelationId);
+        }
         #endregion
 
         #region Health Data Services events
@@ -1724,6 +1820,7 @@ namespace Azure.Messaging.EventGrid.Tests
             ""eventTime"": ""2022-09-15T01:14:04.5613214Z"",
             ""id"": ""d621839d-958b-4142-a638-bb966b4f7dfd"",
             ""data"": {
+                ""partitionName"": ""Microsoft.Default"",
                 ""imageStudyInstanceUid"": ""1.2.3.4.3"",
                 ""imageSeriesInstanceUid"": ""1.2.3.4.3.9423673"",
                 ""imageSopInstanceUid"": ""1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442"",
@@ -1742,6 +1839,41 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual("1.2.3.4.3.9423673", healthEvent.ImageSeriesInstanceUid);
             Assert.AreEqual("1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442", healthEvent.ImageSopInstanceUid);
             Assert.AreEqual(1, healthEvent.SequenceNumber);
+            Assert.AreEqual("Microsoft.Default", healthEvent.PartitionName);
+        }
+
+        [Test]
+        public void ConsumeDicomImageUpdatedEvent()
+        {
+            string requestContent = @"{
+            ""source"": ""/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/Microsoft.HealthcareApis/workspaces/{workspace-name}"",
+            ""subject"": ""{dicom-account}.dicom.azurehealthcareapis.com/v1/studies/1.2.3.4.3/series/1.2.3.4.3.9423673/instances/1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442"",
+            ""eventType"": ""Microsoft.HealthcareApis.DicomImageUpdated"",
+            ""dataVersion"": ""1"",
+            ""metadataVersion"": ""1"", 
+            ""eventTime"": ""2022-09-15T01:14:04.5613214Z"",
+            ""id"": ""d621839d-958b-4142-a638-bb966b4f7dfd"",
+            ""data"": {
+                ""partitionName"": ""Microsoft.Default"",
+                ""imageStudyInstanceUid"": ""1.2.3.4.3"",
+                ""imageSeriesInstanceUid"": ""1.2.3.4.3.9423673"",
+                ""imageSopInstanceUid"": ""1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442"",
+                ""serviceHostName"": ""{dicom-account}.dicom.azurehealthcareapis.com"",
+                ""sequenceNumber"": 1
+            },
+            ""specVersion"": ""1.0""
+        }";
+            EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var healthEvent = eventData as HealthcareDicomImageUpdatedEventData;
+            Assert.IsNotNull(healthEvent);
+            Assert.AreEqual("1.2.3.4.3", healthEvent.ImageStudyInstanceUid);
+            Assert.AreEqual("1.2.3.4.3.9423673", healthEvent.ImageSeriesInstanceUid);
+            Assert.AreEqual("1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442", healthEvent.ImageSopInstanceUid);
+            Assert.AreEqual(1, healthEvent.SequenceNumber);
+            Assert.AreEqual("Microsoft.Default", healthEvent.PartitionName);
         }
 
         [Test]
@@ -1756,6 +1888,7 @@ namespace Azure.Messaging.EventGrid.Tests
             ""eventTime"": ""2022-09-15T01:14:04.5613214Z"",
             ""id"": ""d621839d-958b-4142-a638-bb966b4f7dfd"",
             ""data"": {
+                ""partitionName"": ""Microsoft.Default"",
                 ""imageStudyInstanceUid"": ""1.2.3.4.3"",
                 ""imageSeriesInstanceUid"": ""1.2.3.4.3.9423673"",
                 ""imageSopInstanceUid"": ""1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442"",
@@ -1774,6 +1907,7 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual("1.2.3.4.3.9423673", healthEvent.ImageSeriesInstanceUid);
             Assert.AreEqual("1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442", healthEvent.ImageSopInstanceUid);
             Assert.AreEqual(1, healthEvent.SequenceNumber);
+            Assert.AreEqual("Microsoft.Default", healthEvent.PartitionName);
         }
         #endregion
         #endregion
@@ -3200,6 +3334,100 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual(RecordingContentType.Audio, recordingEvent.RecordingContentType);
             Assert.AreEqual(RecordingFormatType.Mp3, recordingEvent.RecordingFormatType);
         }
+
+        [Test]
+        public void ConsumeCloudEventAcsEmailDeliveryReportReceivedEvent()
+        {
+            string requestContent = @"{
+                ""id"": ""5f04f77c-2a6a-43bd-9b74-576a64c01f9e"",
+                ""source"": ""/subscriptions/{subscription-id}/resourceGroups/{group-name}/providers/Microsoft.Communication/communicationServices/{communication-services-resource-name}"",
+                ""subject"": ""sender/test2@contoso.org/message/950850f5-bcdf-4315-b77a-6447cf56fac9"",
+                ""data"": {
+                    ""sender"": ""test2@contoso.org"",
+                    ""recipient"": ""test1@contoso.com"",
+                    ""messageId"": ""950850f5-bcdf-4315-b77a-6447cf56fac9"",
+                    ""status"": ""delivered"",
+                    ""deliveryStatusDetails"": {
+                        ""statusMessage"": ""DestinationMailboxFull""
+                    },
+                    ""deliveryAttemptTimeStamp"": ""2023-02-09T19:46:12.2480265+00:00""
+                },
+                ""type"": ""Microsoft.Communication.EmailDeliveryReportReceived"",
+                ""time"": ""2023-02-09T19:46:12.2478002Z"",
+                ""specversion"": ""1.0""
+            }";
+
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var emailEvent = eventData as AcsEmailDeliveryReportReceivedEventData;
+            Assert.IsNotNull(emailEvent);
+            Assert.AreEqual("test2@contoso.org", emailEvent.Sender);
+            Assert.AreEqual("test1@contoso.com", emailEvent.Recipient);
+            Assert.AreEqual(AcsEmailDeliveryReportStatus.Delivered, emailEvent.Status);
+            Assert.AreEqual("DestinationMailboxFull", emailEvent.DeliveryStatusDetails.StatusMessage);
+            Assert.AreEqual(DateTimeOffset.Parse("2023-02-09T19:46:12.2480265+00:00"), emailEvent.DeliveryAttemptTimestamp);
+        }
+
+        [Test]
+        public void ConsumeCloudEventAcsIncomingCallEvent()
+        {
+            string requestContent = @"{
+                ""id"": ""e80026e7-e298-46ba-bc42-dab0eda92581"",
+                ""source"": ""/subscriptions/{subscription-id}/resourceGroups/{group-name}/providers/Microsoft.Communication/communicationServices/{communication-services-resource-name}"",
+                ""subject"": ""/caller/{caller-id}/recipient/{recipient-id}"",
+                ""data"": {
+                    ""to"": {
+                        ""kind"": ""communicationUser"",
+                        ""rawId"": ""{recipient-id}"",
+                        ""communicationUser"": {
+                            ""id"": ""{recipient-id}""
+                        }
+                    },
+                    ""from"": {
+                        ""kind"": ""communicationUser"",
+                        ""rawId"": ""{caller-id}"",
+                        ""communicationUser"": {
+                            ""id"": ""{caller-id}""
+                        }
+                    },
+                    ""serverCallId"": ""{server-call-id}"",
+                    ""callerDisplayName"": ""VOIP Caller"",
+                    ""customContext"": {
+                        ""sipHeaders"": {
+                            ""userToUser"": ""616d617a6f6e5f6368696;encoding=hex"",
+                            ""X-MS-Custom-myheader1"": ""35567842"",
+                            ""X-MS-Custom-myheader2"": ""customsipheadervalue""
+                        },
+                        ""voipHeaders"": {
+                            ""customHeader"": ""customValue""
+                        }
+                    },
+                    ""incomingCallContext"": ""{incoming-call-contextValue}"",
+                    ""correlationId"": ""correlationId""
+                },
+                ""type"": ""Microsoft.Communication.IncomingCall"",
+                ""specversion"": ""1.0"",
+                ""time"": ""2023-04-04T17:18:42.5542219Z""
+            }";
+
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var incomingCallEvent = eventData as AcsIncomingCallEventData;
+            Assert.IsNotNull(incomingCallEvent);
+            Assert.AreEqual("{recipient-id}", incomingCallEvent.ToCommunicationIdentifier.CommunicationUser.Id);
+            Assert.AreEqual("{caller-id}", incomingCallEvent.FromCommunicationIdentifier.CommunicationUser.Id);
+            Assert.AreEqual("VOIP Caller", incomingCallEvent.CallerDisplayName);
+            Assert.AreEqual("616d617a6f6e5f6368696;encoding=hex", incomingCallEvent.CustomContext.SipHeaders["userToUser"]);
+            Assert.AreEqual("35567842", incomingCallEvent.CustomContext.SipHeaders["X-MS-Custom-myheader1"]);
+            Assert.AreEqual("customsipheadervalue", incomingCallEvent.CustomContext.SipHeaders["X-MS-Custom-myheader2"]);
+            Assert.AreEqual("customValue", incomingCallEvent.CustomContext.VoipHeaders["customHeader"]);
+            Assert.AreEqual("{incoming-call-contextValue}", incomingCallEvent.IncomingCallContext);
+            Assert.AreEqual("correlationId", incomingCallEvent.CorrelationId);
+        }
         #endregion
 
         #region Health Data Services events
@@ -3264,6 +3492,7 @@ namespace Azure.Messaging.EventGrid.Tests
             ""time"": ""2022-09-15T01:14:04.5613214Z"",
             ""id"": ""d621839d-958b-4142-a638-bb966b4f7dfd"",
             ""data"": {
+                ""partitionName"": ""Microsoft.Default"",
                 ""imageStudyInstanceUid"": ""1.2.3.4.3"",
                 ""imageSeriesInstanceUid"": ""1.2.3.4.3.9423673"",
                 ""imageSopInstanceUid"": ""1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442"",
@@ -3282,6 +3511,39 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual("1.2.3.4.3.9423673", healthEvent.ImageSeriesInstanceUid);
             Assert.AreEqual("1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442", healthEvent.ImageSopInstanceUid);
             Assert.AreEqual(1, healthEvent.SequenceNumber);
+            Assert.AreEqual("Microsoft.Default", healthEvent.PartitionName);
+        }
+
+        [Test]
+        public void ConsumeCloudEventDicomImageUpdatedEvent()
+        {
+            string requestContent = @"{
+            ""source"": ""/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/Microsoft.HealthcareApis/workspaces/{workspace-name}"",
+            ""subject"": ""{dicom-account}.dicom.azurehealthcareapis.com/v1/studies/1.2.3.4.3/series/1.2.3.4.3.9423673/instances/1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442"",
+            ""type"": ""Microsoft.HealthcareApis.DicomImageUpdated"",
+            ""time"": ""2022-09-15T01:14:04.5613214Z"",
+            ""id"": ""d621839d-958b-4142-a638-bb966b4f7dfd"",
+            ""data"": {
+                ""partitionName"": ""Microsoft.Default"",
+                ""imageStudyInstanceUid"": ""1.2.3.4.3"",
+                ""imageSeriesInstanceUid"": ""1.2.3.4.3.9423673"",
+                ""imageSopInstanceUid"": ""1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442"",
+                ""serviceHostName"": ""{dicom-account}.dicom.azurehealthcareapis.com"",
+                ""sequenceNumber"": 1
+            },
+            ""specversion"": ""1.0""
+        }";
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var healthEvent = eventData as HealthcareDicomImageUpdatedEventData;
+            Assert.IsNotNull(healthEvent);
+            Assert.AreEqual("1.2.3.4.3", healthEvent.ImageStudyInstanceUid);
+            Assert.AreEqual("1.2.3.4.3.9423673", healthEvent.ImageSeriesInstanceUid);
+            Assert.AreEqual("1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442", healthEvent.ImageSopInstanceUid);
+            Assert.AreEqual(1, healthEvent.SequenceNumber);
+            Assert.AreEqual("Microsoft.Default", healthEvent.PartitionName);
         }
 
         [Test]
@@ -3294,6 +3556,7 @@ namespace Azure.Messaging.EventGrid.Tests
             ""time"": ""2022-09-15T01:14:04.5613214Z"",
             ""id"": ""d621839d-958b-4142-a638-bb966b4f7dfd"",
             ""data"": {
+                ""partitionName"": ""Microsoft.Default"",
                 ""imageStudyInstanceUid"": ""1.2.3.4.3"",
                 ""imageSeriesInstanceUid"": ""1.2.3.4.3.9423673"",
                 ""imageSopInstanceUid"": ""1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442"",
@@ -3312,6 +3575,7 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual("1.2.3.4.3.9423673", healthEvent.ImageSeriesInstanceUid);
             Assert.AreEqual("1.3.6.1.4.1.45096.2.296485376.2210.1633373143.864442", healthEvent.ImageSopInstanceUid);
             Assert.AreEqual(1, healthEvent.SequenceNumber);
+            Assert.AreEqual("Microsoft.Default", healthEvent.PartitionName);
         }
         #endregion
 
