@@ -4,7 +4,6 @@
 using System.Linq.Expressions;
 using System;
 using Moq;
-using Mock = Moq.Mock;
 using System.Reflection;
 using System.Linq;
 
@@ -12,7 +11,7 @@ namespace Azure.ResourceManager.Resources.Mocking
 {
     internal static class MockingExtensions
     {
-        internal static void SetupAzureExtensionMethod<T>(this Mock<T> mock, Expression<Action<T>> expression) where T : ArmResource
+        internal static Mock<T> SetupAzureExtensionMethod<T>(this Mock<T> mock, Expression<Action<T>> expression) where T : ArmResource
         {
             // we would like the customer to use this in this way:
             // tenantResourceMock.SetupAzureExtensionMethod(tenant => tenant.CalculateDeploymentTemplateHashAsync(mockTemplate, default)).Returns(Task.FromResult(Response.FromValue(mockResult, null)));
@@ -36,45 +35,61 @@ namespace Azure.ResourceManager.Resources.Mocking
             var parameterType = typeof(Expression<>).MakeGenericType(typeof(Action<>).MakeGenericType(extensionClientType));
             var setupMethod = newMockType.GetMethod("Setup", new[] { parameterType });
 
-            // TODO -- need to construct a new expression using the parameter of the new type from the old "expression"
-            var newExpression = new ChangeTypeVisitor(typeof(T), extensionClientType).ChangeType(expression);
+            // construct a new expression using the parameter of the new type from the old "expression"
+            var newExpression = ChangeType(expression, extensionClientType);
             setupMethod.Invoke(newMock, new[] { newExpression });
+            // TODO -- call the result method to set the return value if any.
+
+            //mock.Setup(t => t.GetCachedClient(It.IsAny<Func<ArmClient, XXXExtensionClient>>()));
+            // first create a Matcher to match anything like Func<ArmClient, XXXExtensionClient>
+            var funcType = typeof(Func<,>).MakeGenericType(typeof(ArmClient), extensionClientType);
+            // then create the matcher by calling the method It.IsAny<Func<ArmClient, XXXExtensionClient>>() using reflection
+            var matcher = typeof(It).GetMethod("IsAny", BindingFlags.Public | BindingFlags.Static).MakeGenericMethod(funcType).Invoke(null, Array.Empty<object>());
+            // put the matcher into the Setup method of Mock<T> to set it up
+            parameterType = typeof(Expression<>).MakeGenericType(typeof(Func<,>));
+            setupMethod = mock.GetType().GetMethod("Setup", new[] { parameterType });
+            // TODO -- build the expression that represents this: `t => t.GetCachedClient(It.IsAny<Func<ArmClient, XXXExtensionClient>>())`
+            newExpression = ConstructGetCachedClientExpression(parameterType, matcher);
+            setupMethod.Invoke(mock, new[] { newExpression });
+
+            return mock;
         }
 
-        internal class ChangeTypeVisitor : ExpressionVisitor
+        private static Expression ConstructGetCachedClientExpression(Type delegateType,object matcher)
         {
-            private readonly Type _originalType;
-            private readonly Type _newType;
-            private readonly ParameterExpression _newParameter;
+            var parameter = Expression.Parameter(typeof(ArmResource), "r");
+            var method = typeof(ArmResource).GetMethod("GetCachedClient", BindingFlags.Instance | BindingFlags.Public);
+            var argument = Expression.Constant(matcher);
+            var methodCallExpression = Expression.Call(parameter, method, argument);
+            return Expression.Lambda(delegateType, methodCallExpression, parameter);
+        }
 
-            public ChangeTypeVisitor(Type originalType, Type newType)
+        private static Expression ChangeType<T>(Expression<Action<T>> expression, Type newType)
+        {
+            // we only support one parameter
+            var parameter = expression.Parameters.Single();
+            var body = expression.Body;
+            if (body is not MethodCallExpression methodCallExpression)
             {
-                _originalType = originalType;
-                _newType = newType;
-                _newParameter = Expression.Parameter(newType);
+                throw new InvalidOperationException("We only support methodCallExpression as the body of lambda expression for now");
             }
+            // TODO -- add some validation on the method, to ensure it is an extension method on an ArmResource
+            var originalMethod = methodCallExpression.Method;
+            var originalParameterTypes = originalMethod.GetParameters().Select(p => p.ParameterType);
+            var originalArguments = methodCallExpression.Arguments;
+            // find the new method with the same name from the newType
+            var methodInfo = newType.GetMethod(originalMethod.Name, originalParameterTypes.Skip(1).ToArray());
+            // construct a new method call expression on the method with the same name from the newType
+            if (methodInfo is null)
+            {
+                throw new InvalidOperationException($"The method {originalMethod} is not found on type {newType}");
+            }
+            var instanceExpression = Expression.Parameter(newType);
+            var newMethodCallExpression = Expression.Call(instanceExpression, methodInfo, originalArguments.Skip(1));
 
-            protected override Expression VisitParameter(ParameterExpression node)
-            {
-                return _newParameter;
-            }
-
-            protected override Expression VisitMethodCall(MethodCallExpression node)
-            {
-                if (node.Object != null && node.Object.Type == _originalType)
-                {
-                    var newMethodInfo = _newType.GetMethod(node.Method.Name, node.Method.GetParameters().Select(p => p.ParameterType).ToArray());
-                    var newObject = Visit(node.Object);
-                    var newArguments = node.Arguments.Select(Visit);
-                    return Expression.Call(newObject, newMethodInfo, newArguments);
-                }
-                return base.VisitMethodCall(node);
-            }
-
-            public Expression ChangeType(Expression expression)
-            {
-                return Visit(expression);
-            }
+            // get the delegate type
+            var delegateType = typeof(Action<>).MakeGenericType(newType);
+            return Expression.Lambda(delegateType, newMethodCallExpression, instanceExpression);
         }
     }
 }
