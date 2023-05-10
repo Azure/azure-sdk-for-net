@@ -7,12 +7,13 @@
 - Added support for `== null` and value equality for primitives to `DynamicData`.
 - Added support for `Length` property on `DynamicData` arrays.
 - Made name mappings from PascalCase in C# to camelCase in JSON the default for `DynamicData`.
-- Added implicit casts to all primitives supported by `JsonElement` and explicit casts for supported reference types.
+- Added implicit casts to primitives supported by `JsonElement` and explicit casts for supported reference types.
 
 ### Breaking Changes
 
 - Made `MutableJsonDocument` and `MutableJsonElement` internal.
-- Removed `DynamicDataOptions`, `DynamicDataNameMapping` and the `BinaryData` extensions that took parameters of those types.
+- Moved `ToDynamicFromJson()` extension method on `BinaryData` to the `Azure` namespace.
+- Removed `DynamicJsonOptions`, `DynamicDataNameMapping` and the `BinaryData` extensions that took parameters of those types.
 - Removed `DynamicDataProperty`.
 
 ## 0.1.0-preview.26 (2023-04-10)
