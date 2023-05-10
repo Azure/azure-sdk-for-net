@@ -1,14 +1,10 @@
 # Release History
 
-## 5.10.0-beta.1 (Unreleased)
+## 5.10.0 (2023-05-10)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `MinMessageBatchSize` and `MaxBatchWaitTime` to `ServiceBusOptions` to allow configuring the minimum number of messages to process in a batch and the maximum time to wait for a batch to be filled before processing.
 
 ## 5.9.0 (2023-02-23)
 
