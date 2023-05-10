@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of SelfHelpDiagnosticResources and their operations over a SelfHelpDiagnosticResource. </returns>
-        public static SelfHelpDiagnosticResourceCollection GetSelfHelpDiagnosticResources(this ArmClient client, ResourceIdentifier scope)
+        public static SelfHelpDiagnosticCollection GetSelfHelpDiagnostics(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetSelfHelpDiagnosticResources();
+            return GetArmResourceExtensionClient(client, scope).GetSelfHelpDiagnostics();
         }
 
         /// <summary>
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SelfHelpDiagnosticResource>> GetSelfHelpDiagnosticResourceAsync(this ArmClient client, ResourceIdentifier scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SelfHelpDiagnosticResource>> GetSelfHelpDiagnosticAsync(this ArmClient client, ResourceIdentifier scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
-            return await client.GetSelfHelpDiagnosticResources(scope).GetAsync(diagnosticsResourceName, cancellationToken).ConfigureAwait(false);
+            return await client.GetSelfHelpDiagnostics(scope).GetAsync(diagnosticsResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SelfHelpDiagnosticResource> GetSelfHelpDiagnosticResource(this ArmClient client, ResourceIdentifier scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
+        public static Response<SelfHelpDiagnosticResource> GetSelfHelpDiagnostic(this ArmClient client, ResourceIdentifier scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
-            return client.GetSelfHelpDiagnosticResources(scope).Get(diagnosticsResourceName, cancellationToken);
+            return client.GetSelfHelpDiagnostics(scope).Get(diagnosticsResourceName, cancellationToken);
         }
 
         /// <summary>

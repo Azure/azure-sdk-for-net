@@ -14,15 +14,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// Properties returned with in an insight.
     /// Serialized Name: Diagnostic
     /// </summary>
-    public partial class SelfHelpDiagnostic
+    public partial class DiagnosticInfo
     {
-        /// <summary> Initializes a new instance of SelfHelpDiagnostic. </summary>
-        internal SelfHelpDiagnostic()
+        /// <summary> Initializes a new instance of DiagnosticInfo. </summary>
+        internal DiagnosticInfo()
         {
             DiagnosticInsights = new ChangeTrackingList<DiagnosticInsight>();
         }
 
-        /// <summary> Initializes a new instance of SelfHelpDiagnostic. </summary>
+        /// <summary> Initializes a new instance of DiagnosticInfo. </summary>
         /// <param name="solutionId">
         /// Solution Id
         /// Serialized Name: Diagnostic.solutionId
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// Error definition.
         /// Serialized Name: Diagnostic.error
         /// </param>
-        internal SelfHelpDiagnostic(string solutionId, DiagnosticStatus? diagnosticStatus, IReadOnlyList<DiagnosticInsight> diagnosticInsights, SelfHelpError errorInfo)
+        internal DiagnosticInfo(string solutionId, DiagnosticStatus? diagnosticStatus, IReadOnlyList<DiagnosticInsight> diagnosticInsights, SelfHelpError errorInfo)
         {
             SolutionId = solutionId;
             DiagnosticStatus = diagnosticStatus;

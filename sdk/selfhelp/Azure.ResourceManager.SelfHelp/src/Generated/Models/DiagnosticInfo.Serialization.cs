@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class SelfHelpDiagnostic
+    public partial class DiagnosticInfo
     {
-        internal static SelfHelpDiagnostic DeserializeSelfHelpDiagnostic(JsonElement element)
+        internal static DiagnosticInfo DeserializeDiagnosticInfo(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     continue;
                 }
             }
-            return new SelfHelpDiagnostic(solutionId.Value, Optional.ToNullable(status), Optional.ToList(insights), error.Value);
+            return new DiagnosticInfo(solutionId.Value, Optional.ToNullable(status), Optional.ToList(insights), error.Value);
         }
     }
 }

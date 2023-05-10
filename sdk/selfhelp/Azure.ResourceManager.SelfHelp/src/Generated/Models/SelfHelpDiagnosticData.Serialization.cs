@@ -13,7 +13,7 @@ using Azure.ResourceManager.SelfHelp.Models;
 
 namespace Azure.ResourceManager.SelfHelp
 {
-    public partial class SelfHelpDiagnosticResourceData : IUtf8JsonSerializable
+    public partial class SelfHelpDiagnosticData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SelfHelp
             writer.WriteEndObject();
         }
 
-        internal static SelfHelpDiagnosticResourceData DeserializeSelfHelpDiagnosticResourceData(JsonElement element)
+        internal static SelfHelpDiagnosticData DeserializeSelfHelpDiagnosticData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SelfHelp
             Optional<IList<DiagnosticInvocation>> insights = default;
             Optional<string> acceptedAt = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<SelfHelpDiagnostic>> diagnostics = default;
+            Optional<IReadOnlyList<DiagnosticInfo>> diagnostics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.SelfHelp
                             {
                                 continue;
                             }
-                            List<SelfHelpDiagnostic> array = new List<SelfHelpDiagnostic>();
+                            List<DiagnosticInfo> array = new List<DiagnosticInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SelfHelpDiagnostic.DeserializeSelfHelpDiagnostic(item));
+                                array.Add(DiagnosticInfo.DeserializeDiagnosticInfo(item));
                             }
                             diagnostics = array;
                             continue;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SelfHelp
                     continue;
                 }
             }
-            return new SelfHelpDiagnosticResourceData(id, name, type, systemData.Value, Optional.ToDictionary(globalParameters), Optional.ToList(insights), acceptedAt.Value, Optional.ToNullable(provisioningState), Optional.ToList(diagnostics));
+            return new SelfHelpDiagnosticData(id, name, type, systemData.Value, Optional.ToDictionary(globalParameters), Optional.ToList(insights), acceptedAt.Value, Optional.ToNullable(provisioningState), Optional.ToList(diagnostics));
         }
     }
 }

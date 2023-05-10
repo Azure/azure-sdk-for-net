@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.SelfHelp
     /// <summary> A class to add extension methods to ArmResource. </summary>
     internal partial class ArmResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _selfHelpDiagnosticResourceDiagnosticsClientDiagnostics;
-        private DiagnosticsRestOperations _selfHelpDiagnosticResourceDiagnosticsRestClient;
+        private ClientDiagnostics _selfHelpDiagnosticDiagnosticsClientDiagnostics;
+        private DiagnosticsRestOperations _selfHelpDiagnosticDiagnosticsRestClient;
         private ClientDiagnostics _discoverySolutionClientDiagnostics;
         private DiscoverySolutionRestOperations _discoverySolutionRestClient;
 
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.SelfHelp
         {
         }
 
-        private ClientDiagnostics SelfHelpDiagnosticResourceDiagnosticsClientDiagnostics => _selfHelpDiagnosticResourceDiagnosticsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp", SelfHelpDiagnosticResource.ResourceType.Namespace, Diagnostics);
-        private DiagnosticsRestOperations SelfHelpDiagnosticResourceDiagnosticsRestClient => _selfHelpDiagnosticResourceDiagnosticsRestClient ??= new DiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SelfHelpDiagnosticResource.ResourceType));
+        private ClientDiagnostics SelfHelpDiagnosticDiagnosticsClientDiagnostics => _selfHelpDiagnosticDiagnosticsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp", SelfHelpDiagnosticResource.ResourceType.Namespace, Diagnostics);
+        private DiagnosticsRestOperations SelfHelpDiagnosticDiagnosticsRestClient => _selfHelpDiagnosticDiagnosticsRestClient ??= new DiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SelfHelpDiagnosticResource.ResourceType));
         private ClientDiagnostics DiscoverySolutionClientDiagnostics => _discoverySolutionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private DiscoverySolutionRestOperations DiscoverySolutionRestClient => _discoverySolutionRestClient ??= new DiscoverySolutionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.SelfHelp
 
         /// <summary> Gets a collection of SelfHelpDiagnosticResources in the ArmResource. </summary>
         /// <returns> An object representing collection of SelfHelpDiagnosticResources and their operations over a SelfHelpDiagnosticResource. </returns>
-        public virtual SelfHelpDiagnosticResourceCollection GetSelfHelpDiagnosticResources()
+        public virtual SelfHelpDiagnosticCollection GetSelfHelpDiagnostics()
         {
-            return GetCachedClient(Client => new SelfHelpDiagnosticResourceCollection(Client, Id));
+            return GetCachedClient(Client => new SelfHelpDiagnosticCollection(Client, Id));
         }
 
         /// <summary>
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityDiagnosticAsync(CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = SelfHelpDiagnosticResourceDiagnosticsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckNameAvailabilityDiagnostic");
+            using var scope = SelfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckNameAvailabilityDiagnostic");
             scope.Start();
             try
             {
-                var response = await SelfHelpDiagnosticResourceDiagnosticsRestClient.CheckNameAvailabilityAsync(Id, content, cancellationToken).ConfigureAwait(false);
+                var response = await SelfHelpDiagnosticDiagnosticsRestClient.CheckNameAvailabilityAsync(Id, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CheckNameAvailabilityResponse> CheckNameAvailabilityDiagnostic(CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = SelfHelpDiagnosticResourceDiagnosticsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckNameAvailabilityDiagnostic");
+            using var scope = SelfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckNameAvailabilityDiagnostic");
             scope.Start();
             try
             {
-                var response = SelfHelpDiagnosticResourceDiagnosticsRestClient.CheckNameAvailability(Id, content, cancellationToken);
+                var response = SelfHelpDiagnosticDiagnosticsRestClient.CheckNameAvailability(Id, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

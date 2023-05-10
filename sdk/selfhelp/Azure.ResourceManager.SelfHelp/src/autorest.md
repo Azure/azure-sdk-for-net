@@ -53,11 +53,11 @@ list-exception:
 - /{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}
 
 rename-mapping:
-  DiagnosticResource: SelfHelpDiagnosticResource
+  DiagnosticResource: SelfHelpDiagnostic
   Status: DiagnosticStatus
   Insight: DiagnosticInsight
   Error: SelfHelpError
-  Diagnostic: SelfHelpDiagnostic
+  Diagnostic: DiagnosticInfo
   DiagnosticResource.properties.acceptedAt: acceptedTime
   Insight.id: InsightId
   Insight.title: InsightTitle

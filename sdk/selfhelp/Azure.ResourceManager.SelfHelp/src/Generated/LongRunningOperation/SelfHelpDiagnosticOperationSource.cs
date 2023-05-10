@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SelfHelp
 {
-    internal class SelfHelpDiagnosticResourceOperationSource : IOperationSource<SelfHelpDiagnosticResource>
+    internal class SelfHelpDiagnosticOperationSource : IOperationSource<SelfHelpDiagnosticResource>
     {
         private readonly ArmClient _client;
 
-        internal SelfHelpDiagnosticResourceOperationSource(ArmClient client)
+        internal SelfHelpDiagnosticOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.SelfHelp
         SelfHelpDiagnosticResource IOperationSource<SelfHelpDiagnosticResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SelfHelpDiagnosticResourceData.DeserializeSelfHelpDiagnosticResourceData(document.RootElement);
+            var data = SelfHelpDiagnosticData.DeserializeSelfHelpDiagnosticData(document.RootElement);
             return new SelfHelpDiagnosticResource(_client, data);
         }
 
         async ValueTask<SelfHelpDiagnosticResource> IOperationSource<SelfHelpDiagnosticResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SelfHelpDiagnosticResourceData.DeserializeSelfHelpDiagnosticResourceData(document.RootElement);
+            var data = SelfHelpDiagnosticData.DeserializeSelfHelpDiagnosticData(document.RootElement);
             return new SelfHelpDiagnosticResource(_client, data);
         }
     }
