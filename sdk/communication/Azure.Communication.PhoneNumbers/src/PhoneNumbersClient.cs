@@ -16,6 +16,8 @@ namespace Azure.Communication.PhoneNumbers
     public class PhoneNumbersClient
     {
         internal InternalPhoneNumbersClient InternalClient { get; }
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly HttpPipeline _pipeline;
         private readonly string _acceptedLanguage;
 
         #region public constructors - all arguments need null check
@@ -91,6 +93,8 @@ namespace Azure.Communication.PhoneNumbers
         private PhoneNumbersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string acceptedLanguage, string apiVersion = "2021-03-07")
         {
             InternalClient = new InternalPhoneNumbersClient(clientDiagnostics, pipeline, endpoint, apiVersion);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
             _acceptedLanguage = acceptedLanguage;
         }
 
@@ -109,8 +113,18 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
         public virtual async Task<ReleasePhoneNumberOperation> StartReleasePhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
         {
-            var response = await InternalClient.StartReleasePhoneNumberAsync(phoneNumber, cancellationToken).ConfigureAwait(false);
-            return new ReleasePhoneNumberOperation(response);
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartReleasePhoneNumber)}");
+            scope.Start();
+            try
+            {
+                var originalResponse = await InternalClient.StartReleasePhoneNumberAsync(phoneNumber, cancellationToken).ConfigureAwait(false);
+                return new ReleasePhoneNumberOperation(originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Releases an purchased phone number. </summary>
@@ -119,8 +133,20 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
         public virtual ReleasePhoneNumberOperation StartReleasePhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
         {
-            var response = InternalClient.StartReleasePhoneNumber(phoneNumber, cancellationToken);
-            return new ReleasePhoneNumberOperation(response);
+            Argument.AssertNotNull(phoneNumber, nameof(phoneNumber));
+
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartReleasePhoneNumber)}");
+            scope.Start();
+            try
+            {
+                var originalResponse = InternalClient.StartReleasePhoneNumber(phoneNumber, cancellationToken);
+                return new ReleasePhoneNumberOperation(originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Updates the capabilities of a phone number. </summary>
@@ -131,7 +157,17 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
         public virtual async Task<UpdatePhoneNumberCapabilitiesOperation> StartUpdateCapabilitiesAsync(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
         {
-            return await InternalClient.StartUpdateCapabilitiesAsync(phoneNumber, calling, sms, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartUpdateCapabilities)}");
+            scope.Start();
+            try
+            {
+                return await InternalClient.StartUpdateCapabilitiesAsync(phoneNumber, calling, sms, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Updates the capabilities of a phone number. </summary>
@@ -142,7 +178,17 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
         public virtual UpdatePhoneNumberCapabilitiesOperation StartUpdateCapabilities(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
         {
-            return InternalClient.StartUpdateCapabilities(phoneNumber, calling, sms, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartUpdateCapabilities)}");
+            scope.Start();
+            try
+            {
+                return InternalClient.StartUpdateCapabilities(phoneNumber, calling, sms, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Gets the details of the given purchased phone number. </summary>
@@ -150,7 +196,17 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PurchasedPhoneNumber>> GetPurchasedPhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
         {
-            return await InternalClient.GetByNumberAsync(phoneNumber, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumber)}");
+            scope.Start();
+            try
+            {
+                return await InternalClient.GetByNumberAsync(phoneNumber, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Gets the details of the given purchased phone number. </summary>
@@ -158,7 +214,17 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PurchasedPhoneNumber> GetPurchasedPhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
         {
-            return InternalClient.GetByNumber(phoneNumber, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumber)}");
+            scope.Start();
+            try
+            {
+                return InternalClient.GetByNumber(phoneNumber, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Purchases phone numbers. </summary>
@@ -166,8 +232,18 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<PurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId, CancellationToken cancellationToken = default)
         {
-            var response = await InternalClient.StartPurchasePhoneNumbersAsync(searchId, cancellationToken).ConfigureAwait(false);
-            return new PurchasePhoneNumbersOperation(response);
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartPurchasePhoneNumbers)}");
+            scope.Start();
+            try
+            {
+                var originalResponse = await InternalClient.StartPurchasePhoneNumbersAsync(searchId, cancellationToken).ConfigureAwait(false);
+                return new PurchasePhoneNumbersOperation(originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Purchases phone numbers. </summary>
@@ -175,8 +251,18 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual PurchasePhoneNumbersOperation StartPurchasePhoneNumbers(string searchId, CancellationToken cancellationToken = default)
         {
-            var response = InternalClient.StartPurchasePhoneNumbers(searchId, cancellationToken);
-            return new PurchasePhoneNumbersOperation(response);
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartPurchasePhoneNumbers)}");
+            scope.Start();
+            try
+            {
+                var originalResponse = InternalClient.StartPurchasePhoneNumbers(searchId, cancellationToken);
+                return new PurchasePhoneNumbersOperation(originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Search for available phone numbers to purchase. </summary>
@@ -190,8 +276,18 @@ namespace Azure.Communication.PhoneNumbers
         public virtual async Task<SearchAvailablePhoneNumbersOperation> StartSearchAvailablePhoneNumbersAsync(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType,
             PhoneNumberCapabilities capabilities, PhoneNumberSearchOptions options = null, CancellationToken cancellationToken = default)
         {
-            var searchRequest = new PhoneNumberSearchRequest(phoneNumberType, phoneNumberAssignmentType, capabilities) { AreaCode = options?.AreaCode, Quantity = options?.Quantity };
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartSearchAvailablePhoneNumbers)}");
+            scope.Start();
+            try
+            {
+                var searchRequest = new PhoneNumberSearchRequest(phoneNumberType, phoneNumberAssignmentType, capabilities) { AreaCode = options?.AreaCode, Quantity = options?.Quantity };
                 return await InternalClient.StartSearchAvailablePhoneNumbersAsync(twoLetterIsoCountryName, searchRequest, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Search for available phone numbers to purchase. </summary>
@@ -205,8 +301,18 @@ namespace Azure.Communication.PhoneNumbers
         public virtual SearchAvailablePhoneNumbersOperation StartSearchAvailablePhoneNumbers(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType,
             PhoneNumberCapabilities capabilities, PhoneNumberSearchOptions options = null, CancellationToken cancellationToken = default)
         {
-            var searchRequest = new PhoneNumberSearchRequest(phoneNumberType, phoneNumberAssignmentType, capabilities) { AreaCode = options?.AreaCode, Quantity = options?.Quantity };
-            return InternalClient.StartSearchAvailablePhoneNumbers(twoLetterIsoCountryName, searchRequest, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartSearchAvailablePhoneNumbers)}");
+            scope.Start();
+            try
+            {
+                var searchRequest = new PhoneNumberSearchRequest(phoneNumberType, phoneNumberAssignmentType, capabilities) { AreaCode = options?.AreaCode, Quantity = options?.Quantity };
+                return InternalClient.StartSearchAvailablePhoneNumbers(twoLetterIsoCountryName, searchRequest, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieve the search result details. </summary>
@@ -214,7 +320,19 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PhoneNumberSearchResult>> GetPhoneNumberSearchResultAsync(string searchId, CancellationToken cancellationToken = default)
         {
-            return await InternalClient.GetSearchResultAsync(searchId, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(searchId, nameof(searchId));
+
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPhoneNumberSearchResult)}");
+            scope.Start();
+            try
+            {
+                return await InternalClient.GetSearchResultAsync(searchId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieve the search result details. </summary>
@@ -222,35 +340,87 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PhoneNumberSearchResult> GetPhoneNumberSearchResult(string searchId, CancellationToken cancellationToken = default)
         {
-            return InternalClient.GetSearchResult(searchId, cancellationToken);
+            Argument.AssertNotNull(searchId, nameof(searchId));
+
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPhoneNumberSearchResult)}");
+            scope.Start();
+            try
+            {
+                return InternalClient.GetSearchResult(searchId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Gets the list of all purchased phone numbers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<PurchasedPhoneNumber> GetPurchasedPhoneNumbersAsync(CancellationToken cancellationToken = default)
         {
-            return InternalClient.ListPhoneNumbersAsync(skip: null, top: null, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumbers)}");
+            scope.Start();
+            try
+            {
+                return InternalClient.ListPhoneNumbersAsync(skip: null, top: null, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Gets the list of all purchased phone numbers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<PurchasedPhoneNumber> GetPurchasedPhoneNumbers(CancellationToken cancellationToken = default)
         {
-            return InternalClient.ListPhoneNumbers(skip: null, top: null, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumbers)}");
+            scope.Start();
+            try
+            {
+                return InternalClient.ListPhoneNumbers(skip: null, top: null, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists the available countries from which to purchase phone numbers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<PhoneNumberCountry> GetAvailableCountriesAsync(CancellationToken cancellationToken = default)
         {
-            return InternalClient.ListAvailableCountriesAsync(skip: null, maxPageSize: null, acceptLanguage: _acceptedLanguage, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableCountries)}");
+            scope.Start();
+            try
+            {
+                return InternalClient.ListAvailableCountriesAsync(skip: null, maxPageSize: null, acceptLanguage: _acceptedLanguage, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists the available countries from which to purchase phone numbers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<PhoneNumberCountry> GetAvailableCountries(CancellationToken cancellationToken = default)
         {
-            return InternalClient.ListAvailableCountries(skip: null, maxPageSize: null, acceptLanguage: _acceptedLanguage, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableCountries)}");
+            scope.Start();
+            try
+            {
+                return InternalClient.ListAvailableCountries(skip: null, maxPageSize: null, acceptLanguage: _acceptedLanguage, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists the available localities (e.g. city or town) in the given country from which to purchase phone numbers. </summary>
@@ -259,7 +429,18 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<PhoneNumberLocality> GetAvailableLocalitiesAsync(string twoLetterIsoCountryName, string administrativeDivision = null, CancellationToken cancellationToken = default)
         {
-            return InternalClient.ListAvailableLocalitiesAsync(twoLetterIsoCountryName, skip: null, maxPageSize: null, administrativeDivision, acceptLanguage: _acceptedLanguage, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableLocalities)}");
+            Console.WriteLine(scope.ToString());
+            scope.Start();
+            try
+            {
+                return InternalClient.ListAvailableLocalitiesAsync(twoLetterIsoCountryName, skip: null, maxPageSize: null, administrativeDivision, acceptLanguage: _acceptedLanguage, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists the available localities (e.g. city or town) in the given country from which to purchase phone numbers. </summary>
@@ -268,7 +449,17 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<PhoneNumberLocality> GetAvailableLocalities(string twoLetterIsoCountryName, string administrativeDivision = null, CancellationToken cancellationToken = default)
         {
-            return InternalClient.ListAvailableLocalities(twoLetterIsoCountryName, skip: null, maxPageSize: null, administrativeDivision, acceptLanguage: _acceptedLanguage, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableLocalities)}");
+            scope.Start();
+            try
+            {
+                return InternalClient.ListAvailableLocalities(twoLetterIsoCountryName, skip: null, maxPageSize: null, administrativeDivision, acceptLanguage: _acceptedLanguage, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists the available area codes within a given country and locality. </summary>
@@ -316,7 +507,17 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<PhoneNumberOffering> GetAvailableOfferingsAsync(string twoLetterIsoCountryName, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? phoneNumberAssignmentType = null, CancellationToken cancellationToken = default)
         {
-            return InternalClient.ListOfferingsAsync(twoLetterIsoCountryName, skip: null, maxPageSize: null, phoneNumberType, phoneNumberAssignmentType, acceptLanguage: _acceptedLanguage, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableOfferings)}");
+            scope.Start();
+            try
+            {
+                return InternalClient.ListOfferingsAsync(twoLetterIsoCountryName, skip: null, maxPageSize: null, phoneNumberType, phoneNumberAssignmentType, acceptLanguage: _acceptedLanguage, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists the available offerings in the given country. </summary>
@@ -326,7 +527,17 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<PhoneNumberOffering> GetAvailableOfferings(string twoLetterIsoCountryName, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? phoneNumberAssignmentType = null, CancellationToken cancellationToken = default)
         {
-            return InternalClient.ListOfferings(twoLetterIsoCountryName, skip: null, maxPageSize: null, phoneNumberType, phoneNumberAssignmentType, acceptLanguage: _acceptedLanguage, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableOfferings)}");
+            scope.Start();
+            try
+            {
+                return InternalClient.ListOfferings(twoLetterIsoCountryName, skip: null, maxPageSize: null, phoneNumberType, phoneNumberAssignmentType, acceptLanguage: _acceptedLanguage, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists the available area codes within a given country and locality. </summary>
@@ -338,7 +549,26 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private AsyncPageable<PhoneNumberAreaCode> GetAvailableAreaCodesAsync(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, string administrativeDivision = null, CancellationToken cancellationToken = default)
         {
-            return InternalClient.ListAreaCodesAsync(twoLetterIsoCountryName, phoneNumberType, skip: null, maxPageSize: null, phoneNumberAssignmentType, locality, administrativeDivision, acceptLanguage: _acceptedLanguage, cancellationToken);
+            var operationName = "";
+            if (phoneNumberType == "geographic")
+            {
+                operationName = "GetAvailableAreaCodesGeographic";
+            }
+            else if (phoneNumberType == "tollFree")
+            {
+                operationName = "GetAvailableAreaCodesTollFree";
+            }
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{operationName}");
+            scope.Start();
+            try
+            {
+                return InternalClient.ListAreaCodesAsync(twoLetterIsoCountryName, phoneNumberType ,null, null, phoneNumberAssignmentType, locality, administrativeDivision, _acceptedLanguage, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists the available area codes within a given country and locality. </summary>
@@ -350,7 +580,26 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private Pageable<PhoneNumberAreaCode> GetAvailableAreaCodes(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, string administrativeDivision = null, CancellationToken cancellationToken = default)
         {
-            return InternalClient.ListAreaCodes(twoLetterIsoCountryName, phoneNumberType, skip: null, maxPageSize: null, phoneNumberAssignmentType, locality, administrativeDivision, acceptLanguage: _acceptedLanguage, cancellationToken);
+            var operationName = "";
+            if (phoneNumberType == "geographic")
+            {
+                operationName = "GetAvailableAreaCodesGeographic";
+            }
+            else if (phoneNumberType == "tollFree")
+            {
+                operationName = "GetAvailableAreaCodesTollFree";
+            }
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{operationName}");
+            scope.Start();
+            try
+            {
+                return InternalClient.ListAreaCodes(twoLetterIsoCountryName, phoneNumberType, null, null, phoneNumberAssignmentType, locality, administrativeDivision, _acceptedLanguage, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }
