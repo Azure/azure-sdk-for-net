@@ -69,6 +69,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trialMatcherData"/> is null. </exception>
         /// <remarks> Creates a Trial Matcher job with the given request body. </remarks>
+        /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrialsAsync(WaitUntil,TrialMatcherData,string,DateTimeOffset?,CancellationToken)']/*" />
         public virtual async Task<Operation<TrialMatcherResult>> MatchTrialsAsync(WaitUntil waitUntil, TrialMatcherData trialMatcherData, string repeatabilityRequestId = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(trialMatcherData, nameof(trialMatcherData));
@@ -86,6 +87,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trialMatcherData"/> is null. </exception>
         /// <remarks> Creates a Trial Matcher job with the given request body. </remarks>
+        /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrials(WaitUntil,TrialMatcherData,string,DateTimeOffset?,CancellationToken)']/*" />
         public virtual Operation<TrialMatcherResult> MatchTrials(WaitUntil waitUntil, TrialMatcherData trialMatcherData, string repeatabilityRequestId = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(trialMatcherData, nameof(trialMatcherData));
