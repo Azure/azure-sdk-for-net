@@ -83,6 +83,21 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("errorBlobUri"u8);
                 writer.WriteStringValue(ErrorBlobUri.AbsoluteUri);
             }
+            if (Optional.IsDefined(OutputBlobManagedIdentity))
+            {
+                writer.WritePropertyName("outputBlobManagedIdentity"u8);
+                writer.WriteObjectValue(OutputBlobManagedIdentity);
+            }
+            if (Optional.IsDefined(ErrorBlobManagedIdentity))
+            {
+                writer.WritePropertyName("errorBlobManagedIdentity"u8);
+                writer.WriteObjectValue(ErrorBlobManagedIdentity);
+            }
+            if (Optional.IsDefined(TreatFailureAsDeploymentFailure))
+            {
+                writer.WritePropertyName("treatFailureAsDeploymentFailure"u8);
+                writer.WriteBooleanValue(TreatFailureAsDeploymentFailure.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

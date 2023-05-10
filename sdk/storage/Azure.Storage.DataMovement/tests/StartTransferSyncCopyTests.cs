@@ -13,7 +13,6 @@ using Azure.Storage.DataMovement.Models;
 using NUnit.Framework;
 using Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Shared;
 using System.Linq;
 using System.ComponentModel;
 
@@ -140,7 +139,11 @@ namespace Azure.Storage.DataMovement.Tests
                 StorageResource sourceResource = new BlockBlobStorageResource(originalBlob);
                 // Set up destination client
                 BlockBlobClient destClient = InstrumentClient(container.GetBlockBlobClient(string.Concat(destinationBlobNames[i])));
-                StorageResource destinationResource = new BlockBlobStorageResource(destClient);
+                StorageResource destinationResource = new BlockBlobStorageResource(destClient,
+                    new BlockBlobStorageResourceOptions()
+                    {
+                        CopyMethod = TransferCopyMethod.SyncCopy
+                    });
                 copyBlobInfo.Add(new VerifyBlockBlobCopyFromUriInfo(
                     localSourceFile,
                     sourceResource,
@@ -426,7 +429,11 @@ namespace Azure.Storage.DataMovement.Tests
                 GetNewBlobName(),
                 size);
             StorageResource sourceResource = new BlockBlobStorageResource(blockBlobClient);
-            StorageResource destinationResource = new BlockBlobStorageResource(destinationClient);
+            StorageResource destinationResource = new BlockBlobStorageResource(destinationClient,
+                new BlockBlobStorageResourceOptions()
+                {
+                    CopyMethod = TransferCopyMethod.SyncCopy
+                });
             TransferManager transferManager = new TransferManager();
 
             // Start transfer and await for completion.
@@ -515,7 +522,11 @@ namespace Azure.Storage.DataMovement.Tests
                 size: size);
 
             StorageResource sourceResource = new AppendBlobStorageResource(sourceBlob);
-            StorageResource destinationResource = new AppendBlobStorageResource(destinationBlob);
+            StorageResource destinationResource = new AppendBlobStorageResource(destinationBlob,
+                new AppendBlobStorageResourceOptions()
+                {
+                    CopyMethod = TransferCopyMethod.SyncCopy
+                });
             TransferManager transferManager = new TransferManager();
 
             // Start transfer and await for completion.
@@ -558,7 +569,11 @@ namespace Azure.Storage.DataMovement.Tests
                 size);
             PageBlobClient destinationClient = testContainer.Container.GetPageBlobClient(GetNewBlobName());
             StorageResource sourceResource = new PageBlobStorageResource(sourceClient);
-            StorageResource destinationResource = new PageBlobStorageResource(destinationClient);
+            StorageResource destinationResource = new PageBlobStorageResource(destinationClient,
+                new PageBlobStorageResourceOptions()
+                {
+                    CopyMethod = TransferCopyMethod.SyncCopy
+                });
             TransferManager transferManager = new TransferManager();
 
             // Start transfer and await for completion.
@@ -606,7 +621,11 @@ namespace Azure.Storage.DataMovement.Tests
             string newSourceFile = Path.Combine(testDirectory.DirectoryPath, sourceBlobName);
             BlockBlobClient blockBlobClient = await CreateBlockBlob(containerClient, newSourceFile, sourceBlobName, size);
             StorageResource sourceResource = new BlockBlobStorageResource(blockBlobClient);
-            StorageResource destinationResource = new BlockBlobStorageResource(destinationClient);
+            StorageResource destinationResource = new BlockBlobStorageResource(destinationClient,
+                new BlockBlobStorageResourceOptions()
+                {
+                    CopyMethod = TransferCopyMethod.SyncCopy
+                });
 
             // Create Transfer Manager with single threaded operation
             TransferManagerOptions managerOptions = new TransferManagerOptions()
