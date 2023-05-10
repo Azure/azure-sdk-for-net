@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Redis.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckRedisNameAvailability_RedisCacheCheckNameAvailability()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2022-06-01/examples/RedisCacheCheckNameAvailability.json
+            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2023-04-01/examples/RedisCacheCheckNameAvailability.json
             // this example is just showing the usage of "Redis_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Redis.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetUpgradeNotifications_RedisCacheListUpgradeNotifications()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2022-06-01/examples/RedisCacheListUpgradeNotifications.json
+            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2023-04-01/examples/RedisCacheListUpgradeNotifications.json
             // this example is just showing the usage of "Redis_ListUpgradeNotifications" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Redis.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_RedisCacheUpdate()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2022-06-01/examples/RedisCacheUpdate.json
+            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2023-04-01/examples/RedisCacheUpdate.json
             // this example is just showing the usage of "Redis_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Redis.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_RedisCacheDelete()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2022-06-01/examples/RedisCacheDelete.json
+            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2023-04-01/examples/RedisCacheDelete.json
             // this example is just showing the usage of "Redis_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Redis.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_RedisCacheGet()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2022-06-01/examples/RedisCacheGet.json
+            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2023-04-01/examples/RedisCacheGet.json
             // this example is just showing the usage of "Redis_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Redis.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAllRedis_RedisCacheList()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2022-06-01/examples/RedisCacheList.json
+            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2023-04-01/examples/RedisCacheList.json
             // this example is just showing the usage of "Redis_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Redis.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetKeys_RedisCacheListKeys()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2022-06-01/examples/RedisCacheListKeys.json
+            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2023-04-01/examples/RedisCacheListKeys.json
             // this example is just showing the usage of "Redis_ListKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Redis.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task RegenerateKey_RedisCacheRegenerateKey()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2022-06-01/examples/RedisCacheRegenerateKey.json
+            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2023-04-01/examples/RedisCacheRegenerateKey.json
             // this example is just showing the usage of "Redis_RegenerateKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Redis.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ForceReboot_RedisCacheForceReboot()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2022-06-01/examples/RedisCacheForceReboot.json
+            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2023-04-01/examples/RedisCacheForceReboot.json
             // this example is just showing the usage of "Redis_ForceReboot" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Redis.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ImportData_RedisCacheImport()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2022-06-01/examples/RedisCacheImport.json
+            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2023-04-01/examples/RedisCacheImport.json
             // this example is just showing the usage of "Redis_ImportData" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -322,6 +322,7 @@ namespace Azure.ResourceManager.Redis.Samples
             })
             {
                 Format = "RDB",
+                StorageSubscriptionId = "storageSubId",
             };
             await redis.ImportDataAsync(WaitUntil.Completed, content);
 
@@ -333,7 +334,7 @@ namespace Azure.ResourceManager.Redis.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ExportData_RedisCacheExport()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2022-06-01/examples/RedisCacheExport.json
+            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2023-04-01/examples/RedisCacheExport.json
             // this example is just showing the usage of "Redis_ExportData" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -353,6 +354,7 @@ namespace Azure.ResourceManager.Redis.Samples
             ExportRdbContent content = new ExportRdbContent("datadump1", "https://contosostorage.blob.core.window.net/urltoBlobContainer?sasKeyParameters")
             {
                 Format = "RDB",
+                StorageSubscriptionId = "storageSubId",
             };
             await redis.ExportDataAsync(WaitUntil.Completed, content);
 
@@ -364,7 +366,7 @@ namespace Azure.ResourceManager.Redis.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetPrivateLinkResourcesByRedisCache_StorageAccountListPrivateLinkResources()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2022-06-01/examples/RedisCacheListPrivateLinkResources.json
+            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2023-04-01/examples/RedisCacheListPrivateLinkResources.json
             // this example is just showing the usage of "PrivateLinkResources_ListByRedisCache" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
