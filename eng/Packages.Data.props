@@ -102,6 +102,8 @@
     <PackageReference Update="Azure.Storage.Queues" Version="12.14.0" />
     <PackageReference Update="Azure.ResourceManager" Version="1.5.0" />
 
+    <PackageReference Update="Moq" Version="4.18.2" />
+
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.1" />
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.2.0" />

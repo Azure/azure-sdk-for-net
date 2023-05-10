@@ -214,6 +214,7 @@
 
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="Moq" />
 
     <!-- TODO: Review these file references-->
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
@@ -228,8 +229,12 @@
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="Moq" />
+    <!-- <PackageReference Include="Moq" /> -->
   </ItemGroup>
+
+  <!-- <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true'">
+    <PackageReference Include="Moq" />
+  </ItemGroup> -->
   <!-- *********** END OF Management Client Library Override section ************* -->
 
   <!-- Added layer of checks to make sure we correctly switched to project references -->
