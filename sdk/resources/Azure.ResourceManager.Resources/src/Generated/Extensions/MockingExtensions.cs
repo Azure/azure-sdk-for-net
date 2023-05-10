@@ -46,20 +46,20 @@ namespace Azure.ResourceManager.Resources.Mocking
             // then create the matcher by calling the method It.IsAny<Func<ArmClient, XXXExtensionClient>>() using reflection
             var matcher = typeof(It).GetMethod("IsAny", BindingFlags.Public | BindingFlags.Static).MakeGenericMethod(funcType).Invoke(null, Array.Empty<object>());
             // put the matcher into the Setup method of Mock<T> to set it up
-            parameterType = typeof(Expression<>).MakeGenericType(typeof(Func<,>));
+            parameterType = typeof(Expression<>).MakeGenericType(funcType);
             setupMethod = mock.GetType().GetMethod("Setup", new[] { parameterType });
-            // TODO -- build the expression that represents this: `t => t.GetCachedClient(It.IsAny<Func<ArmClient, XXXExtensionClient>>())`
-            newExpression = ConstructGetCachedClientExpression(parameterType, matcher);
+            // build the expression that represents this: `t => t.GetCachedClient(It.IsAny<Func<ArmClient, XXXExtensionClient>>())`
+            newExpression = ConstructGetCachedClientExpression(funcType, extensionClientType, matcher);
             setupMethod.Invoke(mock, new[] { newExpression });
 
             return mock;
         }
 
-        private static Expression ConstructGetCachedClientExpression(Type delegateType,object matcher)
+        private static Expression ConstructGetCachedClientExpression(Type delegateType, Type extensionClientType, object matcher)
         {
-            var parameter = Expression.Parameter(typeof(ArmResource), "r");
-            var method = typeof(ArmResource).GetMethod("GetCachedClient", BindingFlags.Instance | BindingFlags.Public);
-            var argument = Expression.Constant(matcher);
+            var parameter = Expression.Parameter(typeof(ArmClient), "client");
+            var method = typeof(ArmResource).GetMethod("GetCachedClient", BindingFlags.Instance | BindingFlags.Public).MakeGenericMethod(extensionClientType);
+            var argument = Expression.Constant(matcher, delegateType);
             var methodCallExpression = Expression.Call(parameter, method, argument);
             return Expression.Lambda(delegateType, methodCallExpression, parameter);
         }
