@@ -90,6 +90,19 @@ namespace Azure.Storage.DataMovement.Blobs
             _blobClient = blobClient;
             _blocks = new ConcurrentDictionary<long, string>();
             _options = options;
+
+            // Set credential internally if passed one.
+            TokenCredential tokenCredential = BlobBaseClientInternals.GetTokenCredential(blobClient);
+            if (tokenCredential != null)
+            {
+                SetAuthorizationScheme(tokenCredential);
+            }
+            // TODO: add back in when AzureSasCredential supports generating SAS's
+            //AzureSasCredential sasCredential = BlobBaseClientInternals.GetSasCredential(blobClient);
+            //else if (sasCredential != null)
+            //{
+            //SetAuthorizationScheme(sasCredential);
+            //}
         }
 
         /// <summary>

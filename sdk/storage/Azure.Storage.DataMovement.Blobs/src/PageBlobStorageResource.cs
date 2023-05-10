@@ -241,17 +241,12 @@ namespace Azure.Storage.DataMovement.Blobs
             if (ServiceCopyMethod == TransferCopyMethod.SyncCopy)
             {
                 // Create the blob first before uploading the pages
-                PageBlobRequestConditions conditions = new PageBlobRequestConditions
-                {
-                    // TODO: copy over the other conditions from the uploadOptions
-                    IfNoneMatch = overwrite ? null : new ETag(Constants.Wildcard),
-                };
                 if (range.Offset == 0)
                 {
                     await _blobClient.CreateAsync(
                         size: completeLength,
-                        _options.ToCreateOptions(overwrite),
-                        cancellationToken).ConfigureAwait(false);
+                        options: _options.ToCreateOptions(overwrite),
+                        cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
                 await _blobClient.UploadPagesFromUriAsync(
                     sourceResource.Uri,

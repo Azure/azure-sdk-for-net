@@ -200,7 +200,7 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         public BlobServiceClient(Uri serviceUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            : this(serviceUri, credential.AsPolicy(), options ?? new BlobClientOptions(), credential)
+            : this(serviceUri, credential.AsPolicy(), credential, options ?? new BlobClientOptions())
         {
         }
 
@@ -246,7 +246,7 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         public BlobServiceClient(Uri serviceUri, TokenCredential credential, BlobClientOptions options = default)
-            : this(serviceUri, credential.AsPolicy(options), options ?? new BlobClientOptions())
+            : this(serviceUri, credential.AsPolicy(options), credential, options ?? new BlobClientOptions())
         {
             Errors.VerifyHttpsTokenAuth(serviceUri);
         }
@@ -267,19 +267,92 @@ namespace Azure.Storage.Blobs
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
+        internal BlobServiceClient(
+            Uri serviceUri,
+            HttpPipelinePolicy authentication,
+            BlobClientOptions options)
+            : this(serviceUri,
+                  new BlobClientConfiguration(
+                      pipeline: options.Build(authentication),
+                      sharedKeyCredential: default,
+                      clientDiagnostics: new ClientDiagnostics(options),
+                      version: options?.Version ?? BlobClientOptions.LatestVersion,
+                      customerProvidedKey: options?.CustomerProvidedKey,
+                      transferValidation: options.TransferValidation,
+                      encryptionScope: options?.EncryptionScope,
+                      trimBlobNameSlashes: options?.TrimBlobNameSlashes ?? false),
+                  authentication,
+                  options?._clientSideEncryptionOptions?.Clone())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the blob service.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
         /// <param name="storageSharedKeyCredential">
         /// Optional storage shared key credential used to sign requests and generate sas.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
         /// </param>
         internal BlobServiceClient(
             Uri serviceUri,
             HttpPipelinePolicy authentication,
-            BlobClientOptions options,
-            StorageSharedKeyCredential storageSharedKeyCredential = default)
-            : this(
-                  serviceUri,
+            StorageSharedKeyCredential storageSharedKeyCredential,
+            BlobClientOptions options)
+            : this(serviceUri,
                   new BlobClientConfiguration(
                       pipeline: options.Build(authentication),
                       sharedKeyCredential: storageSharedKeyCredential,
+                      clientDiagnostics: new ClientDiagnostics(options),
+                      version: options?.Version ?? BlobClientOptions.LatestVersion,
+                      customerProvidedKey: options?.CustomerProvidedKey,
+                      transferValidation: options.TransferValidation,
+                      encryptionScope: options?.EncryptionScope,
+                      trimBlobNameSlashes: options?.TrimBlobNameSlashes ?? false),
+                  authentication,
+                  options?._clientSideEncryptionOptions?.Clone())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the blob service.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="tokenCredential">
+        /// The token credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        internal BlobServiceClient(
+            Uri serviceUri,
+            HttpPipelinePolicy authentication,
+            TokenCredential tokenCredential,
+            BlobClientOptions options)
+            : this(serviceUri,
+                  new BlobClientConfiguration(
+                      pipeline: options.Build(authentication),
+                      tokenCredential: tokenCredential,
                       clientDiagnostics: new ClientDiagnostics(options),
                       version: options?.Version ?? BlobClientOptions.LatestVersion,
                       customerProvidedKey: options?.CustomerProvidedKey,

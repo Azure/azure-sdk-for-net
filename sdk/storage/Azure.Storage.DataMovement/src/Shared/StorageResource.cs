@@ -18,11 +18,6 @@ namespace Azure.Storage.DataMovement
     public abstract class StorageResource : StorageResourceBase
     {
         /// <summary>
-        /// Stores the authentication scheme that client authenticates with.
-        /// </summary>
-        internal ResourceAuthScheme _authScheme;
-
-        /// <summary>
         /// For Mocking.
         /// </summary>
         protected StorageResource() { }

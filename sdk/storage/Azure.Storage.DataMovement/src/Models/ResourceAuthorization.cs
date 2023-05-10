@@ -15,20 +15,28 @@ namespace Azure.Storage.DataMovement.Models
     /// and <see cref="StorageResource.CopyFromUriAsync(StorageResource, bool, long, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/> when using the
     /// <see cref="StorageResourceCopyFromUriOptions.SourceAuthentication"/>. It's also used on the source copy source when a <see cref="AzureSasCredential"/> is used on the Uri.
     /// </summary>
-    internal class ResourceAuthScheme
+    internal class ResourceAuthorization
     {
-        public virtual TokenCredential TokenCredential { get; private set; }
+        internal bool CanProduceTokenCredential => TokenCredential != null;
 
-        public virtual AzureSasCredential SasCredential { get; private set; }
+        internal TokenCredential TokenCredential;
 
-        public ResourceAuthScheme(TokenCredential tokenCredential)
+        internal ResourceAuthorization()
+        {
+            TokenCredential = null;
+        }
+
+        internal void SetAuthentication(TokenCredential tokenCredential)
         {
             TokenCredential = tokenCredential;
         }
 
-        public ResourceAuthScheme(AzureSasCredential sasCredential)
-        {
-            SasCredential = sasCredential;
-        }
+        // TODO: add back in when AzureSasCredential supports generating SAS's
+        //internal bool CanProduceSasCredential => SasCredential != null;
+        //internal AzureSasCredential SasCredential;
+        //internal void SetAuthentication(TokenCredential tokenCredential)
+        //{
+            //TokenCredential = tokenCredential;
+        //}
     }
 }

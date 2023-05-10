@@ -1,10 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading;
 
 namespace Azure.Storage.DataMovement.Models
@@ -23,7 +20,8 @@ namespace Azure.Storage.DataMovement.Models
         public string BlockId { get; internal set; }
 
         /// <summary>
-        /// Optional.  Source authentication used to access the source blob.
+        /// Optional.  Source authentication used to access the source blob. Cannot be used in conjunction with
+        /// SasCredential.
         ///
         /// Only applies to copy operations, not local operations.
         /// </summary>

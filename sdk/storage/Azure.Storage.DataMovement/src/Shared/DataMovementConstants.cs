@@ -34,6 +34,12 @@ namespace Azure.Storage.DataMovement
 
         internal const string DefaultCheckpointerPath = ".azstoragedml";
 
+        internal static class CopyHttpAuthorization
+        {
+            internal static readonly string[] Scopes = { "https://storage.azure.com/.default" };
+            internal const string BearerScheme = "Bearer";
+        }
+
         /// <summary>
         ///  Constants used for logger extensions
         /// </summary>

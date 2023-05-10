@@ -13,5 +13,9 @@ namespace Azure.Storage.DataMovement.Blobs
     {
         public static new TokenCredential GetTokenCredential(BlobBaseClient client)
             => BlobBaseClient.GetTokenCredential(client);
+
+        // TODO: add back in when AzureSasCredential supports generating SAS's
+        //public static new AzureSasCredential GetSasCredential(BlobBaseClient client)
+        //=> BlobBaseClient.GetSasCredential(client);
     }
 }
