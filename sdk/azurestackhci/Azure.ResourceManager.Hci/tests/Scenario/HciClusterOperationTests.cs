@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Hci.Tests
         private HciClusterResource _cluster;
 
         public HciClusterOperationTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
