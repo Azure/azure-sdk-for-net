@@ -67,7 +67,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="padding">The padding mode.</param>
         /// <returns>The encrypted data.</returns>
         /// <exception cref="NotSupportedException">The <paramref name="padding"/> is not supported.</exception>
-        /// <exception cref="RequestFailedException"></exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public override byte[] Encrypt(byte[] data, RSAEncryptionPadding padding)
         {
             EncryptionAlgorithm algorithm = EncryptionAlgorithm.FromRsaEncryptionPadding(padding);
