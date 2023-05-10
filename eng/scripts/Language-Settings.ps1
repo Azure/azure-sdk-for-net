@@ -494,6 +494,25 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
       continue
     }
 
+    if ($matchingPublishedPackage.Support -eq 'deprecated') { 
+      if ($Mode -eq 'legacy') { 
+
+        # Select the GA version, if none use the preview version
+        $updatedVersion = $matchingPublishedPackage.VersionGA.Trim()
+        if (!$updatedVersion) { 
+          $updatedVersion = $matchingPublishedPackage.VersionPreview.Trim()
+        }
+        $package.Versions = @($updatedVersion)
+
+        Write-Host "Add deprecated package to legacy moniker: $($package.Name)"
+        $outputPackages += $package
+      } else { 
+        Write-Host "Removing deprecated package: $($package.Name)"
+      }
+
+      continue
+    }
+
     $updatedVersion = $matchingPublishedPackage.VersionGA.Trim()
     if ($Mode -eq 'preview') {
       $updatedVersion = $matchingPublishedPackage.VersionPreview.Trim()
