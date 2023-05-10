@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.TestFramework;
 using Azure.Data.Tables;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs.Host;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -1342,6 +1343,78 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
             var result4 = await CallAsync<BindTableEntityToJArrayProgram>(nameof(BindTableEntityToJArrayProgram.Call));
             Assert.AreEqual("x1;x2;x3;x4;", result4.Result);
+        }
+
+        [RecordedTest]
+        public async Task CanBindToParameterBindingDataList()
+        {
+            await TableClient.AddEntityAsync(new TableEntity(PartitionKey, RowKey + "1") { ["Value"] = "x1" });
+            await TableClient.AddEntityAsync(new TableEntity(PartitionKey, RowKey + "2") { ["Value"] = "x2" });
+            await TableClient.AddEntityAsync(new TableEntity(PartitionKey, RowKey + "3") { ["Value"] = "x3" });
+            await TableClient.AddEntityAsync(new TableEntity(PartitionKey, RowKey + "4") { ["Value"] = "x4" });
+
+            // Act
+            var result1 = await CallAsync<BindTableEntityToParameterDataListProgram>(nameof(BindTableEntityToParameterDataListProgram.CallTakeFilter));
+            Assert.AreEqual($"{RowKey}1;{RowKey}3;", result1.Result);
+
+            var result2 = await CallAsync<BindTableEntityToParameterDataListProgram>(nameof(BindTableEntityToParameterDataListProgram.CallFilter));
+            Assert.AreEqual($"{RowKey}1;{RowKey}3;{RowKey}4;", result2.Result);
+
+            var result3 = await CallAsync<BindTableEntityToParameterDataListProgram>(nameof(BindTableEntityToParameterDataListProgram.CallTake));
+            Assert.AreEqual($"{RowKey}1;{RowKey}2;{RowKey}3;", result3.Result);
+
+            var result4 = await CallAsync<BindTableEntityToParameterDataListProgram>(nameof(BindTableEntityToParameterDataListProgram.Call));
+            Assert.AreEqual($"{RowKey}1;{RowKey}2;{RowKey}3;{RowKey}4;", result4.Result);
+
+            var result5 = await CallAsync<BindTableEntityToParameterDataListProgram>(nameof(BindTableEntityToParameterDataListProgram.Call));
+            Assert.AreEqual($"{RowKey}1;{RowKey}2;{RowKey}3;{RowKey}4;", result5.Result);
+        }
+
+        private class BindTableEntityToParameterDataListProgram
+        {
+            public string Result;
+
+            // Helper to flatten a ParameterDataList for quick testing.
+            private static string Flatten(ParameterBindingData[] array)
+            {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < array.Length; i++)
+                {
+                    var result = (ParameterBindingData) array.GetValue(i);
+                    var dict = result?.Content.ToObjectFromJson<Dictionary<string, object>>();
+                    dict.TryGetValue("RowKey", out var rowKey);
+                    sb.Append(rowKey);
+                    sb.Append(';');
+                }
+
+                return sb.ToString();
+            }
+
+            public void CallTakeFilter([Table(TableNameExpression, PartitionKey, Take = 2, Filter = "Value ne 'x2'")] ParameterBindingData[] array)
+            {
+                Result = Flatten(array);
+            }
+
+            public void CallFilter([Table(TableNameExpression, PartitionKey, Filter = "Value ne 'x2'")] ParameterBindingData[] array)
+            {
+                Result = Flatten(array);
+            }
+
+            public void CallTake([Table(TableNameExpression, PartitionKey, Take = 3)] ParameterBindingData[] array)
+            {
+                Result = Flatten(array);
+            }
+
+            // No take or filters
+            public void Call([Table(TableNameExpression, PartitionKey)] ParameterBindingData[] array)
+            {
+                Result = Flatten(array);
+            }
+
+            public void CallTakeZero([Table(TableNameExpression, PartitionKey, Take = 0)] ParameterBindingData[] array)
+            {
+                Result = Flatten(array);
+            }
         }
 
         private class BindTableEntityToJArrayProgram
