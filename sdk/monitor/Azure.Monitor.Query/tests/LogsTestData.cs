@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -93,7 +94,8 @@ namespace Azure.Monitor.Query.Tests
             {
                 _initialization ??= Task.WhenAll(
                     InitializeData(_testEnvironment.WorkspaceId, _testEnvironment.WorkspaceKey),
-                    InitializeData(_testEnvironment.SecondaryWorkspaceId, _testEnvironment.SecondaryWorkspaceKey));
+                    InitializeData(_testEnvironment.SecondaryWorkspaceId, _testEnvironment.SecondaryWorkspaceKey)
+                    InitializeStorageAccount());
             }
 
             await _initialization;
@@ -132,6 +134,27 @@ namespace Azure.Monitor.Query.Tests
             catch
             {
                 return 0;
+            }
+        }
+
+        private async Task InitializeStorageAccount()
+        {
+            var client = new LogsQueryClient(_testEnvironment.Credential);
+            bool noData = true;
+
+            while (noData)
+            {
+                var result = await client.QueryResourceAsync(new ResourceIdentifier(_testEnvironment.StorageAccountId), "search *", new QueryTimeRange(DateTimeOffset.Now, TimeSpan.FromDays(15))).ConfigureAwait(false);
+                if (result.Value.Table.Rows.Count > 0 || result.Value.Table.Columns.Count > 0)
+                {
+                    // Make sure StorageAccount set-up is complete and data is there before beginning testing
+                    noData = false;
+                }
+                else
+                {
+                    // Delay for 5 minutes to give time for StorageAccount to initialize
+                    Thread.Sleep(300000);
+                }
             }
         }
     }

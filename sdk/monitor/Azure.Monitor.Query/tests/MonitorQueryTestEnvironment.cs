@@ -24,19 +24,5 @@ namespace Azure.Monitor.Query.Tests
         public string ResourceId => GetRecordedVariable("RESOURCE_ID");
         public string StorageAccountName => GetRecordedVariable("STORAGE_ACCOUNT_NAME");
         public string StorageAccountId => GetRecordedVariable("STORAGE_ID");
-
-        protected override async ValueTask<bool> IsEnvironmentReadyAsync()
-        {
-            // Delay for 5 minutes to give time for StorageAccount to initialize
-            Thread.Sleep(300000);
-            var client = new LogsQueryClient(Credential);
-            var result = await client.QueryResourceAsync(new ResourceIdentifier(StorageAccountId), "search *", new QueryTimeRange(DateTimeOffset.Now, TimeSpan.FromDays(15))).ConfigureAwait(false);
-
-            // Make sure StorageAccount set-up is complete and data is there before beginning testing
-            if (result.Value.Table.Rows.Count == 0 || result.Value.Table.Columns.Count == 0)
-                return false;
-
-            return true;
-        }
     }
 }
