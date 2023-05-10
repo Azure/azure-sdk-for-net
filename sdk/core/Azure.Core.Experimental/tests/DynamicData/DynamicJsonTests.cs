@@ -318,7 +318,7 @@ namespace Azure.Core.Tests
             Assert.IsTrue(value.Model.Number == 2);
             Assert.IsTrue(value.model.number == 2);
 
-            RequestContent content = RequestContent.Create(value);
+            RequestContent content = RequestContent.Create((object)value);
             Stream stream = new MemoryStream();
             content.WriteTo(stream, default);
             stream.Flush();

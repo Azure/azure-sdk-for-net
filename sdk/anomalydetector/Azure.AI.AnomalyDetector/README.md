@@ -126,12 +126,13 @@ Console.WriteLine("Detecting anomalies in the entire time series.");
 
 try
 {
-    UnivariateEntireDetectionResult result = client.DetectUnivariateEntireSeries(request);
+    Response response = client.DetectUnivariateEntireSeries(request.ToRequestContent());
+    JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 
     bool hasAnomaly = false;
     for (int i = 0; i < request.Series.Count; ++i)
     {
-        if (result.IsAnomaly[i])
+        if (result.GetProperty("isAnomaly")[i].GetBoolean())
         {
             Console.WriteLine($"An anomaly was detected at index: {i}.");
             hasAnomaly = true;
