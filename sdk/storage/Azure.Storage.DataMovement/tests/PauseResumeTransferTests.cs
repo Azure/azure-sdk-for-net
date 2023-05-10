@@ -230,10 +230,10 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task TryPauseTransferAsync_Id(TransferType transferType)
         {
             // Arrange
-            DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
-            DisposingLocalDirectory localDirectory = GetTestLocalDirectory();
-            DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
-            DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
+            using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
@@ -241,7 +241,7 @@ namespace Azure.Storage.DataMovement.Tests
             };
             TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions();
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(transferOptions);
+            TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
 
             // Add long-running job to pause, if the job is not big enough
             // then the job might finish before we can pause it.
@@ -259,7 +259,7 @@ namespace Azure.Storage.DataMovement.Tests
             bool pauseSuccess = await transferManager.TryPauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
-            failureTransferHolder.AssertFailureCheck();
+            testEventsRaised.AssertPausedCheck();
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
             Assert.IsTrue(pauseSuccess);
 
@@ -280,17 +280,17 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task TryPauseTransferAsync_DataTransfer(TransferType transferType)
         {
             // Arrange
-            DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
-            DisposingLocalDirectory localDirectory = GetTestLocalDirectory();
-            DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
-            DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
+            using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
             TransferOptions transferOptions = new TransferOptions();
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(transferOptions);
+            TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
             TransferManager transferManager = new TransferManager(options);
 
             // Add long-running job to pause, if the job is not big enough
@@ -309,7 +309,7 @@ namespace Azure.Storage.DataMovement.Tests
             bool pauseSuccess = await transferManager.TryPauseTransferAsync(transfer, cancellationTokenSource.Token);
 
             // Assert
-            failureTransferHolder.AssertFailureCheck();
+            testEventsRaised.AssertPausedCheck();
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
             Assert.IsTrue(pauseSuccess);
 
@@ -325,7 +325,7 @@ namespace Azure.Storage.DataMovement.Tests
         public void TryPauseTransferAsync_Error()
         {
             // Arrange
-            DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
+            using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
@@ -346,17 +346,17 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task TryPauseTransferAsync_AlreadyPaused(TransferType transferType)
         {
             // Arrange
-            DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
-            DisposingLocalDirectory localDirectory = GetTestLocalDirectory();
-            DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
-            DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
+            using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
             TransferOptions transferOptions = new TransferOptions();
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(transferOptions);
+            TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
             TransferManager transferManager = new TransferManager(options);
 
             // Add long-running job to pause, if the job is not big enough
@@ -375,7 +375,7 @@ namespace Azure.Storage.DataMovement.Tests
             bool pauseSuccess = await transferManager.TryPauseTransferAsync(transfer, cancellationTokenSource.Token);
 
             // Assert
-            failureTransferHolder.AssertFailureCheck();
+            testEventsRaised.AssertPausedCheck();
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
             Assert.IsTrue(pauseSuccess);
 
@@ -401,10 +401,10 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task PauseThenResumeTransferAsync(TransferType transferType)
         {
             // Arrange
-            DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
-            DisposingLocalDirectory localDirectory = GetTestLocalDirectory();
-            DisposingBlobContainer sourceContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
-            DisposingBlobContainer destinationContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
 
             TransferManagerOptions options = new TransferManagerOptions()
             {
@@ -412,7 +412,7 @@ namespace Azure.Storage.DataMovement.Tests
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
             TransferOptions transferOptions = new TransferOptions();
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(transferOptions);
+            TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
             TransferManager transferManager = new TransferManager(options);
             long size = Constants.KB * 100;
 
@@ -439,7 +439,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert - Confirm we've paused
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
-            failureTransferHolder.AssertFailureCheck();
+            testEventsRaised.AssertPausedCheck();
             Assert.IsTrue(pauseSuccess);
 
             // Act - Resume Job
@@ -447,7 +447,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 ResumeFromCheckpointId = transfer.Id
             };
-            FailureTransferHolder resumeFailureHolder = new FailureTransferHolder(resumeOptions);
+            TestEventsRaised resumeFailureHolder = new TestEventsRaised(resumeOptions);
             DataTransfer resumeTransfer = await CreateSingleLongTransferAsync(
                 manager: transferManager,
                 sourceResource: sourceResource,
@@ -458,7 +458,7 @@ namespace Azure.Storage.DataMovement.Tests
             await resumeTransfer.AwaitCompletion(waitTransferCompletion.Token);
 
             // Assert
-            resumeFailureHolder.AssertFailureCheck();
+            resumeFailureHolder.AssertPausedCheck();
             Assert.AreEqual(StorageTransferStatus.Completed, resumeTransfer.TransferStatus);
             Assert.IsTrue(resumeTransfer.HasCompleted);
 
@@ -609,11 +609,11 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task TryPauseTransferAsync_Id_Directory(TransferType transferType)
         {
             // Arrange
-            DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
-            DisposingLocalDirectory sourceDirectory = GetTestLocalDirectory();
-            DisposingLocalDirectory destinationDirectory = GetTestLocalDirectory();
-            DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
-            DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
+            using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
@@ -621,7 +621,7 @@ namespace Azure.Storage.DataMovement.Tests
             };
             TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions();
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(transferOptions);
+            TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
 
             // Add long-running job to pause, if the job is not big enough
             // then the job might finish before we can pause it.
@@ -642,7 +642,7 @@ namespace Azure.Storage.DataMovement.Tests
             bool pauseSuccess = await transferManager.TryPauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
-            failureTransferHolder.AssertFailureCheck();
+            testEventsRaised.AssertPausedCheck();
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
             Assert.IsTrue(pauseSuccess);
         }
@@ -656,11 +656,11 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task TryPauseTransferAsync_DataTransfer_Directory(TransferType transferType)
         {
             // Arrange
-            DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
-            DisposingLocalDirectory sourceDirectory = GetTestLocalDirectory();
-            DisposingLocalDirectory destinationDirectory = GetTestLocalDirectory();
-            DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
-            DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
+            using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
@@ -668,7 +668,7 @@ namespace Azure.Storage.DataMovement.Tests
             };
             TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions();
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(transferOptions);
+            TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
 
             // Add long-running job to pause, if the job is not big enough
             // then the job might finish before we can pause it.
@@ -689,7 +689,7 @@ namespace Azure.Storage.DataMovement.Tests
             bool pauseSuccess = await transferManager.TryPauseTransferAsync(transfer, cancellationTokenSource.Token);
 
             // Assert
-            failureTransferHolder.AssertFailureCheck();
+            testEventsRaised.AssertPausedCheck();
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
             Assert.IsTrue(pauseSuccess);
         }
@@ -703,11 +703,11 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task TryPauseTransferAsync_AlreadyPaused_Directory(TransferType transferType)
         {
             // Arrange
-            DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
-            DisposingLocalDirectory sourceDirectory = GetTestLocalDirectory();
-            DisposingLocalDirectory destinationDirectory = GetTestLocalDirectory();
-            DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
-            DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
+            using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
@@ -715,7 +715,7 @@ namespace Azure.Storage.DataMovement.Tests
             };
             TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions();
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(transferOptions);
+            TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
 
             // Add long-running job to pause, if the job is not big enough
             // then the job might finish before we can pause it.
@@ -736,14 +736,14 @@ namespace Azure.Storage.DataMovement.Tests
             bool pauseSuccess = await transferManager.TryPauseTransferAsync(transfer, cancellationTokenSource.Token);
 
             // Assert
-            failureTransferHolder.AssertFailureCheck();
+            testEventsRaised.AssertPausedCheck();
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
             Assert.IsTrue(pauseSuccess);
 
             CancellationTokenSource cancellationTokenSource2 = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             bool pauseFailure = await transferManager.TryPauseTransferAsync(transfer, cancellationTokenSource2.Token);
 
-            failureTransferHolder.AssertFailureCheck();
+            testEventsRaised.AssertPausedCheck();
             Assert.IsFalse(pauseFailure);
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
         }
@@ -757,11 +757,11 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task PauseThenResumeTransferAsync_Directory(TransferType transferType)
         {
             // Arrange
-            DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
-            DisposingLocalDirectory sourceDirectory = GetTestLocalDirectory();
-            DisposingLocalDirectory destinationDirectory = GetTestLocalDirectory();
-            DisposingBlobContainer sourceContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
-            DisposingBlobContainer destinationContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
@@ -769,7 +769,7 @@ namespace Azure.Storage.DataMovement.Tests
             };
             TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions();
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(transferOptions);
+            TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
             long size = Constants.KB * 4;
             int partCount = 4;
 
@@ -798,7 +798,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert - Confirm we've paused
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
-            failureTransferHolder.AssertFailureCheck();
+            testEventsRaised.AssertPausedCheck();
             Assert.IsTrue(pauseSuccess);
 
             // Act - Resume Job
@@ -806,7 +806,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 ResumeFromCheckpointId = transfer.Id
             };
-            FailureTransferHolder resumeFailureHolder = new FailureTransferHolder(resumeOptions);
+            TestEventsRaised resumeFailureHolder = new TestEventsRaised(resumeOptions);
             DataTransfer resumeTransfer = await CreateDirectoryLongTransferAsync(
                 manager: transferManager,
                 sourceResource: sourceResource,
@@ -817,7 +817,7 @@ namespace Azure.Storage.DataMovement.Tests
             await resumeTransfer.AwaitCompletion(waitTransferCompletion.Token);
 
             // Assert
-            resumeFailureHolder.AssertFailureCheck();
+            resumeFailureHolder.AssertPausedCheck();
             Assert.AreEqual(StorageTransferStatus.Completed, resumeTransfer.TransferStatus);
             Assert.IsTrue(resumeTransfer.HasCompleted);
 

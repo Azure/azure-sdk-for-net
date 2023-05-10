@@ -230,9 +230,5 @@ namespace Azure.Core
             scope.Start();
             return scope;
         }
-
-        protected async ValueTask<RequestFailedException> CreateException(bool async, Response response) => async
-            ? await _diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false)
-            : _diagnostics.CreateRequestFailedException(response);
     }
 }

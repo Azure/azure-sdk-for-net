@@ -2,12 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using Azure.Core;
-using Azure.Core.Dynamic;
-using System.Collections;
 
 namespace Azure.AI.Language.Conversations.Tests
 {
@@ -46,7 +45,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // deserialize
-            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson();
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
@@ -92,7 +91,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // deserialize
-            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson();
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
@@ -149,7 +148,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // deserialize
-            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson();
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
@@ -201,7 +200,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // deserialize
-            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson();
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
@@ -256,7 +255,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
 
-            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson();
             Assert.That((string)conversationalTaskResult.Result.Prediction.TopIntent, Is.EqualTo("Send"));
         }
 
@@ -322,7 +321,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
 
-            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson();
             Assert.NotNull(jobResults);
 
             foreach (dynamic analyzeConversationSummarization in jobResults.Tasks.Items)
@@ -406,7 +405,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
 
-            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson();
             Assert.NotNull(jobResults);
 
             foreach (dynamic analyzeConversationPIIResult in jobResults.Tasks.Items)
@@ -570,7 +569,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
 
-            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
+            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson();
             Assert.NotNull(jobResults);
 
             foreach (dynamic result in jobResults.Tasks.Items)

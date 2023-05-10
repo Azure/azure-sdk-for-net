@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Specifies the protocol of WinRM listener. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;**http** &lt;br&gt;&lt;br&gt; **https**. </summary>
+    /// <summary> Specifies the protocol of WinRM listener. Possible values are: **http,** **https.**. </summary>
     public enum WinRMListenerProtocolType
     {
         /// <summary> Http. </summary>

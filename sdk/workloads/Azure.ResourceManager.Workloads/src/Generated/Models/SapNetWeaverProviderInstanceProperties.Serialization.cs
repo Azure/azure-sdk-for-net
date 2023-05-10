@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<string> sapClientId = default;
             Optional<string> sapPortNumber = default;
             Optional<Uri> sslCertificateUri = default;
-            Optional<SslPreference> sslPreference = default;
+            Optional<SapSslPreference> sslPreference = default;
             string providerType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    sslPreference = new SslPreference(property.Value.GetString());
+                    sslPreference = new SapSslPreference(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("providerType"u8))
