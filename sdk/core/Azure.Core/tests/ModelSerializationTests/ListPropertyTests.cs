@@ -110,7 +110,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = ignoreReadOnly, IgnoreAdditionalProperties = ignoreUnknown };
 
             var model = new DogListProperty();
-            model.Serialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
+            model.Deserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
 
             if (!ignoreReadOnly)
             {
