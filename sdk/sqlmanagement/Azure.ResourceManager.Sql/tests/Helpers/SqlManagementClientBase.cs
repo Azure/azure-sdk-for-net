@@ -26,9 +26,11 @@ namespace Azure.ResourceManager.Sql.Tests
         protected SqlManagementClientBase(bool isAsync)
             : base(isAsync)
         {
+            IgnoreNetworkDependencyVersions();
         }
         public SqlManagementClientBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
+            IgnoreNetworkDependencyVersions();
         }
         [SetUp]
         public virtual void TestSetup()
@@ -80,56 +82,45 @@ namespace Azure.ResourceManager.Sql.Tests
 
         protected async Task<VirtualNetworkResource> CreateVirtualNetwork(string vnetName, ResourceGroupResource resourceGroup)
         {
-            if (Mode == RecordedTestMode.Playback)
+            string networkSecurityGroupName = Recording.GenerateAssetName("network-security-group-");
+            string routeTableName = Recording.GenerateAssetName("route-table-");
+            //1. create NetworkSecurityGroup
+            NetworkSecurityGroupData networkSecurityGroupData = new NetworkSecurityGroupData()
             {
-                ResourceIdentifier id = VirtualNetworkResource.CreateResourceIdentifier(resourceGroup.Id.SubscriptionId, resourceGroup.Id.Name, vnetName);
-                return Client.GetVirtualNetworkResource(id);
-            }
-            else
+                Location = DefaultLocation,
+            };
+            var networkSecurityGroup = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroupData);
+
+            //2. create Route table
+            RouteTableData routeTableData = new RouteTableData()
             {
-                using (Recording.DisableRecording())
+                Location = DefaultLocation,
+            };
+            var routeTable = await resourceGroup.GetRouteTables().CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, routeTableData);
+
+            //3. create vnet(subnet bind NetworkSecurityGroup and RouteTable)
+            var vnetData = new VirtualNetworkData()
+            {
+                Location = DefaultLocation,
+                Subnets =
                 {
-                    string networkSecurityGroupName = Recording.GenerateAssetName("network-security-group-");
-                    string routeTableName = Recording.GenerateAssetName("route-table-");
-                    //1. create NetworkSecurityGroup
-                    NetworkSecurityGroupData networkSecurityGroupData = new NetworkSecurityGroupData()
+                    new SubnetData() { Name = "subnet01", AddressPrefix = "10.10.1.0/24", },
+                    new SubnetData()
                     {
-                        Location = DefaultLocation,
-                    };
-                    var networkSecurityGroup = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroupData);
-
-                    //2. create Route table
-                    RouteTableData routeTableData = new RouteTableData()
-                    {
-                        Location = DefaultLocation,
-                    };
-                    var routeTable = await resourceGroup.GetRouteTables().CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, routeTableData);
-
-                    //3. create vnet(subnet bind NetworkSecurityGroup and RouteTable)
-                    var vnetData = new VirtualNetworkData()
-                    {
-                        Location = DefaultLocation,
-                        Subnets =
+                        Name = "ManagedInstance",
+                        AddressPrefix = "10.10.2.0/24",
+                        Delegations =
                         {
-                            new SubnetData() { Name = "subnet01", AddressPrefix = "10.10.1.0/24", },
-                            new SubnetData()
-                            {
-                                Name = "ManagedInstance",
-                                AddressPrefix = "10.10.2.0/24",
-                                Delegations =
-                                {
-                                    new ServiceDelegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql/managedInstances"}
-                                },
-                                RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id },
-                                NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id },
-                            }
+                            new ServiceDelegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql/managedInstances"}
                         },
-                    };
-                    vnetData.AddressPrefixes.Add("10.10.0.0/16");
-                    var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData);
-                    return vnet.Value;
-                }
-            }
+                        RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id },
+                        NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id },
+                    }
+                },
+            };
+            vnetData.AddressPrefixes.Add("10.10.0.0/16");
+            var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData);
+            return vnet.Value;
         }
 
         /// <summary>
@@ -143,39 +134,33 @@ namespace Azure.ResourceManager.Sql.Tests
         /// <returns></returns>
         protected async Task CreateDefaultPrivateEndpoint(ManagedInstanceResource managedInstance, AzureLocation location, ResourceGroupResource resourceGroup)
         {
-            if (Mode == RecordedTestMode.Record)
+            var vnet = resourceGroup.GetVirtualNetworks().GetAllAsync().ToEnumerableAsync().Result.FirstOrDefault();
+            // Add new subnet
+            SubnetData subnetData = new SubnetData()
             {
-                using (Recording.DisableRecording())
-                {
-                    var vnet = resourceGroup.GetVirtualNetworks().GetAllAsync().ToEnumerableAsync().Result.FirstOrDefault();
-                    // Add new subnet
-                    SubnetData subnetData = new SubnetData()
-                    {
-                        AddressPrefix = "10.10.5.0/24",
-                        PrivateEndpointNetworkPolicy = "Disabled"
-                    };
-                    var privateEndpointSubnet = await vnet.GetSubnets().CreateOrUpdateAsync(WaitUntil.Completed, $"private-endpoint-subnet", subnetData);
+                AddressPrefix = "10.10.5.0/24",
+                PrivateEndpointNetworkPolicy = "Disabled"
+            };
+            var privateEndpointSubnet = await vnet.GetSubnets().CreateOrUpdateAsync(WaitUntil.Completed, $"private-endpoint-subnet", subnetData);
 
-                    // Create private endpoint
-                    string privateEndpointName = $"{managedInstance.Data.Name}-private-endpoint";
-                    var endpointCollection = resourceGroup.GetPrivateEndpoints();
-                    PrivateEndpointData data = new PrivateEndpointData()
+            // Create private endpoint
+            string privateEndpointName = $"{managedInstance.Data.Name}-private-endpoint";
+            var endpointCollection = resourceGroup.GetPrivateEndpoints();
+            PrivateEndpointData data = new PrivateEndpointData()
+            {
+                Subnet = new SubnetData() { Id = privateEndpointSubnet.Value.Data.Id },
+                Location = location,
+                PrivateLinkServiceConnections =
+                {
+                    new NetworkPrivateLinkServiceConnection()
                     {
-                        Subnet = new SubnetData() { Id = privateEndpointSubnet.Value.Data.Id },
-                        Location = location,
-                        PrivateLinkServiceConnections =
-                        {
-                            new NetworkPrivateLinkServiceConnection()
-                            {
-                                Name = privateEndpointName,
-                                PrivateLinkServiceId = managedInstance.Data.Id,
-                                GroupIds = { "managedInstance" },
-                            }
-                        },
-                    };
-                    var privateEndpoint = await resourceGroup.GetPrivateEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointName, data);
-                }
-            }
+                        Name = privateEndpointName,
+                        PrivateLinkServiceId = managedInstance.Data.Id,
+                        GroupIds = { "managedInstance" },
+                    }
+                },
+            };
+            var privateEndpoint = await resourceGroup.GetPrivateEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointName, data);
         }
 
         /// <summary>
