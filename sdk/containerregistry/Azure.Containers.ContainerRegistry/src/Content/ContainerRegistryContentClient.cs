@@ -20,6 +20,9 @@ namespace Azure.Containers.ContainerRegistry
     public class ContainerRegistryContentClient
     {
         private const int DefaultChunkSize = 4 * 1024 * 1024; // 4MB
+        private const int MaxManifestSize = 4 * 1024 * 1024;
+
+        private const string MissingContentLengthMessage = "The response does not include the 'Content-Length' header.";
 
         private readonly Uri _endpoint;
         private readonly string _registryName;
@@ -573,26 +576,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                string accept = GetAcceptHeader();
-
-                Response<ManifestWrapper> response = _restClient.GetManifest(_repositoryName, tagOrDigest, accept, cancellationToken);
-                Response rawResponse = response.GetRawResponse();
-
-                rawResponse.Headers.TryGetValue("Docker-Content-Digest", out string digest);
-                rawResponse.Headers.TryGetValue("Content-Type", out string contentType);
-
-                var contentDigest = BlobHelper.ComputeDigest(rawResponse.ContentStream);
-
-                if (ReferenceIsDigest(tagOrDigest))
-                {
-                    BlobHelper.ValidateDigest(contentDigest, tagOrDigest, BlobHelper.ManifestDigestDoestMatchRequestedMessage);
-                }
-                else
-                {
-                    BlobHelper.ValidateDigest(contentDigest, digest);
-                }
-
-                return Response.FromValue(new GetManifestResult(digest, contentType, rawResponse.Content), rawResponse);
+                return GetManifestInternalAsync(tagOrDigest, false, cancellationToken).EnsureCompleted();
             }
             catch (Exception e)
             {
@@ -617,32 +601,39 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                string accept = GetAcceptHeader();
-
-                Response<ManifestWrapper> response = await _restClient.GetManifestAsync(_repositoryName, tagOrDigest, accept, cancellationToken).ConfigureAwait(false);
-                Response rawResponse = response.GetRawResponse();
-
-                rawResponse.Headers.TryGetValue("Docker-Content-Digest", out var digest);
-                rawResponse.Headers.TryGetValue("Content-Type", out string contentType);
-
-                var contentDigest = BlobHelper.ComputeDigest(rawResponse.ContentStream);
-
-                if (ReferenceIsDigest(tagOrDigest))
-                {
-                    BlobHelper.ValidateDigest(contentDigest, tagOrDigest, BlobHelper.ManifestDigestDoestMatchRequestedMessage);
-                }
-                else
-                {
-                    BlobHelper.ValidateDigest(contentDigest, digest);
-                }
-
-                return Response.FromValue(new GetManifestResult(digest, contentType, rawResponse.Content), rawResponse);
+                return await GetManifestInternalAsync(tagOrDigest, true, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private async Task<Response<GetManifestResult>> GetManifestInternalAsync(string reference, bool async, CancellationToken cancellationToken)
+        {
+            string accept = GetAcceptHeader();
+
+            Response<ManifestWrapper> response = async ?
+                await _restClient.GetManifestAsync(_repositoryName, reference, accept, cancellationToken).ConfigureAwait(false) :
+                _restClient.GetManifest(_repositoryName, reference, accept, cancellationToken);
+            Response rawResponse = response.GetRawResponse();
+
+            CheckManifestSize(rawResponse);
+
+            rawResponse.Headers.TryGetValue("Docker-Content-Digest", out string responseHeaderDigest);
+            rawResponse.Headers.TryGetValue("Content-Type", out string contentType);
+
+            string computedDigest = BlobHelper.ComputeDigest(rawResponse.ContentStream);
+
+            BlobHelper.ValidateDigest(computedDigest, responseHeaderDigest);
+
+            if (ReferenceIsDigest(reference))
+            {
+                BlobHelper.ValidateDigest(computedDigest, reference, BlobHelper.ManifestDigestDoestMatchRequestedMessage);
+            }
+
+            return Response.FromValue(new GetManifestResult(responseHeaderDigest, contentType, rawResponse.Content), rawResponse);
         }
 
         private static string GetAcceptHeader()
@@ -669,6 +660,19 @@ namespace Azure.Containers.ContainerRegistry
         private static bool ReferenceIsDigest(string reference)
         {
             return reference.StartsWith("sha256:", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static void CheckManifestSize(Response response)
+        {
+            // This check is to address part of the service threat model.
+            // If a manifest does not have a proper content length or is too big,
+            // it indicates a malicious or faulty service and should not be trusted.
+            int? size = response.Headers.ContentLength ?? throw new RequestFailedException(MissingContentLengthMessage);
+
+            if (size > MaxManifestSize)
+            {
+                throw new RequestFailedException("Manifest size is bigger than max allowed size of 4MB.");
+            }
         }
 
         /// <summary>
@@ -735,12 +739,15 @@ namespace Azure.Containers.ContainerRegistry
                 await _blobRestClient.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false) :
                 _blobRestClient.GetBlob(_repositoryName, digest, cancellationToken);
 
+            // Validate content-range header
+            long blobSize = blobResult.Headers.ContentLength ?? throw new RequestFailedException(blobResult.GetRawResponse().Status, MissingContentLengthMessage);
+
             BinaryData data = async ?
                 await BinaryData.FromStreamAsync(blobResult.Value, cancellationToken).ConfigureAwait(false) :
                 BinaryData.FromStream(blobResult.Value);
 
             string contentDigest = BlobHelper.ComputeDigest(data);
-            BlobHelper.ValidateDigest(contentDigest, digest);
+            BlobHelper.ValidateDigest(contentDigest, digest, BlobHelper.ContentDigestDoesntMatchRequestedMessage);
 
             return Response.FromValue(new DownloadRegistryBlobResult(digest, data), blobResult.GetRawResponse());
         }
@@ -1042,7 +1049,7 @@ namespace Azure.Containers.ContainerRegistry
                 // Complete hash computation.
                 sha256.TransformFinalBlock(buffer, 0, 0);
                 string computedDigest = BlobHelper.FormatDigest(sha256.Hash);
-                BlobHelper.ValidateDigest(computedDigest, digest);
+                BlobHelper.ValidateDigest(computedDigest, digest, BlobHelper.ContentDigestDoesntMatchRequestedMessage);
 
                 if (async)
                 {
