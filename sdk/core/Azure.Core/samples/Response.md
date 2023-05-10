@@ -36,18 +36,6 @@ foreach (HttpHeader header in http.Headers)
 }
 ```
 
-## Accessing HTTP response content with `dynamic`
-
-If a service method does not return `Response<T>`, JSON content can be accessed using `dynamic`.
-
-```C# Snippet:AzureCoreGetDynamicJsonProperty
-Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson();
-string name = widget.Name;
-```
-
-See [dynamic content samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/DynamicContent.md) for more details.
-
 ## Accessing HTTP response content with ContentStream
 
 ```C# Snippet:ResponseTContent

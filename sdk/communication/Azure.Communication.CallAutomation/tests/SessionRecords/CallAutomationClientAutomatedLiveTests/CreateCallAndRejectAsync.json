@@ -122,12 +122,13 @@
           }
         ],
         "sourceIdentity": {
-          "rawId": "Sanitized",
-          "communicationUser": {
-            "id": "Sanitized"
-          }
+           "id": "Sanitized"
         },
-        "callbackUri": "https://sanitized.skype.com/api/servicebuscallback/events?q=SanitizedSanitized"
+        "callbackUri": "https://sanitized.skype.com/api/servicebuscallback/events?q=SanitizedSanitized",
+        "customContext": {
+          "voipHeaders": {
+          }
+        }
       },
       "StatusCode": 201,
       "ResponseHeaders": {

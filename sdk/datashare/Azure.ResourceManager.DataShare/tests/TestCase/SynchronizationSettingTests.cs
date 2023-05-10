@@ -39,7 +39,6 @@ namespace Azure.ResourceManager.DataShare.Tests.TestCase
 
         [TestCase]
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/36058")]
         public async Task HronizationSettingApiTests()
         {
             //1.CreateorUpdate
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.DataShare.Tests.TestCase
             var name = Recording.GenerateAssetName("TestHronization-");
             var name2 = Recording.GenerateAssetName("TestHronization-");
             var name3 = Recording.GenerateAssetName("TestHronization-");
-            var input = ResourceDataHelpers.GetSynchronizationData();
+            var input = ResourceDataHelpers.GetSynchronizationData(Recording.UtcNow);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             DataShareSynchronizationSettingResource hronization1 = lro.Value;
             Assert.AreEqual(name, hronization1.Data.Name);

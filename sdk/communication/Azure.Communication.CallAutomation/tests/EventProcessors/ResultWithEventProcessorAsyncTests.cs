@@ -248,7 +248,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
-            var response = callConnection.GetCallMedia().PlayToAll(new FileSource(new Uri(CallBackUri)), new PlayOptions() { OperationContext = OperationContext });
+            var response = callConnection.GetCallMedia().PlayToAll(new PlayToAllOptions(new FileSource(new Uri(CallBackUri))) { OperationContext = OperationContext });
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
@@ -274,7 +274,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
-            var response = callConnection.GetCallMedia().PlayToAll(new FileSource(new Uri(CallBackUri)), new PlayOptions() { OperationContext = OperationContext });
+            var response = callConnection.GetCallMedia().PlayToAll(new PlayToAllOptions(new FileSource(new Uri(CallBackUri))) { OperationContext = OperationContext });
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
@@ -457,8 +457,8 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
             var response = callConnection.GetCallMedia().SendDtmf(
-                       new CommunicationUserIdentifier("targetUserId"),
                        new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound },
+                       new CommunicationUserIdentifier("targetUserId"),
                        OperationContext
                 );
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
@@ -487,8 +487,8 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
             var response = callConnection.GetCallMedia().SendDtmf(
-                       new CommunicationUserIdentifier("targetUserId"),
                        new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound },
+                       new CommunicationUserIdentifier("targetUserId"),
                        OperationContext
                 );
             Assert.AreEqual(successCode, response.GetRawResponse().Status);

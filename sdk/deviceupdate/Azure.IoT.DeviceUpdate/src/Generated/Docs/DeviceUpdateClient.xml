@@ -56,46 +56,6 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("etag").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Update</c>:
-<code>{
-  updateId: {
-    provider: string, # Required. Update provider.
-    name: string, # Required. Update name.
-    version: string, # Required. Update version.
-  }, # Required. Update identity.
-  description: string, # Optional. Update description specified by creator.
-  friendlyName: string, # Optional. Friendly update name specified by importer.
-  isDeployable: boolean, # Optional. Whether the update can be deployed to a device on its own.
-  updateType: string, # Optional. Update type. Deprecated in latest import manifest schema.
-  installedCriteria: string, # Optional. String interpreted by Device Update client to determine if the update is installed on the device. Deprecated in latest import manifest schema.
-  compatibility: [Dictionary&lt;string, string&gt;], # Required. List of update compatibility information.
-  instructions: {
-    steps: [
-      {
-        type: &quot;Inline&quot; | &quot;Reference&quot;, # Optional. Step type.
-        description: string, # Optional. Step description.
-        handler: string, # Optional. Identity of handler that will execute this step. Required if step type is inline.
-        handlerProperties: any, # Optional. Parameters to be passed to handler during execution.
-        files: [string], # Optional. Collection of file names to be passed to handler during execution. Required if step type is inline.
-        updateId: UpdateId, # Optional. Referenced child update identity.  Required if step type is reference.
-      }
-    ], # Required. Collection of installation steps.
-  }, # Optional. Update install instructions.
-  referencedBy: [UpdateId], # Optional. List of update identities that reference this update.
-  scanResult: string, # Optional. Update aggregate scan result (calculated from payload file scan results).
-  manifestVersion: string, # Required. Schema version of manifest used to import the update.
-  importedDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was imported.
-  createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was created.
-  etag: string, # Optional. Update ETag.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetUpdate(string,string,string,ETag?,RequestContext)">
 <example>
@@ -152,46 +112,6 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("etag").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Update</c>:
-<code>{
-  updateId: {
-    provider: string, # Required. Update provider.
-    name: string, # Required. Update name.
-    version: string, # Required. Update version.
-  }, # Required. Update identity.
-  description: string, # Optional. Update description specified by creator.
-  friendlyName: string, # Optional. Friendly update name specified by importer.
-  isDeployable: boolean, # Optional. Whether the update can be deployed to a device on its own.
-  updateType: string, # Optional. Update type. Deprecated in latest import manifest schema.
-  installedCriteria: string, # Optional. String interpreted by Device Update client to determine if the update is installed on the device. Deprecated in latest import manifest schema.
-  compatibility: [Dictionary&lt;string, string&gt;], # Required. List of update compatibility information.
-  instructions: {
-    steps: [
-      {
-        type: &quot;Inline&quot; | &quot;Reference&quot;, # Optional. Step type.
-        description: string, # Optional. Step description.
-        handler: string, # Optional. Identity of handler that will execute this step. Required if step type is inline.
-        handlerProperties: any, # Optional. Parameters to be passed to handler during execution.
-        files: [string], # Optional. Collection of file names to be passed to handler during execution. Required if step type is inline.
-        updateId: UpdateId, # Optional. Referenced child update identity.  Required if step type is reference.
-      }
-    ], # Required. Collection of installation steps.
-  }, # Optional. Update install instructions.
-  referencedBy: [UpdateId], # Optional. List of update identities that reference this update.
-  scanResult: string, # Optional. Update aggregate scan result (calculated from payload file scan results).
-  manifestVersion: string, # Required. Schema version of manifest used to import the update.
-  importedDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was imported.
-  createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was created.
-  etag: string, # Optional. Update ETag.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetFileAsync(string,string,string,string,ETag?,RequestContext)">
 <example>
@@ -237,40 +157,6 @@ Console.WriteLine(result.GetProperty("scanDetails").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>UpdateFile</c>:
-<code>{
-  fileId: string, # Required. File identity, generated by server at import time.
-  relatedFiles: [
-    {
-      fileName: string, # Required. File name.
-      sizeInBytes: number, # Required. File size in number of bytes.
-      hashes: Dictionary&lt;string, string&gt;, # Required. Mapping of hashing algorithm to base64 encoded hash values.
-      mimeType: string, # Optional. File MIME type.
-      scanResult: string, # Optional. Anti-malware scan result.
-      scanDetails: string, # Optional. Anti-malware scan details.
-      properties: Dictionary&lt;string, string&gt;, # Optional. Optional file properties (not consumed by service but pass-through to device).
-    }
-  ], # Optional. Optional related files metadata used together DownloadHandler metadata to download payload file.
-  downloadHandler: {
-    id: string, # Required. Download handler identifier.
-  }, # Optional. Optional download handler for utilizing related files to download payload file.
-  etag: string, # Optional. File ETag.
-  fileName: string, # Required. File name.
-  sizeInBytes: number, # Required. File size in number of bytes.
-  hashes: Dictionary&lt;string, string&gt;, # Required. Mapping of hashing algorithm to base64 encoded hash values.
-  mimeType: string, # Optional. File MIME type.
-  scanResult: string, # Optional. Anti-malware scan result.
-  scanDetails: string, # Optional. Anti-malware scan details.
-  properties: Dictionary&lt;string, string&gt;, # Optional. Optional file properties (not consumed by service but pass-through to device).
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetFile(string,string,string,string,ETag?,RequestContext)">
 <example>
@@ -316,40 +202,6 @@ Console.WriteLine(result.GetProperty("scanDetails").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>UpdateFile</c>:
-<code>{
-  fileId: string, # Required. File identity, generated by server at import time.
-  relatedFiles: [
-    {
-      fileName: string, # Required. File name.
-      sizeInBytes: number, # Required. File size in number of bytes.
-      hashes: Dictionary&lt;string, string&gt;, # Required. Mapping of hashing algorithm to base64 encoded hash values.
-      mimeType: string, # Optional. File MIME type.
-      scanResult: string, # Optional. Anti-malware scan result.
-      scanDetails: string, # Optional. Anti-malware scan details.
-      properties: Dictionary&lt;string, string&gt;, # Optional. Optional file properties (not consumed by service but pass-through to device).
-    }
-  ], # Optional. Optional related files metadata used together DownloadHandler metadata to download payload file.
-  downloadHandler: {
-    id: string, # Required. Download handler identifier.
-  }, # Optional. Optional download handler for utilizing related files to download payload file.
-  etag: string, # Optional. File ETag.
-  fileName: string, # Required. File name.
-  sizeInBytes: number, # Required. File size in number of bytes.
-  hashes: Dictionary&lt;string, string&gt;, # Required. Mapping of hashing algorithm to base64 encoded hash values.
-  mimeType: string, # Optional. File MIME type.
-  scanResult: string, # Optional. Anti-malware scan result.
-  scanDetails: string, # Optional. Anti-malware scan details.
-  properties: Dictionary&lt;string, string&gt;, # Optional. Optional file properties (not consumed by service but pass-through to device).
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetOperationStatusAsync(string,ETag?,RequestContext)">
 <example>
@@ -397,46 +249,6 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("etag").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>UpdateOperation</c>:
-<code>{
-  operationId: string, # Required. Operation Id.
-  status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. Operation status.
-  update: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Optional. The update being imported or deleted. For import, this property will only be populated after import manifest is processed successfully.
-  resourceLocation: string, # Optional. Location of the imported update when operation is successful.
-  error: {
-    code: string, # Required. Server defined error code.
-    message: string, # Required. A human-readable representation of the error.
-    target: string, # Optional. The target of the error.
-    details: [Error], # Optional. An array of errors that led to the reported error.
-    innererror: {
-      code: string, # Required. A more specific error code than what was provided by the containing error.
-      message: string, # Optional. A human-readable representation of the error.
-      errorDetail: string, # Optional. The internal error or exception message.
-      innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
-    }, # Optional. An object containing more specific information than the current object about the error.
-    occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
-  }, # Optional. Operation error encountered, if any.
-  traceId: string, # Optional. Operation correlation identity that can used by Microsoft Support for troubleshooting.
-  lastActionDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation status was last updated.
-  createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation was created.
-  etag: string, # Optional. Operation ETag.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetOperationStatus(string,ETag?,RequestContext)">
 <example>
@@ -484,46 +296,6 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("etag").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>UpdateOperation</c>:
-<code>{
-  operationId: string, # Required. Operation Id.
-  status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. Operation status.
-  update: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Optional. The update being imported or deleted. For import, this property will only be populated after import manifest is processed successfully.
-  resourceLocation: string, # Optional. Location of the imported update when operation is successful.
-  error: {
-    code: string, # Required. Server defined error code.
-    message: string, # Required. A human-readable representation of the error.
-    target: string, # Optional. The target of the error.
-    details: [Error], # Optional. An array of errors that led to the reported error.
-    innererror: {
-      code: string, # Required. A more specific error code than what was provided by the containing error.
-      message: string, # Optional. A human-readable representation of the error.
-      errorDetail: string, # Optional. The internal error or exception message.
-      innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
-    }, # Optional. An object containing more specific information than the current object about the error.
-    occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
-  }, # Optional. Operation error encountered, if any.
-  traceId: string, # Optional. Operation correlation identity that can used by Microsoft Support for troubleshooting.
-  lastActionDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation status was last updated.
-  createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation was created.
-  etag: string, # Optional. Operation ETag.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetUpdatesAsync(string,string,RequestContext)">
 <example>
@@ -582,46 +354,6 @@ await foreach (var item in client.GetUpdatesAsync("<search>", "<filter>", new Re
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>UpdateListValue</c>:
-<code>{
-  updateId: {
-    provider: string, # Required. Update provider.
-    name: string, # Required. Update name.
-    version: string, # Required. Update version.
-  }, # Required. Update identity.
-  description: string, # Optional. Update description specified by creator.
-  friendlyName: string, # Optional. Friendly update name specified by importer.
-  isDeployable: boolean, # Optional. Whether the update can be deployed to a device on its own.
-  updateType: string, # Optional. Update type. Deprecated in latest import manifest schema.
-  installedCriteria: string, # Optional. String interpreted by Device Update client to determine if the update is installed on the device. Deprecated in latest import manifest schema.
-  compatibility: [Dictionary&lt;string, string&gt;], # Required. List of update compatibility information.
-  instructions: {
-    steps: [
-      {
-        type: &quot;Inline&quot; | &quot;Reference&quot;, # Optional. Step type.
-        description: string, # Optional. Step description.
-        handler: string, # Optional. Identity of handler that will execute this step. Required if step type is inline.
-        handlerProperties: any, # Optional. Parameters to be passed to handler during execution.
-        files: [string], # Optional. Collection of file names to be passed to handler during execution. Required if step type is inline.
-        updateId: UpdateId, # Optional. Referenced child update identity.  Required if step type is reference.
-      }
-    ], # Required. Collection of installation steps.
-  }, # Optional. Update install instructions.
-  referencedBy: [UpdateId], # Optional. List of update identities that reference this update.
-  scanResult: string, # Optional. Update aggregate scan result (calculated from payload file scan results).
-  manifestVersion: string, # Required. Schema version of manifest used to import the update.
-  importedDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was imported.
-  createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was created.
-  etag: string, # Optional. Update ETag.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetUpdates(string,string,RequestContext)">
 <example>
@@ -680,46 +412,6 @@ foreach (var item in client.GetUpdates("<search>", "<filter>", new RequestContex
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>UpdateListValue</c>:
-<code>{
-  updateId: {
-    provider: string, # Required. Update provider.
-    name: string, # Required. Update name.
-    version: string, # Required. Update version.
-  }, # Required. Update identity.
-  description: string, # Optional. Update description specified by creator.
-  friendlyName: string, # Optional. Friendly update name specified by importer.
-  isDeployable: boolean, # Optional. Whether the update can be deployed to a device on its own.
-  updateType: string, # Optional. Update type. Deprecated in latest import manifest schema.
-  installedCriteria: string, # Optional. String interpreted by Device Update client to determine if the update is installed on the device. Deprecated in latest import manifest schema.
-  compatibility: [Dictionary&lt;string, string&gt;], # Required. List of update compatibility information.
-  instructions: {
-    steps: [
-      {
-        type: &quot;Inline&quot; | &quot;Reference&quot;, # Optional. Step type.
-        description: string, # Optional. Step description.
-        handler: string, # Optional. Identity of handler that will execute this step. Required if step type is inline.
-        handlerProperties: any, # Optional. Parameters to be passed to handler during execution.
-        files: [string], # Optional. Collection of file names to be passed to handler during execution. Required if step type is inline.
-        updateId: UpdateId, # Optional. Referenced child update identity.  Required if step type is reference.
-      }
-    ], # Required. Collection of installation steps.
-  }, # Optional. Update install instructions.
-  referencedBy: [UpdateId], # Optional. List of update identities that reference this update.
-  scanResult: string, # Optional. Update aggregate scan result (calculated from payload file scan results).
-  manifestVersion: string, # Required. Schema version of manifest used to import the update.
-  importedDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was imported.
-  createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the update was created.
-  etag: string, # Optional. Update ETag.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetProvidersAsync(RequestContext)">
 <example>
@@ -921,46 +613,6 @@ await foreach (var item in client.GetOperationStatusesAsync("<filter>", 1234, ne
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>UpdateOperationsListValue</c>:
-<code>{
-  operationId: string, # Required. Operation Id.
-  status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. Operation status.
-  update: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Optional. The update being imported or deleted. For import, this property will only be populated after import manifest is processed successfully.
-  resourceLocation: string, # Optional. Location of the imported update when operation is successful.
-  error: {
-    code: string, # Required. Server defined error code.
-    message: string, # Required. A human-readable representation of the error.
-    target: string, # Optional. The target of the error.
-    details: [Error], # Optional. An array of errors that led to the reported error.
-    innererror: {
-      code: string, # Required. A more specific error code than what was provided by the containing error.
-      message: string, # Optional. A human-readable representation of the error.
-      errorDetail: string, # Optional. The internal error or exception message.
-      innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
-    }, # Optional. An object containing more specific information than the current object about the error.
-    occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
-  }, # Optional. Operation error encountered, if any.
-  traceId: string, # Optional. Operation correlation identity that can used by Microsoft Support for troubleshooting.
-  lastActionDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation status was last updated.
-  createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation was created.
-  etag: string, # Optional. Operation ETag.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetOperationStatuses(string,int?,RequestContext)">
 <example>
@@ -1010,46 +662,6 @@ foreach (var item in client.GetOperationStatuses("<filter>", 1234, new RequestCo
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>UpdateOperationsListValue</c>:
-<code>{
-  operationId: string, # Required. Operation Id.
-  status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. Operation status.
-  update: {
-    updateId: {
-      provider: string, # Required. Update provider.
-      name: string, # Required. Update name.
-      version: string, # Required. Update version.
-    }, # Required. Update identifier.
-    description: string, # Optional. Update description.
-    friendlyName: string, # Optional. Friendly update name.
-  }, # Optional. The update being imported or deleted. For import, this property will only be populated after import manifest is processed successfully.
-  resourceLocation: string, # Optional. Location of the imported update when operation is successful.
-  error: {
-    code: string, # Required. Server defined error code.
-    message: string, # Required. A human-readable representation of the error.
-    target: string, # Optional. The target of the error.
-    details: [Error], # Optional. An array of errors that led to the reported error.
-    innererror: {
-      code: string, # Required. A more specific error code than what was provided by the containing error.
-      message: string, # Optional. A human-readable representation of the error.
-      errorDetail: string, # Optional. The internal error or exception message.
-      innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
-    }, # Optional. An object containing more specific information than the current object about the error.
-    occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
-  }, # Optional. Operation error encountered, if any.
-  traceId: string, # Optional. Operation correlation identity that can used by Microsoft Support for troubleshooting.
-  lastActionDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation status was last updated.
-  createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation was created.
-  etag: string, # Optional. Operation ETag.
-}
-</code>
-
-</remarks>
     </member>
     <member name="DeleteUpdateAsync(WaitUntil,string,string,string,RequestContext)">
 <example>
@@ -1111,29 +723,6 @@ var operation = await client.StartImportUpdateAsync(WaitUntil.Completed, Request
 Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>ImportUpdateInputItem</c>:
-<code>{
-  importManifest: {
-    url: string, # Required. Azure Blob location from which the import manifest can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours.
-    sizeInBytes: number, # Required. File size in number of bytes.
-    hashes: Dictionary&lt;string, string&gt;, # Required. A JSON object containing the hash(es) of the file. At least SHA256 hash is required. This object can be thought of as a set of key-value pairs where the key is the hash algorithm, and the value is the hash of the file calculated using that algorithm.
-  }, # Required. Import manifest metadata like source URL, file size/hashes, etc.
-  friendlyName: string, # Optional. Friendly update name.
-  files: [
-    {
-      filename: string, # Required. Update file name as specified inside import manifest.
-      url: string, # Required. Azure Blob location from which the update file can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours.
-    }
-  ], # Optional. One or more update file properties like filename and source URL.
-}
-</code>
-
-</remarks>
     </member>
     <member name="StartImportUpdate(WaitUntil,RequestContent,RequestContext)">
 <example>
@@ -1167,29 +756,6 @@ var operation = client.StartImportUpdate(WaitUntil.Completed, RequestContent.Cre
 Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>ImportUpdateInputItem</c>:
-<code>{
-  importManifest: {
-    url: string, # Required. Azure Blob location from which the import manifest can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours.
-    sizeInBytes: number, # Required. File size in number of bytes.
-    hashes: Dictionary&lt;string, string&gt;, # Required. A JSON object containing the hash(es) of the file. At least SHA256 hash is required. This object can be thought of as a set of key-value pairs where the key is the hash algorithm, and the value is the hash of the file calculated using that algorithm.
-  }, # Required. Import manifest metadata like source URL, file size/hashes, etc.
-  friendlyName: string, # Optional. Friendly update name.
-  files: [
-    {
-      filename: string, # Required. Update file name as specified inside import manifest.
-      url: string, # Required. Azure Blob location from which the update file can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours.
-    }
-  ], # Optional. One or more update file properties like filename and source URL.
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>

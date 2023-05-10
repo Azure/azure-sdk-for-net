@@ -105,7 +105,7 @@ static string TrimSha(string digest)
 }
 ```
 
-## Upload a Docker manifest
+## Upload a Docker manifest list
 
 To upload an image with a custom manifest type, pass the `ManifestMediaType` to the `UploadManifest` method.
 

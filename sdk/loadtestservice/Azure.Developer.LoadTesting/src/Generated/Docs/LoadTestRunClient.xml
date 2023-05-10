@@ -2,300 +2,8 @@
 <doc>
   <members>
     <member name="CreateOrUpdateTestRunAsync(string,RequestContent,string,RequestContext)">
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>TestRun</c>:
-<code>{
-  passFailCriteria: {
-    passFailMetrics: Dictionary&lt;string, PassFailMetric&gt;, # Optional. Map of id and pass fail metrics { id  : pass fail metrics }.
-  }, # Optional. Pass fail criteria for a test.
-  secrets: Dictionary&lt;string, Secret&gt;, # Optional. Secrets can be stored in an Azure Key Vault or any other secret store. If the secret is stored in an Azure Key Vault, the value should be the secret identifier and the type should be AKV_SECRET_URI. If the secret is stored elsewhere, the secret value should be provided directly and the type should be SECRET_VALUE.
-  certificate: {
-    value: string, # Optional. The value of the certificate for respective type
-    type: &quot;AKV_CERT_URI&quot;, # Optional. Type of certificate
-    name: string, # Optional. Name of the certificate.
-  }, # Optional. Certificates metadata
-  environmentVariables: Dictionary&lt;string, string&gt;, # Optional. Environment variables which are defined as a set of &lt;name,value&gt; pairs.
-  errorDetails: [
-    {
-      message: string, # Optional. Error details in case test run was not successfully run.
-    }
-  ], # Optional. Error details if there is any failure in load test run
-  testRunStatistics: Dictionary&lt;string, TestRunStatistics&gt;, # Optional. Test run statistics.
-  loadTestConfiguration: {
-    engineInstances: number, # Optional. The number of engine instances to execute load test. Supported values are in range of 1-45. Required for creating a new test.
-    splitAllCSVs: boolean, # Optional. If false, Azure Load Testing copies and processes your input files unmodified across all test engine instances. If true, Azure Load Testing splits the CSV input data evenly across all engine instances. If you provide multiple CSV files, each file will be split evenly.
-    quickStartTest: boolean, # Optional. If true, optionalLoadTestConfig is required and JMX script for the load test is not required to upload.
-    optionalLoadTestConfig: {
-      endpointUrl: string, # Optional. Test URL. Provide the complete HTTP URL. For example, http://contoso-app.azurewebsites.net/login
-      virtualUsers: number, # Optional. No of concurrent virtual users
-      rampUpTime: number, # Optional. Ramp up time
-      duration: number, # Optional. Test run duration
-    }, # Optional. Optional load test config
-  }, # Optional. The load test configuration.
-  testArtifacts: {
-    inputArtifacts: {
-      configFileInfo: {
-        url: string, # Optional. File URL.
-        fileName: string, # Optional. Name of the file.
-        fileType: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;, # Optional. File type
-        expireDateTime: string (ISO 8601 Format), # Optional. Expiry time of the file (ISO 8601 literal format)
-        validationStatus: &quot;NOT_VALIDATED&quot; | &quot;VALIDATION_SUCCESS&quot; | &quot;VALIDATION_FAILURE&quot; | &quot;VALIDATION_INITIATED&quot; | &quot;VALIDATION_NOT_REQUIRED&quot;, # Optional. Validation status of the file
-        validationFailureDetails: string, # Optional. Validation failure error details
-      }, # Optional. File info
-      testScriptFileInfo: FileInfo, # Optional. File info
-      userPropFileInfo: FileInfo, # Optional. File info
-      inputArtifactsZipFileInfo: FileInfo, # Optional. File info
-      additionalFileInfo: [FileInfo], # Optional. Additional supported files for the test run
-    }, # Optional. The input artifacts for the test run.
-    outputArtifacts: {
-      resultFileInfo: FileInfo, # Optional. File info
-      logsFileInfo: FileInfo, # Optional. File info
-    }, # Optional. The output artifacts for the test run.
-  }, # Optional. Collection of test run artifacts
-  testResult: &quot;PASSED&quot; | &quot;NOT_APPLICABLE&quot; | &quot;FAILED&quot;, # Optional. Test result for pass/Fail criteria used during the test run.
-  virtualUsers: number, # Optional. Number of virtual users, for which test has been run.
-  testRunId: string, # Optional. Unique test run name as identifier
-  displayName: string, # Optional. Display name of a testRun.
-  testId: string, # Optional. Associated test Id.
-  description: string, # Optional. The test run description.
-  status: &quot;ACCEPTED&quot; | &quot;NOTSTARTED&quot; | &quot;PROVISIONING&quot; | &quot;PROVISIONED&quot; | &quot;CONFIGURING&quot; | &quot;CONFIGURED&quot; | &quot;EXECUTING&quot; | &quot;EXECUTED&quot; | &quot;DEPROVISIONING&quot; | &quot;DEPROVISIONED&quot; | &quot;DONE&quot; | &quot;CANCELLING&quot; | &quot;CANCELLED&quot; | &quot;FAILED&quot; | &quot;VALIDATION_SUCCESS&quot; | &quot;VALIDATION_FAILURE&quot;, # Optional. The test run status.
-  startDateTime: string (ISO 8601 Format), # Optional. The test run start DateTime(ISO 8601 literal format).
-  endDateTime: string (ISO 8601 Format), # Optional. The test run end DateTime(ISO 8601 literal format).
-  executedDateTime: string (ISO 8601 Format), # Optional. Test run initiated time.
-  portalUrl: string, # Optional. Portal url.
-  duration: number, # Optional. Test run duration in milliseconds.
-  subnetId: string, # Optional. Subnet ID on which the load test instances should run.
-  createdDateTime: string (ISO 8601 Format), # Optional. The creation datetime(ISO 8601 literal format).
-  createdBy: string, # Optional. The user that created.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified datetime(ISO 8601 literal format).
-  lastModifiedBy: string, # Optional. The user that last modified.
-}
-</code>
-
-Response Body:
-
-Schema for <c>TestRun</c>:
-<code>{
-  passFailCriteria: {
-    passFailMetrics: Dictionary&lt;string, PassFailMetric&gt;, # Optional. Map of id and pass fail metrics { id  : pass fail metrics }.
-  }, # Optional. Pass fail criteria for a test.
-  secrets: Dictionary&lt;string, Secret&gt;, # Optional. Secrets can be stored in an Azure Key Vault or any other secret store. If the secret is stored in an Azure Key Vault, the value should be the secret identifier and the type should be AKV_SECRET_URI. If the secret is stored elsewhere, the secret value should be provided directly and the type should be SECRET_VALUE.
-  certificate: {
-    value: string, # Optional. The value of the certificate for respective type
-    type: &quot;AKV_CERT_URI&quot;, # Optional. Type of certificate
-    name: string, # Optional. Name of the certificate.
-  }, # Optional. Certificates metadata
-  environmentVariables: Dictionary&lt;string, string&gt;, # Optional. Environment variables which are defined as a set of &lt;name,value&gt; pairs.
-  errorDetails: [
-    {
-      message: string, # Optional. Error details in case test run was not successfully run.
-    }
-  ], # Optional. Error details if there is any failure in load test run
-  testRunStatistics: Dictionary&lt;string, TestRunStatistics&gt;, # Optional. Test run statistics.
-  loadTestConfiguration: {
-    engineInstances: number, # Optional. The number of engine instances to execute load test. Supported values are in range of 1-45. Required for creating a new test.
-    splitAllCSVs: boolean, # Optional. If false, Azure Load Testing copies and processes your input files unmodified across all test engine instances. If true, Azure Load Testing splits the CSV input data evenly across all engine instances. If you provide multiple CSV files, each file will be split evenly.
-    quickStartTest: boolean, # Optional. If true, optionalLoadTestConfig is required and JMX script for the load test is not required to upload.
-    optionalLoadTestConfig: {
-      endpointUrl: string, # Optional. Test URL. Provide the complete HTTP URL. For example, http://contoso-app.azurewebsites.net/login
-      virtualUsers: number, # Optional. No of concurrent virtual users
-      rampUpTime: number, # Optional. Ramp up time
-      duration: number, # Optional. Test run duration
-    }, # Optional. Optional load test config
-  }, # Optional. The load test configuration.
-  testArtifacts: {
-    inputArtifacts: {
-      configFileInfo: {
-        url: string, # Optional. File URL.
-        fileName: string, # Optional. Name of the file.
-        fileType: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;, # Optional. File type
-        expireDateTime: string (ISO 8601 Format), # Optional. Expiry time of the file (ISO 8601 literal format)
-        validationStatus: &quot;NOT_VALIDATED&quot; | &quot;VALIDATION_SUCCESS&quot; | &quot;VALIDATION_FAILURE&quot; | &quot;VALIDATION_INITIATED&quot; | &quot;VALIDATION_NOT_REQUIRED&quot;, # Optional. Validation status of the file
-        validationFailureDetails: string, # Optional. Validation failure error details
-      }, # Optional. File info
-      testScriptFileInfo: FileInfo, # Optional. File info
-      userPropFileInfo: FileInfo, # Optional. File info
-      inputArtifactsZipFileInfo: FileInfo, # Optional. File info
-      additionalFileInfo: [FileInfo], # Optional. Additional supported files for the test run
-    }, # Optional. The input artifacts for the test run.
-    outputArtifacts: {
-      resultFileInfo: FileInfo, # Optional. File info
-      logsFileInfo: FileInfo, # Optional. File info
-    }, # Optional. The output artifacts for the test run.
-  }, # Optional. Collection of test run artifacts
-  testResult: &quot;PASSED&quot; | &quot;NOT_APPLICABLE&quot; | &quot;FAILED&quot;, # Optional. Test result for pass/Fail criteria used during the test run.
-  virtualUsers: number, # Optional. Number of virtual users, for which test has been run.
-  testRunId: string, # Optional. Unique test run name as identifier
-  displayName: string, # Optional. Display name of a testRun.
-  testId: string, # Optional. Associated test Id.
-  description: string, # Optional. The test run description.
-  status: &quot;ACCEPTED&quot; | &quot;NOTSTARTED&quot; | &quot;PROVISIONING&quot; | &quot;PROVISIONED&quot; | &quot;CONFIGURING&quot; | &quot;CONFIGURED&quot; | &quot;EXECUTING&quot; | &quot;EXECUTED&quot; | &quot;DEPROVISIONING&quot; | &quot;DEPROVISIONED&quot; | &quot;DONE&quot; | &quot;CANCELLING&quot; | &quot;CANCELLED&quot; | &quot;FAILED&quot; | &quot;VALIDATION_SUCCESS&quot; | &quot;VALIDATION_FAILURE&quot;, # Optional. The test run status.
-  startDateTime: string (ISO 8601 Format), # Optional. The test run start DateTime(ISO 8601 literal format).
-  endDateTime: string (ISO 8601 Format), # Optional. The test run end DateTime(ISO 8601 literal format).
-  executedDateTime: string (ISO 8601 Format), # Optional. Test run initiated time.
-  portalUrl: string, # Optional. Portal url.
-  duration: number, # Optional. Test run duration in milliseconds.
-  subnetId: string, # Optional. Subnet ID on which the load test instances should run.
-  createdDateTime: string (ISO 8601 Format), # Optional. The creation datetime(ISO 8601 literal format).
-  createdBy: string, # Optional. The user that created.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified datetime(ISO 8601 literal format).
-  lastModifiedBy: string, # Optional. The user that last modified.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrUpdateTestRun(string,RequestContent,string,RequestContext)">
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>TestRun</c>:
-<code>{
-  passFailCriteria: {
-    passFailMetrics: Dictionary&lt;string, PassFailMetric&gt;, # Optional. Map of id and pass fail metrics { id  : pass fail metrics }.
-  }, # Optional. Pass fail criteria for a test.
-  secrets: Dictionary&lt;string, Secret&gt;, # Optional. Secrets can be stored in an Azure Key Vault or any other secret store. If the secret is stored in an Azure Key Vault, the value should be the secret identifier and the type should be AKV_SECRET_URI. If the secret is stored elsewhere, the secret value should be provided directly and the type should be SECRET_VALUE.
-  certificate: {
-    value: string, # Optional. The value of the certificate for respective type
-    type: &quot;AKV_CERT_URI&quot;, # Optional. Type of certificate
-    name: string, # Optional. Name of the certificate.
-  }, # Optional. Certificates metadata
-  environmentVariables: Dictionary&lt;string, string&gt;, # Optional. Environment variables which are defined as a set of &lt;name,value&gt; pairs.
-  errorDetails: [
-    {
-      message: string, # Optional. Error details in case test run was not successfully run.
-    }
-  ], # Optional. Error details if there is any failure in load test run
-  testRunStatistics: Dictionary&lt;string, TestRunStatistics&gt;, # Optional. Test run statistics.
-  loadTestConfiguration: {
-    engineInstances: number, # Optional. The number of engine instances to execute load test. Supported values are in range of 1-45. Required for creating a new test.
-    splitAllCSVs: boolean, # Optional. If false, Azure Load Testing copies and processes your input files unmodified across all test engine instances. If true, Azure Load Testing splits the CSV input data evenly across all engine instances. If you provide multiple CSV files, each file will be split evenly.
-    quickStartTest: boolean, # Optional. If true, optionalLoadTestConfig is required and JMX script for the load test is not required to upload.
-    optionalLoadTestConfig: {
-      endpointUrl: string, # Optional. Test URL. Provide the complete HTTP URL. For example, http://contoso-app.azurewebsites.net/login
-      virtualUsers: number, # Optional. No of concurrent virtual users
-      rampUpTime: number, # Optional. Ramp up time
-      duration: number, # Optional. Test run duration
-    }, # Optional. Optional load test config
-  }, # Optional. The load test configuration.
-  testArtifacts: {
-    inputArtifacts: {
-      configFileInfo: {
-        url: string, # Optional. File URL.
-        fileName: string, # Optional. Name of the file.
-        fileType: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;, # Optional. File type
-        expireDateTime: string (ISO 8601 Format), # Optional. Expiry time of the file (ISO 8601 literal format)
-        validationStatus: &quot;NOT_VALIDATED&quot; | &quot;VALIDATION_SUCCESS&quot; | &quot;VALIDATION_FAILURE&quot; | &quot;VALIDATION_INITIATED&quot; | &quot;VALIDATION_NOT_REQUIRED&quot;, # Optional. Validation status of the file
-        validationFailureDetails: string, # Optional. Validation failure error details
-      }, # Optional. File info
-      testScriptFileInfo: FileInfo, # Optional. File info
-      userPropFileInfo: FileInfo, # Optional. File info
-      inputArtifactsZipFileInfo: FileInfo, # Optional. File info
-      additionalFileInfo: [FileInfo], # Optional. Additional supported files for the test run
-    }, # Optional. The input artifacts for the test run.
-    outputArtifacts: {
-      resultFileInfo: FileInfo, # Optional. File info
-      logsFileInfo: FileInfo, # Optional. File info
-    }, # Optional. The output artifacts for the test run.
-  }, # Optional. Collection of test run artifacts
-  testResult: &quot;PASSED&quot; | &quot;NOT_APPLICABLE&quot; | &quot;FAILED&quot;, # Optional. Test result for pass/Fail criteria used during the test run.
-  virtualUsers: number, # Optional. Number of virtual users, for which test has been run.
-  testRunId: string, # Optional. Unique test run name as identifier
-  displayName: string, # Optional. Display name of a testRun.
-  testId: string, # Optional. Associated test Id.
-  description: string, # Optional. The test run description.
-  status: &quot;ACCEPTED&quot; | &quot;NOTSTARTED&quot; | &quot;PROVISIONING&quot; | &quot;PROVISIONED&quot; | &quot;CONFIGURING&quot; | &quot;CONFIGURED&quot; | &quot;EXECUTING&quot; | &quot;EXECUTED&quot; | &quot;DEPROVISIONING&quot; | &quot;DEPROVISIONED&quot; | &quot;DONE&quot; | &quot;CANCELLING&quot; | &quot;CANCELLED&quot; | &quot;FAILED&quot; | &quot;VALIDATION_SUCCESS&quot; | &quot;VALIDATION_FAILURE&quot;, # Optional. The test run status.
-  startDateTime: string (ISO 8601 Format), # Optional. The test run start DateTime(ISO 8601 literal format).
-  endDateTime: string (ISO 8601 Format), # Optional. The test run end DateTime(ISO 8601 literal format).
-  executedDateTime: string (ISO 8601 Format), # Optional. Test run initiated time.
-  portalUrl: string, # Optional. Portal url.
-  duration: number, # Optional. Test run duration in milliseconds.
-  subnetId: string, # Optional. Subnet ID on which the load test instances should run.
-  createdDateTime: string (ISO 8601 Format), # Optional. The creation datetime(ISO 8601 literal format).
-  createdBy: string, # Optional. The user that created.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified datetime(ISO 8601 literal format).
-  lastModifiedBy: string, # Optional. The user that last modified.
-}
-</code>
-
-Response Body:
-
-Schema for <c>TestRun</c>:
-<code>{
-  passFailCriteria: {
-    passFailMetrics: Dictionary&lt;string, PassFailMetric&gt;, # Optional. Map of id and pass fail metrics { id  : pass fail metrics }.
-  }, # Optional. Pass fail criteria for a test.
-  secrets: Dictionary&lt;string, Secret&gt;, # Optional. Secrets can be stored in an Azure Key Vault or any other secret store. If the secret is stored in an Azure Key Vault, the value should be the secret identifier and the type should be AKV_SECRET_URI. If the secret is stored elsewhere, the secret value should be provided directly and the type should be SECRET_VALUE.
-  certificate: {
-    value: string, # Optional. The value of the certificate for respective type
-    type: &quot;AKV_CERT_URI&quot;, # Optional. Type of certificate
-    name: string, # Optional. Name of the certificate.
-  }, # Optional. Certificates metadata
-  environmentVariables: Dictionary&lt;string, string&gt;, # Optional. Environment variables which are defined as a set of &lt;name,value&gt; pairs.
-  errorDetails: [
-    {
-      message: string, # Optional. Error details in case test run was not successfully run.
-    }
-  ], # Optional. Error details if there is any failure in load test run
-  testRunStatistics: Dictionary&lt;string, TestRunStatistics&gt;, # Optional. Test run statistics.
-  loadTestConfiguration: {
-    engineInstances: number, # Optional. The number of engine instances to execute load test. Supported values are in range of 1-45. Required for creating a new test.
-    splitAllCSVs: boolean, # Optional. If false, Azure Load Testing copies and processes your input files unmodified across all test engine instances. If true, Azure Load Testing splits the CSV input data evenly across all engine instances. If you provide multiple CSV files, each file will be split evenly.
-    quickStartTest: boolean, # Optional. If true, optionalLoadTestConfig is required and JMX script for the load test is not required to upload.
-    optionalLoadTestConfig: {
-      endpointUrl: string, # Optional. Test URL. Provide the complete HTTP URL. For example, http://contoso-app.azurewebsites.net/login
-      virtualUsers: number, # Optional. No of concurrent virtual users
-      rampUpTime: number, # Optional. Ramp up time
-      duration: number, # Optional. Test run duration
-    }, # Optional. Optional load test config
-  }, # Optional. The load test configuration.
-  testArtifacts: {
-    inputArtifacts: {
-      configFileInfo: {
-        url: string, # Optional. File URL.
-        fileName: string, # Optional. Name of the file.
-        fileType: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;, # Optional. File type
-        expireDateTime: string (ISO 8601 Format), # Optional. Expiry time of the file (ISO 8601 literal format)
-        validationStatus: &quot;NOT_VALIDATED&quot; | &quot;VALIDATION_SUCCESS&quot; | &quot;VALIDATION_FAILURE&quot; | &quot;VALIDATION_INITIATED&quot; | &quot;VALIDATION_NOT_REQUIRED&quot;, # Optional. Validation status of the file
-        validationFailureDetails: string, # Optional. Validation failure error details
-      }, # Optional. File info
-      testScriptFileInfo: FileInfo, # Optional. File info
-      userPropFileInfo: FileInfo, # Optional. File info
-      inputArtifactsZipFileInfo: FileInfo, # Optional. File info
-      additionalFileInfo: [FileInfo], # Optional. Additional supported files for the test run
-    }, # Optional. The input artifacts for the test run.
-    outputArtifacts: {
-      resultFileInfo: FileInfo, # Optional. File info
-      logsFileInfo: FileInfo, # Optional. File info
-    }, # Optional. The output artifacts for the test run.
-  }, # Optional. Collection of test run artifacts
-  testResult: &quot;PASSED&quot; | &quot;NOT_APPLICABLE&quot; | &quot;FAILED&quot;, # Optional. Test result for pass/Fail criteria used during the test run.
-  virtualUsers: number, # Optional. Number of virtual users, for which test has been run.
-  testRunId: string, # Optional. Unique test run name as identifier
-  displayName: string, # Optional. Display name of a testRun.
-  testId: string, # Optional. Associated test Id.
-  description: string, # Optional. The test run description.
-  status: &quot;ACCEPTED&quot; | &quot;NOTSTARTED&quot; | &quot;PROVISIONING&quot; | &quot;PROVISIONED&quot; | &quot;CONFIGURING&quot; | &quot;CONFIGURED&quot; | &quot;EXECUTING&quot; | &quot;EXECUTED&quot; | &quot;DEPROVISIONING&quot; | &quot;DEPROVISIONED&quot; | &quot;DONE&quot; | &quot;CANCELLING&quot; | &quot;CANCELLED&quot; | &quot;FAILED&quot; | &quot;VALIDATION_SUCCESS&quot; | &quot;VALIDATION_FAILURE&quot;, # Optional. The test run status.
-  startDateTime: string (ISO 8601 Format), # Optional. The test run start DateTime(ISO 8601 literal format).
-  endDateTime: string (ISO 8601 Format), # Optional. The test run end DateTime(ISO 8601 literal format).
-  executedDateTime: string (ISO 8601 Format), # Optional. Test run initiated time.
-  portalUrl: string, # Optional. Portal url.
-  duration: number, # Optional. Test run duration in milliseconds.
-  subnetId: string, # Optional. Subnet ID on which the load test instances should run.
-  createdDateTime: string (ISO 8601 Format), # Optional. The creation datetime(ISO 8601 literal format).
-  createdBy: string, # Optional. The user that created.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified datetime(ISO 8601 literal format).
-  lastModifiedBy: string, # Optional. The user that last modified.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetTestRunAsync(string,RequestContext)">
 <example>
@@ -405,81 +113,6 @@ Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>TestRun</c>:
-<code>{
-  passFailCriteria: {
-    passFailMetrics: Dictionary&lt;string, PassFailMetric&gt;, # Optional. Map of id and pass fail metrics { id  : pass fail metrics }.
-  }, # Optional. Pass fail criteria for a test.
-  secrets: Dictionary&lt;string, Secret&gt;, # Optional. Secrets can be stored in an Azure Key Vault or any other secret store. If the secret is stored in an Azure Key Vault, the value should be the secret identifier and the type should be AKV_SECRET_URI. If the secret is stored elsewhere, the secret value should be provided directly and the type should be SECRET_VALUE.
-  certificate: {
-    value: string, # Optional. The value of the certificate for respective type
-    type: &quot;AKV_CERT_URI&quot;, # Optional. Type of certificate
-    name: string, # Optional. Name of the certificate.
-  }, # Optional. Certificates metadata
-  environmentVariables: Dictionary&lt;string, string&gt;, # Optional. Environment variables which are defined as a set of &lt;name,value&gt; pairs.
-  errorDetails: [
-    {
-      message: string, # Optional. Error details in case test run was not successfully run.
-    }
-  ], # Optional. Error details if there is any failure in load test run
-  testRunStatistics: Dictionary&lt;string, TestRunStatistics&gt;, # Optional. Test run statistics.
-  loadTestConfiguration: {
-    engineInstances: number, # Optional. The number of engine instances to execute load test. Supported values are in range of 1-45. Required for creating a new test.
-    splitAllCSVs: boolean, # Optional. If false, Azure Load Testing copies and processes your input files unmodified across all test engine instances. If true, Azure Load Testing splits the CSV input data evenly across all engine instances. If you provide multiple CSV files, each file will be split evenly.
-    quickStartTest: boolean, # Optional. If true, optionalLoadTestConfig is required and JMX script for the load test is not required to upload.
-    optionalLoadTestConfig: {
-      endpointUrl: string, # Optional. Test URL. Provide the complete HTTP URL. For example, http://contoso-app.azurewebsites.net/login
-      virtualUsers: number, # Optional. No of concurrent virtual users
-      rampUpTime: number, # Optional. Ramp up time
-      duration: number, # Optional. Test run duration
-    }, # Optional. Optional load test config
-  }, # Optional. The load test configuration.
-  testArtifacts: {
-    inputArtifacts: {
-      configFileInfo: {
-        url: string, # Optional. File URL.
-        fileName: string, # Optional. Name of the file.
-        fileType: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;, # Optional. File type
-        expireDateTime: string (ISO 8601 Format), # Optional. Expiry time of the file (ISO 8601 literal format)
-        validationStatus: &quot;NOT_VALIDATED&quot; | &quot;VALIDATION_SUCCESS&quot; | &quot;VALIDATION_FAILURE&quot; | &quot;VALIDATION_INITIATED&quot; | &quot;VALIDATION_NOT_REQUIRED&quot;, # Optional. Validation status of the file
-        validationFailureDetails: string, # Optional. Validation failure error details
-      }, # Optional. File info
-      testScriptFileInfo: FileInfo, # Optional. File info
-      userPropFileInfo: FileInfo, # Optional. File info
-      inputArtifactsZipFileInfo: FileInfo, # Optional. File info
-      additionalFileInfo: [FileInfo], # Optional. Additional supported files for the test run
-    }, # Optional. The input artifacts for the test run.
-    outputArtifacts: {
-      resultFileInfo: FileInfo, # Optional. File info
-      logsFileInfo: FileInfo, # Optional. File info
-    }, # Optional. The output artifacts for the test run.
-  }, # Optional. Collection of test run artifacts
-  testResult: &quot;PASSED&quot; | &quot;NOT_APPLICABLE&quot; | &quot;FAILED&quot;, # Optional. Test result for pass/Fail criteria used during the test run.
-  virtualUsers: number, # Optional. Number of virtual users, for which test has been run.
-  testRunId: string, # Optional. Unique test run name as identifier
-  displayName: string, # Optional. Display name of a testRun.
-  testId: string, # Optional. Associated test Id.
-  description: string, # Optional. The test run description.
-  status: &quot;ACCEPTED&quot; | &quot;NOTSTARTED&quot; | &quot;PROVISIONING&quot; | &quot;PROVISIONED&quot; | &quot;CONFIGURING&quot; | &quot;CONFIGURED&quot; | &quot;EXECUTING&quot; | &quot;EXECUTED&quot; | &quot;DEPROVISIONING&quot; | &quot;DEPROVISIONED&quot; | &quot;DONE&quot; | &quot;CANCELLING&quot; | &quot;CANCELLED&quot; | &quot;FAILED&quot; | &quot;VALIDATION_SUCCESS&quot; | &quot;VALIDATION_FAILURE&quot;, # Optional. The test run status.
-  startDateTime: string (ISO 8601 Format), # Optional. The test run start DateTime(ISO 8601 literal format).
-  endDateTime: string (ISO 8601 Format), # Optional. The test run end DateTime(ISO 8601 literal format).
-  executedDateTime: string (ISO 8601 Format), # Optional. Test run initiated time.
-  portalUrl: string, # Optional. Portal url.
-  duration: number, # Optional. Test run duration in milliseconds.
-  subnetId: string, # Optional. Subnet ID on which the load test instances should run.
-  createdDateTime: string (ISO 8601 Format), # Optional. The creation datetime(ISO 8601 literal format).
-  createdBy: string, # Optional. The user that created.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified datetime(ISO 8601 literal format).
-  lastModifiedBy: string, # Optional. The user that last modified.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetTestRun(string,RequestContext)">
 <example>
@@ -589,81 +222,6 @@ Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>TestRun</c>:
-<code>{
-  passFailCriteria: {
-    passFailMetrics: Dictionary&lt;string, PassFailMetric&gt;, # Optional. Map of id and pass fail metrics { id  : pass fail metrics }.
-  }, # Optional. Pass fail criteria for a test.
-  secrets: Dictionary&lt;string, Secret&gt;, # Optional. Secrets can be stored in an Azure Key Vault or any other secret store. If the secret is stored in an Azure Key Vault, the value should be the secret identifier and the type should be AKV_SECRET_URI. If the secret is stored elsewhere, the secret value should be provided directly and the type should be SECRET_VALUE.
-  certificate: {
-    value: string, # Optional. The value of the certificate for respective type
-    type: &quot;AKV_CERT_URI&quot;, # Optional. Type of certificate
-    name: string, # Optional. Name of the certificate.
-  }, # Optional. Certificates metadata
-  environmentVariables: Dictionary&lt;string, string&gt;, # Optional. Environment variables which are defined as a set of &lt;name,value&gt; pairs.
-  errorDetails: [
-    {
-      message: string, # Optional. Error details in case test run was not successfully run.
-    }
-  ], # Optional. Error details if there is any failure in load test run
-  testRunStatistics: Dictionary&lt;string, TestRunStatistics&gt;, # Optional. Test run statistics.
-  loadTestConfiguration: {
-    engineInstances: number, # Optional. The number of engine instances to execute load test. Supported values are in range of 1-45. Required for creating a new test.
-    splitAllCSVs: boolean, # Optional. If false, Azure Load Testing copies and processes your input files unmodified across all test engine instances. If true, Azure Load Testing splits the CSV input data evenly across all engine instances. If you provide multiple CSV files, each file will be split evenly.
-    quickStartTest: boolean, # Optional. If true, optionalLoadTestConfig is required and JMX script for the load test is not required to upload.
-    optionalLoadTestConfig: {
-      endpointUrl: string, # Optional. Test URL. Provide the complete HTTP URL. For example, http://contoso-app.azurewebsites.net/login
-      virtualUsers: number, # Optional. No of concurrent virtual users
-      rampUpTime: number, # Optional. Ramp up time
-      duration: number, # Optional. Test run duration
-    }, # Optional. Optional load test config
-  }, # Optional. The load test configuration.
-  testArtifacts: {
-    inputArtifacts: {
-      configFileInfo: {
-        url: string, # Optional. File URL.
-        fileName: string, # Optional. Name of the file.
-        fileType: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;, # Optional. File type
-        expireDateTime: string (ISO 8601 Format), # Optional. Expiry time of the file (ISO 8601 literal format)
-        validationStatus: &quot;NOT_VALIDATED&quot; | &quot;VALIDATION_SUCCESS&quot; | &quot;VALIDATION_FAILURE&quot; | &quot;VALIDATION_INITIATED&quot; | &quot;VALIDATION_NOT_REQUIRED&quot;, # Optional. Validation status of the file
-        validationFailureDetails: string, # Optional. Validation failure error details
-      }, # Optional. File info
-      testScriptFileInfo: FileInfo, # Optional. File info
-      userPropFileInfo: FileInfo, # Optional. File info
-      inputArtifactsZipFileInfo: FileInfo, # Optional. File info
-      additionalFileInfo: [FileInfo], # Optional. Additional supported files for the test run
-    }, # Optional. The input artifacts for the test run.
-    outputArtifacts: {
-      resultFileInfo: FileInfo, # Optional. File info
-      logsFileInfo: FileInfo, # Optional. File info
-    }, # Optional. The output artifacts for the test run.
-  }, # Optional. Collection of test run artifacts
-  testResult: &quot;PASSED&quot; | &quot;NOT_APPLICABLE&quot; | &quot;FAILED&quot;, # Optional. Test result for pass/Fail criteria used during the test run.
-  virtualUsers: number, # Optional. Number of virtual users, for which test has been run.
-  testRunId: string, # Optional. Unique test run name as identifier
-  displayName: string, # Optional. Display name of a testRun.
-  testId: string, # Optional. Associated test Id.
-  description: string, # Optional. The test run description.
-  status: &quot;ACCEPTED&quot; | &quot;NOTSTARTED&quot; | &quot;PROVISIONING&quot; | &quot;PROVISIONED&quot; | &quot;CONFIGURING&quot; | &quot;CONFIGURED&quot; | &quot;EXECUTING&quot; | &quot;EXECUTED&quot; | &quot;DEPROVISIONING&quot; | &quot;DEPROVISIONED&quot; | &quot;DONE&quot; | &quot;CANCELLING&quot; | &quot;CANCELLED&quot; | &quot;FAILED&quot; | &quot;VALIDATION_SUCCESS&quot; | &quot;VALIDATION_FAILURE&quot;, # Optional. The test run status.
-  startDateTime: string (ISO 8601 Format), # Optional. The test run start DateTime(ISO 8601 literal format).
-  endDateTime: string (ISO 8601 Format), # Optional. The test run end DateTime(ISO 8601 literal format).
-  executedDateTime: string (ISO 8601 Format), # Optional. Test run initiated time.
-  portalUrl: string, # Optional. Portal url.
-  duration: number, # Optional. Test run duration in milliseconds.
-  subnetId: string, # Optional. Subnet ID on which the load test instances should run.
-  createdDateTime: string (ISO 8601 Format), # Optional. The creation datetime(ISO 8601 literal format).
-  createdBy: string, # Optional. The user that created.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified datetime(ISO 8601 literal format).
-  lastModifiedBy: string, # Optional. The user that last modified.
-}
-</code>
-
-</remarks>
     </member>
     <member name="DeleteTestRunAsync(string,RequestContext)">
 <example>
@@ -710,23 +268,6 @@ Console.WriteLine(result.GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("validationFailureDetails").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>FileInfo</c>:
-<code>{
-  url: string, # Optional. File URL.
-  fileName: string, # Optional. Name of the file.
-  fileType: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;, # Optional. File type
-  expireDateTime: string (ISO 8601 Format), # Optional. Expiry time of the file (ISO 8601 literal format)
-  validationStatus: &quot;NOT_VALIDATED&quot; | &quot;VALIDATION_SUCCESS&quot; | &quot;VALIDATION_FAILURE&quot; | &quot;VALIDATION_INITIATED&quot; | &quot;VALIDATION_NOT_REQUIRED&quot;, # Optional. Validation status of the file
-  validationFailureDetails: string, # Optional. Validation failure error details
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetTestRunFile(string,string,RequestContext)">
 <example>
@@ -747,23 +288,6 @@ Console.WriteLine(result.GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("validationFailureDetails").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>FileInfo</c>:
-<code>{
-  url: string, # Optional. File URL.
-  fileName: string, # Optional. Name of the file.
-  fileType: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;, # Optional. File type
-  expireDateTime: string (ISO 8601 Format), # Optional. Expiry time of the file (ISO 8601 literal format)
-  validationStatus: &quot;NOT_VALIDATED&quot; | &quot;VALIDATION_SUCCESS&quot; | &quot;VALIDATION_FAILURE&quot; | &quot;VALIDATION_INITIATED&quot; | &quot;VALIDATION_NOT_REQUIRED&quot;, # Optional. Validation status of the file
-  validationFailureDetails: string, # Optional. Validation failure error details
-}
-</code>
-
-</remarks>
     </member>
     <member name="StopTestRunAsync(string,RequestContext)">
 <example>
@@ -873,81 +397,6 @@ Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>TestRun</c>:
-<code>{
-  passFailCriteria: {
-    passFailMetrics: Dictionary&lt;string, PassFailMetric&gt;, # Optional. Map of id and pass fail metrics { id  : pass fail metrics }.
-  }, # Optional. Pass fail criteria for a test.
-  secrets: Dictionary&lt;string, Secret&gt;, # Optional. Secrets can be stored in an Azure Key Vault or any other secret store. If the secret is stored in an Azure Key Vault, the value should be the secret identifier and the type should be AKV_SECRET_URI. If the secret is stored elsewhere, the secret value should be provided directly and the type should be SECRET_VALUE.
-  certificate: {
-    value: string, # Optional. The value of the certificate for respective type
-    type: &quot;AKV_CERT_URI&quot;, # Optional. Type of certificate
-    name: string, # Optional. Name of the certificate.
-  }, # Optional. Certificates metadata
-  environmentVariables: Dictionary&lt;string, string&gt;, # Optional. Environment variables which are defined as a set of &lt;name,value&gt; pairs.
-  errorDetails: [
-    {
-      message: string, # Optional. Error details in case test run was not successfully run.
-    }
-  ], # Optional. Error details if there is any failure in load test run
-  testRunStatistics: Dictionary&lt;string, TestRunStatistics&gt;, # Optional. Test run statistics.
-  loadTestConfiguration: {
-    engineInstances: number, # Optional. The number of engine instances to execute load test. Supported values are in range of 1-45. Required for creating a new test.
-    splitAllCSVs: boolean, # Optional. If false, Azure Load Testing copies and processes your input files unmodified across all test engine instances. If true, Azure Load Testing splits the CSV input data evenly across all engine instances. If you provide multiple CSV files, each file will be split evenly.
-    quickStartTest: boolean, # Optional. If true, optionalLoadTestConfig is required and JMX script for the load test is not required to upload.
-    optionalLoadTestConfig: {
-      endpointUrl: string, # Optional. Test URL. Provide the complete HTTP URL. For example, http://contoso-app.azurewebsites.net/login
-      virtualUsers: number, # Optional. No of concurrent virtual users
-      rampUpTime: number, # Optional. Ramp up time
-      duration: number, # Optional. Test run duration
-    }, # Optional. Optional load test config
-  }, # Optional. The load test configuration.
-  testArtifacts: {
-    inputArtifacts: {
-      configFileInfo: {
-        url: string, # Optional. File URL.
-        fileName: string, # Optional. Name of the file.
-        fileType: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;, # Optional. File type
-        expireDateTime: string (ISO 8601 Format), # Optional. Expiry time of the file (ISO 8601 literal format)
-        validationStatus: &quot;NOT_VALIDATED&quot; | &quot;VALIDATION_SUCCESS&quot; | &quot;VALIDATION_FAILURE&quot; | &quot;VALIDATION_INITIATED&quot; | &quot;VALIDATION_NOT_REQUIRED&quot;, # Optional. Validation status of the file
-        validationFailureDetails: string, # Optional. Validation failure error details
-      }, # Optional. File info
-      testScriptFileInfo: FileInfo, # Optional. File info
-      userPropFileInfo: FileInfo, # Optional. File info
-      inputArtifactsZipFileInfo: FileInfo, # Optional. File info
-      additionalFileInfo: [FileInfo], # Optional. Additional supported files for the test run
-    }, # Optional. The input artifacts for the test run.
-    outputArtifacts: {
-      resultFileInfo: FileInfo, # Optional. File info
-      logsFileInfo: FileInfo, # Optional. File info
-    }, # Optional. The output artifacts for the test run.
-  }, # Optional. Collection of test run artifacts
-  testResult: &quot;PASSED&quot; | &quot;NOT_APPLICABLE&quot; | &quot;FAILED&quot;, # Optional. Test result for pass/Fail criteria used during the test run.
-  virtualUsers: number, # Optional. Number of virtual users, for which test has been run.
-  testRunId: string, # Optional. Unique test run name as identifier
-  displayName: string, # Optional. Display name of a testRun.
-  testId: string, # Optional. Associated test Id.
-  description: string, # Optional. The test run description.
-  status: &quot;ACCEPTED&quot; | &quot;NOTSTARTED&quot; | &quot;PROVISIONING&quot; | &quot;PROVISIONED&quot; | &quot;CONFIGURING&quot; | &quot;CONFIGURED&quot; | &quot;EXECUTING&quot; | &quot;EXECUTED&quot; | &quot;DEPROVISIONING&quot; | &quot;DEPROVISIONED&quot; | &quot;DONE&quot; | &quot;CANCELLING&quot; | &quot;CANCELLED&quot; | &quot;FAILED&quot; | &quot;VALIDATION_SUCCESS&quot; | &quot;VALIDATION_FAILURE&quot;, # Optional. The test run status.
-  startDateTime: string (ISO 8601 Format), # Optional. The test run start DateTime(ISO 8601 literal format).
-  endDateTime: string (ISO 8601 Format), # Optional. The test run end DateTime(ISO 8601 literal format).
-  executedDateTime: string (ISO 8601 Format), # Optional. Test run initiated time.
-  portalUrl: string, # Optional. Portal url.
-  duration: number, # Optional. Test run duration in milliseconds.
-  subnetId: string, # Optional. Subnet ID on which the load test instances should run.
-  createdDateTime: string (ISO 8601 Format), # Optional. The creation datetime(ISO 8601 literal format).
-  createdBy: string, # Optional. The user that created.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified datetime(ISO 8601 literal format).
-  lastModifiedBy: string, # Optional. The user that last modified.
-}
-</code>
-
-</remarks>
     </member>
     <member name="StopTestRun(string,RequestContext)">
 <example>
@@ -1057,81 +506,6 @@ Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>TestRun</c>:
-<code>{
-  passFailCriteria: {
-    passFailMetrics: Dictionary&lt;string, PassFailMetric&gt;, # Optional. Map of id and pass fail metrics { id  : pass fail metrics }.
-  }, # Optional. Pass fail criteria for a test.
-  secrets: Dictionary&lt;string, Secret&gt;, # Optional. Secrets can be stored in an Azure Key Vault or any other secret store. If the secret is stored in an Azure Key Vault, the value should be the secret identifier and the type should be AKV_SECRET_URI. If the secret is stored elsewhere, the secret value should be provided directly and the type should be SECRET_VALUE.
-  certificate: {
-    value: string, # Optional. The value of the certificate for respective type
-    type: &quot;AKV_CERT_URI&quot;, # Optional. Type of certificate
-    name: string, # Optional. Name of the certificate.
-  }, # Optional. Certificates metadata
-  environmentVariables: Dictionary&lt;string, string&gt;, # Optional. Environment variables which are defined as a set of &lt;name,value&gt; pairs.
-  errorDetails: [
-    {
-      message: string, # Optional. Error details in case test run was not successfully run.
-    }
-  ], # Optional. Error details if there is any failure in load test run
-  testRunStatistics: Dictionary&lt;string, TestRunStatistics&gt;, # Optional. Test run statistics.
-  loadTestConfiguration: {
-    engineInstances: number, # Optional. The number of engine instances to execute load test. Supported values are in range of 1-45. Required for creating a new test.
-    splitAllCSVs: boolean, # Optional. If false, Azure Load Testing copies and processes your input files unmodified across all test engine instances. If true, Azure Load Testing splits the CSV input data evenly across all engine instances. If you provide multiple CSV files, each file will be split evenly.
-    quickStartTest: boolean, # Optional. If true, optionalLoadTestConfig is required and JMX script for the load test is not required to upload.
-    optionalLoadTestConfig: {
-      endpointUrl: string, # Optional. Test URL. Provide the complete HTTP URL. For example, http://contoso-app.azurewebsites.net/login
-      virtualUsers: number, # Optional. No of concurrent virtual users
-      rampUpTime: number, # Optional. Ramp up time
-      duration: number, # Optional. Test run duration
-    }, # Optional. Optional load test config
-  }, # Optional. The load test configuration.
-  testArtifacts: {
-    inputArtifacts: {
-      configFileInfo: {
-        url: string, # Optional. File URL.
-        fileName: string, # Optional. Name of the file.
-        fileType: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;, # Optional. File type
-        expireDateTime: string (ISO 8601 Format), # Optional. Expiry time of the file (ISO 8601 literal format)
-        validationStatus: &quot;NOT_VALIDATED&quot; | &quot;VALIDATION_SUCCESS&quot; | &quot;VALIDATION_FAILURE&quot; | &quot;VALIDATION_INITIATED&quot; | &quot;VALIDATION_NOT_REQUIRED&quot;, # Optional. Validation status of the file
-        validationFailureDetails: string, # Optional. Validation failure error details
-      }, # Optional. File info
-      testScriptFileInfo: FileInfo, # Optional. File info
-      userPropFileInfo: FileInfo, # Optional. File info
-      inputArtifactsZipFileInfo: FileInfo, # Optional. File info
-      additionalFileInfo: [FileInfo], # Optional. Additional supported files for the test run
-    }, # Optional. The input artifacts for the test run.
-    outputArtifacts: {
-      resultFileInfo: FileInfo, # Optional. File info
-      logsFileInfo: FileInfo, # Optional. File info
-    }, # Optional. The output artifacts for the test run.
-  }, # Optional. Collection of test run artifacts
-  testResult: &quot;PASSED&quot; | &quot;NOT_APPLICABLE&quot; | &quot;FAILED&quot;, # Optional. Test result for pass/Fail criteria used during the test run.
-  virtualUsers: number, # Optional. Number of virtual users, for which test has been run.
-  testRunId: string, # Optional. Unique test run name as identifier
-  displayName: string, # Optional. Display name of a testRun.
-  testId: string, # Optional. Associated test Id.
-  description: string, # Optional. The test run description.
-  status: &quot;ACCEPTED&quot; | &quot;NOTSTARTED&quot; | &quot;PROVISIONING&quot; | &quot;PROVISIONED&quot; | &quot;CONFIGURING&quot; | &quot;CONFIGURED&quot; | &quot;EXECUTING&quot; | &quot;EXECUTED&quot; | &quot;DEPROVISIONING&quot; | &quot;DEPROVISIONED&quot; | &quot;DONE&quot; | &quot;CANCELLING&quot; | &quot;CANCELLED&quot; | &quot;FAILED&quot; | &quot;VALIDATION_SUCCESS&quot; | &quot;VALIDATION_FAILURE&quot;, # Optional. The test run status.
-  startDateTime: string (ISO 8601 Format), # Optional. The test run start DateTime(ISO 8601 literal format).
-  endDateTime: string (ISO 8601 Format), # Optional. The test run end DateTime(ISO 8601 literal format).
-  executedDateTime: string (ISO 8601 Format), # Optional. Test run initiated time.
-  portalUrl: string, # Optional. Portal url.
-  duration: number, # Optional. Test run duration in milliseconds.
-  subnetId: string, # Optional. Subnet ID on which the load test instances should run.
-  createdDateTime: string (ISO 8601 Format), # Optional. The creation datetime(ISO 8601 literal format).
-  createdBy: string, # Optional. The user that created.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified datetime(ISO 8601 literal format).
-  lastModifiedBy: string, # Optional. The user that last modified.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetMetricNamespacesAsync(string,RequestContext)">
 <example>
@@ -1148,23 +522,6 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToSt
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>MetricNamespaceCollection</c>:
-<code>{
-  value: [
-    {
-      description: string, # Optional. The namespace description.
-      name: string, # Optional. The metric namespace name.
-    }
-  ], # Required. The values for the metric namespaces.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetMetricNamespaces(string,RequestContext)">
 <example>
@@ -1181,23 +538,6 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToSt
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>MetricNamespaceCollection</c>:
-<code>{
-  value: [
-    {
-      description: string, # Optional. The namespace description.
-      name: string, # Optional. The metric namespace name.
-    }
-  ], # Required. The values for the metric namespaces.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetMetricDefinitionsAsync(string,string,RequestContext)">
 <example>
@@ -1221,38 +561,6 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("unit").ToString())
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("metricAvailabilities")[0].GetProperty("timeGrain").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>MetricDefinitionCollection</c>:
-<code>{
-  value: [
-    {
-      dimensions: [
-        {
-          description: string, # Optional. The description
-          name: string, # Optional. The name
-        }
-      ], # Optional. List of dimensions
-      description: string, # Optional. The metric description
-      name: string, # Optional. The metric name
-      namespace: string, # Optional. The namespace the metric belongs to.
-      primaryAggregationType: &quot;Average&quot; | &quot;Count&quot; | &quot;None&quot; | &quot;Total&quot; | &quot;Percentile90&quot; | &quot;Percentile95&quot; | &quot;Percentile99&quot;, # Optional. The primary aggregation type value defining how to use the values for display.
-      supportedAggregationTypes: [string], # Optional. The collection of what all aggregation types are supported.
-      unit: &quot;NotSpecified&quot; | &quot;Percent&quot; | &quot;Count&quot; | &quot;Seconds&quot; | &quot;Milliseconds&quot; | &quot;Bytes&quot; | &quot;BytesPerSecond&quot; | &quot;CountPerSecond&quot;, # Optional. The unit of the metric.
-      metricAvailabilities: [
-        {
-          timeGrain: &quot;PT5S&quot; | &quot;PT10S&quot; | &quot;PT1M&quot; | &quot;PT5M&quot; | &quot;PT1H&quot;, # Optional. The time grain specifies the aggregation interval for the metric. Expressed as a duration &apos;PT1M&apos;, &apos;PT1H&apos;, etc.
-        }
-      ], # Optional. Metric availability specifies the time grain (aggregation interval or frequency).
-    }
-  ], # Required. the values for the metric definitions.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetMetricDefinitions(string,string,RequestContext)">
 <example>
@@ -1276,38 +584,6 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("unit").ToString())
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("metricAvailabilities")[0].GetProperty("timeGrain").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>MetricDefinitionCollection</c>:
-<code>{
-  value: [
-    {
-      dimensions: [
-        {
-          description: string, # Optional. The description
-          name: string, # Optional. The name
-        }
-      ], # Optional. List of dimensions
-      description: string, # Optional. The metric description
-      name: string, # Optional. The metric name
-      namespace: string, # Optional. The namespace the metric belongs to.
-      primaryAggregationType: &quot;Average&quot; | &quot;Count&quot; | &quot;None&quot; | &quot;Total&quot; | &quot;Percentile90&quot; | &quot;Percentile95&quot; | &quot;Percentile99&quot;, # Optional. The primary aggregation type value defining how to use the values for display.
-      supportedAggregationTypes: [string], # Optional. The collection of what all aggregation types are supported.
-      unit: &quot;NotSpecified&quot; | &quot;Percent&quot; | &quot;Count&quot; | &quot;Seconds&quot; | &quot;Milliseconds&quot; | &quot;Bytes&quot; | &quot;BytesPerSecond&quot; | &quot;CountPerSecond&quot;, # Optional. The unit of the metric.
-      metricAvailabilities: [
-        {
-          timeGrain: &quot;PT5S&quot; | &quot;PT10S&quot; | &quot;PT1M&quot; | &quot;PT5M&quot; | &quot;PT1H&quot;, # Optional. The time grain specifies the aggregation interval for the metric. Expressed as a duration &apos;PT1M&apos;, &apos;PT1H&apos;, etc.
-        }
-      ], # Optional. Metric availability specifies the time grain (aggregation interval or frequency).
-    }
-  ], # Required. the values for the metric definitions.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrUpdateAppComponentsAsync(string,RequestContent,RequestContext)">
 <example>
@@ -1345,36 +621,6 @@ Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>TestRunAppComponents</c>:
-<code>{
-  components: Dictionary&lt;string, AppComponent&gt;, # Required. Azure resource collection { resource id (fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}) : resource object } 
-  testRunId: string, # Optional. Test run identifier
-  createdDateTime: string (ISO 8601 Format), # Optional. The creation datetime(ISO 8601 literal format).
-  createdBy: string, # Optional. The user that created.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified datetime(ISO 8601 literal format).
-  lastModifiedBy: string, # Optional. The user that last modified.
-}
-</code>
-
-Response Body:
-
-Schema for <c>TestRunAppComponents</c>:
-<code>{
-  components: Dictionary&lt;string, AppComponent&gt;, # Required. Azure resource collection { resource id (fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}) : resource object } 
-  testRunId: string, # Optional. Test run identifier
-  createdDateTime: string (ISO 8601 Format), # Optional. The creation datetime(ISO 8601 literal format).
-  createdBy: string, # Optional. The user that created.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified datetime(ISO 8601 literal format).
-  lastModifiedBy: string, # Optional. The user that last modified.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrUpdateAppComponents(string,RequestContent,RequestContext)">
 <example>
@@ -1412,36 +658,6 @@ Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>TestRunAppComponents</c>:
-<code>{
-  components: Dictionary&lt;string, AppComponent&gt;, # Required. Azure resource collection { resource id (fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}) : resource object } 
-  testRunId: string, # Optional. Test run identifier
-  createdDateTime: string (ISO 8601 Format), # Optional. The creation datetime(ISO 8601 literal format).
-  createdBy: string, # Optional. The user that created.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified datetime(ISO 8601 literal format).
-  lastModifiedBy: string, # Optional. The user that last modified.
-}
-</code>
-
-Response Body:
-
-Schema for <c>TestRunAppComponents</c>:
-<code>{
-  components: Dictionary&lt;string, AppComponent&gt;, # Required. Azure resource collection { resource id (fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}) : resource object } 
-  testRunId: string, # Optional. Test run identifier
-  createdDateTime: string (ISO 8601 Format), # Optional. The creation datetime(ISO 8601 literal format).
-  createdBy: string, # Optional. The user that created.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified datetime(ISO 8601 literal format).
-  lastModifiedBy: string, # Optional. The user that last modified.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetAppComponentsAsync(string,RequestContext)">
 <example>
@@ -1468,23 +684,6 @@ Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>TestRunAppComponents</c>:
-<code>{
-  components: Dictionary&lt;string, AppComponent&gt;, # Required. Azure resource collection { resource id (fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}) : resource object } 
-  testRunId: string, # Optional. Test run identifier
-  createdDateTime: string (ISO 8601 Format), # Optional. The creation datetime(ISO 8601 literal format).
-  createdBy: string, # Optional. The user that created.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified datetime(ISO 8601 literal format).
-  lastModifiedBy: string, # Optional. The user that last modified.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetAppComponents(string,RequestContext)">
 <example>
@@ -1511,23 +710,6 @@ Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>TestRunAppComponents</c>:
-<code>{
-  components: Dictionary&lt;string, AppComponent&gt;, # Required. Azure resource collection { resource id (fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}) : resource object } 
-  testRunId: string, # Optional. Test run identifier
-  createdDateTime: string (ISO 8601 Format), # Optional. The creation datetime(ISO 8601 literal format).
-  createdBy: string, # Optional. The user that created.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified datetime(ISO 8601 literal format).
-  lastModifiedBy: string, # Optional. The user that last modified.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrUpdateServerMetricsConfigAsync(string,RequestContent,RequestContext)">
 <example>
@@ -1582,36 +764,6 @@ Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>TestRunServerMetricConfig</c>:
-<code>{
-  testRunId: string, # Optional. Test run identifier
-  metrics: Dictionary&lt;string, ResourceMetric&gt;, # Optional. Azure resource metrics collection {metric id : metrics object} (Refer : https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition for metric id).
-  createdDateTime: string (ISO 8601 Format), # Optional. The creation datetime(ISO 8601 literal format).
-  createdBy: string, # Optional. The user that created.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified datetime(ISO 8601 literal format).
-  lastModifiedBy: string, # Optional. The user that last modified.
-}
-</code>
-
-Response Body:
-
-Schema for <c>TestRunServerMetricConfig</c>:
-<code>{
-  testRunId: string, # Optional. Test run identifier
-  metrics: Dictionary&lt;string, ResourceMetric&gt;, # Optional. Azure resource metrics collection {metric id : metrics object} (Refer : https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition for metric id).
-  createdDateTime: string (ISO 8601 Format), # Optional. The creation datetime(ISO 8601 literal format).
-  createdBy: string, # Optional. The user that created.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified datetime(ISO 8601 literal format).
-  lastModifiedBy: string, # Optional. The user that last modified.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrUpdateServerMetricsConfig(string,RequestContent,RequestContext)">
 <example>
@@ -1666,36 +818,6 @@ Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>TestRunServerMetricConfig</c>:
-<code>{
-  testRunId: string, # Optional. Test run identifier
-  metrics: Dictionary&lt;string, ResourceMetric&gt;, # Optional. Azure resource metrics collection {metric id : metrics object} (Refer : https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition for metric id).
-  createdDateTime: string (ISO 8601 Format), # Optional. The creation datetime(ISO 8601 literal format).
-  createdBy: string, # Optional. The user that created.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified datetime(ISO 8601 literal format).
-  lastModifiedBy: string, # Optional. The user that last modified.
-}
-</code>
-
-Response Body:
-
-Schema for <c>TestRunServerMetricConfig</c>:
-<code>{
-  testRunId: string, # Optional. Test run identifier
-  metrics: Dictionary&lt;string, ResourceMetric&gt;, # Optional. Azure resource metrics collection {metric id : metrics object} (Refer : https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition for metric id).
-  createdDateTime: string (ISO 8601 Format), # Optional. The creation datetime(ISO 8601 literal format).
-  createdBy: string, # Optional. The user that created.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified datetime(ISO 8601 literal format).
-  lastModifiedBy: string, # Optional. The user that last modified.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetServerMetricsConfigAsync(string,RequestContext)">
 <example>
@@ -1723,23 +845,6 @@ Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>TestRunServerMetricConfig</c>:
-<code>{
-  testRunId: string, # Optional. Test run identifier
-  metrics: Dictionary&lt;string, ResourceMetric&gt;, # Optional. Azure resource metrics collection {metric id : metrics object} (Refer : https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition for metric id).
-  createdDateTime: string (ISO 8601 Format), # Optional. The creation datetime(ISO 8601 literal format).
-  createdBy: string, # Optional. The user that created.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified datetime(ISO 8601 literal format).
-  lastModifiedBy: string, # Optional. The user that last modified.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetServerMetricsConfig(string,RequestContext)">
 <example>
@@ -1767,177 +872,10 @@ Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>TestRunServerMetricConfig</c>:
-<code>{
-  testRunId: string, # Optional. Test run identifier
-  metrics: Dictionary&lt;string, ResourceMetric&gt;, # Optional. Azure resource metrics collection {metric id : metrics object} (Refer : https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition for metric id).
-  createdDateTime: string (ISO 8601 Format), # Optional. The creation datetime(ISO 8601 literal format).
-  createdBy: string, # Optional. The user that created.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified datetime(ISO 8601 literal format).
-  lastModifiedBy: string, # Optional. The user that last modified.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetTestRunsAsync(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,RequestContext)">
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>TestRunsListValue</c>:
-<code>{
-  passFailCriteria: {
-    passFailMetrics: Dictionary&lt;string, PassFailMetric&gt;, # Optional. Map of id and pass fail metrics { id  : pass fail metrics }.
-  }, # Optional. Pass fail criteria for a test.
-  secrets: Dictionary&lt;string, Secret&gt;, # Optional. Secrets can be stored in an Azure Key Vault or any other secret store. If the secret is stored in an Azure Key Vault, the value should be the secret identifier and the type should be AKV_SECRET_URI. If the secret is stored elsewhere, the secret value should be provided directly and the type should be SECRET_VALUE.
-  certificate: {
-    value: string, # Optional. The value of the certificate for respective type
-    type: &quot;AKV_CERT_URI&quot;, # Optional. Type of certificate
-    name: string, # Optional. Name of the certificate.
-  }, # Optional. Certificates metadata
-  environmentVariables: Dictionary&lt;string, string&gt;, # Optional. Environment variables which are defined as a set of &lt;name,value&gt; pairs.
-  errorDetails: [
-    {
-      message: string, # Optional. Error details in case test run was not successfully run.
-    }
-  ], # Optional. Error details if there is any failure in load test run
-  testRunStatistics: Dictionary&lt;string, TestRunStatistics&gt;, # Optional. Test run statistics.
-  loadTestConfiguration: {
-    engineInstances: number, # Optional. The number of engine instances to execute load test. Supported values are in range of 1-45. Required for creating a new test.
-    splitAllCSVs: boolean, # Optional. If false, Azure Load Testing copies and processes your input files unmodified across all test engine instances. If true, Azure Load Testing splits the CSV input data evenly across all engine instances. If you provide multiple CSV files, each file will be split evenly.
-    quickStartTest: boolean, # Optional. If true, optionalLoadTestConfig is required and JMX script for the load test is not required to upload.
-    optionalLoadTestConfig: {
-      endpointUrl: string, # Optional. Test URL. Provide the complete HTTP URL. For example, http://contoso-app.azurewebsites.net/login
-      virtualUsers: number, # Optional. No of concurrent virtual users
-      rampUpTime: number, # Optional. Ramp up time
-      duration: number, # Optional. Test run duration
-    }, # Optional. Optional load test config
-  }, # Optional. The load test configuration.
-  testArtifacts: {
-    inputArtifacts: {
-      configFileInfo: {
-        url: string, # Optional. File URL.
-        fileName: string, # Optional. Name of the file.
-        fileType: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;, # Optional. File type
-        expireDateTime: string (ISO 8601 Format), # Optional. Expiry time of the file (ISO 8601 literal format)
-        validationStatus: &quot;NOT_VALIDATED&quot; | &quot;VALIDATION_SUCCESS&quot; | &quot;VALIDATION_FAILURE&quot; | &quot;VALIDATION_INITIATED&quot; | &quot;VALIDATION_NOT_REQUIRED&quot;, # Optional. Validation status of the file
-        validationFailureDetails: string, # Optional. Validation failure error details
-      }, # Optional. File info
-      testScriptFileInfo: FileInfo, # Optional. File info
-      userPropFileInfo: FileInfo, # Optional. File info
-      inputArtifactsZipFileInfo: FileInfo, # Optional. File info
-      additionalFileInfo: [FileInfo], # Optional. Additional supported files for the test run
-    }, # Optional. The input artifacts for the test run.
-    outputArtifacts: {
-      resultFileInfo: FileInfo, # Optional. File info
-      logsFileInfo: FileInfo, # Optional. File info
-    }, # Optional. The output artifacts for the test run.
-  }, # Optional. Collection of test run artifacts
-  testResult: &quot;PASSED&quot; | &quot;NOT_APPLICABLE&quot; | &quot;FAILED&quot;, # Optional. Test result for pass/Fail criteria used during the test run.
-  virtualUsers: number, # Optional. Number of virtual users, for which test has been run.
-  testRunId: string, # Optional. Unique test run name as identifier
-  displayName: string, # Optional. Display name of a testRun.
-  testId: string, # Optional. Associated test Id.
-  description: string, # Optional. The test run description.
-  status: &quot;ACCEPTED&quot; | &quot;NOTSTARTED&quot; | &quot;PROVISIONING&quot; | &quot;PROVISIONED&quot; | &quot;CONFIGURING&quot; | &quot;CONFIGURED&quot; | &quot;EXECUTING&quot; | &quot;EXECUTED&quot; | &quot;DEPROVISIONING&quot; | &quot;DEPROVISIONED&quot; | &quot;DONE&quot; | &quot;CANCELLING&quot; | &quot;CANCELLED&quot; | &quot;FAILED&quot; | &quot;VALIDATION_SUCCESS&quot; | &quot;VALIDATION_FAILURE&quot;, # Optional. The test run status.
-  startDateTime: string (ISO 8601 Format), # Optional. The test run start DateTime(ISO 8601 literal format).
-  endDateTime: string (ISO 8601 Format), # Optional. The test run end DateTime(ISO 8601 literal format).
-  executedDateTime: string (ISO 8601 Format), # Optional. Test run initiated time.
-  portalUrl: string, # Optional. Portal url.
-  duration: number, # Optional. Test run duration in milliseconds.
-  subnetId: string, # Optional. Subnet ID on which the load test instances should run.
-  createdDateTime: string (ISO 8601 Format), # Optional. The creation datetime(ISO 8601 literal format).
-  createdBy: string, # Optional. The user that created.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified datetime(ISO 8601 literal format).
-  lastModifiedBy: string, # Optional. The user that last modified.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetTestRuns(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,RequestContext)">
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>TestRunsListValue</c>:
-<code>{
-  passFailCriteria: {
-    passFailMetrics: Dictionary&lt;string, PassFailMetric&gt;, # Optional. Map of id and pass fail metrics { id  : pass fail metrics }.
-  }, # Optional. Pass fail criteria for a test.
-  secrets: Dictionary&lt;string, Secret&gt;, # Optional. Secrets can be stored in an Azure Key Vault or any other secret store. If the secret is stored in an Azure Key Vault, the value should be the secret identifier and the type should be AKV_SECRET_URI. If the secret is stored elsewhere, the secret value should be provided directly and the type should be SECRET_VALUE.
-  certificate: {
-    value: string, # Optional. The value of the certificate for respective type
-    type: &quot;AKV_CERT_URI&quot;, # Optional. Type of certificate
-    name: string, # Optional. Name of the certificate.
-  }, # Optional. Certificates metadata
-  environmentVariables: Dictionary&lt;string, string&gt;, # Optional. Environment variables which are defined as a set of &lt;name,value&gt; pairs.
-  errorDetails: [
-    {
-      message: string, # Optional. Error details in case test run was not successfully run.
-    }
-  ], # Optional. Error details if there is any failure in load test run
-  testRunStatistics: Dictionary&lt;string, TestRunStatistics&gt;, # Optional. Test run statistics.
-  loadTestConfiguration: {
-    engineInstances: number, # Optional. The number of engine instances to execute load test. Supported values are in range of 1-45. Required for creating a new test.
-    splitAllCSVs: boolean, # Optional. If false, Azure Load Testing copies and processes your input files unmodified across all test engine instances. If true, Azure Load Testing splits the CSV input data evenly across all engine instances. If you provide multiple CSV files, each file will be split evenly.
-    quickStartTest: boolean, # Optional. If true, optionalLoadTestConfig is required and JMX script for the load test is not required to upload.
-    optionalLoadTestConfig: {
-      endpointUrl: string, # Optional. Test URL. Provide the complete HTTP URL. For example, http://contoso-app.azurewebsites.net/login
-      virtualUsers: number, # Optional. No of concurrent virtual users
-      rampUpTime: number, # Optional. Ramp up time
-      duration: number, # Optional. Test run duration
-    }, # Optional. Optional load test config
-  }, # Optional. The load test configuration.
-  testArtifacts: {
-    inputArtifacts: {
-      configFileInfo: {
-        url: string, # Optional. File URL.
-        fileName: string, # Optional. Name of the file.
-        fileType: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;, # Optional. File type
-        expireDateTime: string (ISO 8601 Format), # Optional. Expiry time of the file (ISO 8601 literal format)
-        validationStatus: &quot;NOT_VALIDATED&quot; | &quot;VALIDATION_SUCCESS&quot; | &quot;VALIDATION_FAILURE&quot; | &quot;VALIDATION_INITIATED&quot; | &quot;VALIDATION_NOT_REQUIRED&quot;, # Optional. Validation status of the file
-        validationFailureDetails: string, # Optional. Validation failure error details
-      }, # Optional. File info
-      testScriptFileInfo: FileInfo, # Optional. File info
-      userPropFileInfo: FileInfo, # Optional. File info
-      inputArtifactsZipFileInfo: FileInfo, # Optional. File info
-      additionalFileInfo: [FileInfo], # Optional. Additional supported files for the test run
-    }, # Optional. The input artifacts for the test run.
-    outputArtifacts: {
-      resultFileInfo: FileInfo, # Optional. File info
-      logsFileInfo: FileInfo, # Optional. File info
-    }, # Optional. The output artifacts for the test run.
-  }, # Optional. Collection of test run artifacts
-  testResult: &quot;PASSED&quot; | &quot;NOT_APPLICABLE&quot; | &quot;FAILED&quot;, # Optional. Test result for pass/Fail criteria used during the test run.
-  virtualUsers: number, # Optional. Number of virtual users, for which test has been run.
-  testRunId: string, # Optional. Unique test run name as identifier
-  displayName: string, # Optional. Display name of a testRun.
-  testId: string, # Optional. Associated test Id.
-  description: string, # Optional. The test run description.
-  status: &quot;ACCEPTED&quot; | &quot;NOTSTARTED&quot; | &quot;PROVISIONING&quot; | &quot;PROVISIONED&quot; | &quot;CONFIGURING&quot; | &quot;CONFIGURED&quot; | &quot;EXECUTING&quot; | &quot;EXECUTED&quot; | &quot;DEPROVISIONING&quot; | &quot;DEPROVISIONED&quot; | &quot;DONE&quot; | &quot;CANCELLING&quot; | &quot;CANCELLED&quot; | &quot;FAILED&quot; | &quot;VALIDATION_SUCCESS&quot; | &quot;VALIDATION_FAILURE&quot;, # Optional. The test run status.
-  startDateTime: string (ISO 8601 Format), # Optional. The test run start DateTime(ISO 8601 literal format).
-  endDateTime: string (ISO 8601 Format), # Optional. The test run end DateTime(ISO 8601 literal format).
-  executedDateTime: string (ISO 8601 Format), # Optional. Test run initiated time.
-  portalUrl: string, # Optional. Portal url.
-  duration: number, # Optional. Test run duration in milliseconds.
-  subnetId: string, # Optional. Subnet ID on which the load test instances should run.
-  createdDateTime: string (ISO 8601 Format), # Optional. The creation datetime(ISO 8601 literal format).
-  createdBy: string, # Optional. The user that created.
-  lastModifiedDateTime: string (ISO 8601 Format), # Optional. The last Modified datetime(ISO 8601 literal format).
-  lastModifiedBy: string, # Optional. The user that last modified.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetMetricsAsync(string,string,string,string,RequestContent,string,string,RequestContext)">
 <example>
@@ -1982,42 +920,6 @@ await foreach (var item in client.GetMetricsAsync("<testRunId>", "<metricname>",
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload and one item in the pageable response.
-
-Request Body:
-
-Schema for <c>MetricRequestPayload</c>:
-<code>{
-  filters: [
-    {
-      name: string, # Optional. The dimension name
-      values: [string], # Optional. The dimension values. Maximum values can be 20.
-    }
-  ], # Optional. Get metrics for specific dimension values. Example: Metric contains dimension like SamplerName, Error. To retrieve all the time series data where SamplerName is equals to HTTPRequest1 or HTTPRequest2, the DimensionFilter value will be {&quot;SamplerName&quot;, [&quot;HTTPRequest1&quot;, &quot;HTTPRequest2&quot;}
-}
-</code>
-
-Response Body:
-
-Schema for <c>MetricsValue</c>:
-<code>{
-  data: [
-    {
-      timestamp: string, # Optional. The timestamp for the metric value in ISO 8601 format.
-      value: number, # Optional. The metric value.
-    }
-  ], # Optional. An array of data points representing the metric values.
-  dimensionValues: [
-    {
-      name: string, # Optional. The name of the dimension.
-      value: string, # Optional. The value of the dimension.
-    }
-  ], # Optional. The dimension values 
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetMetrics(string,string,string,string,RequestContent,string,string,RequestContext)">
 <example>
@@ -2062,42 +964,6 @@ foreach (var item in client.GetMetrics("<testRunId>", "<metricname>", "<metricNa
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload and one item in the pageable response.
-
-Request Body:
-
-Schema for <c>MetricRequestPayload</c>:
-<code>{
-  filters: [
-    {
-      name: string, # Optional. The dimension name
-      values: [string], # Optional. The dimension values. Maximum values can be 20.
-    }
-  ], # Optional. Get metrics for specific dimension values. Example: Metric contains dimension like SamplerName, Error. To retrieve all the time series data where SamplerName is equals to HTTPRequest1 or HTTPRequest2, the DimensionFilter value will be {&quot;SamplerName&quot;, [&quot;HTTPRequest1&quot;, &quot;HTTPRequest2&quot;}
-}
-</code>
-
-Response Body:
-
-Schema for <c>MetricsValue</c>:
-<code>{
-  data: [
-    {
-      timestamp: string, # Optional. The timestamp for the metric value in ISO 8601 format.
-      value: number, # Optional. The metric value.
-    }
-  ], # Optional. An array of data points representing the metric values.
-  dimensionValues: [
-    {
-      name: string, # Optional. The name of the dimension.
-      value: string, # Optional. The value of the dimension.
-    }
-  ], # Optional. The dimension values 
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetMetricDimensionValuesAsync(string,string,string,string,string,string,RequestContext)">
 <example>

@@ -72,47 +72,6 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>SatelliteDataIngestionJob</c>:
-<code>{
-  partyId: string, # Required. Party Id.
-  boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
-  startDateTime: string (ISO 8601 Format), # Required. Start Date.
-  endDateTime: string (ISO 8601 Format), # Required. End Date.
-  provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data. Available Value: Microsoft.
-  source: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
-  data: {
-    imageNames: [string], # Optional. List of ImageNames.
-    imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
-    imageResolutions: [number], # Optional. List of ImageResolutions in meters. Available values: 10, 20, 60.
-  }, # Optional. Data Model for SatelliteIngestionJobRequest.
-  id: string, # Optional. Unique job id.
-  status: string, # Optional. Status of the job.
-Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-  durationInSeconds: number, # Optional. Duration of the job in seconds.
-  message: string, # Optional. Status message to capture more details of the job.
-  errorCode: string, # Optional. Error Code when job failed.
-  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetSatelliteDataIngestionJobDetails(string,RequestContext)">
 <example>
@@ -149,47 +108,6 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>SatelliteDataIngestionJob</c>:
-<code>{
-  partyId: string, # Required. Party Id.
-  boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
-  startDateTime: string (ISO 8601 Format), # Required. Start Date.
-  endDateTime: string (ISO 8601 Format), # Required. End Date.
-  provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data. Available Value: Microsoft.
-  source: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
-  data: {
-    imageNames: [string], # Optional. List of ImageNames.
-    imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
-    imageResolutions: [number], # Optional. List of ImageResolutions in meters. Available values: 10, 20, 60.
-  }, # Optional. Data Model for SatelliteIngestionJobRequest.
-  id: string, # Optional. Unique job id.
-  status: string, # Optional. Status of the job.
-Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-  durationInSeconds: number, # Optional. Duration of the job in seconds.
-  message: string, # Optional. Status message to capture more details of the job.
-  errorCode: string, # Optional. Error Code when job failed.
-  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
     <member name="SearchFeaturesAsync(string,RequestContent,int?,int?,RequestContext)">
 <example>
@@ -265,56 +183,6 @@ Console.WriteLine(result.GetProperty("features")[0].GetProperty("collection").To
 Console.WriteLine(result.GetProperty("nextLink").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>SearchFeaturesQuery</c>:
-<code>{
-  startDateTime: string (ISO 8601 Format), # Required. Start datetime of the time interval in which to search for Features.
-  endDateTime: string (ISO 8601 Format), # Required. End datetime of the time interval in which to search for Features.
-  intersects: {
-    type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
-  }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
-  bbox: [number], # Optional. Only features that have a geometry that intersects the bounding box are selected.
-The bounding box is provided as four numbers. The coordinate reference system of the values is WGS84 longitude/latitude.
-  featureIds: [string], # Optional. Array of feature ids to return.
-}
-</code>
-
-Response Body:
-
-Schema for <c>SearchFeaturesResponse</c>:
-<code>{
-  features: [
-    {
-      stacVersion: string, # Required. The STAC version the Feature implements.
-      stacExtensions: [string], # Optional. A list of extensions the Feature implements.
-      id: string, # Required. Provider identifier. Globally unique ID by Data provider.
-      type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
-      geometry: any, # Optional. Defines the full footprint of the asset represented by this item.
-Its a GeoJSON geometry.
-      bbox: [number], # Optional. Bounding box of the feature.
-      properties: any, # Required. A dictionary of additional metadata for the item.
-      links: [
-        {
-          href: string, # Required. The actual link in the format of an URL.
-          rel: string, # Required. Relationship between the current document and the linked document.
-          type: string, # Optional. Media type of the referenced entity.
-          title: string, # Optional. A human readable title to be used in rendered displays of the link.
-        }
-      ], # Required. List of link objects to resources and related URLs.
-      assets: Dictionary&lt;string, StacFeatureAsset&gt;, # Required. Dictionary of asset objects, each with a unique key.
-      collection: string, # Optional. The id of the STAC Collection this Feature references.
-    }
-  ], # Required. List of features.
-  nextLink: string, # Optional. URL to do the POST request with same filters,
-to get next set of features.
-}
-</code>
-
-</remarks>
     </member>
     <member name="SearchFeatures(string,RequestContent,int?,int?,RequestContext)">
 <example>
@@ -390,56 +258,6 @@ Console.WriteLine(result.GetProperty("features")[0].GetProperty("collection").To
 Console.WriteLine(result.GetProperty("nextLink").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>SearchFeaturesQuery</c>:
-<code>{
-  startDateTime: string (ISO 8601 Format), # Required. Start datetime of the time interval in which to search for Features.
-  endDateTime: string (ISO 8601 Format), # Required. End datetime of the time interval in which to search for Features.
-  intersects: {
-    type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
-  }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
-  bbox: [number], # Optional. Only features that have a geometry that intersects the bounding box are selected.
-The bounding box is provided as four numbers. The coordinate reference system of the values is WGS84 longitude/latitude.
-  featureIds: [string], # Optional. Array of feature ids to return.
-}
-</code>
-
-Response Body:
-
-Schema for <c>SearchFeaturesResponse</c>:
-<code>{
-  features: [
-    {
-      stacVersion: string, # Required. The STAC version the Feature implements.
-      stacExtensions: [string], # Optional. A list of extensions the Feature implements.
-      id: string, # Required. Provider identifier. Globally unique ID by Data provider.
-      type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
-      geometry: any, # Optional. Defines the full footprint of the asset represented by this item.
-Its a GeoJSON geometry.
-      bbox: [number], # Optional. Bounding box of the feature.
-      properties: any, # Required. A dictionary of additional metadata for the item.
-      links: [
-        {
-          href: string, # Required. The actual link in the format of an URL.
-          rel: string, # Required. Relationship between the current document and the linked document.
-          type: string, # Optional. Media type of the referenced entity.
-          title: string, # Optional. A human readable title to be used in rendered displays of the link.
-        }
-      ], # Required. List of link objects to resources and related URLs.
-      assets: Dictionary&lt;string, StacFeatureAsset&gt;, # Required. Dictionary of asset objects, each with a unique key.
-      collection: string, # Optional. The id of the STAC Collection this Feature references.
-    }
-  ], # Required. List of features.
-  nextLink: string, # Optional. URL to do the POST request with same filters,
-to get next set of features.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetStacFeatureAsync(string,string,RequestContext)">
 <example>
@@ -470,35 +288,6 @@ Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty
 Console.WriteLine(result.GetProperty("collection").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>StacFeature</c>:
-<code>{
-  stacVersion: string, # Required. The STAC version the Feature implements.
-  stacExtensions: [string], # Optional. A list of extensions the Feature implements.
-  id: string, # Required. Provider identifier. Globally unique ID by Data provider.
-  type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
-  geometry: any, # Optional. Defines the full footprint of the asset represented by this item.
-Its a GeoJSON geometry.
-  bbox: [number], # Optional. Bounding box of the feature.
-  properties: any, # Required. A dictionary of additional metadata for the item.
-  links: [
-    {
-      href: string, # Required. The actual link in the format of an URL.
-      rel: string, # Required. Relationship between the current document and the linked document.
-      type: string, # Optional. Media type of the referenced entity.
-      title: string, # Optional. A human readable title to be used in rendered displays of the link.
-    }
-  ], # Required. List of link objects to resources and related URLs.
-  assets: Dictionary&lt;string, StacFeatureAsset&gt;, # Required. Dictionary of asset objects, each with a unique key.
-  collection: string, # Optional. The id of the STAC Collection this Feature references.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetStacFeature(string,string,RequestContext)">
 <example>
@@ -529,35 +318,6 @@ Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty
 Console.WriteLine(result.GetProperty("collection").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>StacFeature</c>:
-<code>{
-  stacVersion: string, # Required. The STAC version the Feature implements.
-  stacExtensions: [string], # Optional. A list of extensions the Feature implements.
-  id: string, # Required. Provider identifier. Globally unique ID by Data provider.
-  type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
-  geometry: any, # Optional. Defines the full footprint of the asset represented by this item.
-Its a GeoJSON geometry.
-  bbox: [number], # Optional. Bounding box of the feature.
-  properties: any, # Required. A dictionary of additional metadata for the item.
-  links: [
-    {
-      href: string, # Required. The actual link in the format of an URL.
-      rel: string, # Required. Relationship between the current document and the linked document.
-      type: string, # Optional. Media type of the referenced entity.
-      title: string, # Optional. A human readable title to be used in rendered displays of the link.
-    }
-  ], # Required. List of link objects to resources and related URLs.
-  assets: Dictionary&lt;string, StacFeatureAsset&gt;, # Required. Dictionary of asset objects, each with a unique key.
-  collection: string, # Optional. The id of the STAC Collection this Feature references.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetScenesAsync(string,string,string,string,DateTimeOffset?,DateTimeOffset?,double?,double?,IEnumerable{string},IEnumerable{double},IEnumerable{string},int?,string,RequestContext)">
 <example>
@@ -577,7 +337,7 @@ This sample shows how to call GetScenesAsync with all parameters, and how to par
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-await foreach (var item in client.GetScenesAsync("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<imageNames>"}, new Double[]{1234}, new String[]{"<imageFormats>"}, 1234, "<skipToken>", new RequestContext()))
+await foreach (var item in client.GetScenesAsync("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<imageNames>"}, new Double[]{3.14}, new String[]{"<imageFormats>"}, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("sceneDateTime").ToString());
@@ -598,36 +358,6 @@ await foreach (var item in client.GetScenesAsync("<provider>", "<partyId>", "<bo
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>SceneListResponseValue</c>:
-<code>{
-  sceneDateTime: string (ISO 8601 Format), # Optional. Date-time of the scene, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  provider: string, # Optional. Data provider of the scene.
-  source: string, # Optional. Data source of the scene.
-  imageFiles: [
-    {
-      fileLink: string, # Optional. Link of the image file.
-      name: string, # Required. Name of the image file.
-      imageFormat: &quot;TIF&quot;, # Optional. ImageFormat. Available value: TIF.
-      resolution: number, # Optional. Resolution of image file in meters.
-    }
-  ], # Optional. Collection of image files.
-  imageFormat: &quot;TIF&quot;, # Optional. ImageFormat. Available value: TIF.
-  cloudCoverPercentage: number, # Optional. Cloud cover percentage of the scene.
-  darkPixelPercentage: number, # Optional. Dark pixel percentage of the scene.
-  ndviMedianValue: number, # Optional. Median of NDVI of the scene.
-  boundaryId: string, # Optional. Boundary ID which belongs to the scene.
-  partyId: string, # Optional. Party ID which belongs to the scene.
-  id: string, # Optional. Unique scene resource ID.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetScenes(string,string,string,string,DateTimeOffset?,DateTimeOffset?,double?,double?,IEnumerable{string},IEnumerable{double},IEnumerable{string},int?,string,RequestContext)">
 <example>
@@ -647,7 +377,7 @@ This sample shows how to call GetScenes with all parameters, and how to parse th
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-foreach (var item in client.GetScenes("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<imageNames>"}, new Double[]{1234}, new String[]{"<imageFormats>"}, 1234, "<skipToken>", new RequestContext()))
+foreach (var item in client.GetScenes("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<imageNames>"}, new Double[]{3.14}, new String[]{"<imageFormats>"}, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("sceneDateTime").ToString());
@@ -668,36 +398,6 @@ foreach (var item in client.GetScenes("<provider>", "<partyId>", "<boundaryId>",
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>SceneListResponseValue</c>:
-<code>{
-  sceneDateTime: string (ISO 8601 Format), # Optional. Date-time of the scene, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  provider: string, # Optional. Data provider of the scene.
-  source: string, # Optional. Data source of the scene.
-  imageFiles: [
-    {
-      fileLink: string, # Optional. Link of the image file.
-      name: string, # Required. Name of the image file.
-      imageFormat: &quot;TIF&quot;, # Optional. ImageFormat. Available value: TIF.
-      resolution: number, # Optional. Resolution of image file in meters.
-    }
-  ], # Optional. Collection of image files.
-  imageFormat: &quot;TIF&quot;, # Optional. ImageFormat. Available value: TIF.
-  cloudCoverPercentage: number, # Optional. Cloud cover percentage of the scene.
-  darkPixelPercentage: number, # Optional. Dark pixel percentage of the scene.
-  ndviMedianValue: number, # Optional. Median of NDVI of the scene.
-  boundaryId: string, # Optional. Boundary ID which belongs to the scene.
-  partyId: string, # Optional. Party ID which belongs to the scene.
-  id: string, # Optional. Unique scene resource ID.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateSatelliteDataIngestionJobAsync(WaitUntil,string,RequestContent,RequestContext)">
 <example>
@@ -783,84 +483,6 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>SatelliteDataIngestionJob</c>:
-<code>{
-  partyId: string, # Required. Party Id.
-  boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
-  startDateTime: string (ISO 8601 Format), # Required. Start Date.
-  endDateTime: string (ISO 8601 Format), # Required. End Date.
-  provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data. Available Value: Microsoft.
-  source: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
-  data: {
-    imageNames: [string], # Optional. List of ImageNames.
-    imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
-    imageResolutions: [number], # Optional. List of ImageResolutions in meters. Available values: 10, 20, 60.
-  }, # Optional. Data Model for SatelliteIngestionJobRequest.
-  id: string, # Optional. Unique job id.
-  status: string, # Optional. Status of the job.
-Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-  durationInSeconds: number, # Optional. Duration of the job in seconds.
-  message: string, # Optional. Status message to capture more details of the job.
-  errorCode: string, # Optional. Error Code when job failed.
-  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-Response Body:
-
-Schema for <c>SatelliteDataIngestionJob</c>:
-<code>{
-  partyId: string, # Required. Party Id.
-  boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
-  startDateTime: string (ISO 8601 Format), # Required. Start Date.
-  endDateTime: string (ISO 8601 Format), # Required. End Date.
-  provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data. Available Value: Microsoft.
-  source: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
-  data: {
-    imageNames: [string], # Optional. List of ImageNames.
-    imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
-    imageResolutions: [number], # Optional. List of ImageResolutions in meters. Available values: 10, 20, 60.
-  }, # Optional. Data Model for SatelliteIngestionJobRequest.
-  id: string, # Optional. Unique job id.
-  status: string, # Optional. Status of the job.
-Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-  durationInSeconds: number, # Optional. Duration of the job in seconds.
-  message: string, # Optional. Status message to capture more details of the job.
-  errorCode: string, # Optional. Error Code when job failed.
-  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateSatelliteDataIngestionJob(WaitUntil,string,RequestContent,RequestContext)">
 <example>
@@ -946,84 +568,6 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>SatelliteDataIngestionJob</c>:
-<code>{
-  partyId: string, # Required. Party Id.
-  boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
-  startDateTime: string (ISO 8601 Format), # Required. Start Date.
-  endDateTime: string (ISO 8601 Format), # Required. End Date.
-  provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data. Available Value: Microsoft.
-  source: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
-  data: {
-    imageNames: [string], # Optional. List of ImageNames.
-    imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
-    imageResolutions: [number], # Optional. List of ImageResolutions in meters. Available values: 10, 20, 60.
-  }, # Optional. Data Model for SatelliteIngestionJobRequest.
-  id: string, # Optional. Unique job id.
-  status: string, # Optional. Status of the job.
-Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-  durationInSeconds: number, # Optional. Duration of the job in seconds.
-  message: string, # Optional. Status message to capture more details of the job.
-  errorCode: string, # Optional. Error Code when job failed.
-  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-Response Body:
-
-Schema for <c>SatelliteDataIngestionJob</c>:
-<code>{
-  partyId: string, # Required. Party Id.
-  boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
-  startDateTime: string (ISO 8601 Format), # Required. Start Date.
-  endDateTime: string (ISO 8601 Format), # Required. End Date.
-  provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data. Available Value: Microsoft.
-  source: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
-  data: {
-    imageNames: [string], # Optional. List of ImageNames.
-    imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
-    imageResolutions: [number], # Optional. List of ImageResolutions in meters. Available values: 10, 20, 60.
-  }, # Optional. Data Model for SatelliteIngestionJobRequest.
-  id: string, # Optional. Unique job id.
-  status: string, # Optional. Status of the job.
-Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-  durationInSeconds: number, # Optional. Duration of the job in seconds.
-  message: string, # Optional. Status message to capture more details of the job.
-  errorCode: string, # Optional. Error Code when job failed.
-  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  createdBy: string, # Optional. Created by user/tenant id.
-  modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>

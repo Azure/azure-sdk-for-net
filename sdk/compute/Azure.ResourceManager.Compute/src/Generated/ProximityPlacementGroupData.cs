@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="zones"> Specifies the Availability Zone where virtual machine, virtual machine scale set or availability set associated with the  proximity placement group can be created. </param>
-        /// <param name="proximityPlacementGroupType"> Specifies the type of the proximity placement group. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Standard** : Co-locate resources within an Azure region or Availability Zone. &lt;br&gt;&lt;br&gt; **Ultra** : For future use. </param>
+        /// <param name="proximityPlacementGroupType"> Specifies the type of the proximity placement group. Possible values are: **Standard** : Co-locate resources within an Azure region or Availability Zone. **Ultra** : For future use. </param>
         /// <param name="virtualMachines"> A list of references to all virtual machines in the proximity placement group. </param>
         /// <param name="virtualMachineScaleSets"> A list of references to all virtual machine scale sets in the proximity placement group. </param>
         /// <param name="availabilitySets"> A list of references to all availability sets in the proximity placement group. </param>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Specifies the Availability Zone where virtual machine, virtual machine scale set or availability set associated with the  proximity placement group can be created. </summary>
         public IList<string> Zones { get; }
-        /// <summary> Specifies the type of the proximity placement group. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Standard** : Co-locate resources within an Azure region or Availability Zone. &lt;br&gt;&lt;br&gt; **Ultra** : For future use. </summary>
+        /// <summary> Specifies the type of the proximity placement group. Possible values are: **Standard** : Co-locate resources within an Azure region or Availability Zone. **Ultra** : For future use. </summary>
         public ProximityPlacementGroupType? ProximityPlacementGroupType { get; set; }
         /// <summary> A list of references to all virtual machines in the proximity placement group. </summary>
         public IReadOnlyList<ComputeSubResourceDataWithColocationStatus> VirtualMachines { get; }

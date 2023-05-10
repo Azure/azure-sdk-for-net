@@ -61,48 +61,6 @@ Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssi
 Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssignment").GetProperty("principalType").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>CheckPrincipalAccessRequest</c>:
-<code>{
-  subject: {
-    principalId: Guid, # Required. Principal Id
-    groupIds: [Guid], # Optional. List of group Ids that the principalId is part of.
-  }, # Required. Subject details
-  actions: [
-    {
-      id: string, # Required. Action Id.
-      isDataAction: boolean, # Required. Is a data action or not.
-    }
-  ], # Required. List of actions.
-  scope: string, # Required. Scope at which the check access is done.
-}
-</code>
-
-Response Body:
-
-Schema for <c>CheckPrincipalAccessResponse</c>:
-<code>{
-  accessDecisions: [
-    {
-      accessDecision: string, # Optional. Access Decision.
-      actionId: string, # Optional. Action Id.
-      roleAssignment: {
-        id: string, # Optional. Role Assignment ID
-        roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
-        principalId: Guid, # Optional. Object ID of the AAD principal or security-group
-        scope: string, # Optional. Scope at the role assignment is created
-        principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
-      }, # Optional. Role Assignment response details
-    }
-  ], # Optional. To check if the current user, group, or service principal has permission to read artifacts in the specified workspace.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CheckPrincipalAccess(RequestContent,ContentType,RequestContext)">
 <example>
@@ -164,48 +122,6 @@ Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssi
 Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssignment").GetProperty("principalType").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>CheckPrincipalAccessRequest</c>:
-<code>{
-  subject: {
-    principalId: Guid, # Required. Principal Id
-    groupIds: [Guid], # Optional. List of group Ids that the principalId is part of.
-  }, # Required. Subject details
-  actions: [
-    {
-      id: string, # Required. Action Id.
-      isDataAction: boolean, # Required. Is a data action or not.
-    }
-  ], # Required. List of actions.
-  scope: string, # Required. Scope at which the check access is done.
-}
-</code>
-
-Response Body:
-
-Schema for <c>CheckPrincipalAccessResponse</c>:
-<code>{
-  accessDecisions: [
-    {
-      accessDecision: string, # Optional. Access Decision.
-      actionId: string, # Optional. Action Id.
-      roleAssignment: {
-        id: string, # Optional. Role Assignment ID
-        roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
-        principalId: Guid, # Optional. Object ID of the AAD principal or security-group
-        scope: string, # Optional. Scope at the role assignment is created
-        principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
-      }, # Optional. Role Assignment response details
-    }
-  ], # Optional. To check if the current user, group, or service principal has permission to read artifacts in the specified workspace.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetRoleAssignmentsAsync(string,string,string,string,RequestContext)">
 <example>
@@ -237,27 +153,6 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("scope").ToString()
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("principalType").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>RoleAssignmentDetailsList</c>:
-<code>{
-  count: number, # Optional. Number of role assignments
-  value: [
-    {
-      id: string, # Optional. Role Assignment ID
-      roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
-      principalId: Guid, # Optional. Object ID of the AAD principal or security-group
-      scope: string, # Optional. Scope at the role assignment is created
-      principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
-    }
-  ], # Optional. A list of role assignments
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetRoleAssignments(string,string,string,string,RequestContext)">
 <example>
@@ -289,27 +184,6 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("scope").ToString()
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("principalType").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>RoleAssignmentDetailsList</c>:
-<code>{
-  count: number, # Optional. Number of role assignments
-  value: [
-    {
-      id: string, # Optional. Role Assignment ID
-      roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
-      principalId: Guid, # Optional. Object ID of the AAD principal or security-group
-      scope: string, # Optional. Scope at the role assignment is created
-      principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
-    }
-  ], # Optional. A list of role assignments
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateRoleAssignmentAsync(string,RequestContent,ContentType,RequestContext)">
 <example>
@@ -353,33 +227,6 @@ Console.WriteLine(result.GetProperty("scope").ToString());
 Console.WriteLine(result.GetProperty("principalType").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>RoleAssignmentRequest</c>:
-<code>{
-  roleId: Guid, # Required. Role ID of the Synapse Built-In Role
-  principalId: Guid, # Required. Object ID of the AAD principal or security-group
-  scope: string, # Required. Scope at which the role assignment is created
-  principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
-}
-</code>
-
-Response Body:
-
-Schema for <c>RoleAssignmentDetails</c>:
-<code>{
-  id: string, # Optional. Role Assignment ID
-  roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
-  principalId: Guid, # Optional. Object ID of the AAD principal or security-group
-  scope: string, # Optional. Scope at the role assignment is created
-  principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateRoleAssignment(string,RequestContent,ContentType,RequestContext)">
 <example>
@@ -423,33 +270,6 @@ Console.WriteLine(result.GetProperty("scope").ToString());
 Console.WriteLine(result.GetProperty("principalType").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>RoleAssignmentRequest</c>:
-<code>{
-  roleId: Guid, # Required. Role ID of the Synapse Built-In Role
-  principalId: Guid, # Required. Object ID of the AAD principal or security-group
-  scope: string, # Required. Scope at which the role assignment is created
-  principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
-}
-</code>
-
-Response Body:
-
-Schema for <c>RoleAssignmentDetails</c>:
-<code>{
-  id: string, # Optional. Role Assignment ID
-  roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
-  principalId: Guid, # Optional. Object ID of the AAD principal or security-group
-  scope: string, # Optional. Scope at the role assignment is created
-  principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetRoleAssignmentByIdAsync(string,RequestContext)">
 <example>
@@ -469,22 +289,6 @@ Console.WriteLine(result.GetProperty("scope").ToString());
 Console.WriteLine(result.GetProperty("principalType").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>RoleAssignmentDetails</c>:
-<code>{
-  id: string, # Optional. Role Assignment ID
-  roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
-  principalId: Guid, # Optional. Object ID of the AAD principal or security-group
-  scope: string, # Optional. Scope at the role assignment is created
-  principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetRoleAssignmentById(string,RequestContext)">
 <example>
@@ -504,22 +308,6 @@ Console.WriteLine(result.GetProperty("scope").ToString());
 Console.WriteLine(result.GetProperty("principalType").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>RoleAssignmentDetails</c>:
-<code>{
-  id: string, # Optional. Role Assignment ID
-  roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
-  principalId: Guid, # Optional. Object ID of the AAD principal or security-group
-  scope: string, # Optional. Scope at the role assignment is created
-  principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
-}
-</code>
-
-</remarks>
     </member>
     <member name="DeleteRoleAssignmentByIdAsync(string,string,RequestContext)">
 <example>

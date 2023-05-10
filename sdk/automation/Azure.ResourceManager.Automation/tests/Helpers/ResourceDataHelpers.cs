@@ -184,9 +184,9 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
         #endregion
 
         #region Schedule
-        public static AutomationScheduleCreateOrUpdateContent GetScheduleData(string name)
+        public static AutomationScheduleCreateOrUpdateContent GetScheduleData(string name, DateTimeOffset day)
         {
-            var data = new AutomationScheduleCreateOrUpdateContent(name, DateTime.Today.AddDays(1), AutomationScheduleFrequency.Hour)
+            var data = new AutomationScheduleCreateOrUpdateContent(name, day, AutomationScheduleFrequency.Hour)
             {
                 Interval = BinaryData.FromString("1"),
             };

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-11-01";
+            _apiVersion = apiVersion ?? "2023-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        /// <summary> Sets the OS state of the virtual machine to generalized. It is recommended to sysprep the virtual machine before performing this operation. &lt;br&gt;For Windows, please refer to [Create a managed image of a generalized VM in Azure](https://docs.microsoft.com/azure/virtual-machines/windows/capture-image-resource).&lt;br&gt;For Linux, please refer to [How to create an image of a virtual machine or VHD](https://docs.microsoft.com/azure/virtual-machines/linux/capture-image). </summary>
+        /// <summary> Sets the OS state of the virtual machine to generalized. It is recommended to sysprep the virtual machine before performing this operation. For Windows, please refer to [Create a managed image of a generalized VM in Azure](https://docs.microsoft.com/azure/virtual-machines/windows/capture-image-resource). For Linux, please refer to [How to create an image of a virtual machine or VHD](https://docs.microsoft.com/azure/virtual-machines/linux/capture-image). </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Sets the OS state of the virtual machine to generalized. It is recommended to sysprep the virtual machine before performing this operation. &lt;br&gt;For Windows, please refer to [Create a managed image of a generalized VM in Azure](https://docs.microsoft.com/azure/virtual-machines/windows/capture-image-resource).&lt;br&gt;For Linux, please refer to [How to create an image of a virtual machine or VHD](https://docs.microsoft.com/azure/virtual-machines/linux/capture-image). </summary>
+        /// <summary> Sets the OS state of the virtual machine to generalized. It is recommended to sysprep the virtual machine before performing this operation. For Windows, please refer to [Create a managed image of a generalized VM in Azure](https://docs.microsoft.com/azure/virtual-machines/windows/capture-image-resource). For Linux, please refer to [How to create an image of a virtual machine or VHD](https://docs.microsoft.com/azure/virtual-machines/linux/capture-image). </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
@@ -803,7 +803,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string filter)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string filter, GetVirtualMachineExpandType? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -819,6 +819,10 @@ namespace Azure.ResourceManager.Compute
             {
                 uri.AppendQuery("$filter", filter, true);
             }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand.Value.ToString(), true);
+            }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -830,15 +834,16 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="filter"> The system query option to filter VMs returned in the response. Allowed value is &apos;virtualMachineScaleSet/id&apos; eq /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}&apos;. </param>
+        /// <param name="expand"> The expand expression to apply on operation. &apos;instanceView&apos; enables fetching run time status of all Virtual Machines, this can only be specified if a valid $filter option is specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualMachineListResult>> ListAsync(string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineListResult>> ListAsync(string subscriptionId, string resourceGroupName, string filter = null, GetVirtualMachineExpandType? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, filter);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, filter, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -858,15 +863,16 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="filter"> The system query option to filter VMs returned in the response. Allowed value is &apos;virtualMachineScaleSet/id&apos; eq /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}&apos;. </param>
+        /// <param name="expand"> The expand expression to apply on operation. &apos;instanceView&apos; enables fetching run time status of all Virtual Machines, this can only be specified if a valid $filter option is specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualMachineListResult> List(string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineListResult> List(string subscriptionId, string resourceGroupName, string filter = null, GetVirtualMachineExpandType? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, filter);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, filter, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -882,7 +888,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListAllRequest(string subscriptionId, string statusOnly, string filter)
+        internal HttpMessage CreateListAllRequest(string subscriptionId, string statusOnly, string filter, ExpandTypesForListVm? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -901,6 +907,10 @@ namespace Azure.ResourceManager.Compute
             {
                 uri.AppendQuery("$filter", filter, true);
             }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand.Value.ToString(), true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -911,14 +921,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="statusOnly"> statusOnly=true enables fetching run time status of all Virtual Machines in the subscription. </param>
         /// <param name="filter"> The system query option to filter VMs returned in the response. Allowed value is &apos;virtualMachineScaleSet/id&apos; eq /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}&apos;. </param>
+        /// <param name="expand"> The expand expression to apply on operation. &apos;instanceView&apos; enables fetching run time status of all Virtual Machines, this can only be specified if a valid $filter option is specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualMachineListResult>> ListAllAsync(string subscriptionId, string statusOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineListResult>> ListAllAsync(string subscriptionId, string statusOnly = null, string filter = null, ExpandTypesForListVm? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListAllRequest(subscriptionId, statusOnly, filter);
+            using var message = CreateListAllRequest(subscriptionId, statusOnly, filter, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -938,14 +949,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="statusOnly"> statusOnly=true enables fetching run time status of all Virtual Machines in the subscription. </param>
         /// <param name="filter"> The system query option to filter VMs returned in the response. Allowed value is &apos;virtualMachineScaleSet/id&apos; eq /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}&apos;. </param>
+        /// <param name="expand"> The expand expression to apply on operation. &apos;instanceView&apos; enables fetching run time status of all Virtual Machines, this can only be specified if a valid $filter option is specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualMachineListResult> ListAll(string subscriptionId, string statusOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineListResult> ListAll(string subscriptionId, string statusOnly = null, string filter = null, ExpandTypesForListVm? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListAllRequest(subscriptionId, statusOnly, filter);
+            using var message = CreateListAllRequest(subscriptionId, statusOnly, filter, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1510,7 +1522,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
-        /// <param name="sasUriExpirationTimeInMinutes"> Expiration duration in minutes for the SAS URIs with a value between 1 to 1440 minutes. &lt;br&gt;&lt;br&gt;NOTE: If not specified, SAS URIs will be generated with a default expiration duration of 120 minutes. </param>
+        /// <param name="sasUriExpirationTimeInMinutes"> Expiration duration in minutes for the SAS URIs with a value between 1 to 1440 minutes. **Note:** If not specified, SAS URIs will be generated with a default expiration duration of 120 minutes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1540,7 +1552,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
-        /// <param name="sasUriExpirationTimeInMinutes"> Expiration duration in minutes for the SAS URIs with a value between 1 to 1440 minutes. &lt;br&gt;&lt;br&gt;NOTE: If not specified, SAS URIs will be generated with a default expiration duration of 120 minutes. </param>
+        /// <param name="sasUriExpirationTimeInMinutes"> Expiration duration in minutes for the SAS URIs with a value between 1 to 1440 minutes. **Note:** If not specified, SAS URIs will be generated with a default expiration duration of 120 minutes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2005,7 +2017,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string filter)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string filter, GetVirtualMachineExpandType? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2024,16 +2036,17 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="filter"> The system query option to filter VMs returned in the response. Allowed value is &apos;virtualMachineScaleSet/id&apos; eq /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}&apos;. </param>
+        /// <param name="expand"> The expand expression to apply on operation. &apos;instanceView&apos; enables fetching run time status of all Virtual Machines, this can only be specified if a valid $filter option is specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualMachineListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, GetVirtualMachineExpandType? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, filter);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, filter, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2054,16 +2067,17 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="filter"> The system query option to filter VMs returned in the response. Allowed value is &apos;virtualMachineScaleSet/id&apos; eq /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}&apos;. </param>
+        /// <param name="expand"> The expand expression to apply on operation. &apos;instanceView&apos; enables fetching run time status of all Virtual Machines, this can only be specified if a valid $filter option is specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualMachineListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, GetVirtualMachineExpandType? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, filter);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, filter, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2079,7 +2093,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListAllNextPageRequest(string nextLink, string subscriptionId, string statusOnly, string filter)
+        internal HttpMessage CreateListAllNextPageRequest(string nextLink, string subscriptionId, string statusOnly, string filter, ExpandTypesForListVm? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2098,15 +2112,16 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="statusOnly"> statusOnly=true enables fetching run time status of all Virtual Machines in the subscription. </param>
         /// <param name="filter"> The system query option to filter VMs returned in the response. Allowed value is &apos;virtualMachineScaleSet/id&apos; eq /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}&apos;. </param>
+        /// <param name="expand"> The expand expression to apply on operation. &apos;instanceView&apos; enables fetching run time status of all Virtual Machines, this can only be specified if a valid $filter option is specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualMachineListResult>> ListAllNextPageAsync(string nextLink, string subscriptionId, string statusOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineListResult>> ListAllNextPageAsync(string nextLink, string subscriptionId, string statusOnly = null, string filter = null, ExpandTypesForListVm? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListAllNextPageRequest(nextLink, subscriptionId, statusOnly, filter);
+            using var message = CreateListAllNextPageRequest(nextLink, subscriptionId, statusOnly, filter, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2127,15 +2142,16 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="statusOnly"> statusOnly=true enables fetching run time status of all Virtual Machines in the subscription. </param>
         /// <param name="filter"> The system query option to filter VMs returned in the response. Allowed value is &apos;virtualMachineScaleSet/id&apos; eq /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}&apos;. </param>
+        /// <param name="expand"> The expand expression to apply on operation. &apos;instanceView&apos; enables fetching run time status of all Virtual Machines, this can only be specified if a valid $filter option is specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualMachineListResult> ListAllNextPage(string nextLink, string subscriptionId, string statusOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineListResult> ListAllNextPage(string nextLink, string subscriptionId, string statusOnly = null, string filter = null, ExpandTypesForListVm? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListAllNextPageRequest(nextLink, subscriptionId, statusOnly, filter);
+            using var message = CreateListAllNextPageRequest(nextLink, subscriptionId, statusOnly, filter, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

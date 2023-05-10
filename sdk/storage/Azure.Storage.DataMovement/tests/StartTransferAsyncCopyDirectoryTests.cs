@@ -65,7 +65,11 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer sourceResource =
                 new BlobDirectoryStorageResourceContainer(container, sourceBlobPrefix);
             StorageResourceContainer destinationResource =
-                new BlobDirectoryStorageResourceContainer(container, destinationBlobPrefix);
+                new BlobDirectoryStorageResourceContainer(container, destinationBlobPrefix,
+                new BlobStorageResourceContainerOptions()
+                {
+                    CopyMethod = TransferCopyMethod.AsyncCopy
+                });
 
             DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
 

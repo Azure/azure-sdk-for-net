@@ -13,6 +13,7 @@ using Azure.ResourceManager.Resources;
 using System.Threading.Tasks;
 using NUnit.Framework.Internal;
 using System.IO;
+using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.DataShare.Tests.Helper
 {
@@ -137,9 +138,9 @@ namespace Azure.ResourceManager.DataShare.Tests.Helper
             AssertResource(data1, data2);
             Assert.AreEqual(data1.Kind, data2.Kind);
         }
-        public static DataShareSynchronizationSettingData GetSynchronizationData()
+        public static DataShareSynchronizationSettingData GetSynchronizationData(DateTimeOffset day )
         {
-            var data = new ScheduledSynchronizationSetting(DataShareSynchronizationRecurrenceInterval.Day, DateTime.Today.AddDays(1))
+            var data = new ScheduledSynchronizationSetting(DataShareSynchronizationRecurrenceInterval.Day, day)
             {
             };
             return data;

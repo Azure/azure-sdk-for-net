@@ -36,7 +36,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="serverCallId">The server call id.</param>
         /// <param name="targets">The targets of the call.</param>
         /// <param name="callConnectionState">The state of the call connection.</param>
-        /// <param name="callbackEndpoint">The callback URI.</param>
+        /// <param name="callbackUri">The callback URI.</param>
         /// <param name="sourceIdentity">Source identity.</param>
         /// <param name="sourceCallerIdNumber">Caller ID phone number to appear on the invitee.</param>
         /// <param name="sourceDisplayName">Display name to appear on the invitee.</param>
@@ -47,13 +47,13 @@ namespace Azure.Communication.CallAutomation
             string serverCallId = default,
             IEnumerable<CommunicationIdentifier> targets = default,
             CallConnectionState callConnectionState = default,
-            Uri callbackEndpoint = default,
+            Uri callbackUri = default,
             CommunicationIdentifier sourceIdentity = default,
             PhoneNumberIdentifier sourceCallerIdNumber = default,
             string sourceDisplayName = default,
             string mediaSubscriptionId = default)
         {
-            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackEndpoint, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, mediaSubscriptionId);
+            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackUri, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, mediaSubscriptionId);
         }
 
         /// <summary> Initializes a new instance of CallParticipant. </summary>

@@ -3,7 +3,7 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary><see cref="StartRecognizingEventResult"/> is returned from WaitForEvent of <see cref="StartRecognizingResult"/>.</summary>
+    /// <summary><see cref="StartRecognizingEventResult"/> is returned from WaitForEvent of <see cref="StartRecognizingCallMediaResult"/>.</summary>
     public class StartRecognizingEventResult
     {
         /// <summary>
