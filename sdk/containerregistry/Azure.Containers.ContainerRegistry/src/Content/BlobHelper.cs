@@ -11,6 +11,7 @@ namespace Azure.Containers.ContainerRegistry
     internal class BlobHelper
     {
         private const string ClientAndServerDigestsDontMatchMessage = "The server-computed digest does not match the client-computed digest.";
+        internal const string ContentDigestDoesntMatchRequestedMessage = "The digest computed from the downloaded content does not match the requested digest.";
         internal const string ManifestDigestDoestMatchRequestedMessage = "The digest of the received manifest does not match the requested digest reference.";
 
         internal static string ComputeDigest(Stream stream)
