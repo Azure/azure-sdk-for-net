@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/users/df428e89-1bc2-4e72-b736-032c31a6cd97/devboxes/MyDevBox?api-version=2023-04-01",
+      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/users/df428e89-1bc2-4e72-b736-032c31a6cd97/devboxes/MyDevBox?api-version=2023-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -22,8 +22,8 @@
         "Content-Length": "934",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 01 May 2023 22:24:44 GMT",
-        "Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/3a74bfec-7731-4077-bb58-74ccec7a0730?monitor=true",
-        "Operation-Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/3a74bfec-7731-4077-bb58-74ccec7a0730",
+        "Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/3a74bfec-7731-4077-bb58-74ccec7a0730?monitor=true",
+        "Operation-Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/3a74bfec-7731-4077-bb58-74ccec7a0730",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "x-ms-client-request-id": "17f48c179d631dd6a7ec00f4e58ce6ea",
         "x-ms-correlation-request-id": "e3571869-3f15-45f0-b898-5d7e35567f44",
@@ -41,7 +41,7 @@
         "powerState": "Running",
         "uniqueId": "b72928a2-2ced-42b4-a8c6-86bdd9f16737",
         "errorDetails": {},
-        "location": "eastus",
+        "location": "centraluseuap",
         "osType": "Windows",
         "user": "df428e89-1bc2-4e72-b736-032c31a6cd97",
         "hardwareProfile": {
@@ -66,7 +66,7 @@
       }
     },
     {
-      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/3a74bfec-7731-4077-bb58-74ccec7a0730?api-version=2023-04-01",
+      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/3a74bfec-7731-4077-bb58-74ccec7a0730?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -82,8 +82,8 @@
         "Content-Length": "231",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 01 May 2023 22:24:44 GMT",
-        "Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/3a74bfec-7731-4077-bb58-74ccec7a0730?monitor=true",
-        "Operation-Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/3a74bfec-7731-4077-bb58-74ccec7a0730",
+        "Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/3a74bfec-7731-4077-bb58-74ccec7a0730?monitor=true",
+        "Operation-Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/3a74bfec-7731-4077-bb58-74ccec7a0730",
         "Retry-After": "30",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "x-ms-client-request-id": "2394b9102b44598bdaf8d0e54d4cdc48",
@@ -100,7 +100,7 @@
       }
     },
     {
-      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/3a74bfec-7731-4077-bb58-74ccec7a0730?api-version=2023-04-01",
+      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/3a74bfec-7731-4077-bb58-74ccec7a0730?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -116,8 +116,8 @@
         "Content-Length": "279",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 01 May 2023 22:25:14 GMT",
-        "Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/3a74bfec-7731-4077-bb58-74ccec7a0730?monitor=true",
-        "Operation-Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/3a74bfec-7731-4077-bb58-74ccec7a0730",
+        "Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/3a74bfec-7731-4077-bb58-74ccec7a0730?monitor=true",
+        "Operation-Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/3a74bfec-7731-4077-bb58-74ccec7a0730",
         "Retry-After": "30",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "x-ms-client-request-id": "dccb4ca40f57fe4a21de6283a8cd55f7",
@@ -135,7 +135,7 @@
       }
     },
     {
-      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/users/df428e89-1bc2-4e72-b736-032c31a6cd97/devboxes/MyDevBox?api-version=2023-04-01",
+      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/users/df428e89-1bc2-4e72-b736-032c31a6cd97/devboxes/MyDevBox?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -168,7 +168,7 @@
         "powerState": "Running",
         "uniqueId": "b72928a2-2ced-42b4-a8c6-86bdd9f16737",
         "errorDetails": {},
-        "location": "eastus",
+        "location": "centraluseuap",
         "osType": "Windows",
         "user": "df428e89-1bc2-4e72-b736-032c31a6cd97",
         "hardwareProfile": {
@@ -193,7 +193,7 @@
       }
     },
     {
-      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/users/df428e89-1bc2-4e72-b736-032c31a6cd97/devboxes/MyDevBox:start?api-version=2023-04-01",
+      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/users/df428e89-1bc2-4e72-b736-032c31a6cd97/devboxes/MyDevBox:start?api-version=2023-04-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -211,8 +211,8 @@
         "Content-Length": "935",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 01 May 2023 22:25:15 GMT",
-        "Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?monitor=true",
-        "Operation-Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc",
+        "Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?monitor=true",
+        "Operation-Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "x-ms-client-request-id": "984fb70f09c101936f960165c807b10d",
         "x-ms-correlation-request-id": "ac545519-50ab-4588-90f1-87c4fb1c92d8",
@@ -230,7 +230,7 @@
         "powerState": "Running",
         "uniqueId": "b72928a2-2ced-42b4-a8c6-86bdd9f16737",
         "errorDetails": {},
-        "location": "eastus",
+        "location": "centraluseuap",
         "osType": "Windows",
         "user": "df428e89-1bc2-4e72-b736-032c31a6cd97",
         "hardwareProfile": {
@@ -255,7 +255,7 @@
       }
     },
     {
-      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?api-version=2023-04-01",
+      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -271,8 +271,8 @@
         "Content-Length": "232",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 01 May 2023 22:25:15 GMT",
-        "Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?monitor=true",
-        "Operation-Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc",
+        "Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?monitor=true",
+        "Operation-Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc",
         "Retry-After": "30",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "x-ms-client-request-id": "8f0cd8a36a4b5cd832dfdabcd3df3030",
@@ -289,7 +289,7 @@
       }
     },
     {
-      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?api-version=2023-04-01",
+      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -305,8 +305,8 @@
         "Content-Length": "229",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 01 May 2023 22:25:45 GMT",
-        "Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?monitor=true",
-        "Operation-Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc",
+        "Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?monitor=true",
+        "Operation-Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc",
         "Retry-After": "30",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "x-ms-client-request-id": "f074070ebc7dce362a0003da46b423f9",
@@ -323,7 +323,7 @@
       }
     },
     {
-      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?api-version=2023-04-01",
+      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -339,8 +339,8 @@
         "Content-Length": "229",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 01 May 2023 22:26:15 GMT",
-        "Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?monitor=true",
-        "Operation-Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc",
+        "Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?monitor=true",
+        "Operation-Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc",
         "Retry-After": "30",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "x-ms-client-request-id": "f4c62fe941e5a50fdff366e22fd62d8f",
@@ -357,7 +357,7 @@
       }
     },
     {
-      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?api-version=2023-04-01",
+      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -373,8 +373,8 @@
         "Content-Length": "229",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 01 May 2023 22:26:50 GMT",
-        "Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?monitor=true",
-        "Operation-Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc",
+        "Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?monitor=true",
+        "Operation-Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc",
         "Retry-After": "30",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "x-ms-client-request-id": "c157d165c092e78fa13d654a66fd157d",
@@ -391,7 +391,7 @@
       }
     },
     {
-      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?api-version=2023-04-01",
+      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -407,8 +407,8 @@
         "Content-Length": "281",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 01 May 2023 22:27:20 GMT",
-        "Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?monitor=true",
-        "Operation-Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc",
+        "Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?monitor=true",
+        "Operation-Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc",
         "Retry-After": "30",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "x-ms-client-request-id": "a4d2e0bc3c19cc4af7ce108a55549f53",
@@ -426,7 +426,7 @@
       }
     },
     {
-      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?monitor=true",
+      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?monitor=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -442,8 +442,8 @@
         "Content-Length": "281",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 01 May 2023 22:27:21 GMT",
-        "Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?monitor=true",
-        "Operation-Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc",
+        "Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc?monitor=true",
+        "Operation-Location": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/projects/sdk-project-jo2qjpwybd77m/operationstatuses/904fb94f-c3ab-4baf-8261-dc36577de4bc",
         "Retry-After": "30",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "x-ms-client-request-id": "757573d2615d29679fde52a7dbc43ee2",
@@ -467,7 +467,7 @@
     "DEFAULT_POOL_NAME": "sdk-pool-anwrmdfee3qmg",
     "DEFAULT_PROJECT_NAME": "sdk-project-jo2qjpwybd77m",
     "DEFAULT_TEST_USER_NAME": "sdk_integration_test_1@fidalgoppe010.onmicrosoft.com",
-    "DEVCENTER_ENDPOINT": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.eastus.devcenter.azure.com/",
+    "DEVCENTER_ENDPOINT": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-nfe5imigsvzps.centraluseuap.devcenter.azure.com/",
     "RandomSeed": "1759650678",
     "STATIC_TEST_USER_ID": "df428e89-1bc2-4e72-b736-032c31a6cd97",
     "TENANT_ID": "8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd"
