@@ -550,7 +550,7 @@ namespace Azure.Containers.ContainerRegistry
                 throw new RequestFailedException(response.Status, InvalidContentRangeMessage);
             }
 
-            if (long.TryParse(values[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out long size) ||
+            if (!long.TryParse(values[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out long size) ||
                 size <= 0)
             {
                 throw new RequestFailedException(response.Status, InvalidContentRangeMessage);
