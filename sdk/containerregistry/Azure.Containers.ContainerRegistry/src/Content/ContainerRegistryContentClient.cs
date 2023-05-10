@@ -22,7 +22,7 @@ namespace Azure.Containers.ContainerRegistry
         private const int DefaultChunkSize = 4 * 1024 * 1024; // 4MB
         private const int MaxManifestSize = 4 * 1024 * 1024;
 
-        private const string MissingContentLengthMessage = "The response does not include the 'Content-Length' header.";
+        private const string InvalidContentLengthMessage = "Missing or invalid 'Content-Length' header in the response.";
         private const string InvalidContentRangeMessage = "Missing or invalid 'Content-Range' header in the response.";
 
         private readonly Uri _endpoint;
@@ -680,12 +680,21 @@ namespace Azure.Containers.ContainerRegistry
             return reference.StartsWith("sha256:", StringComparison.OrdinalIgnoreCase);
         }
 
+        private static void CheckBlobSize(Response response)
+        {
+            if (response.Headers.ContentLength == null ||
+                response.Headers.ContentLength <= 0)
+            {
+                throw new RequestFailedException(response.Status, InvalidContentLengthMessage);
+            }
+        }
+
         private static void CheckManifestSize(Response response)
         {
             // This check is to address part of the service threat model.
             // If a manifest does not have a proper content length or is too big,
             // it indicates a malicious or faulty service and should not be trusted.
-            int? size = response.Headers.ContentLength ?? throw new RequestFailedException(response.Status, MissingContentLengthMessage);
+            int? size = response.Headers.ContentLength ?? throw new RequestFailedException(response.Status, InvalidContentLengthMessage);
 
             if (size > MaxManifestSize)
             {
@@ -757,8 +766,8 @@ namespace Azure.Containers.ContainerRegistry
                 await _blobRestClient.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false) :
                 _blobRestClient.GetBlob(_repositoryName, digest, cancellationToken);
 
-            // Validate content-range header
-            long blobSize = blobResult.Headers.ContentLength ?? throw new RequestFailedException(blobResult.GetRawResponse().Status, MissingContentLengthMessage);
+            Response response = blobResult.GetRawResponse();
+            CheckBlobSize(response);
 
             BinaryData data = async ?
                 await BinaryData.FromStreamAsync(blobResult.Value, cancellationToken).ConfigureAwait(false) :
@@ -767,7 +776,7 @@ namespace Azure.Containers.ContainerRegistry
             string contentDigest = BlobHelper.ComputeDigest(data);
             BlobHelper.ValidateDigest(contentDigest, digest, BlobHelper.ContentDigestDoesntMatchRequestedMessage);
 
-            return Response.FromValue(new DownloadRegistryBlobResult(digest, data), blobResult.GetRawResponse());
+            return Response.FromValue(new DownloadRegistryBlobResult(digest, data), response);
         }
 
         /// <summary>
@@ -862,6 +871,9 @@ namespace Azure.Containers.ContainerRegistry
                 await _blobRestClient.GetBlobAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false) :
                 _blobRestClient.GetBlob(_repositoryName, digest, cancellationToken);
 
+            Response response = blobResult.GetRawResponse();
+            CheckBlobSize(response);
+
             // Wrap the response Content in a RetriableStream so we
             // can return it before it's finished downloading, but still
             // allow retrying if it fails.
@@ -874,7 +886,7 @@ namespace Azure.Containers.ContainerRegistry
 
             ValidatingStream stream = new(retriableStream, (int)blobResult.Headers.ContentLength.Value, digest);
 
-            return Response.FromValue(new DownloadRegistryBlobStreamingResult(digest, stream), blobResult.GetRawResponse());
+            return Response.FromValue(new DownloadRegistryBlobStreamingResult(digest, stream), response);
         }
 
         /// <summary>

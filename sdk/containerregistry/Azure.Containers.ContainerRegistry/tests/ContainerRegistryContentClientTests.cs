@@ -68,7 +68,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         /// Validates digest checks for DownloadManifest.
         /// </summary>
         [Test]
-        public async Task DownloadManifestValidatesDigest()
+        public async Task GetManifestValidatesDigest()
         {
             // Arrange
             Uri endpoint = new("https://example.acr.io");
@@ -76,15 +76,16 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string tagName = "v1";
             BinaryData manifest = BinaryData.FromObjectAsJson(ContainerRegistryTestDataHelpers.CreateManifest());
             string manifestContent = manifest.ToString();
+            string contentLength = manifestContent.Length.ToString();
             string digest = BlobHelper.ComputeDigest(manifest.ToStream());
 
             ContainerRegistryClientOptions options = new()
             {
                 Transport = new MockTransport(
-                    new MockResponse(200).SetContent(manifestContent).AddHeader("Docker-Content-Digest", digest),
-                    new MockResponse(200).SetContent(manifestContent).AddHeader("Docker-Content-Digest", digest),
-                    new MockResponse(200).SetContent(manifestContent).AddHeader("Docker-Content-Digest", digest),
-                    new MockResponse(200).SetContent(manifestContent).AddHeader("Docker-Content-Digest", "Invalid server digest")),
+                    new MockResponse(200).SetContent(manifestContent).AddHeader("Docker-Content-Digest", digest).AddHeader("Content-Length", contentLength),
+                    new MockResponse(200).SetContent(manifestContent).AddHeader("Docker-Content-Digest", digest).AddHeader("Content-Length", contentLength),
+                    new MockResponse(200).SetContent(manifestContent).AddHeader("Docker-Content-Digest", digest).AddHeader("Content-Length", contentLength),
+                    new MockResponse(200).SetContent(manifestContent).AddHeader("Docker-Content-Digest", "Invalid server digest").AddHeader("Content-Length", contentLength)),
                 Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
             };
 
@@ -111,6 +112,49 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 await client.GetManifestAsync(tagName);
             });
+        }
+
+        [Test]
+        public void GetManifestThrowsIfMissingContentLength()
+        {
+            // Arrange
+            Uri endpoint = new("https://example.acr.io");
+            string repository = "TestRepository";
+            BinaryData manifest = BinaryData.FromObjectAsJson(ContainerRegistryTestDataHelpers.CreateManifest());
+            string manifestContent = manifest.ToString();
+            string digest = BlobHelper.ComputeDigest(manifest.ToStream());
+
+            ContainerRegistryClientOptions options = new()
+            {
+                Transport = new MockTransport(new MockResponse(200).SetContent(manifestContent).AddHeader("Docker-Content-Digest", digest))
+            };
+
+            ContainerRegistryContentClient client = new(endpoint, repository, new MockCredential(), options);
+
+            // Act
+            Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetManifestAsync(digest));
+        }
+
+        [Test]
+        public void GetManifestThrowsIfSizeExceedsLimit()
+        {
+            // Arrange
+            Uri endpoint = new("https://example.acr.io");
+            string repository = "TestRepository";
+            BinaryData manifest = BinaryData.FromObjectAsJson(ContainerRegistryTestDataHelpers.CreateManifest());
+            string manifestContent = manifest.ToString();
+            string contentLength = ((4 * 1024 * 1024) + 1).ToString();
+            string digest = BlobHelper.ComputeDigest(manifest.ToStream());
+
+            ContainerRegistryClientOptions options = new()
+            {
+                Transport = new MockTransport(new MockResponse(200).SetContent(manifestContent).AddHeader("Docker-Content-Digest", digest).AddHeader("Content-Length", contentLength))
+            };
+
+            ContainerRegistryContentClient client = new(endpoint, repository, new MockCredential(), options);
+
+            // Act
+            Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetManifestAsync(digest));
         }
 
         /// <summary>
