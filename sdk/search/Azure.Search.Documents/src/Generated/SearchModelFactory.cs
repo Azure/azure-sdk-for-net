@@ -15,16 +15,16 @@ namespace Azure.Search.Documents.Models
     /// <summary> Model factory for models. </summary>
     public static partial class SearchModelFactory
     {
-        /// <summary> Initializes a new instance of Vector. </summary>
+        /// <summary> Initializes a new instance of SearchQueryVector. </summary>
         /// <param name="value"> The vector representation of a search query. </param>
         /// <param name="k"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fields"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
-        /// <returns> A new <see cref="Models.Vector"/> instance for mocking. </returns>
-        public static Vector Vector(IEnumerable<float> value = null, int? k = null, string fields = null)
+        /// <returns> A new <see cref="Models.SearchQueryVector"/> instance for mocking. </returns>
+        public static SearchQueryVector SearchQueryVector(IEnumerable<float> value = null, int? k = null, string fields = null)
         {
             value ??= new List<float>();
 
-            return new Vector(value?.ToList(), k, fields);
+            return new SearchQueryVector(value?.ToList(), k, fields);
         }
 
         /// <summary> Initializes a new instance of AnswerResult. </summary>

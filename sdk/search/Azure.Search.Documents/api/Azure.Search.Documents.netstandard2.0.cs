@@ -173,7 +173,7 @@ namespace Azure.Search.Documents
         public string SessionId { get { throw null; } set { } }
         public int? Size { get { throw null; } set { } }
         public int? Skip { get { throw null; } set { } }
-        public Azure.Search.Documents.Models.Vector Vector { get { throw null; } set { } }
+        public Azure.Search.Documents.Models.SearchQueryVector Vector { get { throw null; } set { } }
     }
     public partial class SuggestOptions
     {
@@ -3295,6 +3295,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerStatus SearchIndexerStatus(Azure.Search.Documents.Indexes.Models.IndexerStatus status, Azure.Search.Documents.Indexes.Models.IndexerExecutionResult lastResult, System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.IndexerExecutionResult> executionHistory, Azure.Search.Documents.Indexes.Models.SearchIndexerLimits limits) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerWarning SearchIndexerWarning(string key, string message, string name, string details, string documentationLink) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchIndexStatistics SearchIndexStatistics(long documentCount, long storageSize) { throw null; }
+        public static Azure.Search.Documents.Models.SearchQueryVector SearchQueryVector(System.Collections.Generic.IEnumerable<float> value = null, int? k = default(int?), string fields = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchResourceCounter SearchResourceCounter(long usage, long? quota) { throw null; }
         public static Azure.Search.Documents.Models.SearchResultsPage<T> SearchResultsPage<T>(Azure.Search.Documents.Models.SearchResults<T> results) { throw null; }
         public static Azure.Search.Documents.Models.SearchResults<T> SearchResults<T>(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.SearchResult<T>> values, long? totalCount, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.Search.Documents.Models.FacetResult>> facets, double? coverage, Azure.Response rawResponse) { throw null; }
@@ -3311,7 +3312,6 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Indexes.Models.SimilarityAlgorithm SimilarityAlgorithm(string oDataType) { throw null; }
         public static Azure.Search.Documents.Models.SuggestResults<T> SuggestResults<T>(System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.SearchSuggestion<T>> results, double? coverage) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.TokenFilter TokenFilter(string oDataType, string name) { throw null; }
-        public static Azure.Search.Documents.Models.Vector Vector(System.Collections.Generic.IEnumerable<float> value = null, int? k = default(int?), string fields = null) { throw null; }
     }
     public enum SearchQueryType
     {
@@ -3319,12 +3319,21 @@ namespace Azure.Search.Documents.Models
         Full = 1,
         Semantic = 2,
     }
+    public partial class SearchQueryVector
+    {
+        public SearchQueryVector() { }
+        public string Fields { get { throw null; } set { } }
+        public int? K { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<float> Value { get { throw null; } set { } }
+    }
     public partial class SearchResultsPage<T> : Azure.Page<Azure.Search.Documents.Models.SearchResult<T>>
     {
         internal SearchResultsPage() { }
         public override string ContinuationToken { get { throw null; } }
         public double? Coverage { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.Search.Documents.Models.FacetResult>> Facets { get { throw null; } }
+        public Azure.Search.Documents.Models.SemanticPartialResponseReason? SemanticPartialResponseReason { get { throw null; } }
+        public Azure.Search.Documents.Models.SemanticPartialResponseType? SemanticPartialResponseType { get { throw null; } }
         public long? TotalCount { get { throw null; } }
         public override System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.SearchResult<T>> Values { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
@@ -3336,6 +3345,8 @@ namespace Azure.Search.Documents.Models
         public System.Collections.Generic.IList<Azure.Search.Documents.Models.CaptionResult> Captions { get { throw null; } }
         public double? Coverage { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.Search.Documents.Models.FacetResult>> Facets { get { throw null; } }
+        public Azure.Search.Documents.Models.SemanticPartialResponseReason? SemanticPartialResponseReason { get { throw null; } }
+        public Azure.Search.Documents.Models.SemanticPartialResponseType? SemanticPartialResponseType { get { throw null; } }
         public long? TotalCount { get { throw null; } }
         public Azure.Pageable<Azure.Search.Documents.Models.SearchResult<T>> GetResults() { throw null; }
         public Azure.AsyncPageable<Azure.Search.Documents.Models.SearchResult<T>> GetResultsAsync() { throw null; }
@@ -3429,13 +3440,6 @@ namespace Azure.Search.Documents.Models
         public ValueFacetResult(long count, T value) { }
         public long Count { get { throw null; } }
         public T Value { get { throw null; } }
-    }
-    public partial class Vector
-    {
-        public Vector() { }
-        public string Fields { get { throw null; } set { } }
-        public int? K { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<float> Value { get { throw null; } set { } }
     }
 }
 namespace Microsoft.Extensions.Azure

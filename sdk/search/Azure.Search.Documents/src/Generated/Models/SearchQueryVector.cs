@@ -11,19 +11,19 @@ using Azure.Core;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The query parameters for vector and hybrid search queries. </summary>
-    public partial class Vector
+    public partial class SearchQueryVector
     {
-        /// <summary> Initializes a new instance of Vector. </summary>
-        public Vector()
+        /// <summary> Initializes a new instance of SearchQueryVector. </summary>
+        public SearchQueryVector()
         {
             Value = new ChangeTrackingList<float>();
         }
 
-        /// <summary> Initializes a new instance of Vector. </summary>
+        /// <summary> Initializes a new instance of SearchQueryVector. </summary>
         /// <param name="value"> The vector representation of a search query. </param>
         /// <param name="k"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fields"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
-        internal Vector(IReadOnlyList<float> value, int? k, string fields)
+        internal SearchQueryVector(IReadOnlyList<float> value, int? k, string fields)
         {
             Value = value;
             K = k;

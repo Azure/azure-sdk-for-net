@@ -51,7 +51,7 @@ namespace Azure.Search.Documents
         /// <param name="queryCaptionRaw"> A value that specifies whether captions should be returned as part of the search response. </param>
         /// <param name="semanticFieldsRaw"> The comma-separated list of field names used for semantic search. </param>
         /// <param name="vector"> The query parameters for vector and hybrid search queries. </param>
-        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string semanticConfigurationName, SemanticErrorHandling? semanticErrorHandling, int? semanticMaxWaitInMilliseconds, QueryDebugMode? debug, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, string queryAnswerRaw, string selectRaw, int? skip, int? size, string queryCaptionRaw, string semanticFieldsRaw, Vector vector)
+        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string semanticConfigurationName, SemanticErrorHandling? semanticErrorHandling, int? semanticMaxWaitInMilliseconds, QueryDebugMode? debug, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, string queryAnswerRaw, string selectRaw, int? skip, int? size, string queryCaptionRaw, string semanticFieldsRaw, SearchQueryVector vector)
         {
             IncludeTotalCount = includeTotalCount;
             Facets = facets;
@@ -108,6 +108,6 @@ namespace Azure.Search.Documents
         /// <summary> The number of search results to skip. This value cannot be greater than 100,000. If you need to scan documents in sequence, but cannot use skip due to this limitation, consider using orderby on a totally-ordered key and filter with a range query instead. </summary>
         public int? Skip { get; set; }
         /// <summary> The query parameters for vector and hybrid search queries. </summary>
-        public Vector Vector { get; set; }
+        public SearchQueryVector Vector { get; set; }
     }
 }

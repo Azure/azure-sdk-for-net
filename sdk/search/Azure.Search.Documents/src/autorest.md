@@ -91,6 +91,17 @@ directive:
   transform: $["x-ms-client-name"] = "SearchServiceError"
 ```
 
+### Rename Vector definition
+
+ It conflicts with https://learn.microsoft.com/en-us/dotnet/api/system.numerics.vector?view=net-7.0 which is likely to be used by customers integrating with other .NET AI libraries.
+
+``` yaml
+directive:
+- from: searchindex.json
+  where: $.definitions.Vector
+  transform: $["x-ms-client-name"] = "SearchQueryVector"
+```
+
 ### Rename one of SearchMode definitions
 
 SearchMode is duplicated across swaggers. Rename one of them, even though it will be internalized.

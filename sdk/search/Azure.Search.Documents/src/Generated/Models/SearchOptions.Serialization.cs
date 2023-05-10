@@ -216,7 +216,7 @@ namespace Azure.Search.Documents
             Optional<int> top = default;
             Optional<string> captions = default;
             Optional<string> semanticFields = default;
-            Optional<Vector> vector = default;
+            Optional<SearchQueryVector> vector = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -432,7 +432,7 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    vector = Vector.DeserializeVector(property.Value);
+                    vector = SearchQueryVector.DeserializeSearchQueryVector(property.Value);
                     continue;
                 }
             }

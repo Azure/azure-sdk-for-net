@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class Vector : IUtf8JsonSerializable
+    public partial class SearchQueryVector : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Models
             writer.WriteEndObject();
         }
 
-        internal static Vector DeserializeVector(JsonElement element)
+        internal static SearchQueryVector DeserializeSearchQueryVector(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -79,7 +79,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new Vector(Optional.ToList(value), Optional.ToNullable(k), fields.Value);
+            return new SearchQueryVector(Optional.ToList(value), Optional.ToNullable(k), fields.Value);
         }
     }
 }

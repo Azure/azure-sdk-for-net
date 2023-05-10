@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Tests
                    null,
                    new SearchOptions
                    {
-                       Vector = new Vector { Value = vectorizedResult, K = 3, Fields = "descriptionVector" },
+                       Vector = new SearchQueryVector { Value = vectorizedResult, K = 3, Fields = "descriptionVector" },
                        Select = { "hotelId", "hotelName" }
                    });
 
@@ -61,7 +61,7 @@ namespace Azure.Search.Documents.Tests
                     null,
                     new SearchOptions
                     {
-                        Vector = new Vector { Value = vectorizedResult, K = 3, Fields = "descriptionVector" },
+                        Vector = new SearchQueryVector { Value = vectorizedResult, K = 3, Fields = "descriptionVector" },
                         Filter = "category eq 'Budget'",
                         Select = { "hotelId", "hotelName", "category" }
                     });
@@ -83,7 +83,7 @@ namespace Azure.Search.Documents.Tests
                     "Top hotels in town",
                     new SearchOptions
                     {
-                        Vector = new Vector { Value = vectorizedResult, K = 3, Fields = "descriptionVector" },
+                        Vector = new SearchQueryVector { Value = vectorizedResult, K = 3, Fields = "descriptionVector" },
                         Select = { "hotelId", "hotelName" },
                     });
 
