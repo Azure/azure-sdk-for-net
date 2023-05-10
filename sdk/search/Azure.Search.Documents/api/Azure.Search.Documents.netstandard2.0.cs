@@ -154,6 +154,7 @@ namespace Azure.Search.Documents
         public System.Collections.Generic.IList<string> OrderBy { get { throw null; } }
         public Azure.Search.Documents.Models.QueryAnswerType? QueryAnswer { get { throw null; } set { } }
         public int? QueryAnswerCount { get { throw null; } set { } }
+        public double? QueryAnswerThreshold { get { throw null; } set { } }
         public Azure.Search.Documents.Models.QueryCaptionType? QueryCaption { get { throw null; } set { } }
         public bool? QueryCaptionHighlightEnabled { get { throw null; } set { } }
         public Azure.Search.Documents.Models.QueryLanguage? QueryLanguage { get { throw null; } set { } }
