@@ -1602,62 +1602,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
-        /// Creates an <see cref="ECDsa"/> implementation backed by this <see cref="CryptographyClient"/>.
-        /// </summary>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel this operation.</param>
-        /// <returns>An <see cref="ECDsaKeyVault"/> implementation backed by this <see cref="CryptographyClient"/>.</returns>
-        /// <remarks>
-        /// The <see cref="CryptographyClient"/> will attempt to download the public key synchronously.
-        /// </remarks>
-        /// <exception cref="InvalidOperationException">This key is not of type <see cref="KeyType.Ec"/> or <see cref="KeyType.EcHsm"/>, or one or more key parameters are invalid.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual ECDsaKeyVault CreateECDsa(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(CreateECDsa)}");
-            scope.AddAttribute("key", _keyId);
-            scope.Start();
-
-            try
-            {
-                Initialize(GetOperation, cancellationToken);
-                return new ECDsaKeyVault(this, KeyMaterial);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates an <see cref="ECDsa"/> implementation backed by this <see cref="CryptographyClient"/>.
-        /// </summary>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel this operation.</param>
-        /// <returns>An <see cref="ECDsaKeyVault"/> implementation backed by this <see cref="CryptographyClient"/>.</returns>
-        /// <remarks>
-        /// The <see cref="CryptographyClient"/> will attempt to download the public key synchronously.
-        /// </remarks>
-        /// <exception cref="InvalidOperationException">This key is not of type <see cref="KeyType.Ec"/> or <see cref="KeyType.EcHsm"/>, or one or more key parameters are invalid.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<ECDsaKeyVault> CreateECDsaAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(CreateECDsa)}");
-            scope.AddAttribute("key", _keyId);
-            scope.Start();
-
-            try
-            {
-                await InitializeAsync(GetOperation, cancellationToken).ConfigureAwait(false);
-                return new ECDsaKeyVault(this, KeyMaterial);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Creates an <see cref="RSA"/> implementation backed by this <see cref="CryptographyClient"/>.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel this operation.</param>
@@ -1676,7 +1620,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             try
             {
                 Initialize(GetOperation, cancellationToken);
-                return new RSAKeyVault(this, KeyMaterial);
+                return new RSAKeyVault(this, KeyId, KeyMaterial);
             }
             catch (Exception e)
             {
@@ -1704,7 +1648,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             try
             {
                 await InitializeAsync(GetOperation, cancellationToken).ConfigureAwait(false);
-                return new RSAKeyVault(this, KeyMaterial);
+                return new RSAKeyVault(this, KeyId, KeyMaterial);
             }
             catch (Exception e)
             {

@@ -398,8 +398,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         System.Threading.Tasks.Task<byte[]> Azure.Core.Cryptography.IKeyEncryptionKey.UnwrapKeyAsync(string algorithm, System.ReadOnlyMemory<byte> encryptedKey, System.Threading.CancellationToken cancellationToken) { throw null; }
         byte[] Azure.Core.Cryptography.IKeyEncryptionKey.WrapKey(string algorithm, System.ReadOnlyMemory<byte> key, System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Threading.Tasks.Task<byte[]> Azure.Core.Cryptography.IKeyEncryptionKey.WrapKeyAsync(string algorithm, System.ReadOnlyMemory<byte> key, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual Azure.Security.KeyVault.Keys.Cryptography.ECDsaKeyVault CreateECDsa(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Keys.Cryptography.ECDsaKeyVault> CreateECDsaAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.KeyVault.Keys.Cryptography.RSAKeyVault CreateRSA(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Keys.Cryptography.RSAKeyVault> CreateRSAAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.KeyVault.Keys.Cryptography.DecryptResult Decrypt(Azure.Security.KeyVault.Keys.Cryptography.DecryptParameters decryptParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -468,16 +466,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public Azure.Security.KeyVault.Keys.Cryptography.EncryptionAlgorithm Algorithm { get { throw null; } }
         public string KeyId { get { throw null; } }
         public byte[] Plaintext { get { throw null; } }
-    }
-    public partial class ECDsaKeyVault : System.Security.Cryptography.ECDsa
-    {
-        internal ECDsaKeyVault() { }
-        public System.Security.Cryptography.ECDsa Key { get { throw null; } }
-        public override int KeySize { get { throw null; } set { } }
-        public override System.Security.Cryptography.KeySizes[] LegalKeySizes { get { throw null; } }
-        protected override void Dispose(bool disposing) { }
-        public override byte[] SignHash(byte[] hash) { throw null; }
-        public override bool VerifyHash(byte[] hash, byte[] signature) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EncryptionAlgorithm : System.IEquatable<Azure.Security.KeyVault.Keys.Cryptography.EncryptionAlgorithm>
@@ -578,8 +566,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     public partial class RSAKeyVault : System.Security.Cryptography.RSA
     {
         internal RSAKeyVault() { }
-        public System.Security.Cryptography.RSA Key { get { throw null; } }
         public override string KeyExchangeAlgorithm { get { throw null; } }
+        public string KeyId { get { throw null; } }
         public override int KeySize { get { throw null; } set { } }
         public override System.Security.Cryptography.KeySizes[] LegalKeySizes { get { throw null; } }
         public override byte[] Decrypt(byte[] data, System.Security.Cryptography.RSAEncryptionPadding padding) { throw null; }

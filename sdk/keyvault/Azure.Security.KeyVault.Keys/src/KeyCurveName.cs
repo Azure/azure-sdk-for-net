@@ -4,7 +4,6 @@
 using System;
 using System.ComponentModel;
 using System.Security.Cryptography;
-using Azure.Security.KeyVault.Keys.Cryptography;
 
 namespace Azure.Security.KeyVault.Keys
 {
@@ -187,15 +186,6 @@ namespace Azure.Security.KeyVault.Keys
             P256KValue => new Oid(P256KOidValue),
             P384Value => new Oid(P384OidValue),
             P521Value => new Oid(P521OidValue),
-            _ => null,
-        };
-
-        internal SignatureAlgorithm SignatureAlgorithm => _value switch
-        {
-            P256Value => SignatureAlgorithm.ES256,
-            P256KValue => SignatureAlgorithm.ES256K,
-            P384Value => SignatureAlgorithm.ES384,
-            P521Value => SignatureAlgorithm.ES512,
             _ => null,
         };
     }

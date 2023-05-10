@@ -18,30 +18,33 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         };
 
         private readonly CryptographyClient _client;
+        private readonly RSA _key;
 
-        internal RSAKeyVault(CryptographyClient client, JsonWebKey keyMaterial)
+        internal RSAKeyVault(CryptographyClient client, string keyId, JsonWebKey keyMaterial)
         {
             _client = client;
+            KeyId = keyId;
+
             if (keyMaterial != null)
             {
-                Key = keyMaterial.ToRSA();
+                _key = keyMaterial.ToRSA();
             }
         }
 
         /// <summary>
-        /// Gets the <see cref="RSA"/> key if downloaded.
+        /// Gets the <see cref="KeyVaultKey.Id"/> of the key used to perform cryptographic operations.
         /// </summary>
-        public RSA Key { get; }
+        public string KeyId { get; }
 
         /// <inheritdoc/>
-        public override string KeyExchangeAlgorithm => Key?.KeyExchangeAlgorithm;
+        public override string KeyExchangeAlgorithm => _key?.KeyExchangeAlgorithm;
 
         /// <inheritdoc/>
         /// <exception cref="InvalidOperationException">The key could not be downloaded so key size is unavailable.</exception>
         /// <exception cref="NotSupportedException">Changing the key size on this read-only provider is not supported.</exception>
         public override int KeySize
         {
-            get => Key?.KeySize ?? throw new InvalidOperationException("Cannot download the key");
+            get => _key?.KeySize ?? throw new InvalidOperationException("Cannot download the key");
             set => throw new NotSupportedException("Cannot change the key size");
         }
 
@@ -51,7 +54,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <inheritdoc/>
         /// <exception cref="InvalidOperationException">The key could not be downloaded so exporting it is not supported.</exception>
         public override RSAParameters ExportParameters(bool includePrivateParameters) =>
-            Key?.ExportParameters(includePrivateParameters) ?? throw new InvalidOperationException("Cannot download the key");
+            _key?.ExportParameters(includePrivateParameters) ?? throw new InvalidOperationException("Cannot download the key");
 
         /// <inheritdoc/>
         /// <exception cref="NotSupportedException">Importing a key into this read-only provider is not supported.</exception>
@@ -157,7 +160,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             if (disposing)
             {
-                Key?.Dispose();
+                _key?.Dispose();
             }
 
             base.Dispose(disposing);

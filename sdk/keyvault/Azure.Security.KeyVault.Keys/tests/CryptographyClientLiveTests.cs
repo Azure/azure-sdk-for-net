@@ -391,38 +391,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [RecordedTest]
-        public async Task CreateECDsaSignVerify([EnumValues(nameof(SignatureAlgorithm.ES256), nameof(SignatureAlgorithm.ES384), nameof(SignatureAlgorithm.ES512))] SignatureAlgorithm algorithm)
-        {
-            KeyVaultKey key = await CreateTestKey(algorithm);
-            RegisterForCleanup(key.Name);
-
-            CryptographyClient client = GetCryptoClient(key.Id);
-            using ECDsa ecdsa = await client.CreateECDsaAsync();
-
-            HashAlgorithmName hashAlgorithm = algorithm.GetHashAlgorithmName();
-
-            byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
-            byte[] hash = ecdsa.SignData(plaintext, hashAlgorithm);
-            Assert.IsTrue(ecdsa.VerifyData(plaintext, hash, hashAlgorithm));
-        }
-
-        [RecordedTest]
-        public async Task CreateECDsaSignVerifyRemote([EnumValues(nameof(SignatureAlgorithm.ES256), nameof(SignatureAlgorithm.ES384), nameof(SignatureAlgorithm.ES512))] SignatureAlgorithm algorithm)
-        {
-            KeyVaultKey key = await CreateTestKey(algorithm);
-            RegisterForCleanup(key.Name);
-
-            CryptographyClient client = GetCryptoClient(key.Id, forceRemote: true);
-            using ECDsa ecdsa = await client.CreateECDsaAsync();
-
-            HashAlgorithmName hashAlgorithm = algorithm.GetHashAlgorithmName();
-
-            byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
-            byte[] hash = ecdsa.SignData(plaintext, hashAlgorithm);
-            Assert.IsTrue(ecdsa.VerifyData(plaintext, hash, hashAlgorithm));
-        }
-
-        [RecordedTest]
         public async Task CreateRSAEncryptDecrypt()
         {
             EncryptionAlgorithm algorithm = EncryptionAlgorithm.RsaOaep256;
