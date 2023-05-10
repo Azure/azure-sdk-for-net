@@ -67,7 +67,6 @@ namespace Azure.ResourceManager.Dynatrace
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -86,7 +85,6 @@ namespace Azure.ResourceManager.Dynatrace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             logRules = DynatraceMonitorResourceLogRules.DeserializeDynatraceMonitorResourceLogRules(property0.Value);
@@ -96,7 +94,6 @@ namespace Azure.ResourceManager.Dynatrace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             metricRules = DynatraceMonitorResourceMetricRules.DeserializeDynatraceMonitorResourceMetricRules(property0.Value);
@@ -106,7 +103,6 @@ namespace Azure.ResourceManager.Dynatrace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new DynatraceProvisioningState(property0.Value.GetString());

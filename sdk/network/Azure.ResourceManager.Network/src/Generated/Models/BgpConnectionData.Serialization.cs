@@ -9,6 +9,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -39,6 +40,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("peerIp"u8);
                 writer.WriteStringValue(PeerIP);
             }
+            if (Optional.IsDefined(HubVirtualNetworkConnection))
+            {
+                writer.WritePropertyName("hubVirtualNetworkConnection"u8);
+                JsonSerializer.Serialize(writer, HubVirtualNetworkConnection);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -55,6 +61,7 @@ namespace Azure.ResourceManager.Network
             Optional<ResourceType> type = default;
             Optional<long> peerAsn = default;
             Optional<string> peerIP = default;
+            Optional<WritableSubResource> hubVirtualNetworkConnection = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<HubBgpConnectionStatus> connectionState = default;
             foreach (var property in element.EnumerateObject())
@@ -63,7 +70,6 @@ namespace Azure.ResourceManager.Network
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -73,7 +79,6 @@ namespace Azure.ResourceManager.Network
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -88,7 +93,6 @@ namespace Azure.ResourceManager.Network
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
@@ -107,7 +111,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             peerAsn = property0.Value.GetInt64();
@@ -118,11 +121,19 @@ namespace Azure.ResourceManager.Network
                             peerIP = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("hubVirtualNetworkConnection"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            hubVirtualNetworkConnection = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
@@ -132,7 +143,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             connectionState = new HubBgpConnectionStatus(property0.Value.GetString());
@@ -142,7 +152,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new BgpConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(peerAsn), peerIP.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(connectionState));
+            return new BgpConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(peerAsn), peerIP.Value, hubVirtualNetworkConnection, Optional.ToNullable(provisioningState), Optional.ToNullable(connectionState));
         }
     }
 }

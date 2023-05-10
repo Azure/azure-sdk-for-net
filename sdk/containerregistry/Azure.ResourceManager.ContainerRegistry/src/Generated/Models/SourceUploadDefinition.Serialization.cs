@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        uploadUrl = null;
                         continue;
                     }
                     uploadUrl = new Uri(property.Value.GetString());

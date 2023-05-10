@@ -41,7 +41,6 @@ namespace Azure.MixedReality.RemoteRendering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     output = AssetConversionOutput.DeserializeAssetConversionOutput(property.Value);

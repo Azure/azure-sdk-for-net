@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The result data of a query. </summary>
-    internal partial class MonitorMetric
+    public partial class MonitorMetric
     {
         /// <summary> Initializes a new instance of MonitorMetric. </summary>
         /// <param name="id"> the metric Id. </param>
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="timeseries"> the time series returned when a data query is performed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="metricType"/>, <paramref name="name"/> or <paramref name="timeseries"/> is null. </exception>
-        internal MonitorMetric(string id, string metricType, MonitorLocalizableString name, Unit unit, IEnumerable<MonitorTimeSeriesElement> timeseries)
+        internal MonitorMetric(string id, string metricType, MonitorLocalizableString name, MonitorMetricUnit unit, IEnumerable<MonitorTimeSeriesElement> timeseries)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(metricType, nameof(metricType));
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="errorMessage"> Error message encountered querying this specific metric. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="timeseries"> the time series returned when a data query is performed. </param>
-        internal MonitorMetric(string id, string metricType, MonitorLocalizableString name, string displayDescription, string errorCode, string errorMessage, Unit unit, IReadOnlyList<MonitorTimeSeriesElement> timeseries)
+        internal MonitorMetric(string id, string metricType, MonitorLocalizableString name, string displayDescription, string errorCode, string errorMessage, MonitorMetricUnit unit, IReadOnlyList<MonitorTimeSeriesElement> timeseries)
         {
             Id = id;
             MetricType = metricType;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Error message encountered querying this specific metric. </summary>
         public string ErrorMessage { get; }
         /// <summary> The unit of the metric. </summary>
-        public Unit Unit { get; }
+        public MonitorMetricUnit Unit { get; }
         /// <summary> the time series returned when a data query is performed. </summary>
         public IReadOnlyList<MonitorTimeSeriesElement> Timeseries { get; }
     }

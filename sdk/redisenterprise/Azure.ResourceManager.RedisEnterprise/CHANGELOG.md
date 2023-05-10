@@ -4,11 +4,23 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Updated api-version to `2023-03-01-preview`
+- Added operation Flush
+- Added operation group SkusOperations
+- Model Cluster has a new parameter encryption
+- Model Cluster has a new parameter identity
+- Model ClusterUpdate has a new parameter encryption
+- Model ClusterUpdate has a new parameter identity
 
 ### Other Changes
+
+- Model Database has a new parameter system_data
+- Model PrivateEndpointConnection has a new parameter system_data
+- Model PrivateLinkResource has a new parameter system_data
+- Model ProxyResource has a new parameter system_data
+- Model Resource has a new parameter system_data
+- Model TrackedResource has a new parameter system_data
+- Model Cluster has a new parameter system_data
 
 ## 1.0.1 (2023-02-20)
 

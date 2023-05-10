@@ -1,14 +1,31 @@
 # Release History
 
-## 1.31.0-beta.1 (Unreleased)
+## 1.32.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Added the `GetRawResponse` method to `RequestFailedException`.
+- Added overloads of `Operation<T>.WaitForCompletion` and `Operation.WaitForCompletionResponse` that take a `DelayStrategy`.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.31.0 (2023-04-10)
+
+### Features Added
+
+- Added the `RetryPolicy` type which can be used to create a custom retry policy.
+- Added the `DelayStrategy` type which can be used to customize delays.
+
+### Bugs Fixed
+
+- Set the Activity status to `Error` on failed activity source activities.
+- Mark the `Azure.Core.Http.Request` span as failed if the request fails with an exception thrown in the pipeline.
+- Fixed equality comparison when comparing a `string` to a `ContentType` instance.
+- Jitter is added when using a `RetryMode` of `Fixed`.
 
 ## 1.30.0 (2023-03-09)
 

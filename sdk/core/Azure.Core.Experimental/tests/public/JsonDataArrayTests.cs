@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public
@@ -52,18 +51,17 @@ namespace Azure.Core.Tests.Public
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
 
-            // TODO: Standardize Exception types.
-            Assert.Throws<InvalidOperationException>(() => { var model = (int)data; });
-            Assert.Throws<InvalidOperationException>(() => { var model = (bool)data; });
-            Assert.Throws<InvalidOperationException>(() => { var model = (string)data; });
-            Assert.Throws<JsonException>(() => { var model = (DateTime)data; });
+            Assert.Throws<InvalidCastException>(() => { var model = (int)data; });
+            Assert.Throws<InvalidCastException>(() => { var model = (bool)data; });
+            Assert.Throws<InvalidCastException>(() => { var model = (string)data; });
+            Assert.Throws<InvalidCastException>(() => { var model = (DateTime)data; });
         }
 
         [Test]
         public void CannotConvertArrayToModel()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
-            Assert.Throws<JsonException>(() => { var model = (SampleModel)data; });
+            Assert.Throws<InvalidCastException>(() => { var model = (SampleModel)data; });
         }
 
         [Test]
@@ -71,18 +69,18 @@ namespace Azure.Core.Tests.Public
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": [1, 2, 3] }""");
 
-            // TODO: Standardize Exception types.
-            Assert.Throws<InvalidOperationException>(() => { var model = (int)data.value; });
-            Assert.Throws<InvalidOperationException>(() => { var model = (bool)data.value; });
-            Assert.Throws<InvalidOperationException>(() => { var model = (string)data.value; });
-            Assert.Throws<JsonException>(() => { var model = (DateTime)data.value; });
+            Assert.Throws<InvalidCastException>(() => { var model = (int)data.value; });
+            Assert.Throws<InvalidCastException>(() => { var model = (bool)data.value; });
+            Assert.Throws<InvalidCastException>(() => { var model = (string)data.value; });
+            Assert.Throws<InvalidCastException>(() => { var model = (double)data.value; });
+            Assert.Throws<InvalidCastException>(() => { var model = (DateTime)data.value; });
         }
 
         [Test]
         public void CannotConvertArrayPropertyToModel()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": [1, 2, 3] }""");
-            Assert.Throws<JsonException>(() => { var model = (SampleModel)data.value; });
+            Assert.Throws<InvalidCastException>(() => { var model = (SampleModel)data.value; });
         }
 
         #endregion
@@ -198,10 +196,7 @@ namespace Azure.Core.Tests.Public
 
             Assert.AreEqual(5, (int)data[0]);
             Assert.AreEqual("valid", (string)data[1]);
-
-            // TODO: to check for null, we have to cast to string.  Is that
-            // what we want?
-            Assert.AreEqual(null, (string)data[2]);
+            Assert.IsTrue(data[2] == null);
         }
 
         [Test]
@@ -214,11 +209,9 @@ namespace Azure.Core.Tests.Public
             data.value[2] = null;
 
             Assert.AreEqual(5, (int)data.value[0]);
+            Assert.IsTrue(5 == data.value[0]);
             Assert.AreEqual("valid", (string)data.value[1]);
-
-            // TODO: to check for null, we have to cast to string.  Is that
-            // what we want?
-            Assert.AreEqual(null, (string)data.value[2]);
+            Assert.IsTrue(data.value[2] == null);
         }
 
         [Test]
@@ -241,14 +234,50 @@ namespace Azure.Core.Tests.Public
         public void CanGetArrayLength()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
-            Assert.AreEqual(3, ((int[])data).Length);
+            Assert.AreEqual(3, data.Length);
+        }
+
+        [Test]
+        public void CanGetArrayLengthWithChanges()
+        {
+            dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
+
+            data[0] = 4;
+            data[1] = BinaryData.FromString("""{ "foo": 1 }""").ToDynamicFromJson();
+
+            Assert.AreEqual(3, data.Length);
         }
 
         [Test]
         public void CanGetArrayPropertyLength()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": [1, 2, 3] }""");
-            Assert.AreEqual(3, ((int[])data.value).Length);
+            Assert.AreEqual(3, data.value.Length);
+        }
+
+        [Test]
+        public void CanGetArrayPropertyLengthWithChanges()
+        {
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": [1, 2, 3] }""");
+
+            data.value[0] = 4;
+            data.value[1] = BinaryData.FromString("""{ "foo": 1 }""").ToDynamicFromJson();
+
+            Assert.AreEqual(3, data.value.Length);
+
+            data.value = new int[] { 1, 2 };
+
+            Assert.AreEqual(2, data.value.Length);
+
+            data.value = BinaryData.FromString("""[1, 2, 3, 4]""").ToDynamicFromJson();
+
+            Assert.AreEqual(4, data.value.Length);
+
+            // Switch JsonKind
+            data = BinaryData.FromString("""{ "foo": 1 }""").ToDynamicFromJson();
+            data.foo = new int[] { 1, 2 };
+
+            Assert.AreEqual(2, data.foo.Length);
         }
 
         [Test]

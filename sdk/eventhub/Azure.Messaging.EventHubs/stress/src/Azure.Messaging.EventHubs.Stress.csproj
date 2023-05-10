@@ -8,13 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="System.Memory.Data" />
-    <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.ApplicationInsights" />
     <PackageReference Include="CommandLineParser" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Azure.Messaging.EventHubs.csproj" />
+    <!--ProjectReference Include="..\..\src\Azure.Messaging.EventHubs.csproj" / -->
     <ProjectReference Include="..\..\..\Azure.Messaging.EventHubs.Processor\src\Azure.Messaging.EventHubs.Processor.csproj" />
   </ItemGroup>
 

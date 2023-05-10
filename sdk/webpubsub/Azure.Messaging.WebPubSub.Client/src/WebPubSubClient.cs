@@ -82,7 +82,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// <summary>
         /// The connection ID of the client. The ID is assigned when the client connects.
         /// </summary>
-        public string ConnectionId { get; }
+        public string ConnectionId => _connectionId;
 
         // Some exposed properties for testing
         internal IWebSocketClientFactory WebSocketClientFactory { get; set; }

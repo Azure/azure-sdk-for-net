@@ -836,27 +836,6 @@ namespace Azure.AI.TextAnalytics
         }
         #endregion
 
-        #region Dynamic Classify
-
-        /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.DynamicClassifyDocumentResultCollection"/> for mocking purposes.
-        /// </summary>
-        /// <param name="results">Sets the collection of <see cref="TextAnalytics.ClassifyDocumentResult"/>.</param>
-        /// <param name="statistics">Sets the <see cref="DynamicClassifyDocumentResultCollection.Statistics"/> property.</param>
-        /// <param name="modelVersion">Sets the <see cref="DynamicClassifyDocumentResultCollection.ModelVersion"/> property.</param>
-        /// <returns>
-        /// A new instance of <see cref="TextAnalytics.DynamicClassifyDocumentResultCollection"/> for mocking purposes.
-        /// </returns>
-        public static DynamicClassifyDocumentResultCollection DynamicClassifyDocumentResultCollection(
-            IEnumerable<ClassifyDocumentResult> results,
-            TextDocumentBatchStatistics statistics,
-            string modelVersion)
-        {
-            return new DynamicClassifyDocumentResultCollection(results.ToList(), statistics, modelVersion);
-        }
-
-        #endregion
-
         #region Linked Entities
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.LinkedEntity"/> for mocking purposes.

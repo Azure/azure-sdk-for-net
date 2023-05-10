@@ -10,6 +10,8 @@ openapi-type: data-plane
 tag: package-heavy-metal-demo
 model-namespace: false
 
+require:
+     - https://github.com/williamzhao87/azure-rest-api-specs/blob/366f31cb260cb6c0ef4c8964440e9fee25bdf39f/specification/communication/data-plane/CallAutomation/readme.md
 input-file:
     - ./swagger.json
 title: Azure Communication Services

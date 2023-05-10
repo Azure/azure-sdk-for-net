@@ -1,39 +1,39 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93?api-version=2021-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-bf221f84a3d0fb2471c7b5ea08cf3e42-4ee7a30d143a8f98-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "0aa792013b2a97ee659e2e3d3fb2f22c",
+        "traceparent": "00-22a73ef9b1aaa524c6f15cf478c12dfb-654874962dc2baa4-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "c7b347774473ccb41365dfd77a4301ca",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "400",
+        "Content-Length": "398",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 May 2022 23:10:03 GMT",
+        "Date": "Fri, 10 Mar 2023 06:32:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "4bcc74e5-dd20-4809-817d-834f3fa78dcd",
-        "x-ms-ratelimit-remaining-subscription-reads": "11977",
-        "x-ms-request-id": "4bcc74e5-dd20-4809-817d-834f3fa78dcd",
-        "x-ms-routing-request-id": "WESTUS:20220516T231004Z:4bcc74e5-dd20-4809-817d-834f3fa78dcd"
+        "x-ms-correlation-request-id": "273ab2bd-5270-4b8c-9605-63bc37119b90",
+        "x-ms-ratelimit-remaining-subscription-reads": "11962",
+        "x-ms-request-id": "273ab2bd-5270-4b8c-9605-63bc37119b90",
+        "x-ms-routing-request-id": "WESTUS:20230310T063204Z:273ab2bd-5270-4b8c-9605-63bc37119b90"
       },
       "ResponseBody": {
-        "id": "/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93",
+        "id": "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "subscriptionId": "6d5e2387-bdf5-4ca1-83db-795fd2398b93",
-        "tenantId": "2fc06c85-616c-4845-9d37-2faa8091e955",
-        "displayName": "Azure subscription 1",
+        "subscriptionId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+        "tenantId": "f1a380c7-4edb-405c-9ffb-015823f5b32c",
+        "displayName": "PayG-UK-03-09-2021",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Public_2014-09-01",
@@ -43,40 +43,261 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93/providers/Microsoft.Capacity/catalogs?api-version=2022-03-01\u0026reservedResourceType=RedHat",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01\u0026reservedResourceType=RedHat",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-b7678da8d5e90c8fbe89fc3a4716f00b-31fe5ff61d936c96-00",
-        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.0.0-alpha.20220516.1 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "4bbc6e941e5fef022b95d8a5ae7c11ba",
+        "traceparent": "00-d7bfbe6cc60e0e84601891e3b8e88fd5-1094efbb51cd1c8f-00",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230309.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "b1606e509e5143204fd54dc62afcea41",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1611",
+        "Content-Length": "2396",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 May 2022 23:10:03 GMT",
+        "Date": "Fri, 10 Mar 2023 06:32:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "9b532a3a-0398-4c03-8584-8141bf627b68",
-        "x-ms-ratelimit-remaining-subscription-reads": "11976",
-        "x-ms-request-id": "4bbc6e941e5fef022b95d8a5ae7c11ba",
-        "x-ms-routing-request-id": "WESTUS:20220516T231004Z:9b532a3a-0398-4c03-8584-8141bf627b68",
-        "x-ms-version": "1.0.1957.1107"
+        "x-ms-correlation-request-id": "8cc35d43-3ebc-4704-9334-755ca69bc52e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11961",
+        "x-ms-request-id": "b1606e509e5143204fd54dc62afcea41",
+        "x-ms-routing-request-id": "WESTUS:20230310T063204Z:8cc35d43-3ebc-4704-9334-755ca69bc52e",
+        "x-ms-version": "1.0.2251.115"
       },
-      "ResponseBody": "[{\u0022resourceType\u0022:\u0022RedHat\u0022,\u0022name\u0022:\u0022rhel_1-4_vcpu\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:420.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Red Hat Ent Linux\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Red Hat Enterprise Linux\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u00221-4 vCPU VM\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00222f96d035-3bac-46d6-b2bc-c6daa0938536\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 1-vCPU VM License Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u00221-4 vCPU VM\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022RedHat\u0022,\u0022name\u0022:\u0022rhel_5plus_vcpu\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:911.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Red Hat Ent Linux\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Red Hat Enterprise Linux\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u00225\u002B vCPU VM\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022a838cfb1-0bd3-4965-84f0-663f49afc2e2\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 128-vCPU VM License Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u00225\u002B vCPU VM\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]}]"
+      "ResponseBody": {
+        "value": [
+          {
+            "resourceType": "RedHat",
+            "name": "rhel_1-4_vcpu",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 420.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Red Hat Ent Linux"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Red Hat Enterprise Linux"
+              },
+              {
+                "name": "SkuName",
+                "value": "1-4 vCPU VM"
+              },
+              {
+                "name": "MeterId",
+                "value": "4831a7b4-bdd4-48a2-8e95-18d053971ede"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 4-vCPU VM License Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "1-4 vCPU VM"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P3Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedHat",
+            "name": "rhel_5plus_vcpu",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 911.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Red Hat Ent Linux"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Red Hat Enterprise Linux"
+              },
+              {
+                "name": "SkuName",
+                "value": "5\u002B vCPU VM"
+              },
+              {
+                "name": "MeterId",
+                "value": "3b6661c4-03dd-45e7-88c9-512fcb7906d5"
+              },
+              {
+                "name": "MeterType",
+                "value": "1 40-vCPU VM License Hour"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "5\u002B vCPU VM"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P3Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "RedHat",
+            "name": "red hat enterprise linux for arm64 byos",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront"
+              ],
+              "p3Y": [
+                "Upfront"
+              ],
+              "p5Y": [
+                "Upfront"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 0.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ProductShortName",
+                "value": "Red Hat Ent Linux"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Red Hat Enterprise Linux"
+              },
+              {
+                "name": "SkuName",
+                "value": "Red Hat Enterprise Linux for ARM64 BYOS"
+              },
+              {
+                "name": "MeterId",
+                "value": "beb8e2dc-3796-5037-9a74-0c1ec788e87f"
+              },
+              {
+                "name": "MeterType",
+                "value": "1-416 vCPU VM License Hours"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Red Hat Enterprise Linux for ARM64 BYOS"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P3Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          }
+        ],
+        "totalItems": 3
+      }
     }
   ],
   "Variables": {
-    "RandomSeed": "2086691299",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
-    "SUBSCRIPTION_ID": "6d5e2387-bdf5-4ca1-83db-795fd2398b93"
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1551781041",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
   }
 }

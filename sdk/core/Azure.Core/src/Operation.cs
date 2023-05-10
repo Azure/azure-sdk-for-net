@@ -93,6 +93,24 @@ namespace Azure
         /// <summary>
         /// Periodically calls the server till the long-running operation completes.
         /// </summary>
+        /// <param name="delayStrategy">
+        /// The strategy to use to determine the delay between status requests to the server. If the server returns retry-after header,
+        /// the delay used will be the maximum specified by the strategy and the header value.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
+        /// <returns>The last HTTP response received from the server.</returns>
+        /// <remarks>
+        /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final response of the operation.
+        /// </remarks>
+        public virtual async ValueTask<Response> WaitForCompletionResponseAsync(DelayStrategy delayStrategy, CancellationToken cancellationToken = default)
+        {
+            OperationPoller poller = new OperationPoller(delayStrategy);
+            return await poller.WaitForCompletionResponseAsync(this, default, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Periodically calls the server till the long-running operation completes.
+        /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
         /// <returns>The last HTTP response received from the server.</returns>
         /// <remarks>
@@ -121,6 +139,24 @@ namespace Azure
         {
             OperationPoller poller = new OperationPoller();
             return poller.WaitForCompletionResponse(this, pollingInterval, cancellationToken);
+        }
+
+        /// <summary>
+        /// Periodically calls the server till the long-running operation completes.
+        /// </summary>
+        /// <param name="delayStrategy">
+        /// The strategy to use to determine the delay between status requests to the server. If the server returns retry-after header,
+        /// the delay used will be the maximum specified by the strategy and the header value.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
+        /// <returns>The last HTTP response received from the server.</returns>
+        /// <remarks>
+        /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final response of the operation.
+        /// </remarks>
+        public virtual Response WaitForCompletionResponse(DelayStrategy delayStrategy, CancellationToken cancellationToken = default)
+        {
+            OperationPoller poller = new OperationPoller(delayStrategy);
+            return poller.WaitForCompletionResponse(this, default, cancellationToken);
         }
 
         internal static T GetValue<T>(ref T? value) where T : class

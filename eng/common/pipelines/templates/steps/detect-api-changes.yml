@@ -1,6 +1,7 @@
 parameters:
   ArtifactPath: $(Build.ArtifactStagingDirectory)
   Artifacts: []
+  ArtifactName: 'packages'
 
 steps:
   - pwsh: |
@@ -20,6 +21,7 @@ steps:
         -PullRequestNumber $(System.PullRequest.PullRequestNumber)
         -RepoFullName $(Build.Repository.Name)
         -APIViewUri $(ApiChangeDetectRequestUrl)
+        -ArtifactName ${{ parameters.ArtifactName }}
       pwsh: true
     displayName: Detect API changes
     condition: and(succeededOrFailed(), eq(variables['Build.Reason'],'PullRequest'))

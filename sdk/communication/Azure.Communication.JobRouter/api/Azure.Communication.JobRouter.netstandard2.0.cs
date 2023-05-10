@@ -25,6 +25,7 @@ namespace Azure.Communication.JobRouter
     {
         public ChannelConfiguration(int capacityCostPerJob) { }
         public int CapacityCostPerJob { get { throw null; } set { } }
+        public int? MaxNumberOfJobs { get { throw null; } set { } }
     }
     public partial class CloseJobOptions
     {
@@ -242,10 +243,16 @@ namespace Azure.Communication.JobRouter
     }
     public partial class ManualReclassifyExceptionAction : Azure.Communication.JobRouter.ExceptionAction
     {
-        public ManualReclassifyExceptionAction(string queueId, int priority, System.Collections.Generic.IEnumerable<Azure.Communication.JobRouter.WorkerSelector> workerSelectors = null) { }
+        public ManualReclassifyExceptionAction() { }
         public int? Priority { get { throw null; } set { } }
         public string QueueId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Communication.JobRouter.WorkerSelector> WorkerSelectors { get { throw null; } }
+    }
+    public partial class Oauth2ClientCredential
+    {
+        public Oauth2ClientCredential() { }
+        public string ClientId { get { throw null; } set { } }
+        public string ClientSecret { get { throw null; } set { } }
     }
     public partial class PassThroughQueueSelectorAttachment : Azure.Communication.JobRouter.QueueSelectorAttachment
     {
@@ -517,6 +524,13 @@ namespace Azure.Communication.JobRouter
         public WaitTimeExceptionTrigger(System.TimeSpan threshold) { }
         public System.TimeSpan Threshold { get { throw null; } set { } }
     }
+    public partial class WebhookRule : Azure.Communication.JobRouter.RouterRule
+    {
+        public WebhookRule() { }
+        public System.Uri AuthorizationServerUri { get { throw null; } set { } }
+        public Azure.Communication.JobRouter.Oauth2ClientCredential ClientCredential { get { throw null; } set { } }
+        public System.Uri WebhookUri { get { throw null; } set { } }
+    }
     public partial class WeightedAllocationQueueSelectorAttachment : Azure.Communication.JobRouter.QueueSelectorAttachment
     {
         public WeightedAllocationQueueSelectorAttachment(System.Collections.Generic.IEnumerable<Azure.Communication.JobRouter.QueueWeightedAllocation> allocations) { }
@@ -529,7 +543,7 @@ namespace Azure.Communication.JobRouter
     }
     public partial class WorkerSelector
     {
-        public WorkerSelector(string key, Azure.Communication.JobRouter.LabelOperator labelOperator, Azure.Communication.JobRouter.LabelValue value, System.TimeSpan? ttl = default(System.TimeSpan?), bool? expedite = default(bool?)) { }
+        public WorkerSelector(string key, Azure.Communication.JobRouter.LabelOperator labelOperator, Azure.Communication.JobRouter.LabelValue value) { }
         public bool? Expedite { get { throw null; } set { } }
         public System.DateTimeOffset? ExpireTime { get { throw null; } }
         public string Key { get { throw null; } set { } }

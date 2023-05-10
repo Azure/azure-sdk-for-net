@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -70,7 +71,16 @@ namespace Azure.AI.TextAnalytics.Tests
             { "1", s_englishExpectedOutput2 },
         };
 
+        [SetUp]
+        public void TestSetup()
+        {
+            // These tests require a pre-trained, static resource,
+            // which is currently only available in the public cloud.
+            TestEnvironment.IgnoreIfNotPublicCloud();
+        }
+
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task RecognizeCustomEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true, useStaticResource: true);
@@ -95,6 +105,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task RecognizeCustomEntitiesTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
@@ -119,6 +130,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task RecognizeCustomEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
@@ -148,6 +160,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task RecognizeCustomEntitiesBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
@@ -183,6 +196,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task RecognizeCustomEntitiesBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
@@ -206,6 +220,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task RecognizeCustomEntitiesBatchTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
@@ -234,6 +249,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public void RecognizeCustomEntitiesBatchWithNullIdTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
@@ -252,6 +268,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [Ignore("Issue https://github.com/Azure/azure-sdk-for-net/issues/25152")]
         public async Task RecognizeCustomEntitiesWithMultipleActions()
         {
@@ -290,6 +307,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task StartRecognizeCustomEntities()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
@@ -311,6 +329,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task StartRecognizeCustomEntitiesWithName()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
@@ -336,6 +355,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task RecognizeCustomEntitiesBatchConvenienceWithAutoDetectedLanguageTest()
         {
@@ -354,6 +374,26 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public void AnalyzeOperationRecognizeCustomEntitiesActionNotSupported()
+        {
+            TestDiagnostics = false;
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
+            TextAnalyticsActions batchActions = new()
+            {
+                RecognizeCustomEntitiesActions = new[]
+                {
+                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName),
+                },
+            };
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(s_batchDocuments, batchActions));
+            Assert.AreEqual("RecognizeCustomEntitiesAction is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task AnalyzeOperationRecognizeCustomEntitiesWithAutoDetectedLanguageTest()
         {

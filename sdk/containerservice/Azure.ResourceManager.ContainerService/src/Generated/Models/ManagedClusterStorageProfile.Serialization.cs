@@ -54,7 +54,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskCsiDriver = ManagedClusterStorageProfileDiskCsiDriver.DeserializeManagedClusterStorageProfileDiskCsiDriver(property.Value);
@@ -64,7 +63,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fileCsiDriver = ManagedClusterStorageProfileFileCsiDriver.DeserializeManagedClusterStorageProfileFileCsiDriver(property.Value);
@@ -74,7 +72,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     snapshotController = ManagedClusterStorageProfileSnapshotController.DeserializeManagedClusterStorageProfileSnapshotController(property.Value);
@@ -84,7 +81,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     blobCsiDriver = ManagedClusterStorageProfileBlobCsiDriver.DeserializeManagedClusterStorageProfileBlobCsiDriver(property.Value);

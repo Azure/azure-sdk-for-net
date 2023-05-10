@@ -24,12 +24,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         }
 
         [Test]
-        public async Task ThrowsUnauthorizedOn401()
+        public void ThrowsUnauthorizedOn401()
         {
             try
             {
                 MockResponse response = new MockResponse((int)HttpStatusCode.Unauthorized);
-                await _requestResponse.ThrowIfRequestFailedAsync(new MockRequest(), response);
+                _requestResponse.ThrowIfRequestFailed(new MockRequest(), response);
             }
             catch (UnauthorizedAccessException ex)
             {
@@ -41,12 +41,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         }
 
         [Test]
-        public async Task ThrowsMessagingEntityNotFoundOn404()
+        public void ThrowsMessagingEntityNotFoundOn404()
         {
             try
             {
                 MockResponse response = new MockResponse((int)HttpStatusCode.NotFound);
-                await _requestResponse.ThrowIfRequestFailedAsync(new MockRequest(), response);
+                _requestResponse.ThrowIfRequestFailed(new MockRequest(), response);
             }
             catch (ServiceBusException ex)
             {
@@ -59,12 +59,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         }
 
         [Test]
-        public async Task ThrowsMessagingEntityAlreadyExistsOnCreateConflict()
+        public void ThrowsMessagingEntityAlreadyExistsOnCreateConflict()
         {
             try
             {
                 MockResponse response = new MockResponse((int)HttpStatusCode.Conflict);
-                await _requestResponse.ThrowIfRequestFailedAsync(new MockRequest() { Method = RequestMethod.Put }, response);
+                _requestResponse.ThrowIfRequestFailed(new MockRequest() { Method = RequestMethod.Put }, response);
             }
             catch (ServiceBusException ex)
             {
@@ -78,14 +78,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         }
 
         [Test]
-        public async Task ThrowsGeneralErrorOnUpdateConflict()
+        public void ThrowsGeneralErrorOnUpdateConflict()
         {
             try
             {
                 MockResponse response = new MockResponse((int)HttpStatusCode.Conflict);
                 var request = new MockRequest() { Method = RequestMethod.Put };
                 request.Headers.Add("If-Match", "*");
-                await _requestResponse.ThrowIfRequestFailedAsync(request, response);
+                _requestResponse.ThrowIfRequestFailed(request, response);
             }
             catch (ServiceBusException ex)
             {
@@ -99,13 +99,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         }
 
         [Test]
-        public async Task ThrowsGeneralErrorOnDeleteConflict()
+        public void ThrowsGeneralErrorOnDeleteConflict()
         {
             try
             {
                 MockResponse response = new MockResponse((int)HttpStatusCode.Conflict);
                 var request = new MockRequest() { Method = RequestMethod.Delete };
-                await _requestResponse.ThrowIfRequestFailedAsync(request, response);
+                _requestResponse.ThrowIfRequestFailed(request, response);
             }
             catch (ServiceBusException ex)
             {
@@ -119,13 +119,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         }
 
         [Test]
-        public async Task ThrowsServiceBusyOnServiceUnavailable()
+        public void ThrowsServiceBusyOnServiceUnavailable()
         {
             try
             {
                 MockResponse response = new MockResponse((int)HttpStatusCode.ServiceUnavailable);
                 var request = new MockRequest() { Method = RequestMethod.Delete };
-                await _requestResponse.ThrowIfRequestFailedAsync(request, response);
+                _requestResponse.ThrowIfRequestFailed(request, response);
             }
             catch (ServiceBusException ex)
             {
@@ -139,13 +139,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         }
 
         [Test]
-        public async Task ThrowsArgumentExceptionOnBadRequest()
+        public void ThrowsArgumentExceptionOnBadRequest()
         {
             try
             {
                 MockResponse response = new MockResponse((int)HttpStatusCode.BadRequest);
                 var request = new MockRequest() { Method = RequestMethod.Put };
-                await _requestResponse.ThrowIfRequestFailedAsync(request, response);
+                _requestResponse.ThrowIfRequestFailed(request, response);
             }
             catch (ArgumentException ex)
             {
@@ -157,7 +157,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         }
 
         [Test]
-        public async Task ThrowsInvalidOperationOnForbiddenSubcode()
+        public void ThrowsInvalidOperationOnForbiddenSubcode()
         {
             try
             {
@@ -165,7 +165,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                     (int)HttpStatusCode.Forbidden,
                     AdministrationClientConstants.ForbiddenInvalidOperationSubCode);
                 var request = new MockRequest() { Method = RequestMethod.Put };
-                await _requestResponse.ThrowIfRequestFailedAsync(request, response);
+                _requestResponse.ThrowIfRequestFailed(request, response);
             }
             catch (InvalidOperationException ex)
             {
@@ -177,14 +177,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         }
 
         [Test]
-        public async Task ThrowsQuotaExceededOnForbiddenStatus()
+        public void ThrowsQuotaExceededOnForbiddenStatus()
         {
             try
             {
                 MockResponse response = new MockResponse(
                     (int)HttpStatusCode.Forbidden);
                 var request = new MockRequest() { Method = RequestMethod.Delete };
-                await _requestResponse.ThrowIfRequestFailedAsync(request, response);
+                _requestResponse.ThrowIfRequestFailed(request, response);
             }
             catch (ServiceBusException ex)
             {
@@ -198,14 +198,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         }
 
         [Test]
-        public async Task ThrowsGeneralFailureOnOtherError()
+        public void ThrowsGeneralFailureOnOtherError()
         {
             try
             {
                 MockResponse response = new MockResponse(
                     429);
                 var request = new MockRequest() { Method = RequestMethod.Put };
-                await _requestResponse.ThrowIfRequestFailedAsync(request, response);
+                _requestResponse.ThrowIfRequestFailed(request, response);
             }
             catch (ServiceBusException ex)
             {
