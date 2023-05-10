@@ -72,6 +72,19 @@ namespace Azure.Communication.CallAutomation
                     }
                 }
 
+                if (options.ChannelAffinity != null && options.ChannelAffinity.Any())
+                {
+                    foreach (var c in options.ChannelAffinity)
+                    {
+                        ChannelAffinityInternal newChannelAffinity = new ChannelAffinityInternal(CommunicationIdentifierSerializer.Serialize(c.Participant));
+                        if (c.Channel != null)
+                        {
+                            newChannelAffinity.Channel = c.Channel;
+                        }
+                        request.ChannelAffinity.Add(newChannelAffinity);
+                    }
+                }
+
                 if (options.ExternalStorage is not null)
                 {
                     request.ExternalStorage = TranslateExternalStorageToInternal(options.ExternalStorage);
