@@ -14,24 +14,38 @@ namespace Azure.ResourceManager.AppContainers.Models
     public partial class ContainerAppWorkloadProfile
     {
         /// <summary> Initializes a new instance of ContainerAppWorkloadProfile. </summary>
+        /// <param name="name"> Workload profile type for the workloads to run on. </param>
+        /// <param name="workloadProfileType"> Workload profile type for the workloads to run on. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="workloadProfileType"/> is null. </exception>
+        public ContainerAppWorkloadProfile(string name, string workloadProfileType)
+        {
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(workloadProfileType, nameof(workloadProfileType));
+
+            Name = name;
+            WorkloadProfileType = workloadProfileType;
+        }
+
+        /// <summary> Initializes a new instance of ContainerAppWorkloadProfile. </summary>
+        /// <param name="name"> Workload profile type for the workloads to run on. </param>
         /// <param name="workloadProfileType"> Workload profile type for the workloads to run on. </param>
         /// <param name="minimumCount"> The minimum capacity. </param>
         /// <param name="maximumCount"> The maximum capacity. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workloadProfileType"/> is null. </exception>
-        public ContainerAppWorkloadProfile(string workloadProfileType, int minimumCount, int maximumCount)
+        internal ContainerAppWorkloadProfile(string name, string workloadProfileType, int? minimumCount, int? maximumCount)
         {
-            Argument.AssertNotNull(workloadProfileType, nameof(workloadProfileType));
-
+            Name = name;
             WorkloadProfileType = workloadProfileType;
             MinimumCount = minimumCount;
             MaximumCount = maximumCount;
         }
 
         /// <summary> Workload profile type for the workloads to run on. </summary>
+        public string Name { get; set; }
+        /// <summary> Workload profile type for the workloads to run on. </summary>
         public string WorkloadProfileType { get; set; }
         /// <summary> The minimum capacity. </summary>
-        public int MinimumCount { get; set; }
+        public int? MinimumCount { get; set; }
         /// <summary> The maximum capacity. </summary>
-        public int MaximumCount { get; set; }
+        public int? MaximumCount { get; set; }
     }
 }

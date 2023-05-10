@@ -29,11 +29,249 @@ namespace Azure.ResourceManager.AppContainers
 
         private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return client.GetResourceClient(() =>
             {
                 return new ResourceGroupResourceExtensionClient(client, scope);
             });
         }
+
+        /// <summary>
+        /// Get all available workload profiles for a location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/availableManagedEnvironmentsWorkloadProfileTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableWorkloadProfiles_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ContainerAppAvailableWorkloadProfile" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContainerAppAvailableWorkloadProfile> GetAvailableWorkloadProfiles(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetAvailableWorkloadProfiles(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get all billingMeters for a location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/billingMeters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingMeters_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ContainerAppBillingMeter" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContainerAppBillingMeter> GetBillingMetersAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetBillingMetersAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get all billingMeters for a location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/billingMeters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingMeters_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ContainerAppBillingMeter" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContainerAppBillingMeter> GetBillingMeters(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetBillingMeters(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get all connectedEnvironments for a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/connectedEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ContainerAppConnectedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetContainerAppConnectedEnvironmentsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get all connectedEnvironments for a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/connectedEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ContainerAppConnectedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetContainerAppConnectedEnvironments(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the Container Apps in a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/containerApps</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ContainerAppResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContainerAppResource> GetContainerAppsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetContainerAppsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the Container Apps in a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/containerApps</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ContainerAppResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContainerAppResource> GetContainerApps(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetContainerApps(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the Container Apps Jobs in a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/jobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="JobResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<JobResource> GetJobsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetJobsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the Container Apps Jobs in a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/jobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="JobResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<JobResource> GetJobs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetJobs(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get all Managed Environments for a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/managedEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ContainerAppManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetContainerAppManagedEnvironmentsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get all Managed Environments for a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/managedEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ContainerAppManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetContainerAppManagedEnvironments(cancellationToken);
+        }
+
+        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
+        {
+            return resourceGroupResource.GetCachedClient((client) =>
+>>>>>>> f4287da6d1 (add 2022-11-01-preview)
 
         private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
         {
@@ -50,6 +288,200 @@ namespace Azure.ResourceManager.AppContainers
                 return new SubscriptionResourceExtensionClient(client, scope);
             });
         }
+
+        /// <summary>
+        /// Get the properties of an connectedEnvironment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedEnvironments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="connectedEnvironmentName"> Name of the connectedEnvironment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectedEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectedEnvironmentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironment(this ResourceGroupResource resourceGroupResource, string connectedEnvironmentName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetContainerAppConnectedEnvironments().Get(connectedEnvironmentName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ContainerAppResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ContainerAppResources and their operations over a ContainerAppResource. </returns>
+        public static ContainerAppCollection GetContainerApps(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetExtensionClient(resourceGroupResource).GetContainerApps();
+        }
+
+        /// <summary>
+        /// Get the properties of a Container App.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="containerAppName"> Name of the Container App. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ContainerAppResource>> GetContainerAppAsync(this ResourceGroupResource resourceGroupResource, string containerAppName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetContainerApps().GetAsync(containerAppName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the properties of a Container App.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="containerAppName"> Name of the Container App. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ContainerAppResource> GetContainerApp(this ResourceGroupResource resourceGroupResource, string containerAppName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetContainerApps().Get(containerAppName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of JobResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of JobResources and their operations over a JobResource. </returns>
+        public static JobCollection GetJobs(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetExtensionClient(resourceGroupResource).GetJobs();
+        }
+
+        /// <summary>
+        /// Get the properties of a Container Apps Job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="jobName"> Name of the Container Apps Job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<JobResource>> GetJobAsync(this ResourceGroupResource resourceGroupResource, string jobName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetJobs().GetAsync(jobName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the properties of a Container Apps Job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="jobName"> Name of the Container Apps Job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<JobResource> GetJob(this ResourceGroupResource resourceGroupResource, string jobName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetJobs().Get(jobName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ContainerAppManagedEnvironmentResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ContainerAppManagedEnvironmentResources and their operations over a ContainerAppManagedEnvironmentResource. </returns>
+        public static ContainerAppManagedEnvironmentCollection GetContainerAppManagedEnvironments(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetExtensionClient(resourceGroupResource).GetContainerAppManagedEnvironments();
+        }
+
+        /// <summary>
+        /// Get the properties of a Managed Environment used to host container apps.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="environmentName"> Name of the Environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ContainerAppManagedEnvironmentResource>> GetContainerAppManagedEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string environmentName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetContainerAppManagedEnvironments().GetAsync(environmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the properties of a Managed Environment used to host container apps.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="environmentName"> Name of the Environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironment(this ResourceGroupResource resourceGroupResource, string environmentName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetContainerAppManagedEnvironments().Get(environmentName, cancellationToken);
+        }
+
+>>>>>>> f4287da6d1 (add 2022-11-01-preview)
         #region ContainerAppAuthConfigResource
         /// <summary>
         /// Gets an object representing a <see cref="ContainerAppAuthConfigResource" /> along with the instance operations that can be performed on it but with no data.
@@ -221,6 +653,25 @@ namespace Azure.ResourceManager.AppContainers
         }
         #endregion
 
+        #region JobResource
+        /// <summary>
+        /// Gets an object representing a <see cref="JobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="JobResource.CreateResourceIdentifier" /> to create a <see cref="JobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="JobResource" /> object. </returns>
+        public static JobResource GetJobResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                JobResource.ValidateResourceId(id);
+                return new JobResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region ContainerAppRevisionResource
         /// <summary>
         /// Gets an object representing a <see cref="ContainerAppRevisionResource" /> along with the instance operations that can be performed on it but with no data.
@@ -349,6 +800,25 @@ namespace Azure.ResourceManager.AppContainers
             {
                 ContainerAppManagedEnvironmentResource.ValidateResourceId(id);
                 return new ContainerAppManagedEnvironmentResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ManagedCertificateResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedCertificateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedCertificateResource.CreateResourceIdentifier" /> to create a <see cref="ManagedCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedCertificateResource" /> object. </returns>
+        public static ManagedCertificateResource GetManagedCertificateResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ManagedCertificateResource.ValidateResourceId(id);
+                return new ManagedCertificateResource(client, id);
             }
             );
         }
