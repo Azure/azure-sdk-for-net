@@ -36,6 +36,9 @@ namespace Azure.Search.Documents
         /// <param name="scoringParameters"> The list of parameter values to be used in scoring functions (for example, referencePointParameter) using the format name-values. For example, if the scoring profile defines a function with a parameter called &apos;mylocation&apos; the parameter string would be &quot;mylocation--122.2,44.8&quot; (without the quotes). </param>
         /// <param name="scoringProfile"> The name of a scoring profile to evaluate match scores for matching documents in order to sort the results. </param>
         /// <param name="semanticConfigurationName"> The name of a semantic configuration that will be used when processing documents for queries of type semantic. </param>
+        /// <param name="semanticErrorHandling"> Allows the user to choose whether a semantic call should fail completely (default / current behavior), or to return partial results. </param>
+        /// <param name="semanticMaxWaitInMilliseconds"> Allows the user to set an upper bound on the amount of time it takes for semantic enrichment to finish processing before the request fails. </param>
+        /// <param name="debug"> Enables a debugging tool that can be used to further explore your Semantic search results. </param>
         /// <param name="searchText"> A full-text search query expression; Use &quot;*&quot; or omit this parameter to match all documents. </param>
         /// <param name="searchFieldsRaw"> The comma-separated list of field names to which to scope the full-text search. When using fielded search (fieldName:searchExpression) in a full Lucene query, the field names of each fielded search expression take precedence over any field names listed in this parameter. </param>
         /// <param name="searchMode"> A value that specifies whether any or all of the search terms must be matched in order to count the document as a match. </param>
@@ -47,7 +50,8 @@ namespace Azure.Search.Documents
         /// <param name="size"> The number of search results to retrieve. This can be used in conjunction with $skip to implement client-side paging of search results. If results are truncated due to server-side paging, the response will include a continuation token that can be used to issue another Search request for the next page of results. </param>
         /// <param name="queryCaptionRaw"> A value that specifies whether captions should be returned as part of the search response. </param>
         /// <param name="semanticFieldsRaw"> The comma-separated list of field names used for semantic search. </param>
-        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string semanticConfigurationName, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, string queryAnswerRaw, string selectRaw, int? skip, int? size, string queryCaptionRaw, string semanticFieldsRaw)
+        /// <param name="vector"> The query parameters for vector and hybrid search queries. </param>
+        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string semanticConfigurationName, SemanticErrorHandling? semanticErrorHandling, int? semanticMaxWaitInMilliseconds, QueryDebugMode? debug, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, string queryAnswerRaw, string selectRaw, int? skip, int? size, string queryCaptionRaw, string semanticFieldsRaw, SearchQueryVector vector)
         {
             IncludeTotalCount = includeTotalCount;
             Facets = facets;
@@ -63,6 +67,9 @@ namespace Azure.Search.Documents
             ScoringParameters = scoringParameters;
             ScoringProfile = scoringProfile;
             SemanticConfigurationName = semanticConfigurationName;
+            SemanticErrorHandling = semanticErrorHandling;
+            SemanticMaxWaitInMilliseconds = semanticMaxWaitInMilliseconds;
+            Debug = debug;
             SearchText = searchText;
             SearchFieldsRaw = searchFieldsRaw;
             SearchMode = searchMode;
@@ -74,6 +81,7 @@ namespace Azure.Search.Documents
             Size = size;
             QueryCaptionRaw = queryCaptionRaw;
             SemanticFieldsRaw = semanticFieldsRaw;
+            Vector = vector;
         }
         /// <summary> A string tag that is appended to hit highlights. Must be set with highlightPreTag. Default is &amp;lt;/em&amp;gt;. </summary>
         public string HighlightPostTag { get; set; }
@@ -89,9 +97,17 @@ namespace Azure.Search.Documents
         public string SessionId { get; set; }
         /// <summary> The name of a scoring profile to evaluate match scores for matching documents in order to sort the results. </summary>
         public string ScoringProfile { get; set; }
+        /// <summary> Allows the user to choose whether a semantic call should fail completely (default / current behavior), or to return partial results. </summary>
+        public SemanticErrorHandling? SemanticErrorHandling { get; set; }
+        /// <summary> Allows the user to set an upper bound on the amount of time it takes for semantic enrichment to finish processing before the request fails. </summary>
+        public int? SemanticMaxWaitInMilliseconds { get; set; }
+        /// <summary> Enables a debugging tool that can be used to further explore your Semantic search results. </summary>
+        public QueryDebugMode? Debug { get; set; }
         /// <summary> A value that specifies whether any or all of the search terms must be matched in order to count the document as a match. </summary>
         public SearchMode? SearchMode { get; set; }
         /// <summary> The number of search results to skip. This value cannot be greater than 100,000. If you need to scan documents in sequence, but cannot use skip due to this limitation, consider using orderby on a totally-ordered key and filter with a range query instead. </summary>
         public int? Skip { get; set; }
+        /// <summary> The query parameters for vector and hybrid search queries. </summary>
+        public SearchQueryVector Vector { get; set; }
     }
 }

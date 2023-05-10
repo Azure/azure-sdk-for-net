@@ -18,7 +18,10 @@ namespace Azure.Search.Documents
     [CodeGenModel("SearchRequest")]
     public partial class SearchOptions
     {
-        private const string QueryAnswerRawSplitter = "|count-";
+        private const string QueryAnswerCountRawSplitter = "|count-";
+        private const string QueryAnswerCountRaw = "count-";
+        private const string QueryAnswerThresholdRawSplitter = "|threshold-";
+        private const string QueryAnswerThresholdRaw = "threshold-";
         private const string QueryCaptionRawSplitter = "|highlight-";
 
         /// <summary>
@@ -191,7 +194,10 @@ namespace Azure.Search.Documents
         /// <summary> A value that specifies the number of <see cref="SearchResults{T}.Answers"/> that should be returned as part of the search response. </summary>
         public int? QueryAnswerCount { get; set; }
 
-        /// <summary> Constructed from <see cref="QueryAnswer"/> and <see cref="QueryAnswerCount"/>.</summary>
+        /// <summary> A value that specifies the threshold of <see cref="SearchResults{T}.Answers"/> that should be returned as part of the search response. </summary>
+        public double? QueryAnswerThreshold { get; set; }
+
+        /// <summary> Constructed from <see cref="QueryAnswer"/>, <see cref="QueryAnswerCount"/> and <see cref="QueryAnswerThreshold"/>.</summary>
         [CodeGenMember("Answers")]
         internal string QueryAnswerRaw
         {
@@ -201,7 +207,7 @@ namespace Azure.Search.Documents
 
                 if (QueryAnswer.HasValue)
                 {
-                    queryAnswerStringValue = $"{QueryAnswer.Value}{QueryAnswerRawSplitter}{QueryAnswerCount.GetValueOrDefault(1)}";
+                    queryAnswerStringValue = $"{QueryAnswer.Value}{QueryAnswerCountRawSplitter}{QueryAnswerCount.GetValueOrDefault(1)}{QueryAnswerThresholdRawSplitter}{QueryAnswerThreshold.GetValueOrDefault(0.7)}";
                 }
 
                 return queryAnswerStringValue;
@@ -213,14 +219,15 @@ namespace Azure.Search.Documents
                 {
                     QueryAnswer = null;
                     QueryAnswerCount = null;
+                    QueryAnswerThreshold = null;
                 }
                 else
                 {
-                    if (value.Contains(QueryAnswerRawSplitter))
+                    if (value.Contains(QueryAnswerCountRawSplitter) || value.Contains(QueryAnswerThresholdRawSplitter))
                     {
-                        var queryAnswerPart = value.Substring(0, value.IndexOf(QueryAnswerRawSplitter, StringComparison.OrdinalIgnoreCase));
-                        var countPart = value.Substring(value.IndexOf(QueryAnswerRawSplitter, StringComparison.OrdinalIgnoreCase) + QueryAnswerRawSplitter.Length);
+                        string[] queryAnswerValues = value.Split('|');
 
+                        var queryAnswerPart = queryAnswerValues[0];
                         if (string.IsNullOrEmpty(queryAnswerPart))
                         {
                             QueryAnswer = null;
@@ -230,15 +237,31 @@ namespace Azure.Search.Documents
                             QueryAnswer = new QueryAnswerType(queryAnswerPart);
                         }
 
-                        if (int.TryParse(countPart, out int countValue))
+                        foreach (var queryAnswerValue in queryAnswerValues)
                         {
-                            QueryAnswerCount = countValue;
+                            if (queryAnswerValue.Contains(QueryAnswerCountRaw))
+                            {
+                                var countPart = queryAnswerValue.Substring(queryAnswerValue.IndexOf(QueryAnswerCountRaw, StringComparison.OrdinalIgnoreCase) + QueryAnswerCountRaw.Length);
+                                if (int.TryParse(countPart, out int countValue))
+                                {
+                                    QueryAnswerCount = countValue;
+                                }
+                            }
+                            else if (queryAnswerValue.Contains(QueryAnswerThresholdRaw))
+                            {
+                                var thresholdPart = queryAnswerValue.Substring(queryAnswerValue.IndexOf(QueryAnswerThresholdRaw, StringComparison.OrdinalIgnoreCase) + QueryAnswerThresholdRaw.Length);
+                                if (double.TryParse(thresholdPart, out double thresholdValue))
+                                {
+                                    QueryAnswerThreshold = thresholdValue;
+                                }
+                            }
                         }
                     }
                     else
                     {
                         QueryAnswer = new QueryAnswerType(value);
                         QueryAnswerCount = null;
+                        QueryAnswerThreshold = null;
                     }
                 }
             }
@@ -307,8 +330,8 @@ namespace Azure.Search.Documents
         /// <param name="destination">The destination options.</param>
         private static void Copy(SearchOptions source, SearchOptions destination)
         {
-            Debug.Assert(source != null);
-            Debug.Assert(destination != null);
+            System.Diagnostics.Debug.Assert(source != null);
+            System.Diagnostics.Debug.Assert(destination != null);
 
             destination.Facets = source.Facets;
             destination.Filter = source.Filter;
@@ -320,6 +343,7 @@ namespace Azure.Search.Documents
             destination.OrderBy = source.OrderBy;
             destination.QueryAnswer = source.QueryAnswer;
             destination.QueryAnswerCount = source.QueryAnswerCount;
+            destination.QueryAnswerThreshold = source.QueryAnswerThreshold;
             destination.QueryCaption = source.QueryCaption;
             destination.QueryCaptionHighlightEnabled = source.QueryCaptionHighlightEnabled;
             destination.QueryLanguage = source.QueryLanguage;
