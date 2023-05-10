@@ -93,7 +93,7 @@ directive:
 
 ### Rename Vector definition
 
- It conflicts with https://learn.microsoft.com/en-us/dotnet/api/system.numerics.vector?view=net-7.0 which is likely to be used by customers integrating with other .NET AI libraries.
+ It conflicts with https://learn.microsoft.com/dotnet/api/system.numerics.vector?view=net-7.0 which is likely to be used by customers integrating with other .NET AI libraries.
 
 ``` yaml
 directive:
