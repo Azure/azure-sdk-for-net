@@ -23,6 +23,7 @@ namespace Azure.Containers.ContainerRegistry
         private const int MaxManifestSize = 4 * 1024 * 1024;
 
         private const string MissingContentLengthMessage = "The response does not include the 'Content-Length' header.";
+        private const string InvalidContentRangeMessage = "Missing or invalid 'Content-Range' header in the response.";
 
         private readonly Uri _endpoint;
         private readonly string _registryName;
@@ -535,10 +536,27 @@ namespace Azure.Containers.ContainerRegistry
             return FormattableString.Invariant($"{offset}-{endRange}");
         }
 
-        private static long GetBlobLengthFromContentRange(string contentRange)
+        private static long GetBlobSize(Response response)
         {
-            string size = contentRange.Split('/')[1];
-            return long.Parse(size, CultureInfo.InvariantCulture);
+            if (!response.Headers.TryGetValue("Content-Range", out string contentRange) ||
+                contentRange == null)
+            {
+                throw new RequestFailedException(response.Status, InvalidContentRangeMessage);
+            }
+
+            string[] values = contentRange.Split('/');
+            if (values.Length < 2)
+            {
+                throw new RequestFailedException(response.Status, InvalidContentRangeMessage);
+            }
+
+            if (long.TryParse(values[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out long size) ||
+                size <= 0)
+            {
+                throw new RequestFailedException(response.Status, InvalidContentRangeMessage);
+            }
+
+            return size;
         }
 
         // Some streams will throw if you try to access their length so we wrap
@@ -667,11 +685,11 @@ namespace Azure.Containers.ContainerRegistry
             // This check is to address part of the service threat model.
             // If a manifest does not have a proper content length or is too big,
             // it indicates a malicious or faulty service and should not be trusted.
-            int? size = response.Headers.ContentLength ?? throw new RequestFailedException(MissingContentLengthMessage);
+            int? size = response.Headers.ContentLength ?? throw new RequestFailedException(response.Status, MissingContentLengthMessage);
 
             if (size > MaxManifestSize)
             {
-                throw new RequestFailedException("Manifest size is bigger than max allowed size of 4MB.");
+                throw new RequestFailedException(response.Status, "Manifest size is bigger than max allowed size of 4MB.");
             }
         }
 
@@ -995,7 +1013,7 @@ namespace Azure.Containers.ContainerRegistry
             using SHA256 sha256 = SHA256.Create();
 
             long blobBytes = 0;
-            long? blobLength = default;
+            long? blobSize = default;
 
             try
             {
@@ -1004,16 +1022,16 @@ namespace Azure.Containers.ContainerRegistry
                 do
                 {
                     // Request a chunk
-                    long requestLength = blobLength.HasValue ?
-                        (int)Math.Min(blobLength.Value - blobBytes, options.MaxChunkSize) :
+                    long requestLength = blobSize.HasValue ?
+                        (int)Math.Min(blobSize.Value - blobBytes, options.MaxChunkSize) :
                         options.MaxChunkSize;
                     string requestRange = new HttpRange(blobBytes, requestLength).ToString();
 
-                    var getChunkResponse = async ?
+                    ResponseWithHeaders<Stream, ContainerRegistryBlobGetChunkHeaders> getChunkResponse = async ?
                         await _blobRestClient.GetChunkAsync(_repositoryName, digest, requestRange, cancellationToken).ConfigureAwait(false) :
                         _blobRestClient.GetChunk(_repositoryName, digest, requestRange, cancellationToken);
 
-                    blobLength ??= GetBlobLengthFromContentRange(getChunkResponse.Headers.ContentRange);
+                    blobSize ??= GetBlobSize(getChunkResponse.GetRawResponse());
 
                     int chunkLength = (int)getChunkResponse.Headers.ContentLength.Value;
                     Stream responseStream = getChunkResponse.Value;
@@ -1044,7 +1062,7 @@ namespace Azure.Containers.ContainerRegistry
                     blobBytes += chunkBytes;
                     result = getChunkResponse.GetRawResponse();
                 }
-                while (blobBytes < blobLength.Value);
+                while (blobBytes < blobSize.Value);
 
                 // Complete hash computation.
                 sha256.TransformFinalBlock(buffer, 0, 0);
