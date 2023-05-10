@@ -6,6 +6,7 @@ using System;
 using Moq;
 using Mock = Moq.Mock;
 using System.Reflection;
+using System.Linq;
 
 namespace Azure.ResourceManager.Resources.Mocking
 {
@@ -36,16 +37,20 @@ namespace Azure.ResourceManager.Resources.Mocking
             var setupMethod = newMockType.GetMethod("Setup", new[] { parameterType });
 
             // TODO -- need to construct a new expression using the parameter of the new type from the old "expression"
-            var newExpression = new ChangeTypeVisitor(extensionClientType).ChangeType(expression);
+            var newExpression = new ChangeTypeVisitor(typeof(T), extensionClientType).ChangeType(expression);
             setupMethod.Invoke(newMock, new[] { newExpression });
         }
 
         internal class ChangeTypeVisitor : ExpressionVisitor
         {
+            private readonly Type _originalType;
+            private readonly Type _newType;
             private readonly ParameterExpression _newParameter;
 
-            public ChangeTypeVisitor(Type newType)
+            public ChangeTypeVisitor(Type originalType, Type newType)
             {
+                _originalType = originalType;
+                _newType = newType;
                 _newParameter = Expression.Parameter(newType);
             }
 
@@ -54,9 +59,16 @@ namespace Azure.ResourceManager.Resources.Mocking
                 return _newParameter;
             }
 
-            protected override Expression VisitInvocation(InvocationExpression node)
+            protected override Expression VisitMethodCall(MethodCallExpression node)
             {
-                return base.VisitInvocation(node);
+                if (node.Object != null && node.Object.Type == _originalType)
+                {
+                    var newMethodInfo = _newType.GetMethod(node.Method.Name, node.Method.GetParameters().Select(p => p.ParameterType).ToArray());
+                    var newObject = Visit(node.Object);
+                    var newArguments = node.Arguments.Select(Visit);
+                    return Expression.Call(newObject, newMethodInfo, newArguments);
+                }
+                return base.VisitMethodCall(node);
             }
 
             public Expression ChangeType(Expression expression)
