@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// The name of the resource for which availability needs to be checked.
         /// Serialized Name: CheckNameAvailabilityRequest.name
         /// </summary>
-        public string Name { get; set; }
+        public string ResourceName { get; set; }
         /// <summary>
         /// The resource type.
         /// Serialized Name: CheckNameAvailabilityRequest.type

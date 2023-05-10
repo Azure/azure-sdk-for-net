@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Initializes a new instance of SelfHelpDiagnostic. </summary>
         internal SelfHelpDiagnostic()
         {
-            Insights = new ChangeTrackingList<DiagnosticInsight>();
+            DiagnosticInsights = new ChangeTrackingList<DiagnosticInsight>();
         }
 
         /// <summary> Initializes a new instance of SelfHelpDiagnostic. </summary>
@@ -27,24 +27,24 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// Solution Id
         /// Serialized Name: Diagnostic.solutionId
         /// </param>
-        /// <param name="status">
+        /// <param name="diagnosticStatus">
         /// Denotes the status of the diagnostic resource.
         /// Serialized Name: Diagnostic.status
         /// </param>
-        /// <param name="insights">
+        /// <param name="diagnosticInsights">
         /// The problems (if any) detected by this insight.
         /// Serialized Name: Diagnostic.insights
         /// </param>
-        /// <param name="error">
+        /// <param name="errorInfo">
         /// Error definition.
         /// Serialized Name: Diagnostic.error
         /// </param>
-        internal SelfHelpDiagnostic(string solutionId, DiagnosticStatus? status, IReadOnlyList<DiagnosticInsight> insights, SelfHelpError error)
+        internal SelfHelpDiagnostic(string solutionId, DiagnosticStatus? diagnosticStatus, IReadOnlyList<DiagnosticInsight> diagnosticInsights, SelfHelpError errorInfo)
         {
             SolutionId = solutionId;
-            Status = status;
-            Insights = insights;
-            Error = error;
+            DiagnosticStatus = diagnosticStatus;
+            DiagnosticInsights = diagnosticInsights;
+            ErrorInfo = errorInfo;
         }
 
         /// <summary>
@@ -56,16 +56,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// Denotes the status of the diagnostic resource.
         /// Serialized Name: Diagnostic.status
         /// </summary>
-        public DiagnosticStatus? Status { get; }
+        public DiagnosticStatus? DiagnosticStatus { get; }
         /// <summary>
         /// The problems (if any) detected by this insight.
         /// Serialized Name: Diagnostic.insights
         /// </summary>
-        public IReadOnlyList<DiagnosticInsight> Insights { get; }
+        public IReadOnlyList<DiagnosticInsight> DiagnosticInsights { get; }
         /// <summary>
         /// Error definition.
         /// Serialized Name: Diagnostic.error
         /// </summary>
-        public SelfHelpError Error { get; }
+        public SelfHelpError ErrorInfo { get; }
     }
 }

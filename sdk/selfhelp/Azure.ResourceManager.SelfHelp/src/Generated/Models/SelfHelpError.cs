@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Initializes a new instance of SelfHelpError. </summary>
         internal SelfHelpError()
         {
-            Details = new ChangeTrackingList<SelfHelpError>();
+            ErrorDetails = new ChangeTrackingList<SelfHelpError>();
         }
 
         /// <summary> Initializes a new instance of SelfHelpError. </summary>
@@ -31,20 +31,20 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// Service specific error type which serves as additional context for the error herein.
         /// Serialized Name: Error.type
         /// </param>
-        /// <param name="message">
+        /// <param name="errorMessage">
         /// Description of the error.
         /// Serialized Name: Error.message
         /// </param>
-        /// <param name="details">
+        /// <param name="errorDetails">
         /// An array of additional nested error response info objects, as described by this contract.
         /// Serialized Name: Error.details
         /// </param>
-        internal SelfHelpError(string errorCode, string errorType, string message, IReadOnlyList<SelfHelpError> details)
+        internal SelfHelpError(string errorCode, string errorType, string errorMessage, IReadOnlyList<SelfHelpError> errorDetails)
         {
             ErrorCode = errorCode;
             ErrorType = errorType;
-            Message = message;
-            Details = details;
+            ErrorMessage = errorMessage;
+            ErrorDetails = errorDetails;
         }
 
         /// <summary>
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// Description of the error.
         /// Serialized Name: Error.message
         /// </summary>
-        public string Message { get; }
+        public string ErrorMessage { get; }
         /// <summary>
         /// An array of additional nested error response info objects, as described by this contract.
         /// Serialized Name: Error.details
         /// </summary>
-        public IReadOnlyList<SelfHelpError> Details { get; }
+        public IReadOnlyList<SelfHelpError> ErrorDetails { get; }
     }
 }

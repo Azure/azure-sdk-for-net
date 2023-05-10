@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SelfHelp
         public SelfHelpDiagnosticResourceData()
         {
             GlobalParameters = new ChangeTrackingDictionary<string, string>();
-            Insights = new ChangeTrackingList<DiagnosticInvocation>();
+            DiagnosticInsights = new ChangeTrackingList<DiagnosticInvocation>();
             Diagnostics = new ChangeTrackingList<SelfHelpDiagnostic>();
         }
 
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// Global parameters that can be passed to all solutionIds.
         /// Serialized Name: DiagnosticResource.properties.globalParameters
         /// </param>
-        /// <param name="insights">
+        /// <param name="diagnosticInsights">
         /// SolutionIds that are needed to be invoked.
         /// Serialized Name: DiagnosticResource.properties.insights
         /// </param>
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.SelfHelp
         /// Array of Diagnostics.
         /// Serialized Name: DiagnosticResource.properties.diagnostics
         /// </param>
-        internal SelfHelpDiagnosticResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> globalParameters, IList<DiagnosticInvocation> insights, string acceptedTime, ProvisioningState? provisioningState, IReadOnlyList<SelfHelpDiagnostic> diagnostics) : base(id, name, resourceType, systemData)
+        internal SelfHelpDiagnosticResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> globalParameters, IList<DiagnosticInvocation> diagnosticInsights, string acceptedTime, ProvisioningState? provisioningState, IReadOnlyList<SelfHelpDiagnostic> diagnostics) : base(id, name, resourceType, systemData)
         {
             GlobalParameters = globalParameters;
-            Insights = insights;
+            DiagnosticInsights = diagnosticInsights;
             AcceptedTime = acceptedTime;
             ProvisioningState = provisioningState;
             Diagnostics = diagnostics;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// SolutionIds that are needed to be invoked.
         /// Serialized Name: DiagnosticResource.properties.insights
         /// </summary>
-        public IList<DiagnosticInvocation> Insights { get; }
+        public IList<DiagnosticInvocation> DiagnosticInsights { get; }
         /// <summary>
         /// Diagnostic Request Accepted time.
         /// Serialized Name: DiagnosticResource.properties.acceptedAt

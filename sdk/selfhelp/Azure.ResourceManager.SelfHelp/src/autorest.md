@@ -64,5 +64,17 @@ rename-mapping:
   Insight.results: InsightResults
   Insight.importanceLevel: InsightImportanceLevel
   Error.code: ErrorCode
+  CheckNameAvailabilityResponse.nameAvailable: IsNameAvailable
+  CheckNameAvailabilityResponse.reason: NotAvailableReason
+  CheckNameAvailabilityResponse.message: ErrorMessage
+  CheckNameAvailabilityRequest.name: ResourceName
+  DiscoveryResponse.value: SolutionMetaData
+  Diagnostic.status: DiagnosticStatus
+  Diagnostic.insights: DiagnosticInsights
+  Diagnostic.error: ErrorInfo
+  Error.message: ErrorMessage
+  Error.details: ErrorDetails
+  SolutionMetadataResource.properties.description: SolutionDescription
+  DiagnosticResource.properties.insights: DiagnosticInsights
 
 ```

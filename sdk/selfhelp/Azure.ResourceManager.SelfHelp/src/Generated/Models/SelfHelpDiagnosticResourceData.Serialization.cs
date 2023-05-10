@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.SelfHelp
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Insights))
+            if (Optional.IsCollectionDefined(DiagnosticInsights))
             {
                 writer.WritePropertyName("insights"u8);
                 writer.WriteStartArray();
-                foreach (var item in Insights)
+                foreach (var item in DiagnosticInsights)
                 {
                     writer.WriteObjectValue(item);
                 }
