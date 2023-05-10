@@ -155,33 +155,6 @@ namespace Azure.AI.AnomalyDetector.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DetectUnivariateEntireSeries_Convenience_Async()
-        {
-            var credential = new AzureKeyCredential("<key>");
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new AnomalyDetectorClient(endpoint, credential);
-
-            var options = new UnivariateDetectionOptions(new TimeSeriesPoint[]
-            {
-    new TimeSeriesPoint(3.14f)
-{
-        Timestamp = DateTimeOffset.UtcNow,
-    }
-            })
-            {
-                Granularity = TimeGranularity.Yearly,
-                CustomInterval = 1234,
-                Period = 1234,
-                MaxAnomalyRatio = 3.14f,
-                Sensitivity = 1234,
-                ImputeMode = ImputeMode.Auto,
-                ImputeFixedValue = 3.14f,
-            };
-            var result = await client.DetectUnivariateEntireSeriesAsync(options);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_DetectUnivariateLastPoint()
         {
             var credential = new AzureKeyCredential("<key>");
@@ -493,7 +466,6 @@ namespace Azure.AI.AnomalyDetector.Samples
             Console.WriteLine(result.GetProperty("resultId").ToString());
             Console.WriteLine(result.GetProperty("summary").GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("dataSource").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("topContributorCount").ToString());
             Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("endTime").ToString());
             Console.WriteLine(result.GetProperty("results")[0].GetProperty("timestamp").ToString());
@@ -548,7 +520,6 @@ namespace Azure.AI.AnomalyDetector.Samples
             Console.WriteLine(result.GetProperty("resultId").ToString());
             Console.WriteLine(result.GetProperty("summary").GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("dataSource").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("topContributorCount").ToString());
             Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("endTime").ToString());
             Console.WriteLine(result.GetProperty("results")[0].GetProperty("timestamp").ToString());
@@ -951,7 +922,6 @@ namespace Azure.AI.AnomalyDetector.Samples
             var data = new
             {
                 dataSource = "<dataSource>",
-                topContributorCount = 1234,
                 startTime = "2022-05-10T14:57:31.2311892-04:00",
                 endTime = "2022-05-10T14:57:31.2311892-04:00",
             };
@@ -962,7 +932,6 @@ namespace Azure.AI.AnomalyDetector.Samples
             Console.WriteLine(result.GetProperty("resultId").ToString());
             Console.WriteLine(result.GetProperty("summary").GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("dataSource").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("topContributorCount").ToString());
             Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("endTime").ToString());
             Console.WriteLine(result.GetProperty("results")[0].GetProperty("timestamp").ToString());
@@ -1022,7 +991,6 @@ namespace Azure.AI.AnomalyDetector.Samples
             var data = new
             {
                 dataSource = "<dataSource>",
-                topContributorCount = 1234,
                 startTime = "2022-05-10T14:57:31.2311892-04:00",
                 endTime = "2022-05-10T14:57:31.2311892-04:00",
             };
@@ -1033,7 +1001,6 @@ namespace Azure.AI.AnomalyDetector.Samples
             Console.WriteLine(result.GetProperty("resultId").ToString());
             Console.WriteLine(result.GetProperty("summary").GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("dataSource").ToString());
-            Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("topContributorCount").ToString());
             Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("endTime").ToString());
             Console.WriteLine(result.GetProperty("results")[0].GetProperty("timestamp").ToString());
@@ -1090,7 +1057,10 @@ namespace Azure.AI.AnomalyDetector.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new AnomalyDetectorClient(endpoint, credential);
 
-            var options = new MultivariateBatchDetectionOptions("<dataSource>", 1234, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow);
+            var options = new MultivariateBatchDetectionOptions("<dataSource>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow)
+            {
+                TopContributorCount = 1234,
+            };
             var result = await client.DetectMultivariateBatchAnomalyAsync("<modelId>", options);
         }
 
