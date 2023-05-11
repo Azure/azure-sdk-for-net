@@ -523,7 +523,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Act
             Response<DownloadRegistryBlobStreamingResult> downloadResult = await client.DownloadBlobStreamingAsync(digest);
-            Stream downloadedStream = downloadResult.Value.Content;
+            using Stream downloadedStream = downloadResult.Value.Content;
             BinaryData content = BinaryData.FromStream(downloadedStream);
 
             // Assert
@@ -532,7 +532,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.AreEqual(data, content.ToArray());
 
             // Clean up
-            downloadedStream.Dispose();
             await client.DeleteBlobAsync(digest);
         }
 

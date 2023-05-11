@@ -28,7 +28,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The callLocator.
         /// </summary>
-        public Uri RecordingStateCallbackEndpoint { get; set; }
+        public Uri RecordingStateCallbackUri { get; set; }
 
         /// <summary>
         /// The recording channel.
@@ -53,6 +53,14 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public IList<CommunicationIdentifier> AudioChannelParticipantOrdering { get; } =
             new List<CommunicationIdentifier>();
+
+        /// <summary>
+        /// The channel affinity of call recording
+        /// When &apos;recordingChannelType&apos; is set to &apos;unmixed&apos;, if channelAffinity is not specified, &apos;channel&apos; will be automatically assigned.
+        /// Channel-Participant mapping details can be found in the metadata of the recording.
+        /// ///
+        /// </summary>
+        public IList<ChannelAffinity> ChannelAffinity { get; set; }
 
         /// <summary> (Optional) Used to specify external storage for call recording. </summary>
         public ExternalStorage ExternalStorage { get; set; }

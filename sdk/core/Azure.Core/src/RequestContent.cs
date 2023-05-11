@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
-using Azure.Core.Buffers;
-using System.Threading.Tasks;
-using System.Threading;
 using System.Buffers;
-using Azure.Core.Serialization;
+using System.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core.Buffers;
+using Azure.Core.Serialization;
 
 namespace Azure.Core
 {
@@ -70,13 +70,6 @@ namespace Azure.Core
         /// <param name="content">The <see cref="BinaryData"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="BinaryData"/>.</returns>
         public static RequestContent Create(BinaryData content) => new MemoryContent(content.ToMemory());
-
-        /// <summary>
-        /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="DynamicData"/>.
-        /// </summary>
-        /// <param name="content">The <see cref="DynamicData"/> to use.</param>
-        /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="DynamicData"/>.</returns>
-        public static RequestContent Create(DynamicData content) => new DynamicDataContent(content);
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
@@ -151,7 +144,8 @@ namespace Azure.Core
                     {
                         CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
                         var read = _stream.Read(buffer, 0, buffer.Length);
-                        if (read == 0) { break; }
+                        if (read == 0)
+                        { break; }
                         CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
                         stream.Write(buffer, 0, read);
                     }
@@ -273,35 +267,6 @@ namespace Azure.Core
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
                 await stream.WriteAsync(_bytes, cancellation).ConfigureAwait(false);
-            }
-        }
-
-        private sealed class DynamicDataContent : RequestContent
-        {
-            private readonly DynamicData _data;
-
-            public DynamicDataContent(DynamicData data) => _data = data;
-
-            public override void Dispose()
-            {
-                _data.Dispose();
-            }
-
-            public override void WriteTo(Stream stream, CancellationToken cancellation)
-            {
-                _data.WriteTo(stream);
-            }
-
-            public override bool TryComputeLength(out long length)
-            {
-                length = default;
-                return false;
-            }
-
-            public override Task WriteToAsync(Stream stream, CancellationToken cancellation)
-            {
-                _data.WriteTo(stream);
-                return Task.CompletedTask;
             }
         }
     }

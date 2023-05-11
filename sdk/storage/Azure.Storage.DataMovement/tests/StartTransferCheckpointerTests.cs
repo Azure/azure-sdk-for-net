@@ -29,6 +29,7 @@ namespace Azure.Storage.DataMovement.Tests
         // the path are not stored in the job plan file
         // We expect only the path and the URL without the query
         // to be stored
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/36016")]
         [RecordedTest]
         public async Task CheckpointerWithSasAsync()
         {
