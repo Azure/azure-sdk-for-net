@@ -15,13 +15,11 @@ namespace Azure.Communication.CallAutomation
         /// Creates a new instance of the DialogOptions.
         /// </summary>
         /// <param name="dialogInputType"></param>
-        /// <param name="targetParticipant"></param>
         /// <param name="botId"></param>
         /// <param name="dialogContext"></param>
-        public StartDialogOptions(DialogInputType dialogInputType, CommunicationIdentifier targetParticipant, Guid botId, IDictionary<string, object> dialogContext)
+        public StartDialogOptions(DialogInputType dialogInputType, Guid botId, IDictionary<string, object> dialogContext)
         {
             DialogInputType = dialogInputType;
-            TargetParticipant = targetParticipant;
             BotId = botId;
             DialogContext = dialogContext;
         }
@@ -30,8 +28,6 @@ namespace Azure.Communication.CallAutomation
         public DialogInputType DialogInputType { get; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
-        /// <summary> Target participant of dialog. </summary>
-        public CommunicationIdentifier TargetParticipant { get; }
         /// <summary> Bot identifier. </summary>
         public Guid BotId { get; }
         /// <summary> Dialog context. </summary>
