@@ -83,14 +83,14 @@
     <!-- Azure SDK packages -->
 	  <PackageReference Update="Azure.Communication.Identity" Version="1.2.0" />
     <PackageReference Update="Azure.Communication.Common" Version="1.2.1" />
-    <PackageReference Update="Azure.Core" Version="1.31.0" />
+    <PackageReference Update="Azure.Core" Version="1.32.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.3.0" />
-    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.25" />
+    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.27" />
     <PackageReference Update="Azure.Data.SchemaRegistry" Version="1.2.0" />
     <PackageReference Update="Azure.Data.Tables" Version="12.8.0" />
-    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.9.0" />
+    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.9.1" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.14.1" />
-    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.13.1" />
+    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.14.0" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.2.0" />
     <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
     <PackageReference Update="Azure.Identity" Version="1.7.0" />
@@ -118,7 +118,7 @@
 
     <!-- OpenTelemetry dependency approved for Azure.Monitor.OpenTelemetry.Exporter package only -->
     <PackageReference Update="OpenTelemetry" Version="1.4.0"  Condition="'$(MSBuildProjectName)' == 'Azure.Monitor.OpenTelemetry.Exporter'" />
-    <PackageReference Update="OpenTelemetry.Extensions.AzureMonitor" VersionOverride="1.0.0-beta.3" />
+    <PackageReference Update="OpenTelemetry.Extensions.AzureMonitor" VersionOverride="1.0.0-beta.4" />
     <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.4.0" />
     <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc9.14" />
     <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc9.14" />

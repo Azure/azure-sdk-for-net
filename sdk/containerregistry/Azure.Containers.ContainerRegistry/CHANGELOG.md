@@ -2,13 +2,9 @@
 
 ## 1.1.0-beta.10 (Unreleased)
 
-### Features Added
-
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Added sanity check for manifest size at download time - if manifest is bigger than 4MB, `RequestFailedException` will be thrown.
 
 ## 1.1.0-beta.9 (2023-04-11)
 
