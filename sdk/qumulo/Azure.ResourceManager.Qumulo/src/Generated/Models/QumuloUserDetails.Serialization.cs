@@ -15,8 +15,11 @@ namespace Azure.ResourceManager.Qumulo.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("email"u8);
-            writer.WriteStringValue(Email);
+            if (Optional.IsDefined(Email))
+            {
+                writer.WritePropertyName("email"u8);
+                writer.WriteStringValue(Email);
+            }
             writer.WriteEndObject();
         }
 
@@ -26,7 +29,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             {
                 return null;
             }
-            string email = default;
+            Optional<string> email = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("email"u8))
@@ -35,7 +38,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                     continue;
                 }
             }
-            return new QumuloUserDetails(email);
+            return new QumuloUserDetails(email.Value);
         }
     }
 }

@@ -69,6 +69,7 @@
     "fhir",
     "finalizer",
     "finalizers",
+    "hnsw",
     "illumos",
     "interventional",
     "ints",

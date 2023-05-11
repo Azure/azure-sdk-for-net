@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.ArcScVmm
             _operation = OperationInternal.Succeeded(response);
         }
 
-        internal ArcScVmmArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        internal ArcScVmmArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
-            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
+            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
             _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response, "ArcScVmmArmOperation", fallbackStrategy: new SequentialDelayStrategy());
         }
 

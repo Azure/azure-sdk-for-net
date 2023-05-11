@@ -21,7 +21,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-Response response = await client.GetEnvironmentByUserAsync("<environmentName>", <me>);
+Response response = await client.GetEnvironmentByUserAsync("<environmentName>", "me", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -39,28 +39,6 @@ Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").Get
 Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetEnvironmentByUser(string,string,RequestContext)">
 <example>
@@ -82,7 +60,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-Response response = client.GetEnvironmentByUser("<environmentName>", <me>);
+Response response = client.GetEnvironmentByUser("<environmentName>", "me", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -100,28 +78,6 @@ Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").Get
 Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-
-</remarks>
     </member>
     <member name="UpdateEnvironmentAsync(string,RequestContent,string,RequestContext)">
 <example>
@@ -166,7 +122,7 @@ var data = new {
     },
 };
 
-Response response = await client.UpdateEnvironmentAsync("<environmentName>", RequestContent.Create(data), <me>);
+Response response = await client.UpdateEnvironmentAsync("<environmentName>", RequestContent.Create(data), "me", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -184,47 +140,6 @@ Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").Get
 Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-<details><summary>Environment</summary>Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-</details>
-
-Response Body:
-
-Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-
-</remarks>
     </member>
     <member name="UpdateEnvironment(string,RequestContent,string,RequestContext)">
 <example>
@@ -269,7 +184,7 @@ var data = new {
     },
 };
 
-Response response = client.UpdateEnvironment("<environmentName>", RequestContent.Create(data), <me>);
+Response response = client.UpdateEnvironment("<environmentName>", RequestContent.Create(data), "me", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -287,47 +202,6 @@ Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").Get
 Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-<details><summary>Environment</summary>Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-</details>
-
-Response Body:
-
-Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetCatalogItemAsync(string,RequestContext)">
 <example>
@@ -337,7 +211,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-Response response = await client.GetCatalogItemAsync("<catalogItemId>");
+Response response = await client.GetCatalogItemAsync("<catalogItemId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -345,20 +219,6 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("catalogName").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>CatalogItem</c>:
-<code>{
-  id: string, # Optional. Unique identifier of the catalog item.
-  name: string, # Optional. Name of the catalog item.
-  catalogName: string, # Optional. Name of the catalog.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetCatalogItem(string,RequestContext)">
 <example>
@@ -368,7 +228,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-Response response = client.GetCatalogItem("<catalogItemId>");
+Response response = client.GetCatalogItem("<catalogItemId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -376,20 +236,6 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("catalogName").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>CatalogItem</c>:
-<code>{
-  id: string, # Optional. Unique identifier of the catalog item.
-  name: string, # Optional. Name of the catalog item.
-  catalogName: string, # Optional. Name of the catalog.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetCatalogItemVersionAsync(string,string,RequestContext)">
 <example>
@@ -399,7 +245,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-Response response = await client.GetCatalogItemVersionAsync("<catalogItemId>", "<version>");
+Response response = await client.GetCatalogItemVersionAsync("<catalogItemId>", "<version>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("catalogItemId").ToString());
@@ -438,52 +284,6 @@ Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("eligibleForLatestVersion").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>CatalogItemVersion</c>:
-<code>{
-  catalogItemId: string, # Optional. Unique identifier of the catalog item.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  catalogName: string, # Optional. Name of the catalog.
-  version: string, # Optional. The version of the catalog item.
-  summary: string, # Optional. A short summary of the catalog item.
-  description: string, # Optional. A long description of the catalog item.
-  templatePath: string, # Optional. Path to the catalog item entrypoint file.
-  parametersSchema: string, # Optional. JSON schema defining the parameters object passed to actions
-  parameters: [
-    {
-      id: string, # Optional. Unique ID of the parameter
-      name: string, # Optional. Display name of the parameter
-      description: string, # Optional. Description of the parameter
-      default: any, # Optional. Default value of the parameter
-      type: &quot;array&quot; | &quot;boolean&quot; | &quot;integer&quot; | &quot;null&quot; | &quot;number&quot; | &quot;object&quot; | &quot;string&quot;, # Optional. A string of one of the basic JSON types (number, integer, null, array, object, boolean, string)
-      readOnly: boolean, # Optional. Whether or not this parameter is read-only.  If true, default should have a value.
-      required: boolean, # Optional. Whether or not this parameter is required
-      allowed: [any], # Optional. An array of allowed values
-    }
-  ], # Optional. Input parameters passed to actions
-  actions: [
-    {
-      id: string, # Optional. Unique identifier of the action
-      name: string, # Optional. Display name of the action
-      description: string, # Optional. Description of the action
-      parametersSchema: string, # Optional. JSON schema defining the parameters specific to the custom action
-      parameters: [CatalogItemParameter], # Optional. Input parameters passed to the action
-      type: &quot;Custom&quot; | &quot;Deploy&quot; | &quot;Delete&quot;, # Optional. The action type.
-      typeName: string, # Optional. Name of the custom action type
-      runner: string, # Optional. The container image to use to execute the action
-    }
-  ], # Optional. Custom actions for the catalog item.
-  runner: string, # Optional. The default container image to use to execute actions
-  status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Defines whether the specific catalog item version can be used.
-  eligibleForLatestVersion: boolean, # Optional. Whether the version is eligible to be the latest version.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetCatalogItemVersion(string,string,RequestContext)">
 <example>
@@ -493,7 +293,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-Response response = client.GetCatalogItemVersion("<catalogItemId>", "<version>");
+Response response = client.GetCatalogItemVersion("<catalogItemId>", "<version>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("catalogItemId").ToString());
@@ -532,52 +332,6 @@ Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("eligibleForLatestVersion").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>CatalogItemVersion</c>:
-<code>{
-  catalogItemId: string, # Optional. Unique identifier of the catalog item.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  catalogName: string, # Optional. Name of the catalog.
-  version: string, # Optional. The version of the catalog item.
-  summary: string, # Optional. A short summary of the catalog item.
-  description: string, # Optional. A long description of the catalog item.
-  templatePath: string, # Optional. Path to the catalog item entrypoint file.
-  parametersSchema: string, # Optional. JSON schema defining the parameters object passed to actions
-  parameters: [
-    {
-      id: string, # Optional. Unique ID of the parameter
-      name: string, # Optional. Display name of the parameter
-      description: string, # Optional. Description of the parameter
-      default: any, # Optional. Default value of the parameter
-      type: &quot;array&quot; | &quot;boolean&quot; | &quot;integer&quot; | &quot;null&quot; | &quot;number&quot; | &quot;object&quot; | &quot;string&quot;, # Optional. A string of one of the basic JSON types (number, integer, null, array, object, boolean, string)
-      readOnly: boolean, # Optional. Whether or not this parameter is read-only.  If true, default should have a value.
-      required: boolean, # Optional. Whether or not this parameter is required
-      allowed: [any], # Optional. An array of allowed values
-    }
-  ], # Optional. Input parameters passed to actions
-  actions: [
-    {
-      id: string, # Optional. Unique identifier of the action
-      name: string, # Optional. Display name of the action
-      description: string, # Optional. Description of the action
-      parametersSchema: string, # Optional. JSON schema defining the parameters specific to the custom action
-      parameters: [CatalogItemParameter], # Optional. Input parameters passed to the action
-      type: &quot;Custom&quot; | &quot;Deploy&quot; | &quot;Delete&quot;, # Optional. The action type.
-      typeName: string, # Optional. Name of the custom action type
-      runner: string, # Optional. The container image to use to execute the action
-    }
-  ], # Optional. Custom actions for the catalog item.
-  runner: string, # Optional. The default container image to use to execute actions
-  status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Defines whether the specific catalog item version can be used.
-  eligibleForLatestVersion: boolean, # Optional. Whether the version is eligible to be the latest version.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetEnvironmentsAsync(int?,RequestContext)">
 <example>
@@ -587,9 +341,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-await foreach (var data in client.GetEnvironmentsAsync())
+await foreach (var item in client.GetEnvironmentsAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("environmentType").ToString());
     Console.WriteLine(result.ToString());
 }
@@ -600,9 +354,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-await foreach (var data in client.GetEnvironmentsAsync(1234))
+await foreach (var item in client.GetEnvironmentsAsync(1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("environmentType").ToString());
     Console.WriteLine(result.GetProperty("user").ToString());
@@ -619,28 +373,6 @@ await foreach (var data in client.GetEnvironmentsAsync(1234))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>EnvironmentListResultValue</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetEnvironments(int?,RequestContext)">
 <example>
@@ -650,9 +382,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-foreach (var data in client.GetEnvironments())
+foreach (var item in client.GetEnvironments())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("environmentType").ToString());
     Console.WriteLine(result.ToString());
 }
@@ -663,9 +395,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-foreach (var data in client.GetEnvironments(1234))
+foreach (var item in client.GetEnvironments(1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("environmentType").ToString());
     Console.WriteLine(result.GetProperty("user").ToString());
@@ -682,28 +414,6 @@ foreach (var data in client.GetEnvironments(1234))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>EnvironmentListResultValue</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetEnvironmentsByUserAsync(string,int?,RequestContext)">
 <example>
@@ -713,9 +423,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-await foreach (var data in client.GetEnvironmentsByUserAsync())
+await foreach (var item in client.GetEnvironmentsByUserAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("environmentType").ToString());
     Console.WriteLine(result.ToString());
 }
@@ -726,9 +436,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-await foreach (var data in client.GetEnvironmentsByUserAsync(<me>, 1234))
+await foreach (var item in client.GetEnvironmentsByUserAsync("me", 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("environmentType").ToString());
     Console.WriteLine(result.GetProperty("user").ToString());
@@ -745,28 +455,6 @@ await foreach (var data in client.GetEnvironmentsByUserAsync(<me>, 1234))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>EnvironmentListResultValue</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetEnvironmentsByUser(string,int?,RequestContext)">
 <example>
@@ -776,9 +464,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-foreach (var data in client.GetEnvironmentsByUser())
+foreach (var item in client.GetEnvironmentsByUser())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("environmentType").ToString());
     Console.WriteLine(result.ToString());
 }
@@ -789,9 +477,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-foreach (var data in client.GetEnvironmentsByUser(<me>, 1234))
+foreach (var item in client.GetEnvironmentsByUser("me", 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("environmentType").ToString());
     Console.WriteLine(result.GetProperty("user").ToString());
@@ -808,28 +496,6 @@ foreach (var data in client.GetEnvironmentsByUser(<me>, 1234))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>EnvironmentListResultValue</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetCatalogItemsAsync(int?,RequestContext)">
 <example>
@@ -839,9 +505,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-await foreach (var data in client.GetCatalogItemsAsync())
+await foreach (var item in client.GetCatalogItemsAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -851,29 +517,15 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-await foreach (var data in client.GetCatalogItemsAsync(1234))
+await foreach (var item in client.GetCatalogItemsAsync(1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("catalogName").ToString());
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>CatalogItemListResultValue</c>:
-<code>{
-  id: string, # Optional. Unique identifier of the catalog item.
-  name: string, # Optional. Name of the catalog item.
-  catalogName: string, # Optional. Name of the catalog.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetCatalogItems(int?,RequestContext)">
 <example>
@@ -883,9 +535,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-foreach (var data in client.GetCatalogItems())
+foreach (var item in client.GetCatalogItems())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -895,29 +547,15 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-foreach (var data in client.GetCatalogItems(1234))
+foreach (var item in client.GetCatalogItems(1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("catalogName").ToString());
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>CatalogItemListResultValue</c>:
-<code>{
-  id: string, # Optional. Unique identifier of the catalog item.
-  name: string, # Optional. Name of the catalog item.
-  catalogName: string, # Optional. Name of the catalog.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetCatalogItemVersionsAsync(string,int?,RequestContext)">
 <example>
@@ -927,9 +565,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-await foreach (var data in client.GetCatalogItemVersionsAsync("<catalogItemId>"))
+await foreach (var item in client.GetCatalogItemVersionsAsync("<catalogItemId>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -939,9 +577,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-await foreach (var data in client.GetCatalogItemVersionsAsync("<catalogItemId>", 1234))
+await foreach (var item in client.GetCatalogItemVersionsAsync("<catalogItemId>", 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("catalogItemId").ToString());
     Console.WriteLine(result.GetProperty("catalogItemName").ToString());
     Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -979,52 +617,6 @@ await foreach (var data in client.GetCatalogItemVersionsAsync("<catalogItemId>",
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>CatalogItemVersionListResultValue</c>:
-<code>{
-  catalogItemId: string, # Optional. Unique identifier of the catalog item.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  catalogName: string, # Optional. Name of the catalog.
-  version: string, # Optional. The version of the catalog item.
-  summary: string, # Optional. A short summary of the catalog item.
-  description: string, # Optional. A long description of the catalog item.
-  templatePath: string, # Optional. Path to the catalog item entrypoint file.
-  parametersSchema: string, # Optional. JSON schema defining the parameters object passed to actions
-  parameters: [
-    {
-      id: string, # Optional. Unique ID of the parameter
-      name: string, # Optional. Display name of the parameter
-      description: string, # Optional. Description of the parameter
-      default: any, # Optional. Default value of the parameter
-      type: &quot;array&quot; | &quot;boolean&quot; | &quot;integer&quot; | &quot;null&quot; | &quot;number&quot; | &quot;object&quot; | &quot;string&quot;, # Optional. A string of one of the basic JSON types (number, integer, null, array, object, boolean, string)
-      readOnly: boolean, # Optional. Whether or not this parameter is read-only.  If true, default should have a value.
-      required: boolean, # Optional. Whether or not this parameter is required
-      allowed: [any], # Optional. An array of allowed values
-    }
-  ], # Optional. Input parameters passed to actions
-  actions: [
-    {
-      id: string, # Optional. Unique identifier of the action
-      name: string, # Optional. Display name of the action
-      description: string, # Optional. Description of the action
-      parametersSchema: string, # Optional. JSON schema defining the parameters specific to the custom action
-      parameters: [CatalogItemParameter], # Optional. Input parameters passed to the action
-      type: &quot;Custom&quot; | &quot;Deploy&quot; | &quot;Delete&quot;, # Optional. The action type.
-      typeName: string, # Optional. Name of the custom action type
-      runner: string, # Optional. The container image to use to execute the action
-    }
-  ], # Optional. Custom actions for the catalog item.
-  runner: string, # Optional. The default container image to use to execute actions
-  status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Defines whether the specific catalog item version can be used.
-  eligibleForLatestVersion: boolean, # Optional. Whether the version is eligible to be the latest version.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetCatalogItemVersions(string,int?,RequestContext)">
 <example>
@@ -1034,9 +626,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-foreach (var data in client.GetCatalogItemVersions("<catalogItemId>"))
+foreach (var item in client.GetCatalogItemVersions("<catalogItemId>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -1046,9 +638,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-foreach (var data in client.GetCatalogItemVersions("<catalogItemId>", 1234))
+foreach (var item in client.GetCatalogItemVersions("<catalogItemId>", 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("catalogItemId").ToString());
     Console.WriteLine(result.GetProperty("catalogItemName").ToString());
     Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -1086,52 +678,6 @@ foreach (var data in client.GetCatalogItemVersions("<catalogItemId>", 1234))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>CatalogItemVersionListResultValue</c>:
-<code>{
-  catalogItemId: string, # Optional. Unique identifier of the catalog item.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  catalogName: string, # Optional. Name of the catalog.
-  version: string, # Optional. The version of the catalog item.
-  summary: string, # Optional. A short summary of the catalog item.
-  description: string, # Optional. A long description of the catalog item.
-  templatePath: string, # Optional. Path to the catalog item entrypoint file.
-  parametersSchema: string, # Optional. JSON schema defining the parameters object passed to actions
-  parameters: [
-    {
-      id: string, # Optional. Unique ID of the parameter
-      name: string, # Optional. Display name of the parameter
-      description: string, # Optional. Description of the parameter
-      default: any, # Optional. Default value of the parameter
-      type: &quot;array&quot; | &quot;boolean&quot; | &quot;integer&quot; | &quot;null&quot; | &quot;number&quot; | &quot;object&quot; | &quot;string&quot;, # Optional. A string of one of the basic JSON types (number, integer, null, array, object, boolean, string)
-      readOnly: boolean, # Optional. Whether or not this parameter is read-only.  If true, default should have a value.
-      required: boolean, # Optional. Whether or not this parameter is required
-      allowed: [any], # Optional. An array of allowed values
-    }
-  ], # Optional. Input parameters passed to actions
-  actions: [
-    {
-      id: string, # Optional. Unique identifier of the action
-      name: string, # Optional. Display name of the action
-      description: string, # Optional. Description of the action
-      parametersSchema: string, # Optional. JSON schema defining the parameters specific to the custom action
-      parameters: [CatalogItemParameter], # Optional. Input parameters passed to the action
-      type: &quot;Custom&quot; | &quot;Deploy&quot; | &quot;Delete&quot;, # Optional. The action type.
-      typeName: string, # Optional. Name of the custom action type
-      runner: string, # Optional. The container image to use to execute the action
-    }
-  ], # Optional. Custom actions for the catalog item.
-  runner: string, # Optional. The default container image to use to execute actions
-  status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Defines whether the specific catalog item version can be used.
-  eligibleForLatestVersion: boolean, # Optional. Whether the version is eligible to be the latest version.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetEnvironmentTypesAsync(int?,RequestContext)">
 <example>
@@ -1141,9 +687,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-await foreach (var data in client.GetEnvironmentTypesAsync())
+await foreach (var item in client.GetEnvironmentTypesAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -1153,29 +699,15 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-await foreach (var data in client.GetEnvironmentTypesAsync(1234))
+await foreach (var item in client.GetEnvironmentTypesAsync(1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("deploymentTargetId").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>EnvironmentTypeListResultValue</c>:
-<code>{
-  name: string, # Optional. Name of the environment type
-  deploymentTargetId: string, # Optional. Id of a subscription or management group that the environment type will be mapped to. The environment&apos;s resources will be deployed into this subscription or management group.
-  status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Defines whether this Environment Type can be used in this Project.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetEnvironmentTypes(int?,RequestContext)">
 <example>
@@ -1185,9 +717,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-foreach (var data in client.GetEnvironmentTypes())
+foreach (var item in client.GetEnvironmentTypes())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -1197,29 +729,15 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-foreach (var data in client.GetEnvironmentTypes(1234))
+foreach (var item in client.GetEnvironmentTypes(1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("deploymentTargetId").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>EnvironmentTypeListResultValue</c>:
-<code>{
-  name: string, # Optional. Name of the environment type
-  deploymentTargetId: string, # Optional. Id of a subscription or management group that the environment type will be mapped to. The environment&apos;s resources will be deployed into this subscription or management group.
-  status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Defines whether this Environment Type can be used in this Project.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrUpdateEnvironmentAsync(WaitUntil,string,RequestContent,string,RequestContext)">
 <example>
@@ -1235,8 +753,8 @@ var data = new {
 
 var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("environmentType").ToString());
 Console.WriteLine(result.ToString());
 ]]></code>
@@ -1265,10 +783,10 @@ var data = new {
     },
 };
 
-var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
+var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), "me", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("environmentType").ToString());
 Console.WriteLine(result.GetProperty("user").ToString());
@@ -1284,46 +802,6 @@ Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").Get
 Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-
-Response Body:
-
-Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrUpdateEnvironment(WaitUntil,string,RequestContent,string,RequestContext)">
 <example>
@@ -1339,8 +817,8 @@ var data = new {
 
 var operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("environmentType").ToString());
 Console.WriteLine(result.ToString());
 ]]></code>
@@ -1369,10 +847,10 @@ var data = new {
     },
 };
 
-var operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
+var operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), "me", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("environmentType").ToString());
 Console.WriteLine(result.GetProperty("user").ToString());
@@ -1388,46 +866,6 @@ Console.WriteLine(result.GetProperty("scheduledTasks").GetProperty("<test>").Get
 Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-
-Response Body:
-
-Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  description: string, # Optional. Description of the Environment.
-  catalogName: string, # Optional. Name of the catalog.
-  catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: any, # Optional. Parameters object for the deploy action
-  scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
-}
-</code>
-
-</remarks>
     </member>
     <member name="DeleteEnvironmentAsync(WaitUntil,string,string,RequestContext)">
 <example>
@@ -1439,7 +877,7 @@ var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 var operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<environmentName>");
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 This sample shows how to call DeleteEnvironmentAsync with all parameters.
 <code><![CDATA[
@@ -1447,9 +885,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-var operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<environmentName>", <me>);
+var operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<environmentName>", "me", new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
     </member>
@@ -1463,7 +901,7 @@ var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
 var operation = client.DeleteEnvironment(WaitUntil.Completed, "<environmentName>");
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 This sample shows how to call DeleteEnvironment with all parameters.
 <code><![CDATA[
@@ -1471,9 +909,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-var operation = client.DeleteEnvironment(WaitUntil.Completed, "<environmentName>", <me>);
+var operation = client.DeleteEnvironment(WaitUntil.Completed, "<environmentName>", "me", new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
     </member>
@@ -1491,7 +929,7 @@ var data = new {
 
 var operation = await client.DeployEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 This sample shows how to call DeployEnvironmentActionAsync with all parameters and request content.
 <code><![CDATA[
@@ -1504,24 +942,11 @@ var data = new {
     parameters = new {},
 };
 
-var operation = await client.DeployEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
+var operation = await client.DeployEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), "me", new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>ActionRequest</c>:
-<code>{
-  actionId: string, # Required. The Catalog Item action id to execute
-  parameters: any, # Optional. Parameters object for the Action
-}
-</code>
-
-</remarks>
     </member>
     <member name="DeployEnvironmentAction(WaitUntil,string,RequestContent,string,RequestContext)">
 <example>
@@ -1537,7 +962,7 @@ var data = new {
 
 var operation = client.DeployEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 This sample shows how to call DeployEnvironmentAction with all parameters and request content.
 <code><![CDATA[
@@ -1550,24 +975,11 @@ var data = new {
     parameters = new {},
 };
 
-var operation = client.DeployEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
+var operation = client.DeployEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), "me", new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>ActionRequest</c>:
-<code>{
-  actionId: string, # Required. The Catalog Item action id to execute
-  parameters: any, # Optional. Parameters object for the Action
-}
-</code>
-
-</remarks>
     </member>
     <member name="CustomEnvironmentActionAsync(WaitUntil,string,RequestContent,string,RequestContext)">
 <example>
@@ -1583,7 +995,7 @@ var data = new {
 
 var operation = await client.CustomEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 This sample shows how to call CustomEnvironmentActionAsync with all parameters and request content.
 <code><![CDATA[
@@ -1596,24 +1008,11 @@ var data = new {
     parameters = new {},
 };
 
-var operation = await client.CustomEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
+var operation = await client.CustomEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), "me", new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>ActionRequest</c>:
-<code>{
-  actionId: string, # Required. The Catalog Item action id to execute
-  parameters: any, # Optional. Parameters object for the Action
-}
-</code>
-
-</remarks>
     </member>
     <member name="CustomEnvironmentAction(WaitUntil,string,RequestContent,string,RequestContext)">
 <example>
@@ -1629,7 +1028,7 @@ var data = new {
 
 var operation = client.CustomEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 This sample shows how to call CustomEnvironmentAction with all parameters and request content.
 <code><![CDATA[
@@ -1642,24 +1041,11 @@ var data = new {
     parameters = new {},
 };
 
-var operation = client.CustomEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
+var operation = client.CustomEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), "me", new RequestContext());
 
-Console.WriteLine(operation.GetRawResponse().Status)
+Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>ActionRequest</c>:
-<code>{
-  actionId: string, # Required. The Catalog Item action id to execute
-  parameters: any, # Optional. Parameters object for the Action
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>
