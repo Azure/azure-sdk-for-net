@@ -289,6 +289,8 @@ namespace Azure.ResourceManager.AppContainers
         public Azure.ResourceManager.AppContainers.Models.ContainerAppProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppTemplate Template { get { throw null; } set { } }
         public string WorkloadProfileName { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public string WorkloadProfileType { get { throw null; } set { } }
     }
     public partial class ContainerAppDetectorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppContainers.ContainerAppDetectorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppContainers.ContainerAppDetectorResource>, System.Collections.IEnumerable
     {
@@ -448,6 +450,8 @@ namespace Azure.ResourceManager.AppContainers
         public string KedaVersion { get { throw null; } }
         public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppEnvironmentProvisioningState? ProvisioningState { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.ResourceManager.AppContainers.Models.AppContainersSkuName? SkuName { get { throw null; } set { } }
         public System.Net.IPAddress StaticIP { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppVnetConfiguration VnetConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.ContainerAppWorkloadProfile> WorkloadProfiles { get { throw null; } }
@@ -840,6 +844,23 @@ namespace Azure.ResourceManager.AppContainers.Models
         public string EphemeralStorage { get { throw null; } }
         public string Memory { get { throw null; } set { } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential, Size=1)]
+    public readonly partial struct AppContainersSkuName : System.IEquatable<Azure.ResourceManager.AppContainers.Models.AppContainersSkuName>
+    {
+        public AppContainersSkuName(string value) { throw null; }
+        public static Azure.ResourceManager.AppContainers.Models.AppContainersSkuName Consumption { get { throw null; } }
+        public static Azure.ResourceManager.AppContainers.Models.AppContainersSkuName Premium { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppContainers.Models.AppContainersSkuName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppContainers.Models.AppContainersSkuName left, Azure.ResourceManager.AppContainers.Models.AppContainersSkuName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppContainers.Models.AppContainersSkuName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppContainers.Models.AppContainersSkuName left, Azure.ResourceManager.AppContainers.Models.AppContainersSkuName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContainerAppAccessMode : System.IEquatable<Azure.ResourceManager.AppContainers.Models.ContainerAppAccessMode>
     {
@@ -935,6 +956,8 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         public ContainerAppAvailableWorkloadProfileProperties() { }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppAvailableWorkloadProfileApplicability? Applicability { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppBillingMeterCategory? BillingMeterCategory { get { throw null; } set { } }
         public string Category { get { throw null; } set { } }
         public int? Cores { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
@@ -1003,12 +1026,34 @@ namespace Azure.ResourceManager.AppContainers.Models
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppBillingMeterProperties Properties { get { throw null; } set { } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerAppBillingMeterCategory : System.IEquatable<Azure.ResourceManager.AppContainers.Models.ContainerAppBillingMeterCategory>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerAppBillingMeterCategory(string value) { throw null; }
+        public static Azure.ResourceManager.AppContainers.Models.ContainerAppBillingMeterCategory PremiumSkuComputeOptimized { get { throw null; } }
+        public static Azure.ResourceManager.AppContainers.Models.ContainerAppBillingMeterCategory PremiumSkuGeneralPurpose { get { throw null; } }
+        public static Azure.ResourceManager.AppContainers.Models.ContainerAppBillingMeterCategory PremiumSkuMemoryOptimized { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppContainers.Models.ContainerAppBillingMeterCategory other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppContainers.Models.ContainerAppBillingMeterCategory left, Azure.ResourceManager.AppContainers.Models.ContainerAppBillingMeterCategory right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppContainers.Models.ContainerAppBillingMeterCategory (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppContainers.Models.ContainerAppBillingMeterCategory left, Azure.ResourceManager.AppContainers.Models.ContainerAppBillingMeterCategory right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ContainerAppBillingMeterProperties
     {
         public ContainerAppBillingMeterProperties() { }
-        public string Category { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppBillingMeterCategory? Category { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public string MeterType { get { throw null; } set { } }
+        public string WorkloadProfileCategory { get { throw null; } set { } }
     }
     public partial class ContainerAppCertificatePatch
     {
@@ -1128,6 +1173,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     public partial class ContainerAppCustomDomain
     {
         public ContainerAppCustomDomain(string name) { }
+        public ContainerAppCustomDomain(string name, Azure.Core.ResourceIdentifier certificateId) { }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppCustomDomainBindingType? BindingType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier CertificateId { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
@@ -1632,6 +1678,32 @@ namespace Azure.ResourceManager.AppContainers.Models
         public string Destination { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppLogAnalyticsConfiguration LogAnalyticsConfiguration { get { throw null; } set { } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    public partial class ContainerAppManagedEnvironmentOutboundSettings
+    {
+        public ContainerAppManagedEnvironmentOutboundSettings() { }
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppManagedEnvironmentOutBoundType? OutBoundType { get { throw null; } set { } }
+        public System.Net.IPAddress VirtualNetworkApplianceIP { get { throw null; } set { } }
+    }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerAppManagedEnvironmentOutBoundType : System.IEquatable<Azure.ResourceManager.AppContainers.Models.ContainerAppManagedEnvironmentOutBoundType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerAppManagedEnvironmentOutBoundType(string value) { throw null; }
+        public static Azure.ResourceManager.AppContainers.Models.ContainerAppManagedEnvironmentOutBoundType LoadBalancer { get { throw null; } }
+        public static Azure.ResourceManager.AppContainers.Models.ContainerAppManagedEnvironmentOutBoundType UserDefinedRouting { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppContainers.Models.ContainerAppManagedEnvironmentOutBoundType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppContainers.Models.ContainerAppManagedEnvironmentOutBoundType left, Azure.ResourceManager.AppContainers.Models.ContainerAppManagedEnvironmentOutBoundType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppContainers.Models.ContainerAppManagedEnvironmentOutBoundType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppContainers.Models.ContainerAppManagedEnvironmentOutBoundType left, Azure.ResourceManager.AppContainers.Models.ContainerAppManagedEnvironmentOutBoundType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ContainerAppNameAvailabilityContent
     {
         public ContainerAppNameAvailabilityContent() { }
@@ -1984,8 +2056,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         public string DockerBridgeCidr { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier InfrastructureSubnetId { get { throw null; } set { } }
         public bool? IsInternal { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppManagedEnvironmentOutboundSettings OutboundSettings { get { throw null; } set { } }
         public string PlatformReservedCidr { get { throw null; } set { } }
         public string PlatformReservedDnsIP { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
+        public string RuntimeSubnetId { get { throw null; } set { } }
     }
     public partial class ContainerAppVolume
     {
@@ -2003,9 +2081,14 @@ namespace Azure.ResourceManager.AppContainers.Models
     }
     public partial class ContainerAppWorkloadProfile
     {
+        public ContainerAppWorkloadProfile(string workloadProfileType, int minimumCount, int maximumCount) { }
         public ContainerAppWorkloadProfile(string name, string workloadProfileType) { }
-        public int? MaximumCount { get { throw null; } set { } }
-        public int? MinimumCount { get { throw null; } set { } }
+        public int? MaxCount { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public int MaximumCount { get { throw null; } set { } }
+        public int? MinCount { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public int MinimumCount { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string WorkloadProfileType { get { throw null; } set { } }
     }
