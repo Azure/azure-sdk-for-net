@@ -2,18 +2,20 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
+using System.Reflection;
 using Moq;
 using Moq.Language;
 using Moq.Language.Flow;
 
 namespace Azure.ResourceManager.Resources.Testing
 {
-    internal class AzureSetup<T, R> : ISetup<T, R> where T : ArmResource
+    internal class AzureSetupAdapter<T, R> : ISetup<T, R> where T : ArmResource
     {
         private readonly object _intermediateSetup; // runtime type: ISetup<intermediateType, R>
         private readonly Type _intermediateType;
 
-        public AzureSetup(object intermediateSetup, Type intermediateType)
+        public AzureSetupAdapter(object intermediateSetup, Type intermediateType)
         {
             _intermediateSetup = intermediateSetup;
             _intermediateType = intermediateType;
@@ -134,16 +136,25 @@ namespace Azure.ResourceManager.Resources.Testing
             throw new NotImplementedException();
         }
 
+        private object RedirectMethodInvocation(MethodBase currentMethod, object[] arguments)
+        {
+            // find the exact same method with same name and same parameter list, then call it
+            var methodName = currentMethod.Name.Split('.').Last();
+            var parameterTypes = currentMethod.GetParameters().Select(p => p.ParameterType).ToArray();
+            var method = _intermediateSetup.GetType().GetMethod(methodName, parameterTypes);
+            return method.Invoke(_intermediateSetup, arguments);
+        }
+
         IReturnsResult<T> IReturns<T, R>.Returns(R value)
         {
-            var method = _intermediateSetup.GetType().GetMethod("Returns", new[] { typeof(R) });
-            var result = method.Invoke(_intermediateSetup, new object[] { value });
+            var result = RedirectMethodInvocation(MethodBase.GetCurrentMethod(), new object[] { value });
             return new AzureReturns<T>(result, _intermediateType);
         }
 
         IReturnsResult<T> IReturns<T, R>.Returns(InvocationFunc valueFunction)
         {
-            throw new NotImplementedException();
+            var result = RedirectMethodInvocation(MethodBase.GetCurrentMethod(), new object[] { valueFunction });
+            return new AzureReturns<T>(result, _intermediateType);
         }
 
         IReturnsResult<T> IReturns<T, R>.Returns(Delegate valueFunction)

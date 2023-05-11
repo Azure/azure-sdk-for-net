@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Testing
         /// <param name="mock"></param>
         /// <param name="expression"></param>
         /// <returns></returns>
-        public static ISetup<T, R> SetupAzureExtensionMethod<T, R>(this Mock<T> mock, Expression<Func<T, R>> expression) where T : ArmResource // ISetup<TenantResource, R> => E
+        public static ISetup<T, R> SetupAzureExtensionMethod<T, R>(this Mock<T> mock, Expression<Func<T, R>> expression) where T : ArmResource
         {
             // we would like the customer to use this in this way:
             // tenantResourceMock.SetupAzureExtensionMethod(tenant => tenant.CalculateDeploymentTemplateHashAsync(mockTemplate, default)).Returns(Task.FromResult(Response.FromValue(mockResult, null)));
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Resources.Testing
             var newExpression = ChangeType(expression, extensionClientType);
             var intermediateSetup = methodInfo.Invoke(null, new object[] { mock, newExpression });
 
-            return new AzureSetup<T, R>(intermediateSetup, extensionClientType);
+            return new AzureSetupAdapter<T, R>(intermediateSetup, extensionClientType);
         }
 
-        private static Expression ChangeType<T, R>(Expression<Func<T, R>> expression, Type newType)
+        private static Expression ChangeType<T, R>(Expression<Func<T, R>> expression, Type newType) where T : ArmResource
         {
             // we only support one parameter
             var parameter = expression.Parameters.Single();
@@ -59,7 +59,6 @@ namespace Azure.ResourceManager.Resources.Testing
             {
                 throw new InvalidOperationException("We only support methodCallExpression as the body of lambda expression for now");
             }
-            // TODO -- add some validation on the method, to ensure it is an extension method on an ArmResource
             var originalMethod = methodCallExpression.Method;
             var originalParameterTypes = originalMethod.GetParameters().Select(p => p.ParameterType);
             var originalArguments = methodCallExpression.Arguments;

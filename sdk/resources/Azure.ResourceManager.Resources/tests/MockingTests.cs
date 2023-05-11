@@ -20,9 +20,11 @@ namespace Azure.ResourceManager.Resources.Tests
             var mockTemplate = BinaryData.FromString("mockTemplate");
 
             var mockResult = new TemplateHashResult("a", "b");
-            mock.SetupAzureExtensionMethod(tenantResource => tenantResource.CalculateDeploymentTemplateHash(mockTemplate, default)).Throws(new Exception());//.Returns(Response.FromValue(mockResult, null));
+            mock.SetupAzureExtensionMethod(tenantResource => tenantResource.CalculateDeploymentTemplateHash(mockTemplate, default))
+                .Returns(Response.FromValue(mockResult, null));
+                //.Throws(new Exception());
 
-            mock.Setup(tenantResource => tenantResource.CalculateDeploymentTemplateHash(mockTemplate, default)).Returns(Response.FromValue(mockResult, null));
+            //mock.Setup(tenantResource => tenantResource.CalculateDeploymentTemplateHash(mockTemplate, default)).Returns(Response.FromValue(mockResult, null));
 
             var tenant = mock.Object;
             var r = tenant.CalculateDeploymentTemplateHash(mockTemplate, default);
