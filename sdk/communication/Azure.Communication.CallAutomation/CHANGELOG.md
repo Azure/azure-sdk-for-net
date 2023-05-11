@@ -1,4 +1,8 @@
 # Release History
+ ## 1.0.1-alpha.7 (Unreleased)
+ - DialogContext in StartDialogOption is now of type IDictionary<string, object>
+ - StatDialog now takes dialogId of type Guid
+ 
 ## 1.0.1-alpha.6 (Unreleased)
 - Added Conversation Conductor events
 
