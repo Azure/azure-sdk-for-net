@@ -37,7 +37,6 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
-        [Ignore("Depend on Network which will block the pipeline to release new Network package, disable this case temporary")]
         [RecordedTest]
         public async Task ManagedInstancePrivateEndpointConnectioApiTests()
         {
