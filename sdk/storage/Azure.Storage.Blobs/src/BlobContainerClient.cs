@@ -316,9 +316,28 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         public BlobContainerClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
-            : this(blobContainerUri, credential.AsPolicy(options), credential, options)
         {
             Errors.VerifyHttpsTokenAuth(blobContainerUri);
+            Argument.AssertNotNull(blobContainerUri, nameof(blobContainerUri));
+            _uri = blobContainerUri;
+            _authenticationPolicy = credential.AsPolicy(options);
+            options ??= new BlobClientOptions();
+
+            _clientConfiguration = new BlobClientConfiguration(
+                        pipeline: options.Build(_authenticationPolicy),
+                        tokenCredential: credential,
+                        clientDiagnostics: new ClientDiagnostics(options),
+                        version: options.Version,
+                        customerProvidedKey: options.CustomerProvidedKey,
+                        transferValidation: options.TransferValidation,
+                        encryptionScope: options.EncryptionScope,
+                        trimBlobNameSlashes: options.TrimBlobNameSlashes);
+
+            _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
+            _containerRestClient = BuildContainerRestClient(blobContainerUri);
+
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
         }
 
         /// <summary>
@@ -342,9 +361,13 @@ namespace Azure.Storage.Blobs
             Uri blobContainerUri,
             HttpPipelinePolicy authentication,
             BlobClientOptions options)
-            : this(blobContainerUri,
-                    authentication,
-                    new BlobClientConfiguration(
+        {
+            Argument.AssertNotNull(blobContainerUri, nameof(blobContainerUri));
+            _uri = blobContainerUri;
+            _authenticationPolicy = authentication;
+            options ??= new BlobClientOptions();
+
+            _clientConfiguration = new BlobClientConfiguration(
                         pipeline: options.Build(authentication),
                         sharedKeyCredential: null,
                         clientDiagnostics: new ClientDiagnostics(options),
@@ -352,82 +375,8 @@ namespace Azure.Storage.Blobs
                         customerProvidedKey: options.CustomerProvidedKey,
                         transferValidation: options.TransferValidation,
                         encryptionScope: options.EncryptionScope,
-                        trimBlobNameSlashes: options.TrimBlobNameSlashes),
-                    options)
-        {
-        }
+                        trimBlobNameSlashes: options.TrimBlobNameSlashes);
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BlobContainerClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="blobContainerUri">
-        /// A <see cref="Uri"/> referencing the blob container that includes the
-        /// name of the account and the name of the container.
-        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}".
-        /// </param>
-        /// <param name="authentication">
-        /// An optional authentication policy used to sign requests.
-        /// </param>
-        /// <param name="tokenCredential">
-        /// The token credential used to sign requests.
-        /// </param>
-        /// <param name="options">
-        /// Optional client options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
-        internal BlobContainerClient(
-            Uri blobContainerUri,
-            HttpPipelinePolicy authentication,
-            TokenCredential tokenCredential,
-            BlobClientOptions options)
-            : this(blobContainerUri,
-                    authentication,
-                    new BlobClientConfiguration(
-                        pipeline: options.Build(authentication),
-                        tokenCredential: tokenCredential,
-                        clientDiagnostics: new ClientDiagnostics(options),
-                        version: options.Version,
-                        customerProvidedKey: options.CustomerProvidedKey,
-                        transferValidation: options.TransferValidation,
-                        encryptionScope: options.EncryptionScope,
-                        trimBlobNameSlashes: options.TrimBlobNameSlashes),
-                    options)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BlobContainerClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="blobContainerUri">
-        /// A <see cref="Uri"/> referencing the blob container that includes the
-        /// name of the account and the name of the container.
-        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}".
-        /// </param>
-        /// <param name="authentication">
-        /// An optional authentication policy used to sign requests.
-        /// </param>
-        /// <param name="clientConfiguration">
-        /// <see cref="BlobClientConfiguration"/>.
-        /// </param>
-        /// <param name="options">
-        /// Optional client options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
-        internal BlobContainerClient(
-            Uri blobContainerUri,
-            HttpPipelinePolicy authentication,
-            BlobClientConfiguration clientConfiguration,
-            BlobClientOptions options)
-        {
-            Argument.AssertNotNull(blobContainerUri, nameof(blobContainerUri));
-            _uri = blobContainerUri;
-            _authenticationPolicy = authentication;
-            options ??= new BlobClientOptions();
-            _clientConfiguration = clientConfiguration;
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _containerRestClient = BuildContainerRestClient(blobContainerUri);
 
