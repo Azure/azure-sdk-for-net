@@ -247,8 +247,6 @@ namespace Azure
         {
             error = null;
             data = null;
-            //string? message = null;
-            //string? code = null;
 
             try
             {
