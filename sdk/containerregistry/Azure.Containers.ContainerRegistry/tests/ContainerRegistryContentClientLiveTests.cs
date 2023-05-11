@@ -246,7 +246,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             SetManifestResult result = await client.SetManifestAsync(manifest, mediaType: ManifestMediaType.DockerManifest);
 
             // Assert
-            Assert.AreEqual("sha256:997e70d7f84828f39a9b551f4e86aee0fbbe47bacbd02a3b1ca638ce7335646f", result.Digest);
+            Assert.AreEqual("sha256:721089ae5c4d90e58e3d7f7e6c652a351621fbf37c26eceae23622173ec5a44d", result.Digest);
 
             // The following fails because the manifest media type is set to OciImageManifest by default
             fs.Position = 0;
