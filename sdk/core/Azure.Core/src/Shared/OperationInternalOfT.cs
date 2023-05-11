@@ -302,8 +302,12 @@ namespace Azure.Core
             return _operation.GetOperationId();
         }
 
-        private static RequestMethod GetHttpMethodFromOperationId(string operationId)
+        private static RequestMethod? GetHttpMethodFromOperationId(string operationId)
         {
+            if (string.IsNullOrEmpty(operationId))
+            {
+                return null;
+            }
             var lroDetails = BinaryData.FromBytes(Convert.FromBase64String(operationId)).ToObjectFromJson<Dictionary<string, string>>();
             return new RequestMethod(lroDetails["RequestMethod"]);
         }

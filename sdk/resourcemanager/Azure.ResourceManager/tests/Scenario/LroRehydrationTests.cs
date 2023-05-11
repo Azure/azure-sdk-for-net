@@ -40,9 +40,6 @@ namespace Azure.ResourceManager.Tests
             var response = rgOp.GetRawResponse();
             Assert.AreEqual(201, response.Status);
             Assert.AreEqual(200, rehydratedOrgResponse.Status);
-            //Assert.AreEqual(response.Status, rehydratedOrgResponse.Status);
-            //Assert.AreEqual(response.ReasonPhrase, rehydratedOrgResponse.ReasonPhrase);
-            //Assert.AreEqual(response.ClientRequestId, rehydratedOrgResponse.ClientRequestId);
             Assert.AreEqual(response.IsError, rehydratedOrgResponse.IsError);
             Assert.AreEqual(response.Headers.Count(), rehydratedOrgResponse.Headers.Count());
 
@@ -86,32 +83,32 @@ namespace Azure.ResourceManager.Tests
                 var resourceId = rg.Id.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
                 await genericResources.CreateOrUpdateAsync(WaitUntil.Completed, resourceId, ConstructGenericAvailabilitySet());
             }
-            var expOp = await Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(subscription.Id.SubscriptionId, rgName)).ExportTemplateAsync(WaitUntil.Started, parameters);
-            var expOpId = expOp.Id;
-            var modelRehydratedLro = new ArmOperation<ResourceGroupExportResult>(Client, expOpId);
-            await modelRehydratedLro.WaitForCompletionResponseAsync();
-            Assert.AreEqual(modelRehydratedLro.HasValue, true);
-            var rehydratedResult = modelRehydratedLro.Value;
-            await expOp.UpdateStatusAsync();
-            var result = expOp.Value;
-            Assert.AreEqual(JsonSerializer.Serialize(result.Template), JsonSerializer.Serialize(rehydratedResult.Template));
-            Assert.AreEqual(result.Error, rehydratedResult.Error);
-            var expResponse = expOp.GetRawResponse();
-            var rehydratedExpResponse = modelRehydratedLro.GetRawResponse();
+
+            var originalOperation = await Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(subscription.Id.SubscriptionId, rgName)).ExportTemplateAsync(WaitUntil.Started, parameters);
+            var originalOperationId = originalOperation.Id;
+            var rehydratedOperation = new ArmOperation<ResourceGroupExportResult>(Client, originalOperationId);
+            await rehydratedOperation.WaitForCompletionResponseAsync();
+            Assert.AreEqual(rehydratedOperation.HasValue, true);
+            var rehydratedResult = rehydratedOperation.Value;
+            await originalOperation.UpdateStatusAsync();
+            var originalResult = originalOperation.Value;
+            Assert.AreEqual(JsonSerializer.Serialize(originalResult.Template), JsonSerializer.Serialize(rehydratedResult.Template));
+            Assert.AreEqual(originalResult.Error, rehydratedResult.Error);
+            var expResponse = originalOperation.GetRawResponse();
+            var rehydratedExpResponse = rehydratedOperation.GetRawResponse();
             Assert.AreEqual(expResponse.Status, rehydratedExpResponse.Status);
             Assert.AreEqual(expResponse.ReasonPhrase, rehydratedExpResponse.ReasonPhrase);
             //Assert.AreEqual(expResponse.ClientRequestId, rehydratedExpResponse.ClientRequestId);
             Assert.AreEqual(expResponse.IsError, rehydratedExpResponse.IsError);
             Assert.AreEqual(expResponse.Headers.Count(), rehydratedExpResponse.Headers.Count());
-            //CheckResponseHeaders(expResponse.Headers, rehydratedExpResponse.Headers);
 
             // The deletion of a resource group is a real LRO
-            var deleteOp = await rg.DeleteAsync(WaitUntil.Started);
-            var deleteOpId = deleteOp.Id;
-            var deleteRehydratedLro = new ArmOperation(Client, deleteOpId);
-            await deleteRehydratedLro.WaitForCompletionResponseAsync();
-            Assert.AreEqual(deleteRehydratedLro.HasCompleted, true);
-            var deleteFinalRehydratedLro = new ArmOperation(Client, deleteRehydratedLro.Id);
+            var originalDeleteOperation = await rg.DeleteAsync(WaitUntil.Started);
+            var originalDeleteOperationId = originalDeleteOperation.Id;
+            var rehydratedDeleteOperation = new ArmOperation(Client, originalDeleteOperationId);
+            await rehydratedDeleteOperation.WaitForCompletionResponseAsync();
+            Assert.AreEqual(rehydratedDeleteOperation.HasCompleted, true);
+            var deleteFinalRehydratedLro = new ArmOperation(Client, rehydratedDeleteOperation.Id);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await rg.GetAsync());
             var deleteRehydratedResponse = await deleteFinalRehydratedLro.UpdateStatusAsync();
             Assert.AreEqual(404, ex.Status);
