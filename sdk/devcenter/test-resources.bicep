@@ -1,12 +1,12 @@
 param resourceLocation string = resourceGroup().location
 param baseName string = resourceGroup().name
-param catalogPatIdentifier string
-param devCenterPresetMsi string
-param projectEnvironmentTypePresetMsi string
-param testUserOid string
-param testUserName string
-param projectAdminRoleDefinitionId string
-param deploymentEnvironmentsRoleDefinitionId string
+param catalogPatIdentifier string = 'https://dtc-ppe-integrationtests.vault.azure.net/secrets/FidalgoIntegrationTestsGithubTemplates'
+param devCenterPresetMsi string = '/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/KeepFidalgoIntegrationTestResourcesCanary/providers/Microsoft.ManagedIdentity/userAssignedIdentities/FidalgoIntegrationTestIdentity'
+param projectEnvironmentTypePresetMsi string = '/subscriptions/974ae608-fbe5-429f-83ae-924a64019bf3/resourceGroups/Common/providers/Microsoft.ManagedIdentity/userAssignedIdentities/IntegrationTestProjectEnvTypeIdentity'
+param testUserOid string = 'df428e89-1bc2-4e72-b736-032c31a6cd97'
+param testUserName string = 'sdk_integration_test_1@fidalgoppe010.onmicrosoft.com'
+param projectAdminRoleDefinitionId string = '331c37c6-af14-46d9-b9f4-e1909e1b95a0'
+param deploymentEnvironmentsRoleDefinitionId string = '18e40d4e-8d2e-438d-97e1-9528336e149c'
 
 var defaultDevCenterName = 'sdk-dc-${uniqueString('devcenter', '2022-11-11-preview', baseName, resourceGroup().name)}'
 
@@ -16,11 +16,12 @@ var defaultNetworkConnectionName = 'sdk-networkconnection-${uniqueString('networ
 var defaultNetworkConnection2Name = 'sdk-networkconnection2-${uniqueString('networkConnection', '2022-09-01-preview', baseName, resourceGroup().name)}'
 var defaultMarketplaceDefinition = 'sdk-devboxdefinition-${uniqueString('devboxdefinition', '2022-09-01-preview', baseName, resourceGroup().name)}'
 var defaultCatalogName = 'sdk-default-catalog'
+var defaultScheduleName = 'default'
 var defaultEnvironmentTypeName = 'sdk-environment-type-${uniqueString('environment-type', '2022-11-11-preview', baseName, resourceGroup().name)}'
 var devBoxSkuName = 'general_a_8c32gb_v1'
 var devBoxStorage = 'ssd_1024gb'
 var marketplaceImageName = 'MicrosoftWindowsDesktop_windows-ent-cpc_win11-21h2-ent-cpc-m365'
-var gitUri = 'https://github.com/Azure/fidalgoIntegrationTests.git'
+var gitUri = 'https://github.com/Azure/deployment-environments.git'
 
 resource devcenter 'Microsoft.DevCenter/devcenters@2022-11-11-preview' = {
   name: defaultDevCenterName
@@ -173,6 +174,20 @@ resource catalog 'Microsoft.DevCenter/devcenters/catalogs@2022-09-01-preview' = 
       uri: gitUri
     }
   }
+}
+
+resource schedule 'Microsoft.DevCenter/projects/pools/schedules@2023-01-01-preview' = {
+  name: '${project.name}/${defaultPoolName}/${defaultScheduleName}'
+  properties: {
+    type: 'StopDevBox'
+    frequency: 'Daily'
+    time: '19:00'
+    timeZone: 'America/Los_Angeles'
+    state: 'Enabled'
+  }
+  dependsOn: [
+    project, pool
+  ]
 }
 
 resource environmentType 'Microsoft.DevCenter/devcenters/environmentTypes@2022-11-11-preview' = {
