@@ -152,7 +152,7 @@ namespace Azure.Monitor.Query.Tests
                 else
                 {
                     // Delay for 30 seconds to give time for StorageAccount to initialize
-                    await Task.Delay(TimeSpan.FromSeconds(30));
+                    await Task.Delay(TimeSpan.FromSeconds(300000));
                 }
             }
         }
