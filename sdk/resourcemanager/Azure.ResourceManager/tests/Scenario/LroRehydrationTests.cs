@@ -73,9 +73,6 @@ namespace Azure.ResourceManager.Tests
             var rgOp = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, rgName, orgData);
             var rg = rgOp.Value;
 
-            // Template exportation is a real LRO with generic type
-            var parameters = new ExportTemplate();
-            parameters.Resources.Add("*");
             await CreateGenericAvailabilitySetAsync(rg.Id);
             var genericResources = Client.GetGenericResources();
             for (int i = 0; i < 20; i++)
@@ -84,6 +81,9 @@ namespace Azure.ResourceManager.Tests
                 await genericResources.CreateOrUpdateAsync(WaitUntil.Completed, resourceId, ConstructGenericAvailabilitySet());
             }
 
+            // Template exportation is a real LRO with generic type
+            var parameters = new ExportTemplate();
+            parameters.Resources.Add("*");
             var originalOperation = await Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(subscription.Id.SubscriptionId, rgName)).ExportTemplateAsync(WaitUntil.Started, parameters);
             var originalOperationId = originalOperation.Id;
             var rehydratedOperation = new ArmOperation<ResourceGroupExportResult>(Client, originalOperationId);
