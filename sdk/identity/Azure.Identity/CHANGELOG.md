@@ -1,16 +1,9 @@
 # Release History
 
-## 1.9.0-beta.4 (Unreleased)
-
-### Features Added
+## 1.9.0 (2023-05-09)
 
 ### Breaking Changes
-- Renamed the `DisableInstanceDiscovery` options property to `DisableAuthorityValidationAndInstanceDiscovery`.
 - Changed visibility of all environment variable based properties on `EnvironmentCredentialOptions` to internal. These options are again only configurable via environment variables.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.9.0-beta.3 (2023-04-12)
 
