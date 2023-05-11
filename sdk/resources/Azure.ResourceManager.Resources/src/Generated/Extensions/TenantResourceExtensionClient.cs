@@ -20,7 +20,7 @@ using Moq.Language.Flow;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
-    internal partial class TenantResourceExtensionClient : ArmResource
+    public partial class TenantResourceExtensionClient : ArmResource
     {
         private ClientDiagnostics _armDeploymentDeploymentsClientDiagnostics;
         private DeploymentsRestOperations _armDeploymentDeploymentsRestClient;
