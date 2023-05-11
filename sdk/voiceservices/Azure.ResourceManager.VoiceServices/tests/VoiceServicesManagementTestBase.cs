@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.VoiceServices.Tests
         {
             var gateway = new CommunicationsGatewayData(Location)
             {
-                Connectivity = Connectivity.PublicAddress,
+                Connectivity = CommunicationsGatewayConnectivity.PublicAddress,
                 E911Type = E911Type.Standard,
             };
             gateway.ServiceLocations.Add(new ServiceRegionProperties("eastus", new PrimaryRegionProperties(new List<string> { "1.1.1.1" })));
