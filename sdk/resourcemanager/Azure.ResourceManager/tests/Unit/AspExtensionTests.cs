@@ -61,12 +61,22 @@ namespace Azure.ResourceManager.Tests
         private static ArmClient GetClient(ServiceCollection services)
         {
             ArmClient result = null;
-            Assert.DoesNotThrow(() =>
+            ServiceProvider sp = null;
+
+            try
             {
-                result = services
-                    .BuildServiceProvider()
-                    .GetRequiredService<ArmClient>();
-            });
+                Assert.DoesNotThrow(() =>
+                {
+                    sp = services.BuildServiceProvider();
+                    result = sp
+                        .GetRequiredService<ArmClient>();
+                });
+            }
+            finally
+            {
+                sp?.Dispose();
+            }
+
             return result;
         }
 
