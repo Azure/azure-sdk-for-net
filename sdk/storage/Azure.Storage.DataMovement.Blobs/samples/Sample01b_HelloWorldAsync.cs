@@ -499,15 +499,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 TransferOptions downloadOptions = new TransferOptions();
                 downloadOptions.TransferFailed += async (TransferFailedEventArgs args) =>
                 {
-                    // TODO: change the Exception if it's a RequestFailedException and then look at the exception.StatusCode
-                    if (args.Exception.Message.Contains("500"))
-                    {
-                        Console.WriteLine(args.Exception.Message);
-                    }
-                    else if (args.Exception.Message == "403")
-                    {
-                        Console.WriteLine("We're getting auth errors. Might be the entire container, consider stopping");
-                    }
+                    // Log Exception Message
+                    Console.WriteLine(args.Exception.Message);
                     // Remove stub
                     await Task.CompletedTask;
                 };

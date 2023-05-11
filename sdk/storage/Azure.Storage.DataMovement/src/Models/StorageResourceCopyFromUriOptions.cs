@@ -20,8 +20,7 @@ namespace Azure.Storage.DataMovement.Models
         public string BlockId { get; internal set; }
 
         /// <summary>
-        /// Optional.  Source authentication used to access the source blob. Cannot be used in conjunction with
-        /// SasCredential.
+        /// Optional.  Source authentication used to access the source blob.
         ///
         /// Only applies to copy operations, not local operations.
         /// </summary>

@@ -324,14 +324,14 @@ namespace Azure.Storage.Blobs
             options ??= new BlobClientOptions();
 
             _clientConfiguration = new BlobClientConfiguration(
-                        pipeline: options.Build(_authenticationPolicy),
-                        tokenCredential: credential,
-                        clientDiagnostics: new ClientDiagnostics(options),
-                        version: options.Version,
-                        customerProvidedKey: options.CustomerProvidedKey,
-                        transferValidation: options.TransferValidation,
-                        encryptionScope: options.EncryptionScope,
-                        trimBlobNameSlashes: options.TrimBlobNameSlashes);
+                pipeline: options.Build(_authenticationPolicy),
+                tokenCredential: credential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey,
+                transferValidation: options.TransferValidation,
+                encryptionScope: options.EncryptionScope,
+                trimBlobNameSlashes: options.TrimBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _containerRestClient = BuildContainerRestClient(blobContainerUri);
@@ -368,14 +368,14 @@ namespace Azure.Storage.Blobs
             options ??= new BlobClientOptions();
 
             _clientConfiguration = new BlobClientConfiguration(
-                        pipeline: options.Build(authentication),
-                        sharedKeyCredential: null,
-                        clientDiagnostics: new ClientDiagnostics(options),
-                        version: options.Version,
-                        customerProvidedKey: options.CustomerProvidedKey,
-                        transferValidation: options.TransferValidation,
-                        encryptionScope: options.EncryptionScope,
-                        trimBlobNameSlashes: options.TrimBlobNameSlashes);
+                pipeline: options.Build(authentication),
+                sharedKeyCredential: null,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey,
+                transferValidation: options.TransferValidation,
+                encryptionScope: options.EncryptionScope,
+                trimBlobNameSlashes: options.TrimBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _containerRestClient = BuildContainerRestClient(blobContainerUri);
