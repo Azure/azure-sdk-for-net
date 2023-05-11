@@ -92,7 +92,7 @@ namespace Azure.Communication.Rooms.Tests
         protected RoomsClient CreateClientWithTokenCredential(bool isInstrumented = true)
         {
             var client = new RoomsClient(
-                    TestEnvironment.LiveTestDynamicEndpoint,
+                    TestEnvironment.CommunicationRoomsEndpoint,
                     (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
                     CreateRoomsClientOptionsWithCorrelationVectorLogs(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview));
 
