@@ -123,37 +123,34 @@ namespace Azure.ResourceManager.Resources.Testing
 
         bool IFluentInterface.Equals(object obj)
         {
-            throw new NotImplementedException();
+            return base.Equals(obj);
         }
 
         int IFluentInterface.GetHashCode()
         {
-            throw new NotImplementedException();
+            return base.GetHashCode();
         }
 
         Type IFluentInterface.GetType()
         {
-            throw new NotImplementedException();
+            return GetType();
         }
 
-        private object RedirectMethodInvocation(MethodBase currentMethod, object[] arguments)
+        private object RedirectMethodInvocation(string methodName, Type[] parameterTypes, object[] arguments)
         {
-            // find the exact same method with same name and same parameter list, then call it
-            var methodName = currentMethod.Name.Split('.').Last();
-            var parameterTypes = currentMethod.GetParameters().Select(p => p.ParameterType).ToArray();
             var method = _intermediateSetup.GetType().GetMethod(methodName, parameterTypes);
             return method.Invoke(_intermediateSetup, arguments);
         }
 
         IReturnsResult<T> IReturns<T, R>.Returns(R value)
         {
-            var result = RedirectMethodInvocation(MethodBase.GetCurrentMethod(), new object[] { value });
+            var result = RedirectMethodInvocation("Returns", new[] { typeof(R) }, new object[] { value });
             return new AzureReturns<T>(result, _intermediateType);
         }
 
         IReturnsResult<T> IReturns<T, R>.Returns(InvocationFunc valueFunction)
         {
-            var result = RedirectMethodInvocation(MethodBase.GetCurrentMethod(), new object[] { valueFunction });
+            var result = RedirectMethodInvocation("Returns", new[] { typeof(InvocationFunc) }, new object[] { valueFunction });
             return new AzureReturns<T>(result, _intermediateType);
         }
 
