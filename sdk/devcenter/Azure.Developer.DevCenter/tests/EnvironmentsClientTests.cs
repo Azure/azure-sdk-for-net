@@ -90,7 +90,7 @@ namespace Azure.Developer.DevCenter.Tests
         }
 
         [RecordedTest]
-        public async Task GetEnvironmentDefinitionsAsyncSucceeds()
+        public async Task GetEnvironmentDefinitionsSucceeds()
         {
             var numberOfEnvDefinitions = 0;
             await foreach (BinaryData envDefinitionsData in _environmentsClient.GetEnvironmentDefinitionsAsync(TestEnvironment.ProjectName))
@@ -111,7 +111,7 @@ namespace Azure.Developer.DevCenter.Tests
         }
 
         [RecordedTest]
-        public async Task GetEnvironmentDefinitionsByCatalogAsyncSucceeds()
+        public async Task GetEnvironmentDefinitionsByCatalogSucceeds()
         {
             var numberOfEnvDefinitions = 0;
             await foreach (BinaryData envDefinitionsData in _environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(TestEnvironment.ProjectName, TestEnvironment.CatalogName))
