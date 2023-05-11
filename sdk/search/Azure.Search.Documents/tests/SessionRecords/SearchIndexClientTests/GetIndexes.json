@@ -1,42 +1,39 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes?$select=%2A\u0026api-version=2021-04-30-Preview",
+      "RequestUri": "https://azs-net-t0eeade0124fbb432.search.windows.net/indexes?$select=%2A\u0026api-version=2023-07-01-Preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-8cfe1598c823334a9b9668c817545c32-3e99f6ec57c2a747-00",
-        "User-Agent": [
-          "azsdk-net-Search.Documents/11.4.0-alpha.20210831.1",
-          "(.NET Framework 4.8.4400.0; Microsoft Windows 10.0.19044 )"
-        ],
-        "x-ms-client-request-id": "e88bbfcc516ee73040fb1420e7a9ee12",
+        "traceparent": "00-3722e4c123fe4e1603ce6a8a3c0a12b0-3667c6850e7563f4-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230508.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "cbd26a45140f95cac4de016dc15d2606",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "client-request-id": "e88bbfcc-516e-e730-40fb-1420e7a9ee12",
-        "Content-Length": "49369",
-        "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Tue, 31 Aug 2021 23:40:24 GMT",
-        "elapsed-time": "163",
-        "Expires": "-1",
+        "client-request-id": "cbd26a45-140f-95ca-c4de-016dc15d2606",
+        "Content-Type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+        "Date": "Tue, 09 May 2023 00:43:52 GMT",
+        "elapsed-time": "49",
         "OData-Version": "4.0",
-        "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "e88bbfcc-516e-e730-40fb-1420e7a9ee12",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "e88bbfcc-516e-e730-40fb-1420e7a9ee12"
+        "request-id": "cbd26a45-140f-95ca-c4de-016dc15d2606",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": [
+          "max-age=2592000",
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "cbd26a45-140f-95ca-c4de-016dc15d2606"
       },
       "ResponseBody": {
-        "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#indexes(*)",
+        "@odata.context": "https://azs-net-t0eeade0124fbb432.search.windows.net/$metadata#indexes(*)",
         "value": [
           {
-            "@odata.etag": "\u00220x8D96CA43C0CBAE4\u0022",
-            "name": "cgdneotr",
+            "name": "dbyniqrn",
             "defaultScoringProfile": null,
             "fields": [
               {
@@ -52,6 +49,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -67,6 +66,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -82,6 +83,8 @@
                 "searchAnalyzer": null,
                 "analyzer": "en.lucene",
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -97,6 +100,25 @@
                 "searchAnalyzer": null,
                 "analyzer": "fr.lucene",
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
+                "synonymMaps": []
+              },
+              {
+                "name": "descriptionVector",
+                "type": "Collection(Edm.Single)",
+                "searchable": true,
+                "filterable": false,
+                "retrievable": true,
+                "sortable": false,
+                "facetable": false,
+                "key": false,
+                "indexAnalyzer": null,
+                "searchAnalyzer": null,
+                "analyzer": null,
+                "normalizer": null,
+                "dimensions": 1536,
+                "vectorSearchConfiguration": "my-vector-config",
                 "synonymMaps": []
               },
               {
@@ -112,6 +134,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -127,6 +151,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -142,6 +168,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -157,6 +185,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -172,6 +202,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -187,6 +219,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -202,6 +236,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -217,6 +253,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -236,6 +274,8 @@
                     "searchAnalyzer": null,
                     "analyzer": null,
                     "normalizer": null,
+                    "dimensions": null,
+                    "vectorSearchConfiguration": null,
                     "synonymMaps": []
                   },
                   {
@@ -250,7 +290,9 @@
                     "indexAnalyzer": null,
                     "searchAnalyzer": null,
                     "analyzer": null,
-                    "normalizer": null,
+                    "normalizer": "lowercase",
+                    "dimensions": null,
+                    "vectorSearchConfiguration": null,
                     "synonymMaps": []
                   },
                   {
@@ -266,6 +308,8 @@
                     "searchAnalyzer": null,
                     "analyzer": null,
                     "normalizer": null,
+                    "dimensions": null,
+                    "vectorSearchConfiguration": null,
                     "synonymMaps": []
                   },
                   {
@@ -281,6 +325,8 @@
                     "searchAnalyzer": null,
                     "analyzer": null,
                     "normalizer": null,
+                    "dimensions": null,
+                    "vectorSearchConfiguration": null,
                     "synonymMaps": []
                   },
                   {
@@ -296,6 +342,8 @@
                     "searchAnalyzer": null,
                     "analyzer": null,
                     "normalizer": null,
+                    "dimensions": null,
+                    "vectorSearchConfiguration": null,
                     "synonymMaps": []
                   }
                 ]
@@ -317,6 +365,8 @@
                     "searchAnalyzer": null,
                     "analyzer": "en.lucene",
                     "normalizer": null,
+                    "dimensions": null,
+                    "vectorSearchConfiguration": null,
                     "synonymMaps": []
                   },
                   {
@@ -332,6 +382,8 @@
                     "searchAnalyzer": null,
                     "analyzer": "fr.lucene",
                     "normalizer": null,
+                    "dimensions": null,
+                    "vectorSearchConfiguration": null,
                     "synonymMaps": []
                   },
                   {
@@ -347,6 +399,8 @@
                     "searchAnalyzer": null,
                     "analyzer": null,
                     "normalizer": null,
+                    "dimensions": null,
+                    "vectorSearchConfiguration": null,
                     "synonymMaps": []
                   },
                   {
@@ -362,6 +416,8 @@
                     "searchAnalyzer": null,
                     "analyzer": null,
                     "normalizer": null,
+                    "dimensions": null,
+                    "vectorSearchConfiguration": null,
                     "synonymMaps": []
                   },
                   {
@@ -377,6 +433,8 @@
                     "searchAnalyzer": null,
                     "analyzer": null,
                     "normalizer": null,
+                    "dimensions": null,
+                    "vectorSearchConfiguration": null,
                     "synonymMaps": []
                   },
                   {
@@ -392,6 +450,8 @@
                     "searchAnalyzer": null,
                     "analyzer": null,
                     "normalizer": null,
+                    "dimensions": null,
+                    "vectorSearchConfiguration": null,
                     "synonymMaps": []
                   },
                   {
@@ -407,6 +467,8 @@
                     "searchAnalyzer": null,
                     "analyzer": null,
                     "normalizer": null,
+                    "dimensions": null,
+                    "vectorSearchConfiguration": null,
                     "synonymMaps": []
                   },
                   {
@@ -422,6 +484,8 @@
                     "searchAnalyzer": null,
                     "analyzer": null,
                     "normalizer": null,
+                    "dimensions": null,
+                    "vectorSearchConfiguration": null,
                     "synonymMaps": []
                   }
                 ]
@@ -483,15 +547,29 @@
               "@odata.type": "#Microsoft.Azure.Search.BM25Similarity",
               "k1": null,
               "b": null
+            },
+            "semantic": null,
+            "vectorSearch": {
+              "algorithmConfigurations": [
+                {
+                  "name": "my-vector-config",
+                  "kind": "hnsw",
+                  "hnswParameters": {
+                    "metric": "cosine",
+                    "m": 4,
+                    "efConstruction": 400,
+                    "efSearch": 500
+                  }
+                }
+              ]
             }
           },
           {
-            "@odata.etag": "\u00220x8D96C9E3F1A2CAE\u0022",
-            "name": "maonprvv",
+            "name": "hyndftnn",
             "defaultScoringProfile": null,
             "fields": [
               {
-                "name": "hotelId",
+                "name": "HotelId",
                 "type": "Edm.String",
                 "searchable": false,
                 "filterable": true,
@@ -503,10 +581,12 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
-                "name": "hotelName",
+                "name": "HotelName",
                 "type": "Edm.String",
                 "searchable": true,
                 "filterable": true,
@@ -518,11 +598,30 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
-                "name": "description",
+                "name": "Description",
                 "type": "Edm.String",
+                "searchable": true,
+                "filterable": true,
+                "retrievable": true,
+                "sortable": false,
+                "facetable": false,
+                "key": false,
+                "indexAnalyzer": null,
+                "searchAnalyzer": null,
+                "analyzer": null,
+                "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
+                "synonymMaps": []
+              },
+              {
+                "name": "DescriptionVector",
+                "type": "Collection(Edm.Single)",
                 "searchable": true,
                 "filterable": false,
                 "retrievable": true,
@@ -531,27 +630,14 @@
                 "key": false,
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
-                "analyzer": "en.lucene",
+                "analyzer": null,
                 "normalizer": null,
+                "dimensions": 1536,
+                "vectorSearchConfiguration": "my-vector-config",
                 "synonymMaps": []
               },
               {
-                "name": "descriptionFr",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": false,
-                "retrievable": true,
-                "sortable": false,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": "fr.lucene",
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "category",
+                "name": "Category",
                 "type": "Edm.String",
                 "searchable": true,
                 "filterable": true,
@@ -563,367 +649,14 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
-              },
-              {
-                "name": "tags",
-                "type": "Collection(Edm.String)",
-                "searchable": true,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": false,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "parkingIncluded",
-                "type": "Edm.Boolean",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "smokingAllowed",
-                "type": "Edm.Boolean",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "lastRenovationDate",
-                "type": "Edm.DateTimeOffset",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "rating",
-                "type": "Edm.Int32",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "location",
-                "type": "Edm.GeographyPoint",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "geoLocation",
-                "type": "Edm.GeographyPoint",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "address",
-                "type": "Edm.ComplexType",
-                "fields": [
-                  {
-                    "name": "streetAddress",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": false,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": false,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "city",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": true,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "stateProvince",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": true,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "country",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": true,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "postalCode",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": true,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  }
-                ]
-              },
-              {
-                "name": "rooms",
-                "type": "Collection(Edm.ComplexType)",
-                "fields": [
-                  {
-                    "name": "description",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": false,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": false,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": "en.lucene",
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "descriptionFr",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": false,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": false,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": "fr.lucene",
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "type",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "baseRate",
-                    "type": "Edm.Double",
-                    "searchable": false,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "bedOptions",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "sleepsCount",
-                    "type": "Edm.Int32",
-                    "searchable": false,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "smokingAllowed",
-                    "type": "Edm.Boolean",
-                    "searchable": false,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "tags",
-                    "type": "Collection(Edm.String)",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  }
-                ]
               }
             ],
-            "scoringProfiles": [
-              {
-                "name": "nearest",
-                "functionAggregation": "sum",
-                "text": null,
-                "functions": [
-                  {
-                    "fieldName": "location",
-                    "interpolation": "linear",
-                    "type": "distance",
-                    "boost": 2.0,
-                    "freshness": null,
-                    "magnitude": null,
-                    "distance": {
-                      "referencePointParameter": "myloc",
-                      "boostingDistance": 100.0
-                    },
-                    "tag": null
-                  },
-                  {
-                    "fieldName": "geoLocation",
-                    "interpolation": "linear",
-                    "type": "distance",
-                    "boost": 2.0,
-                    "freshness": null,
-                    "magnitude": null,
-                    "distance": {
-                      "referencePointParameter": "mygeoloc",
-                      "boostingDistance": 100.0
-                    },
-                    "tag": null
-                  }
-                ]
-              }
-            ],
+            "scoringProfiles": [],
             "corsOptions": null,
-            "suggesters": [
-              {
-                "name": "sg",
-                "searchMode": "analyzingInfixMatching",
-                "sourceFields": [
-                  "description",
-                  "hotelName"
-                ]
-              }
-            ],
+            "suggesters": [],
             "analyzers": [],
             "normalizers": [],
             "tokenizers": [],
@@ -934,2261 +667,21 @@
               "@odata.type": "#Microsoft.Azure.Search.BM25Similarity",
               "k1": null,
               "b": null
-            }
-          },
-          {
-            "@odata.etag": "\u00220x8D96CA2BC0078E2\u0022",
-            "name": "mskvbtdi",
-            "defaultScoringProfile": null,
-            "fields": [
-              {
-                "name": "hotelId",
-                "type": "Edm.String",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": true,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "hotelName",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "description",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": false,
-                "retrievable": true,
-                "sortable": false,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": "en.lucene",
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "descriptionFr",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": false,
-                "retrievable": true,
-                "sortable": false,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": "fr.lucene",
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "category",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "tags",
-                "type": "Collection(Edm.String)",
-                "searchable": true,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": false,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "parkingIncluded",
-                "type": "Edm.Boolean",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "smokingAllowed",
-                "type": "Edm.Boolean",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "lastRenovationDate",
-                "type": "Edm.DateTimeOffset",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "rating",
-                "type": "Edm.Int32",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "location",
-                "type": "Edm.GeographyPoint",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "geoLocation",
-                "type": "Edm.GeographyPoint",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "address",
-                "type": "Edm.ComplexType",
-                "fields": [
-                  {
-                    "name": "streetAddress",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": false,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": false,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "city",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": true,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "stateProvince",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": true,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "country",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": true,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "postalCode",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": true,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
+            },
+            "semantic": null,
+            "vectorSearch": {
+              "algorithmConfigurations": [
+                {
+                  "name": "my-vector-config",
+                  "kind": "hnsw",
+                  "hnswParameters": {
+                    "metric": "cosine",
+                    "m": 4,
+                    "efConstruction": 400,
+                    "efSearch": 500
                   }
-                ]
-              },
-              {
-                "name": "rooms",
-                "type": "Collection(Edm.ComplexType)",
-                "fields": [
-                  {
-                    "name": "description",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": false,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": false,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": "en.lucene",
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "descriptionFr",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": false,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": false,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": "fr.lucene",
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "type",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "baseRate",
-                    "type": "Edm.Double",
-                    "searchable": false,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "bedOptions",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "sleepsCount",
-                    "type": "Edm.Int32",
-                    "searchable": false,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "smokingAllowed",
-                    "type": "Edm.Boolean",
-                    "searchable": false,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "tags",
-                    "type": "Collection(Edm.String)",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  }
-                ]
-              }
-            ],
-            "scoringProfiles": [
-              {
-                "name": "nearest",
-                "functionAggregation": "sum",
-                "text": null,
-                "functions": [
-                  {
-                    "fieldName": "location",
-                    "interpolation": "linear",
-                    "type": "distance",
-                    "boost": 2.0,
-                    "freshness": null,
-                    "magnitude": null,
-                    "distance": {
-                      "referencePointParameter": "myloc",
-                      "boostingDistance": 100.0
-                    },
-                    "tag": null
-                  },
-                  {
-                    "fieldName": "geoLocation",
-                    "interpolation": "linear",
-                    "type": "distance",
-                    "boost": 2.0,
-                    "freshness": null,
-                    "magnitude": null,
-                    "distance": {
-                      "referencePointParameter": "mygeoloc",
-                      "boostingDistance": 100.0
-                    },
-                    "tag": null
-                  }
-                ]
-              }
-            ],
-            "corsOptions": null,
-            "suggesters": [
-              {
-                "name": "sg",
-                "searchMode": "analyzingInfixMatching",
-                "sourceFields": [
-                  "description",
-                  "hotelName"
-                ]
-              }
-            ],
-            "analyzers": [],
-            "normalizers": [],
-            "tokenizers": [],
-            "tokenFilters": [],
-            "charFilters": [],
-            "encryptionKey": null,
-            "similarity": {
-              "@odata.type": "#Microsoft.Azure.Search.BM25Similarity",
-              "k1": null,
-              "b": null
-            }
-          },
-          {
-            "@odata.etag": "\u00220x8D96C9FF625D53E\u0022",
-            "name": "mxojtnqu",
-            "defaultScoringProfile": null,
-            "fields": [
-              {
-                "name": "hotelId",
-                "type": "Edm.String",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": true,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "hotelName",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "description",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": false,
-                "retrievable": true,
-                "sortable": false,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": "en.lucene",
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "descriptionFr",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": false,
-                "retrievable": true,
-                "sortable": false,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": "fr.lucene",
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "category",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "tags",
-                "type": "Collection(Edm.String)",
-                "searchable": true,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": false,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "parkingIncluded",
-                "type": "Edm.Boolean",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "smokingAllowed",
-                "type": "Edm.Boolean",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "lastRenovationDate",
-                "type": "Edm.DateTimeOffset",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "rating",
-                "type": "Edm.Int32",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "location",
-                "type": "Edm.GeographyPoint",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "geoLocation",
-                "type": "Edm.GeographyPoint",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "address",
-                "type": "Edm.ComplexType",
-                "fields": [
-                  {
-                    "name": "streetAddress",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": false,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": false,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "city",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": true,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "stateProvince",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": true,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "country",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": true,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "postalCode",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": true,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  }
-                ]
-              },
-              {
-                "name": "rooms",
-                "type": "Collection(Edm.ComplexType)",
-                "fields": [
-                  {
-                    "name": "description",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": false,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": false,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": "en.lucene",
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "descriptionFr",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": false,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": false,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": "fr.lucene",
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "type",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "baseRate",
-                    "type": "Edm.Double",
-                    "searchable": false,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "bedOptions",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "sleepsCount",
-                    "type": "Edm.Int32",
-                    "searchable": false,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "smokingAllowed",
-                    "type": "Edm.Boolean",
-                    "searchable": false,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "tags",
-                    "type": "Collection(Edm.String)",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  }
-                ]
-              }
-            ],
-            "scoringProfiles": [
-              {
-                "name": "nearest",
-                "functionAggregation": "sum",
-                "text": null,
-                "functions": [
-                  {
-                    "fieldName": "location",
-                    "interpolation": "linear",
-                    "type": "distance",
-                    "boost": 2.0,
-                    "freshness": null,
-                    "magnitude": null,
-                    "distance": {
-                      "referencePointParameter": "myloc",
-                      "boostingDistance": 100.0
-                    },
-                    "tag": null
-                  },
-                  {
-                    "fieldName": "geoLocation",
-                    "interpolation": "linear",
-                    "type": "distance",
-                    "boost": 2.0,
-                    "freshness": null,
-                    "magnitude": null,
-                    "distance": {
-                      "referencePointParameter": "mygeoloc",
-                      "boostingDistance": 100.0
-                    },
-                    "tag": null
-                  }
-                ]
-              }
-            ],
-            "corsOptions": null,
-            "suggesters": [
-              {
-                "name": "sg",
-                "searchMode": "analyzingInfixMatching",
-                "sourceFields": [
-                  "description",
-                  "hotelName"
-                ]
-              }
-            ],
-            "analyzers": [],
-            "normalizers": [],
-            "tokenizers": [],
-            "tokenFilters": [],
-            "charFilters": [],
-            "encryptionKey": null,
-            "similarity": {
-              "@odata.type": "#Microsoft.Azure.Search.BM25Similarity",
-              "k1": null,
-              "b": null
-            }
-          },
-          {
-            "@odata.etag": "\u00220x8D96CD895B57CFC\u0022",
-            "name": "tpddmcms",
-            "defaultScoringProfile": null,
-            "fields": [
-              {
-                "name": "hotelId",
-                "type": "Edm.String",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": true,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "hotelName",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "description",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": false,
-                "retrievable": true,
-                "sortable": false,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": "en.lucene",
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "descriptionFr",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": false,
-                "retrievable": true,
-                "sortable": false,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": "fr.lucene",
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "category",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "tags",
-                "type": "Collection(Edm.String)",
-                "searchable": true,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": false,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "parkingIncluded",
-                "type": "Edm.Boolean",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "smokingAllowed",
-                "type": "Edm.Boolean",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "lastRenovationDate",
-                "type": "Edm.DateTimeOffset",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "rating",
-                "type": "Edm.Int32",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "location",
-                "type": "Edm.GeographyPoint",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "geoLocation",
-                "type": "Edm.GeographyPoint",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "address",
-                "type": "Edm.ComplexType",
-                "fields": [
-                  {
-                    "name": "streetAddress",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": false,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": false,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "city",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": true,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "stateProvince",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": true,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "country",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": true,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "postalCode",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": true,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  }
-                ]
-              },
-              {
-                "name": "rooms",
-                "type": "Collection(Edm.ComplexType)",
-                "fields": [
-                  {
-                    "name": "description",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": false,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": false,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": "en.lucene",
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "descriptionFr",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": false,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": false,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": "fr.lucene",
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "type",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "baseRate",
-                    "type": "Edm.Double",
-                    "searchable": false,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "bedOptions",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "sleepsCount",
-                    "type": "Edm.Int32",
-                    "searchable": false,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "smokingAllowed",
-                    "type": "Edm.Boolean",
-                    "searchable": false,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "tags",
-                    "type": "Collection(Edm.String)",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  }
-                ]
-              }
-            ],
-            "scoringProfiles": [
-              {
-                "name": "nearest",
-                "functionAggregation": "sum",
-                "text": null,
-                "functions": [
-                  {
-                    "fieldName": "location",
-                    "interpolation": "linear",
-                    "type": "distance",
-                    "boost": 2.0,
-                    "freshness": null,
-                    "magnitude": null,
-                    "distance": {
-                      "referencePointParameter": "myloc",
-                      "boostingDistance": 100.0
-                    },
-                    "tag": null
-                  },
-                  {
-                    "fieldName": "geoLocation",
-                    "interpolation": "linear",
-                    "type": "distance",
-                    "boost": 2.0,
-                    "freshness": null,
-                    "magnitude": null,
-                    "distance": {
-                      "referencePointParameter": "mygeoloc",
-                      "boostingDistance": 100.0
-                    },
-                    "tag": null
-                  }
-                ]
-              }
-            ],
-            "corsOptions": null,
-            "suggesters": [
-              {
-                "name": "sg",
-                "searchMode": "analyzingInfixMatching",
-                "sourceFields": [
-                  "description",
-                  "hotelName"
-                ]
-              }
-            ],
-            "analyzers": [],
-            "normalizers": [],
-            "tokenizers": [],
-            "tokenFilters": [],
-            "charFilters": [],
-            "encryptionKey": null,
-            "similarity": {
-              "@odata.type": "#Microsoft.Azure.Search.BM25Similarity",
-              "k1": null,
-              "b": null
-            }
-          },
-          {
-            "@odata.etag": "\u00220x8D96CA4D1B7DF64\u0022",
-            "name": "tueenyfc",
-            "defaultScoringProfile": null,
-            "fields": [
-              {
-                "name": "hotelId",
-                "type": "Edm.String",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": true,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "hotelName",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "description",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": false,
-                "retrievable": true,
-                "sortable": false,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": "en.lucene",
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "descriptionFr",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": false,
-                "retrievable": true,
-                "sortable": false,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": "fr.lucene",
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "category",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "tags",
-                "type": "Collection(Edm.String)",
-                "searchable": true,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": false,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "parkingIncluded",
-                "type": "Edm.Boolean",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "smokingAllowed",
-                "type": "Edm.Boolean",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "lastRenovationDate",
-                "type": "Edm.DateTimeOffset",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "rating",
-                "type": "Edm.Int32",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "location",
-                "type": "Edm.GeographyPoint",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "geoLocation",
-                "type": "Edm.GeographyPoint",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "address",
-                "type": "Edm.ComplexType",
-                "fields": [
-                  {
-                    "name": "streetAddress",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": false,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": false,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "city",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": true,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "stateProvince",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": true,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "country",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": true,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "postalCode",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": true,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  }
-                ]
-              },
-              {
-                "name": "rooms",
-                "type": "Collection(Edm.ComplexType)",
-                "fields": [
-                  {
-                    "name": "description",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": false,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": false,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": "en.lucene",
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "descriptionFr",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": false,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": false,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": "fr.lucene",
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "type",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "baseRate",
-                    "type": "Edm.Double",
-                    "searchable": false,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "bedOptions",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "sleepsCount",
-                    "type": "Edm.Int32",
-                    "searchable": false,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "smokingAllowed",
-                    "type": "Edm.Boolean",
-                    "searchable": false,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "tags",
-                    "type": "Collection(Edm.String)",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  }
-                ]
-              }
-            ],
-            "scoringProfiles": [
-              {
-                "name": "nearest",
-                "functionAggregation": "sum",
-                "text": null,
-                "functions": [
-                  {
-                    "fieldName": "location",
-                    "interpolation": "linear",
-                    "type": "distance",
-                    "boost": 2.0,
-                    "freshness": null,
-                    "magnitude": null,
-                    "distance": {
-                      "referencePointParameter": "myloc",
-                      "boostingDistance": 100.0
-                    },
-                    "tag": null
-                  },
-                  {
-                    "fieldName": "geoLocation",
-                    "interpolation": "linear",
-                    "type": "distance",
-                    "boost": 2.0,
-                    "freshness": null,
-                    "magnitude": null,
-                    "distance": {
-                      "referencePointParameter": "mygeoloc",
-                      "boostingDistance": 100.0
-                    },
-                    "tag": null
-                  }
-                ]
-              }
-            ],
-            "corsOptions": null,
-            "suggesters": [
-              {
-                "name": "sg",
-                "searchMode": "analyzingInfixMatching",
-                "sourceFields": [
-                  "description",
-                  "hotelName"
-                ]
-              }
-            ],
-            "analyzers": [],
-            "normalizers": [],
-            "tokenizers": [],
-            "tokenFilters": [],
-            "charFilters": [],
-            "encryptionKey": null,
-            "similarity": {
-              "@odata.type": "#Microsoft.Azure.Search.BM25Similarity",
-              "k1": null,
-              "b": null
-            }
-          },
-          {
-            "@odata.etag": "\u00220x8D9627819199746\u0022",
-            "name": "xgamqeyg",
-            "defaultScoringProfile": null,
-            "fields": [
-              {
-                "name": "hotelId",
-                "type": "Edm.String",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": true,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "hotelName",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "description",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": false,
-                "retrievable": true,
-                "sortable": false,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": "en.lucene",
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "descriptionFr",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": false,
-                "retrievable": true,
-                "sortable": false,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": "fr.lucene",
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "category",
-                "type": "Edm.String",
-                "searchable": true,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "tags",
-                "type": "Collection(Edm.String)",
-                "searchable": true,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": false,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "parkingIncluded",
-                "type": "Edm.Boolean",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "smokingAllowed",
-                "type": "Edm.Boolean",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "lastRenovationDate",
-                "type": "Edm.DateTimeOffset",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "rating",
-                "type": "Edm.Int32",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": true,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "location",
-                "type": "Edm.GeographyPoint",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "geoLocation",
-                "type": "Edm.GeographyPoint",
-                "searchable": false,
-                "filterable": true,
-                "retrievable": true,
-                "sortable": true,
-                "facetable": false,
-                "key": false,
-                "indexAnalyzer": null,
-                "searchAnalyzer": null,
-                "analyzer": null,
-                "normalizer": null,
-                "synonymMaps": []
-              },
-              {
-                "name": "address",
-                "type": "Edm.ComplexType",
-                "fields": [
-                  {
-                    "name": "streetAddress",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": false,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": false,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "city",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": true,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "stateProvince",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": true,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "country",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": true,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "postalCode",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": true,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  }
-                ]
-              },
-              {
-                "name": "rooms",
-                "type": "Collection(Edm.ComplexType)",
-                "fields": [
-                  {
-                    "name": "description",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": false,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": false,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": "en.lucene",
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "descriptionFr",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": false,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": false,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": "fr.lucene",
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "type",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "baseRate",
-                    "type": "Edm.Double",
-                    "searchable": false,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "bedOptions",
-                    "type": "Edm.String",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "sleepsCount",
-                    "type": "Edm.Int32",
-                    "searchable": false,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "smokingAllowed",
-                    "type": "Edm.Boolean",
-                    "searchable": false,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  },
-                  {
-                    "name": "tags",
-                    "type": "Collection(Edm.String)",
-                    "searchable": true,
-                    "filterable": true,
-                    "retrievable": true,
-                    "sortable": false,
-                    "facetable": true,
-                    "key": false,
-                    "indexAnalyzer": null,
-                    "searchAnalyzer": null,
-                    "analyzer": null,
-                    "normalizer": null,
-                    "synonymMaps": []
-                  }
-                ]
-              }
-            ],
-            "scoringProfiles": [
-              {
-                "name": "nearest",
-                "functionAggregation": "sum",
-                "text": null,
-                "functions": [
-                  {
-                    "fieldName": "location",
-                    "interpolation": "linear",
-                    "type": "distance",
-                    "boost": 2.0,
-                    "freshness": null,
-                    "magnitude": null,
-                    "distance": {
-                      "referencePointParameter": "myloc",
-                      "boostingDistance": 100.0
-                    },
-                    "tag": null
-                  },
-                  {
-                    "fieldName": "geoLocation",
-                    "interpolation": "linear",
-                    "type": "distance",
-                    "boost": 2.0,
-                    "freshness": null,
-                    "magnitude": null,
-                    "distance": {
-                      "referencePointParameter": "mygeoloc",
-                      "boostingDistance": 100.0
-                    },
-                    "tag": null
-                  }
-                ]
-              }
-            ],
-            "corsOptions": null,
-            "suggesters": [
-              {
-                "name": "sg",
-                "searchMode": "analyzingInfixMatching",
-                "sourceFields": [
-                  "description",
-                  "hotelName"
-                ]
-              }
-            ],
-            "analyzers": [],
-            "normalizers": [],
-            "tokenizers": [],
-            "tokenFilters": [],
-            "charFilters": [],
-            "encryptionKey": null,
-            "similarity": {
-              "@odata.type": "#Microsoft.Azure.Search.BM25Similarity",
-              "k1": null,
-              "b": null
+                }
+              ]
             }
           }
         ]
@@ -3196,10 +689,10 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "230027432",
-    "SearchIndexName": "tpddmcms",
+    "RandomSeed": "1869940521",
+    "SearchIndexName": "dbyniqrn",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
-    "SEARCH_ENDPOINT_SUFFIX": null,
-    "SEARCH_SERVICE_NAME": "mohitc-acs"
+    "SEARCH_ENDPOINT_SUFFIX": "search.windows.net",
+    "SEARCH_SERVICE_NAME": "azs-net-t0eeade0124fbb432"
   }
 }
