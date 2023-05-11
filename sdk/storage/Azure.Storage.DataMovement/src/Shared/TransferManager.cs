@@ -272,18 +272,18 @@ namespace Azure.Storage.DataMovement
         /// all transfers will be returned regardless of status.
         /// </param>
         /// <returns></returns>
-        public virtual List<DataTransfer> GetTransfers(
-            StorageTransferStatus filterByStatus = StorageTransferStatus.None)
+        public virtual IEnumerable<DataTransfer> GetTransfers(
+            IEnumerable<StorageTransferStatus> filterByStatus = default)
         {
-            if (filterByStatus == StorageTransferStatus.None)
+            if (filterByStatus == default)
             {
-                return _dataTransfers.Select(d => d.Value).ToList();
+                return _dataTransfers.Select(d => d.Value);
             }
             else
             {
                 return _dataTransfers.
                     Select(d => d.Value).
-                    Where(x => x.TransferStatus == filterByStatus).ToList();
+                    Where(x => filterByStatus.Contains(x.TransferStatus)).ToList();
             }
         }
 

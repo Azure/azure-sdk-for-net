@@ -684,14 +684,14 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId3 = GetNewTransferId();
             string transferId4 = GetNewTransferId();
 
-            await transferCheckpointer.AddNewJobAsync(transferId2);
             await transferCheckpointer.AddNewJobAsync(transferId3);
+            await transferCheckpointer.AddNewJobAsync(transferId4);
 
             // Act
             List<string> transfersAfterAdditions = await transferCheckpointer.GetStoredTransfersAsync();
 
             // Assert
-            Assert.AreEqual(4, transfers.Count);
+            Assert.AreEqual(4, transfersAfterAdditions.Count);
             Assert.IsTrue(transfersAfterAdditions.Contains(transferId));
             Assert.IsTrue(transfersAfterAdditions.Contains(transferId2));
             Assert.IsTrue(transfersAfterAdditions.Contains(transferId3));

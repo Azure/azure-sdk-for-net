@@ -32,6 +32,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="folderPath">Path to the folder containing the checkpointing information to resume from.</param>
         public LocalTransferCheckpointer(string folderPath)
         {
+            _transferStates = new Dictionary<string, Dictionary<int, JobPartPlanFile>>();
             if (string.IsNullOrEmpty(folderPath))
             {
                 _pathToCheckpointer = Path.Combine(Environment.CurrentDirectory, DataMovementConstants.DefaultCheckpointerPath);
@@ -40,7 +41,6 @@ namespace Azure.Storage.DataMovement
                     // If it does not already exist, create the default folder.
                     Directory.CreateDirectory(_pathToCheckpointer);
                 }
-                _transferStates = new Dictionary<string, Dictionary<int, JobPartPlanFile>>();
             }
             else if (!Directory.Exists(folderPath))
             {
@@ -133,6 +133,11 @@ namespace Azure.Storage.DataMovement
                     {
                         fileNames.Add(partPlanFileName);
                     }
+                }
+                if (fileNames.Count == 0)
+                {
+                    // If no files exist, there's nothing to resume from
+                    throw Errors.PlanFilesMissing(_pathToCheckpointer, transferId);
                 }
 
                 // Verify each existing file and then add it to our transfer states.

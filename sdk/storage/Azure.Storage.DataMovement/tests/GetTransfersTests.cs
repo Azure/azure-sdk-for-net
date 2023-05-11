@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -19,7 +20,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManager transferManager = new TransferManager();
 
             // Act
-            List<DataTransfer> transfers = transferManager.GetTransfers();
+            List<DataTransfer> transfers = transferManager.GetTransfers().ToList();
 
             // Assert
             Assert.IsEmpty(transfers);
@@ -39,7 +40,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManager manager = factory.BuildTransferManager();
 
             // Act
-            List<DataTransfer> result = manager.GetTransfers();
+            List<DataTransfer> result = manager.GetTransfers().ToList();
 
             // Assert
             Assert.AreEqual(storedTransfers, result);
@@ -74,10 +75,45 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManager manager = factory.BuildTransferManager();
 
             // Act
-            List<DataTransfer> result = manager.GetTransfers(status);
+            StorageTransferStatus[] statuses = new StorageTransferStatus[] { status };
+            List<DataTransfer> result = manager.GetTransfers(statuses).ToList();
 
             // Assert
             Assert.AreEqual(storedTransfers.Where( d => d.TransferStatus == status).ToList(), result);
+        }
+
+        public void GetTransfers_FilterMultipleStatuses()
+        {
+            // Arrange - Set up transfer manager with multiple transfers
+            List<DataTransfer> storedTransfers = new List<DataTransfer>
+            {
+                new DataTransfer(StorageTransferStatus.Queued),
+                new DataTransfer(StorageTransferStatus.Queued),
+                new DataTransfer(StorageTransferStatus.Queued),
+                new DataTransfer(StorageTransferStatus.Queued),
+                new DataTransfer(StorageTransferStatus.InProgress),
+                new DataTransfer(StorageTransferStatus.InProgress),
+                new DataTransfer(StorageTransferStatus.Paused),
+                new DataTransfer(StorageTransferStatus.Paused),
+                new DataTransfer(StorageTransferStatus.CompletedWithFailedTransfers),
+                new DataTransfer(StorageTransferStatus.CompletedWithFailedTransfers),
+                new DataTransfer(StorageTransferStatus.CompletedWithFailedTransfers),
+                new DataTransfer(StorageTransferStatus.Completed),
+                new DataTransfer(StorageTransferStatus.Completed),
+                new DataTransfer(StorageTransferStatus.CompletedWithSkippedTransfers)
+            };
+            TransferManagerFactory factory = new TransferManagerFactory(storedTransfers);
+            TransferManager manager = factory.BuildTransferManager();
+
+            // Act
+            StorageTransferStatus[] statuses = new StorageTransferStatus[] {
+                StorageTransferStatus.Completed,
+                StorageTransferStatus.CompletedWithFailedTransfers,
+                StorageTransferStatus.CompletedWithSkippedTransfers };
+            List<DataTransfer> result = manager.GetTransfers(statuses).ToList();
+
+            // Assert
+            Assert.AreEqual(storedTransfers.Where(d => statuses.Contains(d.TransferStatus)).ToList(), result);
         }
 
         [Test]
@@ -104,7 +140,8 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManager manager = factory.BuildTransferManager();
 
             // Act - With a transfer status not in the above stored transfers
-            List<DataTransfer> result = manager.GetTransfers(StorageTransferStatus.CancellationInProgress);
+            StorageTransferStatus[] statuses = new StorageTransferStatus[] { StorageTransferStatus.CancellationInProgress };
+            List<DataTransfer> result = manager.GetTransfers(statuses).ToList();
 
             // Assert
             Assert.IsEmpty(result);
