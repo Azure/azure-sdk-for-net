@@ -1,6 +1,7 @@
 # Release History
-## 1.0.2-alpha.7 (Unreleased)
- - fix bug
+
+## 1.0.3-alpha.7 (Unreleased)
+ - change botId to botAppId, change type from Guid to string
 
 ## 1.0.1-alpha.7 (Unreleased)
  - DialogContext in StartDialogOption is now of type IDictionary<string, object>

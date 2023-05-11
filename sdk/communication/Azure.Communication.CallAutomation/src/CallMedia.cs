@@ -669,7 +669,6 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 StartDialogRequestInternal request = CreateStartDialogRequest(startDialogOptions);
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 var response = await CallDialogRestClient.StartDialogAsync
                     (CallConnectionId,
@@ -703,7 +702,6 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 StartDialogRequestInternal request = CreateStartDialogRequest(startDialogOptions);
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 var response = CallDialogRestClient.StartDialog
                     (CallConnectionId,
@@ -726,7 +724,7 @@ namespace Azure.Communication.CallAutomation
         private static StartDialogRequestInternal CreateStartDialogRequest(StartDialogOptions startDialogOptions)
         {
             DialogOptionsInternal dialogOptionsInternal = new DialogOptionsInternal(
-                startDialogOptions.BotId.ToString(),
+                startDialogOptions.BotAppId,
                 startDialogOptions.DialogContext);
             StartDialogRequestInternal startDialogRequestInternal = new StartDialogRequestInternal(dialogOptionsInternal, startDialogOptions.DialogInputType)
             {
@@ -746,8 +744,6 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                var repeatabilityHeaders = new RepeatabilityHeaders();
-
                 var response = await CallDialogRestClient.StopDialogAsync
                     (CallConnectionId,
                     dialogId,
@@ -776,8 +772,6 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                var repeatabilityHeaders = new RepeatabilityHeaders();
-
                 var response = CallDialogRestClient.StopDialog
                     (CallConnectionId,
                     dialogId,
