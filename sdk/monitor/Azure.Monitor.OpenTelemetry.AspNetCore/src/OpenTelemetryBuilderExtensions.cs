@@ -94,7 +94,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                             .AddAspNetCoreInstrumentation()
                             .AddHttpClientInstrumentation()
                             .AddSqlClientInstrumentation()
-                            .SetSampler(new ApplicationInsightsSampler(1.0F))
+                            .SetSampler(sp =>
+                            {
+                                var options = sp.GetRequiredService<IOptionsMonitor<ApplicationInsightsSamplerOptions>>().Get(Options.DefaultName);
+                                return new ApplicationInsightsSampler(options);
+                            })
                             .AddAzureMonitorTraceExporter());
 
             builder.WithMetrics(b => b
@@ -111,6 +115,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                     builderOptions.IncludeScopes = false;
                 });
             });
+
+            // Set the default sampling ratio to 100 % to ensure that all telemetry is captured by default.
+            builder.Services.Configure<ApplicationInsightsSamplerOptions>(options => { options.SamplingRatio = 1.0F; });
 
             // Add AzureMonitorLogExporter to AzureMonitorOptions
             // once the service provider is available containing the final
