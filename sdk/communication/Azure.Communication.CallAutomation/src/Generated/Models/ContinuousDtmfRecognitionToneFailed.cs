@@ -20,12 +20,14 @@ namespace Azure.Communication.CallAutomation
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        internal ContinuousDtmfRecognitionToneFailed(string callConnectionId, string serverCallId, string correlationId, ResultInformation resultInformation)
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        internal ContinuousDtmfRecognitionToneFailed(string callConnectionId, string serverCallId, string correlationId, ResultInformation resultInformation, string operationContext)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
             ResultInformation = resultInformation;
+            OperationContext = operationContext;
         }
     }
 }

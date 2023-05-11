@@ -8,9 +8,7 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The Hangup. </summary>
-#pragma warning disable AZC0012 // Avoid single word type names
     public partial class Hangup
-#pragma warning restore AZC0012 // Avoid single word type names
     {
         /// <summary> Initializes a new instance of Hangup. </summary>
         internal Hangup()

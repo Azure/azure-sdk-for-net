@@ -10,9 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-#pragma warning disable AZC0012 // Avoid single word type names
     public partial class Hangup
-#pragma warning restore AZC0012 // Avoid single word type names
     {
         internal static Hangup DeserializeHangup(JsonElement element)
         {

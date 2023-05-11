@@ -23,6 +23,7 @@ namespace Azure.Communication.CallAutomation
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
             Optional<ResultInformation> resultInformation = default;
+            Optional<string> operationContext = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("toneInfo"u8))
@@ -58,8 +59,13 @@ namespace Azure.Communication.CallAutomation
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
                     continue;
                 }
+                if (property.NameEquals("operationContext"u8))
+                {
+                    operationContext = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ContinuousDtmfRecognitionToneReceived(toneInfo.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, resultInformation.Value);
+            return new ContinuousDtmfRecognitionToneReceived(toneInfo.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, resultInformation.Value, operationContext.Value);
         }
     }
 }
