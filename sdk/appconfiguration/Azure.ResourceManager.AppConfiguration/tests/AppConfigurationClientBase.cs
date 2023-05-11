@@ -29,12 +29,14 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             : base(isAsync)
         {
             IgnoreTestInLiveMode();
+            IgnoreNetworkDependencyVersions();
         }
 
         protected AppConfigurationClientBase(bool isAsync, RecordedTestMode mode)
             : base(isAsync, mode)
         {
             IgnoreTestInLiveMode();
+            IgnoreNetworkDependencyVersions();
         }
 
         protected void Initialize()

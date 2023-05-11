@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         private AppConfigurationPrivateEndpointConnectionResource Connection { get; set; }
 
         public PrivateEndpointConnectionOperationTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 

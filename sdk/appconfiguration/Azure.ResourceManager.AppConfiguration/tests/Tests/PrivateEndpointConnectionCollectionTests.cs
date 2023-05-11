@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         private AppConfigurationStoreResource ConfigStore { get; set; }
         private Network.PrivateEndpointResource PrivateEndpointResource { get; set; }
         public PrivateEndpointConnectionCollectionTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
