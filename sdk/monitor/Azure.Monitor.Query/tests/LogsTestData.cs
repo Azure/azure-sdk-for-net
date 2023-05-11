@@ -139,7 +139,7 @@ namespace Azure.Monitor.Query.Tests
 
         private async Task InitializeStorageAccount()
         {
-            var client = new LogsQueryClient(_testEnvironment.Credential);
+            var client = new LogsQueryClient(_testEnvironment.LogsEndpoint, _testEnvironment.Credential);
 
             while (true)
             {
