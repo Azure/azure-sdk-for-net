@@ -19,7 +19,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
     [NonParallelizable]
     public class ContainerRegistryContentClientLiveTests : ContainerRegistryRecordedTestBase
     {
-        public ContainerRegistryContentClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ContainerRegistryContentClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
