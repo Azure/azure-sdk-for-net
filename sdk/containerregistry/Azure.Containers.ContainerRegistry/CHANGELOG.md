@@ -2,9 +2,11 @@
 
 ## 1.1.0 (2023-05-09)
 
+- General availability release of `ContainerRegistryContentClient`.
+
 ### Breaking Changes
 
-- Added sanity check for manifest size at download time - if manifest is bigger than 4MB, `RequestFailedException` will be thrown.
+- Added sanity check for manifest size at download time:  if the manifest is bigger than 4MB, `RequestFailedException` will be thrown.
 
 ## 1.1.0-beta.9 (2023-04-11)
 
