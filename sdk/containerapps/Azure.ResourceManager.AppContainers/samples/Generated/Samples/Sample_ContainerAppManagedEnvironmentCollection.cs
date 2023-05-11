@@ -170,16 +170,16 @@ namespace Azure.ResourceManager.AppContainers.Samples
 {
 new ContainerAppWorkloadProfile("My-GP-01","GeneralPurpose")
 {
-MinCount = 3,
-MaxCount = 12,
+MinimumNodeCount = 3,
+MaximumNodeCount = 12,
 },new ContainerAppWorkloadProfile("My-MO-01","MemoryOptimized")
 {
-MinCount = 3,
-MaxCount = 6,
+MinimumNodeCount = 3,
+MaximumNodeCount = 6,
 },new ContainerAppWorkloadProfile("My-CO-01","ComputeOptimized")
 {
-MinCount = 3,
-MaxCount = 6,
+MinimumNodeCount = 3,
+MaximumNodeCount = 6,
 },new ContainerAppWorkloadProfile("My-consumption-01","Consumption")
 },
                 InfrastructureResourceGroup = "myInfrastructureRgName",
@@ -245,16 +245,16 @@ MaxCount = 6,
 {
 new ContainerAppWorkloadProfile("My-GP-01","GeneralPurpose")
 {
-MinCount = 3,
-MaxCount = 12,
+MinimumNodeCount = 3,
+MaximumNodeCount = 12,
 },new ContainerAppWorkloadProfile("My-MO-01","MemoryOptimized")
 {
-MinCount = 3,
-MaxCount = 6,
+MinimumNodeCount = 3,
+MaximumNodeCount = 6,
 },new ContainerAppWorkloadProfile("My-CO-01","ComputeOptimized")
 {
-MinCount = 3,
-MaxCount = 6,
+MinimumNodeCount = 3,
+MaximumNodeCount = 6,
 },new ContainerAppWorkloadProfile("My-consumption-01","Consumption")
 },
             };

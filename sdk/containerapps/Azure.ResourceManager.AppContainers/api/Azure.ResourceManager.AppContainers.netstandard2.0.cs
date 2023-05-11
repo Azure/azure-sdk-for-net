@@ -2083,12 +2083,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         public ContainerAppWorkloadProfile(string workloadProfileType, int minimumCount, int maximumCount) { }
         public ContainerAppWorkloadProfile(string name, string workloadProfileType) { }
-        public int? MaxCount { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int MaximumCount { get { throw null; } set { } }
-        public int? MinCount { get { throw null; } set { } }
+        public int? MaximumNodeCount { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int MinimumCount { get { throw null; } set { } }
+        public int? MinimumNodeCount { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string WorkloadProfileType { get { throw null; } set { } }
     }
