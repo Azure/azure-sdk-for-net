@@ -254,10 +254,16 @@ namespace Azure.Storage.DataMovement
         /// <returns>The task to wait until the cancellation has been triggered.</returns>
         internal async Task TriggerCancellationAsync()
         {
-            if (!_cancellationToken.IsCancellationRequested)
+            // If stop on failure specified, cancel entire job.
+            if (_errorHandling == ErrorHandlingOptions.StopOnAllFailures)
             {
-                _dataTransfer._state.TriggerCancellation();
+                if (!_cancellationToken.IsCancellationRequested)
+                {
+                    _dataTransfer._state.TriggerCancellation();
+                }
+                _dataTransfer._state.ResetTransferredBytes();
             }
+
             // Set the status to Pause/CancellationInProgress
             if (StorageTransferStatus.PauseInProgress == _dataTransfer.TransferStatus)
             {
@@ -270,7 +276,6 @@ namespace Azure.Storage.DataMovement
                 // It's a cancellation if a pause wasn't called.
                 await OnTransferStatusChanged(StorageTransferStatus.CancellationInProgress).ConfigureAwait(false);
             }
-            _dataTransfer._state.ResetTransferredBytes();
         }
 
         /// <summary>

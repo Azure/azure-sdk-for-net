@@ -99,6 +99,7 @@ All client instance methods are thread-safe and independent of each other ([guid
 - [Metrics query](#metrics-query)
   - [Handle metrics query response](#handle-metrics-query-response)
   - [Query metrics with options](#query-metrics-with-options)
+  - [Split a metric by dimension](#split-a-metric-by-dimension)
 - [Register the client with dependency injection](#register-the-client-with-dependency-injection)
 
 ### Logs query
@@ -429,7 +430,7 @@ var client = new MetricsQueryClient(new DefaultAzureCredential());
 
 Response<MetricsQueryResult> results = await client.QueryResourceAsync(
     resourceId,
-    new[] { "SuccessfulCalls", "TotalCalls" }
+    new[] { "Query Success Rate", "Query Count" }
 );
 
 foreach (MetricResult metric in results.Value.Metrics)
@@ -479,11 +480,12 @@ A `MetricsQueryOptions` object may be used to support more granular metrics quer
 ```C# Snippet:QueryMetricsWithAggregations
 string resourceId =
     "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.KeyVault/vaults/TestVault";
+string[] metricNames = new[] { "Availability" };
 var client = new MetricsQueryClient(new DefaultAzureCredential());
 
 Response<MetricsQueryResult> result = await client.QueryResourceAsync(
     resourceId,
-    new[] { "Availability" },
+    metricNames,
     new MetricsQueryOptions
     {
         Aggregations =
@@ -504,6 +506,48 @@ foreach (MetricTimeSeriesElement element in metric.TimeSeries)
     }
 }
 ```
+
+#### Split a metric by dimension
+
+The [MetricsQueryOptions.Filter](https://learn.microsoft.com/dotnet/api/azure.monitor.query.metricsqueryoptions.filter?view=azure-dotnet#azure-monitor-query-metricsqueryoptions-filter) property can be used for [splitting a metric](https://learn.microsoft.com/azure/azure-monitor/essentials/metrics-charts#metric-splitting) by a dimension when its filter value is set to an asterisk. Consider the following example for an App Service resource named *TestWebApp*. The code queries the resource's `Http2xx` metric and splits it by the `Instance` dimension.
+
+```C# Snippet:QueryMetricsWithSplitting
+string resourceId =
+    "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.Web/sites/TestWebApp";
+string[] metricNames = new[] { "Http2xx" };
+// Use of asterisk in filter value enables splitting on Instance dimension.
+string filter = "Instance eq '*'";
+var client = new MetricsQueryClient(new DefaultAzureCredential());
+var options = new MetricsQueryOptions
+{
+    Aggregations =
+    {
+        MetricAggregationType.Average,
+    },
+    Filter = filter,
+    TimeRange = TimeSpan.FromDays(2),
+};
+Response<MetricsQueryResult> result = await client.QueryResourceAsync(
+    resourceId,
+    metricNames,
+    options);
+
+foreach (MetricResult metric in result.Value.Metrics)
+{
+    foreach (MetricTimeSeriesElement element in metric.TimeSeries)
+    {
+        foreach (MetricValue value in element.Values)
+        {
+            // Prints a line that looks like the following:
+            // Thursday, May 4, 2023 9:42:00 PM, webwk000002, Http2xx, 1
+            Console.WriteLine(
+                $"{value.TimeStamp:F}, {element.Metadata["Instance"]}, {metric.Name}, {value.Average}");
+        }
+    }
+}
+```
+
+For an inventory of metrics and dimensions available for each Azure resource type, see [Supported metrics with Azure Monitor](https://learn.microsoft.com/azure/azure-monitor/essentials/metrics-supported).
 
 #### Register the client with dependency injection
 

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <Description>Microsoft Azure WebJobs SDK ServiceBus Extension</Description>
-    <Version>5.10.0-beta.1</Version>
+    <Version>5.10.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>5.9.0</ApiCompatVersion>
     <NoWarn>$(NoWarn);AZC0001;CS1591;SA1636</NoWarn>
@@ -22,6 +22,7 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
+		<Compile Include="$(AzureCoreSharedSources)ValueStopwatch.cs" LinkBase="SharedSource" />
     <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Administration\AdministrationClientConstants.cs" LinkBase="Shared" />
     <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Constants.cs" LinkBase="Shared" />
     <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Core\Argument.cs" LinkBase="Shared" />
@@ -36,7 +37,4 @@
     <Compile Include="$(AzureCoreSharedSources)MessagingDiagnosticOperation.cs" LinkBase="Shared" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Messaging.ServiceBus\src\Azure.Messaging.ServiceBus.csproj" />
-  </ItemGroup>
 </Project>

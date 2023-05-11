@@ -177,10 +177,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [RecordedTest]
         public async Task LocalSignVerifyRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K) })] SignatureAlgorithm algorithm)
         {
-#if NET461
+#if NET462
             if (algorithm.GetEcKeyCurveName() != default)
             {
-                Assert.Ignore("Creating JsonWebKey with ECDsa is not supported on net461.");
+                Assert.Ignore("Creating JsonWebKey with ECDsa is not supported on net462.");
             }
 #endif
 
@@ -254,10 +254,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [RecordedTest]
         public async Task SignLocalVerifyRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K) })] SignatureAlgorithm algorithm)
         {
-#if NET461
+#if NET462
             if (algorithm.GetEcKeyCurveName() != default)
             {
-                Assert.Ignore("Creating JsonWebKey with ECDsa is not supported on net461.");
+                Assert.Ignore("Creating JsonWebKey with ECDsa is not supported on net462.");
             }
 #endif
 

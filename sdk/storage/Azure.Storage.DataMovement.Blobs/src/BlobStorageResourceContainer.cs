@@ -43,8 +43,9 @@ namespace Azure.Storage.DataMovement.Blobs
 
         /// <summary>
         /// Gets the path of the storage resource.
+        /// Return empty string since we are using the root of the container.
         /// </summary>
-        public override string Path => _blobContainerClient.Name;
+        public override string Path => string.Empty;
 
         /// <summary>
         /// Gets the URL of the storage resource.

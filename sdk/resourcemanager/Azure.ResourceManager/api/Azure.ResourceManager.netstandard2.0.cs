@@ -755,8 +755,10 @@ namespace Azure.ResourceManager.Resources
         public Azure.ResourceManager.Models.ManagedServiceIdentity ManagedIdentity { get { throw null; } set { } }
         public System.BinaryData Metadata { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.NonComplianceMessage> NonComplianceMessages { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.PolicyOverride> Overrides { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmPolicyParameterValue> Parameters { get { throw null; } }
         public string PolicyDefinitionId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ResourceSelector> ResourceSelectors { get { throw null; } }
         public string Scope { get { throw null; } }
     }
     public partial class PolicyAssignmentResource : Azure.ResourceManager.ArmResource

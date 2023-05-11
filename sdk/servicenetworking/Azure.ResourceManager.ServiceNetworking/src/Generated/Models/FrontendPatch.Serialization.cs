@@ -26,11 +26,6 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
-            }
             writer.WriteEndObject();
         }
     }
