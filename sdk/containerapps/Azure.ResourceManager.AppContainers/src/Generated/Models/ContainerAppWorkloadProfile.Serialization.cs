@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("workloadProfileType"u8);
             writer.WriteStringValue(WorkloadProfileType);
-            if (Optional.IsDefined(MinCount))
+            if (Optional.IsDefined(MinimumNodeCount))
             {
                 writer.WritePropertyName("minimumCount"u8);
-                writer.WriteNumberValue(MinCount.Value);
+                writer.WriteNumberValue(MinimumNodeCount.Value);
             }
-            if (Optional.IsDefined(MaxCount))
+            if (Optional.IsDefined(MaximumNodeCount))
             {
                 writer.WritePropertyName("maximumCount"u8);
-                writer.WriteNumberValue(MaxCount.Value);
+                writer.WriteNumberValue(MaximumNodeCount.Value);
             }
             writer.WriteEndObject();
         }

@@ -204,8 +204,8 @@ rename-mapping:
   Scheme: ContainerAppHttpScheme
   ContainerAppProbeHttpGetHttpHeadersItem: ContainerAppHttpHeaderInfo
   RegistryInfo.registryUrl: RegistryServer
-  WorkloadProfile.maximumCount: MaxCount
-  WorkloadProfile.minimumCount: MinCount
+  WorkloadProfile.maximumCount: MaximumNodeCount
+  WorkloadProfile.minimumCount: MinimumNodeCount
   BillingMeterProperties.category: WorkloadProfileCategory
 
 request-path-to-resource-name:

@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> SkuName for container app. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public int MinimumCount { get => MinCount ?? default; set => MinCount = value; }
+        public int MinimumCount { get => MinimumNodeCount ?? default; set => MinimumNodeCount = value; }
 
         /// <summary> SkuName for container app. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public int MaximumCount { get => MaxCount ?? default; set => MaxCount = value; }
+        public int MaximumCount { get => MaximumNodeCount ?? default; set => MaximumNodeCount = value; }
     }
 }
