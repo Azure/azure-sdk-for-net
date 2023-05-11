@@ -1647,7 +1647,7 @@
           "type": "string"
         },
         "sourceIdentity": {
-          "$ref": "#/definitions/CommunicationUserIdentifierModel",
+          "$ref": "#/definitions/CommunicationIdentifierModel",
           "description": "Source identity."
         },
         "correlationId": {
@@ -2125,7 +2125,7 @@
     "DialogInputType": {
       "description": "Determines the type of the dialog.",
       "enum": [
-        "dLGaaS"
+        "powerVirtualAgents"
       ],
       "type": "string",
       "x-ms-enum": {
@@ -3345,6 +3345,10 @@
         "resultInformation": {
           "$ref": "#/definitions/ResultInformation",
           "description": "Contains the resulting SIP code/sub-code and message from NGC services."
+        },
+        "operationContext": {
+          "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
+          "type": "string"
         }
       }
     },
@@ -3370,6 +3374,10 @@
         "resultInformation": {
           "$ref": "#/definitions/ResultInformation",
           "description": "Contains the resulting SIP code/sub-code and message from NGC services."
+        },
+        "operationContext": {
+          "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
+          "type": "string"
         }
       }
     },
@@ -3388,10 +3396,6 @@
         },
         "tone": {
           "$ref": "#/definitions/Tone"
-        },
-        "participantId": {
-          "description": "The id of participant.",
-          "type": "string"
         }
       }
     },
