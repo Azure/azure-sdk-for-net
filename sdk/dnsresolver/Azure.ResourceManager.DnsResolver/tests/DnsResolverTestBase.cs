@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
 
         public DnsResolverTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
+            IgnoreNetworkDependencyVersions();
         }
 
         [SetUp]
