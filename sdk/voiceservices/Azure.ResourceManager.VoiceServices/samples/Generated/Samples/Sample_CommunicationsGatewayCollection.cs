@@ -176,7 +176,7 @@ AllowedMediaSourceAddressPrefixes =
 },
 })
 },
-                Connectivity = Connectivity.PublicAddress,
+                Connectivity = CommunicationsGatewayConnectivity.PublicAddress,
                 Codecs =
 {
 TeamsCodec.Pcma

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="provisioningState"> Resource provisioning state. </param>
         /// <param name="phoneNumber"> The phone number. </param>
         /// <param name="purpose"> Purpose of this test line, e.g. automated or manual testing. </param>
-        internal TestLineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, string phoneNumber, TestLinePurpose? purpose) : base(id, name, resourceType, systemData, tags, location)
+        internal TestLineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, VoiceServiceProvisioningState? provisioningState, string phoneNumber, TestLinePurpose? purpose) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             PhoneNumber = phoneNumber;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.VoiceServices
         }
 
         /// <summary> Resource provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public VoiceServiceProvisioningState? ProvisioningState { get; }
         /// <summary> The phone number. </summary>
         public string PhoneNumber { get; set; }
         /// <summary> Purpose of this test line, e.g. automated or manual testing. </summary>

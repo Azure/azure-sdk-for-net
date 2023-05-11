@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.VoiceServices
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<VoiceServiceProvisioningState> provisioningState = default;
             Optional<string> phoneNumber = default;
             Optional<TestLinePurpose> purpose = default;
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.VoiceServices
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new VoiceServiceProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("phoneNumber"u8))

@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.VoiceServices
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<Status> status = default;
+            Optional<VoiceServiceProvisioningState> provisioningState = default;
+            Optional<CommunicationsGatewayStatus> status = default;
             Optional<IList<ServiceRegionProperties>> serviceLocations = default;
-            Optional<Connectivity> connectivity = default;
+            Optional<CommunicationsGatewayConnectivity> connectivity = default;
             Optional<IList<TeamsCodec>> codecs = default;
             Optional<E911Type> e911Type = default;
             Optional<IList<CommunicationsPlatform>> platforms = default;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.VoiceServices
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new VoiceServiceProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.VoiceServices
                             {
                                 continue;
                             }
-                            status = new Status(property0.Value.GetString());
+                            status = new CommunicationsGatewayStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("serviceLocations"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.VoiceServices
                             {
                                 continue;
                             }
-                            connectivity = new Connectivity(property0.Value.GetString());
+                            connectivity = new CommunicationsGatewayConnectivity(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("codecs"u8))

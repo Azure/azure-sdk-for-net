@@ -1,14 +1,15 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0 (2023-05-11)
 
-### Features Added
+This release is first stable release for the Voice Services Management library.
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+Polishing since last public beta release:
+    - Prepended `VoiceServices` prefix to all single / simple model names.
+    - Optimized the name of some models
+    - Remove `Operations_List` operation
 
 ## 1.0.0-beta.1 (2023-02-20)
 
