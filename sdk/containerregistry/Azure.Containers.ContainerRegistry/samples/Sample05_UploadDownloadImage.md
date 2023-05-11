@@ -119,7 +119,7 @@ var manifestList = new
     {
         new
         {
-            digest = "sha256:f54a58bc1aac5ea1a25d796ae155dc228b3f0e11d046ae276b39c4bf2f13d8c4",
+            digest = "sha256:c001493ce924aece0d2cf422ee838bbc90fd6f91a3827dad26f84c3dc762fab2",
             mediaType = ManifestMediaType.DockerManifest.ToString(),
             platform = new {
                 architecture = ArtifactArchitecture.Amd64.ToString(),
