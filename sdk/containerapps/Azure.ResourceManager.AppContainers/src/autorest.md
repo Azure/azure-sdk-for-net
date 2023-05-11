@@ -204,6 +204,9 @@ rename-mapping:
   Scheme: ContainerAppHttpScheme
   ContainerAppProbeHttpGetHttpHeadersItem: ContainerAppHttpHeaderInfo
   RegistryInfo.registryUrl: RegistryServer
+  WorkloadProfile.maximumCount: MaxCount
+  WorkloadProfile.minimumCount: MinCount
+  BillingMeterProperties.category: WorkloadProfileCategory
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}: ContainerAppConnectedEnvironmentCertificate

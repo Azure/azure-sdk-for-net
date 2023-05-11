@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static JobExecutionTemplate DeserializeJobExecutionTemplate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<JobExecutionContainer>> containers = default;
             Optional<IList<JobExecutionContainer>> initContainers = default;
             foreach (var property in element.EnumerateObject())
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<JobExecutionContainer> array = new List<JobExecutionContainer>();
@@ -64,7 +67,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<JobExecutionContainer> array = new List<JobExecutionContainer>();

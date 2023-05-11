@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppBillingMeterProperties. </summary>
-        /// <param name="category"> Used to categorize billing meters. </param>
+        /// <param name="workloadProfileCategory"> Used to categorize billing meters. </param>
         /// <param name="meterType"> Billing meter type. </param>
         /// <param name="displayName"> The everyday name of the billing meter. </param>
-        internal ContainerAppBillingMeterProperties(string category, string meterType, string displayName)
+        internal ContainerAppBillingMeterProperties(string workloadProfileCategory, string meterType, string displayName)
         {
-            Category = category;
+            WorkloadProfileCategory = workloadProfileCategory;
             MeterType = meterType;
             DisplayName = displayName;
         }
 
         /// <summary> Used to categorize billing meters. </summary>
-        public string Category { get; set; }
+        public string WorkloadProfileCategory { get; set; }
         /// <summary> Billing meter type. </summary>
         public string MeterType { get; set; }
         /// <summary> The everyday name of the billing meter. </summary>

@@ -282,7 +282,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             kedaConfiguration = KedaConfiguration.DeserializeKedaConfiguration(property0.Value);
@@ -292,7 +291,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             daprConfiguration = DaprConfiguration.DeserializeDaprConfiguration(property0.Value);

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static JobExecutionBase DeserializeJobExecutionBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> id = default;
             foreach (var property in element.EnumerateObject())

@@ -19,21 +19,25 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("workloadProfileType"u8);
             writer.WriteStringValue(WorkloadProfileType);
-            if (Optional.IsDefined(MinimumCount))
+            if (Optional.IsDefined(MinCount))
             {
                 writer.WritePropertyName("minimumCount"u8);
-                writer.WriteNumberValue(MinimumCount.Value);
+                writer.WriteNumberValue(MinCount.Value);
             }
-            if (Optional.IsDefined(MaximumCount))
+            if (Optional.IsDefined(MaxCount))
             {
                 writer.WritePropertyName("maximumCount"u8);
-                writer.WriteNumberValue(MaximumCount.Value);
+                writer.WriteNumberValue(MaxCount.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static ContainerAppWorkloadProfile DeserializeContainerAppWorkloadProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string workloadProfileType = default;
             Optional<int> minimumCount = default;
@@ -54,7 +58,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minimumCount = property.Value.GetInt32();
@@ -64,7 +67,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maximumCount = property.Value.GetInt32();

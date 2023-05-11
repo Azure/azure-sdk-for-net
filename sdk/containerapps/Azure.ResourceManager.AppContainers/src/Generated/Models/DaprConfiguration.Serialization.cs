@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static DaprConfiguration DeserializeDaprConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {

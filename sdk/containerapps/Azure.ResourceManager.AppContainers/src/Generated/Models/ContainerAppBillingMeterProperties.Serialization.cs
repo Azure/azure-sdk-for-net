@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Category))
+            if (Optional.IsDefined(WorkloadProfileCategory))
             {
                 writer.WritePropertyName("category"u8);
-                writer.WriteStringValue(Category);
+                writer.WriteStringValue(WorkloadProfileCategory);
             }
             if (Optional.IsDefined(MeterType))
             {
@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppBillingMeterProperties DeserializeContainerAppBillingMeterProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> category = default;
             Optional<string> meterType = default;
             Optional<string> displayName = default;

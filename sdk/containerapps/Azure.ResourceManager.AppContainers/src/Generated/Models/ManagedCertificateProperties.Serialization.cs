@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ManagedCertificateProperties DeserializeManagedCertificateProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppCertificateProvisioningState> provisioningState = default;
             Optional<string> subjectName = default;
             Optional<string> error = default;
@@ -41,7 +45,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ContainerAppCertificateProvisioningState(property.Value.GetString());
@@ -61,7 +64,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     domainControlValidation = new ManagedCertificateDomainControlValidation(property.Value.GetString());

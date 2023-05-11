@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static JobSecretsCollection DeserializeJobSecretsCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ContainerAppWritableSecret> value = default;
             foreach (var property in element.EnumerateObject())
             {

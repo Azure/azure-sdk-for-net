@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppWorkloadProfile. </summary>
         /// <param name="name"> Workload profile type for the workloads to run on. </param>
         /// <param name="workloadProfileType"> Workload profile type for the workloads to run on. </param>
-        /// <param name="minimumCount"> The minimum capacity. </param>
-        /// <param name="maximumCount"> The maximum capacity. </param>
-        internal ContainerAppWorkloadProfile(string name, string workloadProfileType, int? minimumCount, int? maximumCount)
+        /// <param name="minCount"> The minimum capacity. </param>
+        /// <param name="maxCount"> The maximum capacity. </param>
+        internal ContainerAppWorkloadProfile(string name, string workloadProfileType, int? minCount, int? maxCount)
         {
             Name = name;
             WorkloadProfileType = workloadProfileType;
-            MinimumCount = minimumCount;
-            MaximumCount = maximumCount;
+            MinCount = minCount;
+            MaxCount = maxCount;
         }
 
         /// <summary> Workload profile type for the workloads to run on. </summary>
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Workload profile type for the workloads to run on. </summary>
         public string WorkloadProfileType { get; set; }
         /// <summary> The minimum capacity. </summary>
-        public int? MinimumCount { get; set; }
+        public int? MinCount { get; set; }
         /// <summary> The maximum capacity. </summary>
-        public int? MaximumCount { get; set; }
+        public int? MaxCount { get; set; }
     }
 }

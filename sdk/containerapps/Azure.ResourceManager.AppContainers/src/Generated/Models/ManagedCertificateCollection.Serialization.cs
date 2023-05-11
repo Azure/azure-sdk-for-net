@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static ManagedCertificateCollection DeserializeManagedCertificateCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ManagedCertificateData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

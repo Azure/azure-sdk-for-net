@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static JobConfigurationScheduleTriggerConfig DeserializeJobConfigurationScheduleTriggerConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> replicaCompletionCount = default;
             string cronExpression = default;
             Optional<int> parallelism = default;
@@ -41,7 +45,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     replicaCompletionCount = property.Value.GetInt32();
@@ -56,7 +59,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     parallelism = property.Value.GetInt32();

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static IngressStickySessions DeserializeIngressStickySessions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Affinity> affinity = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     affinity = new Affinity(property.Value.GetString());

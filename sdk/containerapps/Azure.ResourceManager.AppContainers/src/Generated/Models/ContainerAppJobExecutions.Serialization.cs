@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static ContainerAppJobExecutions DeserializeContainerAppJobExecutions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<JobExecution> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

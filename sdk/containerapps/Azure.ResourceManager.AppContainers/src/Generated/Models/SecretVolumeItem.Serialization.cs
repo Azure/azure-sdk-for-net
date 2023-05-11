@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static SecretVolumeItem DeserializeSecretVolumeItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> secretRef = default;
             Optional<string> path = default;
             foreach (var property in element.EnumerateObject())
