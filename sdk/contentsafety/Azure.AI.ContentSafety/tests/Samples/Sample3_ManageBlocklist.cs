@@ -12,22 +12,23 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace Azure.AI.ContentSafety.Tests.Samples
 {
+    //TODO: Commenting unused snippets until they are used in readme
     public partial class ContentSafetySamples : SamplesBase<ContentSafetyClientTestEnvironment>
     {
         [Test]
         [SyncOnly]
         public void ManageBlocklist()
         {
-            #region Snippet:CreateContentSafetyClient
+            //#region Snippet:CreateContentSafetyClient
 
             string endpoint = TestEnvironment.Endpoint;
             string key = TestEnvironment.Key;
 
             ContentSafetyClient client = new ContentSafetyClient(new Uri(endpoint), new AzureKeyCredential(key));
 
-            #endregion
+            //#endregion
 
-            #region Snippet:ListBlocklists
+            //#region Snippet:ListBlocklists
 
             var blocklists = client.GetTextBlocklists();
             Console.WriteLine("\nMy blocklists:");
@@ -35,18 +36,18 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             {
                 Console.WriteLine(String.Format("BlocklistName: {0}, Description: {1}", blocklist.BlocklistName, blocklist.Description));
             }
-            #endregion
+            //#endregion
 
-            #region Snippet:CreateNewBlocklist
+            //#region Snippet:CreateNewBlocklist
 
             var blocklistName = "TestBlocklist";
             var blocklistDescription = "Test blocklist management";
 
             client.CreateOrUpdateTextBlocklist(blocklistName, blocklistDescription);
 
-            #endregion
+            //#endregion
 
-            #region Snippet:GetBlocklist
+            //#region Snippet:GetBlocklist
 
             var newBlocklist = client.GetTextBlocklist(blocklistName);
             if (newBlocklist != null && newBlocklist.Value != null)
@@ -55,9 +56,9 @@ namespace Azure.AI.ContentSafety.Tests.Samples
                 Console.WriteLine(String.Format("BlocklistName: {0}, Description: {1}", newBlocklist.Value.BlocklistName, newBlocklist.Value.Description));
             }
 
-            #endregion
+            //#endregion
 
-            #region Snippet:AddBlockItems
+            //#region Snippet:AddBlockItems
 
             string blockItemText1 = "k*ll";
             string blockItemText2 = "h*te";
@@ -76,9 +77,9 @@ namespace Azure.AI.ContentSafety.Tests.Samples
                 }
             }
 
-                #endregion
+            //#endregion
 
-            #region Snippet:RemoveBlockItems
+            //#region Snippet:RemoveBlockItems
 
             var removeBlockItemId = addedBlockItems.Value.Value[1].BlockItemId;
             var removeBlockItemIds = new List<string> { removeBlockItemId };
@@ -89,20 +90,20 @@ namespace Azure.AI.ContentSafety.Tests.Samples
                 Console.WriteLine(String.Format("\nBlockItem {0} removed.", removeBlockItemId));
             }
 
-            #endregion
+            //#endregion
 
-            #region Snippet: ListBlockItems
+            //#region Snippet:ListBlockItems
 
             var remainingBlockItems = client.GetTextBlocklistItems(blocklistName);
             Console.WriteLine("\nList BlockItems:");
             foreach (var blocklistItem in remainingBlockItems)
             {
-                Console.WriteLine(String.Format("BlockItemId: {0}, Text: {1}, Description: {2}", blocklistItem.BlockItemId, blocklistItem.Text, blocklistItem.Description));
+                Console.WriteLine(String.Format("BlockItemId: {0}, Text: {1}, Description: {2}", blocklistItem.BlocklistName, blocklistItem.Description, blocklistItem.Description));
             }
 
-            #endregion
+            //#endregion
 
-            #region Snippet:AnalyzeTextWithBlocklist
+            //#region Snippet:AnalyzeTextWithBlocklist
             Thread.Sleep(30000);
             var request = new AnalyzeTextOptions("I h*te you and I want to k*ll you");
             request.BlocklistNames.Add(blocklistName);
@@ -132,9 +133,9 @@ namespace Azure.AI.ContentSafety.Tests.Samples
                 }
             }
 
-            #endregion
+            //#endregion
 
-            #region Snippet:DeleteBlocklist
+            //#region Snippet:DeleteBlocklist
 
             var deleteResult = client.DeleteTextBlocklist(blocklistName);
             if (deleteResult != null && deleteResult.Status == 204)
@@ -142,7 +143,7 @@ namespace Azure.AI.ContentSafety.Tests.Samples
                 Console.WriteLine("\n Delete blocklist succeded.");
             }
 
-            #endregion
+            //#endregion
         }
     }
 }

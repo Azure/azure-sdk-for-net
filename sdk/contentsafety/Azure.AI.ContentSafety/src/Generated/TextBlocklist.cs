@@ -14,7 +14,7 @@ namespace Azure.AI.ContentSafety
     public partial class TextBlocklist
     {
         /// <summary> Initializes a new instance of TextBlocklist. </summary>
-        /// <param name="blocklistName"> Text blocklist name. Only supports the following characters: 0-9  A-Z  a-z  -  .  _  ~. </param>
+        /// <param name="blocklistName"> Text blocklist name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blocklistName"/> is null. </exception>
         internal TextBlocklist(string blocklistName)
         {
@@ -24,7 +24,7 @@ namespace Azure.AI.ContentSafety
         }
 
         /// <summary> Initializes a new instance of TextBlocklist. </summary>
-        /// <param name="blocklistName"> Text blocklist name. Only supports the following characters: 0-9  A-Z  a-z  -  .  _  ~. </param>
+        /// <param name="blocklistName"> Text blocklist name. </param>
         /// <param name="description"> Text blocklist description. </param>
         internal TextBlocklist(string blocklistName, string description)
         {
@@ -32,7 +32,7 @@ namespace Azure.AI.ContentSafety
             Description = description;
         }
 
-        /// <summary> Text blocklist name. Only supports the following characters: 0-9  A-Z  a-z  -  .  _  ~. </summary>
+        /// <summary> Text blocklist name. </summary>
         public string BlocklistName { get; }
         /// <summary> Text blocklist description. </summary>
         public string Description { get; }

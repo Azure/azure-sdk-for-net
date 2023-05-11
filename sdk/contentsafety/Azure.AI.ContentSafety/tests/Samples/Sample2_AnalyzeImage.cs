@@ -12,22 +12,23 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace Azure.AI.ContentSafety.Tests.Samples
 {
+    //TODO: Commenting unused snippets until they are used in readme
     public partial class ContentSafetySamples : SamplesBase<ContentSafetyClientTestEnvironment>
     {
         [Test]
         [SyncOnly]
         public void AnalyzeImage()
         {
-            #region Snippet:CreateContentSafetyClient
+            //#region Snippet:CreateContentSafetyClient
 
             string endpoint = TestEnvironment.Endpoint;
             string key = TestEnvironment.Key;
 
             ContentSafetyClient client = new ContentSafetyClient(new Uri(endpoint), new AzureKeyCredential(key));
 
-            #endregion
+            //#endregion
 
-            #region Snippet:ReadImageData
+            //#region Snippet:ReadImageData
 
             string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Samples", "sample_data", "image.jpg");
             byte[] b = File.ReadAllBytes(datapath);
@@ -41,15 +42,15 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             //stream.Read(buffer, 0, (int)stream.Length);
             //MemoryStream memoryStream = new MemoryStream(buffer);
 
-            #endregion
+            //#endregion
 
-            #region Snippet:CreateRequest
+            //#region Snippet:CreateRequest
 
             var request = new AnalyzeImageOptions(image);
 
-            #endregion
+            //#endregion
 
-            #region Snippet:AnalyzeText
+            //#region Snippet:AnalyzeText
 
             Response<AnalyzeImageResult> response;
             try
@@ -83,7 +84,7 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             {
                 Console.WriteLine(String.Format("Violence severity: {0}", response.Value.ViolenceResult.Severity));
             }
-            #endregion
+            //#endregion
         }
     }
 }

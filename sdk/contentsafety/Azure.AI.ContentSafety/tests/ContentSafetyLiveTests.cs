@@ -62,7 +62,7 @@ namespace Azure.AI.ContentSafety.Tests
 
             var image = new ImageData()
             {
-                Content = new BinaryData(Convert.FromBase64String(TestData.TestImageContent))
+                Content = BinaryData.FromString($"\"{TestData.TestImageContent}\"")
             };
             //var image = new ImageData()
             //{

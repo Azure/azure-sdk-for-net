@@ -345,7 +345,7 @@ Schema for <c>AnalyzeImageResult</c>:
 
 </remarks>
     </member>
-    <member name="GetTextBlocklistAsync(String,RequestContext)">
+    <member name="GetTextBlocklistAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetTextBlocklistAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -369,14 +369,14 @@ Response Body:
 
 Schema for <c>TextBlocklist</c>:
 <code>{
-  blocklistName: string, # Required. Text blocklist name. Only supports the following characters: 0-9  A-Z  a-z  -  .  _  ~
+  blocklistName: string, # Required. Text blocklist name.
   description: string, # Optional. Text blocklist description.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetTextBlocklist(String,RequestContext)">
+    <member name="GetTextBlocklist(string,RequestContext)">
 <example>
 This sample shows how to call GetTextBlocklist with required parameters and parse the result.
 <code><![CDATA[
@@ -400,14 +400,14 @@ Response Body:
 
 Schema for <c>TextBlocklist</c>:
 <code>{
-  blocklistName: string, # Required. Text blocklist name. Only supports the following characters: 0-9  A-Z  a-z  -  .  _  ~
+  blocklistName: string, # Required. Text blocklist name.
   description: string, # Optional. Text blocklist description.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateTextBlocklistAsync(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateTextBlocklistAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateTextBlocklistAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -451,7 +451,7 @@ Request Body:
 
 Schema for <c>TextBlocklist</c>:
 <code>{
-  blocklistName: string, # Required. Text blocklist name. Only supports the following characters: 0-9  A-Z  a-z  -  .  _  ~
+  blocklistName: string, # Required. Text blocklist name.
   description: string, # Optional. Text blocklist description.
 }
 </code>
@@ -460,14 +460,14 @@ Response Body:
 
 Schema for <c>TextBlocklist</c>:
 <code>{
-  blocklistName: string, # Required. Text blocklist name. Only supports the following characters: 0-9  A-Z  a-z  -  .  _  ~
+  blocklistName: string, # Required. Text blocklist name.
   description: string, # Optional. Text blocklist description.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="CreateOrUpdateTextBlocklist(String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateTextBlocklist(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateTextBlocklist with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -511,7 +511,7 @@ Request Body:
 
 Schema for <c>TextBlocklist</c>:
 <code>{
-  blocklistName: string, # Required. Text blocklist name. Only supports the following characters: 0-9  A-Z  a-z  -  .  _  ~
+  blocklistName: string, # Required. Text blocklist name.
   description: string, # Optional. Text blocklist description.
 }
 </code>
@@ -520,14 +520,14 @@ Response Body:
 
 Schema for <c>TextBlocklist</c>:
 <code>{
-  blocklistName: string, # Required. Text blocklist name. Only supports the following characters: 0-9  A-Z  a-z  -  .  _  ~
+  blocklistName: string, # Required. Text blocklist name.
   description: string, # Optional. Text blocklist description.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="DeleteTextBlocklistAsync(String,RequestContext)">
+    <member name="DeleteTextBlocklistAsync(string,RequestContext)">
 <example>
 This sample shows how to call DeleteTextBlocklistAsync with required parameters.
 <code><![CDATA[
@@ -543,7 +543,7 @@ Console.WriteLine(response.Status);
 Deletes a text blocklist.
 </remarks>
     </member>
-    <member name="DeleteTextBlocklist(String,RequestContext)">
+    <member name="DeleteTextBlocklist(string,RequestContext)">
 <example>
 This sample shows how to call DeleteTextBlocklist with required parameters.
 <code><![CDATA[
@@ -559,7 +559,7 @@ Console.WriteLine(response.Status);
 Deletes a text blocklist.
 </remarks>
     </member>
-    <member name="AddBlockItemsAsync(String,RequestContent,RequestContext)">
+    <member name="AddBlockItemsAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call AddBlockItemsAsync with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -585,7 +585,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString())
 ]]></code>
 </example>
 <remarks>
-Add blockItems to a text blocklist.
+Add blockItems to a text blocklist. You can add at most 100 BlockItems in one request.
 
 Below is the JSON schema for the request and response payloads.
 
@@ -618,7 +618,7 @@ Schema for <c>AddBlockItemsResult</c>:
 
 </remarks>
     </member>
-    <member name="AddBlockItems(String,RequestContent,RequestContext)">
+    <member name="AddBlockItems(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call AddBlockItems with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -644,7 +644,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString())
 ]]></code>
 </example>
 <remarks>
-Add blockItems to a text blocklist.
+Add blockItems to a text blocklist. You can add at most 100 BlockItems in one request.
 
 Below is the JSON schema for the request and response payloads.
 
@@ -677,7 +677,7 @@ Schema for <c>AddBlockItemsResult</c>:
 
 </remarks>
     </member>
-    <member name="RemoveBlockItemsAsync(String,RequestContent,RequestContext)">
+    <member name="RemoveBlockItemsAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call RemoveBlockItemsAsync with required parameters and request content.
 <code><![CDATA[
@@ -696,7 +696,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
 <remarks>
-Remove blockItems from a text blocklist.
+Remove blockItems from a text blocklist. You can remove at most 100 BlockItems in one request.
 
 Below is the JSON schema for the request payload.
 
@@ -710,7 +710,7 @@ Schema for <c>RemoveBlockItemsOptions</c>:
 
 </remarks>
     </member>
-    <member name="RemoveBlockItems(String,RequestContent,RequestContext)">
+    <member name="RemoveBlockItems(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call RemoveBlockItems with required parameters and request content.
 <code><![CDATA[
@@ -729,7 +729,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
 <remarks>
-Remove blockItems from a text blocklist.
+Remove blockItems from a text blocklist. You can remove at most 100 BlockItems in one request.
 
 Below is the JSON schema for the request payload.
 
@@ -743,7 +743,7 @@ Schema for <c>RemoveBlockItemsOptions</c>:
 
 </remarks>
     </member>
-    <member name="GetTextBlocklistItemAsync(String,String,RequestContext)">
+    <member name="GetTextBlocklistItemAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetTextBlocklistItemAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -776,7 +776,7 @@ Schema for <c>TextBlockItem</c>:
 
 </remarks>
     </member>
-    <member name="GetTextBlocklistItem(String,String,RequestContext)">
+    <member name="GetTextBlocklistItem(string,string,RequestContext)">
 <example>
 This sample shows how to call GetTextBlocklistItem with required parameters and parse the result.
 <code><![CDATA[
@@ -834,7 +834,7 @@ Response Body:
 
 Schema for <c>Array</c>:
 <code>{
-  blocklistName: string, # Required. Text blocklist name. Only supports the following characters: 0-9  A-Z  a-z  -  .  _  ~
+  blocklistName: string, # Required. Text blocklist name.
   description: string, # Optional. Text blocklist description.
 }
 </code>
@@ -866,14 +866,14 @@ Response Body:
 
 Schema for <c>Array</c>:
 <code>{
-  blocklistName: string, # Required. Text blocklist name. Only supports the following characters: 0-9  A-Z  a-z  -  .  _  ~
+  blocklistName: string, # Required. Text blocklist name.
   description: string, # Optional. Text blocklist description.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetTextBlocklistItemsAsync(String,Int32,Int32,Int32,RequestContext)">
+    <member name="GetTextBlocklistItemsAsync(string,int?,int?,int?,RequestContext)">
 <example>
 This sample shows how to call GetTextBlocklistItemsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -898,14 +898,14 @@ Response Body:
 
 Schema for <c>Array</c>:
 <code>{
-  blocklistName: string, # Required. Text blocklist name. Only supports the following characters: 0-9  A-Z  a-z  -  .  _  ~
+  blocklistName: string, # Required. Text blocklist name.
   description: string, # Optional. Text blocklist description.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetTextBlocklistItems(String,Int32,Int32,Int32,RequestContext)">
+    <member name="GetTextBlocklistItems(string,int?,int?,int?,RequestContext)">
 <example>
 This sample shows how to call GetTextBlocklistItems with required parameters and parse the result.
 <code><![CDATA[
@@ -930,7 +930,7 @@ Response Body:
 
 Schema for <c>Array</c>:
 <code>{
-  blocklistName: string, # Required. Text blocklist name. Only supports the following characters: 0-9  A-Z  a-z  -  .  _  ~
+  blocklistName: string, # Required. Text blocklist name.
   description: string, # Optional. Text blocklist description.
 }
 </code>
