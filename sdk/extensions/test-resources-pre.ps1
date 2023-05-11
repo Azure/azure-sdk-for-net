@@ -20,8 +20,8 @@ param (
     $RemainingArguments
 )
 
-Write-Output "pre-deployment script for Azure extensions"
-$SP=Get-AzureRmADServicePrincipal -ObjectId $TestApplicationOid
-Write-Output "AAD database admin: $($SP.DisplayName)."
+Write-Output "Retrieving AD for test application with OID $TestApplicationOid ..."
+$SP=Get-AzADServicePrincipal -ObjectId $TestApplicationOid
+Write-Output "AAD database admin: $($SP.DisplayName) ..."
 $templateFileParameters['testApplicationServicePrincipal']=$SP.DisplayName
 

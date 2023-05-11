@@ -136,15 +136,11 @@ resource postgresServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' =
   }
 }
 
-// resource azureADApp 'Microsoft.AzureActiveDirectory/applications@2021-08-01' existing ={
-
-// }
-
-resource postgresAdmin 'Microsoft.DBforPostgreSQL/flexibleServers/administrators@2022-12-01' = {
-  name: guid(postgresServer.id, 'admin')
+resource postgresAdmin 'Microsoft.DBforPostgreSQL/flexibleServers/administrators@2022-11-01-preview' = {
+  name: testApplicationOid
   parent: postgresServer
   properties: {
-    principalType: 'ServicePrincipal'
+    principalType: 'SERVICEPRINCIPAL'
     principalName: testApplicationServicePrincipal
     tenantId: tenantId
   }
@@ -152,5 +148,6 @@ resource postgresAdmin 'Microsoft.DBforPostgreSQL/flexibleServers/administrators
 
 output AZURE_KEYVAULT_URL string = keyVault.properties.vaultUri
 output BLOB_STORAGE_ENDPOINT string = blobAcount.properties.primaryEndpoints.blob
-output POSTGRES_SERVER_NAME string = postgresServer.properties.fullyQualifiedDomainName
+output POSTGRES_FQDN string = postgresServer.properties.fullyQualifiedDomainName
+output POSTGRES_NAME string = postgresServer.name
 output POSTGRES_SERVER_ADMIN string = postgresAdmin.properties.principalName
