@@ -643,17 +643,6 @@ namespace Azure.Storage.Blobs.Specialized
 
         protected static TokenCredential GetTokenCredential(BlobBaseClient client) =>
             client.ClientConfiguration.OAuthTokenCredential;
-
-        /// <summary>
-        /// Get a <see cref="BlobBaseClient"/>'s <see cref="AzureSasCredential"/>
-        /// for passing the authorization when performing service to service copy
-        /// where SAS is necessary to authenticate the source. This is so that the SAS
-        /// is passed when the SAS was not appended on to the Uri.
-        /// </summary>
-        /// <param name="client">The BlobServiceClient.</param>
-        /// <returns>The BlobServiceClient's HttpPipeline.</returns>
-        protected static AzureSasCredential GetSasCredential(BlobBaseClient client) =>
-            client.ClientConfiguration.SasCredential;
         #endregion internal static accessors for Azure.Storage.DataMovement.Blobs
 
         ///// <summary>
