@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of TemplateHashResult. </summary>
         /// <param name="minifiedTemplate"> The minified template string. </param>
         /// <param name="templateHash"> The template hash. </param>
-        internal TemplateHashResult(string minifiedTemplate, string templateHash)
+        public TemplateHashResult(string minifiedTemplate, string templateHash)
         {
             MinifiedTemplate = minifiedTemplate;
             TemplateHash = templateHash;

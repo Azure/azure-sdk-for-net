@@ -4,18 +4,32 @@
 using System.Linq.Expressions;
 using System;
 using Moq;
+using Moq.Language.Flow;
 using System.Reflection;
 using System.Linq;
 
-namespace Azure.ResourceManager.Resources.Mocking
+namespace Azure.ResourceManager.Resources.Testing
 {
-    internal static class MockingExtensions
+    /// <summary>
+    /// Provides extensions to Moq.Mock{T}
+    /// </summary>
+    public static class MockingExtensions
     {
-        internal static Mock<T> SetupAzureExtensionMethod<T>(this Mock<T> mock, Expression<Action<T>> expression) where T : ArmResource
+        private const string _mockingMethodName = "SetupAzureExtensionMethod";
+
+        /// <summary>
+        /// Because the APIs on azure will always return something (we never have a method that returns void), we only implements the `Expression{Func{T, R}}` version of the overload.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="R"></typeparam>
+        /// <param name="mock"></param>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public static ISetup<T, R> SetupAzureExtensionMethod<T, R>(this Mock<T> mock, Expression<Func<T, R>> expression) where T : ArmResource // ISetup<TenantResource, R> => E
         {
             // we would like the customer to use this in this way:
             // tenantResourceMock.SetupAzureExtensionMethod(tenant => tenant.CalculateDeploymentTemplateHashAsync(mockTemplate, default)).Returns(Task.FromResult(Response.FromValue(mockResult, null)));
-            // this setup method is accepting an expression: tenant => tenant.CalculateDeploymentTemplateHashAsync(mockTemplate, default),
+            // this setup method is accepting an expression: tenant => tenant.CalculateDeploymentTemplateHashAsync(mockTemplate, default), => tenantClient => tenantClient.CalculateDeploymentTemplateHashAsync(mockTemplate, default)
             // instead we need to hack it and create a new mock instance of the corresponding extension client (using reflection maybe)
             // for instance we get it like this: var tenantExtensionClient = new Mock<TenantExtensionClient>();
             // and then call this method instead:
@@ -25,46 +39,18 @@ namespace Azure.ResourceManager.Resources.Mocking
             var name = typeof(T).Name;
             // construct a new name from the above name to its corresponding extension client
             var extensionClientName = name + "ExtensionClient";
-            // TODO -- get the namespace of the current SDK dynamically
-            var ns = "Azure.ResourceManager.Resources"; // maybe we need to find the extension method and get the namespace of its containing type
-            var extensionClientType = Type.GetType($"{ns}.{extensionClientName}");
-
-            var newMockType = typeof(Mock<>).MakeGenericType(extensionClientType);
-            var ctor = newMockType.GetConstructor(Array.Empty<Type>());
-            var newMock = ctor.Invoke(Array.Empty<object>());
-            var parameterType = typeof(Expression<>).MakeGenericType(typeof(Action<>).MakeGenericType(extensionClientType));
-            var setupMethod = newMockType.GetMethod("Setup", new[] { parameterType });
-
-            // construct a new expression using the parameter of the new type from the old "expression"
+            // get the namespace of the current SDK dynamically
+            var thisNamespace = typeof(MockingExtensions).Namespace;
+            var ns = thisNamespace.Substring(0, thisNamespace.Length - 8);
+            var extensionClientType = typeof(MockingExtensions).Assembly.GetType($"{ns}.{extensionClientName}");
+            var methodInfo = extensionClientType.GetMethod(_mockingMethodName, BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(typeof(R));
             var newExpression = ChangeType(expression, extensionClientType);
-            setupMethod.Invoke(newMock, new[] { newExpression });
-            // TODO -- call the result method to set the return value if any.
+            var intermediateSetup = methodInfo.Invoke(null, new object[] { mock, newExpression });
 
-            //mock.Setup(t => t.GetCachedClient(It.IsAny<Func<ArmClient, XXXExtensionClient>>()));
-            // first create a Matcher to match anything like Func<ArmClient, XXXExtensionClient>
-            var funcType = typeof(Func<,>).MakeGenericType(typeof(ArmClient), extensionClientType);
-            // then create the matcher by calling the method It.IsAny<Func<ArmClient, XXXExtensionClient>>() using reflection
-            var matcher = typeof(It).GetMethod("IsAny", BindingFlags.Public | BindingFlags.Static).MakeGenericMethod(funcType).Invoke(null, Array.Empty<object>());
-            // put the matcher into the Setup method of Mock<T> to set it up
-            parameterType = typeof(Expression<>).MakeGenericType(funcType);
-            setupMethod = mock.GetType().GetMethod("Setup", new[] { parameterType });
-            // build the expression that represents this: `t => t.GetCachedClient(It.IsAny<Func<ArmClient, XXXExtensionClient>>())`
-            newExpression = ConstructGetCachedClientExpression(funcType, extensionClientType, matcher);
-            setupMethod.Invoke(mock, new[] { newExpression });
-
-            return mock;
+            return new AzureSetup<T, R>(intermediateSetup, extensionClientType);
         }
 
-        private static Expression ConstructGetCachedClientExpression(Type delegateType, Type extensionClientType, object matcher)
-        {
-            var parameter = Expression.Parameter(typeof(ArmClient), "client");
-            var method = typeof(ArmResource).GetMethod("GetCachedClient", BindingFlags.Instance | BindingFlags.Public).MakeGenericMethod(extensionClientType);
-            var argument = Expression.Constant(matcher, delegateType);
-            var methodCallExpression = Expression.Call(parameter, method, argument);
-            return Expression.Lambda(delegateType, methodCallExpression, parameter);
-        }
-
-        private static Expression ChangeType<T>(Expression<Action<T>> expression, Type newType)
+        private static Expression ChangeType<T, R>(Expression<Func<T, R>> expression, Type newType)
         {
             // we only support one parameter
             var parameter = expression.Parameters.Single();
@@ -87,9 +73,7 @@ namespace Azure.ResourceManager.Resources.Mocking
             var instanceExpression = Expression.Parameter(newType);
             var newMethodCallExpression = Expression.Call(instanceExpression, methodInfo, originalArguments.Skip(1));
 
-            // get the delegate type
-            var delegateType = typeof(Action<>).MakeGenericType(newType);
-            return Expression.Lambda(delegateType, newMethodCallExpression, instanceExpression);
+            return Expression.Lambda(newMethodCallExpression, instanceExpression);
         }
     }
 }

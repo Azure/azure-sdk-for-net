@@ -4,23 +4,36 @@
 using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
-using Azure.ResourceManager.Resources.Mocking;
+using Azure.ResourceManager.Resources.Testing;
 using System;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources.Tests
 {
     public class MockingTests
     {
         [Test]
-        public void Test()
+        public async Task Test()
         {
             var mock = new Mock<TenantResource>();
 
             var mockTemplate = BinaryData.FromString("mockTemplate");
-            mock.SetupAzureExtensionMethod(tenantResource => tenantResource.CalculateDeploymentTemplateHash(mockTemplate, default));
+
+            var mockResult = new TemplateHashResult("a", "b");
+            mock.SetupAzureExtensionMethod(tenantResource => tenantResource.CalculateDeploymentTemplateHash(mockTemplate, default)).Throws(new Exception());//.Returns(Response.FromValue(mockResult, null));
+
+            mock.Setup(tenantResource => tenantResource.CalculateDeploymentTemplateHash(mockTemplate, default)).Returns(Response.FromValue(mockResult, null));
 
             var tenant = mock.Object;
             var r = tenant.CalculateDeploymentTemplateHash(mockTemplate, default);
+            Assert.AreEqual("a", r.Value.MinifiedTemplate);
+            Assert.AreEqual("b", r.Value.TemplateHash);
+
+            var asyncResult = await tenant.CalculateDeploymentTemplateHashAsync(mockTemplate, default);
+            Assert.IsNull(asyncResult);
+            //mock.Setup(sub => sub.GetCachedClient(It.IsAny<Func<ArmClient, TenantResourceExtensionClient>>()));//.Returns(armDeploymentResourceExtensionMock.Object);
+
+            //Assert.Throws<Exception>(() => tenant.GetArmDeployment("", default));
         }
     }
 }

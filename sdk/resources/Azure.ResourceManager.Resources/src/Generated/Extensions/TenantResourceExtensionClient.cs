@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -13,6 +14,8 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
+using Moq;
+using Moq.Language.Flow;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -110,6 +113,25 @@ namespace Azure.ResourceManager.Resources
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        //internal static Mock<TenantResource> SetupAzureExtensionMethod(Mock<TenantResource> originalMock, Expression<Action<TenantResourceExtensionClient>> expression)
+        //{
+        //    // TODO -- make a cache, create a new or get one from the cache so that we could sync between calls
+        //    var mock = new Mock<TenantResourceExtensionClient>();
+        //    mock.Setup(expression);//Result();
+
+        //    originalMock.Setup(tenant => tenant.GetCachedClient(It.IsAny<Func<ArmClient, TenantResourceExtensionClient>>())).Returns(mock.Object);
+        //    return originalMock;
+        //}
+
+        internal static ISetup<TenantResourceExtensionClient, TResult> SetupAzureExtensionMethod<TResult>(Mock<TenantResource> originalMock, Expression<Func<TenantResourceExtensionClient, TResult>> expression)
+        {
+            var mock = new Mock<TenantResourceExtensionClient>();
+            var setup = mock.Setup(expression); // ISetup<ExClient, R>
+
+            originalMock.Setup(tenant => tenant.GetCachedClient(It.IsAny<Func<ArmClient, TenantResourceExtensionClient>>())).Returns(mock.Object);
+            return setup;
         }
     }
 }
