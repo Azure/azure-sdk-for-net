@@ -16,20 +16,20 @@ using Azure.ResourceManager.ConfidentialLedger.Models;
 
 namespace Azure.ResourceManager.ConfidentialLedger
 {
-    internal partial class LedgerRestOperations
+    internal partial class ManagedCCFRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of LedgerRestOperations. </summary>
+        /// <summary> Initializes a new instance of ManagedCCFRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public LedgerRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public ManagedCCFRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string ledgerName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string appName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.ConfidentialLedger
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ConfidentialLedger/ledgers/", false);
-            uri.AppendPath(ledgerName, true);
+            uri.AppendPath("/providers/Microsoft.ConfidentialLedger/managedCCFs/", false);
+            uri.AppendPath(appName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -57,69 +57,69 @@ namespace Azure.ResourceManager.ConfidentialLedger
             return message;
         }
 
-        /// <summary> Retrieves the properties of a Confidential Ledger. </summary>
+        /// <summary> Retrieves the properties of a Managed CCF app. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
+        /// <param name="appName"> Name of the Managed CCF. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ledgerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConfidentialLedgerData>> GetAsync(string subscriptionId, string resourceGroupName, string ledgerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="appName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ManagedCCFData>> GetAsync(string subscriptionId, string resourceGroupName, string appName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ledgerName, nameof(ledgerName));
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, ledgerName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, appName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ConfidentialLedgerData value = default;
+                        ManagedCCFData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ConfidentialLedgerData.DeserializeConfidentialLedgerData(document.RootElement);
+                        value = ManagedCCFData.DeserializeManagedCCFData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ConfidentialLedgerData)null, message.Response);
+                    return Response.FromValue((ManagedCCFData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Retrieves the properties of a Confidential Ledger. </summary>
+        /// <summary> Retrieves the properties of a Managed CCF app. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
+        /// <param name="appName"> Name of the Managed CCF. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ledgerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConfidentialLedgerData> Get(string subscriptionId, string resourceGroupName, string ledgerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="appName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ManagedCCFData> Get(string subscriptionId, string resourceGroupName, string appName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ledgerName, nameof(ledgerName));
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, ledgerName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, appName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ConfidentialLedgerData value = default;
+                        ManagedCCFData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ConfidentialLedgerData.DeserializeConfidentialLedgerData(document.RootElement);
+                        value = ManagedCCFData.DeserializeManagedCCFData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ConfidentialLedgerData)null, message.Response);
+                    return Response.FromValue((ManagedCCFData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string ledgerName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string appName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -130,8 +130,8 @@ namespace Azure.ResourceManager.ConfidentialLedger
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ConfidentialLedger/ledgers/", false);
-            uri.AppendPath(ledgerName, true);
+            uri.AppendPath("/providers/Microsoft.ConfidentialLedger/managedCCFs/", false);
+            uri.AppendPath(appName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -139,20 +139,20 @@ namespace Azure.ResourceManager.ConfidentialLedger
             return message;
         }
 
-        /// <summary> Deletes an existing Confidential Ledger. </summary>
+        /// <summary> Deletes an existing Managed CCF. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
+        /// <param name="appName"> Name of the Managed CCF. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ledgerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string ledgerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="appName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string appName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ledgerName, nameof(ledgerName));
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, ledgerName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, appName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -165,20 +165,20 @@ namespace Azure.ResourceManager.ConfidentialLedger
             }
         }
 
-        /// <summary> Deletes an existing Confidential Ledger. </summary>
+        /// <summary> Deletes an existing Managed CCF. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
+        /// <param name="appName"> Name of the Managed CCF. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ledgerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string ledgerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="appName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string appName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ledgerName, nameof(ledgerName));
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, ledgerName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, appName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string ledgerName, ConfidentialLedgerData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string appName, ManagedCCFData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -202,8 +202,8 @@ namespace Azure.ResourceManager.ConfidentialLedger
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ConfidentialLedger/ledgers/", false);
-            uri.AppendPath(ledgerName, true);
+            uri.AppendPath("/providers/Microsoft.ConfidentialLedger/managedCCFs/", false);
+            uri.AppendPath(appName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -215,22 +215,22 @@ namespace Azure.ResourceManager.ConfidentialLedger
             return message;
         }
 
-        /// <summary> Creates a  Confidential Ledger with the specified ledger parameters. </summary>
+        /// <summary> Creates a Managed CCF with the specified Managed CCF parameters. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
-        /// <param name="data"> Confidential Ledger Create Request Body. </param>
+        /// <param name="appName"> Name of the Managed CCF. </param>
+        /// <param name="data"> Managed CCF Create Request Body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ledgerName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string ledgerName, ConfidentialLedgerData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="appName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string appName, ManagedCCFData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ledgerName, nameof(ledgerName));
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, ledgerName, data);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, appName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -242,22 +242,22 @@ namespace Azure.ResourceManager.ConfidentialLedger
             }
         }
 
-        /// <summary> Creates a  Confidential Ledger with the specified ledger parameters. </summary>
+        /// <summary> Creates a Managed CCF with the specified Managed CCF parameters. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
-        /// <param name="data"> Confidential Ledger Create Request Body. </param>
+        /// <param name="appName"> Name of the Managed CCF. </param>
+        /// <param name="data"> Managed CCF Create Request Body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ledgerName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string ledgerName, ConfidentialLedgerData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="appName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Create(string subscriptionId, string resourceGroupName, string appName, ManagedCCFData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ledgerName, nameof(ledgerName));
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, ledgerName, data);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, appName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string ledgerName, ConfidentialLedgerData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string appName, ManagedCCFData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -280,8 +280,8 @@ namespace Azure.ResourceManager.ConfidentialLedger
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ConfidentialLedger/ledgers/", false);
-            uri.AppendPath(ledgerName, true);
+            uri.AppendPath("/providers/Microsoft.ConfidentialLedger/managedCCFs/", false);
+            uri.AppendPath(appName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -293,54 +293,54 @@ namespace Azure.ResourceManager.ConfidentialLedger
             return message;
         }
 
-        /// <summary> Updates properties of Confidential Ledger. </summary>
+        /// <summary> Updates properties of Managed CCF. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
-        /// <param name="data"> Confidential Ledger request body for Updating Ledger. </param>
+        /// <param name="appName"> Name of the Managed CCF. </param>
+        /// <param name="data"> Request body for Updating Managed CCF App. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ledgerName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string ledgerName, ConfidentialLedgerData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="appName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string appName, ManagedCCFData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ledgerName, nameof(ledgerName));
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, ledgerName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, appName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
-                case 201:
+                case 202:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Updates properties of Confidential Ledger. </summary>
+        /// <summary> Updates properties of Managed CCF. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
-        /// <param name="data"> Confidential Ledger request body for Updating Ledger. </param>
+        /// <param name="appName"> Name of the Managed CCF. </param>
+        /// <param name="data"> Request body for Updating Managed CCF App. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ledgerName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string ledgerName, ConfidentialLedgerData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="appName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string appName, ManagedCCFData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ledgerName, nameof(ledgerName));
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, ledgerName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, appName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
-                case 201:
+                case 202:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ConfidentialLedger/ledgers", false);
+            uri.AppendPath("/providers/Microsoft.ConfidentialLedger/managedCCFs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
@@ -370,14 +370,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
             return message;
         }
 
-        /// <summary> Retrieves the properties of all Confidential Ledgers. </summary>
+        /// <summary> Retrieves the properties of all Managed CCF apps. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConfidentialLedgerList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedCCFList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -388,9 +388,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 case 200:
                     {
-                        ConfidentialLedgerList value = default;
+                        ManagedCCFList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ConfidentialLedgerList.DeserializeConfidentialLedgerList(document.RootElement);
+                        value = ManagedCCFList.DeserializeManagedCCFList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -398,14 +398,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
             }
         }
 
-        /// <summary> Retrieves the properties of all Confidential Ledgers. </summary>
+        /// <summary> Retrieves the properties of all Managed CCF apps. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConfidentialLedgerList> ListByResourceGroup(string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<ManagedCCFList> ListByResourceGroup(string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -416,9 +416,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 case 200:
                     {
-                        ConfidentialLedgerList value = default;
+                        ManagedCCFList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ConfidentialLedgerList.DeserializeConfidentialLedgerList(document.RootElement);
+                        value = ManagedCCFList.DeserializeManagedCCFList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ConfidentialLedger/ledgers/", false);
+            uri.AppendPath("/providers/Microsoft.ConfidentialLedger/managedCCFs/", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
@@ -447,13 +447,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
             return message;
         }
 
-        /// <summary> Retrieves the properties of all Confidential Ledgers. </summary>
+        /// <summary> Retrieves the properties of all Managed CCF. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConfidentialLedgerList>> ListBySubscriptionAsync(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedCCFList>> ListBySubscriptionAsync(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -463,9 +463,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 case 200:
                     {
-                        ConfidentialLedgerList value = default;
+                        ManagedCCFList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ConfidentialLedgerList.DeserializeConfidentialLedgerList(document.RootElement);
+                        value = ManagedCCFList.DeserializeManagedCCFList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -473,13 +473,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
             }
         }
 
-        /// <summary> Retrieves the properties of all Confidential Ledgers. </summary>
+        /// <summary> Retrieves the properties of all Managed CCF. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConfidentialLedgerList> ListBySubscription(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public Response<ManagedCCFList> ListBySubscription(string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -489,9 +489,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 case 200:
                     {
-                        ConfidentialLedgerList value = default;
+                        ManagedCCFList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ConfidentialLedgerList.DeserializeConfidentialLedgerList(document.RootElement);
+                        value = ManagedCCFList.DeserializeManagedCCFList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             return message;
         }
 
-        /// <summary> Retrieves the properties of all Confidential Ledgers. </summary>
+        /// <summary> Retrieves the properties of all Managed CCF apps. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConfidentialLedgerList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedCCFList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -533,9 +533,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 case 200:
                     {
-                        ConfidentialLedgerList value = default;
+                        ManagedCCFList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ConfidentialLedgerList.DeserializeConfidentialLedgerList(document.RootElement);
+                        value = ManagedCCFList.DeserializeManagedCCFList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             }
         }
 
-        /// <summary> Retrieves the properties of all Confidential Ledgers. </summary>
+        /// <summary> Retrieves the properties of all Managed CCF apps. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConfidentialLedgerList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<ManagedCCFList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -563,9 +563,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 case 200:
                     {
-                        ConfidentialLedgerList value = default;
+                        ManagedCCFList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ConfidentialLedgerList.DeserializeConfidentialLedgerList(document.RootElement);
+                        value = ManagedCCFList.DeserializeManagedCCFList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -587,14 +587,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
             return message;
         }
 
-        /// <summary> Retrieves the properties of all Confidential Ledgers. </summary>
+        /// <summary> Retrieves the properties of all Managed CCF. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConfidentialLedgerList>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedCCFList>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -605,9 +605,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 case 200:
                     {
-                        ConfidentialLedgerList value = default;
+                        ManagedCCFList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ConfidentialLedgerList.DeserializeConfidentialLedgerList(document.RootElement);
+                        value = ManagedCCFList.DeserializeManagedCCFList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -615,14 +615,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
             }
         }
 
-        /// <summary> Retrieves the properties of all Confidential Ledgers. </summary>
+        /// <summary> Retrieves the properties of all Managed CCF. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq &apos;Public&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConfidentialLedgerList> ListBySubscriptionNextPage(string nextLink, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
+        public Response<ManagedCCFList> ListBySubscriptionNextPage(string nextLink, string subscriptionId, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -633,9 +633,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 case 200:
                     {
-                        ConfidentialLedgerList value = default;
+                        ManagedCCFList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ConfidentialLedgerList.DeserializeConfidentialLedgerList(document.RootElement);
+                        value = ManagedCCFList.DeserializeManagedCCFList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
