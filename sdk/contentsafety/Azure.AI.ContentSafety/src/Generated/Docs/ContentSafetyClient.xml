@@ -1,6 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
+    <member name="AnalyzeTextAsync(AnalyzeTextOptions,CancellationToken)">
+<example>
+This sample shows how to call AnalyzeTextAsync with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ContentSafetyClient(endpoint, credential);
+
+var body = new AnalyzeTextOptions("<text>")
+{
+    Categories = 
+{
+        TextCategory.Hate
+    },
+    BlocklistNames = 
+{
+        "<null>"
+    },
+    BreakByBlocklists = true,
+};
+var result = await client.AnalyzeTextAsync(body);
+]]></code>
+</example>
+    </member>
+    <member name="AnalyzeText(AnalyzeTextOptions,CancellationToken)">
+<example>
+This sample shows how to call AnalyzeText with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ContentSafetyClient(endpoint, credential);
+
+var body = new AnalyzeTextOptions("<text>")
+{
+    Categories = 
+{
+        TextCategory.Hate
+    },
+    BlocklistNames = 
+{
+        "<null>"
+    },
+    BreakByBlocklists = true,
+};
+var result = client.AnalyzeText(body);
+]]></code>
+</example>
+    </member>
     <member name="AnalyzeTextAsync(RequestContent,RequestContext)">
 <example>
 This sample shows how to call AnalyzeTextAsync with required request content, and how to parse the result.
@@ -35,7 +83,7 @@ var data = new {
     breakByBlocklists = true,
 };
 
-Response response = await client.AnalyzeTextAsync(RequestContent.Create(data));
+Response response = await client.AnalyzeTextAsync(RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("blocklistsMatchResults")[0].GetProperty("blocklistName").ToString());
@@ -53,46 +101,6 @@ Console.WriteLine(result.GetProperty("violenceResult").GetProperty("category").T
 Console.WriteLine(result.GetProperty("violenceResult").GetProperty("severity").ToString());
 ]]></code>
 </example>
-<remarks>
-A sync API for harmful content analysis for text. Currently, we support four categories: Hate, SelfHarm, Sexual, Violence.
-
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>AnalyzeTextOptions</c>:
-<code>{
-  text: string, # Required. The text needs to be scanned. We support at most 1000 characters (unicode code points) in text of one request.
-  categories: [&quot;Hate&quot; | &quot;SelfHarm&quot; | &quot;Sexual&quot; | &quot;Violence&quot;], # Optional. The categories will be analyzed. If not assigned, a default set of the categories&apos; analysis results will be returned.
-  blocklistNames: [string], # Optional. The names of blocklists.
-  breakByBlocklists: boolean, # Optional. When set to true, further analyses of harmful content will not be performed in cases where blocklists are hit. When set to false, all analyses of harmful content will be performed, whether or not blocklists are hit.
-}
-</code>
-
-Response Body:
-
-Schema for <c>AnalyzeTextResult</c>:
-<code>{
-  blocklistsMatchResults: [
-    {
-      blocklistName: string, # Required. The name of matched blocklist.
-      blockItemId: string, # Required. The id of matched item.
-      blockItemText: string, # Required. The content of matched item.
-      offset: number, # Required. The character offset of matched text in original input.
-      length: number, # Required. The length of matched text in original input.
-    }
-  ], # Optional. The details of blocklist match.
-  hateResult: {
-    category: &quot;Hate&quot; | &quot;SelfHarm&quot; | &quot;Sexual&quot; | &quot;Violence&quot;, # Required. The text category.
-    severity: number, # Required. The higher the severity of input content, the larger this value is. The values could be: 0,2,4,6.
-  }, # Optional. Analysis result for Hate category.
-  selfHarmResult: TextAnalyzeSeverityResult, # Optional. Analysis result for SelfHarm category.
-  sexualResult: TextAnalyzeSeverityResult, # Optional. Analysis result for Sexual category.
-  violenceResult: TextAnalyzeSeverityResult, # Optional. Analysis result for Violence category.
-}
-</code>
-
-</remarks>
     </member>
     <member name="AnalyzeText(RequestContent,RequestContext)">
 <example>
@@ -128,7 +136,7 @@ var data = new {
     breakByBlocklists = true,
 };
 
-Response response = client.AnalyzeText(RequestContent.Create(data));
+Response response = client.AnalyzeText(RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("blocklistsMatchResults")[0].GetProperty("blocklistName").ToString());
@@ -146,46 +154,52 @@ Console.WriteLine(result.GetProperty("violenceResult").GetProperty("category").T
 Console.WriteLine(result.GetProperty("violenceResult").GetProperty("severity").ToString());
 ]]></code>
 </example>
-<remarks>
-A sync API for harmful content analysis for text. Currently, we support four categories: Hate, SelfHarm, Sexual, Violence.
+    </member>
+    <member name="AnalyzeImageAsync(AnalyzeImageOptions,CancellationToken)">
+<example>
+This sample shows how to call AnalyzeImageAsync with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ContentSafetyClient(endpoint, credential);
 
-Below is the JSON schema for the request and response payloads.
+var body = new AnalyzeImageOptions(new ImageData()
+{
+    Content = BinaryData.FromString("<your binary data content>"),
+    BlobUrl = "<BlobUrl>",
+})
+{
+    Categories = 
+{
+        ImageCategory.Hate
+    },
+};
+var result = await client.AnalyzeImageAsync(body);
+]]></code>
+</example>
+    </member>
+    <member name="AnalyzeImage(AnalyzeImageOptions,CancellationToken)">
+<example>
+This sample shows how to call AnalyzeImage with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ContentSafetyClient(endpoint, credential);
 
-Request Body:
-
-Schema for <c>AnalyzeTextOptions</c>:
-<code>{
-  text: string, # Required. The text needs to be scanned. We support at most 1000 characters (unicode code points) in text of one request.
-  categories: [&quot;Hate&quot; | &quot;SelfHarm&quot; | &quot;Sexual&quot; | &quot;Violence&quot;], # Optional. The categories will be analyzed. If not assigned, a default set of the categories&apos; analysis results will be returned.
-  blocklistNames: [string], # Optional. The names of blocklists.
-  breakByBlocklists: boolean, # Optional. When set to true, further analyses of harmful content will not be performed in cases where blocklists are hit. When set to false, all analyses of harmful content will be performed, whether or not blocklists are hit.
-}
-</code>
-
-Response Body:
-
-Schema for <c>AnalyzeTextResult</c>:
-<code>{
-  blocklistsMatchResults: [
-    {
-      blocklistName: string, # Required. The name of matched blocklist.
-      blockItemId: string, # Required. The id of matched item.
-      blockItemText: string, # Required. The content of matched item.
-      offset: number, # Required. The character offset of matched text in original input.
-      length: number, # Required. The length of matched text in original input.
-    }
-  ], # Optional. The details of blocklist match.
-  hateResult: {
-    category: &quot;Hate&quot; | &quot;SelfHarm&quot; | &quot;Sexual&quot; | &quot;Violence&quot;, # Required. The text category.
-    severity: number, # Required. The higher the severity of input content, the larger this value is. The values could be: 0,2,4,6.
-  }, # Optional. Analysis result for Hate category.
-  selfHarmResult: TextAnalyzeSeverityResult, # Optional. Analysis result for SelfHarm category.
-  sexualResult: TextAnalyzeSeverityResult, # Optional. Analysis result for Sexual category.
-  violenceResult: TextAnalyzeSeverityResult, # Optional. Analysis result for Violence category.
-}
-</code>
-
-</remarks>
+var body = new AnalyzeImageOptions(new ImageData()
+{
+    Content = BinaryData.FromString("<your binary data content>"),
+    BlobUrl = "<BlobUrl>",
+})
+{
+    Categories = 
+{
+        ImageCategory.Hate
+    },
+};
+var result = client.AnalyzeImage(body);
+]]></code>
+</example>
     </member>
     <member name="AnalyzeImageAsync(RequestContent,RequestContext)">
 <example>
@@ -220,7 +234,7 @@ var data = new {
     },
 };
 
-Response response = await client.AnalyzeImageAsync(RequestContent.Create(data));
+Response response = await client.AnalyzeImageAsync(RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("hateResult").GetProperty("category").ToString());
@@ -233,38 +247,6 @@ Console.WriteLine(result.GetProperty("violenceResult").GetProperty("category").T
 Console.WriteLine(result.GetProperty("violenceResult").GetProperty("severity").ToString());
 ]]></code>
 </example>
-<remarks>
-A sync API for harmful content analysis for image. Currently, we support four categories: Hate, SelfHarm, Sexual, Violence.
-
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>AnalyzeImageOptions</c>:
-<code>{
-  image: {
-    content: BinaryData, # Optional. Base64 encoding of image.
-    blobUrl: string, # Optional. The blob url of image.
-  }, # Required. The image needs to be analyzed.
-  categories: [&quot;Hate&quot; | &quot;SelfHarm&quot; | &quot;Sexual&quot; | &quot;Violence&quot;], # Optional. The categories will be analyzed. If not assigned, a default set of the categories&apos; analysis results will be returned.
-}
-</code>
-
-Response Body:
-
-Schema for <c>AnalyzeImageResult</c>:
-<code>{
-  hateResult: {
-    category: &quot;Hate&quot; | &quot;SelfHarm&quot; | &quot;Sexual&quot; | &quot;Violence&quot;, # Required. The image category.
-    severity: number, # Required. The higher the severity of input content, the larger this value, currently its value could be: 0,2,4,6.
-  }, # Optional. Analysis result for Hate category.
-  selfHarmResult: ImageAnalyzeSeverityResult, # Optional. Analysis result for SelfHarm category.
-  sexualResult: ImageAnalyzeSeverityResult, # Optional. Analysis result for Sexual category.
-  violenceResult: ImageAnalyzeSeverityResult, # Optional. Analysis result for Violence category.
-}
-</code>
-
-</remarks>
     </member>
     <member name="AnalyzeImage(RequestContent,RequestContext)">
 <example>
@@ -299,7 +281,7 @@ var data = new {
     },
 };
 
-Response response = client.AnalyzeImage(RequestContent.Create(data));
+Response response = client.AnalyzeImage(RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("hateResult").GetProperty("category").ToString());
@@ -312,38 +294,30 @@ Console.WriteLine(result.GetProperty("violenceResult").GetProperty("category").T
 Console.WriteLine(result.GetProperty("violenceResult").GetProperty("severity").ToString());
 ]]></code>
 </example>
-<remarks>
-A sync API for harmful content analysis for image. Currently, we support four categories: Hate, SelfHarm, Sexual, Violence.
+    </member>
+    <member name="GetTextBlocklistAsync(string,CancellationToken)">
+<example>
+This sample shows how to call GetTextBlocklistAsync with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ContentSafetyClient(endpoint, credential);
 
-Below is the JSON schema for the request and response payloads.
+var result = await client.GetTextBlocklistAsync("<blocklistName>");
+]]></code>
+</example>
+    </member>
+    <member name="GetTextBlocklist(string,CancellationToken)">
+<example>
+This sample shows how to call GetTextBlocklist with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ContentSafetyClient(endpoint, credential);
 
-Request Body:
-
-Schema for <c>AnalyzeImageOptions</c>:
-<code>{
-  image: {
-    content: BinaryData, # Optional. Base64 encoding of image.
-    blobUrl: string, # Optional. The blob url of image.
-  }, # Required. The image needs to be analyzed.
-  categories: [&quot;Hate&quot; | &quot;SelfHarm&quot; | &quot;Sexual&quot; | &quot;Violence&quot;], # Optional. The categories will be analyzed. If not assigned, a default set of the categories&apos; analysis results will be returned.
-}
-</code>
-
-Response Body:
-
-Schema for <c>AnalyzeImageResult</c>:
-<code>{
-  hateResult: {
-    category: &quot;Hate&quot; | &quot;SelfHarm&quot; | &quot;Sexual&quot; | &quot;Violence&quot;, # Required. The image category.
-    severity: number, # Required. The higher the severity of input content, the larger this value, currently its value could be: 0,2,4,6.
-  }, # Optional. Analysis result for Hate category.
-  selfHarmResult: ImageAnalyzeSeverityResult, # Optional. Analysis result for SelfHarm category.
-  sexualResult: ImageAnalyzeSeverityResult, # Optional. Analysis result for Sexual category.
-  violenceResult: ImageAnalyzeSeverityResult, # Optional. Analysis result for Violence category.
-}
-</code>
-
-</remarks>
+var result = client.GetTextBlocklist("<blocklistName>");
+]]></code>
+</example>
     </member>
     <member name="GetTextBlocklistAsync(string,RequestContext)">
 <example>
@@ -353,28 +327,13 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ContentSafetyClient(endpoint, credential);
 
-Response response = await client.GetTextBlocklistAsync("<blocklistName>");
+Response response = await client.GetTextBlocklistAsync("<blocklistName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("blocklistName").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 ]]></code>
 </example>
-<remarks>
-Returns text blocklist details.
-
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>TextBlocklist</c>:
-<code>{
-  blocklistName: string, # Required. Text blocklist name.
-  description: string, # Optional. Text blocklist description.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetTextBlocklist(string,RequestContext)">
 <example>
@@ -384,28 +343,13 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ContentSafetyClient(endpoint, credential);
 
-Response response = client.GetTextBlocklist("<blocklistName>");
+Response response = client.GetTextBlocklist("<blocklistName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("blocklistName").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 ]]></code>
 </example>
-<remarks>
-Returns text blocklist details.
-
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>TextBlocklist</c>:
-<code>{
-  blocklistName: string, # Required. Text blocklist name.
-  description: string, # Optional. Text blocklist description.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrUpdateTextBlocklistAsync(string,RequestContent,RequestContext)">
 <example>
@@ -435,37 +379,13 @@ var data = new {
     description = "<description>",
 };
 
-Response response = await client.CreateOrUpdateTextBlocklistAsync("<blocklistName>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateTextBlocklistAsync("<blocklistName>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("blocklistName").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 ]]></code>
 </example>
-<remarks>
-Updates a text blocklist, if blocklistName does not exist, create a new blocklist.
-
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>TextBlocklist</c>:
-<code>{
-  blocklistName: string, # Required. Text blocklist name.
-  description: string, # Optional. Text blocklist description.
-}
-</code>
-
-Response Body:
-
-Schema for <c>TextBlocklist</c>:
-<code>{
-  blocklistName: string, # Required. Text blocklist name.
-  description: string, # Optional. Text blocklist description.
-}
-</code>
-
-</remarks>
     </member>
     <member name="CreateOrUpdateTextBlocklist(string,RequestContent,RequestContext)">
 <example>
@@ -495,37 +415,13 @@ var data = new {
     description = "<description>",
 };
 
-Response response = client.CreateOrUpdateTextBlocklist("<blocklistName>", RequestContent.Create(data));
+Response response = client.CreateOrUpdateTextBlocklist("<blocklistName>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("blocklistName").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 ]]></code>
 </example>
-<remarks>
-Updates a text blocklist, if blocklistName does not exist, create a new blocklist.
-
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>TextBlocklist</c>:
-<code>{
-  blocklistName: string, # Required. Text blocklist name.
-  description: string, # Optional. Text blocklist description.
-}
-</code>
-
-Response Body:
-
-Schema for <c>TextBlocklist</c>:
-<code>{
-  blocklistName: string, # Required. Text blocklist name.
-  description: string, # Optional. Text blocklist description.
-}
-</code>
-
-</remarks>
     </member>
     <member name="DeleteTextBlocklistAsync(string,RequestContext)">
 <example>
@@ -535,13 +431,10 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ContentSafetyClient(endpoint, credential);
 
-Response response = await client.DeleteTextBlocklistAsync("<blocklistName>");
+Response response = await client.DeleteTextBlocklistAsync("<blocklistName>", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Deletes a text blocklist.
-</remarks>
     </member>
     <member name="DeleteTextBlocklist(string,RequestContext)">
 <example>
@@ -551,13 +444,48 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ContentSafetyClient(endpoint, credential);
 
-Response response = client.DeleteTextBlocklist("<blocklistName>");
+Response response = client.DeleteTextBlocklist("<blocklistName>", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Deletes a text blocklist.
-</remarks>
+    </member>
+    <member name="AddBlockItemsAsync(string,AddBlockItemsOptions,CancellationToken)">
+<example>
+This sample shows how to call AddBlockItemsAsync with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ContentSafetyClient(endpoint, credential);
+
+var addBlockItemsOptions = new AddBlockItemsOptions(new TextBlockItemInfo[] 
+{
+    new TextBlockItemInfo("<text>")
+{
+        Description = "<Description>",
+    }
+});
+var result = await client.AddBlockItemsAsync("<blocklistName>", addBlockItemsOptions);
+]]></code>
+</example>
+    </member>
+    <member name="AddBlockItems(string,AddBlockItemsOptions,CancellationToken)">
+<example>
+This sample shows how to call AddBlockItems with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ContentSafetyClient(endpoint, credential);
+
+var addBlockItemsOptions = new AddBlockItemsOptions(new TextBlockItemInfo[] 
+{
+    new TextBlockItemInfo("<text>")
+{
+        Description = "<Description>",
+    }
+});
+var result = client.AddBlockItems("<blocklistName>", addBlockItemsOptions);
+]]></code>
+</example>
     </member>
     <member name="AddBlockItemsAsync(string,RequestContent,RequestContext)">
 <example>
@@ -576,7 +504,7 @@ var data = new {
     },
 };
 
-Response response = await client.AddBlockItemsAsync("<blocklistName>", RequestContent.Create(data));
+Response response = await client.AddBlockItemsAsync("<blocklistName>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("blockItemId").ToString());
@@ -584,39 +512,6 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToSt
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString());
 ]]></code>
 </example>
-<remarks>
-Add blockItems to a text blocklist. You can add at most 100 BlockItems in one request.
-
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>AddBlockItemsOptions</c>:
-<code>{
-  blockItems: [
-    {
-      description: string, # Optional. Block item description.
-      text: string, # Required. Block item content.
-    }
-  ], # Required. Array of blockItemInfo to add.
-}
-</code>
-
-Response Body:
-
-Schema for <c>AddBlockItemsResult</c>:
-<code>{
-  value: [
-    {
-      blockItemId: string, # Required. Block Item Id. It will be uuid.
-      description: string, # Optional. Block item description.
-      text: string, # Required. Block item content.
-    }
-  ], # Optional. Array of blockItems added.
-}
-</code>
-
-</remarks>
     </member>
     <member name="AddBlockItems(string,RequestContent,RequestContext)">
 <example>
@@ -635,7 +530,7 @@ var data = new {
     },
 };
 
-Response response = client.AddBlockItems("<blocklistName>", RequestContent.Create(data));
+Response response = client.AddBlockItems("<blocklistName>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("blockItemId").ToString());
@@ -643,39 +538,38 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToSt
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString());
 ]]></code>
 </example>
-<remarks>
-Add blockItems to a text blocklist. You can add at most 100 BlockItems in one request.
+    </member>
+    <member name="RemoveBlockItemsAsync(string,RemoveBlockItemsOptions,CancellationToken)">
+<example>
+This sample shows how to call RemoveBlockItemsAsync with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ContentSafetyClient(endpoint, credential);
 
-Below is the JSON schema for the request and response payloads.
+var removeBlockItemsOptions = new RemoveBlockItemsOptions(new string[] 
+{
+    "<null>"
+});
+var result = await client.RemoveBlockItemsAsync("<blocklistName>", removeBlockItemsOptions);
+]]></code>
+</example>
+    </member>
+    <member name="RemoveBlockItems(string,RemoveBlockItemsOptions,CancellationToken)">
+<example>
+This sample shows how to call RemoveBlockItems with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ContentSafetyClient(endpoint, credential);
 
-Request Body:
-
-Schema for <c>AddBlockItemsOptions</c>:
-<code>{
-  blockItems: [
-    {
-      description: string, # Optional. Block item description.
-      text: string, # Required. Block item content.
-    }
-  ], # Required. Array of blockItemInfo to add.
-}
-</code>
-
-Response Body:
-
-Schema for <c>AddBlockItemsResult</c>:
-<code>{
-  value: [
-    {
-      blockItemId: string, # Required. Block Item Id. It will be uuid.
-      description: string, # Optional. Block item description.
-      text: string, # Required. Block item content.
-    }
-  ], # Optional. Array of blockItems added.
-}
-</code>
-
-</remarks>
+var removeBlockItemsOptions = new RemoveBlockItemsOptions(new string[] 
+{
+    "<null>"
+});
+var result = client.RemoveBlockItems("<blocklistName>", removeBlockItemsOptions);
+]]></code>
+</example>
     </member>
     <member name="RemoveBlockItemsAsync(string,RequestContent,RequestContext)">
 <example>
@@ -691,24 +585,10 @@ var data = new {
     },
 };
 
-Response response = await client.RemoveBlockItemsAsync("<blocklistName>", RequestContent.Create(data));
+Response response = await client.RemoveBlockItemsAsync("<blocklistName>", RequestContent.Create(data), new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Remove blockItems from a text blocklist. You can remove at most 100 BlockItems in one request.
-
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>RemoveBlockItemsOptions</c>:
-<code>{
-  blockItemIds: [string], # Required. Array of blockItemIds to remove.
-}
-</code>
-
-</remarks>
     </member>
     <member name="RemoveBlockItems(string,RequestContent,RequestContext)">
 <example>
@@ -724,24 +604,34 @@ var data = new {
     },
 };
 
-Response response = client.RemoveBlockItems("<blocklistName>", RequestContent.Create(data));
+Response response = client.RemoveBlockItems("<blocklistName>", RequestContent.Create(data), new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-Remove blockItems from a text blocklist. You can remove at most 100 BlockItems in one request.
+    </member>
+    <member name="GetTextBlocklistItemAsync(string,string,CancellationToken)">
+<example>
+This sample shows how to call GetTextBlocklistItemAsync with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ContentSafetyClient(endpoint, credential);
 
-Below is the JSON schema for the request payload.
+var result = await client.GetTextBlocklistItemAsync("<blocklistName>", "<blockItemId>");
+]]></code>
+</example>
+    </member>
+    <member name="GetTextBlocklistItem(string,string,CancellationToken)">
+<example>
+This sample shows how to call GetTextBlocklistItem with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ContentSafetyClient(endpoint, credential);
 
-Request Body:
-
-Schema for <c>RemoveBlockItemsOptions</c>:
-<code>{
-  blockItemIds: [string], # Required. Array of blockItemIds to remove.
-}
-</code>
-
-</remarks>
+var result = client.GetTextBlocklistItem("<blocklistName>", "<blockItemId>");
+]]></code>
+</example>
     </member>
     <member name="GetTextBlocklistItemAsync(string,string,RequestContext)">
 <example>
@@ -751,7 +641,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ContentSafetyClient(endpoint, credential);
 
-Response response = await client.GetTextBlocklistItemAsync("<blocklistName>", "<blockItemId>");
+Response response = await client.GetTextBlocklistItemAsync("<blocklistName>", "<blockItemId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("blockItemId").ToString());
@@ -759,22 +649,6 @@ Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("text").ToString());
 ]]></code>
 </example>
-<remarks>
-Get blockItem By blockItemId from a text blocklist.
-
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>TextBlockItem</c>:
-<code>{
-  blockItemId: string, # Required. Block Item Id. It will be uuid.
-  description: string, # Optional. Block item description.
-  text: string, # Required. Block item content.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetTextBlocklistItem(string,string,RequestContext)">
 <example>
@@ -784,7 +658,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ContentSafetyClient(endpoint, credential);
 
-Response response = client.GetTextBlocklistItem("<blocklistName>", "<blockItemId>");
+Response response = client.GetTextBlocklistItem("<blocklistName>", "<blockItemId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("blockItemId").ToString());
@@ -792,22 +666,34 @@ Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("text").ToString());
 ]]></code>
 </example>
-<remarks>
-Get blockItem By blockItemId from a text blocklist.
+    </member>
+    <member name="GetTextBlocklistsAsync(CancellationToken)">
+<example>
+This sample shows how to call GetTextBlocklistsAsync.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ContentSafetyClient(endpoint, credential);
 
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>TextBlockItem</c>:
-<code>{
-  blockItemId: string, # Required. Block Item Id. It will be uuid.
-  description: string, # Optional. Block item description.
-  text: string, # Required. Block item content.
+await foreach (var item in client.GetTextBlocklistsAsync())
+{
 }
-</code>
+]]></code>
+</example>
+    </member>
+    <member name="GetTextBlocklists(CancellationToken)">
+<example>
+This sample shows how to call GetTextBlocklists.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ContentSafetyClient(endpoint, credential);
 
-</remarks>
+foreach (var item in client.GetTextBlocklists())
+{
+}
+]]></code>
+</example>
     </member>
     <member name="GetTextBlocklistsAsync(RequestContext)">
 <example>
@@ -817,29 +703,14 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ContentSafetyClient(endpoint, credential);
 
-await foreach (var data in client.GetTextBlocklistsAsync())
+await foreach (var item in client.GetTextBlocklistsAsync(new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("blocklistName").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
 }
 ]]></code>
 </example>
-<remarks>
-Get all text blocklists details.
-
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>Array</c>:
-<code>{
-  blocklistName: string, # Required. Text blocklist name.
-  description: string, # Optional. Text blocklist description.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetTextBlocklists(RequestContext)">
 <example>
@@ -849,29 +720,42 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ContentSafetyClient(endpoint, credential);
 
-foreach (var data in client.GetTextBlocklists())
+foreach (var item in client.GetTextBlocklists(new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("blocklistName").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
 }
 ]]></code>
 </example>
-<remarks>
-Get all text blocklists details.
+    </member>
+    <member name="GetTextBlocklistItemsAsync(string,int?,int?,int?,CancellationToken)">
+<example>
+This sample shows how to call GetTextBlocklistItemsAsync with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ContentSafetyClient(endpoint, credential);
 
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>Array</c>:
-<code>{
-  blocklistName: string, # Required. Text blocklist name.
-  description: string, # Optional. Text blocklist description.
+await foreach (var item in client.GetTextBlocklistItemsAsync("<blocklistName>", 1234, 1234, 1234))
+{
 }
-</code>
+]]></code>
+</example>
+    </member>
+    <member name="GetTextBlocklistItems(string,int?,int?,int?,CancellationToken)">
+<example>
+This sample shows how to call GetTextBlocklistItems with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ContentSafetyClient(endpoint, credential);
 
-</remarks>
+foreach (var item in client.GetTextBlocklistItems("<blocklistName>", 1234, 1234, 1234))
+{
+}
+]]></code>
+</example>
     </member>
     <member name="GetTextBlocklistItemsAsync(string,int?,int?,int?,RequestContext)">
 <example>
@@ -881,29 +765,14 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ContentSafetyClient(endpoint, credential);
 
-await foreach (var data in client.GetTextBlocklistItemsAsync("<blocklistName>", 1234, 1234, 1234))
+await foreach (var item in client.GetTextBlocklistItemsAsync("<blocklistName>", 1234, 1234, 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("blocklistName").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
 }
 ]]></code>
 </example>
-<remarks>
-Get all blockItems in a text blocklist
-
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>Array</c>:
-<code>{
-  blocklistName: string, # Required. Text blocklist name.
-  description: string, # Optional. Text blocklist description.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetTextBlocklistItems(string,int?,int?,int?,RequestContext)">
 <example>
@@ -913,29 +782,14 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ContentSafetyClient(endpoint, credential);
 
-foreach (var data in client.GetTextBlocklistItems("<blocklistName>", 1234, 1234, 1234))
+foreach (var item in client.GetTextBlocklistItems("<blocklistName>", 1234, 1234, 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("blocklistName").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
 }
 ]]></code>
 </example>
-<remarks>
-Get all blockItems in a text blocklist
-
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>Array</c>:
-<code>{
-  blocklistName: string, # Required. Text blocklist name.
-  description: string, # Optional. Text blocklist description.
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>
