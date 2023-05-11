@@ -181,7 +181,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 {
                     new
                     {
-                        digest = "sha256:ca8d9d717feb17f36b80e11c4f3624f8d2a49d5c855c6dbf5550767536a8ccb0",
+                        digest = "sha256:997e70d7f84828f39a9b551f4e86aee0fbbe47bacbd02a3b1ca638ce7335646f",
                         mediaType = ManifestMediaType.DockerManifest.ToString(),
                         platform = new {
                             architecture = ArtifactArchitecture.Amd64.ToString(),
