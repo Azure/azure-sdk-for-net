@@ -53,7 +53,6 @@ namespace Azure.Communication.CallAutomation.Models.Events
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
@@ -63,7 +62,6 @@ namespace Azure.Communication.CallAutomation.Models.Events
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dialogInputType = new DialogInputType(property.Value.GetString());
@@ -78,7 +76,6 @@ namespace Azure.Communication.CallAutomation.Models.Events
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     transferToExternalNumber = TransferToExternalNumber.DeserializeTransferToExternalNumber(property.Value);

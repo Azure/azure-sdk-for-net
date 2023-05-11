@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     [CodeGenModel("DialogOptions")]
-    internal partial class DialogOptionsInternal
+    public partial class DialogOptionsInternal
     {
     }
 }

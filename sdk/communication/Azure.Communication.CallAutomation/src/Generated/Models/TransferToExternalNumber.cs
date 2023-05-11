@@ -17,11 +17,9 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Initializes a new instance of TransferToExternalNumber. </summary>
         /// <param name="transferDestination"></param>
-        /// <param name="type"></param>
-        internal TransferToExternalNumber(string transferDestination, string type)
+        internal TransferToExternalNumber(string transferDestination)
         {
             TransferDestination = transferDestination;
-            Type = type;
         }
     }
 }

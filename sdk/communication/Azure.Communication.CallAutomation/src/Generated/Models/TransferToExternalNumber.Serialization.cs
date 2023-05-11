@@ -19,7 +19,6 @@ namespace Azure.Communication.CallAutomation
                 return null;
             }
             Optional<string> transferDestination = default;
-            Optional<string> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("transferDestination"u8))
@@ -27,13 +26,8 @@ namespace Azure.Communication.CallAutomation
                     transferDestination = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
             }
-            return new TransferToExternalNumber(transferDestination.Value, type.Value);
+            return new TransferToExternalNumber(transferDestination.Value);
         }
     }
 }

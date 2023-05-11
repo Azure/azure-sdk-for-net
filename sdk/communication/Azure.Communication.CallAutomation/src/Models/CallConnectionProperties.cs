@@ -50,7 +50,10 @@ namespace Azure.Communication.CallAutomation
 
             CallbackUri = new Uri(callConnectionPropertiesDtoInternal.CallbackUri);
             MediaSubscriptionId = callConnectionPropertiesDtoInternal.MediaSubscriptionId;
-            SourceIdentity = callConnectionPropertiesDtoInternal.SourceIdentity == null? null : CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesDtoInternal.SourceIdentity);
+            CommunicationUserIdentifierModel sourceIdentifier = callConnectionPropertiesDtoInternal.SourceIdentity;
+            SourceIdentity = callConnectionPropertiesDtoInternal.SourceIdentity == null ?
+                null
+                : new CommunicationUserIdentifier(sourceIdentifier.Id);
             SourceDisplayName = callConnectionPropertiesDtoInternal.SourceDisplayName;
             CorrelationId = callConnectionPropertiesDtoInternal.CorrelationId;
             AnsweredByIdentifier = callConnectionPropertiesDtoInternal.AnsweredByIdentifier == null? null : new CommunicationUserIdentifier(callConnectionPropertiesDtoInternal.AnsweredByIdentifier.Id);

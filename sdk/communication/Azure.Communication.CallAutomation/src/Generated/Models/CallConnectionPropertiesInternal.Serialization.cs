@@ -28,7 +28,7 @@ namespace Azure.Communication.CallAutomation
             Optional<string> mediaSubscriptionId = default;
             Optional<PhoneNumberIdentifierModel> sourceCallerIdNumber = default;
             Optional<string> sourceDisplayName = default;
-            Optional<CommunicationIdentifierModel> sourceIdentity = default;
+            Optional<CommunicationUserIdentifierModel> sourceIdentity = default;
             Optional<string> correlationId = default;
             Optional<CommunicationUserIdentifierModel> answeredByIdentifier = default;
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    sourceIdentity = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    sourceIdentity = CommunicationUserIdentifierModel.DeserializeCommunicationUserIdentifierModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("correlationId"u8))

@@ -17,6 +17,7 @@ namespace Azure.Communication.CallAutomation
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         internal CallMediaRestClient CallMediaRestClient { get; }
+        internal CallDialogRestClient CallDialogRestClient { get; }
         internal CallAutomationEventProcessor EventProcessor { get; }
 
         /// <summary>
@@ -24,12 +25,13 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public virtual string CallConnectionId { get; internal set; }
 
-        internal CallMedia(string callConnectionId, CallMediaRestClient callCallMediaRestClient, ClientDiagnostics clientDiagnostics, CallAutomationEventProcessor eventProcessor)
+        internal CallMedia(string callConnectionId, CallMediaRestClient callCallMediaRestClient, ClientDiagnostics clientDiagnostics, CallAutomationEventProcessor eventProcessor, CallDialogRestClient callDialogRestClient)
         {
             CallConnectionId = callConnectionId;
             CallMediaRestClient = callCallMediaRestClient;
             _clientDiagnostics = clientDiagnostics;
             EventProcessor = eventProcessor;
+            CallDialogRestClient = callDialogRestClient;
         }
 
         /// <summary>Initializes a new instance of <see cref="CallMedia"/> for mocking.</summary>
@@ -656,10 +658,11 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Start Dialog.
         /// </summary>
+        /// <param name="dialogId"></param>
         /// <param name="startDialogOptions">Configuration attributes for starting dialog.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>Returns <see cref="DialogResult"/>, which can be used to wait for Dialog's related events.</returns>
-        public virtual async Task<Response<DialogResult>> StartDialogAsync(StartDialogOptions startDialogOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DialogResult>> StartDialogAsync(Guid dialogId, StartDialogOptions startDialogOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartDialog)}");
             scope.Start();
@@ -668,17 +671,16 @@ namespace Azure.Communication.CallAutomation
                 StartDialogRequestInternal request = CreateStartDialogRequest(startDialogOptions);
                 var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                var response = await CallMediaRestClient.StartDialogAsync
+                var response = await CallDialogRestClient.StartDialogAsync
                     (CallConnectionId,
+                    dialogId,
                     request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
                     cancellationToken).ConfigureAwait(false);
 
                 var result = new DialogResult();
                 result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
 
-                return Response.FromValue(result, response);
+                return Response.FromValue(result, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -692,8 +694,9 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="startDialogOptions">Configuration attributes for starting dialog.</param>
         /// <param name="cancellationToken"></param>
+        /// <param name="dialogId">The dialog id.</param>
         /// <returns>Returns <see cref="DialogResult"/>, which can be used to wait for Dialog's related events.</returns>
-        public virtual Response<DialogResult> StartDialog(StartDialogOptions startDialogOptions, CancellationToken cancellationToken = default)
+        public virtual Response<DialogResult> StartDialog(Guid dialogId, StartDialogOptions startDialogOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartRecognizing)}");
             scope.Start();
@@ -702,17 +705,16 @@ namespace Azure.Communication.CallAutomation
                 StartDialogRequestInternal request = CreateStartDialogRequest(startDialogOptions);
                 var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                var response = CallMediaRestClient.StartDialog
+                var response = CallDialogRestClient.StartDialog
                     (CallConnectionId,
+                    dialogId,
                     request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
                     cancellationToken);
 
                 var result = new DialogResult();
                 result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
 
-                return Response.FromValue(result, response);
+                return Response.FromValue(result, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -723,8 +725,8 @@ namespace Azure.Communication.CallAutomation
 
         private static StartDialogRequestInternal CreateStartDialogRequest(StartDialogOptions startDialogOptions)
         {
-            DialogOptionsInternal dialogOptionsInternal = new DialogOptionsInternal(CommunicationIdentifierSerializer.Serialize(startDialogOptions.TargetParticipant),
-                startDialogOptions.BotId,
+            DialogOptionsInternal dialogOptionsInternal = new DialogOptionsInternal(
+                startDialogOptions.BotId.ToString(),
                 startDialogOptions.DialogContext);
             StartDialogRequestInternal startDialogRequestInternal = new StartDialogRequestInternal(dialogOptionsInternal, startDialogOptions.DialogInputType)
             {
@@ -736,8 +738,9 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Stop Dialog.
         /// </summary>
+        /// <param name="dialogId"></param>
         /// <param name="cancellationToken"></param>
-        public virtual async Task<Response<DialogResult>> StopDialogAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DialogResult>> StopDialogAsync(Guid dialogId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopDialog)}");
             scope.Start();
@@ -745,11 +748,9 @@ namespace Azure.Communication.CallAutomation
             {
                 var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                var response = await CallMediaRestClient.StopDialogAsync
+                var response = await CallDialogRestClient.StopDialogAsync
                     (CallConnectionId,
-                    new StopDialogRequestInternal(),
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    dialogId,
                     cancellationToken).ConfigureAwait(false);
 
                 var result = new DialogResult();
@@ -767,8 +768,9 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Stop Dialog.
         /// </summary>
+        /// <param name="dialogId"></param>
         /// <param name="cancellationToken"></param>
-        public virtual Response<DialogResult> StopDialog(CancellationToken cancellationToken = default)
+        public virtual Response<DialogResult> StopDialog(Guid dialogId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopDialog)}");
             scope.Start();
@@ -776,11 +778,9 @@ namespace Azure.Communication.CallAutomation
             {
                 var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                var response = CallMediaRestClient.StopDialog
+                var response = CallDialogRestClient.StopDialog
                     (CallConnectionId,
-                    new StopDialogRequestInternal(),
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    dialogId,
                     cancellationToken);
 
                 var result = new DialogResult();

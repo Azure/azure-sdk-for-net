@@ -7,34 +7,29 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The DialogOptions. </summary>
-    internal partial class DialogOptionsInternal
+    public partial class DialogOptionsInternal
     {
         /// <summary> Initializes a new instance of DialogOptionsInternal. </summary>
-        /// <param name="targetParticipant"> Target participant of dialog. </param>
-        /// <param name="botId"> Bot identifier. </param>
+        /// <param name="botAppId"> Bot identifier. </param>
         /// <param name="dialogContext"> Dialog context. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> or <paramref name="dialogContext"/> is null. </exception>
-        public DialogOptionsInternal(CommunicationIdentifierModel targetParticipant, Guid botId, IDictionary<string, string> dialogContext)
+        /// <exception cref="ArgumentNullException"> <paramref name="botAppId"/> or <paramref name="dialogContext"/> is null. </exception>
+        public DialogOptionsInternal(string botAppId, IDictionary<string, object> dialogContext)
         {
-            Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
+            Argument.AssertNotNull(botAppId, nameof(botAppId));
             Argument.AssertNotNull(dialogContext, nameof(dialogContext));
 
-            TargetParticipant = targetParticipant;
-            BotId = botId;
+            BotAppId = botAppId;
             DialogContext = dialogContext;
         }
 
-        /// <summary> Target participant of dialog. </summary>
-        public CommunicationIdentifierModel TargetParticipant { get; }
         /// <summary> Bot identifier. </summary>
-        public Guid BotId { get; }
+        public string BotAppId { get; set; }
         /// <summary> Dialog context. </summary>
-        public IDictionary<string, string> DialogContext { get; }
+        public IDictionary<string, object> DialogContext { get; }
     }
 }
