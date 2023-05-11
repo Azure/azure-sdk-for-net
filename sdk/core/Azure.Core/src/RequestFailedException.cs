@@ -247,6 +247,9 @@ namespace Azure
         {
             error = null;
             data = null;
+            string? message = null;
+            string? code = null;
+
             try
             {
                 // The response content is buffered at this point.
@@ -257,7 +260,40 @@ namespace Azure
                 {
                     return false;
                 }
-                error = System.Text.Json.JsonSerializer.Deserialize<ErrorResponse>(content)?.Error;
+                var reader = new System.Text.Json.Utf8JsonReader(response.Content);
+                int objectDepth = 0;
+                while (reader.Read())
+                {
+                    if (code is not null && message is not null || objectDepth > 2)
+                    {
+                        break;
+                    }
+                    switch (reader.TokenType)
+                    {
+                        case System.Text.Json.JsonTokenType.EndObject:
+                            objectDepth++;
+                            break;
+                        case System.Text.Json.JsonTokenType.PropertyName:
+                            var propName = reader.GetString();
+                            if (!reader.Read())
+                            {
+                                break;
+                            }
+                            if (propName == "message")
+                            {
+                                message = reader.GetString();
+                            }
+                            else if (propName == "code")
+                            {
+                                code = reader.GetString();
+                            }
+                            break;
+                    }
+                }
+                if (objectDepth <= 2)
+                {
+                    error = new ResponseError(code, message);
+                }
             }
             catch (Exception)
             {

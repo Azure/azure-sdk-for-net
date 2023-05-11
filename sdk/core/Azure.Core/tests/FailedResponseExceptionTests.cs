@@ -288,7 +288,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void ParsesJsonErrors()
+        public void ParsesJsonErrors([Values(true, false)] bool hasErrorWrapper)
         {
             var formattedResponse =
                 "Custom message" + s_nl +
@@ -296,13 +296,16 @@ namespace Azure.Core.Tests
                 "ErrorCode: StatusCode" + s_nl +
                 s_nl +
                 "Content:" + s_nl +
-                "{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}" + s_nl +
+            (hasErrorWrapper ? "{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}" :
+                "{ \"code\":\"StatusCode\", \"message\":\"Custom message\" }") + s_nl +
                 s_nl +
                 "Headers:" + s_nl +
                 "Content-Type: text/json" + s_nl;
 
             var response = new MockResponse(210, "Reason");
-            response.SetContent("{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}");
+            var errorContent = hasErrorWrapper ? "{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}" :
+                "{ \"code\":\"StatusCode\", \"message\":\"Custom message\" }";
+            response.SetContent(errorContent);
             response.AddHeader(new HttpHeader("Content-Type", "text/json"));
             response.Sanitizer = Sanitizer;
 
@@ -312,7 +315,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void ParsesJsonErrors_ResponseCtor()
+        public void ParsesJsonErrors_ResponseCtor([Values(true, false)] bool hasErrorWrapper)
         {
             var formattedResponse =
                 "Custom message" + s_nl +
@@ -320,13 +323,16 @@ namespace Azure.Core.Tests
                 "ErrorCode: StatusCode" + s_nl +
                 s_nl +
                 "Content:" + s_nl +
-                "{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}" + s_nl +
+            (hasErrorWrapper ? "{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}" :
+                "{ \"code\":\"StatusCode\", \"message\":\"Custom message\" }") + s_nl +
                 s_nl +
                 "Headers:" + s_nl +
                 "Content-Type: text/json" + s_nl;
 
             var response = new MockResponse(210, "Reason");
-            response.SetContent("{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}");
+            var errorContent = hasErrorWrapper ? "{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}" :
+                "{ \"code\":\"StatusCode\", \"message\":\"Custom message\" }";
+            response.SetContent(errorContent);
             response.AddHeader(new HttpHeader("Content-Type", "text/json"));
             response.Sanitizer = Sanitizer;
 
@@ -336,7 +342,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void ParsesJsonErrors_ResponseCtor_Stream([Values(true, false)] bool canSeek)
+        public void ParsesJsonErrors_ResponseCtor_Stream([Values(true, false)] bool canSeek, [Values(true, false)] bool hasErrorWrapper)
         {
             var formattedResponse =
                 "Custom message" + s_nl +
@@ -344,13 +350,16 @@ namespace Azure.Core.Tests
                 "ErrorCode: StatusCode" + s_nl +
                 s_nl +
                 "Content:" + s_nl +
-                "{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}" + s_nl +
+            (hasErrorWrapper ? "{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}" :
+                "{ \"code\":\"StatusCode\", \"message\":\"Custom message\" }") + s_nl +
                 s_nl +
                 "Headers:" + s_nl +
                 "Content-Type: text/json" + s_nl;
 
             var response = new MockResponse(210, "Reason");
-            response.ContentStream = GetStream(canSeek, "{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}");
+            var errorContent = hasErrorWrapper ? "{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}" :
+                "{ \"code\":\"StatusCode\", \"message\":\"Custom message\" }";
+            response.ContentStream = GetStream(canSeek, errorContent);
             response.AddHeader(new HttpHeader("Content-Type", "text/json"));
             response.Sanitizer = Sanitizer;
 
@@ -361,11 +370,11 @@ namespace Azure.Core.Tests
 
             Assert.IsInstanceOf<MemoryStream>(rawResponse.ContentStream);
             Assert.AreEqual(0, rawResponse.ContentStream.Position);
-            Assert.AreEqual("{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}", rawResponse.Content.ToString());
+            Assert.AreEqual(errorContent, rawResponse.Content.ToString());
         }
 
         [Test]
-        public async Task ParsesJsonErrors_ResponseCtor_StreamAsync([Values(true, false)] bool canSeek)
+        public async Task ParsesJsonErrors_ResponseCtor_StreamAsync([Values(true, false)] bool canSeek, [Values(true, false)] bool hasErrorWrapper)
         {
             await Task.Yield();
             var formattedResponse =
@@ -374,13 +383,16 @@ namespace Azure.Core.Tests
                 "ErrorCode: StatusCode" + s_nl +
                 s_nl +
                 "Content:" + s_nl +
-                "{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}" + s_nl +
+            (hasErrorWrapper ? "{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}" :
+                "{ \"code\":\"StatusCode\", \"message\":\"Custom message\" }") + s_nl +
                 s_nl +
                 "Headers:" + s_nl +
                 "Content-Type: text/json" + s_nl;
 
             var response = new MockResponse(210, "Reason");
-            response.ContentStream = GetStream(canSeek, "{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}");
+            var errorContent = hasErrorWrapper ? "{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}" :
+                "{ \"code\":\"StatusCode\", \"message\":\"Custom message\" }";
+            response.ContentStream = GetStream(canSeek, errorContent);
             response.AddHeader(new HttpHeader("Content-Type", "text/json"));
             response.Sanitizer = Sanitizer;
 
@@ -391,7 +403,7 @@ namespace Azure.Core.Tests
             Response rawResponse = exception.GetRawResponse();
             Assert.IsInstanceOf<MemoryStream>(rawResponse.ContentStream);
             Assert.AreEqual(0, rawResponse.ContentStream.Position);
-            Assert.AreEqual("{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}", rawResponse.Content.ToString());
+            Assert.AreEqual(errorContent, rawResponse.Content.ToString());
         }
 
         [Test]
@@ -424,13 +436,35 @@ namespace Azure.Core.Tests
                 "Status: 210 (Reason)" + s_nl +
                 s_nl +
                 "Content:" + s_nl +
-                "{ \"code\":\"StatusCode\" }" + s_nl +
+                "{ \"customCode\":\"StatusCode\" }" + s_nl +
                 s_nl +
                 "Headers:" + s_nl +
                 "Content-Type: text/json" + s_nl;
 
             var response = new MockResponse(210, "Reason");
-            response.SetContent("{ \"code\":\"StatusCode\" }");
+            response.SetContent("{ \"customCode\":\"StatusCode\" }");
+            response.AddHeader(new HttpHeader("Content-Type", "text/json"));
+            response.Sanitizer = Sanitizer;
+
+            RequestFailedException exception = new RequestFailedException(response);
+            Assert.AreEqual(formattedResponse, exception.Message);
+        }
+
+        [Test]
+        public void IgnoresUnexpectedNestedJson()
+        {
+            var formattedResponse =
+                "Service request failed." + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
+                "Content:" + s_nl +
+                "{ \"error\": { \"error\": { \"code\":\"StatusCode\" }}}" + s_nl +
+                s_nl +
+                "Headers:" + s_nl +
+                "Content-Type: text/json" + s_nl;
+
+            var response = new MockResponse(210, "Reason");
+            response.SetContent("{ \"error\": { \"error\": { \"code\":\"StatusCode\" }}}");
             response.AddHeader(new HttpHeader("Content-Type", "text/json"));
             response.Sanitizer = Sanitizer;
 
