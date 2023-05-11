@@ -74,7 +74,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
 
             binding.Bind(new TableAttributeBindingProvider(_nameResolver, _accountProvider, _converterManager));
             binding.BindToInput<ParameterBindingData>(CreateParameterBindingData);
-            binding.BindToInput<ParameterBindingData[]>(CreateParameterBindingDataEnumerable);
 
             binding.BindToInput<JArray>(CreateJArray);
         }
@@ -134,16 +133,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             return parameterBindingData;
         }
 
-        internal Task<ParameterBindingData> CreateCustomParameterBindingData(TableAttribute attribute, string rowKey)
-        {
-            var tableDetails = new TablesParameterBindingDataContent(attribute);
-            tableDetails.RowKey = rowKey;
-            var tableDetailsBinaryData = new BinaryData(tableDetails);
-            var parameterBindingData = new ParameterBindingData("1.0", Constants.ExtensionName, tableDetailsBinaryData, "application/json");
-
-            return Task.FromResult(parameterBindingData);
-        }
-
         // Used as an alternative to binding to IQueryable.
         private async Task<JArray> CreateJArray(TableAttribute attribute, CancellationToken cancellation)
         {
@@ -187,44 +176,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 }
             }
             return entityArray;
-        }
-
-        private async Task<ParameterBindingData[]> CreateParameterBindingDataEnumerable(TableAttribute attribute, ValueBindingContext context)
-        {
-            var table = GetTable(attribute);
-
-            string filter = attribute.Filter;
-            if (!string.IsNullOrEmpty(attribute.PartitionKey))
-            {
-                var partitionKeyPredicate = TableClient.CreateQueryFilter($"PartitionKey eq {attribute.PartitionKey}");
-                filter = !string.IsNullOrEmpty(filter) ? $"{partitionKeyPredicate} and {filter}" : partitionKeyPredicate;
-            }
-
-            int? maxPerPage = null;
-            if (attribute.Take > 0)
-            {
-                maxPerPage = attribute.Take;
-            }
-
-            int countRemaining = attribute.Take;
-
-            List<ParameterBindingData> bindingDataContent = new List<ParameterBindingData>();
-            var entities = table.QueryAsync<TableEntity>(
-                filter: filter,
-                maxPerPage: maxPerPage).ConfigureAwait(false);
-
-            await foreach (var entity in entities)
-            {
-                countRemaining--;
-                var item = await CreateCustomParameterBindingData(attribute, entity.RowKey).ConfigureAwait(false);
-                bindingDataContent.Add(item);
-                if (countRemaining == 0)
-                {
-                    break;
-                }
-            }
-
-            return bindingDataContent.ToArray();
         }
 
         private static JObject ConvertEntityToJObject(TableEntity tableEntity)
