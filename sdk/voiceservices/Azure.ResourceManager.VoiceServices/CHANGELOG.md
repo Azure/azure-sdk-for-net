@@ -7,9 +7,14 @@ This release is first stable release for the Voice Services Management library.
 ### Breaking Changes
 
 Polishing since last public beta release:
-    - Prepended `VoiceServices` prefix to all single / simple model names.
+    - Prepended `VoiceService` prefix to all single / simple model names.
     - Optimized the name of some models
     - Remove `Operations_List` operation
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.5.0.
 
 ## 1.0.0-beta.1 (2023-02-20)
 
