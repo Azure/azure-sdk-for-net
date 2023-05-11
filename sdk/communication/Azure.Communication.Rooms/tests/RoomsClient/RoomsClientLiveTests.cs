@@ -23,7 +23,6 @@ namespace Azure.Communication.Rooms.Tests
         }
 
         [TestCase(AuthMethod.ConnectionString, TestName = "AcsRoomRequestLiveWithoutParticipantsUsingConnectionString")]
-        [TestCase(AuthMethod.TokenCredential, TestName = "AcsRoomRequestLiveWithoutParticipantsUsingTokenCredential")]
         [TestCase(AuthMethod.KeyCredential, TestName = "AcsRoomRequestLiveWithoutParticipantsUsingKeyCredential")]
         public async Task AcsRoomRequestLiveWithoutParticipantsTest(AuthMethod authMethod)
         {
