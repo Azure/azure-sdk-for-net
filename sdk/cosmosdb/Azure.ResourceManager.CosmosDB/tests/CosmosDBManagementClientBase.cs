@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         protected CosmosDBManagementClientBase(bool isAsync, RecordedTestMode? mode = default)
             : base(isAsync, mode)
         {
+            IgnoreNetworkDependencyVersions();
             JsonPathSanitizers.Add("$..primaryMasterKey");
             JsonPathSanitizers.Add("$..primaryReadonlyMasterKey");
             JsonPathSanitizers.Add("$..secondaryMasterKey");
