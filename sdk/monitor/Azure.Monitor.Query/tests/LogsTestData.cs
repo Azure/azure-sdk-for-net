@@ -94,8 +94,8 @@ namespace Azure.Monitor.Query.Tests
             {
                 _initialization ??= Task.WhenAll(
                     InitializeData(_testEnvironment.WorkspaceId, _testEnvironment.WorkspaceKey),
-                    InitializeData(_testEnvironment.SecondaryWorkspaceId, _testEnvironment.SecondaryWorkspaceKey));
-                    //InitializeStorageAccount());
+                    InitializeData(_testEnvironment.SecondaryWorkspaceId, _testEnvironment.SecondaryWorkspaceKey),
+                    InitializeStorageAccount());
             }
 
             await _initialization;
