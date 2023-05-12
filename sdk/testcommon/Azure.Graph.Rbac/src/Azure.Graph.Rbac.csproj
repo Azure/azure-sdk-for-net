@@ -10,9 +10,6 @@
     <NoWarn>$(NoWarn);AZC0001;AZC0008;AZC0012;CS1591</NoWarn>
     <ExcludeMgmtCoreShared>true</ExcludeMgmtCoreShared>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeGeneratorSharedcode>true</IncludeGeneratorSharedcode>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
-  </ItemGroup>
 </Project>
