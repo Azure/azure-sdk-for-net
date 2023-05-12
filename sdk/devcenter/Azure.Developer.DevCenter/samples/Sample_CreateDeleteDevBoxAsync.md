@@ -41,7 +41,12 @@ var content = new
     poolName = targetPoolName,
 };
 
-Operation<BinaryData> devBoxCreateOperation = await devBoxesClient.CreateDevBoxAsync(WaitUntil.Completed, targetProjectName, "MyDevBox", RequestContent.Create(content));
+Operation<BinaryData> devBoxCreateOperation = await devBoxesClient.CreateDevBoxAsync(
+    WaitUntil.Completed,
+    targetProjectName,
+    "MyDevBox",
+    RequestContent.Create(content));
+
 BinaryData devBoxData = await devBoxCreateOperation.WaitForCompletionAsync();
 JsonElement devBox = JsonDocument.Parse(devBoxData.ToStream()).RootElement;
 Console.WriteLine($"Completed provisioning for dev box with status {devBox.GetProperty("provisioningState")}.");
