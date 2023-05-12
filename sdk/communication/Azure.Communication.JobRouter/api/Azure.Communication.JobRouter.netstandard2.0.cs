@@ -243,7 +243,7 @@ namespace Azure.Communication.JobRouter
     }
     public partial class ManualReclassifyExceptionAction : Azure.Communication.JobRouter.ExceptionAction
     {
-        public ManualReclassifyExceptionAction(string queueId, int priority, System.Collections.Generic.IEnumerable<Azure.Communication.JobRouter.WorkerSelector> workerSelectors = null) { }
+        public ManualReclassifyExceptionAction() { }
         public int? Priority { get { throw null; } set { } }
         public string QueueId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Communication.JobRouter.WorkerSelector> WorkerSelectors { get { throw null; } }

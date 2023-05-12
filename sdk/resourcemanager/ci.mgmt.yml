@@ -113,13 +113,13 @@ trigger:
     - sdk/netapp/Azure.ResourceManager.NetApp
     - sdk/network/Azure.ResourceManager.Network
     - sdk/networkfunction/Azure.ResourceManager.NetworkFunction
-    - sdk/newrelic/Azure.ResourceManager.NewRelicObservability
+    - sdk/newrelicobservability/Azure.ResourceManager.NewRelicObservability
     - sdk/nginx/Azure.ResourceManager.Nginx
     - sdk/notificationhubs/Azure.ResourceManager.NotificationHubs
     - sdk/openenergyplatform/Azure.ResourceManager.EnergyServices
     - sdk/operationalinsights/Azure.ResourceManager.OperationalInsights
     - sdk/orbital/Azure.ResourceManager.Orbital
-    - sdk/paloaltonetworks/Azure.ResourceManager.PaloAltoNetworks.Ngfw
+    - sdk/paloaltonetworks.ngfw/Azure.ResourceManager.PaloAltoNetworks.Ngfw
     - sdk/peering/Azure.ResourceManager.Peering
     - sdk/policyinsights/Azure.ResourceManager.PolicyInsights
     - sdk/postgresql/Azure.ResourceManager.PostgreSql
@@ -145,6 +145,7 @@ trigger:
     - sdk/securitycenter/Azure.ResourceManager.SecurityCenter
     - sdk/securitydevops/Azure.ResourceManager.SecurityDevOps
     - sdk/securityinsights/Azure.ResourceManager.SecurityInsights
+    - sdk/selfhelp/Azure.ResourceManager.SelfHelp
     - sdk/servicebus/Azure.ResourceManager.ServiceBus
     - sdk/servicefabric/Azure.ResourceManager.ServiceFabric
     - sdk/servicefabricmanagedclusters/Azure.ResourceManager.ServiceFabricManagedClusters
@@ -283,13 +284,13 @@ pr:
     - sdk/netapp/Azure.ResourceManager.NetApp
     - sdk/network/Azure.ResourceManager.Network
     - sdk/networkfunction/Azure.ResourceManager.NetworkFunction
-    - sdk/newrelic/Azure.ResourceManager.NewRelicObservability
+    - sdk/newrelicobservability/Azure.ResourceManager.NewRelicObservability
     - sdk/nginx/Azure.ResourceManager.Nginx
     - sdk/notificationhubs/Azure.ResourceManager.NotificationHubs
     - sdk/openenergyplatform/Azure.ResourceManager.EnergyServices
     - sdk/operationalinsights/Azure.ResourceManager.OperationalInsights
     - sdk/orbital/Azure.ResourceManager.Orbital
-    - sdk/paloaltonetworks/Azure.ResourceManager.PaloAltoNetworks.Ngfw
+    - sdk/paloaltonetworks.ngfw/Azure.ResourceManager.PaloAltoNetworks.Ngfw
     - sdk/peering/Azure.ResourceManager.Peering
     - sdk/policyinsights/Azure.ResourceManager.PolicyInsights
     - sdk/postgresql/Azure.ResourceManager.PostgreSql
@@ -315,6 +316,7 @@ pr:
     - sdk/securitycenter/Azure.ResourceManager.SecurityCenter
     - sdk/securitydevops/Azure.ResourceManager.SecurityDevOps
     - sdk/securityinsights/Azure.ResourceManager.SecurityInsights
+    - sdk/selfhelp/Azure.ResourceManager.SelfHelp
     - sdk/servicebus/Azure.ResourceManager.ServiceBus
     - sdk/servicefabric/Azure.ResourceManager.ServiceFabric
     - sdk/servicefabricmanagedclusters/Azure.ResourceManager.ServiceFabricManagedClusters

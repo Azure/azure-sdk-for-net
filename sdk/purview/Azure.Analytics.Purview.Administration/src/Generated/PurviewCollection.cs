@@ -49,10 +49,19 @@ namespace Azure.Analytics.Purview.Administration
             _collectionName = collectionName;
         }
 
-        /// <summary> [Protocol Method] Get a collection. </summary>
+        /// <summary>
+        /// [Protocol Method] Get a collection
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewCollection.xml" path="doc/members/member[@name='GetCollectionAsync(RequestContext)']/*" />
         public virtual async Task<Response> GetCollectionAsync(RequestContext context = null)
         {
@@ -70,10 +79,19 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        /// <summary> [Protocol Method] Get a collection. </summary>
+        /// <summary>
+        /// [Protocol Method] Get a collection
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewCollection.xml" path="doc/members/member[@name='GetCollection(RequestContext)']/*" />
         public virtual Response GetCollection(RequestContext context = null)
         {
@@ -91,12 +109,21 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        /// <summary> [Protocol Method] Creates or updates a collection entity. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <summary>
+        /// [Protocol Method] Creates or updates a collection entity.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewCollection.xml" path="doc/members/member[@name='CreateOrUpdateCollectionAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateCollectionAsync(RequestContent content, RequestContext context = null)
         {
@@ -116,12 +143,21 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        /// <summary> [Protocol Method] Creates or updates a collection entity. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <summary>
+        /// [Protocol Method] Creates or updates a collection entity.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewCollection.xml" path="doc/members/member[@name='CreateOrUpdateCollection(RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateCollection(RequestContent content, RequestContext context = null)
         {
@@ -141,7 +177,16 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        /// <summary> [Protocol Method] Deletes a Collection entity. </summary>
+        /// <summary>
+        /// [Protocol Method] Deletes a Collection entity.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -162,7 +207,16 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        /// <summary> [Protocol Method] Deletes a Collection entity. </summary>
+        /// <summary>
+        /// [Protocol Method] Deletes a Collection entity.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -183,10 +237,19 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        /// <summary> [Protocol Method] Gets the parent name and parent friendly name chains that represent the collection path. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the parent name and parent friendly name chains that represent the collection path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewCollection.xml" path="doc/members/member[@name='GetCollectionPathAsync(RequestContext)']/*" />
         public virtual async Task<Response> GetCollectionPathAsync(RequestContext context = null)
         {
@@ -204,10 +267,19 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        /// <summary> [Protocol Method] Gets the parent name and parent friendly name chains that represent the collection path. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets the parent name and parent friendly name chains that represent the collection path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewCollection.xml" path="doc/members/member[@name='GetCollectionPath(RequestContext)']/*" />
         public virtual Response GetCollectionPath(RequestContext context = null)
         {
@@ -225,7 +297,16 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
-        /// <summary> [Protocol Method] Lists the child collections names in the collection. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the child collections names in the collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -238,7 +319,16 @@ namespace Azure.Analytics.Purview.Administration
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewCollection.GetChildCollectionNames", "value", "nextLink", context);
         }
 
-        /// <summary> [Protocol Method] Lists the child collections names in the collection. </summary>
+        /// <summary>
+        /// [Protocol Method] Lists the child collections names in the collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>

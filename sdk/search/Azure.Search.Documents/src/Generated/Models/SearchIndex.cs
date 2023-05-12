@@ -55,8 +55,9 @@ namespace Azure.Search.Documents.Indexes.Models
         /// The available derived classes include <see cref="BM25Similarity"/> and <see cref="ClassicSimilarity"/>.
         /// </param>
         /// <param name="semanticSettings"> Defines parameters for a search index that influence semantic capabilities. </param>
+        /// <param name="vectorSearch"> Contains configuration options related to vector search. </param>
         /// <param name="etag"> The ETag of the index. </param>
-        internal SearchIndex(string name, IList<SearchField> fields, IList<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IList<SearchSuggester> suggesters, IList<LexicalAnalyzer> analyzers, IList<LexicalTokenizer> tokenizers, IList<TokenFilter> tokenFilters, IList<CharFilter> charFilters, IList<LexicalNormalizer> normalizers, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSettings semanticSettings, string etag)
+        internal SearchIndex(string name, IList<SearchField> fields, IList<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IList<SearchSuggester> suggesters, IList<LexicalAnalyzer> analyzers, IList<LexicalTokenizer> tokenizers, IList<TokenFilter> tokenFilters, IList<CharFilter> charFilters, IList<LexicalNormalizer> normalizers, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSettings semanticSettings, VectorSearch vectorSearch, string etag)
         {
             Name = name;
             _fields = fields;
@@ -72,6 +73,7 @@ namespace Azure.Search.Documents.Indexes.Models
             EncryptionKey = encryptionKey;
             Similarity = similarity;
             SemanticSettings = semanticSettings;
+            VectorSearch = vectorSearch;
             _etag = etag;
         }
         /// <summary> The name of the scoring profile to use if none is specified in the query. If this property is not set and no scoring profile is specified in the query, then default scoring (tf-idf) will be used. </summary>
@@ -88,5 +90,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public SimilarityAlgorithm Similarity { get; set; }
         /// <summary> Defines parameters for a search index that influence semantic capabilities. </summary>
         public SemanticSettings SemanticSettings { get; set; }
+        /// <summary> Contains configuration options related to vector search. </summary>
+        public VectorSearch VectorSearch { get; set; }
     }
 }

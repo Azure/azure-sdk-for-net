@@ -29,7 +29,7 @@ namespace Azure.Communication.CallAutomation
         /// This is blocking call. Wait for <see cref="PlayEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
-        /// <returns>Returns <see cref="PlayEventResult"/> which contains either <see cref="PlayCompletedEventData"/> event or <see cref="PlayFailedEventData"/> event.</returns>
+        /// <returns>Returns <see cref="PlayEventResult"/> which contains either <see cref="PlayCompleted"/> event or <see cref="PlayFailed"/> event.</returns>
         public PlayEventResult WaitForEventProcessor(CancellationToken cancellationToken = default)
         {
             if (_evHandler is null)
@@ -40,8 +40,8 @@ namespace Azure.Communication.CallAutomation
             var returnedEvent = _evHandler.WaitForEventProcessor(filter
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
-                && (filter.GetType() == typeof(PlayCompletedEventData)
-                || filter.GetType() == typeof(PlayFailedEventData)),
+                && (filter.GetType() == typeof(PlayCompleted)
+                || filter.GetType() == typeof(PlayFailed)),
                 cancellationToken);
 
             return SetReturnedEvent(returnedEvent);
@@ -51,7 +51,7 @@ namespace Azure.Communication.CallAutomation
         /// Wait for <see cref="PlayEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
-        /// <returns>Returns <see cref="PlayEventResult"/> which contains either <see cref="PlayCompletedEventData"/> event or <see cref="PlayFailedEventData"/> event.</returns>
+        /// <returns>Returns <see cref="PlayEventResult"/> which contains either <see cref="PlayCompleted"/> event or <see cref="PlayFailed"/> event.</returns>
         public async Task<PlayEventResult> WaitForEventProcessorAsync(CancellationToken cancellationToken = default)
         {
             if (_evHandler is null)
@@ -62,23 +62,23 @@ namespace Azure.Communication.CallAutomation
             var returnedEvent = await _evHandler.WaitForEventProcessorAsync(filter
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
-                && (filter.GetType() == typeof(PlayCompletedEventData)
-                || filter.GetType() == typeof(PlayFailedEventData)),
+                && (filter.GetType() == typeof(PlayCompleted)
+                || filter.GetType() == typeof(PlayFailed)),
                 cancellationToken).ConfigureAwait(false);
 
             return SetReturnedEvent(returnedEvent);
         }
 
-        private static PlayEventResult SetReturnedEvent(CallAutomationEventData returnedEvent)
+        private static PlayEventResult SetReturnedEvent(CallAutomationEventBase returnedEvent)
         {
             PlayEventResult result = default;
             switch (returnedEvent)
             {
-                case PlayCompletedEventData:
-                    result = new PlayEventResult(true, (PlayCompletedEventData)returnedEvent, null);
+                case PlayCompleted:
+                    result = new PlayEventResult(true, (PlayCompleted)returnedEvent, null);
                     break;
-                case PlayFailedEventData:
-                    result = new PlayEventResult(false, null, (PlayFailedEventData)returnedEvent);
+                case PlayFailed:
+                    result = new PlayEventResult(false, null, (PlayFailed)returnedEvent);
                     break;
                 default:
                     throw new NotSupportedException(returnedEvent.GetType().Name);

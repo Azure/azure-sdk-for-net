@@ -12,7 +12,6 @@ input-file:
 generation1-convenience-client: true
 modelerfour:
     lenient-model-deduplication: true
-    seal-single-value-enum-by-default: true
 ```
 
 ### Remove metadata operations
