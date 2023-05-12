@@ -43,7 +43,7 @@ namespace Azure.Developer.DevCenter.Tests
 
                 if (!catalogResponseData.TryGetProperty("name", out var catalogNameJson))
                 {
-                    Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                    FailDueToMissingProperty("name");
                 }
 
                 string catalogName = catalogNameJson.ToString();
@@ -61,7 +61,7 @@ namespace Azure.Developer.DevCenter.Tests
 
             if (!getCatalogData.TryGetProperty("name", out var catalogNameJson))
             {
-                Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                FailDueToMissingProperty("name");
             }
 
             string catalogName = catalogNameJson.ToString();
@@ -79,7 +79,7 @@ namespace Azure.Developer.DevCenter.Tests
 
                 if (!envTypeResponseData.TryGetProperty("name", out var envTypeNameJson))
                 {
-                    Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                    FailDueToMissingProperty("name");
                 }
 
                 string envTypeName = envTypeNameJson.ToString();
@@ -100,7 +100,7 @@ namespace Azure.Developer.DevCenter.Tests
 
                 if (!envDefinitionsResponseData.TryGetProperty("name", out var envDefinitionsNameJson))
                 {
-                    Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                    FailDueToMissingProperty("name");
                 }
 
                 string envDefinitionsName = envDefinitionsNameJson.ToString();
@@ -121,7 +121,7 @@ namespace Azure.Developer.DevCenter.Tests
 
                 if (!envDefinitionsResponseData.TryGetProperty("name", out var envDefinitionsNameJson))
                 {
-                    Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                    FailDueToMissingProperty("name");
                 }
 
                 string envDefinitionsName = envDefinitionsNameJson.ToString();
@@ -141,7 +141,7 @@ namespace Azure.Developer.DevCenter.Tests
 
             if (!getEnvData.TryGetProperty("name", out var envNameJson))
             {
-                Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                FailDueToMissingProperty("name");
             }
 
             string envName = envNameJson.ToString();
@@ -192,7 +192,7 @@ namespace Azure.Developer.DevCenter.Tests
 
                 if (!environmentsResponseData.TryGetProperty("name", out var environmentNameJson))
                 {
-                    Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                    FailDueToMissingProperty("name");
                 }
 
                 string envName = environmentNameJson.ToString();
@@ -212,7 +212,7 @@ namespace Azure.Developer.DevCenter.Tests
 
                 if (!environmentsResponseData.TryGetProperty("name", out var environmentNameJson))
                 {
-                    Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                    FailDueToMissingProperty("name");
                 }
 
                 string envName = environmentNameJson.ToString();
@@ -232,7 +232,7 @@ namespace Azure.Developer.DevCenter.Tests
 
                 if (!envDefinitionsResponseData.TryGetProperty("name", out var envDefinitionsNameJson))
                 {
-                    Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                    FailDueToMissingProperty("name");
                 }
 
                 envDefinitionsName = envDefinitionsNameJson.ToString();
@@ -259,7 +259,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.IsTrue(provisioningState.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
         }
 
-        public async Task DeleteEnvironmentAsync()
+        private async Task DeleteEnvironmentAsync()
         {
             Operation environmentDeleteOperation = await _environmentsClient.DeleteEnvironmentAsync(
                 WaitUntil.Completed,
@@ -269,6 +269,11 @@ namespace Azure.Developer.DevCenter.Tests
 
             await environmentDeleteOperation.WaitForCompletionResponseAsync();
             Console.WriteLine($"Completed environment deletion.");
+        }
+
+        private void FailDueToMissingProperty(string propertyName)
+        {
+            Assert.Fail($"The JSON response received from the service does not include the necessary property: {propertyName}");
         }
     }
 }

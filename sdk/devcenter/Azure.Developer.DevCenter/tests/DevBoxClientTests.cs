@@ -63,7 +63,7 @@ namespace Azure.Developer.DevCenter.Tests
 
             if (!devBox.TryGetProperty("status", out var devBoxStatusJson))
             {
-                Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                FailDueToMissingProperty("status");
             }
 
             string devBoxStatus = devBoxStatusJson.ToString();
@@ -85,7 +85,7 @@ namespace Azure.Developer.DevCenter.Tests
 
             if (!devBox.TryGetProperty("status", out var devBoxStatusJson))
             {
-                Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                FailDueToMissingProperty("status");
             }
 
             string devBoxStatus = devBoxStatusJson.ToString();
@@ -104,7 +104,7 @@ namespace Azure.Developer.DevCenter.Tests
 
             if (!remoteConnectionData.TryGetProperty("webUrl", out var webUrlJson))
             {
-                Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                FailDueToMissingProperty("webUrl");
             }
 
             string uriString = webUrlJson.ToString();
@@ -127,7 +127,7 @@ namespace Azure.Developer.DevCenter.Tests
 
             if (!devBoxResponseData.TryGetProperty("name", out var devBoxNameJson))
             {
-                Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                FailDueToMissingProperty("name");
             }
 
             string devBoxName = devBoxNameJson.ToString();
@@ -146,7 +146,7 @@ namespace Azure.Developer.DevCenter.Tests
 
                 if (!devBoxResponseData.TryGetProperty("name", out var devBoxNameJson))
                 {
-                    Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                    FailDueToMissingProperty("name");
                 }
 
                 string devBoxName = devBoxNameJson.ToString();
@@ -168,7 +168,7 @@ namespace Azure.Developer.DevCenter.Tests
 
                 if (!devBoxResponseData.TryGetProperty("name", out var devBoxNameJson))
                 {
-                    Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                    FailDueToMissingProperty("name");
                 }
 
                 string devBoxName = devBoxNameJson.ToString();
@@ -190,7 +190,7 @@ namespace Azure.Developer.DevCenter.Tests
 
                 if (!devBoxResponseData.TryGetProperty("name", out var devBoxNameJson))
                 {
-                    Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                    FailDueToMissingProperty("name");
                 }
 
                 string devBoxName = devBoxNameJson.ToString();
@@ -208,7 +208,7 @@ namespace Azure.Developer.DevCenter.Tests
 
             if (!getPoolData.TryGetProperty("name", out var poolNameJson))
             {
-                Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                FailDueToMissingProperty("name");
             }
 
             string poolName = poolNameJson.ToString();
@@ -226,7 +226,7 @@ namespace Azure.Developer.DevCenter.Tests
 
                 if (!getPoolsResponseData.TryGetProperty("name", out var poolNameJson))
                 {
-                    Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                    FailDueToMissingProperty("name");
                 }
 
                 string poolName = poolNameJson.ToString();
@@ -247,7 +247,7 @@ namespace Azure.Developer.DevCenter.Tests
 
                 if (!getSchedulesResponseData.TryGetProperty("name", out var scheduleNameJson))
                 {
-                    Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                    FailDueToMissingProperty("name");
                 }
 
                 string scheduleName = scheduleNameJson.ToString();
@@ -269,7 +269,7 @@ namespace Azure.Developer.DevCenter.Tests
 
             if (!getScheduleData.TryGetProperty("name", out var scheduleNameJson))
             {
-                Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                FailDueToMissingProperty("name");
             }
 
             string scheduleName = scheduleNameJson.ToString();
@@ -287,7 +287,7 @@ namespace Azure.Developer.DevCenter.Tests
 
                 if (!getActionsResponseData.TryGetProperty("name", out var actionNameJson))
                 {
-                    Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                    FailDueToMissingProperty("name");
                 }
 
                 string actionName = actionNameJson.ToString();
@@ -309,7 +309,7 @@ namespace Azure.Developer.DevCenter.Tests
 
             if (!getActionData.TryGetProperty("name", out var actionNameJson))
             {
-                Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                FailDueToMissingProperty("name");
             }
 
             string actionName = actionNameJson.ToString();
@@ -343,12 +343,12 @@ namespace Azure.Developer.DevCenter.Tests
             JsonElement delayActionData = JsonDocument.Parse(delayActionResponse.ContentStream).RootElement;
             if (!delayActionData.TryGetProperty("next", out var nextActionTimeJson))
             {
-                Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                FailDueToMissingProperty("next");
             }
 
             if (!nextActionTimeJson.TryGetProperty("scheduledTime", out var scheduledTimeJson))
             {
-                Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                FailDueToMissingProperty("scheduledTime");
             }
 
             Assert.AreEqual(time, scheduledTimeJson.ToString());
@@ -368,7 +368,7 @@ namespace Azure.Developer.DevCenter.Tests
 
                 if (!getActionsResponseData.TryGetProperty("result", out var actionResultJson))
                 {
-                    Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                    FailDueToMissingProperty("result");
                 }
 
                 string actionResultName = actionResultJson.ToString();
@@ -400,6 +400,11 @@ namespace Azure.Developer.DevCenter.Tests
             // Both states indicate successful provisioning
             bool devBoxProvisionSucceeded = devBoxProvisioningState.Equals("Succeeded", StringComparison.OrdinalIgnoreCase) || devBoxProvisioningState.Equals("ProvisionedWithWarning", StringComparison.OrdinalIgnoreCase);
             Assert.IsTrue(devBoxProvisionSucceeded);
+        }
+
+        private void FailDueToMissingProperty(string propertyName)
+        {
+            Assert.Fail($"The JSON response received from the service does not include the necessary property: {propertyName}");
         }
     }
 }

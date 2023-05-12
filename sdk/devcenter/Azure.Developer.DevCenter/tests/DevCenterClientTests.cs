@@ -40,7 +40,7 @@ namespace Azure.Developer.DevCenter.Tests
 
                 if (!projectResponseData.TryGetProperty("name", out var projectNameJson))
                 {
-                    Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                    Assert.Fail($"The JSON response received from the service does not include the necessary property: {"name"}");
                 }
 
                 string projectName = projectNameJson.ToString();
@@ -59,7 +59,7 @@ namespace Azure.Developer.DevCenter.Tests
 
             if (!getProjectData.TryGetProperty("name", out var projectNameJson))
             {
-                Assert.Fail("The JSON response received from the service does not include the necessary property.");
+                Assert.Fail($"The JSON response received from the service does not include the necessary property: {"name"}");
             }
 
             string projectName = projectNameJson.ToString();
