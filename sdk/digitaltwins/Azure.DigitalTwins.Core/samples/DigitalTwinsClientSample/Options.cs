@@ -25,5 +25,8 @@ namespace Azure.DigitalTwins.Core.Samples
 
         [Option('c', "storageAccountContainerEndpoint", Required = true, HelpText = "Storage account container endpoint with permissions set up")]
         public string StorageAccountContainerEndpoint { get; set; }
+
+        [Option('c', "sampleInputBlob.ndjson", Required = true, HelpText = "Blob file of import job data within the storage accoutn container")]
+        public string InputBlobName { get; set; }
     }
 }
