@@ -148,6 +148,6 @@ resource postgresAdmin 'Microsoft.DBforPostgreSQL/flexibleServers/administrators
 
 output AZURE_KEYVAULT_URL string = keyVault.properties.vaultUri
 output BLOB_STORAGE_ENDPOINT string = blobAcount.properties.primaryEndpoints.blob
-output POSTGRES_FQDN string = postgresServer.properties.fullyQualifiedDomainName
-output POSTGRES_NAME string = postgresServer.name
-output POSTGRES_SERVER_ADMIN string = postgresAdmin.properties.principalName
+output EXTENSIONS_POSTGRES_FQDN string = postgresServer.properties.fullyQualifiedDomainName
+output EXTENSIONS_POSTGRES_NAME string = postgresServer.name
+output EXTENSIONS_POSTGRES_SERVER_ADMIN string = postgresAdmin.properties.principalName
