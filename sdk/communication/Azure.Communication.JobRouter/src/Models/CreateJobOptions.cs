@@ -72,7 +72,7 @@ namespace Azure.Communication.JobRouter
 #pragma warning restore CA2227 // Collection properties should be read only
 
         /// <summary>
-        /// A flag indicating this job is ready for being matched with workers.
+        /// A flag indicating this job is not ready for being matched with workers.
         /// When set to true, job matching will not be started. If set to false, job matching will start automatically
         /// </summary>
         public bool? UnavailableForMatching { get; set; }
