@@ -687,43 +687,45 @@ namespace Azure.Monitor.Query.Tests
             TestContext.Progress.WriteLine("Test start");
             var client = CreateClient();
 
-            var blobUri = "https://" + TestEnvironment.StorageAccountName + ".blob.core.windows.net";
-            var blobServiceClient = new BlobServiceClient(
-                    new Uri(blobUri),
-                    TestEnvironment.Credential)
-            ;
+            //var blobUri = "https://" + TestEnvironment.StorageAccountName + ".blob.core.windows.net";
+            //var blobServiceClient = new BlobServiceClient(
+            //        new Uri(blobUri),
+            //        TestEnvironment.Credential)
+            //;
 
-            //Create a unique name for the container
-            string containerName = "quickstartblobs" + Guid.NewGuid().ToString();
+            ////Create a unique name for the container
+            //string containerName = "quickstartblobs" + Guid.NewGuid().ToString();
 
-            // Create the container and return a container client object
-            BlobContainerClient containerClient = await blobServiceClient.CreateBlobContainerAsync(containerName);
+            //// Create the container and return a container client object
+            //BlobContainerClient containerClient = await blobServiceClient.CreateBlobContainerAsync(containerName);
 
-            TestContext.Progress.WriteLine("client created");
-            //TODO
-            while (true)
-            {
-                TestContext.Progress.WriteLine("Query storage account not completed");
-                var result = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId), "search *", _logsTestData.DataTimeRange).ConfigureAwait(false);
-                if (result.Value.Table.Rows.Count > 0 && result.Value.Table.Columns.Count > 0)
-                {
-                    // Make sure StorageAccount set-up is complete and data is there before beginning testing
-                    TestContext.Progress.WriteLine("Storage Account created successfully.");
-                    break;
-                }
-                else
-                {
-                    // Delay for 30 seconds to give time for StorageAccount to initialize
-                    TestContext.Progress.WriteLine("Delay storage account");
-                    TestContext.Progress.WriteLine("Rows " + result.Value.Table.Rows.Count + " Columns " + result.Value.Table.Columns.Count);
-                    TestContext.Progress.WriteLine("DateTime now" + DateTime.Now);
-                    await Task.Delay(TimeSpan.FromSeconds(30));
-                }
-            }
+            //TestContext.Progress.WriteLine("client created");
+            ////TODO
+            //while (true)
+            //{
+            //    TestContext.Progress.WriteLine("Query storage account not completed");
+            //    var result = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId), "search *", _logsTestData.DataTimeRange).ConfigureAwait(false);
+            //    if (result.Value.Table.Rows.Count > 0 && result.Value.Table.Columns.Count > 0)
+            //    {
+            //        // Make sure StorageAccount set-up is complete and data is there before beginning testing
+            //        TestContext.Progress.WriteLine("Storage Account created successfully.");
+            //        break;
+            //    }
+            //    else
+            //    {
+            //        // Delay for 30 seconds to give time for StorageAccount to initialize
+            //        TestContext.Progress.WriteLine("Delay storage account");
+            //        TestContext.Progress.WriteLine("Rows " + result.Value.Table.Rows.Count + " Columns " + result.Value.Table.Columns.Count);
+            //        TestContext.Progress.WriteLine("DateTime now" + DateTime.Now);
+            //        await Task.Delay(TimeSpan.FromSeconds(30));
+            //    }
+            //}
 
-            var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
-                "search *",
-                _logsTestData.DataTimeRange);
+            ////var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
+            ////    "search *",
+            ////    _logsTestData.DataTimeRange);
+
+            var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.ResourceId), "search *", _logsTestData.DataTimeRange).ConfigureAwait(false);
 
             Assert.AreEqual(LogsQueryResultStatus.Success, results.Value.Status);
             var resultTable = results.Value.Table;
