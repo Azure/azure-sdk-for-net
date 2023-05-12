@@ -97,8 +97,8 @@ namespace Azure.Monitor.Query.Tests
                 TestContext.Progress.WriteLine("Initialize lock");
                 _initialization ??= Task.WhenAll(
                     InitializeData(_testEnvironment.WorkspaceId, _testEnvironment.WorkspaceKey),
-                    InitializeData(_testEnvironment.SecondaryWorkspaceId, _testEnvironment.SecondaryWorkspaceKey),
-                    InitializeStorageAccount());
+                    InitializeData(_testEnvironment.SecondaryWorkspaceId, _testEnvironment.SecondaryWorkspaceKey));
+                    //InitializeStorageAccount());
             }
 
             await _initialization;

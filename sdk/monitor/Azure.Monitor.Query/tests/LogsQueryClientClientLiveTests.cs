@@ -25,12 +25,14 @@ namespace Azure.Monitor.Query.Tests
         [SetUp]
         public async Task SetUp()
         {
+            TestContext.Progress.WriteLine("setup");
             _logsTestData = new LogsTestData(this);
             await _logsTestData.InitializeAsync();
         }
 
         private LogsQueryClient CreateClient()
         {
+            TestContext.Progress.WriteLine("create client start");
             return InstrumentClient(new LogsQueryClient(
                 TestEnvironment.LogsEndpoint,
                 TestEnvironment.Credential,
@@ -684,6 +686,24 @@ namespace Azure.Monitor.Query.Tests
             var client = CreateClient();
 
             TestContext.Progress.WriteLine("client created");
+            //TODO
+            while (true)
+            {
+                TestContext.Progress.WriteLine("Query storage account not completed");
+                var result = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId), "search *", _logsTestData.DataTimeRange).ConfigureAwait(false);
+                if (result.Value.Table.Rows.Count > 0 && result.Value.Table.Columns.Count > 0)
+                {
+                    // Make sure StorageAccount set-up is complete and data is there before beginning testing
+                    TestContext.Progress.WriteLine("Storage Account created successfully.");
+                    break;
+                }
+                else
+                {
+                    // Delay for 30 seconds to give time for StorageAccount to initialize
+                    TestContext.Progress.WriteLine("Delay storage account");
+                    await Task.Delay(TimeSpan.FromSeconds(30));
+                }
+            }
 
             var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
                 "search *",
