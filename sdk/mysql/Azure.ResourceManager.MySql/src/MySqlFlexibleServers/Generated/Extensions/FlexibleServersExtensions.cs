@@ -439,11 +439,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="content"> The required parameters for checking if server name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<MySqlFlexibleServerNameAvailabilityResult>> ExecuteCheckNameAvailabilityWithoutLocationAsync(this SubscriptionResource subscriptionResource, MySqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<MySqlFlexibleServerNameAvailabilityResult>> CheckMySqlFlexibleServerNameAvailabilityWithoutLocationAsync(this SubscriptionResource subscriptionResource, MySqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).ExecuteCheckNameAvailabilityWithoutLocationAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckMySqlFlexibleServerNameAvailabilityWithoutLocationAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -463,11 +463,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="content"> The required parameters for checking if server name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<MySqlFlexibleServerNameAvailabilityResult> ExecuteCheckNameAvailabilityWithoutLocation(this SubscriptionResource subscriptionResource, MySqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<MySqlFlexibleServerNameAvailabilityResult> CheckMySqlFlexibleServerNameAvailabilityWithoutLocation(this SubscriptionResource subscriptionResource, MySqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).ExecuteCheckNameAvailabilityWithoutLocation(content, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckMySqlFlexibleServerNameAvailabilityWithoutLocation(content, cancellationToken);
         }
 
         /// <summary>

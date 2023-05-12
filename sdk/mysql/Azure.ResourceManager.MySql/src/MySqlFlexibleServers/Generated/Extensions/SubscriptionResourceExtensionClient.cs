@@ -292,9 +292,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </summary>
         /// <param name="content"> The required parameters for checking if server name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MySqlFlexibleServerNameAvailabilityResult>> ExecuteCheckNameAvailabilityWithoutLocationAsync(MySqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MySqlFlexibleServerNameAvailabilityResult>> CheckMySqlFlexibleServerNameAvailabilityWithoutLocationAsync(MySqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = CheckNameAvailabilityWithoutLocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteCheckNameAvailabilityWithoutLocation");
+            using var scope = CheckNameAvailabilityWithoutLocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckMySqlFlexibleServerNameAvailabilityWithoutLocation");
             scope.Start();
             try
             {
@@ -323,9 +323,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </summary>
         /// <param name="content"> The required parameters for checking if server name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MySqlFlexibleServerNameAvailabilityResult> ExecuteCheckNameAvailabilityWithoutLocation(MySqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<MySqlFlexibleServerNameAvailabilityResult> CheckMySqlFlexibleServerNameAvailabilityWithoutLocation(MySqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = CheckNameAvailabilityWithoutLocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteCheckNameAvailabilityWithoutLocation");
+            using var scope = CheckNameAvailabilityWithoutLocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckMySqlFlexibleServerNameAvailabilityWithoutLocation");
             scope.Start();
             try
             {

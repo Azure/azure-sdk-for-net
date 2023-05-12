@@ -301,6 +301,7 @@ rename-mapping:
 
 override-operation-name:
   CheckNameAvailability_Execute: CheckMySqlFlexibleServerNameAvailability
+  CheckNameAvailabilityWithoutLocation_Execute: CheckMySqlFlexibleServerNameAvailabilityWithoutLocation
   Configurations_BatchUpdate: UpdateConfigurations
   BackupAndExport_ValidateBackup: ValidateBackup
 
