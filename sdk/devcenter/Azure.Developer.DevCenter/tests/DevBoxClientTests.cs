@@ -29,19 +29,20 @@ namespace Azure.Developer.DevCenter.Tests
         }
 
         [SetUp]
-        public void SetUp()
+        public async Task SetUpAsync()
         {
             _devBoxesClient = GetDevBoxesClient();
+            await SetUpDevBoxAsync();
         }
 
-        [OneTimeTearDown]
-        public async Task OneTimeTearDown()
+        [TearDown]
+        public async Task TearDownAsync()
         {
             Operation devBoxDeleteOperation = await _devBoxesClient.DeleteDevBoxAsync(
-                WaitUntil.Completed,
-                TestEnvironment.ProjectName,
-                DevBoxName,
-                userId: TestEnvironment.UserId);
+               WaitUntil.Completed,
+               TestEnvironment.ProjectName,
+               DevBoxName,
+               userId: TestEnvironment.UserId);
 
             await devBoxDeleteOperation.WaitForCompletionResponseAsync();
             Console.WriteLine($"Completed dev box deletion.");
@@ -50,8 +51,6 @@ namespace Azure.Developer.DevCenter.Tests
         [RecordedTest]
         public async Task StartDevBoxSucceeds()
         {
-            await SetUpDevBoxAsync();
-
             // Start the dev box
             Operation<BinaryData> devBoxStartOperation = await _devBoxesClient.StartDevBoxAsync(
                 WaitUntil.Completed,
@@ -74,8 +73,6 @@ namespace Azure.Developer.DevCenter.Tests
         [RecordedTest]
         public async Task StopDevBoxSucceeds()
         {
-            await SetUpDevBoxAsync();
-
             // Stop the dev box
             Operation<BinaryData> devBoxStopOperation = await _devBoxesClient.StopDevBoxAsync(
                 WaitUntil.Completed,
@@ -98,8 +95,6 @@ namespace Azure.Developer.DevCenter.Tests
         [RecordedTest]
         public async Task GetRemoteConnectionSucceeds()
         {
-            await SetUpDevBoxAsync();
-
             Response remoteConnectionResponse = await _devBoxesClient.GetRemoteConnectionAsync(
                 TestEnvironment.ProjectName,
                 DevBoxName,
@@ -123,8 +118,6 @@ namespace Azure.Developer.DevCenter.Tests
         [RecordedTest]
         public async Task GetDevBoxSucceeds()
         {
-            await SetUpDevBoxAsync();
-
             Response devBoxResponse = await _devBoxesClient.GetDevBoxAsync(
                TestEnvironment.ProjectName,
                DevBoxName,
@@ -144,7 +137,6 @@ namespace Azure.Developer.DevCenter.Tests
         [RecordedTest]
         public async Task GetDevBoxesSucceeds()
         {
-            await SetUpDevBoxAsync();
             int numberOfReturnedDevBoxes = 0;
 
             await foreach (BinaryData devBoxData in _devBoxesClient.GetDevBoxesAsync(TestEnvironment.ProjectName))
@@ -167,7 +159,6 @@ namespace Azure.Developer.DevCenter.Tests
         [RecordedTest]
         public async Task GetAllDevBoxesSucceeds()
         {
-            await SetUpDevBoxAsync();
             int numberOfReturnedDevBoxes = 0;
 
             await foreach (BinaryData devBoxData in _devBoxesClient.GetAllDevBoxesAsync())
@@ -190,7 +181,6 @@ namespace Azure.Developer.DevCenter.Tests
         [RecordedTest]
         public async Task GetAllDevBoxesByUserSucceeds()
         {
-            await SetUpDevBoxAsync();
             int numberOfReturnedDevBoxes = 0;
 
             await foreach (BinaryData devBoxData in _devBoxesClient.GetAllDevBoxesByUserAsync(userId: TestEnvironment.UserId))
