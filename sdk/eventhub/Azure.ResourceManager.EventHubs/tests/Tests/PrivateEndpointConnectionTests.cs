@@ -58,7 +58,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.AreEqual(EventHubsPrivateLinkConnectionStatus.Approved, privateEndpointConnection.Data.ConnectionState.Status);
         }
 
-        [Ignore("Depend on Network which will block the pipeline to release new Network package, disable this case temporary")]
         [RecordedTest]
         public async Task GetAllPrivateEndpointConnection()
         {
@@ -70,7 +69,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
             VerifyPrivateEndpointConnections(privateEndpoint1.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnections1[0]);
         }
 
-        [Ignore("Depend on Network which will block the pipeline to release new Network package, disable this case temporary")]
         [RecordedTest]
         public async Task PrivateEndpointConnectionDelete()
         {
@@ -110,20 +108,9 @@ namespace Azure.ResourceManager.EventHubs.Tests
             vnet.DhcpOptionsDnsServers.Add("10.1.2.4");
             //VirtualNetworkResource virtualNetwork = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet)).Value;
             ResourceIdentifier subnetID;
-            if (Mode == RecordedTestMode.Playback)
-            {
-                subnetID = SubnetResource.CreateResourceIdentifier(_resourceGroup.Id.SubscriptionId, _resourceGroup.Id.Name, vnetName, "default");
-            }
-            else
-            {
-                using (Recording.DisableRecording())
-                {
-                    VirtualNetworkResource vnetResource = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet)).Value;
-                    var subnetCollection = vnetResource.GetSubnets();
-                    //SubnetResource subnetResource = (await subnetCollection.CreateOrUpdateAsync(WaitUntil.Completed, subnetName2, subnetData)).Value;
-                    subnetID = vnetResource.Data.Subnets[0].Id;
-                }
-            };
+            VirtualNetworkResource vnetResource = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet)).Value;
+            var subnetCollection = vnetResource.GetSubnets();
+            subnetID = vnetResource.Data.Subnets[0].Id;
             //var name = Recording.GenerateAssetName("pe-");
             var privateEndpointData = new PrivateEndpointData
             {
