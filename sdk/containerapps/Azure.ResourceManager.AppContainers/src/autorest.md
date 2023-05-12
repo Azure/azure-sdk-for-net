@@ -210,15 +210,13 @@ rename-mapping:
   TriggerType: ContainerAppJobTriggerType
   JobTemplate: ContainerAppJobTemplate
   JobProvisioningState: ContainerAppJobProvisioningState
-  JobPatch: ContainerAppJobPatch
   JobPatchPropertiesProperties: ContainerAppJobPatchPropertiesProperties
   JobExecution: ContainerAppJobExecution
   JobExecutionBase: ContainerAppJobExecutionBase
   JobExecutionTemplate: ContainerAppJobExecutionTemplate
   JobConfiguration: ContainerAppJobConfiguration
-  JobCollection: ContainerAppJobCollection
-  JobData: ContainerAppJobData
-  JobResource: ContainerAppJobResource
+  Job: ContainerAppJob
+  JobsCollection: ContainerAppJobsCollection
   ManagedCertificate: ContainerAppManagedCertificate
 
 request-path-to-resource-name:

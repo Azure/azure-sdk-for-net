@@ -17,12 +17,12 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppContainers.Samples
 {
-    public partial class Sample_JobResource
+    public partial class Sample_ContainerAppJobResource
     {
         // List Container Apps Jobs by subscription
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetJobs_ListContainerAppsJobsBySubscription()
+        public async Task GetContainerAppJobs_ListContainerAppsJobsBySubscription()
         {
             // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/Jobs_ListBySubscription.json
             // this example is just showing the usage of "Jobs_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.AppContainers.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (JobResource item in subscriptionResource.GetJobsAsync())
+            await foreach (ContainerAppJobResource item in subscriptionResource.GetContainerAppJobsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                JobData resourceData = item.Data;
+                ContainerAppJobData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -64,20 +64,20 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this JobResource created on azure
-            // for more information of creating JobResource, please refer to the document of JobResource
+            // this example assumes you already have this ContainerAppJobResource created on azure
+            // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
             string jobName = "testcontainerAppsJob0";
-            ResourceIdentifier jobResourceId = JobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            JobResource job = client.GetJobResource(jobResourceId);
+            ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
             // invoke the operation
-            JobResource result = await job.GetAsync();
+            ContainerAppJobResource result = await containerAppJob.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            JobData resourceData = result.Data;
+            ContainerAppJobData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -95,16 +95,16 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this JobResource created on azure
-            // for more information of creating JobResource, please refer to the document of JobResource
+            // this example assumes you already have this ContainerAppJobResource created on azure
+            // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
             string jobName = "testWorkerContainerAppsJob0";
-            ResourceIdentifier jobResourceId = JobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            JobResource job = client.GetJobResource(jobResourceId);
+            ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
             // invoke the operation
-            await job.DeleteAsync(WaitUntil.Completed);
+            await containerAppJob.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -122,16 +122,16 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this JobResource created on azure
-            // for more information of creating JobResource, please refer to the document of JobResource
+            // this example assumes you already have this ContainerAppJobResource created on azure
+            // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
             string jobName = "testcontainerAppsJob0";
-            ResourceIdentifier jobResourceId = JobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            JobResource job = client.GetJobResource(jobResourceId);
+            ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
             // invoke the operation
-            JobPatch patch = new JobPatch()
+            ContainerAppJobPatch patch = new ContainerAppJobPatch()
             {
                 Properties = new ContainerAppJobPatchPropertiesProperties()
                 {
@@ -195,12 +195,12 @@ Name = "testcontainerAppsJob0",
                     },
                 },
             };
-            ArmOperation<JobResource> lro = await job.UpdateAsync(WaitUntil.Completed, patch);
-            JobResource result = lro.Value;
+            ArmOperation<ContainerAppJobResource> lro = await containerAppJob.UpdateAsync(WaitUntil.Completed, patch);
+            ContainerAppJobResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            JobData resourceData = result.Data;
+            ContainerAppJobData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -218,13 +218,13 @@ Name = "testcontainerAppsJob0",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this JobResource created on azure
-            // for more information of creating JobResource, please refer to the document of JobResource
+            // this example assumes you already have this ContainerAppJobResource created on azure
+            // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
             string jobName = "testcontainerAppsJob0";
-            ResourceIdentifier jobResourceId = JobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            JobResource job = client.GetJobResource(jobResourceId);
+            ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
             // invoke the operation
             ContainerAppJobExecutionTemplate template = new ContainerAppJobExecutionTemplate()
@@ -264,7 +264,7 @@ Memory = "100Mi",
 }
 },
             };
-            ArmOperation<ContainerAppJobExecutionBase> lro = await job.StartAsync(WaitUntil.Completed, template);
+            ArmOperation<ContainerAppJobExecutionBase> lro = await containerAppJob.StartAsync(WaitUntil.Completed, template);
             ContainerAppJobExecutionBase result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -283,17 +283,17 @@ Memory = "100Mi",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this JobResource created on azure
-            // for more information of creating JobResource, please refer to the document of JobResource
+            // this example assumes you already have this ContainerAppJobResource created on azure
+            // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
             string jobName = "testcontainerAppsJob0";
-            ResourceIdentifier jobResourceId = JobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            JobResource job = client.GetJobResource(jobResourceId);
+            ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
             // invoke the operation
             string jobExecutionName = "jobExecution1";
-            await job.StopExecutionAsync(WaitUntil.Completed, jobExecutionName);
+            await containerAppJob.StopExecutionAsync(WaitUntil.Completed, jobExecutionName);
 
             Console.WriteLine($"Succeeded");
         }
@@ -311,13 +311,13 @@ Memory = "100Mi",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this JobResource created on azure
-            // for more information of creating JobResource, please refer to the document of JobResource
+            // this example assumes you already have this ContainerAppJobResource created on azure
+            // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
             string jobName = "testcontainerAppsJob0";
-            ResourceIdentifier jobResourceId = JobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            JobResource job = client.GetJobResource(jobResourceId);
+            ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
             // invoke the operation
             JobExecutionNamesCollection jobExecutionName = new JobExecutionNamesCollection(new ContainerAppJobExecutionBase[]
@@ -333,7 +333,7 @@ Name = "jobExecution-27944452",
 Name = "jobExecution-27944451",
 }
             });
-            ArmOperation<ContainerAppJobExecutions> lro = await job.StopMultipleExecutionsAsync(WaitUntil.Completed, jobExecutionName);
+            ArmOperation<ContainerAppJobExecutions> lro = await containerAppJob.StopMultipleExecutionsAsync(WaitUntil.Completed, jobExecutionName);
             ContainerAppJobExecutions result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -352,16 +352,16 @@ Name = "jobExecution-27944451",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this JobResource created on azure
-            // for more information of creating JobResource, please refer to the document of JobResource
+            // this example assumes you already have this ContainerAppJobResource created on azure
+            // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
             string jobName = "testcontainerAppsJob0";
-            ResourceIdentifier jobResourceId = JobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            JobResource job = client.GetJobResource(jobResourceId);
+            ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ContainerAppWritableSecret item in job.GetSecretsAsync())
+            await foreach (ContainerAppWritableSecret item in containerAppJob.GetSecretsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -382,16 +382,16 @@ Name = "jobExecution-27944451",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this JobResource created on azure
-            // for more information of creating JobResource, please refer to the document of JobResource
+            // this example assumes you already have this ContainerAppJobResource created on azure
+            // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
             string jobName = "testcontainerAppsJob0";
-            ResourceIdentifier jobResourceId = JobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            JobResource job = client.GetJobResource(jobResourceId);
+            ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ContainerAppJobExecution item in job.GetJobsExecutionsAsync())
+            await foreach (ContainerAppJobExecution item in containerAppJob.GetJobsExecutionsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

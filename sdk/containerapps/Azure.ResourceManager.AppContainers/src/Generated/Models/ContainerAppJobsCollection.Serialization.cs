@@ -12,24 +12,24 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    internal partial class JobsCollection
+    internal partial class ContainerAppJobsCollection
     {
-        internal static JobsCollection DeserializeJobsCollection(JsonElement element)
+        internal static ContainerAppJobsCollection DeserializeContainerAppJobsCollection(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<JobData> value = default;
+            IReadOnlyList<ContainerAppJobData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<JobData> array = new List<JobData>();
+                    List<ContainerAppJobData> array = new List<ContainerAppJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobData.DeserializeJobData(item));
+                        array.Add(ContainerAppJobData.DeserializeContainerAppJobData(item));
                     }
                     value = array;
                     continue;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new JobsCollection(value, nextLink.Value);
+            return new ContainerAppJobsCollection(value, nextLink.Value);
         }
     }
 }

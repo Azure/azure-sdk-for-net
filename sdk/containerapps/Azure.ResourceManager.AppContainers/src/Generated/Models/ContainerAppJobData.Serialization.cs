@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    public partial class JobData : IUtf8JsonSerializable
+    public partial class ContainerAppJobData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppContainers
             writer.WriteEndObject();
         }
 
-        internal static JobData DeserializeJobData(JsonElement element)
+        internal static ContainerAppJobData DeserializeContainerAppJobData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.AppContainers
                     continue;
                 }
             }
-            return new JobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), environmentId.Value, workloadProfileName.Value, configuration.Value, template.Value, Optional.ToList(outboundIPAddresses), eventStreamEndpoint.Value);
+            return new ContainerAppJobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), environmentId.Value, workloadProfileName.Value, configuration.Value, template.Value, Optional.ToList(outboundIPAddresses), eventStreamEndpoint.Value);
         }
     }
 }

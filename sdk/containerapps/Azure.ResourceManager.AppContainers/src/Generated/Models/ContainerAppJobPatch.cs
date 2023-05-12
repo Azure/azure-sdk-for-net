@@ -12,10 +12,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Container Apps Job resource specific properties. </summary>
-    public partial class JobPatch
+    public partial class ContainerAppJobPatch
     {
-        /// <summary> Initializes a new instance of JobPatch. </summary>
-        public JobPatch()
+        /// <summary> Initializes a new instance of ContainerAppJobPatch. </summary>
+        public ContainerAppJobPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

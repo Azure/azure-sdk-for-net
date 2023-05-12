@@ -221,20 +221,20 @@ namespace Azure.ResourceManager.AppContainers
         }
         #endregion
 
-        #region JobResource
+        #region ContainerAppJobResource
         /// <summary>
-        /// Gets an object representing a <see cref="JobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="JobResource.CreateResourceIdentifier" /> to create a <see cref="JobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContainerAppJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppJobResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobResource" /> object. </returns>
-        public static JobResource GetJobResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppJobResource" /> object. </returns>
+        public static ContainerAppJobResource GetContainerAppJobResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                JobResource.ValidateResourceId(id);
-                return new JobResource(client, id);
+                ContainerAppJobResource.ValidateResourceId(id);
+                return new ContainerAppJobResource(client, id);
             }
             );
         }
@@ -542,12 +542,12 @@ namespace Azure.ResourceManager.AppContainers
             return resourceGroupResource.GetContainerApps().Get(containerAppName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of JobResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ContainerAppJobResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of JobResources and their operations over a JobResource. </returns>
-        public static JobCollection GetJobs(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ContainerAppJobResources and their operations over a ContainerAppJobResource. </returns>
+        public static ContainerAppJobCollection GetContainerAppJobs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetJobs();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetContainerAppJobs();
         }
 
         /// <summary>
@@ -569,9 +569,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<JobResource>> GetJobAsync(this ResourceGroupResource resourceGroupResource, string jobName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ContainerAppJobResource>> GetContainerAppJobAsync(this ResourceGroupResource resourceGroupResource, string jobName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetJobs().GetAsync(jobName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetContainerAppJobs().GetAsync(jobName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -593,9 +593,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<JobResource> GetJob(this ResourceGroupResource resourceGroupResource, string jobName, CancellationToken cancellationToken = default)
+        public static Response<ContainerAppJobResource> GetContainerAppJob(this ResourceGroupResource resourceGroupResource, string jobName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetJobs().Get(jobName, cancellationToken);
+            return resourceGroupResource.GetContainerAppJobs().Get(jobName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerAppManagedEnvironmentResources in the ResourceGroupResource. </summary>
@@ -841,10 +841,10 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="JobResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<JobResource> GetJobsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ContainerAppJobResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContainerAppJobResource> GetContainerAppJobsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetJobsAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerAppJobsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -862,10 +862,10 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JobResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<JobResource> GetJobs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerAppJobResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContainerAppJobResource> GetContainerAppJobs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetJobs(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerAppJobs(cancellationToken);
         }
 
         /// <summary>

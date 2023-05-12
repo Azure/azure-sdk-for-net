@@ -13,19 +13,19 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A class representing the Job data model.
+    /// A class representing the ContainerAppJob data model.
     /// Container App Job
     /// </summary>
-    public partial class JobData : TrackedResourceData
+    public partial class ContainerAppJobData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of JobData. </summary>
+        /// <summary> Initializes a new instance of ContainerAppJobData. </summary>
         /// <param name="location"> The location. </param>
-        public JobData(AzureLocation location) : base(location)
+        public ContainerAppJobData(AzureLocation location) : base(location)
         {
             OutboundIPAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of JobData. </summary>
+        /// <summary> Initializes a new instance of ContainerAppJobData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="template"> Container Apps job definition. </param>
         /// <param name="outboundIPAddresses"> Outbound IP Addresses of a container apps job. </param>
         /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the container apps job. </param>
-        internal JobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ContainerAppJobProvisioningState? provisioningState, string environmentId, string workloadProfileName, ContainerAppJobConfiguration configuration, ContainerAppJobTemplate template, IReadOnlyList<string> outboundIPAddresses, string eventStreamEndpoint) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerAppJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ContainerAppJobProvisioningState? provisioningState, string environmentId, string workloadProfileName, ContainerAppJobConfiguration configuration, ContainerAppJobTemplate template, IReadOnlyList<string> outboundIPAddresses, string eventStreamEndpoint) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;

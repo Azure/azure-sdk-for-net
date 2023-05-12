@@ -20,48 +20,48 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A Class representing a Job along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="JobResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetJobResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetJob method.
+    /// A Class representing a ContainerAppJob along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerAppJobResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetContainerAppJobResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetContainerAppJob method.
     /// </summary>
-    public partial class JobResource : ArmResource
+    public partial class ContainerAppJobResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="JobResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ContainerAppJobResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string jobName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _jobClientDiagnostics;
-        private readonly JobsRestOperations _jobRestClient;
+        private readonly ClientDiagnostics _containerAppJobJobsClientDiagnostics;
+        private readonly JobsRestOperations _containerAppJobJobsRestClient;
         private readonly ClientDiagnostics _jobsExecutionsClientDiagnostics;
         private readonly JobsExecutionsRestOperations _jobsExecutionsRestClient;
-        private readonly JobData _data;
+        private readonly ContainerAppJobData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="JobResource"/> class for mocking. </summary>
-        protected JobResource()
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppJobResource"/> class for mocking. </summary>
+        protected ContainerAppJobResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "JobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ContainerAppJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal JobResource(ArmClient client, JobData data) : this(client, data.Id)
+        internal ContainerAppJobResource(ArmClient client, ContainerAppJobData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="JobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal JobResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ContainerAppJobResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _jobClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string jobApiVersion);
-            _jobRestClient = new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, jobApiVersion);
+            _containerAppJobJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string containerAppJobJobsApiVersion);
+            _containerAppJobJobsRestClient = new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppJobJobsApiVersion);
             _jobsExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _jobsExecutionsRestClient = new JobsExecutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual JobData Data
+        public virtual ContainerAppJobData Data
         {
             get
             {
@@ -107,16 +107,16 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<JobResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppJobResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _jobClientDiagnostics.CreateScope("JobResource.Get");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.Get");
             scope.Start();
             try
             {
-                var response = await _jobRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _containerAppJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,16 +139,16 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<JobResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppJobResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _jobClientDiagnostics.CreateScope("JobResource.Get");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.Get");
             scope.Start();
             try
             {
-                var response = _jobRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _containerAppJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _jobClientDiagnostics.CreateScope("JobResource.Delete");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.Delete");
             scope.Start();
             try
             {
-                var response = await _jobRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation(_jobClientDiagnostics, Pipeline, _jobRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _containerAppJobJobsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AppContainersArmOperation(_containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -208,12 +208,12 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _jobClientDiagnostics.CreateScope("JobResource.Delete");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.Delete");
             scope.Start();
             try
             {
-                var response = _jobRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AppContainersArmOperation(_jobClientDiagnostics, Pipeline, _jobRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _containerAppJobJobsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new AppContainersArmOperation(_containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -242,16 +242,16 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="patch"> Properties used to create a container apps job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<JobResource>> UpdateAsync(WaitUntil waitUntil, JobPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ContainerAppJobResource>> UpdateAsync(WaitUntil waitUntil, ContainerAppJobPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _jobClientDiagnostics.CreateScope("JobResource.Update");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.Update");
             scope.Start();
             try
             {
-                var response = await _jobRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation<JobResource>(new JobOperationSource(Client), _jobClientDiagnostics, Pipeline, _jobRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = await _containerAppJobJobsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new AppContainersArmOperation<ContainerAppJobResource>(new ContainerAppJobOperationSource(Client), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -280,16 +280,16 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="patch"> Properties used to create a container apps job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<JobResource> Update(WaitUntil waitUntil, JobPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ContainerAppJobResource> Update(WaitUntil waitUntil, ContainerAppJobPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _jobClientDiagnostics.CreateScope("JobResource.Update");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.Update");
             scope.Start();
             try
             {
-                var response = _jobRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new AppContainersArmOperation<JobResource>(new JobOperationSource(Client), _jobClientDiagnostics, Pipeline, _jobRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = _containerAppJobJobsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var operation = new AppContainersArmOperation<ContainerAppJobResource>(new ContainerAppJobOperationSource(Client), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -322,12 +322,12 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(template, nameof(template));
 
-            using var scope = _jobClientDiagnostics.CreateScope("JobResource.Start");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.Start");
             scope.Start();
             try
             {
-                var response = await _jobRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, template, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation<ContainerAppJobExecutionBase>(new ContainerAppJobExecutionBaseOperationSource(), _jobClientDiagnostics, Pipeline, _jobRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, template).Request, response, OperationFinalStateVia.Location);
+                var response = await _containerAppJobJobsRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, template, cancellationToken).ConfigureAwait(false);
+                var operation = new AppContainersArmOperation<ContainerAppJobExecutionBase>(new ContainerAppJobExecutionBaseOperationSource(), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, template).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -360,12 +360,12 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(template, nameof(template));
 
-            using var scope = _jobClientDiagnostics.CreateScope("JobResource.Start");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.Start");
             scope.Start();
             try
             {
-                var response = _jobRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, template, cancellationToken);
-                var operation = new AppContainersArmOperation<ContainerAppJobExecutionBase>(new ContainerAppJobExecutionBaseOperationSource(), _jobClientDiagnostics, Pipeline, _jobRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, template).Request, response, OperationFinalStateVia.Location);
+                var response = _containerAppJobJobsRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, template, cancellationToken);
+                var operation = new AppContainersArmOperation<ContainerAppJobExecutionBase>(new ContainerAppJobExecutionBaseOperationSource(), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, template).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -399,12 +399,12 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(jobExecutionName, nameof(jobExecutionName));
 
-            using var scope = _jobClientDiagnostics.CreateScope("JobResource.StopExecution");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.StopExecution");
             scope.Start();
             try
             {
-                var response = await _jobRestClient.StopExecutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation(_jobClientDiagnostics, Pipeline, _jobRestClient.CreateStopExecutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName).Request, response, OperationFinalStateVia.Location);
+                var response = await _containerAppJobJobsRestClient.StopExecutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName, cancellationToken).ConfigureAwait(false);
+                var operation = new AppContainersArmOperation(_containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStopExecutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -438,12 +438,12 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(jobExecutionName, nameof(jobExecutionName));
 
-            using var scope = _jobClientDiagnostics.CreateScope("JobResource.StopExecution");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.StopExecution");
             scope.Start();
             try
             {
-                var response = _jobRestClient.StopExecution(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName, cancellationToken);
-                var operation = new AppContainersArmOperation(_jobClientDiagnostics, Pipeline, _jobRestClient.CreateStopExecutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName).Request, response, OperationFinalStateVia.Location);
+                var response = _containerAppJobJobsRestClient.StopExecution(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName, cancellationToken);
+                var operation = new AppContainersArmOperation(_containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStopExecutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -476,12 +476,12 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(jobExecutionName, nameof(jobExecutionName));
 
-            using var scope = _jobClientDiagnostics.CreateScope("JobResource.StopMultipleExecutions");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.StopMultipleExecutions");
             scope.Start();
             try
             {
-                var response = await _jobRestClient.StopMultipleExecutionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation<ContainerAppJobExecutions>(new ContainerAppJobExecutionsOperationSource(), _jobClientDiagnostics, Pipeline, _jobRestClient.CreateStopMultipleExecutionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName).Request, response, OperationFinalStateVia.Location);
+                var response = await _containerAppJobJobsRestClient.StopMultipleExecutionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName, cancellationToken).ConfigureAwait(false);
+                var operation = new AppContainersArmOperation<ContainerAppJobExecutions>(new ContainerAppJobExecutionsOperationSource(), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStopMultipleExecutionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -514,12 +514,12 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(jobExecutionName, nameof(jobExecutionName));
 
-            using var scope = _jobClientDiagnostics.CreateScope("JobResource.StopMultipleExecutions");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.StopMultipleExecutions");
             scope.Start();
             try
             {
-                var response = _jobRestClient.StopMultipleExecutions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName, cancellationToken);
-                var operation = new AppContainersArmOperation<ContainerAppJobExecutions>(new ContainerAppJobExecutionsOperationSource(), _jobClientDiagnostics, Pipeline, _jobRestClient.CreateStopMultipleExecutionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName).Request, response, OperationFinalStateVia.Location);
+                var response = _containerAppJobJobsRestClient.StopMultipleExecutions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName, cancellationToken);
+                var operation = new AppContainersArmOperation<ContainerAppJobExecutions>(new ContainerAppJobExecutionsOperationSource(), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStopMultipleExecutionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -548,8 +548,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppWritableSecret" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppWritableSecret> GetSecretsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _jobRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ContainerAppWritableSecret.DeserializeContainerAppWritableSecret, _jobClientDiagnostics, Pipeline, "JobResource.GetSecrets", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppJobJobsRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ContainerAppWritableSecret.DeserializeContainerAppWritableSecret, _containerAppJobJobsClientDiagnostics, Pipeline, "ContainerAppJobResource.GetSecrets", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -569,8 +569,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppWritableSecret" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppWritableSecret> GetSecrets(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _jobRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ContainerAppWritableSecret.DeserializeContainerAppWritableSecret, _jobClientDiagnostics, Pipeline, "JobResource.GetSecrets", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppJobJobsRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ContainerAppWritableSecret.DeserializeContainerAppWritableSecret, _containerAppJobJobsClientDiagnostics, Pipeline, "ContainerAppJobResource.GetSecrets", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jobsExecutionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobsExecutionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ContainerAppJobExecution.DeserializeContainerAppJobExecution, _jobsExecutionsClientDiagnostics, Pipeline, "JobResource.GetJobsExecutions", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ContainerAppJobExecution.DeserializeContainerAppJobExecution, _jobsExecutionsClientDiagnostics, Pipeline, "ContainerAppJobResource.GetJobsExecutions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jobsExecutionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobsExecutionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ContainerAppJobExecution.DeserializeContainerAppJobExecution, _jobsExecutionsClientDiagnostics, Pipeline, "JobResource.GetJobsExecutions", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ContainerAppJobExecution.DeserializeContainerAppJobExecution, _jobsExecutionsClientDiagnostics, Pipeline, "ContainerAppJobResource.GetJobsExecutions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -636,12 +636,12 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<JobResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppJobResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _jobClientDiagnostics.CreateScope("JobResource.AddTag");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.AddTag");
             scope.Start();
             try
             {
@@ -650,13 +650,13 @@ namespace Azure.ResourceManager.AppContainers
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _jobRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new JobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _containerAppJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ContainerAppJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new JobPatch();
+                    var patch = new ContainerAppJobPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -690,12 +690,12 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<JobResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppJobResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _jobClientDiagnostics.CreateScope("JobResource.AddTag");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.AddTag");
             scope.Start();
             try
             {
@@ -704,13 +704,13 @@ namespace Azure.ResourceManager.AppContainers
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _jobRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new JobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _containerAppJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new ContainerAppJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new JobPatch();
+                    var patch = new ContainerAppJobPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -743,11 +743,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<JobResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppJobResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _jobClientDiagnostics.CreateScope("JobResource.SetTags");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.SetTags");
             scope.Start();
             try
             {
@@ -757,13 +757,13 @@ namespace Azure.ResourceManager.AppContainers
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _jobRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new JobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _containerAppJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ContainerAppJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new JobPatch();
+                    var patch = new ContainerAppJobPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -792,11 +792,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<JobResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppJobResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _jobClientDiagnostics.CreateScope("JobResource.SetTags");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.SetTags");
             scope.Start();
             try
             {
@@ -806,13 +806,13 @@ namespace Azure.ResourceManager.AppContainers
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _jobRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new JobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _containerAppJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new ContainerAppJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new JobPatch();
+                    var patch = new ContainerAppJobPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -841,11 +841,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<JobResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppJobResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _jobClientDiagnostics.CreateScope("JobResource.RemoveTag");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.RemoveTag");
             scope.Start();
             try
             {
@@ -854,13 +854,13 @@ namespace Azure.ResourceManager.AppContainers
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _jobRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new JobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _containerAppJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ContainerAppJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new JobPatch();
+                    var patch = new ContainerAppJobPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -893,11 +893,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<JobResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppJobResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _jobClientDiagnostics.CreateScope("JobResource.RemoveTag");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.RemoveTag");
             scope.Start();
             try
             {
@@ -906,13 +906,13 @@ namespace Azure.ResourceManager.AppContainers
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _jobRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new JobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _containerAppJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new ContainerAppJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new JobPatch();
+                    var patch = new ContainerAppJobPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
