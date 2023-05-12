@@ -27,7 +27,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="status"> The current status of the snapshot. </param>
         /// <param name="statusCode"> Provides additional information about the status of the snapshot. The status code values are modeled after HTTP status codes. </param>
         /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>
-        /// <param name="compositionType"> The composition type describes how the key-values within the snapshot are composed. The &apos;key&apos; composition type ensures there are no two key-values containing the same key. The &apos;key_label&apos; composition type ensures there are no two key-values containing the same key and label. </param>
+        /// <param name="compositionType"> The composition type describes how the key-values within the snapshot are composed. The 'key' composition type ensures there are no two key-values containing the same key. The 'key_label' composition type ensures there are no two key-values containing the same key and label. </param>
         /// <param name="created"> The time that the snapshot was created. </param>
         /// <param name="expires"> The time that the snapshot will expire. </param>
         /// <param name="retentionPeriod"> The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used. </param>
@@ -59,7 +59,7 @@ namespace Azure.Data.AppConfiguration
         public int? StatusCode { get; }
         /// <summary> A list of filters used to filter the key-values included in the snapshot. </summary>
         public IList<SnapshotSettingFilter> Filters { get; }
-        /// <summary> The composition type describes how the key-values within the snapshot are composed. The &apos;key&apos; composition type ensures there are no two key-values containing the same key. The &apos;key_label&apos; composition type ensures there are no two key-values containing the same key and label. </summary>
+        /// <summary> The composition type describes how the key-values within the snapshot are composed. The 'key' composition type ensures there are no two key-values containing the same key. The 'key_label' composition type ensures there are no two key-values containing the same key and label. </summary>
         public CompositionType? CompositionType { get; set; }
         /// <summary> The time that the snapshot was created. </summary>
         public DateTimeOffset? Created { get; }

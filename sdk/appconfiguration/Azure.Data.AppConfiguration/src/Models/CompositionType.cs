@@ -6,7 +6,7 @@ using System.ComponentModel;
 
 namespace Azure.Data.AppConfiguration
 {
-    /// <summary> The composition type describes how the key-values within the snapshot are composed. The &apos;key&apos; composition type ensures there are no two key-values containing the same key. The &apos;key_label&apos; composition type ensures there are no two key-values containing the same key and label. </summary>
+    /// <summary> The composition type describes how the key-values within the snapshot are composed. The 'key' composition type ensures there are no two key-values containing the same key. The 'key_label' composition type ensures there are no two key-values containing the same key and label. </summary>
     public readonly partial struct CompositionType : IEquatable<CompositionType>
     {
         private readonly string _value;
@@ -21,9 +21,9 @@ namespace Azure.Data.AppConfiguration
         private const string KeyValue = "key";
         private const string KeyLabelValue = "key_label";
 
-        /// <summary> key. </summary>
+        /// <summary> The 'key' composition type ensures there are no two key-values containing the same key. </summary>
         public static CompositionType Key { get; } = new CompositionType(KeyValue);
-        /// <summary> key_label. </summary>
+        /// <summary> The 'key_label' composition type ensures there are no two key-values containing the same key and label. </summary>
         public static CompositionType KeyLabel { get; } = new CompositionType(KeyLabelValue);
         /// <summary> Determines if two <see cref="CompositionType"/> values are the same. </summary>
         public static bool operator ==(CompositionType left, CompositionType right) => left.Equals(right);
