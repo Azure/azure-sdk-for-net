@@ -136,8 +136,8 @@ To query by resource ID, use the [LogsQueryClient.QueryResourceAsync](https://le
 To find the resource ID:
 
 1. Navigate to your resource's page in the Azure portal.
-2. From the **Overview** blade, select the **JSON View** link.
-3. In the resulting JSON, copy the value of the `id` property.
+1. From the **Overview** blade, select the **JSON View** link.
+1. In the resulting JSON, copy the value of the `id` property.
 
 ```C# Snippet:QueryResource
 string resourceId = "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/<resource_provider>/<resource>";
