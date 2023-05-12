@@ -13,6 +13,9 @@ param testApplicationServicePrincipal string
 @description('The location of the resource. By default, this is the same as the resource group.')
 param location string = resourceGroup().location
 
+@description('Current IP address of the client.')
+param clientIpAddress string
+
 
 
 resource keyVault 'Microsoft.KeyVault/vaults@2019-09-01' = {
@@ -143,6 +146,15 @@ resource postgresAdmin 'Microsoft.DBforPostgreSQL/flexibleServers/administrators
     principalType: 'SERVICEPRINCIPAL'
     principalName: testApplicationServicePrincipal
     tenantId: tenantId
+  }
+}
+
+resource postgresFirewall 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@2022-12-01' = {
+  name: 'allowAll'
+  parent: postgresServer
+  properties: {
+    startIpAddress: clientIpAddress
+    endIpAddress: clientIpAddress
   }
 }
 

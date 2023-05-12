@@ -23,5 +23,8 @@ param (
 Write-Output "Retrieving AD for test application with OID $TestApplicationOid ..."
 $SP=Get-AzADServicePrincipal -ObjectId $TestApplicationOid
 Write-Output "AAD database admin: $($SP.DisplayName) ..."
+Write-Output "Get current IP address..."
+$ipAddress = Invoke-RestMethod "http://whatismyip.akamai.com"
 $templateFileParameters['testApplicationServicePrincipal']=$SP.DisplayName
+$templateFileParameters['clientIpAddress']=$ipAddress
 
