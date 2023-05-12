@@ -255,13 +255,13 @@ namespace Azure.Developer.DevCenter.Tests
                 numberOfReturnedSchedules++;
                 JsonElement getSchedulesResponseData = JsonDocument.Parse(scheduleData.ToStream()).RootElement;
 
-                if (!getSchedulesResponseData.TryGetProperty("name", out var poolNameJson))
+                if (!getSchedulesResponseData.TryGetProperty("name", out var scheduleNameJson))
                 {
                     Assert.Fail("The JSON response received from the service does not include the necessary property.");
                 }
 
-                string poolName = poolNameJson.ToString();
-                Assert.AreEqual("default", poolName);
+                string scheduleName = scheduleNameJson.ToString();
+                Assert.AreEqual("default", scheduleName);
             }
 
             Assert.AreEqual(1, numberOfReturnedSchedules);
