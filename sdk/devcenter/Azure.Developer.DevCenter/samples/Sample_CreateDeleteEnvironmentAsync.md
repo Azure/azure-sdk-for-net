@@ -9,11 +9,11 @@ Create a `DevCenterClient` and issue a request to get all projects the signed-in
 ```C# Snippet:Azure_DevCenter_GetProjects_Scenario
 var credential = new DefaultAzureCredential();
 var devCenterClient = new DevCenterClient(endpoint, credential);
-string projectName = null;
+string targetProjectName = null;
 await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null, maxCount: 1))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    projectName = result.GetProperty("name").ToString();
+    targetProjectName = result.GetProperty("name").ToString();
 }
 ```
 
@@ -35,9 +35,7 @@ await foreach (BinaryData data in environmentsClient.GetCatalogsAsync(projectNam
 ## Get all environment definitions in a project for a catalog
 
 ```C# Snippet:Azure_DevCenter_GetEnvironmentDefinitionsFromCatalog_Scenario
-var environmentsClient = new DeploymentEnvironmentsClient(endpoint, credential);
 string environmentDefinitionName = null;
-
 await foreach (BinaryData data in environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(projectName, catalogName, maxCount: 1))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;

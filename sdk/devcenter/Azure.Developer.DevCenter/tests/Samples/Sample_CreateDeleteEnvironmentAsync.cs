@@ -28,22 +28,34 @@ namespace Azure.Developer.DevCenter.Tests.Samples
                 throw new InvalidOperationException($"No valid project resources found in DevCenter {endpoint}.");
             }
 
-            #region Snippet:Azure_DevCenter_GetCatalogItems_Scenario
+            #region Snippet:Azure_DevCenter_GetCatalogs_Scenario
             var environmentsClient = new DeploymentEnvironmentsClient(endpoint, credential);
-            string catalogItemName = null;
+            string catalogName = null;
 
-            /*
-            await foreach (BinaryData data in environmentsClient.GetCatalogItemsAsync(maxCount: 1))
+            await foreach (BinaryData data in environmentsClient.GetCatalogsAsync(projectName, maxCount: 1))
             {
                 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-                catalogItemName = result.GetProperty("name").ToString();
+                catalogName = result.GetProperty("name").ToString();
             }
-            */
             #endregion
 
-            if (catalogItemName is null)
+            if (catalogName is null)
             {
-                throw new InvalidOperationException($"No valid catalog item resources found in Project {projectName}/DevCenter {endpoint}.");
+                throw new InvalidOperationException($"No valid catalog resources found in Project {projectName}/DevCenter {endpoint}.");
+            }
+
+            #region Snippet:Azure_DevCenter_GetEnvironmentDefinitionsFromCatalog_Scenario
+            string environmentDefinitionName = null;
+            await foreach (BinaryData data in environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(projectName, catalogName, maxCount: 1))
+            {
+                JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+                environmentDefinitionName = result.GetProperty("name").ToString();
+            }
+            #endregion
+
+            if (environmentDefinitionName is null)
+            {
+                throw new InvalidOperationException($"No valid environemtn definitions were found in Project {projectName}/DevCenter {endpoint}.");
             }
 
             #region Snippet:Azure_DevCenter_GetEnvironmentTypes_Scenario
@@ -57,14 +69,15 @@ namespace Azure.Developer.DevCenter.Tests.Samples
 
             if (environmentTypeName is null)
             {
-                throw new InvalidOperationException($"No valid catalog item resources found in Project {projectName}/DevCenter {endpoint}.");
+                throw new InvalidOperationException($"No valid environment type resources found in Project {projectName}/DevCenter {endpoint}.");
             }
 
             #region Snippet:Azure_DevCenter_CreateEnvironment_Scenario
             var content = new
             {
+                catalogName = catalogName,
                 environmentType = environmentTypeName,
-                catalogItemName = catalogItemName,
+                environmentDefinitionName = environmentDefinitionName,
             };
 
             // Deploy the environment
