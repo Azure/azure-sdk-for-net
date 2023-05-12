@@ -45,5 +45,10 @@ namespace Azure.Communication.CallAutomation
         /// The identifier of the call automation entity which answers the call.
         /// </summary>
         public CommunicationUserIdentifier AnsweredByIdentifier { get; set; }
+
+        /// <summary>
+        /// The operation context.
+        /// </summary>
+        public string OperationContext { get; set; }
     }
 }

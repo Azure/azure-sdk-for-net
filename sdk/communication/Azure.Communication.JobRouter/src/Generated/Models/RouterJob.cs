@@ -35,7 +35,12 @@ namespace Azure.Communication.JobRouter.Models
         /// </param>
         /// <param name="tags"> A set of non-identifying attributes attached to this job. </param>
         /// <param name="notes"> Notes attached to a job, sorted by timestamp. </param>
-        internal RouterJob(string id, string channelReference, RouterJobStatus? jobStatus, DateTimeOffset? enqueueTimeUtc, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<WorkerSelector> requestedWorkerSelectors, IReadOnlyList<WorkerSelector> attachedWorkerSelectors, IDictionary<string, object> labels, IReadOnlyDictionary<string, JobAssignment> assignments, IDictionary<string, object> tags, IDictionary<string, string> notes)
+        /// <param name="unavailableForMatching">
+        /// A flag indicating this job is ready for being matched with workers.
+        /// When set to true, job matching will not be started. If set to false, job matching will start automatically
+        /// </param>
+        /// <param name="scheduledTimeUtc"> If set, job will be scheduled to be enqueued at a given time. </param>
+        internal RouterJob(string id, string channelReference, RouterJobStatus? jobStatus, DateTimeOffset? enqueueTimeUtc, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<WorkerSelector> requestedWorkerSelectors, IReadOnlyList<WorkerSelector> attachedWorkerSelectors, IDictionary<string, object> labels, IReadOnlyDictionary<string, JobAssignment> assignments, IDictionary<string, object> tags, IDictionary<string, string> notes, bool? unavailableForMatching, DateTimeOffset? scheduledTimeUtc)
         {
             Id = id;
             ChannelReference = channelReference;
@@ -52,6 +57,8 @@ namespace Azure.Communication.JobRouter.Models
             Assignments = assignments;
             _tags = tags;
             _notes = notes;
+            UnavailableForMatching = unavailableForMatching;
+            ScheduledTimeUtc = scheduledTimeUtc;
         }
 
         /// <summary> The id of the job. </summary>
@@ -79,5 +86,12 @@ namespace Azure.Communication.JobRouter.Models
         /// Key is AssignmentId.
         /// </summary>
         public IReadOnlyDictionary<string, JobAssignment> Assignments { get; }
+        /// <summary>
+        /// A flag indicating this job is ready for being matched with workers.
+        /// When set to true, job matching will not be started. If set to false, job matching will start automatically
+        /// </summary>
+        public bool? UnavailableForMatching { get; set; }
+        /// <summary> If set, job will be scheduled to be enqueued at a given time. </summary>
+        public DateTimeOffset? ScheduledTimeUtc { get; set; }
     }
 }

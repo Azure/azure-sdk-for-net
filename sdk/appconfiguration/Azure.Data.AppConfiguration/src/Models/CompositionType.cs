@@ -6,7 +6,7 @@ using System.ComponentModel;
 
 namespace Azure.Data.AppConfiguration
 {
-    /// <summary> The composition type describes how the key-values within the snapshot are composed. The 'all' composition type includes all key-values. The &apos;group_by_key&apos; composition type ensures there are no two key-values containing the same key. </summary>
+    /// <summary> The composition type describes how the key-values within the snapshot are composed. The 'key' composition type ensures there are no two key-values containing the same key. The 'key_label' composition type ensures there are no two key-values containing the same key and label. </summary>
     public readonly partial struct CompositionType : IEquatable<CompositionType>
     {
         private readonly string _value;
@@ -18,13 +18,13 @@ namespace Azure.Data.AppConfiguration
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AllValue = "all";
-        private const string GroupByKeyValue = "group_by_key";
+        private const string KeyValue = "key";
+        private const string KeyLabelValue = "key_label";
 
-        /// <summary> all. </summary>
-        public static CompositionType All { get; } = new CompositionType(AllValue);
-        /// <summary> group_by_key. </summary>
-        public static CompositionType GroupByKey { get; } = new CompositionType(GroupByKeyValue);
+        /// <summary> The 'key' composition type ensures there are no two key-values containing the same key. </summary>
+        public static CompositionType Key { get; } = new CompositionType(KeyValue);
+        /// <summary> The 'key_label' composition type ensures there are no two key-values containing the same key and label. </summary>
+        public static CompositionType KeyLabel { get; } = new CompositionType(KeyLabelValue);
         /// <summary> Determines if two <see cref="CompositionType"/> values are the same. </summary>
         public static bool operator ==(CompositionType left, CompositionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CompositionType"/> values are not the same. </summary>
