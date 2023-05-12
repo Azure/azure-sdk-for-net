@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Data.Extensions.Npgsql.Tests
 {
-    public class TokenCredentialNpgsqlPasswordProviderTests : LiveTestBase<ConfigurationTestEnvironment>
+    public class TokenCredentialNpgsqlPasswordProviderTests : LiveTestBase<NpgsqlTestEnvironment>
     {
         private static async Task ValidateDataSourceAsync(NpgsqlDataSource dataSource)
         {

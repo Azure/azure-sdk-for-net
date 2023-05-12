@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Data.Extensions.Npgsql.Tests
 {
-    public class NpgsqlDataSourceBuilderTests : LiveTestBase<ConfigurationTestEnvironment>
+    public class NpgsqlDataSourceBuilderTests : LiveTestBase<NpgsqlTestEnvironment>
     {
         private static async Task ValidateDataSourceAsync(NpgsqlDataSource dataSource)
         {
