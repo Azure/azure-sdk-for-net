@@ -701,6 +701,8 @@ namespace Azure.Monitor.Query.Tests
                 {
                     // Delay for 30 seconds to give time for StorageAccount to initialize
                     TestContext.Progress.WriteLine("Delay storage account");
+                    TestContext.Progress.WriteLine("Rows " + result.Value.Table.Rows.Count + " Columns " + result.Value.Table.Columns.Count);
+                    TestContext.Progress.WriteLine("DateTime now" + DateTime.Now);
                     await Task.Delay(TimeSpan.FromSeconds(30));
                 }
             }
