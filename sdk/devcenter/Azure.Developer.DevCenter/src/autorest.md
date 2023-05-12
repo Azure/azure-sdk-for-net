@@ -141,23 +141,4 @@ directive:
     where-operation: Environments_ListEnvironmentTypes
     transform: >-
       $.operationId = "DeploymentEnvironments_ListEnvironmentTypes";
-
-  # DevBoxes_ListSchedulesByPool
-  # DevBoxes_GetScheduleByPool
-  # DevBoxes_ListDevBoxesByUser
-  # DevBoxes_GetDevBoxByUser
-  # DevCenter_ListAllDevBoxes
-  # DevCenter_ListAllDevBoxesByUser
-  # Environments_* -> DeploymentEnvironments_*
-  # Environments_CreateOrReplaceEnvironment
-  # Environments_DeleteEnvironment
-  # Environments_GetCatalog
-  # Environments_GetEnvironmentByUser
-  # Environments_GetEnvironmentDefinition
-  # Environments_ListCatalogsByProject
-  # Environments_ListEnvironmentDefinitionsByCatalog
-  # Environments_ListEnvironmentDefinitionsByProject
-  # Environments_ListEnvironments
-  # Environments_ListEnvironmentsByUser
-  # Environments_ListEnvironmentTypes
 ```
