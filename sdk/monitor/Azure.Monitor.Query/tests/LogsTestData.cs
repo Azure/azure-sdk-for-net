@@ -86,6 +86,7 @@ namespace Azure.Monitor.Query.Tests
 
         public async Task InitializeAsync()
         {
+            TestContext.Progress.WriteLine("InitializeAsync");
             if (_testEnvironment.Mode == RecordedTestMode.Playback)
             {
                 return;
@@ -93,6 +94,7 @@ namespace Azure.Monitor.Query.Tests
 
             lock (_initializationLock)
             {
+                TestContext.Progress.WriteLine("Initialize lock");
                 _initialization ??= Task.WhenAll(
                     InitializeData(_testEnvironment.WorkspaceId, _testEnvironment.WorkspaceKey),
                     InitializeData(_testEnvironment.SecondaryWorkspaceId, _testEnvironment.SecondaryWorkspaceKey),
@@ -108,6 +110,7 @@ namespace Azure.Monitor.Query.Tests
 
             if (count == 0)
             {
+                TestContext.Progress.WriteLine("Send data.");
                 var senderClient = new LogSenderClient(workspaceId, _testEnvironment.MonitorIngestionEndpoint, workspaceKey);
                 await senderClient.SendAsync(TableANameSent, TableA);
             }
@@ -121,7 +124,7 @@ namespace Azure.Monitor.Query.Tests
                 await Task.Delay(TimeSpan.FromSeconds(30));
                 count = await QueryCount(workspaceId);
             }
-            TestContext.Progress.WriteLine("Initializa data in table completed.");
+            TestContext.Progress.WriteLine("Initialize data in table completed.");
         }
 
         private async Task<int> QueryCount(string workspaceId)
@@ -129,6 +132,7 @@ namespace Azure.Monitor.Query.Tests
             var logsClient = new LogsQueryClient(_testEnvironment.LogsEndpoint, _testEnvironment.Credential);
             try
             {
+                TestContext.Progress.WriteLine("Get query count.");
                 var countResponse = await logsClient.QueryWorkspaceAsync<int>(workspaceId, $"{TableAName} | count", DataTimeRange);
                 var count = countResponse.Value.Single();
                 return count;
@@ -145,6 +149,7 @@ namespace Azure.Monitor.Query.Tests
 
             while (true)
             {
+                TestContext.Progress.WriteLine("Query storage account");
                 var result = await client.QueryResourceAsync(new ResourceIdentifier(_testEnvironment.StorageAccountId), "search *", DataTimeRange).ConfigureAwait(false);
                 if (result.Value.Table.Rows.Count > 0 && result.Value.Table.Columns.Count > 0)
                 {
