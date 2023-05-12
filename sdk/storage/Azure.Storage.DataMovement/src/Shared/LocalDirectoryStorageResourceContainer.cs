@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
+using Azure.Core;
 using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
@@ -40,6 +41,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="path"></param>
         public LocalDirectoryStorageResourceContainer(string path)
         {
+            Argument.AssertNotNullOrWhiteSpace(path, nameof(path));
             _path = path;
         }
 

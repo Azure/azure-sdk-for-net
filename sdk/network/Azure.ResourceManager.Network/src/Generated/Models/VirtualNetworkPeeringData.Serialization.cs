@@ -113,6 +113,7 @@ namespace Azure.ResourceManager.Network
             Optional<AddressSpace> remoteAddressSpace = default;
             Optional<AddressSpace> remoteVirtualNetworkAddressSpace = default;
             Optional<VirtualNetworkBgpCommunities> remoteBgpCommunities = default;
+            Optional<VirtualNetworkEncryption> remoteVirtualNetworkEncryption = default;
             Optional<VirtualNetworkPeeringState> peeringState = default;
             Optional<VirtualNetworkPeeringLevel> peeringSyncLevel = default;
             Optional<NetworkProvisioningState> provisioningState = default;
@@ -124,7 +125,6 @@ namespace Azure.ResourceManager.Network
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -134,7 +134,6 @@ namespace Azure.ResourceManager.Network
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -149,7 +148,6 @@ namespace Azure.ResourceManager.Network
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
@@ -168,7 +166,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allowVirtualNetworkAccess = property0.Value.GetBoolean();
@@ -178,7 +175,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allowForwardedTraffic = property0.Value.GetBoolean();
@@ -188,7 +184,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allowGatewayTransit = property0.Value.GetBoolean();
@@ -198,7 +193,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             useRemoteGateways = property0.Value.GetBoolean();
@@ -208,7 +202,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             remoteVirtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
@@ -218,7 +211,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             remoteAddressSpace = AddressSpace.DeserializeAddressSpace(property0.Value);
@@ -228,7 +220,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             remoteVirtualNetworkAddressSpace = AddressSpace.DeserializeAddressSpace(property0.Value);
@@ -238,17 +229,24 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             remoteBgpCommunities = VirtualNetworkBgpCommunities.DeserializeVirtualNetworkBgpCommunities(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("remoteVirtualNetworkEncryption"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            remoteVirtualNetworkEncryption = VirtualNetworkEncryption.DeserializeVirtualNetworkEncryption(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("peeringState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             peeringState = new VirtualNetworkPeeringState(property0.Value.GetString());
@@ -258,7 +256,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             peeringSyncLevel = new VirtualNetworkPeeringLevel(property0.Value.GetString());
@@ -268,7 +265,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
@@ -278,7 +274,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             doNotVerifyRemoteGateways = property0.Value.GetBoolean();
@@ -288,7 +283,6 @@ namespace Azure.ResourceManager.Network
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceGuid = property0.Value.GetGuid();
@@ -298,7 +292,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VirtualNetworkPeeringData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(allowVirtualNetworkAccess), Optional.ToNullable(allowForwardedTraffic), Optional.ToNullable(allowGatewayTransit), Optional.ToNullable(useRemoteGateways), remoteVirtualNetwork, remoteAddressSpace.Value, remoteVirtualNetworkAddressSpace.Value, remoteBgpCommunities.Value, Optional.ToNullable(peeringState), Optional.ToNullable(peeringSyncLevel), Optional.ToNullable(provisioningState), Optional.ToNullable(doNotVerifyRemoteGateways), Optional.ToNullable(resourceGuid));
+            return new VirtualNetworkPeeringData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(allowVirtualNetworkAccess), Optional.ToNullable(allowForwardedTraffic), Optional.ToNullable(allowGatewayTransit), Optional.ToNullable(useRemoteGateways), remoteVirtualNetwork, remoteAddressSpace.Value, remoteVirtualNetworkAddressSpace.Value, remoteBgpCommunities.Value, remoteVirtualNetworkEncryption.Value, Optional.ToNullable(peeringState), Optional.ToNullable(peeringSyncLevel), Optional.ToNullable(provisioningState), Optional.ToNullable(doNotVerifyRemoteGateways), Optional.ToNullable(resourceGuid));
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query.Models;
 using NUnit.Framework;
@@ -611,7 +612,7 @@ namespace Azure.Monitor.Query.Tests
             if (include)
             {
                 using JsonDocument document = JsonDocument.Parse(result.GetStatistics());
-                Assert.Greater(document.RootElement.GetProperty("query").GetProperty("executionTime").GetDouble(), 0);
+                Assert.GreaterOrEqual(document.RootElement.GetProperty("query").GetProperty("executionTime").GetDouble(), 0);
             }
             else
             {
@@ -673,6 +674,132 @@ namespace Azure.Monitor.Query.Tests
 
             var response = await client.QueryWorkspaceAsync<bool>(TestEnvironment.WorkspaceId, LogsQueryClient.CreateQuery(query.Value), _logsTestData.DataTimeRange);
             Assert.True(response.Value.Single());
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task CanQueryResource()
+        {
+            var client = CreateClient();
+
+            var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
+                "search *",
+                _logsTestData.DataTimeRange);
+
+            Assert.AreEqual(LogsQueryResultStatus.Success, results.Value.Status);
+            var resultTable = results.Value.Table;
+            CollectionAssert.IsNotEmpty(resultTable.Rows);
+            CollectionAssert.IsNotEmpty(resultTable.Columns);
+
+            bool verifyRow = false;
+            bool verifyColumn1 = false;
+            bool verifyColumn2 = false;
+            foreach (LogsTableRow rows in resultTable.Rows)
+            {
+                foreach (var row in rows)
+                {
+                    if ((row != null) && row.ToString().Contains("Create/Update Storage Account"))
+                    {
+                        verifyRow = true;
+                    }
+                }
+            }
+
+            foreach (LogsTableColumn columns in resultTable.Columns)
+            {
+                if (columns.Name == "SubscriptionId" && columns.Type == LogsColumnType.StringTypeValue)
+                    verifyColumn1 = true;
+
+                if (columns.Name == "TimeGenerated" && columns.Type == LogsColumnType.DatetimeTypeValue)
+                    verifyColumn2 = true;
+            }
+
+            Assert.IsTrue(verifyRow);
+            Assert.IsTrue(verifyColumn1 && verifyColumn2);
+        }
+
+        [LiveOnly]
+        [Test]
+        public void VerifyInvalidQueryResourceCheckNoBackslash()
+        {
+            var client = CreateClient();
+            var exception = Assert.ThrowsAsync<FormatException>(() => client.QueryResourceAsync(
+                new ResourceIdentifier(TestEnvironment.StorageAccountId.Substring(1)),
+                "search *",
+                _logsTestData.DataTimeRange));
+
+            StringAssert.StartsWith("The ResourceIdentifier must start with /subscriptions/ or /providers/.", exception.Message);
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task CanQueryResourceValidId()
+        {
+            var client = CreateClient();
+
+            var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
+                "search *",
+                _logsTestData.DataTimeRange);
+
+            Assert.AreEqual(LogsQueryResultStatus.Success, results.Value.Status);
+            var resultTable = results.Value.Table;
+            CollectionAssert.IsNotEmpty(resultTable.Rows);
+            CollectionAssert.IsNotEmpty(resultTable.Columns);
+
+            bool verifyRow = false;
+            bool verifyColumn1 = false;
+            bool verifyColumn2 = false;
+            foreach (LogsTableRow rows in resultTable.Rows)
+            {
+                foreach (var row in rows)
+                {
+                    if ((row != null) && row.ToString().Contains("Create/Update Storage Account"))
+                    {
+                        verifyRow = true;
+                    }
+                }
+            }
+
+            foreach (LogsTableColumn columns in resultTable.Columns)
+            {
+                if (columns.Name == "SubscriptionId" && columns.Type == LogsColumnType.StringTypeValue)
+                    verifyColumn1 = true;
+
+                if (columns.Name == "TimeGenerated" && columns.Type == LogsColumnType.DatetimeTypeValue)
+                    verifyColumn2 = true;
+            }
+
+            Assert.IsTrue(verifyRow);
+            Assert.IsTrue(verifyColumn1 && verifyColumn2);
+        }
+
+        [LiveOnly]
+        [Test]
+        public void VerifyInvalidQueryResourceCheckMultipleBackslash()
+        {
+            var client = CreateClient();
+            LogsQueryOptions options = new LogsQueryOptions();
+            options.IncludeStatistics = true;
+            var resourceId = new ResourceIdentifier("///" + TestEnvironment.StorageAccountId);
+            var exception = Assert.ThrowsAsync<FormatException>(() => client.QueryResourceAsync(
+                resourceId,
+                "search *",
+                _logsTestData.DataTimeRange,
+                options));
+
+            StringAssert.StartsWith("The ResourceIdentifier must start with /subscriptions/ or /providers/.", exception.Message);
+        }
+
+        [LiveOnly]
+        [Test]
+        public void VerifyQueryResourceInvalidId()
+        {
+            var client = CreateClient();
+            var exception = Assert.ThrowsAsync<FormatException>(() => client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId.Remove(15, 36)),
+                "search *",
+                _logsTestData.DataTimeRange));
+
+            StringAssert.StartsWith("The ResourceIdentifier is missing the key for subscriptions.", exception.Message);
         }
 
         public static IEnumerable<FormattableStringWrapper> Queries

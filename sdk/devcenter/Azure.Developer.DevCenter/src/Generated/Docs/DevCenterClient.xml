@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetProjectAsync(String,RequestContext)">
+    <member name="GetProjectAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetProjectAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -9,7 +9,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevCenterClient(endpoint, credential);
 
-Response response = await client.GetProjectAsync("<projectName>");
+Response response = await client.GetProjectAsync("<projectName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -32,7 +32,7 @@ Schema for <c>Project</c>:
 
 </remarks>
     </member>
-    <member name="GetProject(String,RequestContext)">
+    <member name="GetProject(string,RequestContext)">
 <example>
 This sample shows how to call GetProject with required parameters and parse the result.
 <code><![CDATA[
@@ -40,7 +40,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevCenterClient(endpoint, credential);
 
-Response response = client.GetProject("<projectName>");
+Response response = client.GetProject("<projectName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -63,7 +63,7 @@ Schema for <c>Project</c>:
 
 </remarks>
     </member>
-    <member name="GetProjectsAsync(String,Int32,RequestContext)">
+    <member name="GetProjectsAsync(string,int?,RequestContext)">
 <example>
 This sample shows how to call GetProjectsAsync and parse the result.
 <code><![CDATA[
@@ -71,7 +71,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevCenterClient(endpoint, credential);
 
-await foreach (var data in client.GetProjectsAsync())
+await foreach (var item in client.GetProjectsAsync())
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -83,9 +83,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevCenterClient(endpoint, credential);
 
-await foreach (var data in client.GetProjectsAsync("<filter>", 1234))
+await foreach (var item in client.GetProjectsAsync("<filter>", 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("maxDevBoxesPerUser").ToString());
@@ -107,7 +107,7 @@ Schema for <c>ProjectListResultValue</c>:
 
 </remarks>
     </member>
-    <member name="GetProjects(String,Int32,RequestContext)">
+    <member name="GetProjects(string,int?,RequestContext)">
 <example>
 This sample shows how to call GetProjects and parse the result.
 <code><![CDATA[
@@ -115,7 +115,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevCenterClient(endpoint, credential);
 
-foreach (var data in client.GetProjects())
+foreach (var item in client.GetProjects())
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -127,9 +127,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevCenterClient(endpoint, credential);
 
-foreach (var data in client.GetProjects("<filter>", 1234))
+foreach (var item in client.GetProjects("<filter>", 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("maxDevBoxesPerUser").ToString());

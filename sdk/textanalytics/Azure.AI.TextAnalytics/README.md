@@ -11,7 +11,6 @@ Text Analytics is part of the Azure Cognitive Service for Language, a cloud-base
 * Text analytics for health
 * Custom named entity recognition (Custom NER)
 * Custom text classification
-* Dynamic text classification
 * Extractive text summarization
 * Abstractive text summarization
 
@@ -757,7 +756,6 @@ Samples are provided for each main functional area, and for each area, samples a
 * [Custom Named Entities Recognition][recognize_custom_entities_sample]
 * [Custom Single Label Classification][single_category_classify_sample]
 * [Custom Multi Label Classification][multi_category_classify_sample]
-* [Dynamic Classification][dynamic_classify_sample]
 * [Extractive Summarization][extract_summary_sample]
 * [Abstractive Summarization][abstract_summary_sample]
 
@@ -825,9 +823,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [recognize_custom_entities_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample8_RecognizeCustomEntities.md
 [single_category_classify_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample9_SingleLabelClassify.md
 [multi_category_classify_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample10_MultiLabelClassify.md
-[dynamic_classify_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample11_DynamicClassify.md
-[extract_summary_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample12_ExtractSummary.md
-[abstract_summary_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample13_AbstractSummary.md
+[extract_summary_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample11_ExtractSummary.md
+[abstract_summary_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample12_AbstractSummary.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/

@@ -177,7 +177,7 @@ namespace Azure.Monitor.Query
             scope.Start();
             try
             {
-                return ExecuteAsync(workspaceId, query, timeRange, options, false, cancellationToken).EnsureCompleted();
+                return ExecuteAsync(workspaceId, query, timeRange, options, async: false, isWorkspace: true, cancellationToken).EnsureCompleted();
             }
             catch (Exception e)
             {
@@ -201,7 +201,7 @@ namespace Azure.Monitor.Query
             scope.Start();
             try
             {
-                return await ExecuteAsync(workspaceId, query, timeRange, options, true, cancellationToken).ConfigureAwait(false);
+                return await ExecuteAsync(workspaceId, query, timeRange, options, async: true, isWorkspace: true, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -310,6 +310,186 @@ namespace Azure.Monitor.Query
             try
             {
                 return await ExecuteBatchAsync(batch, async: true, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
+        /// <example snippet="Snippet:QueryResource">
+        /// <code language="csharp">
+        /// var client = new LogsQueryClient(new DefaultAzureCredential());
+        ///
+        /// var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
+        ///     &quot;search *&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(5)));
+        ///
+        /// var resultTable = results.Value.Table;
+        ///
+        /// foreach (LogsTableRow rows in resultTable.Rows)
+        /// {
+        ///     foreach (var row in rows)
+        ///     {
+        ///         Console.WriteLine(row);
+        ///     }
+        /// }
+        ///
+        /// foreach (LogsTableColumn columns in resultTable.Columns)
+        /// {
+        ///     Console.WriteLine(&quot;Name: &quot; + columns.Name + &quot; Type: &quot; + columns.Type);
+        /// }
+        /// </code>
+        /// </example>
+        /// </summary>
+        /// <param name="resourceId"> The resourceId where the query should be executed. </param>
+        /// <param name="query"> The Kusto query to fetch the logs. </param>
+        /// <param name="timeRange"> The time period for which the logs should be looked up. </param>
+        /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        /// <returns>The logs matching the query.</returns>
+        public virtual Response<IReadOnlyList<T>> QueryResource<T>(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        {
+            Response<LogsQueryResult> response = QueryResource(resourceId, query, timeRange, options, cancellationToken);
+
+            return Response.FromValue(RowBinder.Shared.BindResults<T>(response.Value.AllTables), response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
+        /// <example snippet="Snippet:QueryResource">
+        /// <code language="csharp">
+        /// var client = new LogsQueryClient(new DefaultAzureCredential());
+        ///
+        /// var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
+        ///     &quot;search *&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(5)));
+        ///
+        /// var resultTable = results.Value.Table;
+        ///
+        /// foreach (LogsTableRow rows in resultTable.Rows)
+        /// {
+        ///     foreach (var row in rows)
+        ///     {
+        ///         Console.WriteLine(row);
+        ///     }
+        /// }
+        ///
+        /// foreach (LogsTableColumn columns in resultTable.Columns)
+        /// {
+        ///     Console.WriteLine(&quot;Name: &quot; + columns.Name + &quot; Type: &quot; + columns.Type);
+        /// }
+        /// </code>
+        /// </example>
+        /// </summary>
+        /// <param name="resourceId"> The resourceId where the query should be executed. </param>
+        /// <param name="query"> The Kusto query to fetch the logs. </param>
+        /// <param name="timeRange"> The time period for which the logs should be looked up. </param>
+        /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        /// <returns>The logs matching the query.</returns>
+        public virtual async Task<Response<IReadOnlyList<T>>> QueryResourceAsync<T>(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        {
+            Response<LogsQueryResult> response = await QueryWorkspaceAsync(resourceId, query, timeRange, options, cancellationToken).ConfigureAwait(false);
+
+            return Response.FromValue(RowBinder.Shared.BindResults<T>(response.Value.AllTables), response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
+        /// <example snippet="Snippet:QueryResource">
+        /// <code language="csharp">
+        /// var client = new LogsQueryClient(new DefaultAzureCredential());
+        ///
+        /// var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
+        ///     &quot;search *&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(5)));
+        ///
+        /// var resultTable = results.Value.Table;
+        ///
+        /// foreach (LogsTableRow rows in resultTable.Rows)
+        /// {
+        ///     foreach (var row in rows)
+        ///     {
+        ///         Console.WriteLine(row);
+        ///     }
+        /// }
+        ///
+        /// foreach (LogsTableColumn columns in resultTable.Columns)
+        /// {
+        ///     Console.WriteLine(&quot;Name: &quot; + columns.Name + &quot; Type: &quot; + columns.Type);
+        /// }
+        /// </code>
+        /// </example>
+        /// </summary>
+        /// <param name="resourceId"> The resourceId where the query should be executed. </param>
+        /// <param name="query"> The Kusto query to fetch the logs. </param>
+        /// <param name="timeRange"> The time period for which the logs should be looked up. </param>
+        /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        /// <returns>The logs matching the query.</returns>
+        public virtual Response<LogsQueryResult> QueryResource(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(QueryResource)}");
+            scope.Start();
+            try
+            {
+                // Call Parse to validate resourceId, then trim preceding / as generated code cannot handle it: https://github.com/Azure/autorest.csharp/issues/3322
+                string resource = ResourceIdentifier.Parse(resourceId).ToString().TrimStart('/');
+                return ExecuteAsync(resource, query, timeRange, options, async: false, isWorkspace: false, cancellationToken).EnsureCompleted();
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
+        /// <example snippet="Snippet:QueryResource">
+        /// <code language="csharp">
+        /// var client = new LogsQueryClient(new DefaultAzureCredential());
+        ///
+        /// var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
+        ///     &quot;search *&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(5)));
+        ///
+        /// var resultTable = results.Value.Table;
+        ///
+        /// foreach (LogsTableRow rows in resultTable.Rows)
+        /// {
+        ///     foreach (var row in rows)
+        ///     {
+        ///         Console.WriteLine(row);
+        ///     }
+        /// }
+        ///
+        /// foreach (LogsTableColumn columns in resultTable.Columns)
+        /// {
+        ///     Console.WriteLine(&quot;Name: &quot; + columns.Name + &quot; Type: &quot; + columns.Type);
+        /// }
+        /// </code>
+        /// </example>
+        /// </summary>
+        /// <param name="resourceId"> The resourceId where the query should be executed. </param>
+        /// <param name="query"> The Kusto query to fetch the logs. </param>
+        /// <param name="timeRange"> The time period for which the logs should be looked up. </param>
+        /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        /// <returns>The logs matching the query.</returns>
+        public virtual async Task<Response<LogsQueryResult>> QueryResourceAsync(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(QueryResource)}");
+            scope.Start();
+            try
+            {
+                // Call Parse to validate resourceId, then trim preceding / as generated code cannot handle it: https://github.com/Azure/autorest.csharp/issues/3322
+                string resource = ResourceIdentifier.Parse(resourceId).ToString().TrimStart('/');
+                return await ExecuteAsync(resource, query, timeRange, options, async: true, isWorkspace: false, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -539,27 +719,22 @@ namespace Azure.Monitor.Query
                 }
                 default:
                 {
-                    if (async)
-                    {
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
+                    throw new RequestFailedException(message.Response);
                 }
             }
         }
 
-        private async Task<Response<LogsQueryResult>> ExecuteAsync(string workspaceId, string query, QueryTimeRange timeRange, LogsQueryOptions options, bool async, CancellationToken cancellationToken = default)
+        private async Task<Response<LogsQueryResult>> ExecuteAsync(string id, string query, QueryTimeRange timeRange, LogsQueryOptions options, bool async, bool isWorkspace, CancellationToken cancellationToken = default)
         {
-            if (workspaceId == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(workspaceId));
+                throw new ArgumentNullException(nameof(id));
             }
 
             QueryBody queryBody = CreateQueryBody(query, timeRange, options, out string prefer);
-            using var message = _queryClient.CreateExecuteRequest(workspaceId, queryBody, prefer);
+
+            using var message = isWorkspace ? _queryClient.CreateExecuteRequest(id, queryBody, prefer)
+                : _queryClient.CreateResourceExecuteRequest(new ResourceIdentifier(id), queryBody, prefer);
 
             if (options?.ServerTimeout != null)
             {
@@ -598,14 +773,7 @@ namespace Azure.Monitor.Query
                 }
                 default:
                 {
-                    if (async)
-                    {
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
+                    throw new RequestFailedException(message.Response);
                 }
             }
         }

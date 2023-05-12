@@ -15,10 +15,10 @@
         "Pool": "azsdk-pool-mms-ubuntu-2004-general",
         "TestTargetFramework": "net7.0"
       },
-      "Windows2022_NET461": {
+      "Windows2022_NET462": {
         "OSVmImage": "windows-2022",
         "Pool": "azsdk-pool-mms-win-2022-general",
-        "TestTargetFramework": "net461"
+        "TestTargetFramework": "net462"
       },
       "Windows2022_NET7.0": {
         "OSVmImage": "windows-2022",

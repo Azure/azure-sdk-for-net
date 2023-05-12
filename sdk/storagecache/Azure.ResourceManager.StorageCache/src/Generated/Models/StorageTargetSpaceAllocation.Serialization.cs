@@ -47,7 +47,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allocationPercentage = property.Value.GetInt32();

@@ -108,7 +108,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     signingAlgorithm = new AS2SigningAlgorithm(property.Value.GetString());

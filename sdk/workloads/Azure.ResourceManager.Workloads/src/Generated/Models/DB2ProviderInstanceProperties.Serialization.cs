@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<string> dbPassword = default;
             Optional<Uri> dbPasswordUri = default;
             Optional<string> sapSid = default;
-            Optional<SslPreference> sslPreference = default;
+            Optional<SapSslPreference> sslPreference = default;
             Optional<Uri> sslCertificateUri = default;
             string providerType = default;
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dbPasswordUri = null;
                         continue;
                     }
                     dbPasswordUri = new Uri(property.Value.GetString());
@@ -128,17 +127,15 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sslPreference = new SslPreference(property.Value.GetString());
+                    sslPreference = new SapSslPreference(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sslCertificateUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sslCertificateUri = null;
                         continue;
                     }
                     sslCertificateUri = new Uri(property.Value.GetString());

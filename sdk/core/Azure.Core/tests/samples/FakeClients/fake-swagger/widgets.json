@@ -1,0 +1,82 @@
+﻿{
+    "info": {
+        "version": "1.0",
+        "title": "widgets"
+    },
+    "swagger": "2.0",
+    "x-ms-parameterized-host": {
+        "hostTemplate": "{endpoint}",
+        "useSchemePrefix": false,
+        "positionInOperation": "first",
+        "parameters": [
+            {
+                "name": "endpoint",
+                "required": true,
+                "format": "url",
+                "type": "string",
+                "in": "path",
+                "x-ms-skip-url-encoding": true,
+                "x-ms-parameter-location": "client"
+            }
+        ]
+    },
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/widgets": {
+            "get": {
+                "operationId": "Get",
+                "parameters": [
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/Widget"
+                        },
+                        "description": "Success response."
+                    },
+                    "default": {
+                        "description": "Error response."
+                    }
+                }
+            },
+            "put": {
+                "operationId": "Set",
+                "parameters": [
+                    {
+                        "name": "widget",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Widget"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response."
+                    },
+                    "default": {
+                        "description": "Error response."
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Widget": {
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

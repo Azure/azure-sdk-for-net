@@ -53,8 +53,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 tags: new Dictionary<string, object?>() { ["sampleRate"] = SampleRate });
 
             Assert.NotNull(activity);
-            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, "00000000-0000-0000-0000-000000000000");
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, null, "00000000-0000-0000-0000-000000000000");
             var expTelemetryItem = new TelemetryItem("Exception", telemetryItem, default, default, default);
 
             if (SampleRate is float)
@@ -85,8 +85,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 tags: new Dictionary<string, object?>() { ["sampleRate"] = SampleRate });
 
             Assert.NotNull(activity);
-            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, "00000000-0000-0000-0000-000000000000");
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, null, "00000000-0000-0000-0000-000000000000");
 
             if (SampleRate is float)
             {
@@ -104,7 +104,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using var activitySource = new ActivitySource(ActivitySourceName);
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(ActivitySourceName)
-                .SetSampler(new ApplicationInsightsSampler(1.0F))
+                .SetSampler(new ApplicationInsightsSampler(new ApplicationInsightsSamplerOptions() { SamplingRatio = 1.0F }))
                 .AddAzureMonitorTraceExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems)
                 .Build();
 
@@ -115,7 +115,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             tracerProvider?.ForceFlush();
 
             Assert.NotEmpty(telemetryItems);
-            Assert.Equal(100F, telemetryItems.First().SampleRate);
+            Assert.Equal(100F, telemetryItems.Last()!.SampleRate);
         }
 
         [Fact]
@@ -124,7 +124,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using var activitySource = new ActivitySource(ActivitySourceName);
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(ActivitySourceName)
-                .SetSampler(new ApplicationInsightsSampler(0.0F))
+                .SetSampler(new ApplicationInsightsSampler(new ApplicationInsightsSamplerOptions() { SamplingRatio = 0.0F }))
                 .AddAzureMonitorTraceExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems)
                 .Build();
 

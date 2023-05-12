@@ -131,7 +131,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = ReservationsSkuName.DeserializeReservationsSkuName(property.Value);
@@ -141,7 +140,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -160,7 +158,6 @@ namespace Azure.ResourceManager.Reservations.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reservedResourceType = new ReservedResourceType(property0.Value.GetString());
@@ -170,7 +167,6 @@ namespace Azure.ResourceManager.Reservations.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             billingScopeId = new ResourceIdentifier(property0.Value.GetString());
@@ -180,7 +176,6 @@ namespace Azure.ResourceManager.Reservations.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             term = new ReservationTerm(property0.Value.GetString());
@@ -190,7 +185,6 @@ namespace Azure.ResourceManager.Reservations.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             billingPlan = new ReservationBillingPlan(property0.Value.GetString());
@@ -200,7 +194,6 @@ namespace Azure.ResourceManager.Reservations.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             quantity = property0.Value.GetInt32();
@@ -215,7 +208,6 @@ namespace Azure.ResourceManager.Reservations.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             appliedScopeType = new AppliedScopeType(property0.Value.GetString());
@@ -240,7 +232,6 @@ namespace Azure.ResourceManager.Reservations.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             appliedScopeProperties = AppliedScopeProperties.DeserializeAppliedScopeProperties(property0.Value);
@@ -250,7 +241,6 @@ namespace Azure.ResourceManager.Reservations.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             renew = property0.Value.GetBoolean();
@@ -260,7 +250,6 @@ namespace Azure.ResourceManager.Reservations.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reservedResourceProperties = PurchaseRequestPropertiesReservedResourceProperties.DeserializePurchaseRequestPropertiesReservedResourceProperties(property0.Value);
@@ -270,7 +259,6 @@ namespace Azure.ResourceManager.Reservations.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reviewDateTime = property0.Value.GetDateTimeOffset("O");

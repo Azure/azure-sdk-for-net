@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -21,15 +20,9 @@ namespace Azure.Core.Pipeline
         internal const string OpenTelemetrySchemaAttribute = "az.schema_url";
         internal const string OpenTelemetrySchemaVersion = "https://opentelemetry.io/schemas/1.17.0";
         private static readonly object AzureSdkScopeValue = bool.TrueString;
-        private static readonly ConcurrentDictionary<string, object?> ActivitySources = new();
 
         private readonly ActivityAdapter? _activityAdapter;
         private readonly bool _suppressNestedClientActivities;
-
-        internal DiagnosticScope(string ns, string scopeName, DiagnosticListener source, ActivityKind kind, bool suppressNestedClientActivities) :
-            this(scopeName, source, null, GetActivitySource(ns, scopeName), kind, suppressNestedClientActivities)
-        {
-        }
 
         internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind, bool suppressNestedClientActivities)
         {
@@ -44,34 +37,15 @@ namespace Azure.Core.Pipeline
                 IsEnabled &= !AzureSdkScopeValue.Equals(Activity.Current?.GetCustomProperty(AzureSdkScopeLabel));
             }
 
-            _activityAdapter = IsEnabled ? new ActivityAdapter(activitySource, source, scopeName, kind, diagnosticSourceArgs) : null;
+            _activityAdapter = IsEnabled ? new ActivityAdapter(
+                                                    activitySource: activitySource,
+                                                    diagnosticSource: source,
+                                                    activityName: scopeName,
+                                                    kind: kind,
+                                                    diagnosticSourceArgs: diagnosticSourceArgs) : null;
         }
 
         public bool IsEnabled { get; }
-
-        /// <summary>
-        /// This method combines client namespace and operation name into an ActivitySource name and creates the activity source.
-        /// For example:
-        ///     ns: Azure.Storage.Blobs
-        ///     name: BlobClient.DownloadTo
-        ///     result Azure.Storage.Blobs.BlobClient
-        /// </summary>
-        private static object? GetActivitySource(string ns, string name)
-        {
-            if (!ActivityExtensions.SupportsActivitySource())
-            {
-                return null;
-            }
-
-            string clientName = ns;
-            int indexOfDot = name.IndexOf(".", StringComparison.OrdinalIgnoreCase);
-            if (indexOfDot != -1)
-            {
-                clientName += "." + name.Substring(0, indexOfDot);
-            }
-
-            return ActivitySources.GetOrAdd(clientName, static n => ActivityExtensions.CreateActivitySource(n));
-        }
 
         public void AddAttribute(string name, string value)
         {
@@ -200,6 +174,8 @@ namespace Azure.Core.Pipeline
             private readonly object? _diagnosticSourceArgs;
 
             private Activity? _currentActivity;
+            private Activity? _sampleOutActivity;
+
             private ICollection<KeyValuePair<string,object>>? _tagCollection;
             private DateTimeOffset _startTime;
             private List<Activity>? _links;
@@ -288,6 +264,14 @@ namespace Azure.Core.Pipeline
                 _currentActivity = StartActivitySourceActivity();
                 if (_currentActivity != null)
                 {
+                    if (!_currentActivity.GetIsAllDataRequested())
+                    {
+                        _sampleOutActivity = _currentActivity;
+                        _currentActivity = null;
+
+                        return null;
+                    }
+
                     _currentActivity.AddTag(OpenTelemetrySchemaAttribute, OpenTelemetrySchemaVersion);
                 }
                 else
@@ -397,19 +381,20 @@ namespace Azure.Core.Pipeline
 
             public void Dispose()
             {
-                if (_currentActivity == null)
+                var activity = _currentActivity ?? _sampleOutActivity;
+                if (activity == null)
                 {
                     return;
                 }
 
-                if (_currentActivity.Duration == TimeSpan.Zero)
-                    _currentActivity.SetEndTime(DateTime.UtcNow);
+                if (activity.Duration == TimeSpan.Zero)
+                    activity.SetEndTime(DateTime.UtcNow);
 
                 _diagnosticSource.Write(_activityName + ".Stop", _diagnosticSourceArgs);
 
-                if (!_currentActivity.TryDispose())
+                if (!activity.TryDispose())
                 {
-                    _currentActivity.Stop();
+                    activity.Stop();
                 }
             }
         }
@@ -440,6 +425,7 @@ namespace Azure.Core.Pipeline
         private static Action<Activity, string?>? SetTraceStateStringMethod;
         private static Action<Activity, int, string?>? SetErrorStatusMethod;
         private static Func<Activity, int>? GetIdFormatMethod;
+        private static Func<Activity, bool>? GetAllDataRequestedMethod;
         private static Action<Activity, string, object?>? ActivityAddTagMethod;
         private static Func<object, string, int, object?, ICollection<KeyValuePair<string, object>>?, IList?, DateTimeOffset, Activity?>? ActivitySourceStartActivityMethod;
         private static Func<object, bool>? ActivitySourceHasListenersMethod;
@@ -559,6 +545,25 @@ namespace Azure.Core.Pipeline
             }
 
             return GetTraceStateStringMethod(activity);
+        }
+
+        public static bool GetIsAllDataRequested(this Activity activity)
+        {
+            if (GetAllDataRequestedMethod == null)
+            {
+                var method = typeof(Activity).GetProperty("IsAllDataRequested")?.GetMethod;
+                if (method == null)
+                {
+                    GetAllDataRequestedMethod = _ => true;
+                }
+                else
+                {
+                    GetAllDataRequestedMethod = Expression.Lambda<Func<Activity, bool>>(
+                        Expression.Call(ActivityParameter, method),
+                        ActivityParameter).Compile();
+                }
+            }
+            return GetAllDataRequestedMethod(activity);
         }
 
         public static void SetTraceState(this Activity activity, string? tracestate)

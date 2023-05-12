@@ -751,7 +751,7 @@ var client = new DevBoxesClient(endpoint, credential);
 
 await foreach (var data in client.GetPoolsAsync("<projectName>", 1234, "<filter>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("location").ToString());
     Console.WriteLine(result.GetProperty("osType").ToString());
@@ -835,7 +835,7 @@ var client = new DevBoxesClient(endpoint, credential);
 
 foreach (var data in client.GetPools("<projectName>", 1234, "<filter>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("location").ToString());
     Console.WriteLine(result.GetProperty("osType").ToString());
@@ -921,7 +921,7 @@ var client = new DevBoxesClient(endpoint, credential);
 
 await foreach (var data in client.GetSchedulesAsync("<projectName>", "<poolName>", 1234, "<filter>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("frequency").ToString());
@@ -973,7 +973,7 @@ var client = new DevBoxesClient(endpoint, credential);
 
 foreach (var data in client.GetSchedules("<projectName>", "<poolName>", 1234, "<filter>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("frequency").ToString());
@@ -1405,7 +1405,7 @@ var client = new DevBoxesClient(endpoint, credential);
 
 await foreach (var data in client.GetDevBoxesAsync("<projectName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("poolName").ToString());
 }
 ]]></code>
@@ -1417,7 +1417,7 @@ var client = new DevBoxesClient(endpoint, credential);
 
 await foreach (var data in client.GetDevBoxesAsync("<projectName>", <me>, "<filter>", 1234))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("projectName").ToString());
     Console.WriteLine(result.GetProperty("poolName").ToString());
@@ -1504,7 +1504,7 @@ var client = new DevBoxesClient(endpoint, credential);
 
 foreach (var data in client.GetDevBoxes("<projectName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("poolName").ToString());
 }
 ]]></code>
@@ -1516,7 +1516,7 @@ var client = new DevBoxesClient(endpoint, credential);
 
 foreach (var data in client.GetDevBoxes("<projectName>", <me>, "<filter>", 1234))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("projectName").ToString());
     Console.WriteLine(result.GetProperty("poolName").ToString());
@@ -1843,8 +1843,8 @@ var data = new {
 
 var operation = await client.CreateDevBoxAsync(WaitUntil.Completed, "<projectName>", "<devBoxName>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("poolName").ToString());
 ]]></code>
 This sample shows how to call CreateDevBoxAsync with all parameters and request content, and how to parse the result.
@@ -1860,8 +1860,8 @@ var data = new {
 
 var operation = await client.CreateDevBoxAsync(WaitUntil.Completed, "<projectName>", "<devBoxName>", RequestContent.Create(data), <me>);
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("projectName").ToString());
 Console.WriteLine(result.GetProperty("poolName").ToString());
@@ -1994,8 +1994,8 @@ var data = new {
 
 var operation = client.CreateDevBox(WaitUntil.Completed, "<projectName>", "<devBoxName>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("poolName").ToString());
 ]]></code>
 This sample shows how to call CreateDevBox with all parameters and request content, and how to parse the result.
@@ -2011,8 +2011,8 @@ var data = new {
 
 var operation = client.CreateDevBox(WaitUntil.Completed, "<projectName>", "<devBoxName>", RequestContent.Create(data), <me>);
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("projectName").ToString());
 Console.WriteLine(result.GetProperty("poolName").ToString());

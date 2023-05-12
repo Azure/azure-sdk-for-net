@@ -30,11 +30,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="timeoutInSeconds"> The probe timeout in seconds. Probe marked as failed if valid response is not received with this timeout period. Acceptable values are from 1 second to 86400 seconds. </param>
         /// <param name="unhealthyThreshold"> The probe retry count. Backend server is marked down after consecutive probe failure count reaches UnhealthyThreshold. Acceptable values are from 1 second to 20. </param>
         /// <param name="pickHostNameFromBackendHttpSettings"> Whether the host header should be picked from the backend http settings. Default value is false. </param>
+        /// <param name="pickHostNameFromBackendSettings"> Whether the server name indication should be picked from the backend settings for Tls protocol. Default value is false. </param>
         /// <param name="minServers"> Minimum number of servers that are always marked healthy. Default value is 0. </param>
         /// <param name="match"> Criterion for classifying a healthy probe response. </param>
         /// <param name="provisioningState"> The provisioning state of the probe resource. </param>
         /// <param name="port"> Custom port which will be used for probing the backend servers. The valid value ranges from 1 to 65535. In case not set, port from http settings will be used. This property is valid for Standard_v2 and WAF_v2 only. </param>
-        internal ApplicationGatewayProbe(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ApplicationGatewayProtocol? protocol, string host, string path, int? intervalInSeconds, int? timeoutInSeconds, int? unhealthyThreshold, bool? pickHostNameFromBackendHttpSettings, int? minServers, ApplicationGatewayProbeHealthResponseMatch match, NetworkProvisioningState? provisioningState, int? port) : base(id, name, resourceType)
+        internal ApplicationGatewayProbe(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ApplicationGatewayProtocol? protocol, string host, string path, int? intervalInSeconds, int? timeoutInSeconds, int? unhealthyThreshold, bool? pickHostNameFromBackendHttpSettings, bool? pickHostNameFromBackendSettings, int? minServers, ApplicationGatewayProbeHealthResponseMatch match, NetworkProvisioningState? provisioningState, int? port) : base(id, name, resourceType)
         {
             ETag = etag;
             Protocol = protocol;
@@ -44,6 +45,7 @@ namespace Azure.ResourceManager.Network.Models
             TimeoutInSeconds = timeoutInSeconds;
             UnhealthyThreshold = unhealthyThreshold;
             PickHostNameFromBackendHttpSettings = pickHostNameFromBackendHttpSettings;
+            PickHostNameFromBackendSettings = pickHostNameFromBackendSettings;
             MinServers = minServers;
             Match = match;
             ProvisioningState = provisioningState;
@@ -66,6 +68,8 @@ namespace Azure.ResourceManager.Network.Models
         public int? UnhealthyThreshold { get; set; }
         /// <summary> Whether the host header should be picked from the backend http settings. Default value is false. </summary>
         public bool? PickHostNameFromBackendHttpSettings { get; set; }
+        /// <summary> Whether the server name indication should be picked from the backend settings for Tls protocol. Default value is false. </summary>
+        public bool? PickHostNameFromBackendSettings { get; set; }
         /// <summary> Minimum number of servers that are always marked healthy. Default value is 0. </summary>
         public int? MinServers { get; set; }
         /// <summary> Criterion for classifying a healthy probe response. </summary>

@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("assignedUser"u8);
                 writer.WriteStringValue(AssignedUser);
             }
+            if (Optional.IsDefined(FriendlyName))
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -93,6 +98,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<string> virtualMachineId = default;
             Optional<ResourceIdentifier> resourceId = default;
             Optional<string> assignedUser = default;
+            Optional<string> friendlyName = default;
             Optional<SessionHostStatus> status = default;
             Optional<DateTimeOffset> statusTimestamp = default;
             Optional<string> osVersion = default;
@@ -122,7 +128,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -146,7 +151,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastHeartBeat = property0.Value.GetDateTimeOffset("O");
@@ -156,7 +160,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sessions = property0.Value.GetInt32();
@@ -171,7 +174,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allowNewSession = property0.Value.GetBoolean();
@@ -186,7 +188,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -197,11 +198,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             assignedUser = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("friendlyName"u8))
+                        {
+                            friendlyName = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new SessionHostStatus(property0.Value.GetString());
@@ -211,7 +216,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             statusTimestamp = property0.Value.GetDateTimeOffset("O");
@@ -231,7 +235,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             updateState = new SessionHostUpdateState(property0.Value.GetString());
@@ -241,7 +244,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastUpdateTime = property0.Value.GetDateTimeOffset("O");
@@ -256,7 +258,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SessionHostHealthCheckReport> array = new List<SessionHostHealthCheckReport>();
@@ -271,7 +272,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new SessionHostData(id, name, type, systemData.Value, objectId.Value, Optional.ToNullable(lastHeartBeat), Optional.ToNullable(sessions), agentVersion.Value, Optional.ToNullable(allowNewSession), virtualMachineId.Value, resourceId.Value, assignedUser.Value, Optional.ToNullable(status), Optional.ToNullable(statusTimestamp), osVersion.Value, sxsStackVersion.Value, Optional.ToNullable(updateState), Optional.ToNullable(lastUpdateTime), updateErrorMessage.Value, Optional.ToList(sessionHostHealthCheckResults));
+            return new SessionHostData(id, name, type, systemData.Value, objectId.Value, Optional.ToNullable(lastHeartBeat), Optional.ToNullable(sessions), agentVersion.Value, Optional.ToNullable(allowNewSession), virtualMachineId.Value, resourceId.Value, assignedUser.Value, friendlyName.Value, Optional.ToNullable(status), Optional.ToNullable(statusTimestamp), osVersion.Value, sxsStackVersion.Value, Optional.ToNullable(updateState), Optional.ToNullable(lastUpdateTime), updateErrorMessage.Value, Optional.ToList(sessionHostHealthCheckResults));
         }
     }
 }

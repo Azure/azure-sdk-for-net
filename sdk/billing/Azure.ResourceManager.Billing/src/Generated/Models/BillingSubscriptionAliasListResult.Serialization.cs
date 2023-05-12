@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.Billing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BillingSubscriptionAliasData> array = new List<BillingSubscriptionAliasData>();

@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.HybridContainerService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-05-01-preview";
+            _apiVersion = apiVersion ?? "2022-09-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string provisionedClustersName, string agentPoolName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceName, string agentPoolName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HybridContainerService
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusters/", false);
-            uri.AppendPath(provisionedClustersName, true);
+            uri.AppendPath(resourceName, true);
             uri.AppendPath("/agentPools/", false);
             uri.AppendPath(agentPoolName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <summary> Gets the agent pool in the Hybrid AKS provisioned cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="provisionedClustersName"> Parameter for the name of the provisioned cluster. </param>
+        /// <param name="resourceName"> Parameter for the name of the provisioned cluster. </param>
         /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisionedClustersName"/> or <paramref name="agentPoolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisionedClustersName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HybridContainerServiceAgentPoolData>> GetAsync(string subscriptionId, string resourceGroupName, string provisionedClustersName, string agentPoolName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="agentPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<HybridContainerServiceAgentPoolData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string agentPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(provisionedClustersName, nameof(provisionedClustersName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, provisionedClustersName, agentPoolName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, agentPoolName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -95,19 +95,19 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <summary> Gets the agent pool in the Hybrid AKS provisioned cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="provisionedClustersName"> Parameter for the name of the provisioned cluster. </param>
+        /// <param name="resourceName"> Parameter for the name of the provisioned cluster. </param>
         /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisionedClustersName"/> or <paramref name="agentPoolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisionedClustersName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HybridContainerServiceAgentPoolData> Get(string subscriptionId, string resourceGroupName, string provisionedClustersName, string agentPoolName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="agentPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<HybridContainerServiceAgentPoolData> Get(string subscriptionId, string resourceGroupName, string resourceName, string agentPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(provisionedClustersName, nameof(provisionedClustersName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, provisionedClustersName, agentPoolName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, agentPoolName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string provisionedClustersName, string agentPoolName, HybridContainerServiceAgentPoolData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, string agentPoolName, HybridContainerServiceAgentPoolData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HybridContainerService
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusters/", false);
-            uri.AppendPath(provisionedClustersName, true);
+            uri.AppendPath(resourceName, true);
             uri.AppendPath("/agentPools/", false);
             uri.AppendPath(agentPoolName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -154,21 +154,21 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <summary> Creates the agent pool in the Hybrid AKS provisioned cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="provisionedClustersName"> Parameter for the name of the provisioned cluster. </param>
+        /// <param name="resourceName"> Parameter for the name of the provisioned cluster. </param>
         /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
         /// <param name="data"> The HybridContainerServiceAgentPool to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisionedClustersName"/>, <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisionedClustersName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string provisionedClustersName, string agentPoolName, HybridContainerServiceAgentPoolData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, string agentPoolName, HybridContainerServiceAgentPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(provisionedClustersName, nameof(provisionedClustersName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, provisionedClustersName, agentPoolName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, resourceName, agentPoolName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -183,21 +183,21 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <summary> Creates the agent pool in the Hybrid AKS provisioned cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="provisionedClustersName"> Parameter for the name of the provisioned cluster. </param>
+        /// <param name="resourceName"> Parameter for the name of the provisioned cluster. </param>
         /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
         /// <param name="data"> The HybridContainerServiceAgentPool to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisionedClustersName"/>, <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisionedClustersName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string provisionedClustersName, string agentPoolName, HybridContainerServiceAgentPoolData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string resourceName, string agentPoolName, HybridContainerServiceAgentPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(provisionedClustersName, nameof(provisionedClustersName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, provisionedClustersName, agentPoolName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, resourceName, agentPoolName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string provisionedClustersName, string agentPoolName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceName, string agentPoolName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.HybridContainerService
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusters/", false);
-            uri.AppendPath(provisionedClustersName, true);
+            uri.AppendPath(resourceName, true);
             uri.AppendPath("/agentPools/", false);
             uri.AppendPath(agentPoolName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -234,19 +234,19 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <summary> Deletes the agent pool in the Hybrid AKS provisioned cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="provisionedClustersName"> Parameter for the name of the provisioned cluster. </param>
+        /// <param name="resourceName"> Parameter for the name of the provisioned cluster. </param>
         /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisionedClustersName"/> or <paramref name="agentPoolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisionedClustersName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string provisionedClustersName, string agentPoolName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="agentPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string resourceName, string agentPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(provisionedClustersName, nameof(provisionedClustersName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, provisionedClustersName, agentPoolName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, agentPoolName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -261,19 +261,19 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <summary> Deletes the agent pool in the Hybrid AKS provisioned cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="provisionedClustersName"> Parameter for the name of the provisioned cluster. </param>
+        /// <param name="resourceName"> Parameter for the name of the provisioned cluster. </param>
         /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisionedClustersName"/> or <paramref name="agentPoolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisionedClustersName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string provisionedClustersName, string agentPoolName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="agentPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string resourceName, string agentPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(provisionedClustersName, nameof(provisionedClustersName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, provisionedClustersName, agentPoolName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, agentPoolName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string provisionedClustersName, string agentPoolName, HybridContainerServiceAgentPoolData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, string agentPoolName, HybridContainerServiceAgentPoolData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.HybridContainerService
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusters/", false);
-            uri.AppendPath(provisionedClustersName, true);
+            uri.AppendPath(resourceName, true);
             uri.AppendPath("/agentPools/", false);
             uri.AppendPath(agentPoolName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -314,21 +314,21 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <summary> Updates the agent pool in the Hybrid AKS provisioned cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="provisionedClustersName"> Parameter for the name of the provisioned cluster. </param>
+        /// <param name="resourceName"> Parameter for the name of the provisioned cluster. </param>
         /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
         /// <param name="data"> The HybridContainerServiceAgentPool to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisionedClustersName"/>, <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisionedClustersName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HybridContainerServiceAgentPoolData>> UpdateAsync(string subscriptionId, string resourceGroupName, string provisionedClustersName, string agentPoolName, HybridContainerServiceAgentPoolData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<HybridContainerServiceAgentPoolData>> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, string agentPoolName, HybridContainerServiceAgentPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(provisionedClustersName, nameof(provisionedClustersName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, provisionedClustersName, agentPoolName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, agentPoolName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -348,21 +348,21 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <summary> Updates the agent pool in the Hybrid AKS provisioned cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="provisionedClustersName"> Parameter for the name of the provisioned cluster. </param>
+        /// <param name="resourceName"> Parameter for the name of the provisioned cluster. </param>
         /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
         /// <param name="data"> The HybridContainerServiceAgentPool to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisionedClustersName"/>, <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisionedClustersName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HybridContainerServiceAgentPoolData> Update(string subscriptionId, string resourceGroupName, string provisionedClustersName, string agentPoolName, HybridContainerServiceAgentPoolData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<HybridContainerServiceAgentPoolData> Update(string subscriptionId, string resourceGroupName, string resourceName, string agentPoolName, HybridContainerServiceAgentPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(provisionedClustersName, nameof(provisionedClustersName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, provisionedClustersName, agentPoolName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, agentPoolName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
-        internal HttpMessage CreateListByProvisionedClusterRequest(string subscriptionId, string resourceGroupName, string provisionedClustersName)
+        internal HttpMessage CreateListByProvisionedClusterRequest(string subscriptionId, string resourceGroupName, string resourceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.HybridContainerService
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusters/", false);
-            uri.AppendPath(provisionedClustersName, true);
+            uri.AppendPath(resourceName, true);
             uri.AppendPath("/agentPools", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -403,17 +403,17 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <summary> Gets the agent pools in the Hybrid AKS provisioned cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="provisionedClustersName"> Parameter for the name of the provisioned cluster. </param>
+        /// <param name="resourceName"> Parameter for the name of the provisioned cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="provisionedClustersName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="provisionedClustersName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AgentPoolListResult>> ListByProvisionedClusterAsync(string subscriptionId, string resourceGroupName, string provisionedClustersName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AgentPoolListResult>> ListByProvisionedClusterAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(provisionedClustersName, nameof(provisionedClustersName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var message = CreateListByProvisionedClusterRequest(subscriptionId, resourceGroupName, provisionedClustersName);
+            using var message = CreateListByProvisionedClusterRequest(subscriptionId, resourceGroupName, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -432,17 +432,17 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <summary> Gets the agent pools in the Hybrid AKS provisioned cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="provisionedClustersName"> Parameter for the name of the provisioned cluster. </param>
+        /// <param name="resourceName"> Parameter for the name of the provisioned cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="provisionedClustersName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="provisionedClustersName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AgentPoolListResult> ListByProvisionedCluster(string subscriptionId, string resourceGroupName, string provisionedClustersName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AgentPoolListResult> ListByProvisionedCluster(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(provisionedClustersName, nameof(provisionedClustersName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var message = CreateListByProvisionedClusterRequest(subscriptionId, resourceGroupName, provisionedClustersName);
+            using var message = CreateListByProvisionedClusterRequest(subscriptionId, resourceGroupName, resourceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

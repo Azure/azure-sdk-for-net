@@ -49,7 +49,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        public static async ValueTask<RequestFailedException> CreateExceptionForFailedOperationAsync(bool async, ClientDiagnostics diagnostics, Response response, IReadOnlyList<FormRecognizerError> errors, string errorMessage = default)
+        public static RequestFailedException CreateExceptionForFailedOperation(Response response, IReadOnlyList<FormRecognizerError> errors, string errorMessage = default)
         {
             string errorCode = default;
 
@@ -68,17 +68,13 @@ namespace Azure.AI.FormRecognizer
             }
 
             var responseError = new ResponseError(errorCode, errorMessage);
-            return async
-                ? await diagnostics.CreateRequestFailedExceptionAsync(response, responseError, errorInfo).ConfigureAwait(false)
-                : diagnostics.CreateRequestFailedException(response, responseError, errorInfo);
+            return new RequestFailedException(response, null, new FormRecognizerRequestFailedDetailsParser(responseError, errorInfo));
         }
 
-        public static async ValueTask<RequestFailedException> CreateExceptionForFailedOperationAsync(bool async, ClientDiagnostics diagnostics, Response response, ResponseError error)
+        public static RequestFailedException CreateExceptionForFailedOperation(Response response, ResponseError error)
         {
             var additionalInfo = new Dictionary<string, string>(1) { { "AdditionInformation", error.ToString() } };
-            return async
-                ? await diagnostics.CreateRequestFailedExceptionAsync(response, error, additionalInfo).ConfigureAwait(false)
-                : diagnostics.CreateRequestFailedException(response, error, additionalInfo);
+            return new RequestFailedException(response, null, new FormRecognizerRequestFailedDetailsParser(error, additionalInfo));
         }
 
         public static RecognizedFormCollection ConvertPrebuiltOutputToRecognizedForms(V2AnalyzeResult analyzeResult)
@@ -91,7 +87,7 @@ namespace Azure.AI.FormRecognizer
             return new RecognizedFormCollection(forms);
         }
 
-        public static IReadOnlyList<PointF> CovertToListOfPointF(IReadOnlyList<float> coordinates)
+        public static IReadOnlyList<PointF> ConvertToListOfPointF(IReadOnlyList<float> coordinates)
         {
             if (coordinates == null || coordinates.Count == 0)
             {
@@ -106,6 +102,25 @@ namespace Azure.AI.FormRecognizer
             }
 
             return points;
+        }
+
+        private class FormRecognizerRequestFailedDetailsParser : RequestFailedDetailsParser
+        {
+            private readonly ResponseError _error;
+            private readonly IDictionary<string, string> _additionalInfo;
+
+            public FormRecognizerRequestFailedDetailsParser(ResponseError error, IDictionary<string, string> additionalInfo)
+            {
+                _error = error;
+                _additionalInfo = additionalInfo;
+            }
+
+            public override bool TryParse(Response response, out ResponseError error, out IDictionary<string, string> data)
+            {
+                error = _error;
+                data = _additionalInfo;
+                return true;
+            }
         }
     }
 }

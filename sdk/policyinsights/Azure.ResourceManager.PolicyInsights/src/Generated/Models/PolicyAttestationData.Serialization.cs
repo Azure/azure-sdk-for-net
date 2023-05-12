@@ -118,7 +118,6 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -147,7 +146,6 @@ namespace Azure.ResourceManager.PolicyInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             complianceState = new PolicyComplianceState(property0.Value.GetString());
@@ -157,7 +155,6 @@ namespace Azure.ResourceManager.PolicyInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             expiresOn = property0.Value.GetDateTimeOffset("O");
@@ -177,7 +174,6 @@ namespace Azure.ResourceManager.PolicyInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<AttestationEvidence> array = new List<AttestationEvidence>();
@@ -197,7 +193,6 @@ namespace Azure.ResourceManager.PolicyInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastComplianceStateChangeAt = property0.Value.GetDateTimeOffset("O");
@@ -207,7 +202,6 @@ namespace Azure.ResourceManager.PolicyInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             assessmentDate = property0.Value.GetDateTimeOffset("O");
@@ -217,7 +211,6 @@ namespace Azure.ResourceManager.PolicyInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             metadata = BinaryData.FromString(property0.Value.GetRawText());

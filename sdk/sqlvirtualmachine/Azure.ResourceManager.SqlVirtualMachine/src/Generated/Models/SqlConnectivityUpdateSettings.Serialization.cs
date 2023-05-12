@@ -54,7 +54,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     connectivityType = new SqlServerConnectivityType(property.Value.GetString());
@@ -64,7 +63,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     port = property.Value.GetInt32();

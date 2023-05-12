@@ -37,7 +37,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scheduledDateTime = property.Value.GetDateTimeOffset("O");

@@ -61,11 +61,20 @@ namespace Azure.Analytics.Purview.Workflows
             _apiVersion = options.Version;
         }
 
-        /// <summary> Get a specific workflow. </summary>
+        /// <summary>
+        /// [Protocol Method] Get a specific workflow.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="workflowId"> The workflow id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowAsync(Guid,RequestContext)']/*" />
         public virtual async Task<Response> GetWorkflowAsync(Guid workflowId, RequestContext context = null)
         {
@@ -83,11 +92,20 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary> Get a specific workflow. </summary>
+        /// <summary>
+        /// [Protocol Method] Get a specific workflow.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="workflowId"> The workflow id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflow(Guid,RequestContext)']/*" />
         public virtual Response GetWorkflow(Guid workflowId, RequestContext context = null)
         {
@@ -105,13 +123,22 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary> Create or replace a workflow. </summary>
+        /// <summary>
+        /// [Protocol Method] Create or replace a workflow.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="workflowId"> The workflow id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='CreateOrReplaceWorkflowAsync(Guid,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrReplaceWorkflowAsync(Guid workflowId, RequestContent content, RequestContext context = null)
         {
@@ -131,13 +158,22 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary> Create or replace a workflow. </summary>
+        /// <summary>
+        /// [Protocol Method] Create or replace a workflow.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="workflowId"> The workflow id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='CreateOrReplaceWorkflow(Guid,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrReplaceWorkflow(Guid workflowId, RequestContent content, RequestContext context = null)
         {
@@ -157,7 +193,16 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary> Delete a workflow. </summary>
+        /// <summary>
+        /// [Protocol Method] Delete a workflow.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="workflowId"> The workflow id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -179,7 +224,16 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary> Delete a workflow. </summary>
+        /// <summary>
+        /// [Protocol Method] Delete a workflow.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="workflowId"> The workflow id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -201,12 +255,21 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary> Submit a user request for requestor, a user  request describes user ask to do operation(s) on Purview. If any workflow&apos;s trigger matches with an operation in request, a run of the workflow is created. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <summary>
+        /// [Protocol Method] Submit a user request for requestor, a user  request describes user ask to do operation(s) on Purview. If any workflow&apos;s trigger matches with an operation in request, a run of the workflow is created.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='SubmitUserRequestsAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> SubmitUserRequestsAsync(RequestContent content, RequestContext context = null)
         {
@@ -226,12 +289,21 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary> Submit a user request for requestor, a user  request describes user ask to do operation(s) on Purview. If any workflow&apos;s trigger matches with an operation in request, a run of the workflow is created. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <summary>
+        /// [Protocol Method] Submit a user request for requestor, a user  request describes user ask to do operation(s) on Purview. If any workflow&apos;s trigger matches with an operation in request, a run of the workflow is created.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='SubmitUserRequests(RequestContent,RequestContext)']/*" />
         public virtual Response SubmitUserRequests(RequestContent content, RequestContext context = null)
         {
@@ -251,11 +323,20 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary> Get a workflow run. </summary>
+        /// <summary>
+        /// [Protocol Method] Get a workflow run.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="workflowRunId"> The workflow run id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRunAsync(Guid,RequestContext)']/*" />
         public virtual async Task<Response> GetWorkflowRunAsync(Guid workflowRunId, RequestContext context = null)
         {
@@ -273,11 +354,20 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary> Get a workflow run. </summary>
+        /// <summary>
+        /// [Protocol Method] Get a workflow run.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="workflowRunId"> The workflow run id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRun(Guid,RequestContext)']/*" />
         public virtual Response GetWorkflowRun(Guid workflowRunId, RequestContext context = null)
         {
@@ -295,9 +385,18 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary> Cancel a workflow run. </summary>
+        /// <summary>
+        /// [Protocol Method] Cancel a workflow run.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="workflowRunId"> The workflow run id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -321,9 +420,18 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary> Cancel a workflow run. </summary>
+        /// <summary>
+        /// [Protocol Method] Cancel a workflow run.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="workflowRunId"> The workflow run id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -347,11 +455,20 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary> Get a workflow task. </summary>
+        /// <summary>
+        /// [Protocol Method] Get a workflow task.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="taskId"> The task id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTaskAsync(Guid,RequestContext)']/*" />
         public virtual async Task<Response> GetWorkflowTaskAsync(Guid taskId, RequestContext context = null)
         {
@@ -369,11 +486,20 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary> Get a workflow task. </summary>
+        /// <summary>
+        /// [Protocol Method] Get a workflow task.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="taskId"> The task id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTask(Guid,RequestContext)']/*" />
         public virtual Response GetWorkflowTask(Guid taskId, RequestContext context = null)
         {
@@ -391,9 +517,18 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary> Approve an approval task. </summary>
+        /// <summary>
+        /// [Protocol Method] Approve an approval task.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="taskId"> The task id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -417,9 +552,18 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary> Approve an approval task. </summary>
+        /// <summary>
+        /// [Protocol Method] Approve an approval task.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="taskId"> The task id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -443,9 +587,18 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary> Reject an approval task. </summary>
+        /// <summary>
+        /// [Protocol Method] Reject an approval task.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="taskId"> The task id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -469,9 +622,18 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary> Reject an approval task. </summary>
+        /// <summary>
+        /// [Protocol Method] Reject an approval task.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="taskId"> The task id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -495,9 +657,18 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary> Reassign a workflow task. </summary>
+        /// <summary>
+        /// [Protocol Method] Reassign a workflow task.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="taskId"> The task id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -521,9 +692,18 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary> Reassign a workflow task. </summary>
+        /// <summary>
+        /// [Protocol Method] Reassign a workflow task.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="taskId"> The task id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -547,9 +727,18 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary> Update the status of a workflow task request. </summary>
+        /// <summary>
+        /// [Protocol Method] Update the status of a workflow task request.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="taskId"> The task id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -573,9 +762,18 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary> Update the status of a workflow task request. </summary>
+        /// <summary>
+        /// [Protocol Method] Update the status of a workflow task request.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="taskId"> The task id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -599,7 +797,16 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
-        /// <summary> List all workflows. </summary>
+        /// <summary>
+        /// [Protocol Method] List all workflows.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -611,7 +818,16 @@ namespace Azure.Analytics.Purview.Workflows
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflows", "value", "nextLink", context);
         }
 
-        /// <summary> List all workflows. </summary>
+        /// <summary>
+        /// [Protocol Method] List all workflows.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -623,7 +839,16 @@ namespace Azure.Analytics.Purview.Workflows
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflows", "value", "nextLink", context);
         }
 
-        /// <summary> List workflow runs. </summary>
+        /// <summary>
+        /// [Protocol Method] List workflow runs.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="timeWindow"> Time window of filtering items. Allowed values: &quot;1d&quot; | &quot;7d&quot; | &quot;30d&quot; | &quot;90d&quot;. </param>
         /// <param name="orderby"> The key word which used to sort the results. Allowed values: &quot;status desc&quot; | &quot;status asc&quot; | &quot;requestor desc&quot; | &quot;requestor asc&quot; | &quot;startTime desc&quot; | &quot;startTime asc&quot; | &quot;createdTime desc&quot; | &quot;createdTime asc&quot;. </param>
         /// <param name="runStatuses"> Filter workflow runs by workflow run status. </param>
@@ -632,7 +857,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRunsAsync(String,String,IEnumerable,IEnumerable,Int32,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRunsAsync(string,string,IEnumerable{string},IEnumerable{string},int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetWorkflowRunsAsync(string timeWindow = null, string orderby = null, IEnumerable<string> runStatuses = null, IEnumerable<string> workflowIds = null, int? maxpagesize = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowRunsRequest(timeWindow, orderby, runStatuses, workflowIds, maxpagesize, context);
@@ -640,7 +865,16 @@ namespace Azure.Analytics.Purview.Workflows
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowRuns", "value", "nextLink", context);
         }
 
-        /// <summary> List workflow runs. </summary>
+        /// <summary>
+        /// [Protocol Method] List workflow runs.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="timeWindow"> Time window of filtering items. Allowed values: &quot;1d&quot; | &quot;7d&quot; | &quot;30d&quot; | &quot;90d&quot;. </param>
         /// <param name="orderby"> The key word which used to sort the results. Allowed values: &quot;status desc&quot; | &quot;status asc&quot; | &quot;requestor desc&quot; | &quot;requestor asc&quot; | &quot;startTime desc&quot; | &quot;startTime asc&quot; | &quot;createdTime desc&quot; | &quot;createdTime asc&quot;. </param>
         /// <param name="runStatuses"> Filter workflow runs by workflow run status. </param>
@@ -649,7 +883,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRuns(String,String,IEnumerable,IEnumerable,Int32,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRuns(string,string,IEnumerable{string},IEnumerable{string},int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetWorkflowRuns(string timeWindow = null, string orderby = null, IEnumerable<string> runStatuses = null, IEnumerable<string> workflowIds = null, int? maxpagesize = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowRunsRequest(timeWindow, orderby, runStatuses, workflowIds, maxpagesize, context);
@@ -657,7 +891,16 @@ namespace Azure.Analytics.Purview.Workflows
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowRuns", "value", "nextLink", context);
         }
 
-        /// <summary> Get all workflow tasks. </summary>
+        /// <summary>
+        /// [Protocol Method] Get all workflow tasks.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="viewMode"> To filter user&apos;s sent, received or history workflow tasks. </param>
         /// <param name="workflowIds"> Filter items by workflow id list. </param>
         /// <param name="timeWindow"> Time window of filtering items. Allowed values: &quot;1d&quot; | &quot;7d&quot; | &quot;30d&quot; | &quot;90d&quot;. </param>
@@ -669,7 +912,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTasksAsync(String,IEnumerable,String,Int32,String,IEnumerable,IEnumerable,String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTasksAsync(string,IEnumerable{string},string,int?,string,IEnumerable{string},IEnumerable{string},string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetWorkflowTasksAsync(string viewMode = null, IEnumerable<string> workflowIds = null, string timeWindow = null, int? maxpagesize = null, string orderby = null, IEnumerable<string> taskTypes = null, IEnumerable<string> taskStatuses = null, string workflowNameKeyword = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowTasksRequest(viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context);
@@ -677,7 +920,16 @@ namespace Azure.Analytics.Purview.Workflows
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowTasks", "value", "nextLink", context);
         }
 
-        /// <summary> Get all workflow tasks. </summary>
+        /// <summary>
+        /// [Protocol Method] Get all workflow tasks.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="viewMode"> To filter user&apos;s sent, received or history workflow tasks. </param>
         /// <param name="workflowIds"> Filter items by workflow id list. </param>
         /// <param name="timeWindow"> Time window of filtering items. Allowed values: &quot;1d&quot; | &quot;7d&quot; | &quot;30d&quot; | &quot;90d&quot;. </param>
@@ -689,7 +941,7 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTasks(String,IEnumerable,String,Int32,String,IEnumerable,IEnumerable,String,RequestContext)']/*" />
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTasks(string,IEnumerable{string},string,int?,string,IEnumerable{string},IEnumerable{string},string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetWorkflowTasks(string viewMode = null, IEnumerable<string> workflowIds = null, string timeWindow = null, int? maxpagesize = null, string orderby = null, IEnumerable<string> taskTypes = null, IEnumerable<string> taskStatuses = null, string workflowNameKeyword = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowTasksRequest(viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context);
@@ -797,11 +1049,11 @@ namespace Azure.Analytics.Purview.Workflows
             {
                 uri.AppendQuery("orderby", orderby, true);
             }
-            if (runStatuses != null)
+            if (runStatuses != null && Optional.IsCollectionDefined(runStatuses))
             {
                 uri.AppendQueryDelimited("runStatuses", runStatuses, ",", true);
             }
-            if (workflowIds != null)
+            if (workflowIds != null && Optional.IsCollectionDefined(workflowIds))
             {
                 uri.AppendQueryDelimited("workflowIds", workflowIds, ",", true);
             }
@@ -863,7 +1115,7 @@ namespace Azure.Analytics.Purview.Workflows
             {
                 uri.AppendQuery("viewMode", viewMode, true);
             }
-            if (workflowIds != null)
+            if (workflowIds != null && Optional.IsCollectionDefined(workflowIds))
             {
                 uri.AppendQueryDelimited("workflowIds", workflowIds, ",", true);
             }
@@ -879,11 +1131,11 @@ namespace Azure.Analytics.Purview.Workflows
             {
                 uri.AppendQuery("orderby", orderby, true);
             }
-            if (taskTypes != null)
+            if (taskTypes != null && Optional.IsCollectionDefined(taskTypes))
             {
                 uri.AppendQueryDelimited("taskTypes", taskTypes, ",", true);
             }
-            if (taskStatuses != null)
+            if (taskStatuses != null && Optional.IsCollectionDefined(taskStatuses))
             {
                 uri.AppendQueryDelimited("taskStatuses", taskStatuses, ",", true);
             }

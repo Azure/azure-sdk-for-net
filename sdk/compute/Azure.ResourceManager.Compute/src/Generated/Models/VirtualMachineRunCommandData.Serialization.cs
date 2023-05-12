@@ -89,6 +89,21 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("errorBlobUri"u8);
                 writer.WriteStringValue(ErrorBlobUri.AbsoluteUri);
             }
+            if (Optional.IsDefined(OutputBlobManagedIdentity))
+            {
+                writer.WritePropertyName("outputBlobManagedIdentity"u8);
+                writer.WriteObjectValue(OutputBlobManagedIdentity);
+            }
+            if (Optional.IsDefined(ErrorBlobManagedIdentity))
+            {
+                writer.WritePropertyName("errorBlobManagedIdentity"u8);
+                writer.WriteObjectValue(ErrorBlobManagedIdentity);
+            }
+            if (Optional.IsDefined(TreatFailureAsDeploymentFailure))
+            {
+                writer.WritePropertyName("treatFailureAsDeploymentFailure"u8);
+                writer.WriteBooleanValue(TreatFailureAsDeploymentFailure.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -114,15 +129,17 @@ namespace Azure.ResourceManager.Compute
             Optional<int> timeoutInSeconds = default;
             Optional<Uri> outputBlobUri = default;
             Optional<Uri> errorBlobUri = default;
+            Optional<RunCommandManagedIdentity> outputBlobManagedIdentity = default;
+            Optional<RunCommandManagedIdentity> errorBlobManagedIdentity = default;
             Optional<string> provisioningState = default;
             Optional<VirtualMachineRunCommandInstanceView> instanceView = default;
+            Optional<bool> treatFailureAsDeploymentFailure = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -157,7 +174,6 @@ namespace Azure.ResourceManager.Compute
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -176,7 +192,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             source = VirtualMachineRunCommandScriptSource.DeserializeVirtualMachineRunCommandScriptSource(property0.Value);
@@ -186,7 +201,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<RunCommandInputParameter> array = new List<RunCommandInputParameter>();
@@ -201,7 +215,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<RunCommandInputParameter> array = new List<RunCommandInputParameter>();
@@ -216,7 +229,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             asyncExecution = property0.Value.GetBoolean();
@@ -236,7 +248,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             timeoutInSeconds = property0.Value.GetInt32();
@@ -246,7 +257,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                outputBlobUri = null;
                                 continue;
                             }
                             outputBlobUri = new Uri(property0.Value.GetString());
@@ -256,10 +266,27 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                errorBlobUri = null;
                                 continue;
                             }
                             errorBlobUri = new Uri(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("outputBlobManagedIdentity"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            outputBlobManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("errorBlobManagedIdentity"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            errorBlobManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -271,17 +298,25 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             instanceView = VirtualMachineRunCommandInstanceView.DeserializeVirtualMachineRunCommandInstanceView(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("treatFailureAsDeploymentFailure"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            treatFailureAsDeploymentFailure = property0.Value.GetBoolean();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new VirtualMachineRunCommandData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, source.Value, Optional.ToList(parameters), Optional.ToList(protectedParameters), Optional.ToNullable(asyncExecution), runAsUser.Value, runAsPassword.Value, Optional.ToNullable(timeoutInSeconds), outputBlobUri.Value, errorBlobUri.Value, provisioningState.Value, instanceView.Value);
+            return new VirtualMachineRunCommandData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, source.Value, Optional.ToList(parameters), Optional.ToList(protectedParameters), Optional.ToNullable(asyncExecution), runAsUser.Value, runAsPassword.Value, Optional.ToNullable(timeoutInSeconds), outputBlobUri.Value, errorBlobUri.Value, outputBlobManagedIdentity.Value, errorBlobManagedIdentity.Value, provisioningState.Value, instanceView.Value, Optional.ToNullable(treatFailureAsDeploymentFailure));
         }
     }
 }

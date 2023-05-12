@@ -7,7 +7,6 @@ using System.Net;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
-using Newtonsoft.Json.Linq;
 
 namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
 {
@@ -51,7 +50,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
             AnswerCallOptions options = new AnswerCallOptions(incomingCallContext: incomingCallContext, callbackUri: callbackUri)
             {
-                MediaStreamingOptions = _mediaStreamingConfiguration
+                MediaStreamingOptions = _mediaStreamingConfiguration,
+                OperationContext = "operation_context"
             };
 
             var response = await callAutomationClient.AnswerCallAsync(options).ConfigureAwait(false);
