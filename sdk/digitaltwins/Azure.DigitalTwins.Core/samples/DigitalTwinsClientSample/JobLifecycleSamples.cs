@@ -25,8 +25,8 @@ namespace Azure.DigitalTwins.Samples
             // We have to make sure the job Id is unique within the DT instance, and we have to upload a sample input blob to the customer's storage container.
 
             string sampleImportJobId = await GetUniqueJobIdAsync(SamplesConstants.TemporaryJobPrefix, client);
-            string inputBlobUri = options.StorageAccountEndpoint + "/" + options.StorageAccountContainerName + "/sampleInputBlob.ndjson";
-            string outputBlobUri = options.StorageAccountEndpoint + "/" + options.StorageAccountContainerName + "/sampleOutputBlob.ndjson";
+            string inputBlobUri = options.StorageAccountContainerEndpoint + "/" + options.InputBlobName;
+            string outputBlobUri = options.StorageAccountContainerEndpoint + "/sampleOutputBlob.ndjson";
 
             ImportJob sampleImportJob = new ImportJob(inputBlobUri, outputBlobUri);
 
