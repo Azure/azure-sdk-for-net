@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query;
+using NUnit.Framework;
 
 namespace Azure.Monitor.Query.Tests
 {
@@ -120,6 +121,7 @@ namespace Azure.Monitor.Query.Tests
                 await Task.Delay(TimeSpan.FromSeconds(30));
                 count = await QueryCount(workspaceId);
             }
+            TestContext.Progress.WriteLine("Initializa data in table completed.");
         }
 
         private async Task<int> QueryCount(string workspaceId)
@@ -147,6 +149,7 @@ namespace Azure.Monitor.Query.Tests
                 if (result.Value.Table.Rows.Count > 0 && result.Value.Table.Columns.Count > 0)
                 {
                     // Make sure StorageAccount set-up is complete and data is there before beginning testing
+                    TestContext.Progress.WriteLine("Storage Account created successfully.");
                     break;
                 }
                 else
