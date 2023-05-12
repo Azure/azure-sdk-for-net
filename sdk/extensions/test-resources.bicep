@@ -16,6 +16,9 @@ param location string = resourceGroup().location
 @description('Current IP address of the client.')
 param clientIpAddress string
 
+@description('MySQL password')
+param mysqlPassword string
+
 resource keyVault 'Microsoft.KeyVault/vaults@2019-09-01' = {
   name: baseName
   location: location
@@ -164,6 +167,7 @@ resource mysqlIdentityService 'Microsoft.ManagedIdentity/userAssignedIdentities@
 resource mysqlServer 'Microsoft.DBforMySQL/flexibleServers@2022-09-30-preview' = {
   name: baseName
   location: location
+
   sku: {
     name: 'Standard_B1ms'
     tier: 'Burstable'
@@ -175,6 +179,8 @@ resource mysqlServer 'Microsoft.DBforMySQL/flexibleServers@2022-09-30-preview' =
 
   properties: {
     version: '8.0'
+    administratorLogin: 'mysqladmin'
+    administratorLoginPassword: mysqlPassword
     storage: {
       storageSizeGB: 32
     }
@@ -184,15 +190,15 @@ resource mysqlServer 'Microsoft.DBforMySQL/flexibleServers@2022-09-30-preview' =
     name: 'passwordless'
   }
 
-  // resource admin 'administrators@2022-01-01' = {
-  //   name: testApplicationOid
-  //   properties: {
-  //     administratorType: 'SERVICEPRINCIPAL'
-  //     identityResourceId: mysqlIdentityService.id
-  //     tenantId: tenantId
-  //     login:
-  //   }
-  // }
+  resource admin 'administrators@2022-01-01' = {
+    name: testApplicationOid
+    properties: {
+      administratorType: 'SERVICEPRINCIPAL'
+      identityResourceId: mysqlIdentityService.id
+      tenantId: tenantId
+      login:
+    }
+  }
 }
 
 output AZURE_KEYVAULT_URL string = keyVault.properties.vaultUri

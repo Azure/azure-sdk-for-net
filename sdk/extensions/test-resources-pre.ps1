@@ -27,4 +27,6 @@ Write-Output "Get current IP address..."
 $ipAddress = Invoke-RestMethod "http://whatismyip.akamai.com"
 $templateFileParameters['testApplicationServicePrincipal']=$SP.DisplayName
 $templateFileParameters['clientIpAddress']=$ipAddress
+Write-Output "Generating random password for MySQL..."
+$templateFileParameters['mysqlPassword']=-join ((97..122) | Get-Random -Count 10 | ForEach-Object {[char]$_})
 
