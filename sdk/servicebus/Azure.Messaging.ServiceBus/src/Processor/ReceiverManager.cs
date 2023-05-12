@@ -281,7 +281,8 @@ namespace Azure.Messaging.ServiceBus
 
         internal async Task RenewMessageLockAsync(
             ServiceBusReceivedMessage message,
-            CancellationTokenSource cancellationTokenSource)
+            CancellationTokenSource cancellationTokenSource,
+            CancellationTokenSource lockExpiredCancellationSource)
         {
             cancellationTokenSource.CancelAfter(ProcessorOptions.MaxAutoLockRenewalDuration);
             CancellationToken cancellationToken = cancellationTokenSource.Token;
@@ -307,6 +308,7 @@ namespace Azure.Messaging.ServiceBus
                     }
 
                     await Receiver.RenewMessageLockAsync(message, cancellationToken).ConfigureAwait(false);
+                    lockExpiredCancellationSource.CancelAfter(message);
                     ServiceBusEventSource.Log.ProcessorRenewMessageLockComplete(Processor.Identifier, message.LockTokenGuid);
                 }
                 catch (Exception ex) when (!(ex is TaskCanceledException))
@@ -316,6 +318,7 @@ namespace Azure.Messaging.ServiceBus
                     // If the message has already been settled there is no need to raise the lock lost exception to user error handler.
                     if (!message.IsSettled)
                     {
+                        lockExpiredCancellationSource.Cancel();
                         await HandleRenewLockException(ex, cancellationToken).ConfigureAwait(false);
                     }
 

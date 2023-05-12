@@ -30,7 +30,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public CancellationToken CancellationToken { get; }
 
-        internal ConcurrentDictionary<ServiceBusReceivedMessage, byte> Messages => _receiveActions.Messages;
+        internal ConcurrentDictionary<ServiceBusReceivedMessage, CancellationTokenSource> Messages => _receiveActions.Messages;
 
         /// <summary>
         /// The <see cref="ServiceBusSessionReceiver"/> that will be used for all settlement methods for the args.

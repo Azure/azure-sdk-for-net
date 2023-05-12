@@ -28,6 +28,11 @@ namespace Azure.Messaging.ServiceBus
         public CancellationToken CancellationToken { get; }
 
         /// <summary>
+        /// The <see cref="System.Threading.CancellationToken"/> instance is cancelled when the lock renewal failed to renew the lock.
+        /// </summary>
+        public CancellationToken LockLostToken { get; }
+
+        /// <summary>
         /// The path of the Service Bus entity that the message was received from.
         /// </summary>
         public string EntityPath => _receiver.EntityPath;
@@ -42,7 +47,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public string FullyQualifiedNamespace => _receiver.FullyQualifiedNamespace;
 
-        internal ConcurrentDictionary<ServiceBusReceivedMessage, byte> Messages => _receiveActions.Messages;
+        internal ConcurrentDictionary<ServiceBusReceivedMessage, CancellationTokenSource> Messages => _receiveActions.Messages;
 
         private readonly ServiceBusReceiver _receiver;
         private readonly ProcessorReceiveActions _receiveActions;
@@ -102,6 +107,7 @@ namespace Azure.Messaging.ServiceBus
 
             bool autoRenew = manager?.ShouldAutoRenewMessageLock() == true;
             _receiveActions = new ProcessorReceiveActions(message, manager, autoRenew);
+            LockLostToken = _receiveActions.GetLockLostToken(message);
         }
 
         /// <summary>
@@ -214,6 +220,10 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             await _receiver.RenewMessageLockAsync(message, cancellationToken).ConfigureAwait(false);
+            if (_receiveActions.Messages.TryGetValue(message, out var cancellationTokenSource))
+            {
+                cancellationTokenSource.CancelAfter(message);
+            }
         }
 
         /// <summary>

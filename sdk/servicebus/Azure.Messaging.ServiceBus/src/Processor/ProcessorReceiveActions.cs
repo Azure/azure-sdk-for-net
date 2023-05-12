@@ -23,7 +23,7 @@ namespace Azure.Messaging.ServiceBus
         private readonly ConcurrentDictionary<Task, byte> _renewalTasks = new();
         private readonly bool _autoRenew;
 
-        internal ConcurrentDictionary<ServiceBusReceivedMessage, byte> Messages { get; } = new();
+        internal ConcurrentDictionary<ServiceBusReceivedMessage, CancellationTokenSource> Messages { get; } = new();
 
         /// <summary>
         /// For mocking.
@@ -39,12 +39,12 @@ namespace Azure.Messaging.ServiceBus
             // manager would be null in scenarios where customers are using the public constructor of the event args for testing purposes.
             _receiver = manager?.Receiver;
             _autoRenew = autoRenewMessageLocks;
-            Messages[triggerMessage] = default;
+            var triggerMessageLockExpiredCancellationSource = TrackAndArmCancellationSourceIfNecessary(triggerMessage);
 
             if (_autoRenew)
             {
                 _lockRenewalCancellationSource = new CancellationTokenSource();
-                _renewalTasks[_manager.RenewMessageLockAsync(triggerMessage, _lockRenewalCancellationSource)] = default;
+                _renewalTasks[_manager.RenewMessageLockAsync(triggerMessage, _lockRenewalCancellationSource, triggerMessageLockExpiredCancellationSource)] = default;
             }
         }
 
@@ -112,21 +112,31 @@ namespace Azure.Messaging.ServiceBus
                 cancellationToken: cancellationToken).ConfigureAwait(false);
        }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="receivedMessage"></param>
+        /// <returns></returns>
+        public virtual CancellationToken GetLockLostToken(ServiceBusReceivedMessage receivedMessage)
+        {
+            return Messages.TryGetValue(receivedMessage, out var cancellationTokenSource) ? cancellationTokenSource.Token : default;
+        }
+
         private IReadOnlyList<ServiceBusReceivedMessage> TrackMessagesAsReceived(IReadOnlyList<ServiceBusReceivedMessage> messages)
         {
             if (_autoRenew)
             {
                 foreach (ServiceBusReceivedMessage message in messages)
                 {
-                    Messages[message] = default;
-                    _renewalTasks[_manager.RenewMessageLockAsync(message, _lockRenewalCancellationSource)] = default;
+                    var lockLostCancellationTokenSource = TrackAndArmCancellationSourceIfNecessary(message);
+                    _renewalTasks[_manager.RenewMessageLockAsync(message, _lockRenewalCancellationSource, lockLostCancellationTokenSource)] = default;
                 }
             }
             else
             {
                 foreach (ServiceBusReceivedMessage message in messages)
                 {
-                    Messages[message] = default;
+                    _ = TrackAndArmCancellationSourceIfNecessary(message);
                 }
             }
 
@@ -142,6 +152,12 @@ namespace Azure.Messaging.ServiceBus
         {
             try
             {
+                foreach (var messageAndTokenSource in Messages)
+                {
+                    messageAndTokenSource.Value.Cancel();
+                    messageAndTokenSource.Value.Dispose();
+                }
+
                 if (_lockRenewalCancellationSource != null)
                 {
                     _lockRenewalCancellationSource.Cancel();
@@ -153,6 +169,14 @@ namespace Azure.Messaging.ServiceBus
             {
                 // Nothing to do here.  These exceptions are expected.
             }
+        }
+
+        private CancellationTokenSource TrackAndArmCancellationSourceIfNecessary(ServiceBusReceivedMessage message)
+        {
+            var messageLockLostCancellationSource = new CancellationTokenSource();
+            Messages[message] = messageLockLostCancellationSource;
+            messageLockLostCancellationSource.CancelAfter(message);
+            return messageLockLostCancellationSource;
         }
 
         private void ValidateCallbackInScope()
