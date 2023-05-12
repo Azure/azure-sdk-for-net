@@ -1,0 +1,63 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-4qb444onnk2tc.centraluseuap.devcenter.azure.com/projects/sdk-project-x2z4o4ohvwcbi/pools?api-version=2023-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Developer.DevCenter/1.0.0-alpha.20230428.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5f5d9f55c089d42c530b9530425edded",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "709",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 28 Apr 2023 20:30:42 GMT",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "5f5d9f55c089d42c530b9530425edded",
+        "x-ms-correlation-request-id": "2c4b74ca-6f77-444a-b63f-d995156a9312",
+        "X-Rate-Limit-Limit": "1m",
+        "X-Rate-Limit-Remaining": "296",
+        "X-Rate-Limit-Reset": "2023-04-28T20:31:10.1769845Z"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "sdk-pool-6ieikn5v2nfnu",
+            "location": "centraluseuap",
+            "osType": "Windows",
+            "hardwareProfile": {
+              "vCPUs": 8,
+              "skuName": "general_a_8c32gb_v1",
+              "memoryGB": 32
+            },
+            "hibernateSupport": "Disabled",
+            "storageProfile": {
+              "osDisk": {
+                "diskSizeGB": 1024
+              }
+            },
+            "imageReference": {
+              "name": "MicrosoftWindowsDesktop_windows-ent-cpc_win11-21h2-ent-cpc-m365",
+              "version": "1.0.0",
+              "operatingSystem": "Windows11",
+              "osBuildNumber": "win11-21h2-ent-cpc-m365",
+              "publishedDate": "2021-10-04T00:00:00\u002B00:00"
+            },
+            "localAdministrator": "Enabled"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "DEFAULT_POOL_NAME": "sdk-pool-6ieikn5v2nfnu",
+    "DEFAULT_PROJECT_NAME": "sdk-project-x2z4o4ohvwcbi",
+    "DEVCENTER_ENDPOINT": "https://8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd-sdk-dc-4qb444onnk2tc.centraluseuap.devcenter.azure.com/",
+    "RandomSeed": "684161968"
+  }
+}

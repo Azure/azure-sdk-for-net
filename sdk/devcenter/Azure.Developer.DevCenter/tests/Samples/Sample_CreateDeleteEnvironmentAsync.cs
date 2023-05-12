@@ -2,13 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
-using NUnit.Framework;
 
 namespace Azure.Developer.DevCenter.Tests.Samples
 {
@@ -32,13 +29,16 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             }
 
             #region Snippet:Azure_DevCenter_GetCatalogItems_Scenario
-            var environmentsClient = new EnvironmentsClient(endpoint, projectName, credential);
+            var environmentsClient = new DeploymentEnvironmentsClient(endpoint, credential);
             string catalogItemName = null;
+
+            /*
             await foreach (BinaryData data in environmentsClient.GetCatalogItemsAsync(maxCount: 1))
             {
                 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
                 catalogItemName = result.GetProperty("name").ToString();
             }
+            */
             #endregion
 
             if (catalogItemName is null)
@@ -48,7 +48,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
 
             #region Snippet:Azure_DevCenter_GetEnvironmentTypes_Scenario
             string environmentTypeName = null;
-            await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(maxCount: 1))
+            await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(projectName, maxCount: 1))
             {
                 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
                 environmentTypeName = result.GetProperty("name").ToString();
@@ -68,7 +68,12 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             };
 
             // Deploy the environment
-            Operation<BinaryData> environmentCreateOperation = await environmentsClient.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "DevEnvironment", RequestContent.Create(content));
+            Operation<BinaryData> environmentCreateOperation = await environmentsClient.CreateOrUpdateEnvironmentAsync(
+                WaitUntil.Completed,
+                projectName,
+                "DevEnvironment",
+                RequestContent.Create(content));
+
             BinaryData environmentData = await environmentCreateOperation.WaitForCompletionAsync();
             JsonElement environment = JsonDocument.Parse(environmentData.ToStream()).RootElement;
             Console.WriteLine($"Completed provisioning for environment with status {environment.GetProperty("provisioningState")}.");
