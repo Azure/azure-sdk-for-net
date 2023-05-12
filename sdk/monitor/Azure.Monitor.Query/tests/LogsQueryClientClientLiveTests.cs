@@ -9,7 +9,9 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Monitor.Query.Models;
+using Azure.Storage.Blobs;
 using NUnit.Framework;
 
 namespace Azure.Monitor.Query.Tests
@@ -684,6 +686,18 @@ namespace Azure.Monitor.Query.Tests
         {
             TestContext.Progress.WriteLine("Test start");
             var client = CreateClient();
+
+            var blobUri = "https://" + TestEnvironment.StorageAccountName + ".blob.core.windows.net";
+            var blobServiceClient = new BlobServiceClient(
+                    new Uri(blobUri),
+                    TestEnvironment.Credential)
+            ;
+
+            //Create a unique name for the container
+            string containerName = "quickstartblobs" + Guid.NewGuid().ToString();
+
+            // Create the container and return a container client object
+            BlobContainerClient containerClient = await blobServiceClient.CreateBlobContainerAsync(containerName);
 
             TestContext.Progress.WriteLine("client created");
             //TODO
