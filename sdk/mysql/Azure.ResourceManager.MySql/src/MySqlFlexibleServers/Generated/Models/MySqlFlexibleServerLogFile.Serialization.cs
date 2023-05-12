@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class FlexibleServersLogFile : IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerLogFile : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             writer.WriteEndObject();
         }
 
-        internal static FlexibleServersLogFile DeserializeFlexibleServersLogFile(JsonElement element)
+        internal static MySqlFlexibleServerLogFile DeserializeMySqlFlexibleServerLogFile(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new FlexibleServersLogFile(id, name, type, systemData.Value, Optional.ToNullable(sizeInKB), Optional.ToNullable(createdTime), type0.Value, Optional.ToNullable(lastModifiedTime), url.Value);
+            return new MySqlFlexibleServerLogFile(id, name, type, systemData.Value, Optional.ToNullable(sizeInKB), Optional.ToNullable(createdTime), type0.Value, Optional.ToNullable(lastModifiedTime), url.Value);
         }
     }
 }

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class BackupAndExportResponse : IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerBackupAndExportResult : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             writer.WriteEndObject();
         }
 
-        internal static BackupAndExportResponse DeserializeBackupAndExportResponse(JsonElement element)
+        internal static MySqlFlexibleServerBackupAndExportResult DeserializeMySqlFlexibleServerBackupAndExportResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new BackupAndExportResponse(id, name, type, systemData.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(percentComplete), error.Value, Optional.ToNullable(datasourceSizeInBytes), Optional.ToNullable(dataTransferredInBytes), backupMetadata.Value);
+            return new MySqlFlexibleServerBackupAndExportResult(id, name, type, systemData.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(percentComplete), error.Value, Optional.ToNullable(datasourceSizeInBytes), Optional.ToNullable(dataTransferredInBytes), backupMetadata.Value);
         }
     }
 }

@@ -13,17 +13,17 @@ using Azure.ResourceManager.MySql.FlexibleServers.Models;
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     /// <summary>
-    /// A class representing the AzureADAdministrator data model.
+    /// A class representing the MySqlFlexibleServerAadAdministrator data model.
     /// Represents a Administrator.
     /// </summary>
-    public partial class AzureADAdministratorData : ResourceData
+    public partial class MySqlFlexibleServerAadAdministratorData : ResourceData
     {
-        /// <summary> Initializes a new instance of AzureADAdministratorData. </summary>
-        public AzureADAdministratorData()
+        /// <summary> Initializes a new instance of MySqlFlexibleServerAadAdministratorData. </summary>
+        public MySqlFlexibleServerAadAdministratorData()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureADAdministratorData. </summary>
+        /// <summary> Initializes a new instance of MySqlFlexibleServerAadAdministratorData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="sid"> SID (object ID) of the server administrator. </param>
         /// <param name="tenantId"> Tenant ID of the administrator. </param>
         /// <param name="identityResourceId"> The resource id of the identity used for AAD Authentication. </param>
-        internal AzureADAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FlexibleServersAdministratorType? administratorType, string login, string sid, Guid? tenantId, ResourceIdentifier identityResourceId) : base(id, name, resourceType, systemData)
+        internal MySqlFlexibleServerAadAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MySqlFlexibleServerAdministratorType? administratorType, string login, string sid, Guid? tenantId, ResourceIdentifier identityResourceId) : base(id, name, resourceType, systemData)
         {
             AdministratorType = administratorType;
             Login = login;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary> Type of the sever administrator. </summary>
-        public FlexibleServersAdministratorType? AdministratorType { get; set; }
+        public MySqlFlexibleServerAdministratorType? AdministratorType { get; set; }
         /// <summary> Login name of the server administrator. </summary>
         public string Login { get; set; }
         /// <summary> SID (object ID) of the server administrator. </summary>

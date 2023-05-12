@@ -10,6 +10,9 @@ clear-output-folder: true
 skip-csproj: true
 library-name: MySql
 
+#mgmt-debug: 
+#  show-serialized-names: true
+
 batch:
   - tag: package-2020-01-01
   - tag: package-flexibleserver-2022-09-30-preview
@@ -278,13 +281,26 @@ rename-mapping:
   IsDynamicConfig: MySqlFlexibleServerConfigDynamicState
   IsConfigPendingRestart: MySqlFlexibleServerConfigPendingRestartState
   NameAvailability.nameAvailable: IsNameAvailable
+  AzureADAdministrator: MySqlFlexibleServerAadAdministrator
+  AdministratorListResult: MySqlFlexibleServerAadAdministratorListResult
+  AdministratorName: MySqlFlexibleServerAdministratorName
+  BackupAndExportRequest: MySqlFlexibleServerBackupAndExportRequest
+  BackupAndExportResponse: MySqlFlexibleServerBackupAndExportResult
+  BackupFormat: MySqlFlexibleServerBackupFormat
+  BackupRequestBase: MySqlFlexibleServerBackupContentBase
+  BackupSettings: MySqlFlexibleServerBackupSettings
+  BackupStoreDetails: MySqlFlexibleServerBackupStoreDetails
+  FullBackupStoreDetails: MySqlFlexibleServerFullBackupStoreDetails
+  AdministratorType: MySqlFlexibleServerAdministratorType
+  LogFile: MySqlFlexibleServerLogFile
+  LogFileListResult: MySqlFlexibleServerLogFileListResult
 
 override-operation-name:
   CheckNameAvailability_Execute: CheckMySqlFlexibleServerNameAvailability
   Configurations_BatchUpdate: UpdateConfigurations
 
 directive:
-  - from: mysql.json
+  - from: FlexibleServers.json
     where: $.definitions
     transform: >
       $.Identity['x-ms-client-flatten'] = false;
@@ -292,7 +308,7 @@ directive:
       delete $.Identity.properties.userAssignedIdentities.additionalProperties.items;
 
   # Add a new mode for update operation
-  - from: mysql.json
+  - from: Configurations.json
     where: $.definitions
     transform: >
       $.MySqlFlexibleServerConfigurations =  {
@@ -308,8 +324,7 @@ directive:
           },
           'description': 'A list of server configurations.'
         };
-
-  - from: mysql.json
+  - from: Configurations.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/updateConfigurations'].post
     transform: >
       $.responses['200']['schema']['$ref'] = '#/definitions/MySqlFlexibleServerConfigurations';

@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Backup Settings. </summary>
-    public partial class BackupSettings
+    public partial class MySqlFlexibleServerBackupSettings
     {
-        /// <summary> Initializes a new instance of BackupSettings. </summary>
+        /// <summary> Initializes a new instance of MySqlFlexibleServerBackupSettings. </summary>
         /// <param name="backupName"> The name of the backup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
-        public BackupSettings(string backupName)
+        public MySqlFlexibleServerBackupSettings(string backupName)
         {
             Argument.AssertNotNull(backupName, nameof(backupName));
 
@@ -26,6 +26,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <summary> The name of the backup. </summary>
         public string BackupName { get; }
         /// <summary> Backup Format for the current backup. (CollatedFormat is INTERNAL – DO NOT USE). </summary>
-        public BackupFormat? BackupFormat { get; set; }
+        public MySqlFlexibleServerBackupFormat? BackupFormat { get; set; }
     }
 }

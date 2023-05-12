@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Represents a logFile. </summary>
-    public partial class FlexibleServersLogFile : ResourceData
+    public partial class MySqlFlexibleServerLogFile : ResourceData
     {
-        /// <summary> Initializes a new instance of FlexibleServersLogFile. </summary>
-        public FlexibleServersLogFile()
+        /// <summary> Initializes a new instance of MySqlFlexibleServerLogFile. </summary>
+        public MySqlFlexibleServerLogFile()
         {
         }
 
-        /// <summary> Initializes a new instance of FlexibleServersLogFile. </summary>
+        /// <summary> Initializes a new instance of MySqlFlexibleServerLogFile. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="typePropertiesType"> Type of the log file. </param>
         /// <param name="lastModifiedOn"> Last modified timestamp of the log file. </param>
         /// <param name="uri"> The url to download the log file from. </param>
-        internal FlexibleServersLogFile(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? sizeInKB, DateTimeOffset? createdOn, string typePropertiesType, DateTimeOffset? lastModifiedOn, Uri uri) : base(id, name, resourceType, systemData)
+        internal MySqlFlexibleServerLogFile(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? sizeInKB, DateTimeOffset? createdOn, string typePropertiesType, DateTimeOffset? lastModifiedOn, Uri uri) : base(id, name, resourceType, systemData)
         {
             SizeInKB = sizeInKB;
             CreatedOn = createdOn;

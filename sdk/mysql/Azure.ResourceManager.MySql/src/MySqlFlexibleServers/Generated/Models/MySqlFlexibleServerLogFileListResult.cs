@@ -11,25 +11,25 @@ using Azure.Core;
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> A List of logFiles. </summary>
-    internal partial class FlexibleServersLogFileListResult
+    internal partial class MySqlFlexibleServerLogFileListResult
     {
-        /// <summary> Initializes a new instance of FlexibleServersLogFileListResult. </summary>
-        internal FlexibleServersLogFileListResult()
+        /// <summary> Initializes a new instance of MySqlFlexibleServerLogFileListResult. </summary>
+        internal MySqlFlexibleServerLogFileListResult()
         {
-            Value = new ChangeTrackingList<FlexibleServersLogFile>();
+            Value = new ChangeTrackingList<MySqlFlexibleServerLogFile>();
         }
 
-        /// <summary> Initializes a new instance of FlexibleServersLogFileListResult. </summary>
+        /// <summary> Initializes a new instance of MySqlFlexibleServerLogFileListResult. </summary>
         /// <param name="value"> The list of logFiles in a server. </param>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
-        internal FlexibleServersLogFileListResult(IReadOnlyList<FlexibleServersLogFile> value, string nextLink)
+        internal MySqlFlexibleServerLogFileListResult(IReadOnlyList<MySqlFlexibleServerLogFile> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of logFiles in a server. </summary>
-        public IReadOnlyList<FlexibleServersLogFile> Value { get; }
+        public IReadOnlyList<MySqlFlexibleServerLogFile> Value { get; }
         /// <summary> The link used to get the next page of operations. </summary>
         public string NextLink { get; }
     }

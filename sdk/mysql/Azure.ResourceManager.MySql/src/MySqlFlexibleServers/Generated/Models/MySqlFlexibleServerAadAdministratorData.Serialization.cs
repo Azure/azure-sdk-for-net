@@ -13,7 +13,7 @@ using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    public partial class AzureADAdministratorData : IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerAadAdministratorData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             writer.WriteEndObject();
         }
 
-        internal static AzureADAdministratorData DeserializeAzureADAdministratorData(JsonElement element)
+        internal static MySqlFlexibleServerAadAdministratorData DeserializeMySqlFlexibleServerAadAdministratorData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<FlexibleServersAdministratorType> administratorType = default;
+            Optional<MySqlFlexibleServerAdministratorType> administratorType = default;
             Optional<string> login = default;
             Optional<string> sid = default;
             Optional<Guid> tenantId = default;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                             {
                                 continue;
                             }
-                            administratorType = new FlexibleServersAdministratorType(property0.Value.GetString());
+                            administratorType = new MySqlFlexibleServerAdministratorType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("login"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     continue;
                 }
             }
-            return new AzureADAdministratorData(id, name, type, systemData.Value, Optional.ToNullable(administratorType), login.Value, sid.Value, Optional.ToNullable(tenantId), identityResourceId.Value);
+            return new MySqlFlexibleServerAadAdministratorData(id, name, type, systemData.Value, Optional.ToNullable(administratorType), login.Value, sid.Value, Optional.ToNullable(tenantId), identityResourceId.Value);
         }
     }
 }

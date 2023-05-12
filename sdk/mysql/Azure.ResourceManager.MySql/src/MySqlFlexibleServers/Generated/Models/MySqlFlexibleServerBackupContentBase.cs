@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> BackupRequestBase is the base for all backup request. </summary>
-    public partial class BackupRequestBase
+    public partial class MySqlFlexibleServerBackupContentBase
     {
-        /// <summary> Initializes a new instance of BackupRequestBase. </summary>
+        /// <summary> Initializes a new instance of MySqlFlexibleServerBackupContentBase. </summary>
         /// <param name="backupSettings"> Backup Settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupSettings"/> is null. </exception>
-        public BackupRequestBase(BackupSettings backupSettings)
+        public MySqlFlexibleServerBackupContentBase(MySqlFlexibleServerBackupSettings backupSettings)
         {
             Argument.AssertNotNull(backupSettings, nameof(backupSettings));
 
@@ -24,6 +24,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Backup Settings. </summary>
-        public BackupSettings BackupSettings { get; }
+        public MySqlFlexibleServerBackupSettings BackupSettings { get; }
     }
 }

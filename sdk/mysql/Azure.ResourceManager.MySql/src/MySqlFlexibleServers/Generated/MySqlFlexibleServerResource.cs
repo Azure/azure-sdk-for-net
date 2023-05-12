@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of AzureADAdministratorResources in the MySqlFlexibleServer. </summary>
-        /// <returns> An object representing collection of AzureADAdministratorResources and their operations over a AzureADAdministratorResource. </returns>
-        public virtual AzureADAdministratorCollection GetAzureADAdministrators()
+        /// <summary> Gets a collection of MySqlFlexibleServerAadAdministratorResources in the MySqlFlexibleServer. </summary>
+        /// <returns> An object representing collection of MySqlFlexibleServerAadAdministratorResources and their operations over a MySqlFlexibleServerAadAdministratorResource. </returns>
+        public virtual MySqlFlexibleServerAadAdministratorCollection GetMySqlFlexibleServerAadAdministrators()
         {
-            return GetCachedClient(Client => new AzureADAdministratorCollection(Client, Id));
+            return GetCachedClient(Client => new MySqlFlexibleServerAadAdministratorCollection(Client, Id));
         }
 
         /// <summary>
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="administratorName"> The name of the Azure AD Administrator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AzureADAdministratorResource>> GetAzureADAdministratorAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MySqlFlexibleServerAadAdministratorResource>> GetMySqlFlexibleServerAadAdministratorAsync(MySqlFlexibleServerAdministratorName administratorName, CancellationToken cancellationToken = default)
         {
-            return await GetAzureADAdministrators().GetAsync(administratorName, cancellationToken).ConfigureAwait(false);
+            return await GetMySqlFlexibleServerAadAdministrators().GetAsync(administratorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="administratorName"> The name of the Azure AD Administrator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<AzureADAdministratorResource> GetAzureADAdministrator(AdministratorName administratorName, CancellationToken cancellationToken = default)
+        public virtual Response<MySqlFlexibleServerAadAdministratorResource> GetMySqlFlexibleServerAadAdministrator(MySqlFlexibleServerAdministratorName administratorName, CancellationToken cancellationToken = default)
         {
-            return GetAzureADAdministrators().Get(administratorName, cancellationToken);
+            return GetMySqlFlexibleServerAadAdministrators().Get(administratorName, cancellationToken);
         }
 
         /// <summary> Gets a collection of MySqlFlexibleServerBackupResources in the MySqlFlexibleServer. </summary>
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="content"> The required parameters for creating and exporting backup of the given server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BackupAndExportResponse>> CreateBackupAndExportAsync(WaitUntil waitUntil, BackupAndExportContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MySqlFlexibleServerBackupAndExportResult>> CreateBackupAndExportAsync(WaitUntil waitUntil, MySqlFlexibleServerBackupAndExportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = await _backupAndExportRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<BackupAndExportResponse>(new BackupAndExportResponseOperationSource(), _backupAndExportClientDiagnostics, Pipeline, _backupAndExportRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerBackupAndExportResult>(new MySqlFlexibleServerBackupAndExportResultOperationSource(), _backupAndExportClientDiagnostics, Pipeline, _backupAndExportRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="content"> The required parameters for creating and exporting backup of the given server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BackupAndExportResponse> CreateBackupAndExport(WaitUntil waitUntil, BackupAndExportContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MySqlFlexibleServerBackupAndExportResult> CreateBackupAndExport(WaitUntil waitUntil, MySqlFlexibleServerBackupAndExportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = _backupAndExportRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new FlexibleServersArmOperation<BackupAndExportResponse>(new BackupAndExportResponseOperationSource(), _backupAndExportClientDiagnostics, Pipeline, _backupAndExportRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerBackupAndExportResult>(new MySqlFlexibleServerBackupAndExportResultOperationSource(), _backupAndExportClientDiagnostics, Pipeline, _backupAndExportRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="mySqlFlexibleServerConfigurationListForBatchUpdate"> The parameters for updating a list of server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mySqlFlexibleServerConfigurationListForBatchUpdate"/> is null. </exception>
-        public virtual async Task<ArmOperation<MySqlFlexibleServerConfigurationListResult>> UpdateConfigurationsAsync(WaitUntil waitUntil, MySqlFlexibleServerConfigurationListForBatchUpdate mySqlFlexibleServerConfigurationListForBatchUpdate, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MySqlFlexibleServerConfigurations>> UpdateConfigurationsAsync(WaitUntil waitUntil, MySqlFlexibleServerConfigurationListForBatchUpdate mySqlFlexibleServerConfigurationListForBatchUpdate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(mySqlFlexibleServerConfigurationListForBatchUpdate, nameof(mySqlFlexibleServerConfigurationListForBatchUpdate));
 
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = await _mySqlFlexibleServerConfigurationConfigurationsRestClient.BatchUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mySqlFlexibleServerConfigurationListForBatchUpdate, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerConfigurationListResult>(new MySqlFlexibleServerConfigurationListResultOperationSource(), _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics, Pipeline, _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateBatchUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mySqlFlexibleServerConfigurationListForBatchUpdate).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerConfigurations>(new MySqlFlexibleServerConfigurationsOperationSource(), _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics, Pipeline, _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateBatchUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mySqlFlexibleServerConfigurationListForBatchUpdate).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="mySqlFlexibleServerConfigurationListForBatchUpdate"> The parameters for updating a list of server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mySqlFlexibleServerConfigurationListForBatchUpdate"/> is null. </exception>
-        public virtual ArmOperation<MySqlFlexibleServerConfigurationListResult> UpdateConfigurations(WaitUntil waitUntil, MySqlFlexibleServerConfigurationListForBatchUpdate mySqlFlexibleServerConfigurationListForBatchUpdate, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MySqlFlexibleServerConfigurations> UpdateConfigurations(WaitUntil waitUntil, MySqlFlexibleServerConfigurationListForBatchUpdate mySqlFlexibleServerConfigurationListForBatchUpdate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(mySqlFlexibleServerConfigurationListForBatchUpdate, nameof(mySqlFlexibleServerConfigurationListForBatchUpdate));
 
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = _mySqlFlexibleServerConfigurationConfigurationsRestClient.BatchUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mySqlFlexibleServerConfigurationListForBatchUpdate, cancellationToken);
-                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerConfigurationListResult>(new MySqlFlexibleServerConfigurationListResultOperationSource(), _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics, Pipeline, _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateBatchUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mySqlFlexibleServerConfigurationListForBatchUpdate).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerConfigurations>(new MySqlFlexibleServerConfigurationsOperationSource(), _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics, Pipeline, _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateBatchUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mySqlFlexibleServerConfigurationListForBatchUpdate).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1153,12 +1153,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FlexibleServersLogFile" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FlexibleServersLogFile> GetLogFilesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MySqlFlexibleServerLogFile" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MySqlFlexibleServerLogFile> GetLogFilesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logFilesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logFilesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, FlexibleServersLogFile.DeserializeFlexibleServersLogFile, _logFilesClientDiagnostics, Pipeline, "MySqlFlexibleServerResource.GetLogFiles", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MySqlFlexibleServerLogFile.DeserializeMySqlFlexibleServerLogFile, _logFilesClientDiagnostics, Pipeline, "MySqlFlexibleServerResource.GetLogFiles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1175,12 +1175,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FlexibleServersLogFile" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FlexibleServersLogFile> GetLogFiles(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MySqlFlexibleServerLogFile" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MySqlFlexibleServerLogFile> GetLogFiles(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logFilesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logFilesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, FlexibleServersLogFile.DeserializeFlexibleServersLogFile, _logFilesClientDiagnostics, Pipeline, "MySqlFlexibleServerResource.GetLogFiles", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MySqlFlexibleServerLogFile.DeserializeMySqlFlexibleServerLogFile, _logFilesClientDiagnostics, Pipeline, "MySqlFlexibleServerResource.GetLogFiles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -66,20 +66,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 return new TenantResourceExtensionClient(client, scope);
             });
         }
-        #region AzureADAdministratorResource
+        #region MySqlFlexibleServerAadAdministratorResource
         /// <summary>
-        /// Gets an object representing an <see cref="AzureADAdministratorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AzureADAdministratorResource.CreateResourceIdentifier" /> to create an <see cref="AzureADAdministratorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MySqlFlexibleServerAadAdministratorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MySqlFlexibleServerAadAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="MySqlFlexibleServerAadAdministratorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AzureADAdministratorResource" /> object. </returns>
-        public static AzureADAdministratorResource GetAzureADAdministratorResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MySqlFlexibleServerAadAdministratorResource" /> object. </returns>
+        public static MySqlFlexibleServerAadAdministratorResource GetMySqlFlexibleServerAadAdministratorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AzureADAdministratorResource.ValidateResourceId(id);
-                return new AzureADAdministratorResource(client, id);
+                MySqlFlexibleServerAadAdministratorResource.ValidateResourceId(id);
+                return new MySqlFlexibleServerAadAdministratorResource(client, id);
             }
             );
         }

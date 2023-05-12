@@ -8,19 +8,18 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    internal partial class MySqlFlexibleServerConfigurationListResult
+    internal partial class MySqlFlexibleServerLogFileListResult
     {
-        internal static MySqlFlexibleServerConfigurationListResult DeserializeMySqlFlexibleServerConfigurationListResult(JsonElement element)
+        internal static MySqlFlexibleServerLogFileListResult DeserializeMySqlFlexibleServerLogFileListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<MySqlFlexibleServerConfigurationData>> value = default;
+            Optional<IReadOnlyList<MySqlFlexibleServerLogFile>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +29,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    List<MySqlFlexibleServerConfigurationData> array = new List<MySqlFlexibleServerConfigurationData>();
+                    List<MySqlFlexibleServerLogFile> array = new List<MySqlFlexibleServerLogFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlFlexibleServerConfigurationData.DeserializeMySqlFlexibleServerConfigurationData(item));
+                        array.Add(MySqlFlexibleServerLogFile.DeserializeMySqlFlexibleServerLogFile(item));
                     }
                     value = array;
                     continue;
@@ -44,7 +43,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new MySqlFlexibleServerConfigurationListResult(Optional.ToList(value), nextLink.Value);
+            return new MySqlFlexibleServerLogFileListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

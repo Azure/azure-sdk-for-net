@@ -10,13 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class BackupAndExportContent : IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerBackupContentBase : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetDetails"u8);
-            writer.WriteObjectValue(TargetDetails);
             writer.WritePropertyName("backupSettings"u8);
             writer.WriteObjectValue(BackupSettings);
             writer.WriteEndObject();

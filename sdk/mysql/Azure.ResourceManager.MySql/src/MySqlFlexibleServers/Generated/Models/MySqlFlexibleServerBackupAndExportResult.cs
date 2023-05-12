@@ -13,14 +13,14 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Represents BackupAndExport API Response. </summary>
-    public partial class BackupAndExportResponse : ResourceData
+    public partial class MySqlFlexibleServerBackupAndExportResult : ResourceData
     {
-        /// <summary> Initializes a new instance of BackupAndExportResponse. </summary>
-        public BackupAndExportResponse()
+        /// <summary> Initializes a new instance of MySqlFlexibleServerBackupAndExportResult. </summary>
+        public MySqlFlexibleServerBackupAndExportResult()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupAndExportResponse. </summary>
+        /// <summary> Initializes a new instance of MySqlFlexibleServerBackupAndExportResult. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="datasourceSizeInBytes"> Size of datasource in bytes. </param>
         /// <param name="dataTransferredInBytes"> Data transferred in bytes. </param>
         /// <param name="backupMetadata"> Metadata related to backup to be stored for restoring resource in key-value pairs. </param>
-        internal BackupAndExportResponse(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, OperationStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, ResponseError error, long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupMetadata) : base(id, name, resourceType, systemData)
+        internal MySqlFlexibleServerBackupAndExportResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, OperationStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, ResponseError error, long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupMetadata) : base(id, name, resourceType, systemData)
         {
             Status = status;
             StartOn = startOn;

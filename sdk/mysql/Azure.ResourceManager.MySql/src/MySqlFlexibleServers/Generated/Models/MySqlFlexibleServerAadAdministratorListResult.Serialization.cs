@@ -8,18 +8,19 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    internal partial class FlexibleServersLogFileListResult
+    internal partial class MySqlFlexibleServerAadAdministratorListResult
     {
-        internal static FlexibleServersLogFileListResult DeserializeFlexibleServersLogFileListResult(JsonElement element)
+        internal static MySqlFlexibleServerAadAdministratorListResult DeserializeMySqlFlexibleServerAadAdministratorListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<FlexibleServersLogFile>> value = default;
+            Optional<IReadOnlyList<MySqlFlexibleServerAadAdministratorData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,10 +30,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    List<FlexibleServersLogFile> array = new List<FlexibleServersLogFile>();
+                    List<MySqlFlexibleServerAadAdministratorData> array = new List<MySqlFlexibleServerAadAdministratorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FlexibleServersLogFile.DeserializeFlexibleServersLogFile(item));
+                        array.Add(MySqlFlexibleServerAadAdministratorData.DeserializeMySqlFlexibleServerAadAdministratorData(item));
                     }
                     value = array;
                     continue;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new FlexibleServersLogFileListResult(Optional.ToList(value), nextLink.Value);
+            return new MySqlFlexibleServerAadAdministratorListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }
