@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetPoolAsync(String,String,RequestContext)">
+    <member name="GetPoolAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetPoolAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -9,7 +9,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-Response response = await client.GetPoolAsync("<projectName>", "<poolName>");
+Response response = await client.GetPoolAsync("<projectName>", "<poolName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -31,46 +31,8 @@ Console.WriteLine(result.GetProperty("stopOnDisconnect").GetProperty("gracePerio
 Console.WriteLine(result.GetProperty("healthStatus").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Pool</c>:
-<code>{
-  name: string, # Required. Pool name
-  location: string, # Required. Azure region where Dev Boxes in the pool are located
-  osType: &quot;Windows&quot;, # Optional. The operating system type of Dev Boxes in this pool
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Hardware settings for the Dev Boxes created in this pool
-  hibernateSupport: &quot;Enabled&quot; | &quot;Disabled&quot; | &quot;OsUnsupported&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for Dev Box created in this pool
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Image settings for Dev Boxes create in this pool
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether owners of Dev Boxes in this pool are local administrators on the Dev Boxes.
-  stopOnDisconnect: {
-    status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Required. Indicates whether the feature to stop the devbox on disconnect once the grace period has lapsed is enabled.
-    gracePeriodMinutes: number, # Optional. The specified time in minutes to wait before stopping a Dev Box once disconnect is detected.
-  }, # Optional. Stop on disconnect configuration settings for Dev Boxes created in this pool.
-  healthStatus: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Healthy&quot; | &quot;Warning&quot; | &quot;Unhealthy&quot;, # Required. Overall health status of the Pool. Indicates whether or not the Pool is available to create Dev Boxes.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetPool(String,String,RequestContext)">
+    <member name="GetPool(string,string,RequestContext)">
 <example>
 This sample shows how to call GetPool with required parameters and parse the result.
 <code><![CDATA[
@@ -78,7 +40,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-Response response = client.GetPool("<projectName>", "<poolName>");
+Response response = client.GetPool("<projectName>", "<poolName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -100,46 +62,8 @@ Console.WriteLine(result.GetProperty("stopOnDisconnect").GetProperty("gracePerio
 Console.WriteLine(result.GetProperty("healthStatus").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Pool</c>:
-<code>{
-  name: string, # Required. Pool name
-  location: string, # Required. Azure region where Dev Boxes in the pool are located
-  osType: &quot;Windows&quot;, # Optional. The operating system type of Dev Boxes in this pool
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Hardware settings for the Dev Boxes created in this pool
-  hibernateSupport: &quot;Enabled&quot; | &quot;Disabled&quot; | &quot;OsUnsupported&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for Dev Box created in this pool
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Image settings for Dev Boxes create in this pool
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether owners of Dev Boxes in this pool are local administrators on the Dev Boxes.
-  stopOnDisconnect: {
-    status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Required. Indicates whether the feature to stop the devbox on disconnect once the grace period has lapsed is enabled.
-    gracePeriodMinutes: number, # Optional. The specified time in minutes to wait before stopping a Dev Box once disconnect is detected.
-  }, # Optional. Stop on disconnect configuration settings for Dev Boxes created in this pool.
-  healthStatus: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Healthy&quot; | &quot;Warning&quot; | &quot;Unhealthy&quot;, # Required. Overall health status of the Pool. Indicates whether or not the Pool is available to create Dev Boxes.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetScheduleAsync(String,String,String,RequestContext)">
+    <member name="GetScheduleAsync(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetScheduleAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -147,7 +71,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-Response response = await client.GetScheduleAsync("<projectName>", "<poolName>", "<scheduleName>");
+Response response = await client.GetScheduleAsync("<projectName>", "<poolName>", "<scheduleName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -157,24 +81,8 @@ Console.WriteLine(result.GetProperty("time").ToString());
 Console.WriteLine(result.GetProperty("timeZone").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Schedule</c>:
-<code>{
-  name: string, # Required. Display name for the Schedule
-  type: &quot;StopDevBox&quot;, # Required. Supported type this scheduled task represents.
-  frequency: &quot;Daily&quot;, # Required. The frequency of this scheduled task.
-  time: string, # Required. The target time to trigger the action. The format is HH:MM.
-  timeZone: string, # Required. The IANA timezone id at which the schedule should execute.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetSchedule(String,String,String,RequestContext)">
+    <member name="GetSchedule(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetSchedule with required parameters and parse the result.
 <code><![CDATA[
@@ -182,7 +90,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-Response response = client.GetSchedule("<projectName>", "<poolName>", "<scheduleName>");
+Response response = client.GetSchedule("<projectName>", "<poolName>", "<scheduleName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -192,24 +100,8 @@ Console.WriteLine(result.GetProperty("time").ToString());
 Console.WriteLine(result.GetProperty("timeZone").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Schedule</c>:
-<code>{
-  name: string, # Required. Display name for the Schedule
-  type: &quot;StopDevBox&quot;, # Required. Supported type this scheduled task represents.
-  frequency: &quot;Daily&quot;, # Required. The frequency of this scheduled task.
-  time: string, # Required. The target time to trigger the action. The format is HH:MM.
-  timeZone: string, # Required. The IANA timezone id at which the schedule should execute.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetDevBoxAsync(String,String,String,RequestContext)">
+    <member name="GetDevBoxAsync(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetDevBoxAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -228,7 +120,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-Response response = await client.GetDevBoxAsync("<projectName>", "<devBoxName>", <me>);
+Response response = await client.GetDevBoxAsync("<projectName>", "<devBoxName>", "me", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -258,55 +150,8 @@ Console.WriteLine(result.GetProperty("createdTime").ToString());
 Console.WriteLine(result.GetProperty("localAdministrator").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>DevBox</c>:
-<code>{
-  name: string, # Optional. Display name for the Dev Box
-  projectName: string, # Optional. Name of the project this Dev Box belongs to
-  poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
-  hibernateSupport: &quot;Enabled&quot; | &quot;Disabled&quot; | &quot;OsUnsupported&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  provisioningState: string, # Optional. The current provisioning state of the Dev Box.
-  actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
-  powerState: &quot;Unknown&quot; | &quot;Running&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
-  uniqueId: string, # Optional. A unique identifier for the Dev Box. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
-  error: {
-    code: string, # Required. An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-    message: string, # Required. A message describing the error, intended to be suitable for display in a user interface.
-    target: string, # Optional. The target of the particular error. For example, the name of the property in error.
-    details: [CloudErrorBody], # Optional. A list of additional details about the error.
-  }, # Optional. Provisioning or action error details. Populated only for error states.
-  location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
-  osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-  user: string, # Optional. The AAD object id of the user this Dev Box is assigned to.
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Information about the Dev Box&apos;s hardware resources
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for this Dev Box
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Information about the image used for this Dev Box
-  createdTime: string (ISO 8601 Format), # Optional. Creation time of this Dev Box
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether the owner of the Dev Box is a local administrator.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetDevBox(String,String,String,RequestContext)">
+    <member name="GetDevBox(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetDevBox with required parameters and parse the result.
 <code><![CDATA[
@@ -325,7 +170,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-Response response = client.GetDevBox("<projectName>", "<devBoxName>", <me>);
+Response response = client.GetDevBox("<projectName>", "<devBoxName>", "me", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -355,55 +200,8 @@ Console.WriteLine(result.GetProperty("createdTime").ToString());
 Console.WriteLine(result.GetProperty("localAdministrator").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>DevBox</c>:
-<code>{
-  name: string, # Optional. Display name for the Dev Box
-  projectName: string, # Optional. Name of the project this Dev Box belongs to
-  poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
-  hibernateSupport: &quot;Enabled&quot; | &quot;Disabled&quot; | &quot;OsUnsupported&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  provisioningState: string, # Optional. The current provisioning state of the Dev Box.
-  actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
-  powerState: &quot;Unknown&quot; | &quot;Running&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
-  uniqueId: string, # Optional. A unique identifier for the Dev Box. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
-  error: {
-    code: string, # Required. An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-    message: string, # Required. A message describing the error, intended to be suitable for display in a user interface.
-    target: string, # Optional. The target of the particular error. For example, the name of the property in error.
-    details: [CloudErrorBody], # Optional. A list of additional details about the error.
-  }, # Optional. Provisioning or action error details. Populated only for error states.
-  location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
-  osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-  user: string, # Optional. The AAD object id of the user this Dev Box is assigned to.
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Information about the Dev Box&apos;s hardware resources
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for this Dev Box
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Information about the image used for this Dev Box
-  createdTime: string (ISO 8601 Format), # Optional. Creation time of this Dev Box
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether the owner of the Dev Box is a local administrator.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetRemoteConnectionAsync(String,String,String,RequestContext)">
+    <member name="GetRemoteConnectionAsync(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetRemoteConnectionAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -422,28 +220,15 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-Response response = await client.GetRemoteConnectionAsync("<projectName>", "<devBoxName>", <me>);
+Response response = await client.GetRemoteConnectionAsync("<projectName>", "<devBoxName>", "me", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("webUrl").ToString());
 Console.WriteLine(result.GetProperty("rdpConnectionUrl").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>RemoteConnection</c>:
-<code>{
-  webUrl: string, # Optional. URL to open a browser based RDP session.
-  rdpConnectionUrl: string, # Optional. Link to open a Remote Desktop session.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetRemoteConnection(String,String,String,RequestContext)">
+    <member name="GetRemoteConnection(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetRemoteConnection with required parameters and parse the result.
 <code><![CDATA[
@@ -462,28 +247,15 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-Response response = client.GetRemoteConnection("<projectName>", "<devBoxName>", <me>);
+Response response = client.GetRemoteConnection("<projectName>", "<devBoxName>", "me", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("webUrl").ToString());
 Console.WriteLine(result.GetProperty("rdpConnectionUrl").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>RemoteConnection</c>:
-<code>{
-  webUrl: string, # Optional. URL to open a browser based RDP session.
-  rdpConnectionUrl: string, # Optional. Link to open a Remote Desktop session.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetActionAsync(String,String,String,String,RequestContext)">
+    <member name="GetActionAsync(string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetActionAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -504,7 +276,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-Response response = await client.GetActionAsync("<projectName>", "<devBoxName>", "<actionName>", <me>);
+Response response = await client.GetActionAsync("<projectName>", "<devBoxName>", "<actionName>", "me", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -514,26 +286,8 @@ Console.WriteLine(result.GetProperty("suspendedUntil").ToString());
 Console.WriteLine(result.GetProperty("next").GetProperty("scheduledTime").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>DevBoxAction</c>:
-<code>{
-  name: string, # Required. The name of the action.
-  actionType: &quot;Stop&quot;, # Required. The action that will be taken.
-  sourceId: string, # Required. The id of the resource which triggered this action
-  suspendedUntil: string (ISO 8601 Format), # Optional. The earliest time that the action could occur (UTC).
-  next: {
-    scheduledTime: string (ISO 8601 Format), # Required. The time the action will be triggered (UTC).
-  }, # Optional. Details about the next run of this action.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetAction(String,String,String,String,RequestContext)">
+    <member name="GetAction(string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetAction with required parameters and parse the result.
 <code><![CDATA[
@@ -554,7 +308,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-Response response = client.GetAction("<projectName>", "<devBoxName>", "<actionName>", <me>);
+Response response = client.GetAction("<projectName>", "<devBoxName>", "<actionName>", "me", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -564,26 +318,8 @@ Console.WriteLine(result.GetProperty("suspendedUntil").ToString());
 Console.WriteLine(result.GetProperty("next").GetProperty("scheduledTime").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>DevBoxAction</c>:
-<code>{
-  name: string, # Required. The name of the action.
-  actionType: &quot;Stop&quot;, # Required. The action that will be taken.
-  sourceId: string, # Required. The id of the resource which triggered this action
-  suspendedUntil: string (ISO 8601 Format), # Optional. The earliest time that the action could occur (UTC).
-  next: {
-    scheduledTime: string (ISO 8601 Format), # Required. The time the action will be triggered (UTC).
-  }, # Optional. Details about the next run of this action.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="SkipActionAsync(String,String,String,String,RequestContext)">
+    <member name="SkipActionAsync(string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call SkipActionAsync with required parameters.
 <code><![CDATA[
@@ -600,12 +336,12 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-Response response = await client.SkipActionAsync("<projectName>", "<devBoxName>", "<actionName>", <me>);
+Response response = await client.SkipActionAsync("<projectName>", "<devBoxName>", "<actionName>", "me", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="SkipAction(String,String,String,String,RequestContext)">
+    <member name="SkipAction(string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call SkipAction with required parameters.
 <code><![CDATA[
@@ -622,12 +358,12 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-Response response = client.SkipAction("<projectName>", "<devBoxName>", "<actionName>", <me>);
+Response response = client.SkipAction("<projectName>", "<devBoxName>", "<actionName>", "me", new RequestContext());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="DelayActionAsync(String,String,String,DateTimeOffset,String,RequestContext)">
+    <member name="DelayActionAsync(string,string,string,DateTimeOffset,string,RequestContext)">
 <example>
 This sample shows how to call DelayActionAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -648,7 +384,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-Response response = await client.DelayActionAsync("<projectName>", "<devBoxName>", "<actionName>", DateTimeOffset.UtcNow, <me>);
+Response response = await client.DelayActionAsync("<projectName>", "<devBoxName>", "<actionName>", DateTimeOffset.UtcNow, "me", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -658,26 +394,8 @@ Console.WriteLine(result.GetProperty("suspendedUntil").ToString());
 Console.WriteLine(result.GetProperty("next").GetProperty("scheduledTime").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>DevBoxAction</c>:
-<code>{
-  name: string, # Required. The name of the action.
-  actionType: &quot;Stop&quot;, # Required. The action that will be taken.
-  sourceId: string, # Required. The id of the resource which triggered this action
-  suspendedUntil: string (ISO 8601 Format), # Optional. The earliest time that the action could occur (UTC).
-  next: {
-    scheduledTime: string (ISO 8601 Format), # Required. The time the action will be triggered (UTC).
-  }, # Optional. Details about the next run of this action.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="DelayAction(String,String,String,DateTimeOffset,String,RequestContext)">
+    <member name="DelayAction(string,string,string,DateTimeOffset,string,RequestContext)">
 <example>
 This sample shows how to call DelayAction with required parameters and parse the result.
 <code><![CDATA[
@@ -698,7 +416,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-Response response = client.DelayAction("<projectName>", "<devBoxName>", "<actionName>", DateTimeOffset.UtcNow, <me>);
+Response response = client.DelayAction("<projectName>", "<devBoxName>", "<actionName>", DateTimeOffset.UtcNow, "me", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -708,26 +426,8 @@ Console.WriteLine(result.GetProperty("suspendedUntil").ToString());
 Console.WriteLine(result.GetProperty("next").GetProperty("scheduledTime").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>DevBoxAction</c>:
-<code>{
-  name: string, # Required. The name of the action.
-  actionType: &quot;Stop&quot;, # Required. The action that will be taken.
-  sourceId: string, # Required. The id of the resource which triggered this action
-  suspendedUntil: string (ISO 8601 Format), # Optional. The earliest time that the action could occur (UTC).
-  next: {
-    scheduledTime: string (ISO 8601 Format), # Required. The time the action will be triggered (UTC).
-  }, # Optional. Details about the next run of this action.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetPoolsAsync(String,Int32,String,RequestContext)">
+    <member name="GetPoolsAsync(string,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetPoolsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -735,9 +435,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-await foreach (var data in client.GetPoolsAsync("<projectName>"))
+await foreach (var item in client.GetPoolsAsync("<projectName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("location").ToString());
     Console.WriteLine(result.GetProperty("healthStatus").ToString());
@@ -749,7 +449,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-await foreach (var data in client.GetPoolsAsync("<projectName>", 1234, "<filter>"))
+await foreach (var item in client.GetPoolsAsync("<projectName>", 1234, "<filter>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -772,46 +472,8 @@ await foreach (var data in client.GetPoolsAsync("<projectName>", 1234, "<filter>
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>PoolListResultValue</c>:
-<code>{
-  name: string, # Required. Pool name
-  location: string, # Required. Azure region where Dev Boxes in the pool are located
-  osType: &quot;Windows&quot;, # Optional. The operating system type of Dev Boxes in this pool
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Hardware settings for the Dev Boxes created in this pool
-  hibernateSupport: &quot;Enabled&quot; | &quot;Disabled&quot; | &quot;OsUnsupported&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for Dev Box created in this pool
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Image settings for Dev Boxes create in this pool
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether owners of Dev Boxes in this pool are local administrators on the Dev Boxes.
-  stopOnDisconnect: {
-    status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Required. Indicates whether the feature to stop the devbox on disconnect once the grace period has lapsed is enabled.
-    gracePeriodMinutes: number, # Optional. The specified time in minutes to wait before stopping a Dev Box once disconnect is detected.
-  }, # Optional. Stop on disconnect configuration settings for Dev Boxes created in this pool.
-  healthStatus: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Healthy&quot; | &quot;Warning&quot; | &quot;Unhealthy&quot;, # Required. Overall health status of the Pool. Indicates whether or not the Pool is available to create Dev Boxes.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetPools(String,Int32,String,RequestContext)">
+    <member name="GetPools(string,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetPools with required parameters and parse the result.
 <code><![CDATA[
@@ -819,9 +481,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-foreach (var data in client.GetPools("<projectName>"))
+foreach (var item in client.GetPools("<projectName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("location").ToString());
     Console.WriteLine(result.GetProperty("healthStatus").ToString());
@@ -833,7 +495,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-foreach (var data in client.GetPools("<projectName>", 1234, "<filter>"))
+foreach (var item in client.GetPools("<projectName>", 1234, "<filter>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -856,46 +518,8 @@ foreach (var data in client.GetPools("<projectName>", 1234, "<filter>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>PoolListResultValue</c>:
-<code>{
-  name: string, # Required. Pool name
-  location: string, # Required. Azure region where Dev Boxes in the pool are located
-  osType: &quot;Windows&quot;, # Optional. The operating system type of Dev Boxes in this pool
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Hardware settings for the Dev Boxes created in this pool
-  hibernateSupport: &quot;Enabled&quot; | &quot;Disabled&quot; | &quot;OsUnsupported&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for Dev Box created in this pool
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Image settings for Dev Boxes create in this pool
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether owners of Dev Boxes in this pool are local administrators on the Dev Boxes.
-  stopOnDisconnect: {
-    status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Required. Indicates whether the feature to stop the devbox on disconnect once the grace period has lapsed is enabled.
-    gracePeriodMinutes: number, # Optional. The specified time in minutes to wait before stopping a Dev Box once disconnect is detected.
-  }, # Optional. Stop on disconnect configuration settings for Dev Boxes created in this pool.
-  healthStatus: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Healthy&quot; | &quot;Warning&quot; | &quot;Unhealthy&quot;, # Required. Overall health status of the Pool. Indicates whether or not the Pool is available to create Dev Boxes.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetSchedulesAsync(String,String,Int32,String,RequestContext)">
+    <member name="GetSchedulesAsync(string,string,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetSchedulesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -903,9 +527,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-await foreach (var data in client.GetSchedulesAsync("<projectName>", "<poolName>"))
+await foreach (var item in client.GetSchedulesAsync("<projectName>", "<poolName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("frequency").ToString());
@@ -919,7 +543,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-await foreach (var data in client.GetSchedulesAsync("<projectName>", "<poolName>", 1234, "<filter>"))
+await foreach (var item in client.GetSchedulesAsync("<projectName>", "<poolName>", 1234, "<filter>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -930,24 +554,8 @@ await foreach (var data in client.GetSchedulesAsync("<projectName>", "<poolName>
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>ScheduleListResultValue</c>:
-<code>{
-  name: string, # Required. Display name for the Schedule
-  type: &quot;StopDevBox&quot;, # Required. Supported type this scheduled task represents.
-  frequency: &quot;Daily&quot;, # Required. The frequency of this scheduled task.
-  time: string, # Required. The target time to trigger the action. The format is HH:MM.
-  timeZone: string, # Required. The IANA timezone id at which the schedule should execute.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetSchedules(String,String,Int32,String,RequestContext)">
+    <member name="GetSchedules(string,string,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetSchedules with required parameters and parse the result.
 <code><![CDATA[
@@ -955,9 +563,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-foreach (var data in client.GetSchedules("<projectName>", "<poolName>"))
+foreach (var item in client.GetSchedules("<projectName>", "<poolName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("frequency").ToString());
@@ -971,7 +579,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-foreach (var data in client.GetSchedules("<projectName>", "<poolName>", 1234, "<filter>"))
+foreach (var item in client.GetSchedules("<projectName>", "<poolName>", 1234, "<filter>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -982,24 +590,8 @@ foreach (var data in client.GetSchedules("<projectName>", "<poolName>", 1234, "<
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>ScheduleListResultValue</c>:
-<code>{
-  name: string, # Required. Display name for the Schedule
-  type: &quot;StopDevBox&quot;, # Required. Supported type this scheduled task represents.
-  frequency: &quot;Daily&quot;, # Required. The frequency of this scheduled task.
-  time: string, # Required. The target time to trigger the action. The format is HH:MM.
-  timeZone: string, # Required. The IANA timezone id at which the schedule should execute.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetAllDevBoxesAsync(String,Int32,RequestContext)">
+    <member name="GetAllDevBoxesAsync(string,int?,RequestContext)">
 <example>
 This sample shows how to call GetAllDevBoxesAsync and parse the result.
 <code><![CDATA[
@@ -1007,9 +599,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-await foreach (var data in client.GetAllDevBoxesAsync())
+await foreach (var item in client.GetAllDevBoxesAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("poolName").ToString());
 }
 ]]></code>
@@ -1019,9 +611,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-await foreach (var data in client.GetAllDevBoxesAsync("<filter>", 1234))
+await foreach (var item in client.GetAllDevBoxesAsync("<filter>", 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("projectName").ToString());
     Console.WriteLine(result.GetProperty("poolName").ToString());
@@ -1050,55 +642,8 @@ await foreach (var data in client.GetAllDevBoxesAsync("<filter>", 1234))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DevBoxListResultValue</c>:
-<code>{
-  name: string, # Optional. Display name for the Dev Box
-  projectName: string, # Optional. Name of the project this Dev Box belongs to
-  poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
-  hibernateSupport: &quot;Enabled&quot; | &quot;Disabled&quot; | &quot;OsUnsupported&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  provisioningState: string, # Optional. The current provisioning state of the Dev Box.
-  actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
-  powerState: &quot;Unknown&quot; | &quot;Running&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
-  uniqueId: string, # Optional. A unique identifier for the Dev Box. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
-  error: {
-    code: string, # Required. An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-    message: string, # Required. A message describing the error, intended to be suitable for display in a user interface.
-    target: string, # Optional. The target of the particular error. For example, the name of the property in error.
-    details: [CloudErrorBody], # Optional. A list of additional details about the error.
-  }, # Optional. Provisioning or action error details. Populated only for error states.
-  location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
-  osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-  user: string, # Optional. The AAD object id of the user this Dev Box is assigned to.
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Information about the Dev Box&apos;s hardware resources
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for this Dev Box
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Information about the image used for this Dev Box
-  createdTime: string (ISO 8601 Format), # Optional. Creation time of this Dev Box
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether the owner of the Dev Box is a local administrator.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetAllDevBoxes(String,Int32,RequestContext)">
+    <member name="GetAllDevBoxes(string,int?,RequestContext)">
 <example>
 This sample shows how to call GetAllDevBoxes and parse the result.
 <code><![CDATA[
@@ -1106,9 +651,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-foreach (var data in client.GetAllDevBoxes())
+foreach (var item in client.GetAllDevBoxes())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("poolName").ToString());
 }
 ]]></code>
@@ -1118,9 +663,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-foreach (var data in client.GetAllDevBoxes("<filter>", 1234))
+foreach (var item in client.GetAllDevBoxes("<filter>", 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("projectName").ToString());
     Console.WriteLine(result.GetProperty("poolName").ToString());
@@ -1149,55 +694,8 @@ foreach (var data in client.GetAllDevBoxes("<filter>", 1234))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DevBoxListResultValue</c>:
-<code>{
-  name: string, # Optional. Display name for the Dev Box
-  projectName: string, # Optional. Name of the project this Dev Box belongs to
-  poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
-  hibernateSupport: &quot;Enabled&quot; | &quot;Disabled&quot; | &quot;OsUnsupported&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  provisioningState: string, # Optional. The current provisioning state of the Dev Box.
-  actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
-  powerState: &quot;Unknown&quot; | &quot;Running&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
-  uniqueId: string, # Optional. A unique identifier for the Dev Box. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
-  error: {
-    code: string, # Required. An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-    message: string, # Required. A message describing the error, intended to be suitable for display in a user interface.
-    target: string, # Optional. The target of the particular error. For example, the name of the property in error.
-    details: [CloudErrorBody], # Optional. A list of additional details about the error.
-  }, # Optional. Provisioning or action error details. Populated only for error states.
-  location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
-  osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-  user: string, # Optional. The AAD object id of the user this Dev Box is assigned to.
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Information about the Dev Box&apos;s hardware resources
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for this Dev Box
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Information about the image used for this Dev Box
-  createdTime: string (ISO 8601 Format), # Optional. Creation time of this Dev Box
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether the owner of the Dev Box is a local administrator.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetAllDevBoxesByUserAsync(String,String,Int32,RequestContext)">
+    <member name="GetAllDevBoxesByUserAsync(string,string,int?,RequestContext)">
 <example>
 This sample shows how to call GetAllDevBoxesByUserAsync and parse the result.
 <code><![CDATA[
@@ -1205,9 +703,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-await foreach (var data in client.GetAllDevBoxesByUserAsync())
+await foreach (var item in client.GetAllDevBoxesByUserAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("poolName").ToString());
 }
 ]]></code>
@@ -1217,9 +715,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-await foreach (var data in client.GetAllDevBoxesByUserAsync(<me>, "<filter>", 1234))
+await foreach (var item in client.GetAllDevBoxesByUserAsync("me", "<filter>", 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("projectName").ToString());
     Console.WriteLine(result.GetProperty("poolName").ToString());
@@ -1248,55 +746,8 @@ await foreach (var data in client.GetAllDevBoxesByUserAsync(<me>, "<filter>", 12
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DevBoxListResultValue</c>:
-<code>{
-  name: string, # Optional. Display name for the Dev Box
-  projectName: string, # Optional. Name of the project this Dev Box belongs to
-  poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
-  hibernateSupport: &quot;Enabled&quot; | &quot;Disabled&quot; | &quot;OsUnsupported&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  provisioningState: string, # Optional. The current provisioning state of the Dev Box.
-  actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
-  powerState: &quot;Unknown&quot; | &quot;Running&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
-  uniqueId: string, # Optional. A unique identifier for the Dev Box. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
-  error: {
-    code: string, # Required. An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-    message: string, # Required. A message describing the error, intended to be suitable for display in a user interface.
-    target: string, # Optional. The target of the particular error. For example, the name of the property in error.
-    details: [CloudErrorBody], # Optional. A list of additional details about the error.
-  }, # Optional. Provisioning or action error details. Populated only for error states.
-  location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
-  osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-  user: string, # Optional. The AAD object id of the user this Dev Box is assigned to.
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Information about the Dev Box&apos;s hardware resources
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for this Dev Box
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Information about the image used for this Dev Box
-  createdTime: string (ISO 8601 Format), # Optional. Creation time of this Dev Box
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether the owner of the Dev Box is a local administrator.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetAllDevBoxesByUser(String,String,Int32,RequestContext)">
+    <member name="GetAllDevBoxesByUser(string,string,int?,RequestContext)">
 <example>
 This sample shows how to call GetAllDevBoxesByUser and parse the result.
 <code><![CDATA[
@@ -1304,9 +755,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-foreach (var data in client.GetAllDevBoxesByUser())
+foreach (var item in client.GetAllDevBoxesByUser())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("poolName").ToString());
 }
 ]]></code>
@@ -1316,9 +767,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-foreach (var data in client.GetAllDevBoxesByUser(<me>, "<filter>", 1234))
+foreach (var item in client.GetAllDevBoxesByUser("me", "<filter>", 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("projectName").ToString());
     Console.WriteLine(result.GetProperty("poolName").ToString());
@@ -1347,55 +798,8 @@ foreach (var data in client.GetAllDevBoxesByUser(<me>, "<filter>", 1234))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DevBoxListResultValue</c>:
-<code>{
-  name: string, # Optional. Display name for the Dev Box
-  projectName: string, # Optional. Name of the project this Dev Box belongs to
-  poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
-  hibernateSupport: &quot;Enabled&quot; | &quot;Disabled&quot; | &quot;OsUnsupported&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  provisioningState: string, # Optional. The current provisioning state of the Dev Box.
-  actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
-  powerState: &quot;Unknown&quot; | &quot;Running&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
-  uniqueId: string, # Optional. A unique identifier for the Dev Box. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
-  error: {
-    code: string, # Required. An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-    message: string, # Required. A message describing the error, intended to be suitable for display in a user interface.
-    target: string, # Optional. The target of the particular error. For example, the name of the property in error.
-    details: [CloudErrorBody], # Optional. A list of additional details about the error.
-  }, # Optional. Provisioning or action error details. Populated only for error states.
-  location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
-  osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-  user: string, # Optional. The AAD object id of the user this Dev Box is assigned to.
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Information about the Dev Box&apos;s hardware resources
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for this Dev Box
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Information about the image used for this Dev Box
-  createdTime: string (ISO 8601 Format), # Optional. Creation time of this Dev Box
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether the owner of the Dev Box is a local administrator.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetDevBoxesAsync(String,String,String,Int32,RequestContext)">
+    <member name="GetDevBoxesAsync(string,string,string,int?,RequestContext)">
 <example>
 This sample shows how to call GetDevBoxesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1403,7 +807,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-await foreach (var data in client.GetDevBoxesAsync("<projectName>"))
+await foreach (var item in client.GetDevBoxesAsync("<projectName>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("poolName").ToString());
@@ -1415,7 +819,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-await foreach (var data in client.GetDevBoxesAsync("<projectName>", <me>, "<filter>", 1234))
+await foreach (var item in client.GetDevBoxesAsync("<projectName>", "me", "<filter>", 1234, new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -1446,55 +850,8 @@ await foreach (var data in client.GetDevBoxesAsync("<projectName>", <me>, "<filt
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DevBoxListResultValue</c>:
-<code>{
-  name: string, # Optional. Display name for the Dev Box
-  projectName: string, # Optional. Name of the project this Dev Box belongs to
-  poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
-  hibernateSupport: &quot;Enabled&quot; | &quot;Disabled&quot; | &quot;OsUnsupported&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  provisioningState: string, # Optional. The current provisioning state of the Dev Box.
-  actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
-  powerState: &quot;Unknown&quot; | &quot;Running&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
-  uniqueId: string, # Optional. A unique identifier for the Dev Box. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
-  error: {
-    code: string, # Required. An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-    message: string, # Required. A message describing the error, intended to be suitable for display in a user interface.
-    target: string, # Optional. The target of the particular error. For example, the name of the property in error.
-    details: [CloudErrorBody], # Optional. A list of additional details about the error.
-  }, # Optional. Provisioning or action error details. Populated only for error states.
-  location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
-  osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-  user: string, # Optional. The AAD object id of the user this Dev Box is assigned to.
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Information about the Dev Box&apos;s hardware resources
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for this Dev Box
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Information about the image used for this Dev Box
-  createdTime: string (ISO 8601 Format), # Optional. Creation time of this Dev Box
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether the owner of the Dev Box is a local administrator.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetDevBoxes(String,String,String,Int32,RequestContext)">
+    <member name="GetDevBoxes(string,string,string,int?,RequestContext)">
 <example>
 This sample shows how to call GetDevBoxes with required parameters and parse the result.
 <code><![CDATA[
@@ -1502,7 +859,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-foreach (var data in client.GetDevBoxes("<projectName>"))
+foreach (var item in client.GetDevBoxes("<projectName>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("poolName").ToString());
@@ -1514,7 +871,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-foreach (var data in client.GetDevBoxes("<projectName>", <me>, "<filter>", 1234))
+foreach (var item in client.GetDevBoxes("<projectName>", "me", "<filter>", 1234, new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -1545,55 +902,8 @@ foreach (var data in client.GetDevBoxes("<projectName>", <me>, "<filter>", 1234)
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DevBoxListResultValue</c>:
-<code>{
-  name: string, # Optional. Display name for the Dev Box
-  projectName: string, # Optional. Name of the project this Dev Box belongs to
-  poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
-  hibernateSupport: &quot;Enabled&quot; | &quot;Disabled&quot; | &quot;OsUnsupported&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  provisioningState: string, # Optional. The current provisioning state of the Dev Box.
-  actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
-  powerState: &quot;Unknown&quot; | &quot;Running&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
-  uniqueId: string, # Optional. A unique identifier for the Dev Box. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
-  error: {
-    code: string, # Required. An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-    message: string, # Required. A message describing the error, intended to be suitable for display in a user interface.
-    target: string, # Optional. The target of the particular error. For example, the name of the property in error.
-    details: [CloudErrorBody], # Optional. A list of additional details about the error.
-  }, # Optional. Provisioning or action error details. Populated only for error states.
-  location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
-  osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-  user: string, # Optional. The AAD object id of the user this Dev Box is assigned to.
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Information about the Dev Box&apos;s hardware resources
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for this Dev Box
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Information about the image used for this Dev Box
-  createdTime: string (ISO 8601 Format), # Optional. Creation time of this Dev Box
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether the owner of the Dev Box is a local administrator.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetActionsAsync(String,String,String,RequestContext)">
+    <member name="GetActionsAsync(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetActionsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1601,9 +911,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-await foreach (var data in client.GetActionsAsync("<projectName>", "<devBoxName>"))
+await foreach (var item in client.GetActionsAsync("<projectName>", "<devBoxName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("actionType").ToString());
     Console.WriteLine(result.GetProperty("sourceId").ToString());
@@ -1615,9 +925,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-await foreach (var data in client.GetActionsAsync("<projectName>", "<devBoxName>", <me>))
+await foreach (var item in client.GetActionsAsync("<projectName>", "<devBoxName>", "me", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("actionType").ToString());
     Console.WriteLine(result.GetProperty("sourceId").ToString());
@@ -1626,26 +936,8 @@ await foreach (var data in client.GetActionsAsync("<projectName>", "<devBoxName>
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DevBoxActionsListResultValue</c>:
-<code>{
-  name: string, # Required. The name of the action.
-  actionType: &quot;Stop&quot;, # Required. The action that will be taken.
-  sourceId: string, # Required. The id of the resource which triggered this action
-  suspendedUntil: string (ISO 8601 Format), # Optional. The earliest time that the action could occur (UTC).
-  next: {
-    scheduledTime: string (ISO 8601 Format), # Required. The time the action will be triggered (UTC).
-  }, # Optional. Details about the next run of this action.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetActions(String,String,String,RequestContext)">
+    <member name="GetActions(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetActions with required parameters and parse the result.
 <code><![CDATA[
@@ -1653,9 +945,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-foreach (var data in client.GetActions("<projectName>", "<devBoxName>"))
+foreach (var item in client.GetActions("<projectName>", "<devBoxName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("actionType").ToString());
     Console.WriteLine(result.GetProperty("sourceId").ToString());
@@ -1667,9 +959,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-foreach (var data in client.GetActions("<projectName>", "<devBoxName>", <me>))
+foreach (var item in client.GetActions("<projectName>", "<devBoxName>", "me", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("actionType").ToString());
     Console.WriteLine(result.GetProperty("sourceId").ToString());
@@ -1678,26 +970,8 @@ foreach (var data in client.GetActions("<projectName>", "<devBoxName>", <me>))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DevBoxActionsListResultValue</c>:
-<code>{
-  name: string, # Required. The name of the action.
-  actionType: &quot;Stop&quot;, # Required. The action that will be taken.
-  sourceId: string, # Required. The id of the resource which triggered this action
-  suspendedUntil: string (ISO 8601 Format), # Optional. The earliest time that the action could occur (UTC).
-  next: {
-    scheduledTime: string (ISO 8601 Format), # Required. The time the action will be triggered (UTC).
-  }, # Optional. Details about the next run of this action.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="DelayAllActionsAsync(String,String,DateTimeOffset,String,RequestContext)">
+    <member name="DelayAllActionsAsync(string,string,DateTimeOffset,string,RequestContext)">
 <example>
 This sample shows how to call DelayAllActionsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1705,9 +979,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-await foreach (var data in client.DelayAllActionsAsync("<projectName>", "<devBoxName>", DateTimeOffset.UtcNow))
+await foreach (var item in client.DelayAllActionsAsync("<projectName>", "<devBoxName>", DateTimeOffset.UtcNow))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("result").ToString());
 }
@@ -1718,9 +992,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-await foreach (var data in client.DelayAllActionsAsync("<projectName>", "<devBoxName>", DateTimeOffset.UtcNow, <me>))
+await foreach (var item in client.DelayAllActionsAsync("<projectName>", "<devBoxName>", DateTimeOffset.UtcNow, "me", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("result").ToString());
     Console.WriteLine(result.GetProperty("action").GetProperty("name").ToString());
@@ -1734,36 +1008,8 @@ await foreach (var data in client.DelayAllActionsAsync("<projectName>", "<devBox
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DevBoxActionsDelayMultipleResultValue</c>:
-<code>{
-  name: string, # Required. The name of the action.
-  result: &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. The result of the delay operation on this action.
-  action: {
-    name: string, # Required. The name of the action.
-    actionType: &quot;Stop&quot;, # Required. The action that will be taken.
-    sourceId: string, # Required. The id of the resource which triggered this action
-    suspendedUntil: string (ISO 8601 Format), # Optional. The earliest time that the action could occur (UTC).
-    next: {
-      scheduledTime: string (ISO 8601 Format), # Required. The time the action will be triggered (UTC).
-    }, # Optional. Details about the next run of this action.
-  }, # Optional. The delayed action
-  error: {
-    code: string, # Required. An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-    message: string, # Required. A message describing the error, intended to be suitable for display in a user interface.
-    target: string, # Optional. The target of the particular error. For example, the name of the property in error.
-    details: [CloudErrorBody], # Optional. A list of additional details about the error.
-  }, # Optional. Information about the error that occurred. Only populated on error.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="DelayAllActions(String,String,DateTimeOffset,String,RequestContext)">
+    <member name="DelayAllActions(string,string,DateTimeOffset,string,RequestContext)">
 <example>
 This sample shows how to call DelayAllActions with required parameters and parse the result.
 <code><![CDATA[
@@ -1771,9 +1017,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-foreach (var data in client.DelayAllActions("<projectName>", "<devBoxName>", DateTimeOffset.UtcNow))
+foreach (var item in client.DelayAllActions("<projectName>", "<devBoxName>", DateTimeOffset.UtcNow))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("result").ToString());
 }
@@ -1784,9 +1030,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-foreach (var data in client.DelayAllActions("<projectName>", "<devBoxName>", DateTimeOffset.UtcNow, <me>))
+foreach (var item in client.DelayAllActions("<projectName>", "<devBoxName>", DateTimeOffset.UtcNow, "me", new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("result").ToString());
     Console.WriteLine(result.GetProperty("action").GetProperty("name").ToString());
@@ -1800,36 +1046,8 @@ foreach (var data in client.DelayAllActions("<projectName>", "<devBoxName>", Dat
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>DevBoxActionsDelayMultipleResultValue</c>:
-<code>{
-  name: string, # Required. The name of the action.
-  result: &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. The result of the delay operation on this action.
-  action: {
-    name: string, # Required. The name of the action.
-    actionType: &quot;Stop&quot;, # Required. The action that will be taken.
-    sourceId: string, # Required. The id of the resource which triggered this action
-    suspendedUntil: string (ISO 8601 Format), # Optional. The earliest time that the action could occur (UTC).
-    next: {
-      scheduledTime: string (ISO 8601 Format), # Required. The time the action will be triggered (UTC).
-    }, # Optional. Details about the next run of this action.
-  }, # Optional. The delayed action
-  error: {
-    code: string, # Required. An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-    message: string, # Required. A message describing the error, intended to be suitable for display in a user interface.
-    target: string, # Optional. The target of the particular error. For example, the name of the property in error.
-    details: [CloudErrorBody], # Optional. A list of additional details about the error.
-  }, # Optional. Information about the error that occurred. Only populated on error.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="CreateDevBoxAsync(WaitUntil,String,String,RequestContent,String,RequestContext)">
+    <member name="CreateDevBoxAsync(WaitUntil,string,string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call CreateDevBoxAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -1858,7 +1076,7 @@ var data = new {
     localAdministrator = "Enabled",
 };
 
-var operation = await client.CreateDevBoxAsync(WaitUntil.Completed, "<projectName>", "<devBoxName>", RequestContent.Create(data), <me>);
+var operation = await client.CreateDevBoxAsync(WaitUntil.Completed, "<projectName>", "<devBoxName>", RequestContent.Create(data), "me", new RequestContext());
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1889,98 +1107,8 @@ Console.WriteLine(result.GetProperty("createdTime").ToString());
 Console.WriteLine(result.GetProperty("localAdministrator").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>DevBox</c>:
-<code>{
-  name: string, # Optional. Display name for the Dev Box
-  projectName: string, # Optional. Name of the project this Dev Box belongs to
-  poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
-  hibernateSupport: &quot;Enabled&quot; | &quot;Disabled&quot; | &quot;OsUnsupported&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  provisioningState: string, # Optional. The current provisioning state of the Dev Box.
-  actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
-  powerState: &quot;Unknown&quot; | &quot;Running&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
-  uniqueId: string, # Optional. A unique identifier for the Dev Box. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
-  error: {
-    code: string, # Required. An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-    message: string, # Required. A message describing the error, intended to be suitable for display in a user interface.
-    target: string, # Optional. The target of the particular error. For example, the name of the property in error.
-    details: [CloudErrorBody], # Optional. A list of additional details about the error.
-  }, # Optional. Provisioning or action error details. Populated only for error states.
-  location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
-  osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-  user: string, # Optional. The AAD object id of the user this Dev Box is assigned to.
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Information about the Dev Box&apos;s hardware resources
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for this Dev Box
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Information about the image used for this Dev Box
-  createdTime: string (ISO 8601 Format), # Optional. Creation time of this Dev Box
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether the owner of the Dev Box is a local administrator.
-}
-</code>
-
-Response Body:
-
-Schema for <c>DevBox</c>:
-<code>{
-  name: string, # Optional. Display name for the Dev Box
-  projectName: string, # Optional. Name of the project this Dev Box belongs to
-  poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
-  hibernateSupport: &quot;Enabled&quot; | &quot;Disabled&quot; | &quot;OsUnsupported&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  provisioningState: string, # Optional. The current provisioning state of the Dev Box.
-  actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
-  powerState: &quot;Unknown&quot; | &quot;Running&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
-  uniqueId: string, # Optional. A unique identifier for the Dev Box. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
-  error: {
-    code: string, # Required. An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-    message: string, # Required. A message describing the error, intended to be suitable for display in a user interface.
-    target: string, # Optional. The target of the particular error. For example, the name of the property in error.
-    details: [CloudErrorBody], # Optional. A list of additional details about the error.
-  }, # Optional. Provisioning or action error details. Populated only for error states.
-  location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
-  osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-  user: string, # Optional. The AAD object id of the user this Dev Box is assigned to.
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Information about the Dev Box&apos;s hardware resources
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for this Dev Box
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Information about the image used for this Dev Box
-  createdTime: string (ISO 8601 Format), # Optional. Creation time of this Dev Box
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether the owner of the Dev Box is a local administrator.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="CreateDevBox(WaitUntil,String,String,RequestContent,String,RequestContext)">
+    <member name="CreateDevBox(WaitUntil,string,string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call CreateDevBox with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -2009,7 +1137,7 @@ var data = new {
     localAdministrator = "Enabled",
 };
 
-var operation = client.CreateDevBox(WaitUntil.Completed, "<projectName>", "<devBoxName>", RequestContent.Create(data), <me>);
+var operation = client.CreateDevBox(WaitUntil.Completed, "<projectName>", "<devBoxName>", RequestContent.Create(data), "me", new RequestContext());
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -2040,98 +1168,8 @@ Console.WriteLine(result.GetProperty("createdTime").ToString());
 Console.WriteLine(result.GetProperty("localAdministrator").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>DevBox</c>:
-<code>{
-  name: string, # Optional. Display name for the Dev Box
-  projectName: string, # Optional. Name of the project this Dev Box belongs to
-  poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
-  hibernateSupport: &quot;Enabled&quot; | &quot;Disabled&quot; | &quot;OsUnsupported&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  provisioningState: string, # Optional. The current provisioning state of the Dev Box.
-  actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
-  powerState: &quot;Unknown&quot; | &quot;Running&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
-  uniqueId: string, # Optional. A unique identifier for the Dev Box. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
-  error: {
-    code: string, # Required. An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-    message: string, # Required. A message describing the error, intended to be suitable for display in a user interface.
-    target: string, # Optional. The target of the particular error. For example, the name of the property in error.
-    details: [CloudErrorBody], # Optional. A list of additional details about the error.
-  }, # Optional. Provisioning or action error details. Populated only for error states.
-  location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
-  osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-  user: string, # Optional. The AAD object id of the user this Dev Box is assigned to.
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Information about the Dev Box&apos;s hardware resources
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for this Dev Box
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Information about the image used for this Dev Box
-  createdTime: string (ISO 8601 Format), # Optional. Creation time of this Dev Box
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether the owner of the Dev Box is a local administrator.
-}
-</code>
-
-Response Body:
-
-Schema for <c>DevBox</c>:
-<code>{
-  name: string, # Optional. Display name for the Dev Box
-  projectName: string, # Optional. Name of the project this Dev Box belongs to
-  poolName: string, # Required. The name of the Dev Box pool this machine belongs to.
-  hibernateSupport: &quot;Enabled&quot; | &quot;Disabled&quot; | &quot;OsUnsupported&quot;, # Optional. Indicates whether hibernate is enabled/disabled or unknown.
-  provisioningState: string, # Optional. The current provisioning state of the Dev Box.
-  actionState: string, # Optional. The current action state of the Dev Box. This is state is based on previous action performed by user.
-  powerState: &quot;Unknown&quot; | &quot;Running&quot; | &quot;Deallocated&quot; | &quot;PoweredOff&quot; | &quot;Hibernated&quot;, # Optional. The current power state of the Dev Box.
-  uniqueId: string, # Optional. A unique identifier for the Dev Box. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).
-  error: {
-    code: string, # Required. An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-    message: string, # Required. A message describing the error, intended to be suitable for display in a user interface.
-    target: string, # Optional. The target of the particular error. For example, the name of the property in error.
-    details: [CloudErrorBody], # Optional. A list of additional details about the error.
-  }, # Optional. Provisioning or action error details. Populated only for error states.
-  location: string, # Optional. Azure region where this Dev Box is located. This will be the same region as the Virtual Network it is attached to.
-  osType: &quot;Windows&quot;, # Optional. The operating system type of this Dev Box.
-  user: string, # Optional. The AAD object id of the user this Dev Box is assigned to.
-  hardwareProfile: {
-    skuName: string, # Optional. The name of the SKU
-    vCPUs: number, # Optional. The number of vCPUs available for the Dev Box.
-    memoryGB: number, # Optional. The amount of memory available for the Dev Box.
-  }, # Optional. Information about the Dev Box&apos;s hardware resources
-  storageProfile: {
-    osDisk: {
-      diskSizeGB: number, # Optional. The size of the OS Disk in gigabytes.
-    }, # Optional. Settings for the operating system disk.
-  }, # Optional. Storage settings for this Dev Box
-  imageReference: {
-    name: string, # Optional. The name of the image used.
-    version: string, # Optional. The version of the image.
-    operatingSystem: string, # Optional. The operating system of the image.
-    osBuildNumber: string, # Optional. The operating system build number of the image.
-    publishedDate: string (ISO 8601 Format), # Optional. The datetime that the backing image version was published.
-  }, # Optional. Information about the image used for this Dev Box
-  createdTime: string (ISO 8601 Format), # Optional. Creation time of this Dev Box
-  localAdministrator: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Indicates whether the owner of the Dev Box is a local administrator.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="DeleteDevBoxAsync(WaitUntil,String,String,String,RequestContext)">
+    <member name="DeleteDevBoxAsync(WaitUntil,string,string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteDevBoxAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2141,8 +1179,8 @@ var client = new DevBoxesClient(endpoint, credential);
 
 var operation = await client.DeleteDevBoxAsync(WaitUntil.Completed, "<projectName>", "<devBoxName>");
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call DeleteDevBoxAsync with all parameters, and how to parse the result.
@@ -2151,10 +1189,10 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-var operation = await client.DeleteDevBoxAsync(WaitUntil.Completed, "<projectName>", "<devBoxName>", <me>);
+var operation = await client.DeleteDevBoxAsync(WaitUntil.Completed, "<projectName>", "<devBoxName>", "me", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -2167,31 +1205,8 @@ Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>OperationStatus</c>:
-<code>{
-  id: string, # Optional. Fully qualified ID for the operation status.
-  name: string, # Optional. The operation id name
-  status: string, # Required. Provisioning state of the resource.
-  resourceId: string, # Optional. The id of the resource.
-  startTime: string (ISO 8601 Format), # Optional. The start time of the operation
-  endTime: string (ISO 8601 Format), # Optional. The end time of the operation
-  percentComplete: number, # Optional. Percent of the operation that is complete
-  properties: AnyObject, # Optional. Custom operation properties, populated only for a successful operation.
-  error: {
-    code: string, # Optional. The error code.
-    message: string, # Optional. The error message.
-  }, # Optional. Operation Error message
-}
-</code>
-
-</remarks>
     </member>
-    <member name="DeleteDevBox(WaitUntil,String,String,String,RequestContext)">
+    <member name="DeleteDevBox(WaitUntil,string,string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteDevBox with required parameters and parse the result.
 <code><![CDATA[
@@ -2201,8 +1216,8 @@ var client = new DevBoxesClient(endpoint, credential);
 
 var operation = client.DeleteDevBox(WaitUntil.Completed, "<projectName>", "<devBoxName>");
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call DeleteDevBox with all parameters, and how to parse the result.
@@ -2211,10 +1226,10 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-var operation = client.DeleteDevBox(WaitUntil.Completed, "<projectName>", "<devBoxName>", <me>);
+var operation = client.DeleteDevBox(WaitUntil.Completed, "<projectName>", "<devBoxName>", "me", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -2227,31 +1242,8 @@ Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>OperationStatus</c>:
-<code>{
-  id: string, # Optional. Fully qualified ID for the operation status.
-  name: string, # Optional. The operation id name
-  status: string, # Required. Provisioning state of the resource.
-  resourceId: string, # Optional. The id of the resource.
-  startTime: string (ISO 8601 Format), # Optional. The start time of the operation
-  endTime: string (ISO 8601 Format), # Optional. The end time of the operation
-  percentComplete: number, # Optional. Percent of the operation that is complete
-  properties: AnyObject, # Optional. Custom operation properties, populated only for a successful operation.
-  error: {
-    code: string, # Optional. The error code.
-    message: string, # Optional. The error message.
-  }, # Optional. Operation Error message
-}
-</code>
-
-</remarks>
     </member>
-    <member name="StartDevBoxAsync(WaitUntil,String,String,String,RequestContext)">
+    <member name="StartDevBoxAsync(WaitUntil,string,string,string,RequestContext)">
 <example>
 This sample shows how to call StartDevBoxAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2261,8 +1253,8 @@ var client = new DevBoxesClient(endpoint, credential);
 
 var operation = await client.StartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<devBoxName>");
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call StartDevBoxAsync with all parameters, and how to parse the result.
@@ -2271,10 +1263,10 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-var operation = await client.StartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<devBoxName>", <me>);
+var operation = await client.StartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<devBoxName>", "me", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -2287,31 +1279,8 @@ Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>OperationStatus</c>:
-<code>{
-  id: string, # Optional. Fully qualified ID for the operation status.
-  name: string, # Optional. The operation id name
-  status: string, # Required. Provisioning state of the resource.
-  resourceId: string, # Optional. The id of the resource.
-  startTime: string (ISO 8601 Format), # Optional. The start time of the operation
-  endTime: string (ISO 8601 Format), # Optional. The end time of the operation
-  percentComplete: number, # Optional. Percent of the operation that is complete
-  properties: AnyObject, # Optional. Custom operation properties, populated only for a successful operation.
-  error: {
-    code: string, # Optional. The error code.
-    message: string, # Optional. The error message.
-  }, # Optional. Operation Error message
-}
-</code>
-
-</remarks>
     </member>
-    <member name="StartDevBox(WaitUntil,String,String,String,RequestContext)">
+    <member name="StartDevBox(WaitUntil,string,string,string,RequestContext)">
 <example>
 This sample shows how to call StartDevBox with required parameters and parse the result.
 <code><![CDATA[
@@ -2321,8 +1290,8 @@ var client = new DevBoxesClient(endpoint, credential);
 
 var operation = client.StartDevBox(WaitUntil.Completed, "<projectName>", "<devBoxName>");
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call StartDevBox with all parameters, and how to parse the result.
@@ -2331,10 +1300,10 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-var operation = client.StartDevBox(WaitUntil.Completed, "<projectName>", "<devBoxName>", <me>);
+var operation = client.StartDevBox(WaitUntil.Completed, "<projectName>", "<devBoxName>", "me", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -2347,31 +1316,8 @@ Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>OperationStatus</c>:
-<code>{
-  id: string, # Optional. Fully qualified ID for the operation status.
-  name: string, # Optional. The operation id name
-  status: string, # Required. Provisioning state of the resource.
-  resourceId: string, # Optional. The id of the resource.
-  startTime: string (ISO 8601 Format), # Optional. The start time of the operation
-  endTime: string (ISO 8601 Format), # Optional. The end time of the operation
-  percentComplete: number, # Optional. Percent of the operation that is complete
-  properties: AnyObject, # Optional. Custom operation properties, populated only for a successful operation.
-  error: {
-    code: string, # Optional. The error code.
-    message: string, # Optional. The error message.
-  }, # Optional. Operation Error message
-}
-</code>
-
-</remarks>
     </member>
-    <member name="StopDevBoxAsync(WaitUntil,String,String,String,Boolean,RequestContext)">
+    <member name="StopDevBoxAsync(WaitUntil,string,string,string,bool?,RequestContext)">
 <example>
 This sample shows how to call StopDevBoxAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2381,8 +1327,8 @@ var client = new DevBoxesClient(endpoint, credential);
 
 var operation = await client.StopDevBoxAsync(WaitUntil.Completed, "<projectName>", "<devBoxName>");
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call StopDevBoxAsync with all parameters, and how to parse the result.
@@ -2391,10 +1337,10 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-var operation = await client.StopDevBoxAsync(WaitUntil.Completed, "<projectName>", "<devBoxName>", <me>, true);
+var operation = await client.StopDevBoxAsync(WaitUntil.Completed, "<projectName>", "<devBoxName>", "me", true, new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -2407,31 +1353,8 @@ Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>OperationStatus</c>:
-<code>{
-  id: string, # Optional. Fully qualified ID for the operation status.
-  name: string, # Optional. The operation id name
-  status: string, # Required. Provisioning state of the resource.
-  resourceId: string, # Optional. The id of the resource.
-  startTime: string (ISO 8601 Format), # Optional. The start time of the operation
-  endTime: string (ISO 8601 Format), # Optional. The end time of the operation
-  percentComplete: number, # Optional. Percent of the operation that is complete
-  properties: AnyObject, # Optional. Custom operation properties, populated only for a successful operation.
-  error: {
-    code: string, # Optional. The error code.
-    message: string, # Optional. The error message.
-  }, # Optional. Operation Error message
-}
-</code>
-
-</remarks>
     </member>
-    <member name="StopDevBox(WaitUntil,String,String,String,Boolean,RequestContext)">
+    <member name="StopDevBox(WaitUntil,string,string,string,bool?,RequestContext)">
 <example>
 This sample shows how to call StopDevBox with required parameters and parse the result.
 <code><![CDATA[
@@ -2441,8 +1364,8 @@ var client = new DevBoxesClient(endpoint, credential);
 
 var operation = client.StopDevBox(WaitUntil.Completed, "<projectName>", "<devBoxName>");
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call StopDevBox with all parameters, and how to parse the result.
@@ -2451,10 +1374,10 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-var operation = client.StopDevBox(WaitUntil.Completed, "<projectName>", "<devBoxName>", <me>, true);
+var operation = client.StopDevBox(WaitUntil.Completed, "<projectName>", "<devBoxName>", "me", true, new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -2467,31 +1390,8 @@ Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>OperationStatus</c>:
-<code>{
-  id: string, # Optional. Fully qualified ID for the operation status.
-  name: string, # Optional. The operation id name
-  status: string, # Required. Provisioning state of the resource.
-  resourceId: string, # Optional. The id of the resource.
-  startTime: string (ISO 8601 Format), # Optional. The start time of the operation
-  endTime: string (ISO 8601 Format), # Optional. The end time of the operation
-  percentComplete: number, # Optional. Percent of the operation that is complete
-  properties: AnyObject, # Optional. Custom operation properties, populated only for a successful operation.
-  error: {
-    code: string, # Optional. The error code.
-    message: string, # Optional. The error message.
-  }, # Optional. Operation Error message
-}
-</code>
-
-</remarks>
     </member>
-    <member name="RestartDevBoxAsync(WaitUntil,String,String,String,RequestContext)">
+    <member name="RestartDevBoxAsync(WaitUntil,string,string,string,RequestContext)">
 <example>
 This sample shows how to call RestartDevBoxAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -2501,8 +1401,8 @@ var client = new DevBoxesClient(endpoint, credential);
 
 var operation = await client.RestartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<devBoxName>");
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call RestartDevBoxAsync with all parameters, and how to parse the result.
@@ -2511,10 +1411,10 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-var operation = await client.RestartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<devBoxName>", <me>);
+var operation = await client.RestartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<devBoxName>", "me", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -2527,31 +1427,8 @@ Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>OperationStatus</c>:
-<code>{
-  id: string, # Optional. Fully qualified ID for the operation status.
-  name: string, # Optional. The operation id name
-  status: string, # Required. Provisioning state of the resource.
-  resourceId: string, # Optional. The id of the resource.
-  startTime: string (ISO 8601 Format), # Optional. The start time of the operation
-  endTime: string (ISO 8601 Format), # Optional. The end time of the operation
-  percentComplete: number, # Optional. Percent of the operation that is complete
-  properties: AnyObject, # Optional. Custom operation properties, populated only for a successful operation.
-  error: {
-    code: string, # Optional. The error code.
-    message: string, # Optional. The error message.
-  }, # Optional. Operation Error message
-}
-</code>
-
-</remarks>
     </member>
-    <member name="RestartDevBox(WaitUntil,String,String,String,RequestContext)">
+    <member name="RestartDevBox(WaitUntil,string,string,string,RequestContext)">
 <example>
 This sample shows how to call RestartDevBox with required parameters and parse the result.
 <code><![CDATA[
@@ -2561,8 +1438,8 @@ var client = new DevBoxesClient(endpoint, credential);
 
 var operation = client.RestartDevBox(WaitUntil.Completed, "<projectName>", "<devBoxName>");
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call RestartDevBox with all parameters, and how to parse the result.
@@ -2571,10 +1448,10 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, credential);
 
-var operation = client.RestartDevBox(WaitUntil.Completed, "<projectName>", "<devBoxName>", <me>);
+var operation = client.RestartDevBox(WaitUntil.Completed, "<projectName>", "<devBoxName>", "me", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -2587,29 +1464,6 @@ Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>OperationStatus</c>:
-<code>{
-  id: string, # Optional. Fully qualified ID for the operation status.
-  name: string, # Optional. The operation id name
-  status: string, # Required. Provisioning state of the resource.
-  resourceId: string, # Optional. The id of the resource.
-  startTime: string (ISO 8601 Format), # Optional. The start time of the operation
-  endTime: string (ISO 8601 Format), # Optional. The end time of the operation
-  percentComplete: number, # Optional. Percent of the operation that is complete
-  properties: AnyObject, # Optional. Custom operation properties, populated only for a successful operation.
-  error: {
-    code: string, # Optional. The error code.
-    message: string, # Optional. The error message.
-  }, # Optional. Operation Error message
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>

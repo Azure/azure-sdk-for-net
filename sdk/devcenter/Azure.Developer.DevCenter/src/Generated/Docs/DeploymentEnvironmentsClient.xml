@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetEnvironmentAsync(String,String,String,RequestContext)">
+    <member name="GetEnvironmentAsync(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetEnvironmentAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -23,7 +23,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Response response = await client.GetEnvironmentAsync("<projectName>", "<environmentName>", <me>);
+Response response = await client.GetEnvironmentAsync("<projectName>", "<environmentName>", "me", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -39,33 +39,8 @@ Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
 Console.WriteLine(result.GetProperty("parameters").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  catalogName: string, # Required. Name of the catalog.
-  environmentDefinitionName: string, # Required. Name of the environment definition.
-  error: {
-    code: string, # Required. An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-    message: string, # Required. A message describing the error, intended to be suitable for display in a user interface.
-    target: string, # Optional. The target of the particular error. For example, the name of the property in error.
-    details: [CloudErrorBody], # Optional. A list of additional details about the error.
-  }, # Optional. Provisioning error details. Populated only for error states.
-  parameters: AnyObject, # Optional. Parameters object for the environment.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetEnvironment(String,String,String,RequestContext)">
+    <member name="GetEnvironment(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetEnvironment with required parameters and parse the result.
 <code><![CDATA[
@@ -87,7 +62,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Response response = client.GetEnvironment("<projectName>", "<environmentName>", <me>);
+Response response = client.GetEnvironment("<projectName>", "<environmentName>", "me", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -103,33 +78,8 @@ Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
 Console.WriteLine(result.GetProperty("parameters").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  catalogName: string, # Required. Name of the catalog.
-  environmentDefinitionName: string, # Required. Name of the environment definition.
-  error: {
-    code: string, # Required. An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-    message: string, # Required. A message describing the error, intended to be suitable for display in a user interface.
-    target: string, # Optional. The target of the particular error. For example, the name of the property in error.
-    details: [CloudErrorBody], # Optional. A list of additional details about the error.
-  }, # Optional. Provisioning error details. Populated only for error states.
-  parameters: AnyObject, # Optional. Parameters object for the environment.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetCatalogAsync(String,String,RequestContext)">
+    <member name="GetCatalogAsync(string,string,RequestContext)">
 <example>
 This sample shows how to call GetCatalogAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -137,26 +87,14 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Response response = await client.GetCatalogAsync("<projectName>", "<catalogName>");
+Response response = await client.GetCatalogAsync("<projectName>", "<catalogName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Catalog</c>:
-<code>{
-  name: string, # Required. Name of the catalog.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetCatalog(String,String,RequestContext)">
+    <member name="GetCatalog(string,string,RequestContext)">
 <example>
 This sample shows how to call GetCatalog with required parameters and parse the result.
 <code><![CDATA[
@@ -164,26 +102,14 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Response response = client.GetCatalog("<projectName>", "<catalogName>");
+Response response = client.GetCatalog("<projectName>", "<catalogName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Catalog</c>:
-<code>{
-  name: string, # Required. Name of the catalog.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetEnvironmentDefinitionAsync(String,String,String,RequestContext)">
+    <member name="GetEnvironmentDefinitionAsync(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetEnvironmentDefinitionAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -191,7 +117,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Response response = await client.GetEnvironmentDefinitionAsync("<projectName>", "<catalogName>", "<definitionName>");
+Response response = await client.GetEnvironmentDefinitionAsync("<projectName>", "<catalogName>", "<definitionName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -210,37 +136,8 @@ Console.WriteLine(result.GetProperty("parametersSchema").ToString());
 Console.WriteLine(result.GetProperty("templatePath").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>EnvironmentDefinition</c>:
-<code>{
-  id: string, # Required. The ID of the environment definition.
-  name: string, # Required. Name of the environment definition.
-  catalogName: string, # Required. Name of the catalog.
-  description: string, # Optional. A short description of the environment definition.
-  parameters: [
-    {
-      id: string, # Required. Unique ID of the parameter
-      name: string, # Optional. Display name of the parameter
-      description: string, # Optional. Description of the parameter
-      default: string, # Optional. Default value of the parameter
-      type: &quot;array&quot; | &quot;boolean&quot; | &quot;integer&quot; | &quot;number&quot; | &quot;object&quot; | &quot;string&quot;, # Required. A string of one of the basic JSON types (number, integer, array, object, boolean, string)
-      readOnly: boolean, # Optional. Whether or not this parameter is read-only.  If true, default should have a value.
-      required: boolean, # Required. Whether or not this parameter is required
-      allowed: [string], # Optional. An array of allowed values
-    }
-  ], # Optional. Input parameters passed to an environment.
-  parametersSchema: string, # Optional. JSON schema defining the parameters object passed to an environment.
-  templatePath: string, # Optional. Path to the Environment Definition entrypoint file.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetEnvironmentDefinition(String,String,String,RequestContext)">
+    <member name="GetEnvironmentDefinition(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetEnvironmentDefinition with required parameters and parse the result.
 <code><![CDATA[
@@ -248,7 +145,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Response response = client.GetEnvironmentDefinition("<projectName>", "<catalogName>", "<definitionName>");
+Response response = client.GetEnvironmentDefinition("<projectName>", "<catalogName>", "<definitionName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -267,37 +164,8 @@ Console.WriteLine(result.GetProperty("parametersSchema").ToString());
 Console.WriteLine(result.GetProperty("templatePath").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>EnvironmentDefinition</c>:
-<code>{
-  id: string, # Required. The ID of the environment definition.
-  name: string, # Required. Name of the environment definition.
-  catalogName: string, # Required. Name of the catalog.
-  description: string, # Optional. A short description of the environment definition.
-  parameters: [
-    {
-      id: string, # Required. Unique ID of the parameter
-      name: string, # Optional. Display name of the parameter
-      description: string, # Optional. Description of the parameter
-      default: string, # Optional. Default value of the parameter
-      type: &quot;array&quot; | &quot;boolean&quot; | &quot;integer&quot; | &quot;number&quot; | &quot;object&quot; | &quot;string&quot;, # Required. A string of one of the basic JSON types (number, integer, array, object, boolean, string)
-      readOnly: boolean, # Optional. Whether or not this parameter is read-only.  If true, default should have a value.
-      required: boolean, # Required. Whether or not this parameter is required
-      allowed: [string], # Optional. An array of allowed values
-    }
-  ], # Optional. Input parameters passed to an environment.
-  parametersSchema: string, # Optional. JSON schema defining the parameters object passed to an environment.
-  templatePath: string, # Optional. Path to the Environment Definition entrypoint file.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetAllEnvironmentsAsync(String,Int32,RequestContext)">
+    <member name="GetAllEnvironmentsAsync(string,int?,RequestContext)">
 <example>
 This sample shows how to call GetAllEnvironmentsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -305,9 +173,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-await foreach (var data in client.GetAllEnvironmentsAsync("<projectName>"))
+await foreach (var item in client.GetAllEnvironmentsAsync("<projectName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("environmentType").ToString());
     Console.WriteLine(result.GetProperty("catalogName").ToString());
     Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
@@ -320,9 +188,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-await foreach (var data in client.GetAllEnvironmentsAsync("<projectName>", 1234))
+await foreach (var item in client.GetAllEnvironmentsAsync("<projectName>", 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("environmentType").ToString());
     Console.WriteLine(result.GetProperty("user").ToString());
@@ -337,33 +205,8 @@ await foreach (var data in client.GetAllEnvironmentsAsync("<projectName>", 1234)
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>EnvironmentListResultValue</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  catalogName: string, # Required. Name of the catalog.
-  environmentDefinitionName: string, # Required. Name of the environment definition.
-  error: {
-    code: string, # Required. An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-    message: string, # Required. A message describing the error, intended to be suitable for display in a user interface.
-    target: string, # Optional. The target of the particular error. For example, the name of the property in error.
-    details: [CloudErrorBody], # Optional. A list of additional details about the error.
-  }, # Optional. Provisioning error details. Populated only for error states.
-  parameters: AnyObject, # Optional. Parameters object for the environment.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetAllEnvironments(String,Int32,RequestContext)">
+    <member name="GetAllEnvironments(string,int?,RequestContext)">
 <example>
 This sample shows how to call GetAllEnvironments with required parameters and parse the result.
 <code><![CDATA[
@@ -371,9 +214,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-foreach (var data in client.GetAllEnvironments("<projectName>"))
+foreach (var item in client.GetAllEnvironments("<projectName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("environmentType").ToString());
     Console.WriteLine(result.GetProperty("catalogName").ToString());
     Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
@@ -386,9 +229,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-foreach (var data in client.GetAllEnvironments("<projectName>", 1234))
+foreach (var item in client.GetAllEnvironments("<projectName>", 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("environmentType").ToString());
     Console.WriteLine(result.GetProperty("user").ToString());
@@ -403,33 +246,8 @@ foreach (var data in client.GetAllEnvironments("<projectName>", 1234))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>EnvironmentListResultValue</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  catalogName: string, # Required. Name of the catalog.
-  environmentDefinitionName: string, # Required. Name of the environment definition.
-  error: {
-    code: string, # Required. An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-    message: string, # Required. A message describing the error, intended to be suitable for display in a user interface.
-    target: string, # Optional. The target of the particular error. For example, the name of the property in error.
-    details: [CloudErrorBody], # Optional. A list of additional details about the error.
-  }, # Optional. Provisioning error details. Populated only for error states.
-  parameters: AnyObject, # Optional. Parameters object for the environment.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetEnvironmentsAsync(String,String,Int32,RequestContext)">
+    <member name="GetEnvironmentsAsync(string,string,int?,RequestContext)">
 <example>
 This sample shows how to call GetEnvironmentsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -437,9 +255,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-await foreach (var data in client.GetEnvironmentsAsync("<projectName>"))
+await foreach (var item in client.GetEnvironmentsAsync("<projectName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("environmentType").ToString());
     Console.WriteLine(result.GetProperty("catalogName").ToString());
     Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
@@ -452,9 +270,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-await foreach (var data in client.GetEnvironmentsAsync("<projectName>", <me>, 1234))
+await foreach (var item in client.GetEnvironmentsAsync("<projectName>", "me", 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("environmentType").ToString());
     Console.WriteLine(result.GetProperty("user").ToString());
@@ -469,33 +287,8 @@ await foreach (var data in client.GetEnvironmentsAsync("<projectName>", <me>, 12
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>EnvironmentListResultValue</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  catalogName: string, # Required. Name of the catalog.
-  environmentDefinitionName: string, # Required. Name of the environment definition.
-  error: {
-    code: string, # Required. An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-    message: string, # Required. A message describing the error, intended to be suitable for display in a user interface.
-    target: string, # Optional. The target of the particular error. For example, the name of the property in error.
-    details: [CloudErrorBody], # Optional. A list of additional details about the error.
-  }, # Optional. Provisioning error details. Populated only for error states.
-  parameters: AnyObject, # Optional. Parameters object for the environment.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetEnvironments(String,String,Int32,RequestContext)">
+    <member name="GetEnvironments(string,string,int?,RequestContext)">
 <example>
 This sample shows how to call GetEnvironments with required parameters and parse the result.
 <code><![CDATA[
@@ -503,9 +296,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-foreach (var data in client.GetEnvironments("<projectName>"))
+foreach (var item in client.GetEnvironments("<projectName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("environmentType").ToString());
     Console.WriteLine(result.GetProperty("catalogName").ToString());
     Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
@@ -518,9 +311,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-foreach (var data in client.GetEnvironments("<projectName>", <me>, 1234))
+foreach (var item in client.GetEnvironments("<projectName>", "me", 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("environmentType").ToString());
     Console.WriteLine(result.GetProperty("user").ToString());
@@ -535,33 +328,8 @@ foreach (var data in client.GetEnvironments("<projectName>", <me>, 1234))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>EnvironmentListResultValue</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  catalogName: string, # Required. Name of the catalog.
-  environmentDefinitionName: string, # Required. Name of the environment definition.
-  error: {
-    code: string, # Required. An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-    message: string, # Required. A message describing the error, intended to be suitable for display in a user interface.
-    target: string, # Optional. The target of the particular error. For example, the name of the property in error.
-    details: [CloudErrorBody], # Optional. A list of additional details about the error.
-  }, # Optional. Provisioning error details. Populated only for error states.
-  parameters: AnyObject, # Optional. Parameters object for the environment.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetCatalogsAsync(String,Int32,RequestContext)">
+    <member name="GetCatalogsAsync(string,int?,RequestContext)">
 <example>
 This sample shows how to call GetCatalogsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -569,9 +337,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-await foreach (var data in client.GetCatalogsAsync("<projectName>"))
+await foreach (var item in client.GetCatalogsAsync("<projectName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code>
@@ -581,27 +349,15 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-await foreach (var data in client.GetCatalogsAsync("<projectName>", 1234))
+await foreach (var item in client.GetCatalogsAsync("<projectName>", 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>CatalogListResultValue</c>:
-<code>{
-  name: string, # Required. Name of the catalog.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetCatalogs(String,Int32,RequestContext)">
+    <member name="GetCatalogs(string,int?,RequestContext)">
 <example>
 This sample shows how to call GetCatalogs with required parameters and parse the result.
 <code><![CDATA[
@@ -609,9 +365,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-foreach (var data in client.GetCatalogs("<projectName>"))
+foreach (var item in client.GetCatalogs("<projectName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code>
@@ -621,27 +377,15 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-foreach (var data in client.GetCatalogs("<projectName>", 1234))
+foreach (var item in client.GetCatalogs("<projectName>", 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>CatalogListResultValue</c>:
-<code>{
-  name: string, # Required. Name of the catalog.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetEnvironmentDefinitionsAsync(String,Int32,RequestContext)">
+    <member name="GetEnvironmentDefinitionsAsync(string,int?,RequestContext)">
 <example>
 This sample shows how to call GetEnvironmentDefinitionsAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -649,9 +393,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-await foreach (var data in client.GetEnvironmentDefinitionsAsync("<projectName>"))
+await foreach (var item in client.GetEnvironmentDefinitionsAsync("<projectName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -663,9 +407,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-await foreach (var data in client.GetEnvironmentDefinitionsAsync("<projectName>", 1234))
+await foreach (var item in client.GetEnvironmentDefinitionsAsync("<projectName>", 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -683,37 +427,8 @@ await foreach (var data in client.GetEnvironmentDefinitionsAsync("<projectName>"
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>EnvironmentDefinitionListResultValue</c>:
-<code>{
-  id: string, # Required. The ID of the environment definition.
-  name: string, # Required. Name of the environment definition.
-  catalogName: string, # Required. Name of the catalog.
-  description: string, # Optional. A short description of the environment definition.
-  parameters: [
-    {
-      id: string, # Required. Unique ID of the parameter
-      name: string, # Optional. Display name of the parameter
-      description: string, # Optional. Description of the parameter
-      default: string, # Optional. Default value of the parameter
-      type: &quot;array&quot; | &quot;boolean&quot; | &quot;integer&quot; | &quot;number&quot; | &quot;object&quot; | &quot;string&quot;, # Required. A string of one of the basic JSON types (number, integer, array, object, boolean, string)
-      readOnly: boolean, # Optional. Whether or not this parameter is read-only.  If true, default should have a value.
-      required: boolean, # Required. Whether or not this parameter is required
-      allowed: [string], # Optional. An array of allowed values
-    }
-  ], # Optional. Input parameters passed to an environment.
-  parametersSchema: string, # Optional. JSON schema defining the parameters object passed to an environment.
-  templatePath: string, # Optional. Path to the Environment Definition entrypoint file.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetEnvironmentDefinitions(String,Int32,RequestContext)">
+    <member name="GetEnvironmentDefinitions(string,int?,RequestContext)">
 <example>
 This sample shows how to call GetEnvironmentDefinitions with required parameters and parse the result.
 <code><![CDATA[
@@ -721,9 +436,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-foreach (var data in client.GetEnvironmentDefinitions("<projectName>"))
+foreach (var item in client.GetEnvironmentDefinitions("<projectName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -735,9 +450,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-foreach (var data in client.GetEnvironmentDefinitions("<projectName>", 1234))
+foreach (var item in client.GetEnvironmentDefinitions("<projectName>", 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -755,37 +470,8 @@ foreach (var data in client.GetEnvironmentDefinitions("<projectName>", 1234))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>EnvironmentDefinitionListResultValue</c>:
-<code>{
-  id: string, # Required. The ID of the environment definition.
-  name: string, # Required. Name of the environment definition.
-  catalogName: string, # Required. Name of the catalog.
-  description: string, # Optional. A short description of the environment definition.
-  parameters: [
-    {
-      id: string, # Required. Unique ID of the parameter
-      name: string, # Optional. Display name of the parameter
-      description: string, # Optional. Description of the parameter
-      default: string, # Optional. Default value of the parameter
-      type: &quot;array&quot; | &quot;boolean&quot; | &quot;integer&quot; | &quot;number&quot; | &quot;object&quot; | &quot;string&quot;, # Required. A string of one of the basic JSON types (number, integer, array, object, boolean, string)
-      readOnly: boolean, # Optional. Whether or not this parameter is read-only.  If true, default should have a value.
-      required: boolean, # Required. Whether or not this parameter is required
-      allowed: [string], # Optional. An array of allowed values
-    }
-  ], # Optional. Input parameters passed to an environment.
-  parametersSchema: string, # Optional. JSON schema defining the parameters object passed to an environment.
-  templatePath: string, # Optional. Path to the Environment Definition entrypoint file.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetEnvironmentDefinitionsByCatalogAsync(String,String,Int32,RequestContext)">
+    <member name="GetEnvironmentDefinitionsByCatalogAsync(string,string,int?,RequestContext)">
 <example>
 This sample shows how to call GetEnvironmentDefinitionsByCatalogAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -793,9 +479,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-await foreach (var data in client.GetEnvironmentDefinitionsByCatalogAsync("<projectName>", "<catalogName>"))
+await foreach (var item in client.GetEnvironmentDefinitionsByCatalogAsync("<projectName>", "<catalogName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -807,9 +493,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-await foreach (var data in client.GetEnvironmentDefinitionsByCatalogAsync("<projectName>", "<catalogName>", 1234))
+await foreach (var item in client.GetEnvironmentDefinitionsByCatalogAsync("<projectName>", "<catalogName>", 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -827,37 +513,8 @@ await foreach (var data in client.GetEnvironmentDefinitionsByCatalogAsync("<proj
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>EnvironmentDefinitionListResultValue</c>:
-<code>{
-  id: string, # Required. The ID of the environment definition.
-  name: string, # Required. Name of the environment definition.
-  catalogName: string, # Required. Name of the catalog.
-  description: string, # Optional. A short description of the environment definition.
-  parameters: [
-    {
-      id: string, # Required. Unique ID of the parameter
-      name: string, # Optional. Display name of the parameter
-      description: string, # Optional. Description of the parameter
-      default: string, # Optional. Default value of the parameter
-      type: &quot;array&quot; | &quot;boolean&quot; | &quot;integer&quot; | &quot;number&quot; | &quot;object&quot; | &quot;string&quot;, # Required. A string of one of the basic JSON types (number, integer, array, object, boolean, string)
-      readOnly: boolean, # Optional. Whether or not this parameter is read-only.  If true, default should have a value.
-      required: boolean, # Required. Whether or not this parameter is required
-      allowed: [string], # Optional. An array of allowed values
-    }
-  ], # Optional. Input parameters passed to an environment.
-  parametersSchema: string, # Optional. JSON schema defining the parameters object passed to an environment.
-  templatePath: string, # Optional. Path to the Environment Definition entrypoint file.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetEnvironmentDefinitionsByCatalog(String,String,Int32,RequestContext)">
+    <member name="GetEnvironmentDefinitionsByCatalog(string,string,int?,RequestContext)">
 <example>
 This sample shows how to call GetEnvironmentDefinitionsByCatalog with required parameters and parse the result.
 <code><![CDATA[
@@ -865,9 +522,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-foreach (var data in client.GetEnvironmentDefinitionsByCatalog("<projectName>", "<catalogName>"))
+foreach (var item in client.GetEnvironmentDefinitionsByCatalog("<projectName>", "<catalogName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -879,9 +536,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-foreach (var data in client.GetEnvironmentDefinitionsByCatalog("<projectName>", "<catalogName>", 1234))
+foreach (var item in client.GetEnvironmentDefinitionsByCatalog("<projectName>", "<catalogName>", 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -899,37 +556,8 @@ foreach (var data in client.GetEnvironmentDefinitionsByCatalog("<projectName>", 
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>EnvironmentDefinitionListResultValue</c>:
-<code>{
-  id: string, # Required. The ID of the environment definition.
-  name: string, # Required. Name of the environment definition.
-  catalogName: string, # Required. Name of the catalog.
-  description: string, # Optional. A short description of the environment definition.
-  parameters: [
-    {
-      id: string, # Required. Unique ID of the parameter
-      name: string, # Optional. Display name of the parameter
-      description: string, # Optional. Description of the parameter
-      default: string, # Optional. Default value of the parameter
-      type: &quot;array&quot; | &quot;boolean&quot; | &quot;integer&quot; | &quot;number&quot; | &quot;object&quot; | &quot;string&quot;, # Required. A string of one of the basic JSON types (number, integer, array, object, boolean, string)
-      readOnly: boolean, # Optional. Whether or not this parameter is read-only.  If true, default should have a value.
-      required: boolean, # Required. Whether or not this parameter is required
-      allowed: [string], # Optional. An array of allowed values
-    }
-  ], # Optional. Input parameters passed to an environment.
-  parametersSchema: string, # Optional. JSON schema defining the parameters object passed to an environment.
-  templatePath: string, # Optional. Path to the Environment Definition entrypoint file.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetEnvironmentTypesAsync(String,Int32,RequestContext)">
+    <member name="GetEnvironmentTypesAsync(string,int?,RequestContext)">
 <example>
 This sample shows how to call GetEnvironmentTypesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -937,9 +565,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-await foreach (var data in client.GetEnvironmentTypesAsync("<projectName>"))
+await foreach (var item in client.GetEnvironmentTypesAsync("<projectName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("deploymentTargetId").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -951,31 +579,17 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-await foreach (var data in client.GetEnvironmentTypesAsync("<projectName>", 1234))
+await foreach (var item in client.GetEnvironmentTypesAsync("<projectName>", 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("deploymentTargetId").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>EnvironmentTypeListResultValue</c>:
-<code>{
-  name: string, # Required. Name of the environment type
-  deploymentTargetId: string, # Required. Id of a subscription or management group that the environment type will be mapped to. The environment&apos;s resources will be deployed into this subscription or management group.
-  status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Required. Indicates whether this environment type is enabled for use in this project.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetEnvironmentTypes(String,Int32,RequestContext)">
+    <member name="GetEnvironmentTypes(string,int?,RequestContext)">
 <example>
 This sample shows how to call GetEnvironmentTypes with required parameters and parse the result.
 <code><![CDATA[
@@ -983,9 +597,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-foreach (var data in client.GetEnvironmentTypes("<projectName>"))
+foreach (var item in client.GetEnvironmentTypes("<projectName>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("deploymentTargetId").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -997,31 +611,17 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-foreach (var data in client.GetEnvironmentTypes("<projectName>", 1234))
+foreach (var item in client.GetEnvironmentTypes("<projectName>", 1234, new RequestContext()))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("deploymentTargetId").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>EnvironmentTypeListResultValue</c>:
-<code>{
-  name: string, # Required. Name of the environment type
-  deploymentTargetId: string, # Required. Id of a subscription or management group that the environment type will be mapped to. The environment&apos;s resources will be deployed into this subscription or management group.
-  status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Required. Indicates whether this environment type is enabled for use in this project.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="CreateOrUpdateEnvironmentAsync(WaitUntil,String,String,RequestContent,String,RequestContext)">
+    <member name="CreateOrUpdateEnvironmentAsync(WaitUntil,string,string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateEnvironmentAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -1037,8 +637,8 @@ var data = new {
 
 var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<environmentName>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("environmentType").ToString());
 Console.WriteLine(result.GetProperty("catalogName").ToString());
 Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
@@ -1057,10 +657,10 @@ var data = new {
     parameters = new {},
 };
 
-var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<environmentName>", RequestContent.Create(data), <me>);
+var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<environmentName>", RequestContent.Create(data), "me", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("environmentType").ToString());
 Console.WriteLine(result.GetProperty("user").ToString());
@@ -1074,54 +674,8 @@ Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
 Console.WriteLine(result.GetProperty("parameters").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  catalogName: string, # Required. Name of the catalog.
-  environmentDefinitionName: string, # Required. Name of the environment definition.
-  error: {
-    code: string, # Required. An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-    message: string, # Required. A message describing the error, intended to be suitable for display in a user interface.
-    target: string, # Optional. The target of the particular error. For example, the name of the property in error.
-    details: [CloudErrorBody], # Optional. A list of additional details about the error.
-  }, # Optional. Provisioning error details. Populated only for error states.
-  parameters: AnyObject, # Optional. Parameters object for the environment.
-}
-</code>
-
-Response Body:
-
-Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  catalogName: string, # Required. Name of the catalog.
-  environmentDefinitionName: string, # Required. Name of the environment definition.
-  error: {
-    code: string, # Required. An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-    message: string, # Required. A message describing the error, intended to be suitable for display in a user interface.
-    target: string, # Optional. The target of the particular error. For example, the name of the property in error.
-    details: [CloudErrorBody], # Optional. A list of additional details about the error.
-  }, # Optional. Provisioning error details. Populated only for error states.
-  parameters: AnyObject, # Optional. Parameters object for the environment.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="CreateOrUpdateEnvironment(WaitUntil,String,String,RequestContent,String,RequestContext)">
+    <member name="CreateOrUpdateEnvironment(WaitUntil,string,string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateEnvironment with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -1137,8 +691,8 @@ var data = new {
 
 var operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<projectName>", "<environmentName>", RequestContent.Create(data));
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("environmentType").ToString());
 Console.WriteLine(result.GetProperty("catalogName").ToString());
 Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
@@ -1157,10 +711,10 @@ var data = new {
     parameters = new {},
 };
 
-var operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<projectName>", "<environmentName>", RequestContent.Create(data), <me>);
+var operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<projectName>", "<environmentName>", RequestContent.Create(data), "me", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("environmentType").ToString());
 Console.WriteLine(result.GetProperty("user").ToString());
@@ -1174,54 +728,8 @@ Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
 Console.WriteLine(result.GetProperty("parameters").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  catalogName: string, # Required. Name of the catalog.
-  environmentDefinitionName: string, # Required. Name of the environment definition.
-  error: {
-    code: string, # Required. An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-    message: string, # Required. A message describing the error, intended to be suitable for display in a user interface.
-    target: string, # Optional. The target of the particular error. For example, the name of the property in error.
-    details: [CloudErrorBody], # Optional. A list of additional details about the error.
-  }, # Optional. Provisioning error details. Populated only for error states.
-  parameters: AnyObject, # Optional. Parameters object for the environment.
-}
-</code>
-
-Response Body:
-
-Schema for <c>Environment</c>:
-<code>{
-  name: string, # Optional. Environment name.
-  environmentType: string, # Required. Environment type.
-  user: string, # Optional. The AAD object id of the owner of this Environment.
-  provisioningState: string, # Optional. The provisioning state of the environment.
-  resourceGroupId: string, # Optional. The identifier of the resource group containing the environment&apos;s resources.
-  catalogName: string, # Required. Name of the catalog.
-  environmentDefinitionName: string, # Required. Name of the environment definition.
-  error: {
-    code: string, # Required. An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-    message: string, # Required. A message describing the error, intended to be suitable for display in a user interface.
-    target: string, # Optional. The target of the particular error. For example, the name of the property in error.
-    details: [CloudErrorBody], # Optional. A list of additional details about the error.
-  }, # Optional. Provisioning error details. Populated only for error states.
-  parameters: AnyObject, # Optional. Parameters object for the environment.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="DeleteEnvironmentAsync(WaitUntil,String,String,String,RequestContext)">
+    <member name="DeleteEnvironmentAsync(WaitUntil,string,string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteEnvironmentAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1231,8 +739,8 @@ var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
 var operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<environmentName>");
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call DeleteEnvironmentAsync with all parameters, and how to parse the result.
@@ -1241,10 +749,10 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-var operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<environmentName>", <me>);
+var operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<environmentName>", "me", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -1257,31 +765,8 @@ Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>OperationStatus</c>:
-<code>{
-  id: string, # Optional. Fully qualified ID for the operation status.
-  name: string, # Optional. The operation id name
-  status: string, # Required. Provisioning state of the resource.
-  resourceId: string, # Optional. The id of the resource.
-  startTime: string (ISO 8601 Format), # Optional. The start time of the operation
-  endTime: string (ISO 8601 Format), # Optional. The end time of the operation
-  percentComplete: number, # Optional. Percent of the operation that is complete
-  properties: AnyObject, # Optional. Custom operation properties, populated only for a successful operation.
-  error: {
-    code: string, # Optional. The error code.
-    message: string, # Optional. The error message.
-  }, # Optional. Operation Error message
-}
-</code>
-
-</remarks>
     </member>
-    <member name="DeleteEnvironment(WaitUntil,String,String,String,RequestContext)">
+    <member name="DeleteEnvironment(WaitUntil,string,string,string,RequestContext)">
 <example>
 This sample shows how to call DeleteEnvironment with required parameters and parse the result.
 <code><![CDATA[
@@ -1291,8 +776,8 @@ var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
 var operation = client.DeleteEnvironment(WaitUntil.Completed, "<projectName>", "<environmentName>");
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call DeleteEnvironment with all parameters, and how to parse the result.
@@ -1301,10 +786,10 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-var operation = client.DeleteEnvironment(WaitUntil.Completed, "<projectName>", "<environmentName>", <me>);
+var operation = client.DeleteEnvironment(WaitUntil.Completed, "<projectName>", "<environmentName>", "me", new RequestContext());
 
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -1317,29 +802,6 @@ Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>OperationStatus</c>:
-<code>{
-  id: string, # Optional. Fully qualified ID for the operation status.
-  name: string, # Optional. The operation id name
-  status: string, # Required. Provisioning state of the resource.
-  resourceId: string, # Optional. The id of the resource.
-  startTime: string (ISO 8601 Format), # Optional. The start time of the operation
-  endTime: string (ISO 8601 Format), # Optional. The end time of the operation
-  percentComplete: number, # Optional. Percent of the operation that is complete
-  properties: AnyObject, # Optional. Custom operation properties, populated only for a successful operation.
-  error: {
-    code: string, # Optional. The error code.
-    message: string, # Optional. The error message.
-  }, # Optional. Operation Error message
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>

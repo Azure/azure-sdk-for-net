@@ -30,7 +30,7 @@ namespace Azure.Developer.DevCenter.Samples
             Response response = client.GetProject("<projectName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
+            Console.WriteLine(result.GetProperty("name").ToString());
         }
 
         [Test]
@@ -46,6 +46,7 @@ namespace Azure.Developer.DevCenter.Samples
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("maxDevBoxesPerUser").ToString());
         }
 
         [Test]
@@ -59,7 +60,7 @@ namespace Azure.Developer.DevCenter.Samples
             Response response = await client.GetProjectAsync("<projectName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
+            Console.WriteLine(result.GetProperty("name").ToString());
         }
 
         [Test]
@@ -75,6 +76,7 @@ namespace Azure.Developer.DevCenter.Samples
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("maxDevBoxesPerUser").ToString());
         }
 
         [Test]
@@ -88,7 +90,7 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (var item in client.GetProjects())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
             }
         }
 
@@ -105,6 +107,7 @@ namespace Azure.Developer.DevCenter.Samples
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("maxDevBoxesPerUser").ToString());
             }
         }
 
@@ -119,7 +122,7 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (var item in client.GetProjectsAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
             }
         }
 
@@ -136,218 +139,7 @@ namespace Azure.Developer.DevCenter.Samples
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("description").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllDevBoxes()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new DevCenterClient(endpoint, credential);
-
-            foreach (var item in client.GetAllDevBoxes())
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("poolName").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllDevBoxes_AllParameters()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new DevCenterClient(endpoint, credential);
-
-            foreach (var item in client.GetAllDevBoxes("<filter>", 1234, new RequestContext()))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("projectName").ToString());
-                Console.WriteLine(result.GetProperty("poolName").ToString());
-                Console.WriteLine(result.GetProperty("hibernateSupport").ToString());
-                Console.WriteLine(result.GetProperty("provisioningState").ToString());
-                Console.WriteLine(result.GetProperty("actionState").ToString());
-                Console.WriteLine(result.GetProperty("powerState").ToString());
-                Console.WriteLine(result.GetProperty("uniqueId").ToString());
-                Console.WriteLine(result.GetProperty("errorDetails").GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("errorDetails").GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("location").ToString());
-                Console.WriteLine(result.GetProperty("osType").ToString());
-                Console.WriteLine(result.GetProperty("user").ToString());
-                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("skuName").ToString());
-                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("vCPUs").ToString());
-                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("memoryGB").ToString());
-                Console.WriteLine(result.GetProperty("storageProfile").GetProperty("osDisk").GetProperty("diskSizeGB").ToString());
-                Console.WriteLine(result.GetProperty("imageReference").GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("imageReference").GetProperty("version").ToString());
-                Console.WriteLine(result.GetProperty("imageReference").GetProperty("operatingSystem").ToString());
-                Console.WriteLine(result.GetProperty("imageReference").GetProperty("osBuildNumber").ToString());
-                Console.WriteLine(result.GetProperty("imageReference").GetProperty("publishedDate").ToString());
-                Console.WriteLine(result.GetProperty("createdTime").ToString());
-                Console.WriteLine(result.GetProperty("localAdministrator").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllDevBoxes_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new DevCenterClient(endpoint, credential);
-
-            await foreach (var item in client.GetAllDevBoxesAsync())
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("poolName").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllDevBoxes_AllParameters_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new DevCenterClient(endpoint, credential);
-
-            await foreach (var item in client.GetAllDevBoxesAsync("<filter>", 1234, new RequestContext()))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("projectName").ToString());
-                Console.WriteLine(result.GetProperty("poolName").ToString());
-                Console.WriteLine(result.GetProperty("hibernateSupport").ToString());
-                Console.WriteLine(result.GetProperty("provisioningState").ToString());
-                Console.WriteLine(result.GetProperty("actionState").ToString());
-                Console.WriteLine(result.GetProperty("powerState").ToString());
-                Console.WriteLine(result.GetProperty("uniqueId").ToString());
-                Console.WriteLine(result.GetProperty("errorDetails").GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("errorDetails").GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("location").ToString());
-                Console.WriteLine(result.GetProperty("osType").ToString());
-                Console.WriteLine(result.GetProperty("user").ToString());
-                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("skuName").ToString());
-                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("vCPUs").ToString());
-                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("memoryGB").ToString());
-                Console.WriteLine(result.GetProperty("storageProfile").GetProperty("osDisk").GetProperty("diskSizeGB").ToString());
-                Console.WriteLine(result.GetProperty("imageReference").GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("imageReference").GetProperty("version").ToString());
-                Console.WriteLine(result.GetProperty("imageReference").GetProperty("operatingSystem").ToString());
-                Console.WriteLine(result.GetProperty("imageReference").GetProperty("osBuildNumber").ToString());
-                Console.WriteLine(result.GetProperty("imageReference").GetProperty("publishedDate").ToString());
-                Console.WriteLine(result.GetProperty("createdTime").ToString());
-                Console.WriteLine(result.GetProperty("localAdministrator").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllDevBoxesByUser()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new DevCenterClient(endpoint, credential);
-
-            foreach (var item in client.GetAllDevBoxesByUser())
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("poolName").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllDevBoxesByUser_AllParameters()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new DevCenterClient(endpoint, credential);
-
-            foreach (var item in client.GetAllDevBoxesByUser("me", "<filter>", 1234, new RequestContext()))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("projectName").ToString());
-                Console.WriteLine(result.GetProperty("poolName").ToString());
-                Console.WriteLine(result.GetProperty("hibernateSupport").ToString());
-                Console.WriteLine(result.GetProperty("provisioningState").ToString());
-                Console.WriteLine(result.GetProperty("actionState").ToString());
-                Console.WriteLine(result.GetProperty("powerState").ToString());
-                Console.WriteLine(result.GetProperty("uniqueId").ToString());
-                Console.WriteLine(result.GetProperty("errorDetails").GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("errorDetails").GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("location").ToString());
-                Console.WriteLine(result.GetProperty("osType").ToString());
-                Console.WriteLine(result.GetProperty("user").ToString());
-                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("skuName").ToString());
-                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("vCPUs").ToString());
-                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("memoryGB").ToString());
-                Console.WriteLine(result.GetProperty("storageProfile").GetProperty("osDisk").GetProperty("diskSizeGB").ToString());
-                Console.WriteLine(result.GetProperty("imageReference").GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("imageReference").GetProperty("version").ToString());
-                Console.WriteLine(result.GetProperty("imageReference").GetProperty("operatingSystem").ToString());
-                Console.WriteLine(result.GetProperty("imageReference").GetProperty("osBuildNumber").ToString());
-                Console.WriteLine(result.GetProperty("imageReference").GetProperty("publishedDate").ToString());
-                Console.WriteLine(result.GetProperty("createdTime").ToString());
-                Console.WriteLine(result.GetProperty("localAdministrator").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllDevBoxesByUser_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new DevCenterClient(endpoint, credential);
-
-            await foreach (var item in client.GetAllDevBoxesByUserAsync())
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("poolName").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllDevBoxesByUser_AllParameters_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new DevCenterClient(endpoint, credential);
-
-            await foreach (var item in client.GetAllDevBoxesByUserAsync("me", "<filter>", 1234, new RequestContext()))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("projectName").ToString());
-                Console.WriteLine(result.GetProperty("poolName").ToString());
-                Console.WriteLine(result.GetProperty("hibernateSupport").ToString());
-                Console.WriteLine(result.GetProperty("provisioningState").ToString());
-                Console.WriteLine(result.GetProperty("actionState").ToString());
-                Console.WriteLine(result.GetProperty("powerState").ToString());
-                Console.WriteLine(result.GetProperty("uniqueId").ToString());
-                Console.WriteLine(result.GetProperty("errorDetails").GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("errorDetails").GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("location").ToString());
-                Console.WriteLine(result.GetProperty("osType").ToString());
-                Console.WriteLine(result.GetProperty("user").ToString());
-                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("skuName").ToString());
-                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("vCPUs").ToString());
-                Console.WriteLine(result.GetProperty("hardwareProfile").GetProperty("memoryGB").ToString());
-                Console.WriteLine(result.GetProperty("storageProfile").GetProperty("osDisk").GetProperty("diskSizeGB").ToString());
-                Console.WriteLine(result.GetProperty("imageReference").GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("imageReference").GetProperty("version").ToString());
-                Console.WriteLine(result.GetProperty("imageReference").GetProperty("operatingSystem").ToString());
-                Console.WriteLine(result.GetProperty("imageReference").GetProperty("osBuildNumber").ToString());
-                Console.WriteLine(result.GetProperty("imageReference").GetProperty("publishedDate").ToString());
-                Console.WriteLine(result.GetProperty("createdTime").ToString());
-                Console.WriteLine(result.GetProperty("localAdministrator").ToString());
+                Console.WriteLine(result.GetProperty("maxDevBoxesPerUser").ToString());
             }
         }
     }
