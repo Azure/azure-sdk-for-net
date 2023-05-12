@@ -98,7 +98,6 @@ namespace Azure.Monitor.Query.Tests
                 _initialization ??= Task.WhenAll(
                     InitializeData(_testEnvironment.WorkspaceId, _testEnvironment.WorkspaceKey),
                     InitializeData(_testEnvironment.SecondaryWorkspaceId, _testEnvironment.SecondaryWorkspaceKey));
-                    //InitializeStorageAccount());
             }
 
             await _initialization;
@@ -140,28 +139,6 @@ namespace Azure.Monitor.Query.Tests
             catch
             {
                 return 0;
-            }
-        }
-
-        private async Task InitializeStorageAccount()
-        {
-            var client = new LogsQueryClient(_testEnvironment.LogsEndpoint, _testEnvironment.Credential);
-
-            while (true)
-            {
-                TestContext.Progress.WriteLine("Query storage account");
-                var result = await client.QueryResourceAsync(new ResourceIdentifier(_testEnvironment.StorageAccountId), "search *", DataTimeRange).ConfigureAwait(false);
-                if (result.Value.Table.Rows.Count > 0 && result.Value.Table.Columns.Count > 0)
-                {
-                    // Make sure StorageAccount set-up is complete and data is there before beginning testing
-                    TestContext.Progress.WriteLine("Storage Account created successfully.");
-                    break;
-                }
-                else
-                {
-                    // Delay for 30 seconds to give time for StorageAccount to initialize
-                    await Task.Delay(TimeSpan.FromSeconds(30));
-                }
             }
         }
     }
