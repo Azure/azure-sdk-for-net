@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Tests
     public class AvailabilitySetOperationsTests : ComputeTestBase
     {
         public AvailabilitySetOperationsTests(bool isAsync, string apiVersion)
-            : base(isAsync, AvailabilitySetResource.ResourceType, apiVersion)//, RecordedTestMode.Record)
+            : base(isAsync, AvailabilitySetResource.ResourceType, apiVersion, RecordedTestMode.Record)
         {
         }
 
@@ -123,6 +123,23 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.AreEqual(addIdResult, newAddIdResult);
             Assert.AreEqual(removeIdResult, newRemoveIdResult);
             Assert.AreEqual(removeIdResult, newRemoveOuterIdResult);
+        }
+
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task SetTags(bool? useTagResource)
+        {
+            SetTagResourceUsage(Client, useTagResource);
+            var name = Recording.GenerateAssetName("aset-");
+            var aset = await CreateAvailabilitySetAsync(name);
+            var tags = new Dictionary<string, string>()
+            {
+                { "key", "value" }
+            };
+            AvailabilitySetResource updated = await aset.SetTagsAsync(tags);
+
+            Assert.AreEqual(tags, updated.Data.Tags);
         }
     }
 }

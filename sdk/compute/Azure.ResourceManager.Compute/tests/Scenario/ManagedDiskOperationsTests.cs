@@ -14,8 +14,9 @@ namespace Azure.ResourceManager.Compute.Tests
     public class ManagedDiskOperationsTests : ComputeTestBase
     {
         public ManagedDiskOperationsTests(bool isAsync, string apiVersion)
-            : base(isAsync, ManagedDiskResource.ResourceType, apiVersion)//, RecordedTestMode.Record)
+            : base(isAsync, ManagedDiskResource.ResourceType, apiVersion, RecordedTestMode.Record)
         {
+            SaveDebugRecordingsOnFailure = true;
         }
 
         private async Task<ManagedDiskResource> CreateDiskAsync(string diskName)
@@ -61,6 +62,23 @@ namespace Azure.ResourceManager.Compute.Tests
             ManagedDiskResource updatedDisk = lro.Value;
 
             Assert.AreEqual(newDiskSize, updatedDisk.Data.DiskSizeGB);
+        }
+
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task SetTags(bool? useTagResource)
+        {
+            SetTagResourceUsage(Client, useTagResource);
+            var name = Recording.GenerateAssetName("testDisk-");
+            var disk = await CreateDiskAsync(name);
+            var tags = new Dictionary<string, string>()
+            {
+                { "key", "value" }
+            };
+            ManagedDiskResource updated = await disk.SetTagsAsync(tags);
+
+            Assert.AreEqual(tags, updated.Data.Tags);
         }
     }
 }
