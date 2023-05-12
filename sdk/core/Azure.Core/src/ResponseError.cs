@@ -26,7 +26,21 @@ namespace Azure
         /// <param name="code">The error code.</param>
         /// <param name="message">The error message.</param>
         [InitializationConstructor]
-        public ResponseError(string? code, string? message) : this(code, message, null, default)
+        public ResponseError(string? code, string? message)
+            : this(code, message, null, default, null, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="ResponseError"/>.
+        /// </summary>
+        /// <param name="code">The error code.</param>
+        /// <param name="message">The error message.</param>
+        /// <param name="target">The error target.</param>
+        /// <param name="innerError">The inner error.</param>
+        /// <param name="details">A list of related errors.</param>
+        public ResponseError(string? code, string? message, string? target, ResponseInnerError? innerError = null, IReadOnlyList<ResponseError>? details = null)
+            : this(code, message, target, default, innerError, details)
         {
         }
 
@@ -63,17 +77,17 @@ namespace Azure
         /// <summary>
         /// Gets the inner error.
         /// </summary>
-        internal ResponseInnerError? InnerError { get; }
+        public ResponseInnerError? InnerError { get; }
 
         /// <summary>
         /// Gets the error target.
         /// </summary>
-        internal string? Target { get; }
+        public string? Target { get; }
 
         /// <summary>
         /// Gets the list of related errors.
         /// </summary>
-        internal IReadOnlyList<ResponseError> Details { get; }
+        public IReadOnlyList<ResponseError> Details { get; }
 
         private class Converter : JsonConverter<ResponseError?>
         {

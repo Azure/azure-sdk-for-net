@@ -86,3 +86,28 @@ catch (RequestFailedException e) when (e.Status == 404)
     Console.WriteLine("ErrorCode " + e.ErrorCode);
 }
 ```
+
+### Exception details
+
+Some services may provide additional details when a service call fails. Apart from the error `Code` and `Message` that are part of the service contract, you should only use this information for diagnostics
+since the values could change any time.
+
+```C# Snippet:RequestFailedExceptionDetails
+try
+{
+    KeyVaultSecret secret = client.SetSecret("DeletedSecret", "secret");
+}
+// handle exception with status code 404
+catch (RequestFailedException e) when (e.Status == 409)
+{
+    ResponseError error = e.GetRawResponse().Content.ToObjectFromJson<ResponseError>();
+    if (error.Code == "Conflict" &&
+        (error.InnerError?.Code == "ObjectIsBeingDeleted" || error.InnerError?.Code == "ObjectIsDeletedButRecoverable"))
+    {
+        Console.WriteLine("Please try again with a different name.");
+        return;
+    }
+
+    throw;
+}
+```

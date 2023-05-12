@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Core;
 
 namespace Azure
 {
@@ -13,10 +14,21 @@ namespace Azure
     /// Represents an inner error.
     /// </summary>
     [JsonConverter(typeof(Converter))]
-    internal sealed class ResponseInnerError
+    public sealed class ResponseInnerError
     {
         private readonly JsonElement _innerErrorElement;
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="ResponseInnerError"/>.
+        /// </summary>
+        /// <param name="code">The error code.</param>
+        /// <param name="innerError">The inner error.</param>
+        public ResponseInnerError(string? code, ResponseInnerError? innerError = null)
+            : this(code, innerError, default)
+        {
+        }
+
+        [SerializationConstructor]
         internal ResponseInnerError(string? code, ResponseInnerError? innerError, JsonElement innerErrorElement)
         {
             _innerErrorElement = innerErrorElement;

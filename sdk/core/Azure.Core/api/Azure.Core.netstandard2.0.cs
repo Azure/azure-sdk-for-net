@@ -256,8 +256,19 @@ namespace Azure
     public sealed partial class ResponseError
     {
         public ResponseError(string? code, string? message) { }
+        public ResponseError(string? code, string? message, string? target, Azure.ResponseInnerError? innerError = null, System.Collections.Generic.IReadOnlyList<Azure.ResponseError>? details = null) { }
         public string? Code { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Details { get { throw null; } }
+        public Azure.ResponseInnerError? InnerError { get { throw null; } }
         public string? Message { get { throw null; } }
+        public string? Target { get { throw null; } }
+        public override string ToString() { throw null; }
+    }
+    public sealed partial class ResponseInnerError
+    {
+        public ResponseInnerError(string? code, Azure.ResponseInnerError? innerError = null) { }
+        public string? Code { get { throw null; } }
+        public Azure.ResponseInnerError? InnerError { get { throw null; } }
         public override string ToString() { throw null; }
     }
     public abstract partial class Response<T> : Azure.NullableResponse<T>

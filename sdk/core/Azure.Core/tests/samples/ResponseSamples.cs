@@ -153,5 +153,33 @@ namespace Azure.Core.Samples
             }
             #endregion
         }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public void RequestFailedExceptionDetails()
+        {
+            // create a client
+            var client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
+
+            #region Snippet:RequestFailedExceptionDetails
+            try
+            {
+                KeyVaultSecret secret = client.SetSecret("DeletedSecret", "secret");
+            }
+            // handle exception with status code 404
+            catch (RequestFailedException e) when (e.Status == 409)
+            {
+                ResponseError error = e.GetRawResponse().Content.ToObjectFromJson<ResponseError>();
+                if (error.Code == "Conflict" &&
+                    (error.InnerError?.Code == "ObjectIsBeingDeleted" || error.InnerError?.Code == "ObjectIsDeletedButRecoverable"))
+                {
+                    Console.WriteLine("Please try again with a different name.");
+                    return;
+                }
+
+                throw;
+            }
+            #endregion
+        }
     }
 }
