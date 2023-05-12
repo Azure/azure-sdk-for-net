@@ -13,18 +13,18 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A class representing the ManagedCertificate data model.
+    /// A class representing the ContainerAppManagedCertificate data model.
     /// Managed certificates used for Custom Domain bindings of Container Apps in a Managed Environment
     /// </summary>
-    public partial class ManagedCertificateData : TrackedResourceData
+    public partial class ContainerAppManagedCertificateData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ManagedCertificateData. </summary>
+        /// <summary> Initializes a new instance of ContainerAppManagedCertificateData. </summary>
         /// <param name="location"> The location. </param>
-        public ManagedCertificateData(AzureLocation location) : base(location)
+        public ContainerAppManagedCertificateData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedCertificateData. </summary>
+        /// <summary> Initializes a new instance of ContainerAppManagedCertificateData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Certificate resource specific properties. </param>
-        internal ManagedCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedCertificateProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerAppManagedCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedCertificateProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
         }

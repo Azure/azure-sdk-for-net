@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Container Apps Jobs execution. </summary>
-    public partial class JobExecution : ResourceData
+    public partial class ContainerAppJobExecution : ResourceData
     {
-        /// <summary> Initializes a new instance of JobExecution. </summary>
-        internal JobExecution()
+        /// <summary> Initializes a new instance of ContainerAppJobExecution. </summary>
+        internal ContainerAppJobExecution()
         {
         }
 
-        /// <summary> Initializes a new instance of JobExecution. </summary>
+        /// <summary> Initializes a new instance of ContainerAppJobExecution. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="startOn"> Job execution start time. </param>
         /// <param name="endOn"> Job execution start time. </param>
         /// <param name="template"> Job&apos;s execution container. </param>
-        internal JobExecution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobExecutionRunningState? status, DateTimeOffset? startOn, DateTimeOffset? endOn, JobExecutionTemplate template) : base(id, name, resourceType, systemData)
+        internal ContainerAppJobExecution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobExecutionRunningState? status, DateTimeOffset? startOn, DateTimeOffset? endOn, ContainerAppJobExecutionTemplate template) : base(id, name, resourceType, systemData)
         {
             Status = status;
             StartOn = startOn;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Job execution start time. </summary>
         public DateTimeOffset? EndOn { get; }
         /// <summary> Job&apos;s execution container. </summary>
-        public JobExecutionTemplate Template { get; }
+        public ContainerAppJobExecutionTemplate Template { get; }
     }
 }

@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
             JobData data = new JobData(new AzureLocation("East US"))
             {
                 EnvironmentId = "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/rg/providers/Microsoft.App/managedEnvironments/demokube",
-                Configuration = new JobConfiguration(TriggerType.Manual, 10)
+                Configuration = new ContainerAppJobConfiguration(ContainerAppJobTriggerType.Manual, 10)
                 {
                     ReplicaRetryLimit = 10,
                     ManualTriggerConfig = new JobConfigurationManualTriggerConfig()
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
                         Parallelism = 4,
                     },
                 },
-                Template = new JobTemplate()
+                Template = new ContainerAppJobTemplate()
                 {
                     InitContainers =
 {

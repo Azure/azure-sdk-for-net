@@ -11,19 +11,19 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Job&apos;s execution template, containing container configuration for a job&apos;s execution. </summary>
-    public partial class JobExecutionTemplate
+    public partial class ContainerAppJobExecutionTemplate
     {
-        /// <summary> Initializes a new instance of JobExecutionTemplate. </summary>
-        public JobExecutionTemplate()
+        /// <summary> Initializes a new instance of ContainerAppJobExecutionTemplate. </summary>
+        public ContainerAppJobExecutionTemplate()
         {
             Containers = new ChangeTrackingList<JobExecutionContainer>();
             InitContainers = new ChangeTrackingList<JobExecutionContainer>();
         }
 
-        /// <summary> Initializes a new instance of JobExecutionTemplate. </summary>
+        /// <summary> Initializes a new instance of ContainerAppJobExecutionTemplate. </summary>
         /// <param name="containers"> List of container definitions for the Container Apps Job. </param>
         /// <param name="initContainers"> List of specialized containers that run before job containers. </param>
-        internal JobExecutionTemplate(IList<JobExecutionContainer> containers, IList<JobExecutionContainer> initContainers)
+        internal ContainerAppJobExecutionTemplate(IList<JobExecutionContainer> containers, IList<JobExecutionContainer> initContainers)
         {
             Containers = containers;
             InitContainers = initContainers;

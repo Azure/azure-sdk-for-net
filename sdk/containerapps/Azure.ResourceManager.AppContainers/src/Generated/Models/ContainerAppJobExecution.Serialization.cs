@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class JobExecution
+    public partial class ContainerAppJobExecution
     {
-        internal static JobExecution DeserializeJobExecution(JsonElement element)
+        internal static ContainerAppJobExecution DeserializeContainerAppJobExecution(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<JobExecutionRunningState> status = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
-            Optional<JobExecutionTemplate> template = default;
+            Optional<ContainerAppJobExecutionTemplate> template = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    template = JobExecutionTemplate.DeserializeJobExecutionTemplate(property.Value);
+                    template = ContainerAppJobExecutionTemplate.DeserializeContainerAppJobExecutionTemplate(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new JobExecution(id, name, type, systemData.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), template.Value);
+            return new ContainerAppJobExecution(id, name, type, systemData.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), template.Value);
         }
     }
 }

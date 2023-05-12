@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The JobPatchPropertiesProperties. </summary>
-    public partial class JobPatchPropertiesProperties
+    /// <summary> The ContainerAppJobPatchPropertiesProperties. </summary>
+    public partial class ContainerAppJobPatchPropertiesProperties
     {
-        /// <summary> Initializes a new instance of JobPatchPropertiesProperties. </summary>
-        public JobPatchPropertiesProperties()
+        /// <summary> Initializes a new instance of ContainerAppJobPatchPropertiesProperties. </summary>
+        public ContainerAppJobPatchPropertiesProperties()
         {
             OutboundIPAddresses = new ChangeTrackingList<string>();
         }
@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Resource ID of environment. </summary>
         public string EnvironmentId { get; set; }
         /// <summary> Container Apps Job configuration properties. </summary>
-        public JobConfiguration Configuration { get; set; }
+        public ContainerAppJobConfiguration Configuration { get; set; }
         /// <summary> Container Apps job definition. </summary>
-        public JobTemplate Template { get; set; }
+        public ContainerAppJobTemplate Template { get; set; }
         /// <summary> Outbound IP Addresses of a container apps job. </summary>
         public IList<string> OutboundIPAddresses { get; }
         /// <summary> The endpoint of the eventstream of the container apps job. </summary>

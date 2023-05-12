@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class JobTemplate : IUtf8JsonSerializable
+    public partial class ContainerAppJobTemplate : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteEndObject();
         }
 
-        internal static JobTemplate DeserializeJobTemplate(JsonElement element)
+        internal static ContainerAppJobTemplate DeserializeContainerAppJobTemplate(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new JobTemplate(Optional.ToList(initContainers), Optional.ToList(containers), Optional.ToList(volumes));
+            return new ContainerAppJobTemplate(Optional.ToList(initContainers), Optional.ToList(containers), Optional.ToList(volumes));
         }
     }
 }

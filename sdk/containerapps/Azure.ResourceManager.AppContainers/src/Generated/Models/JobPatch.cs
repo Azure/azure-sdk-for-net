@@ -25,6 +25,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Gets or sets the properties. </summary>
-        public JobPatchPropertiesProperties Properties { get; set; }
+        public ContainerAppJobPatchPropertiesProperties Properties { get; set; }
     }
 }

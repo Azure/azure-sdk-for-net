@@ -16,7 +16,7 @@ using Azure.ResourceManager.AppContainers.Models;
 
 namespace Azure.ResourceManager.AppContainers.Samples
 {
-    public partial class Sample_ManagedCertificateResource
+    public partial class Sample_ContainerAppManagedCertificateResource
     {
         // Get Certificate
         [NUnit.Framework.Test]
@@ -31,21 +31,21 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ManagedCertificateResource created on azure
-            // for more information of creating ManagedCertificateResource, please refer to the document of ManagedCertificateResource
+            // this example assumes you already have this ContainerAppManagedCertificateResource created on azure
+            // for more information of creating ContainerAppManagedCertificateResource, please refer to the document of ContainerAppManagedCertificateResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "examplerg";
             string environmentName = "testcontainerenv";
             string managedCertificateName = "certificate-firendly-name";
-            ResourceIdentifier managedCertificateResourceId = ManagedCertificateResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, environmentName, managedCertificateName);
-            ManagedCertificateResource managedCertificate = client.GetManagedCertificateResource(managedCertificateResourceId);
+            ResourceIdentifier containerAppManagedCertificateResourceId = ContainerAppManagedCertificateResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, environmentName, managedCertificateName);
+            ContainerAppManagedCertificateResource containerAppManagedCertificate = client.GetContainerAppManagedCertificateResource(containerAppManagedCertificateResourceId);
 
             // invoke the operation
-            ManagedCertificateResource result = await managedCertificate.GetAsync();
+            ContainerAppManagedCertificateResource result = await containerAppManagedCertificate.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedCertificateData resourceData = result.Data;
+            ContainerAppManagedCertificateData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ManagedCertificateResource created on azure
-            // for more information of creating ManagedCertificateResource, please refer to the document of ManagedCertificateResource
+            // this example assumes you already have this ContainerAppManagedCertificateResource created on azure
+            // for more information of creating ContainerAppManagedCertificateResource, please refer to the document of ContainerAppManagedCertificateResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "examplerg";
             string environmentName = "testcontainerenv";
             string managedCertificateName = "certificate-firendly-name";
-            ResourceIdentifier managedCertificateResourceId = ManagedCertificateResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, environmentName, managedCertificateName);
-            ManagedCertificateResource managedCertificate = client.GetManagedCertificateResource(managedCertificateResourceId);
+            ResourceIdentifier containerAppManagedCertificateResourceId = ContainerAppManagedCertificateResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, environmentName, managedCertificateName);
+            ContainerAppManagedCertificateResource containerAppManagedCertificate = client.GetContainerAppManagedCertificateResource(containerAppManagedCertificateResourceId);
 
             // invoke the operation
-            await managedCertificate.DeleteAsync(WaitUntil.Completed);
+            await containerAppManagedCertificate.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -91,17 +91,17 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ManagedCertificateResource created on azure
-            // for more information of creating ManagedCertificateResource, please refer to the document of ManagedCertificateResource
+            // this example assumes you already have this ContainerAppManagedCertificateResource created on azure
+            // for more information of creating ContainerAppManagedCertificateResource, please refer to the document of ContainerAppManagedCertificateResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "examplerg";
             string environmentName = "testcontainerenv";
             string managedCertificateName = "certificate-firendly-name";
-            ResourceIdentifier managedCertificateResourceId = ManagedCertificateResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, environmentName, managedCertificateName);
-            ManagedCertificateResource managedCertificate = client.GetManagedCertificateResource(managedCertificateResourceId);
+            ResourceIdentifier containerAppManagedCertificateResourceId = ContainerAppManagedCertificateResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, environmentName, managedCertificateName);
+            ContainerAppManagedCertificateResource containerAppManagedCertificate = client.GetContainerAppManagedCertificateResource(containerAppManagedCertificateResourceId);
 
             // invoke the operation
-            ManagedCertificatePatch patch = new ManagedCertificatePatch()
+            ContainerAppManagedCertificatePatch patch = new ContainerAppManagedCertificatePatch()
             {
                 Tags =
 {
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.AppContainers.Samples
 ["tag2"] = "value2",
 },
             };
-            ManagedCertificateResource result = await managedCertificate.UpdateAsync(patch);
+            ContainerAppManagedCertificateResource result = await containerAppManagedCertificate.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedCertificateData resourceData = result.Data;
+            ContainerAppManagedCertificateData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

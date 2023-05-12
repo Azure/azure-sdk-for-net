@@ -373,20 +373,20 @@ namespace Azure.ResourceManager.AppContainers
         }
         #endregion
 
-        #region ManagedCertificateResource
+        #region ContainerAppManagedCertificateResource
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedCertificateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedCertificateResource.CreateResourceIdentifier" /> to create a <see cref="ManagedCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContainerAppManagedCertificateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppManagedCertificateResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedCertificateResource" /> object. </returns>
-        public static ManagedCertificateResource GetManagedCertificateResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppManagedCertificateResource" /> object. </returns>
+        public static ContainerAppManagedCertificateResource GetContainerAppManagedCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedCertificateResource.ValidateResourceId(id);
-                return new ManagedCertificateResource(client, id);
+                ContainerAppManagedCertificateResource.ValidateResourceId(id);
+                return new ContainerAppManagedCertificateResource(client, id);
             }
             );
         }

@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="template"> Properties used to start a job instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="template"/> is null. </exception>
-        public virtual async Task<ArmOperation<JobExecutionBase>> StartAsync(WaitUntil waitUntil, JobExecutionTemplate template, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ContainerAppJobExecutionBase>> StartAsync(WaitUntil waitUntil, ContainerAppJobExecutionTemplate template, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(template, nameof(template));
 
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = await _jobRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, template, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation<JobExecutionBase>(new JobExecutionBaseOperationSource(), _jobClientDiagnostics, Pipeline, _jobRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, template).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppContainersArmOperation<ContainerAppJobExecutionBase>(new ContainerAppJobExecutionBaseOperationSource(), _jobClientDiagnostics, Pipeline, _jobRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, template).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="template"> Properties used to start a job instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="template"/> is null. </exception>
-        public virtual ArmOperation<JobExecutionBase> Start(WaitUntil waitUntil, JobExecutionTemplate template, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ContainerAppJobExecutionBase> Start(WaitUntil waitUntil, ContainerAppJobExecutionTemplate template, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(template, nameof(template));
 
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = _jobRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, template, cancellationToken);
-                var operation = new AppContainersArmOperation<JobExecutionBase>(new JobExecutionBaseOperationSource(), _jobClientDiagnostics, Pipeline, _jobRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, template).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppContainersArmOperation<ContainerAppJobExecutionBase>(new ContainerAppJobExecutionBaseOperationSource(), _jobClientDiagnostics, Pipeline, _jobRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, template).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -588,12 +588,12 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="JobExecution" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<JobExecution> GetJobsExecutionsAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ContainerAppJobExecution" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerAppJobExecution> GetJobsExecutionsAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jobsExecutionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobsExecutionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, JobExecution.DeserializeJobExecution, _jobsExecutionsClientDiagnostics, Pipeline, "JobResource.GetJobsExecutions", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ContainerAppJobExecution.DeserializeContainerAppJobExecution, _jobsExecutionsClientDiagnostics, Pipeline, "JobResource.GetJobsExecutions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -611,12 +611,12 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JobExecution" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<JobExecution> GetJobsExecutions(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerAppJobExecution" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerAppJobExecution> GetJobsExecutions(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jobsExecutionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobsExecutionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, JobExecution.DeserializeJobExecution, _jobsExecutionsClientDiagnostics, Pipeline, "JobResource.GetJobsExecutions", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ContainerAppJobExecution.DeserializeContainerAppJobExecution, _jobsExecutionsClientDiagnostics, Pipeline, "JobResource.GetJobsExecutions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

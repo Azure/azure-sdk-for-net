@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedCertificateResource" /> and their operations.
-    /// Each <see cref="ManagedCertificateResource" /> in the collection will belong to the same instance of <see cref="ContainerAppManagedEnvironmentResource" />.
-    /// To get a <see cref="ManagedCertificateCollection" /> instance call the GetManagedCertificates method from an instance of <see cref="ContainerAppManagedEnvironmentResource" />.
+    /// A class representing a collection of <see cref="ContainerAppManagedCertificateResource" /> and their operations.
+    /// Each <see cref="ContainerAppManagedCertificateResource" /> in the collection will belong to the same instance of <see cref="ContainerAppManagedEnvironmentResource" />.
+    /// To get a <see cref="ContainerAppManagedCertificateCollection" /> instance call the GetContainerAppManagedCertificates method from an instance of <see cref="ContainerAppManagedEnvironmentResource" />.
     /// </summary>
-    public partial class ManagedCertificateCollection : ArmCollection, IEnumerable<ManagedCertificateResource>, IAsyncEnumerable<ManagedCertificateResource>
+    public partial class ContainerAppManagedCertificateCollection : ArmCollection, IEnumerable<ContainerAppManagedCertificateResource>, IAsyncEnumerable<ContainerAppManagedCertificateResource>
     {
-        private readonly ClientDiagnostics _managedCertificateClientDiagnostics;
-        private readonly ManagedCertificatesRestOperations _managedCertificateRestClient;
+        private readonly ClientDiagnostics _containerAppManagedCertificateManagedCertificatesClientDiagnostics;
+        private readonly ManagedCertificatesRestOperations _containerAppManagedCertificateManagedCertificatesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ManagedCertificateCollection"/> class for mocking. </summary>
-        protected ManagedCertificateCollection()
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppManagedCertificateCollection"/> class for mocking. </summary>
+        protected ContainerAppManagedCertificateCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagedCertificateCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppManagedCertificateCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ManagedCertificateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ContainerAppManagedCertificateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedCertificateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ManagedCertificateResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ManagedCertificateResource.ResourceType, out string managedCertificateApiVersion);
-            _managedCertificateRestClient = new ManagedCertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedCertificateApiVersion);
+            _containerAppManagedCertificateManagedCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppManagedCertificateResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ContainerAppManagedCertificateResource.ResourceType, out string containerAppManagedCertificateManagedCertificatesApiVersion);
+            _containerAppManagedCertificateManagedCertificatesRestClient = new ManagedCertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppManagedCertificateManagedCertificatesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="managedCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedCertificateName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ManagedCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string managedCertificateName, ManagedCertificateData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ContainerAppManagedCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string managedCertificateName, ContainerAppManagedCertificateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedCertificateName, nameof(managedCertificateName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedCertificateClientDiagnostics.CreateScope("ManagedCertificateCollection.CreateOrUpdate");
+            using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _managedCertificateRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedCertificateName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation<ManagedCertificateResource>(new ManagedCertificateOperationSource(Client), _managedCertificateClientDiagnostics, Pipeline, _managedCertificateRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedCertificateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _containerAppManagedCertificateManagedCertificatesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedCertificateName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppContainersArmOperation<ContainerAppManagedCertificateResource>(new ContainerAppManagedCertificateOperationSource(Client), _containerAppManagedCertificateManagedCertificatesClientDiagnostics, Pipeline, _containerAppManagedCertificateManagedCertificatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedCertificateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -112,17 +112,17 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="managedCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedCertificateName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ManagedCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string managedCertificateName, ManagedCertificateData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ContainerAppManagedCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string managedCertificateName, ContainerAppManagedCertificateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedCertificateName, nameof(managedCertificateName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedCertificateClientDiagnostics.CreateScope("ManagedCertificateCollection.CreateOrUpdate");
+            using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _managedCertificateRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedCertificateName, data, cancellationToken);
-                var operation = new AppContainersArmOperation<ManagedCertificateResource>(new ManagedCertificateOperationSource(Client), _managedCertificateClientDiagnostics, Pipeline, _managedCertificateRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedCertificateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _containerAppManagedCertificateManagedCertificatesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedCertificateName, data, cancellationToken);
+                var operation = new AppContainersArmOperation<ContainerAppManagedCertificateResource>(new ContainerAppManagedCertificateOperationSource(Client), _containerAppManagedCertificateManagedCertificatesClientDiagnostics, Pipeline, _containerAppManagedCertificateManagedCertificatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedCertificateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -151,18 +151,18 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="managedCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedCertificateName"/> is null. </exception>
-        public virtual async Task<Response<ManagedCertificateResource>> GetAsync(string managedCertificateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppManagedCertificateResource>> GetAsync(string managedCertificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedCertificateName, nameof(managedCertificateName));
 
-            using var scope = _managedCertificateClientDiagnostics.CreateScope("ManagedCertificateCollection.Get");
+            using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateCollection.Get");
             scope.Start();
             try
             {
-                var response = await _managedCertificateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedCertificateName, cancellationToken).ConfigureAwait(false);
+                var response = await _containerAppManagedCertificateManagedCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedCertificateName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppManagedCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,18 +188,18 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="managedCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedCertificateName"/> is null. </exception>
-        public virtual Response<ManagedCertificateResource> Get(string managedCertificateName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppManagedCertificateResource> Get(string managedCertificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedCertificateName, nameof(managedCertificateName));
 
-            using var scope = _managedCertificateClientDiagnostics.CreateScope("ManagedCertificateCollection.Get");
+            using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateCollection.Get");
             scope.Start();
             try
             {
-                var response = _managedCertificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedCertificateName, cancellationToken);
+                var response = _containerAppManagedCertificateManagedCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedCertificateName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppManagedCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,12 +222,12 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedCertificateResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedCertificateResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ContainerAppManagedCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerAppManagedCertificateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedCertificateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedCertificateRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedCertificateResource(Client, ManagedCertificateData.DeserializeManagedCertificateData(e)), _managedCertificateClientDiagnostics, Pipeline, "ManagedCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedCertificateManagedCertificatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppManagedCertificateManagedCertificatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppManagedCertificateResource(Client, ContainerAppManagedCertificateData.DeserializeContainerAppManagedCertificateData(e)), _containerAppManagedCertificateManagedCertificatesClientDiagnostics, Pipeline, "ContainerAppManagedCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -244,12 +244,12 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedCertificateResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedCertificateResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerAppManagedCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerAppManagedCertificateResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedCertificateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedCertificateRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedCertificateResource(Client, ManagedCertificateData.DeserializeManagedCertificateData(e)), _managedCertificateClientDiagnostics, Pipeline, "ManagedCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedCertificateManagedCertificatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppManagedCertificateManagedCertificatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppManagedCertificateResource(Client, ContainerAppManagedCertificateData.DeserializeContainerAppManagedCertificateData(e)), _containerAppManagedCertificateManagedCertificatesClientDiagnostics, Pipeline, "ContainerAppManagedCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(managedCertificateName, nameof(managedCertificateName));
 
-            using var scope = _managedCertificateClientDiagnostics.CreateScope("ManagedCertificateCollection.Exists");
+            using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _managedCertificateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedCertificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _containerAppManagedCertificateManagedCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedCertificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -308,11 +308,11 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(managedCertificateName, nameof(managedCertificateName));
 
-            using var scope = _managedCertificateClientDiagnostics.CreateScope("ManagedCertificateCollection.Exists");
+            using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateCollection.Exists");
             scope.Start();
             try
             {
-                var response = _managedCertificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedCertificateName, cancellationToken: cancellationToken);
+                var response = _containerAppManagedCertificateManagedCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedCertificateName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        IEnumerator<ManagedCertificateResource> IEnumerable<ManagedCertificateResource>.GetEnumerator()
+        IEnumerator<ContainerAppManagedCertificateResource> IEnumerable<ContainerAppManagedCertificateResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.AppContainers
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ManagedCertificateResource> IAsyncEnumerable<ManagedCertificateResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ContainerAppManagedCertificateResource> IAsyncEnumerable<ContainerAppManagedCertificateResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

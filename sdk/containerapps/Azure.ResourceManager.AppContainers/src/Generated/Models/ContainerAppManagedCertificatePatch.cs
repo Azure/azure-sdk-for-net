@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> A managed certificate to update. </summary>
-    public partial class ManagedCertificatePatch
+    public partial class ContainerAppManagedCertificatePatch
     {
-        /// <summary> Initializes a new instance of ManagedCertificatePatch. </summary>
-        public ManagedCertificatePatch()
+        /// <summary> Initializes a new instance of ContainerAppManagedCertificatePatch. </summary>
+        public ContainerAppManagedCertificatePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

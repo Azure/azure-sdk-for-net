@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    public partial class ManagedCertificateData : IUtf8JsonSerializable
+    public partial class ContainerAppManagedCertificateData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppContainers
             writer.WriteEndObject();
         }
 
-        internal static ManagedCertificateData DeserializeManagedCertificateData(JsonElement element)
+        internal static ContainerAppManagedCertificateData DeserializeContainerAppManagedCertificateData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppContainers
                     continue;
                 }
             }
-            return new ManagedCertificateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value);
+            return new ContainerAppManagedCertificateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value);
         }
     }
 }

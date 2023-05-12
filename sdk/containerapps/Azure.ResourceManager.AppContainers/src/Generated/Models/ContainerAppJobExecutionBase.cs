@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Container App&apos;s Job execution name. </summary>
-    public partial class JobExecutionBase
+    public partial class ContainerAppJobExecutionBase
     {
-        /// <summary> Initializes a new instance of JobExecutionBase. </summary>
-        public JobExecutionBase()
+        /// <summary> Initializes a new instance of ContainerAppJobExecutionBase. </summary>
+        public ContainerAppJobExecutionBase()
         {
         }
 
-        /// <summary> Initializes a new instance of JobExecutionBase. </summary>
+        /// <summary> Initializes a new instance of ContainerAppJobExecutionBase. </summary>
         /// <param name="name"> Job execution name. </param>
         /// <param name="id"> Job execution Id. </param>
-        internal JobExecutionBase(string name, string id)
+        internal ContainerAppJobExecutionBase(string name, string id)
         {
             Name = name;
             Id = id;

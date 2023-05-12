@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            IReadOnlyList<JobExecution> value = default;
+            IReadOnlyList<ContainerAppJobExecution> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<JobExecution> array = new List<JobExecution>();
+                    List<ContainerAppJobExecution> array = new List<ContainerAppJobExecution>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobExecution.DeserializeJobExecution(item));
+                        array.Add(ContainerAppJobExecution.DeserializeContainerAppJobExecution(item));
                     }
                     value = array;
                     continue;

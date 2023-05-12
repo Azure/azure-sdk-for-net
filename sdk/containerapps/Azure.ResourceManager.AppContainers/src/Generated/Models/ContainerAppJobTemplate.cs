@@ -11,21 +11,21 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Container Apps Job versioned application definition. Defines the desired state of an immutable revision. Any changes to this section Will result in a new revision being created. </summary>
-    public partial class JobTemplate
+    public partial class ContainerAppJobTemplate
     {
-        /// <summary> Initializes a new instance of JobTemplate. </summary>
-        public JobTemplate()
+        /// <summary> Initializes a new instance of ContainerAppJobTemplate. </summary>
+        public ContainerAppJobTemplate()
         {
             InitContainers = new ChangeTrackingList<ContainerAppInitContainer>();
             Containers = new ChangeTrackingList<ContainerAppContainer>();
             Volumes = new ChangeTrackingList<ContainerAppVolume>();
         }
 
-        /// <summary> Initializes a new instance of JobTemplate. </summary>
+        /// <summary> Initializes a new instance of ContainerAppJobTemplate. </summary>
         /// <param name="initContainers"> List of specialized containers that run before app containers. </param>
         /// <param name="containers"> List of container definitions for the Container App. </param>
         /// <param name="volumes"> List of volume definitions for the Container App. </param>
-        internal JobTemplate(IList<ContainerAppInitContainer> initContainers, IList<ContainerAppContainer> containers, IList<ContainerAppVolume> volumes)
+        internal ContainerAppJobTemplate(IList<ContainerAppInitContainer> initContainers, IList<ContainerAppContainer> containers, IList<ContainerAppVolume> volumes)
         {
             InitContainers = initContainers;
             Containers = containers;

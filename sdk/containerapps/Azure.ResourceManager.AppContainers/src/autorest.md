@@ -207,6 +207,19 @@ rename-mapping:
   WorkloadProfile.maximumCount: MaximumNodeCount
   WorkloadProfile.minimumCount: MinimumNodeCount
   BillingMeterProperties.category: WorkloadProfileCategory
+  TriggerType: ContainerAppJobTriggerType
+  JobTemplate: ContainerAppJobTemplate
+  JobProvisioningState: ContainerAppJobProvisioningState
+  JobPatch: ContainerAppJobPatch
+  JobPatchPropertiesProperties: ContainerAppJobPatchPropertiesProperties
+  JobExecution: ContainerAppJobExecution
+  JobExecutionBase: ContainerAppJobExecutionBase
+  JobExecutionTemplate: ContainerAppJobExecutionTemplate
+  JobConfiguration: ContainerAppJobConfiguration
+  JobCollection: ContainerAppJobCollection
+  JobData: ContainerAppJobData
+  JobResource: ContainerAppJobResource
+  ManagedCertificate: ContainerAppManagedCertificate
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}: ContainerAppConnectedEnvironmentCertificate

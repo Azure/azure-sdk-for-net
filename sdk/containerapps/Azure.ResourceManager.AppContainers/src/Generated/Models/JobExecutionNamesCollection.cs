@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of JobExecutionNamesCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public JobExecutionNamesCollection(IEnumerable<JobExecutionBase> value)
+        public JobExecutionNamesCollection(IEnumerable<ContainerAppJobExecutionBase> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -26,6 +26,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Collection of resources. </summary>
-        public IList<JobExecutionBase> Value { get; }
+        public IList<ContainerAppJobExecutionBase> Value { get; }
     }
 }

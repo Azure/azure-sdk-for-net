@@ -3,7 +3,7 @@
 ## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
-
+- Upgrade to 2022-11-01-preview api version
 ### Breaking Changes
 
 ### Bugs Fixed

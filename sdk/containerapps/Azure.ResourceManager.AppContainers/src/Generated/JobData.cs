@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="template"> Container Apps job definition. </param>
         /// <param name="outboundIPAddresses"> Outbound IP Addresses of a container apps job. </param>
         /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the container apps job. </param>
-        internal JobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, JobProvisioningState? provisioningState, string environmentId, string workloadProfileName, JobConfiguration configuration, JobTemplate template, IReadOnlyList<string> outboundIPAddresses, string eventStreamEndpoint) : base(id, name, resourceType, systemData, tags, location)
+        internal JobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ContainerAppJobProvisioningState? provisioningState, string environmentId, string workloadProfileName, ContainerAppJobConfiguration configuration, ContainerAppJobTemplate template, IReadOnlyList<string> outboundIPAddresses, string eventStreamEndpoint) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -55,15 +55,15 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Managed identities needed by a container app job to interact with other Azure services to not maintain any secrets or credentials in code. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Provisioning state of the Container Apps Job. </summary>
-        public JobProvisioningState? ProvisioningState { get; }
+        public ContainerAppJobProvisioningState? ProvisioningState { get; }
         /// <summary> Resource ID of environment. </summary>
         public string EnvironmentId { get; set; }
         /// <summary> Workload profile name to pin for container apps job execution. </summary>
         public string WorkloadProfileName { get; set; }
         /// <summary> Container Apps Job configuration properties. </summary>
-        public JobConfiguration Configuration { get; set; }
+        public ContainerAppJobConfiguration Configuration { get; set; }
         /// <summary> Container Apps job definition. </summary>
-        public JobTemplate Template { get; set; }
+        public ContainerAppJobTemplate Template { get; set; }
         /// <summary> Outbound IP Addresses of a container apps job. </summary>
         public IReadOnlyList<string> OutboundIPAddresses { get; }
         /// <summary> The endpoint of the eventstream of the container apps job. </summary>

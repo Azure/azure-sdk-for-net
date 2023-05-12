@@ -16,7 +16,7 @@ using Azure.ResourceManager.AppContainers.Models;
 
 namespace Azure.ResourceManager.AppContainers.Samples
 {
-    public partial class Sample_ManagedCertificateCollection
+    public partial class Sample_ContainerAppManagedCertificateCollection
     {
         // Get Certificate
         [NUnit.Framework.Test]
@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.AppContainers.Samples
             ResourceIdentifier containerAppManagedEnvironmentResourceId = ContainerAppManagedEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, environmentName);
             ContainerAppManagedEnvironmentResource containerAppManagedEnvironment = client.GetContainerAppManagedEnvironmentResource(containerAppManagedEnvironmentResourceId);
 
-            // get the collection of this ManagedCertificateResource
-            ManagedCertificateCollection collection = containerAppManagedEnvironment.GetManagedCertificates();
+            // get the collection of this ContainerAppManagedCertificateResource
+            ContainerAppManagedCertificateCollection collection = containerAppManagedEnvironment.GetContainerAppManagedCertificates();
 
             // invoke the operation
             string managedCertificateName = "certificate-firendly-name";
-            ManagedCertificateResource result = await collection.GetAsync(managedCertificateName);
+            ContainerAppManagedCertificateResource result = await collection.GetAsync(managedCertificateName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedCertificateData resourceData = result.Data;
+            ContainerAppManagedCertificateData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppContainers.Samples
             ResourceIdentifier containerAppManagedEnvironmentResourceId = ContainerAppManagedEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, environmentName);
             ContainerAppManagedEnvironmentResource containerAppManagedEnvironment = client.GetContainerAppManagedEnvironmentResource(containerAppManagedEnvironmentResourceId);
 
-            // get the collection of this ManagedCertificateResource
-            ManagedCertificateCollection collection = containerAppManagedEnvironment.GetManagedCertificates();
+            // get the collection of this ContainerAppManagedCertificateResource
+            ContainerAppManagedCertificateCollection collection = containerAppManagedEnvironment.GetContainerAppManagedCertificates();
 
             // invoke the operation
             string managedCertificateName = "certificate-firendly-name";
@@ -105,12 +105,12 @@ namespace Azure.ResourceManager.AppContainers.Samples
             ResourceIdentifier containerAppManagedEnvironmentResourceId = ContainerAppManagedEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, environmentName);
             ContainerAppManagedEnvironmentResource containerAppManagedEnvironment = client.GetContainerAppManagedEnvironmentResource(containerAppManagedEnvironmentResourceId);
 
-            // get the collection of this ManagedCertificateResource
-            ManagedCertificateCollection collection = containerAppManagedEnvironment.GetManagedCertificates();
+            // get the collection of this ContainerAppManagedCertificateResource
+            ContainerAppManagedCertificateCollection collection = containerAppManagedEnvironment.GetContainerAppManagedCertificates();
 
             // invoke the operation
             string managedCertificateName = "certificate-firendly-name";
-            ManagedCertificateData data = new ManagedCertificateData(new AzureLocation("East US"))
+            ContainerAppManagedCertificateData data = new ContainerAppManagedCertificateData(new AzureLocation("East US"))
             {
                 Properties = new ManagedCertificateProperties()
                 {
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.AppContainers.Samples
                     DomainControlValidation = ManagedCertificateDomainControlValidation.Cname,
                 },
             };
-            ArmOperation<ManagedCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, managedCertificateName, data);
-            ManagedCertificateResource result = lro.Value;
+            ArmOperation<ContainerAppManagedCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, managedCertificateName, data);
+            ContainerAppManagedCertificateResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ManagedCertificateData resourceData = result.Data;
+            ContainerAppManagedCertificateData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -149,15 +149,15 @@ namespace Azure.ResourceManager.AppContainers.Samples
             ResourceIdentifier containerAppManagedEnvironmentResourceId = ContainerAppManagedEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, environmentName);
             ContainerAppManagedEnvironmentResource containerAppManagedEnvironment = client.GetContainerAppManagedEnvironmentResource(containerAppManagedEnvironmentResourceId);
 
-            // get the collection of this ManagedCertificateResource
-            ManagedCertificateCollection collection = containerAppManagedEnvironment.GetManagedCertificates();
+            // get the collection of this ContainerAppManagedCertificateResource
+            ContainerAppManagedCertificateCollection collection = containerAppManagedEnvironment.GetContainerAppManagedCertificates();
 
             // invoke the operation and iterate over the result
-            await foreach (ManagedCertificateResource item in collection.GetAllAsync())
+            await foreach (ContainerAppManagedCertificateResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ManagedCertificateData resourceData = item.Data;
+                ContainerAppManagedCertificateData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

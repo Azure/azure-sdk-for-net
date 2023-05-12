@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class JobConfiguration : IUtf8JsonSerializable
+    public partial class ContainerAppJobConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteEndObject();
         }
 
-        internal static JobConfiguration DeserializeJobConfiguration(JsonElement element)
+        internal static ContainerAppJobConfiguration DeserializeContainerAppJobConfiguration(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<ContainerAppWritableSecret>> secrets = default;
-            TriggerType triggerType = default;
+            ContainerAppJobTriggerType triggerType = default;
             int replicaTimeout = default;
             Optional<int> replicaRetryLimit = default;
             Optional<JobConfigurationManualTriggerConfig> manualTriggerConfig = default;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (property.NameEquals("triggerType"u8))
                 {
-                    triggerType = new TriggerType(property.Value.GetString());
+                    triggerType = new ContainerAppJobTriggerType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("replicaTimeout"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new JobConfiguration(Optional.ToList(secrets), triggerType, replicaTimeout, Optional.ToNullable(replicaRetryLimit), manualTriggerConfig.Value, scheduleTriggerConfig.Value, Optional.ToList(registries));
+            return new ContainerAppJobConfiguration(Optional.ToList(secrets), triggerType, replicaTimeout, Optional.ToNullable(replicaRetryLimit), manualTriggerConfig.Value, scheduleTriggerConfig.Value, Optional.ToList(registries));
         }
     }
 }

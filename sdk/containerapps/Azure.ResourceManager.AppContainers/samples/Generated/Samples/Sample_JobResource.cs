@@ -133,9 +133,9 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // invoke the operation
             JobPatch patch = new JobPatch()
             {
-                Properties = new JobPatchPropertiesProperties()
+                Properties = new ContainerAppJobPatchPropertiesProperties()
                 {
-                    Configuration = new JobConfiguration(TriggerType.Manual, 10)
+                    Configuration = new ContainerAppJobConfiguration(ContainerAppJobTriggerType.Manual, 10)
                     {
                         ReplicaRetryLimit = 10,
                         ManualTriggerConfig = new JobConfigurationManualTriggerConfig()
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
                             Parallelism = 4,
                         },
                     },
-                    Template = new JobTemplate()
+                    Template = new ContainerAppJobTemplate()
                     {
                         InitContainers =
 {
@@ -227,7 +227,7 @@ Name = "testcontainerAppsJob0",
             JobResource job = client.GetJobResource(jobResourceId);
 
             // invoke the operation
-            JobExecutionTemplate template = new JobExecutionTemplate()
+            ContainerAppJobExecutionTemplate template = new ContainerAppJobExecutionTemplate()
             {
                 Containers =
 {
@@ -264,8 +264,8 @@ Memory = "100Mi",
 }
 },
             };
-            ArmOperation<JobExecutionBase> lro = await job.StartAsync(WaitUntil.Completed, template);
-            JobExecutionBase result = lro.Value;
+            ArmOperation<ContainerAppJobExecutionBase> lro = await job.StartAsync(WaitUntil.Completed, template);
+            ContainerAppJobExecutionBase result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -320,15 +320,15 @@ Memory = "100Mi",
             JobResource job = client.GetJobResource(jobResourceId);
 
             // invoke the operation
-            JobExecutionNamesCollection jobExecutionName = new JobExecutionNamesCollection(new JobExecutionBase[]
+            JobExecutionNamesCollection jobExecutionName = new JobExecutionNamesCollection(new ContainerAppJobExecutionBase[]
             {
-new JobExecutionBase()
+new ContainerAppJobExecutionBase()
 {
 Name = "jobExecution-27944453",
-},new JobExecutionBase()
+},new ContainerAppJobExecutionBase()
 {
 Name = "jobExecution-27944452",
-},new JobExecutionBase()
+},new ContainerAppJobExecutionBase()
 {
 Name = "jobExecution-27944451",
 }
@@ -391,7 +391,7 @@ Name = "jobExecution-27944451",
             JobResource job = client.GetJobResource(jobResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (JobExecution item in job.GetJobsExecutionsAsync())
+            await foreach (ContainerAppJobExecution item in job.GetJobsExecutionsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

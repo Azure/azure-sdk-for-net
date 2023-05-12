@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.AppContainers
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<JobProvisioningState> provisioningState = default;
+            Optional<ContainerAppJobProvisioningState> provisioningState = default;
             Optional<string> environmentId = default;
             Optional<string> workloadProfileName = default;
-            Optional<JobConfiguration> configuration = default;
-            Optional<JobTemplate> template = default;
+            Optional<ContainerAppJobConfiguration> configuration = default;
+            Optional<ContainerAppJobTemplate> template = default;
             Optional<IReadOnlyList<string>> outboundIPAddresses = default;
             Optional<string> eventStreamEndpoint = default;
             foreach (var property in element.EnumerateObject())
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            provisioningState = new JobProvisioningState(property0.Value.GetString());
+                            provisioningState = new ContainerAppJobProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("environmentId"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            configuration = JobConfiguration.DeserializeJobConfiguration(property0.Value);
+                            configuration = ContainerAppJobConfiguration.DeserializeContainerAppJobConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("template"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            template = JobTemplate.DeserializeJobTemplate(property0.Value);
+                            template = ContainerAppJobTemplate.DeserializeContainerAppJobTemplate(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("outboundIpAddresses"u8))

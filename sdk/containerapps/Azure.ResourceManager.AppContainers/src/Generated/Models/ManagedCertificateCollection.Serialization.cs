@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            IReadOnlyList<ManagedCertificateData> value = default;
+            IReadOnlyList<ContainerAppManagedCertificateData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ManagedCertificateData> array = new List<ManagedCertificateData>();
+                    List<ContainerAppManagedCertificateData> array = new List<ContainerAppManagedCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedCertificateData.DeserializeManagedCertificateData(item));
+                        array.Add(ContainerAppManagedCertificateData.DeserializeContainerAppManagedCertificateData(item));
                     }
                     value = array;
                     continue;

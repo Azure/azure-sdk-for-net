@@ -19,46 +19,46 @@ using Azure.ResourceManager.AppContainers.Models;
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A Class representing a ManagedCertificate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedCertificateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedCertificateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerAppManagedEnvironmentResource" /> using the GetManagedCertificate method.
+    /// A Class representing a ContainerAppManagedCertificate along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerAppManagedCertificateResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetContainerAppManagedCertificateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerAppManagedEnvironmentResource" /> using the GetContainerAppManagedCertificate method.
     /// </summary>
-    public partial class ManagedCertificateResource : ArmResource
+    public partial class ContainerAppManagedCertificateResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ManagedCertificateResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ContainerAppManagedCertificateResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string environmentName, string managedCertificateName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/managedCertificates/{managedCertificateName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _managedCertificateClientDiagnostics;
-        private readonly ManagedCertificatesRestOperations _managedCertificateRestClient;
-        private readonly ManagedCertificateData _data;
+        private readonly ClientDiagnostics _containerAppManagedCertificateManagedCertificatesClientDiagnostics;
+        private readonly ManagedCertificatesRestOperations _containerAppManagedCertificateManagedCertificatesRestClient;
+        private readonly ContainerAppManagedCertificateData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ManagedCertificateResource"/> class for mocking. </summary>
-        protected ManagedCertificateResource()
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppManagedCertificateResource"/> class for mocking. </summary>
+        protected ContainerAppManagedCertificateResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedCertificateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ContainerAppManagedCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagedCertificateResource(ArmClient client, ManagedCertificateData data) : this(client, data.Id)
+        internal ContainerAppManagedCertificateResource(ArmClient client, ContainerAppManagedCertificateData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagedCertificateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppManagedCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagedCertificateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ContainerAppManagedCertificateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedCertificateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string managedCertificateApiVersion);
-            _managedCertificateRestClient = new ManagedCertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedCertificateApiVersion);
+            _containerAppManagedCertificateManagedCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string containerAppManagedCertificateManagedCertificatesApiVersion);
+            _containerAppManagedCertificateManagedCertificatesRestClient = new ManagedCertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppManagedCertificateManagedCertificatesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ManagedCertificateData Data
+        public virtual ContainerAppManagedCertificateData Data
         {
             get
             {
@@ -102,16 +102,16 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedCertificateResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppManagedCertificateResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedCertificateClientDiagnostics.CreateScope("ManagedCertificateResource.Get");
+            using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateResource.Get");
             scope.Start();
             try
             {
-                var response = await _managedCertificateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _containerAppManagedCertificateManagedCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppManagedCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -134,16 +134,16 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedCertificateResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppManagedCertificateResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedCertificateClientDiagnostics.CreateScope("ManagedCertificateResource.Get");
+            using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateResource.Get");
             scope.Start();
             try
             {
-                var response = _managedCertificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _containerAppManagedCertificateManagedCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppManagedCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedCertificateClientDiagnostics.CreateScope("ManagedCertificateResource.Delete");
+            using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateResource.Delete");
             scope.Start();
             try
             {
-                var response = await _managedCertificateRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _containerAppManagedCertificateManagedCertificatesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new AppContainersArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -203,11 +203,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedCertificateClientDiagnostics.CreateScope("ManagedCertificateResource.Delete");
+            using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateResource.Delete");
             scope.Start();
             try
             {
-                var response = _managedCertificateRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _containerAppManagedCertificateManagedCertificatesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new AppContainersArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -236,16 +236,16 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="patch"> Properties of a managed certificate that need to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ManagedCertificateResource>> UpdateAsync(ManagedCertificatePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppManagedCertificateResource>> UpdateAsync(ContainerAppManagedCertificatePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _managedCertificateClientDiagnostics.CreateScope("ManagedCertificateResource.Update");
+            using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateResource.Update");
             scope.Start();
             try
             {
-                var response = await _managedCertificateRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ManagedCertificateResource(Client, response.Value), response.GetRawResponse());
+                var response = await _containerAppManagedCertificateManagedCertificatesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ContainerAppManagedCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -270,16 +270,16 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="patch"> Properties of a managed certificate that need to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ManagedCertificateResource> Update(ManagedCertificatePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppManagedCertificateResource> Update(ContainerAppManagedCertificatePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _managedCertificateClientDiagnostics.CreateScope("ManagedCertificateResource.Update");
+            using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateResource.Update");
             scope.Start();
             try
             {
-                var response = _managedCertificateRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new ManagedCertificateResource(Client, response.Value), response.GetRawResponse());
+                var response = _containerAppManagedCertificateManagedCertificatesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new ContainerAppManagedCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -305,12 +305,12 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<ManagedCertificateResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppManagedCertificateResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _managedCertificateClientDiagnostics.CreateScope("ManagedCertificateResource.AddTag");
+            using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateResource.AddTag");
             scope.Start();
             try
             {
@@ -319,13 +319,13 @@ namespace Azure.ResourceManager.AppContainers
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _managedCertificateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ManagedCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _containerAppManagedCertificateManagedCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ContainerAppManagedCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ManagedCertificatePatch();
+                    var patch = new ContainerAppManagedCertificatePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -359,12 +359,12 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<ManagedCertificateResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppManagedCertificateResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _managedCertificateClientDiagnostics.CreateScope("ManagedCertificateResource.AddTag");
+            using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateResource.AddTag");
             scope.Start();
             try
             {
@@ -373,13 +373,13 @@ namespace Azure.ResourceManager.AppContainers
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _managedCertificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new ManagedCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _containerAppManagedCertificateManagedCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new ContainerAppManagedCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ManagedCertificatePatch();
+                    var patch = new ContainerAppManagedCertificatePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -412,11 +412,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<ManagedCertificateResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppManagedCertificateResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _managedCertificateClientDiagnostics.CreateScope("ManagedCertificateResource.SetTags");
+            using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateResource.SetTags");
             scope.Start();
             try
             {
@@ -426,13 +426,13 @@ namespace Azure.ResourceManager.AppContainers
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _managedCertificateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ManagedCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _containerAppManagedCertificateManagedCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ContainerAppManagedCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ManagedCertificatePatch();
+                    var patch = new ContainerAppManagedCertificatePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -461,11 +461,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<ManagedCertificateResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppManagedCertificateResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _managedCertificateClientDiagnostics.CreateScope("ManagedCertificateResource.SetTags");
+            using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateResource.SetTags");
             scope.Start();
             try
             {
@@ -475,13 +475,13 @@ namespace Azure.ResourceManager.AppContainers
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _managedCertificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new ManagedCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _containerAppManagedCertificateManagedCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new ContainerAppManagedCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ManagedCertificatePatch();
+                    var patch = new ContainerAppManagedCertificatePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -510,11 +510,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<ManagedCertificateResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppManagedCertificateResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _managedCertificateClientDiagnostics.CreateScope("ManagedCertificateResource.RemoveTag");
+            using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateResource.RemoveTag");
             scope.Start();
             try
             {
@@ -523,13 +523,13 @@ namespace Azure.ResourceManager.AppContainers
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _managedCertificateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ManagedCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _containerAppManagedCertificateManagedCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ContainerAppManagedCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ManagedCertificatePatch();
+                    var patch = new ContainerAppManagedCertificatePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -562,11 +562,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<ManagedCertificateResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppManagedCertificateResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _managedCertificateClientDiagnostics.CreateScope("ManagedCertificateResource.RemoveTag");
+            using var scope = _containerAppManagedCertificateManagedCertificatesClientDiagnostics.CreateScope("ContainerAppManagedCertificateResource.RemoveTag");
             scope.Start();
             try
             {
@@ -575,13 +575,13 @@ namespace Azure.ResourceManager.AppContainers
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _managedCertificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new ManagedCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _containerAppManagedCertificateManagedCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new ContainerAppManagedCertificateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ManagedCertificatePatch();
+                    var patch = new ContainerAppManagedCertificatePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

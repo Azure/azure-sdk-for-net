@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Non versioned Container Apps Job configuration properties. </summary>
-    public partial class JobConfiguration
+    public partial class ContainerAppJobConfiguration
     {
-        /// <summary> Initializes a new instance of JobConfiguration. </summary>
+        /// <summary> Initializes a new instance of ContainerAppJobConfiguration. </summary>
         /// <param name="triggerType"> Trigger type of the job. </param>
         /// <param name="replicaTimeout"> Maximum number of seconds a replica is allowed to run. </param>
-        public JobConfiguration(TriggerType triggerType, int replicaTimeout)
+        public ContainerAppJobConfiguration(ContainerAppJobTriggerType triggerType, int replicaTimeout)
         {
             Secrets = new ChangeTrackingList<ContainerAppWritableSecret>();
             TriggerType = triggerType;
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Registries = new ChangeTrackingList<ContainerAppRegistryCredentials>();
         }
 
-        /// <summary> Initializes a new instance of JobConfiguration. </summary>
+        /// <summary> Initializes a new instance of ContainerAppJobConfiguration. </summary>
         /// <param name="secrets"> Collection of secrets used by a Container Apps Job. </param>
         /// <param name="triggerType"> Trigger type of the job. </param>
         /// <param name="replicaTimeout"> Maximum number of seconds a replica is allowed to run. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="manualTriggerConfig"> Manual trigger configuration for a single execution job. Properties replicaCompletionCount and parallelism would be set to 1 by default. </param>
         /// <param name="scheduleTriggerConfig"> Cron formatted repeating trigger schedule (&quot;* * * * *&quot;) for cronjobs. Properties completions and parallelism would be set to 1 by default. </param>
         /// <param name="registries"> Collection of private container registry credentials used by a Container apps job. </param>
-        internal JobConfiguration(IList<ContainerAppWritableSecret> secrets, TriggerType triggerType, int replicaTimeout, int? replicaRetryLimit, JobConfigurationManualTriggerConfig manualTriggerConfig, JobConfigurationScheduleTriggerConfig scheduleTriggerConfig, IList<ContainerAppRegistryCredentials> registries)
+        internal ContainerAppJobConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppJobTriggerType triggerType, int replicaTimeout, int? replicaRetryLimit, JobConfigurationManualTriggerConfig manualTriggerConfig, JobConfigurationScheduleTriggerConfig scheduleTriggerConfig, IList<ContainerAppRegistryCredentials> registries)
         {
             Secrets = secrets;
             TriggerType = triggerType;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Collection of secrets used by a Container Apps Job. </summary>
         public IList<ContainerAppWritableSecret> Secrets { get; }
         /// <summary> Trigger type of the job. </summary>
-        public TriggerType TriggerType { get; set; }
+        public ContainerAppJobTriggerType TriggerType { get; set; }
         /// <summary> Maximum number of seconds a replica is allowed to run. </summary>
         public int ReplicaTimeout { get; set; }
         /// <summary> Maximum number of retries before failing the job. </summary>

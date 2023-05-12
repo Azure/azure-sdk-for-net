@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ManagedCertificateCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ManagedCertificateCollection(IEnumerable<ManagedCertificateData> value)
+        internal ManagedCertificateCollection(IEnumerable<ContainerAppManagedCertificateData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ManagedCertificateCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal ManagedCertificateCollection(IReadOnlyList<ManagedCertificateData> value, string nextLink)
+        internal ManagedCertificateCollection(IReadOnlyList<ContainerAppManagedCertificateData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of resources. </summary>
-        public IReadOnlyList<ManagedCertificateData> Value { get; }
+        public IReadOnlyList<ContainerAppManagedCertificateData> Value { get; }
         /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }

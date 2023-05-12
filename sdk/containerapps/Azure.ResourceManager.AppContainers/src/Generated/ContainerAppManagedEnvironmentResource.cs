@@ -259,11 +259,11 @@ namespace Azure.ResourceManager.AppContainers
             return new ContainerAppManagedEnvironmentDetectorResourcePropertyResource(Client, Id.AppendChildResource("detectorProperties", "rootApi"));
         }
 
-        /// <summary> Gets a collection of ManagedCertificateResources in the ContainerAppManagedEnvironment. </summary>
-        /// <returns> An object representing collection of ManagedCertificateResources and their operations over a ManagedCertificateResource. </returns>
-        public virtual ManagedCertificateCollection GetManagedCertificates()
+        /// <summary> Gets a collection of ContainerAppManagedCertificateResources in the ContainerAppManagedEnvironment. </summary>
+        /// <returns> An object representing collection of ContainerAppManagedCertificateResources and their operations over a ContainerAppManagedCertificateResource. </returns>
+        public virtual ContainerAppManagedCertificateCollection GetContainerAppManagedCertificates()
         {
-            return GetCachedClient(Client => new ManagedCertificateCollection(Client, Id));
+            return GetCachedClient(Client => new ContainerAppManagedCertificateCollection(Client, Id));
         }
 
         /// <summary>
@@ -284,9 +284,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="managedCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedCertificateName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedCertificateResource>> GetManagedCertificateAsync(string managedCertificateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppManagedCertificateResource>> GetContainerAppManagedCertificateAsync(string managedCertificateName, CancellationToken cancellationToken = default)
         {
-            return await GetManagedCertificates().GetAsync(managedCertificateName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerAppManagedCertificates().GetAsync(managedCertificateName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -307,9 +307,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="managedCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedCertificateName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ManagedCertificateResource> GetManagedCertificate(string managedCertificateName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppManagedCertificateResource> GetContainerAppManagedCertificate(string managedCertificateName, CancellationToken cancellationToken = default)
         {
-            return GetManagedCertificates().Get(managedCertificateName, cancellationToken);
+            return GetContainerAppManagedCertificates().Get(managedCertificateName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerAppManagedEnvironmentStorageResources in the ContainerAppManagedEnvironment. </summary>
