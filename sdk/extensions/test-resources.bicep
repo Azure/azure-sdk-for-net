@@ -16,8 +16,6 @@ param location string = resourceGroup().location
 @description('Current IP address of the client.')
 param clientIpAddress string
 
-
-
 resource keyVault 'Microsoft.KeyVault/vaults@2019-09-01' = {
   name: baseName
   location: location
@@ -158,8 +156,47 @@ resource postgresFirewall 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRul
   }
 }
 
+resource mysqlIdentityService 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
+  name: baseName
+  location: location
+}
+
+resource mysqlServer 'Microsoft.DBforMySQL/flexibleServers@2022-09-30-preview' = {
+  name: baseName
+  location: location
+  sku: {
+    name: 'Standard_B1ms'
+    tier: 'Burstable'
+  }
+  identity: {
+    type: 'UserAssigned'
+    userAssignedIdentities: mysqlIdentityService
+  }
+
+  properties: {
+    version: '8.0'
+    storage: {
+      storageSizeGB: 32
+    }
+  }
+
+  resource database 'databases' = {
+    name: 'passwordless'
+  }
+
+  // resource admin 'administrators@2022-01-01' = {
+  //   name: testApplicationOid
+  //   properties: {
+  //     administratorType: 'SERVICEPRINCIPAL'
+  //     identityResourceId: mysqlIdentityService.id
+  //     tenantId: tenantId
+  //     login:
+  //   }
+  // }
+}
+
 output AZURE_KEYVAULT_URL string = keyVault.properties.vaultUri
 output BLOB_STORAGE_ENDPOINT string = blobAcount.properties.primaryEndpoints.blob
-output EXTENSIONS_POSTGRES_FQDN string = postgresServer.properties.fullyQualifiedDomainName
-output EXTENSIONS_POSTGRES_NAME string = postgresServer.name
-output EXTENSIONS_POSTGRES_SERVER_ADMIN string = postgresAdmin.properties.principalName
+output POSTGRES_FQDN string = postgresServer.properties.fullyQualifiedDomainName
+output POSTGRES_NAME string = postgresServer.name
+output POSTGRES_SERVER_ADMIN string = postgresAdmin.properties.principalName
