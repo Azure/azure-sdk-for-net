@@ -98,7 +98,7 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             Console.WriteLine("\nList BlockItems:");
             foreach (var blocklistItem in remainingBlockItems)
             {
-                Console.WriteLine(String.Format("BlockItemId: {0}, Text: {1}, Description: {2}", blocklistItem.BlocklistName, blocklistItem.Description, blocklistItem.Description));
+                Console.WriteLine(String.Format("BlockItemId: {0}, Text: {1}, Description: {2}", blocklistItem.BlockItemId, blocklistItem.Text, blocklistItem.Description));
             }
 
             //#endregion
