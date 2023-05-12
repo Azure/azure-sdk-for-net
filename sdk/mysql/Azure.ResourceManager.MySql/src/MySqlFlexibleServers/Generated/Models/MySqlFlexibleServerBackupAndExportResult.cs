@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="datasourceSizeInBytes"> Size of datasource in bytes. </param>
         /// <param name="dataTransferredInBytes"> Data transferred in bytes. </param>
         /// <param name="backupMetadata"> Metadata related to backup to be stored for restoring resource in key-value pairs. </param>
-        internal MySqlFlexibleServerBackupAndExportResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, OperationStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, ResponseError error, long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupMetadata) : base(id, name, resourceType, systemData)
+        internal MySqlFlexibleServerBackupAndExportResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MySqlFlexibleServerBackupAndExportOperationStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, ResponseError error, long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupMetadata) : base(id, name, resourceType, systemData)
         {
             Status = status;
             StartOn = startOn;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> The operation status. </summary>
-        public OperationStatus? Status { get; set; }
+        public MySqlFlexibleServerBackupAndExportOperationStatus? Status { get; set; }
         /// <summary> Start time. </summary>
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> End time. </summary>

@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             }
         }
 
-        internal HttpMessage CreateResetGtidRequest(string subscriptionId, string resourceGroupName, string serverName, ServerGtidSetParameter serverGtidSetParameter)
+        internal HttpMessage CreateResetGtidRequest(string subscriptionId, string resourceGroupName, string serverName, MySqlFlexibleServerGtidSetContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -799,9 +799,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(serverGtidSetParameter);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -810,18 +810,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="serverGtidSetParameter"> The required parameters for resetting GTID on a server. </param>
+        /// <param name="content"> The required parameters for resetting GTID on a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="serverGtidSetParameter"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ResetGtidAsync(string subscriptionId, string resourceGroupName, string serverName, ServerGtidSetParameter serverGtidSetParameter, CancellationToken cancellationToken = default)
+        public async Task<Response> ResetGtidAsync(string subscriptionId, string resourceGroupName, string serverName, MySqlFlexibleServerGtidSetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNull(serverGtidSetParameter, nameof(serverGtidSetParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateResetGtidRequest(subscriptionId, resourceGroupName, serverName, serverGtidSetParameter);
+            using var message = CreateResetGtidRequest(subscriptionId, resourceGroupName, serverName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -837,18 +837,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="serverGtidSetParameter"> The required parameters for resetting GTID on a server. </param>
+        /// <param name="content"> The required parameters for resetting GTID on a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="serverGtidSetParameter"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ResetGtid(string subscriptionId, string resourceGroupName, string serverName, ServerGtidSetParameter serverGtidSetParameter, CancellationToken cancellationToken = default)
+        public Response ResetGtid(string subscriptionId, string resourceGroupName, string serverName, MySqlFlexibleServerGtidSetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNull(serverGtidSetParameter, nameof(serverGtidSetParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateResetGtidRequest(subscriptionId, resourceGroupName, serverName, serverGtidSetParameter);
+            using var message = CreateResetGtidRequest(subscriptionId, resourceGroupName, serverName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

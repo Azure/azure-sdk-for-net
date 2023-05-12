@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<OperationStatus> status = default;
+            Optional<MySqlFlexibleServerBackupAndExportOperationStatus> status = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<double> percentComplete = default;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    status = property.Value.GetString().ToOperationStatus();
+                    status = property.Value.GetString().ToMySqlFlexibleServerBackupAndExportOperationStatus();
                     continue;
                 }
                 if (property.NameEquals("startTime"u8))

@@ -896,8 +896,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         public virtual Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerFirewallRuleCollection GetMySqlFlexibleServerFirewallRules() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation ResetGtid(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.Models.ServerGtidSetParameter serverGtidSetParameter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ResetGtidAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.Models.ServerGtidSetParameter serverGtidSetParameter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation ResetGtid(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerGtidSetContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ResetGtidAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerGtidSetContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Restart(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerRestartParameter mySqlFlexibleServerRestartParameter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RestartAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerRestartParameter mySqlFlexibleServerRestartParameter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -910,8 +910,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurations> UpdateConfigurations(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationListForBatchUpdate mySqlFlexibleServerConfigurationListForBatchUpdate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurations>> UpdateConfigurationsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationListForBatchUpdate mySqlFlexibleServerConfigurationListForBatchUpdate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.ValidateBackupResponse> ValidateBackupBackupAndExport(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.ValidateBackupResponse>> ValidateBackupBackupAndExportAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerValidateBackupResuilt> ValidateBackup(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerValidateBackupResuilt>> ValidateBackupAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
@@ -955,6 +955,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public MySqlFlexibleServerBackupAndExportContent(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupSettings backupSettings, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupStoreDetails targetDetails) : base (default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupSettings)) { }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupStoreDetails TargetDetails { get { throw null; } }
     }
+    public enum MySqlFlexibleServerBackupAndExportOperationStatus
+    {
+        Pending = 0,
+        InProgress = 1,
+        Succeeded = 2,
+        Failed = 3,
+        CancelInProgress = 4,
+        Canceled = 5,
+    }
     public partial class MySqlFlexibleServerBackupAndExportResult : Azure.ResourceManager.Models.ResourceData
     {
         public MySqlFlexibleServerBackupAndExportResult() { }
@@ -965,7 +974,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public Azure.ResponseError Error { get { throw null; } set { } }
         public double? PercentComplete { get { throw null; } set { } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
-        public Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatus? Status { get { throw null; } set { } }
+        public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportOperationStatus? Status { get { throw null; } set { } }
     }
     public partial class MySqlFlexibleServerBackupContentBase
     {
@@ -1079,8 +1088,26 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     public partial class MySqlFlexibleServerConfigurationListForBatchUpdate
     {
         public MySqlFlexibleServerConfigurationListForBatchUpdate() { }
-        public Azure.ResourceManager.MySql.FlexibleServers.Models.ResetAllToDefault? ResetAllToDefault { get { throw null; } set { } }
+        public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationResetAllToDefault? ResetAllToDefault { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationForBatchUpdate> Values { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MySqlFlexibleServerConfigurationResetAllToDefault : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationResetAllToDefault>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MySqlFlexibleServerConfigurationResetAllToDefault(string value) { throw null; }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationResetAllToDefault False { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationResetAllToDefault True { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationResetAllToDefault other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationResetAllToDefault left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationResetAllToDefault right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationResetAllToDefault (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationResetAllToDefault left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationResetAllToDefault right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class MySqlFlexibleServerConfigurations
     {
@@ -1174,6 +1201,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     {
         public MySqlFlexibleServerFullBackupStoreDetails(System.Collections.Generic.IEnumerable<string> sasUriList) { }
         public System.Collections.Generic.IList<string> SasUriList { get { throw null; } }
+    }
+    public partial class MySqlFlexibleServerGtidSetContent
+    {
+        public MySqlFlexibleServerGtidSetContent() { }
+        public string GtidSet { get { throw null; } set { } }
     }
     public partial class MySqlFlexibleServerHighAvailability
     {
@@ -1385,6 +1417,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public long? MinStorageSize { get { throw null; } }
         public string Name { get { throw null; } }
     }
+    public partial class MySqlFlexibleServerValidateBackupResuilt
+    {
+        internal MySqlFlexibleServerValidateBackupResuilt() { }
+        public int? NumberOfContainers { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MySqlFlexibleServerVersion : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVersion>
     {
@@ -1414,43 +1451,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDelegatedSubnetUsage> DelegatedSubnetsUsage { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
-    }
-    public enum OperationStatus
-    {
-        Pending = 0,
-        InProgress = 1,
-        Succeeded = 2,
-        Failed = 3,
-        CancelInProgress = 4,
-        Canceled = 5,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResetAllToDefault : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.ResetAllToDefault>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResetAllToDefault(string value) { throw null; }
-        public static Azure.ResourceManager.MySql.FlexibleServers.Models.ResetAllToDefault False { get { throw null; } }
-        public static Azure.ResourceManager.MySql.FlexibleServers.Models.ResetAllToDefault True { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.ResetAllToDefault other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.ResetAllToDefault left, Azure.ResourceManager.MySql.FlexibleServers.Models.ResetAllToDefault right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.ResetAllToDefault (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MySql.FlexibleServers.Models.ResetAllToDefault left, Azure.ResourceManager.MySql.FlexibleServers.Models.ResetAllToDefault right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ServerGtidSetParameter
-    {
-        public ServerGtidSetParameter() { }
-        public string GtidSet { get { throw null; } set { } }
-    }
-    public partial class ValidateBackupResponse
-    {
-        internal ValidateBackupResponse() { }
-        public int? NumberOfContainers { get { throw null; } }
     }
 }
 namespace Azure.ResourceManager.MySql.Models

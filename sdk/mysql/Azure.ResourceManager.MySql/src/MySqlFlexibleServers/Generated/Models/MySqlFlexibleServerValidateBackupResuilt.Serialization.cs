@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class ValidateBackupResponse
+    public partial class MySqlFlexibleServerValidateBackupResuilt
     {
-        internal static ValidateBackupResponse DeserializeValidateBackupResponse(JsonElement element)
+        internal static MySqlFlexibleServerValidateBackupResuilt DeserializeMySqlFlexibleServerValidateBackupResuilt(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new ValidateBackupResponse(Optional.ToNullable(numberOfContainers));
+            return new MySqlFlexibleServerValidateBackupResuilt(Optional.ToNullable(numberOfContainers));
         }
     }
 }

@@ -661,9 +661,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ValidateBackupResponse>> ValidateBackupBackupAndExportAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MySqlFlexibleServerValidateBackupResuilt>> ValidateBackupAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _backupAndExportClientDiagnostics.CreateScope("MySqlFlexibleServerResource.ValidateBackupBackupAndExport");
+            using var scope = _backupAndExportClientDiagnostics.CreateScope("MySqlFlexibleServerResource.ValidateBackup");
             scope.Start();
             try
             {
@@ -691,9 +691,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ValidateBackupResponse> ValidateBackupBackupAndExport(CancellationToken cancellationToken = default)
+        public virtual Response<MySqlFlexibleServerValidateBackupResuilt> ValidateBackup(CancellationToken cancellationToken = default)
         {
-            using var scope = _backupAndExportClientDiagnostics.CreateScope("MySqlFlexibleServerResource.ValidateBackupBackupAndExport");
+            using var scope = _backupAndExportClientDiagnostics.CreateScope("MySqlFlexibleServerResource.ValidateBackup");
             scope.Start();
             try
             {
@@ -1077,19 +1077,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="serverGtidSetParameter"> The required parameters for resetting GTID on a server. </param>
+        /// <param name="content"> The required parameters for resetting GTID on a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverGtidSetParameter"/> is null. </exception>
-        public virtual async Task<ArmOperation> ResetGtidAsync(WaitUntil waitUntil, ServerGtidSetParameter serverGtidSetParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> ResetGtidAsync(WaitUntil waitUntil, MySqlFlexibleServerGtidSetContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(serverGtidSetParameter, nameof(serverGtidSetParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _mySqlFlexibleServerServersClientDiagnostics.CreateScope("MySqlFlexibleServerResource.ResetGtid");
             scope.Start();
             try
             {
-                var response = await _mySqlFlexibleServerServersRestClient.ResetGtidAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverGtidSetParameter, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateResetGtidRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverGtidSetParameter).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _mySqlFlexibleServerServersRestClient.ResetGtidAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateResetGtidRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1115,19 +1115,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="serverGtidSetParameter"> The required parameters for resetting GTID on a server. </param>
+        /// <param name="content"> The required parameters for resetting GTID on a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverGtidSetParameter"/> is null. </exception>
-        public virtual ArmOperation ResetGtid(WaitUntil waitUntil, ServerGtidSetParameter serverGtidSetParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation ResetGtid(WaitUntil waitUntil, MySqlFlexibleServerGtidSetContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(serverGtidSetParameter, nameof(serverGtidSetParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _mySqlFlexibleServerServersClientDiagnostics.CreateScope("MySqlFlexibleServerResource.ResetGtid");
             scope.Start();
             try
             {
-                var response = _mySqlFlexibleServerServersRestClient.ResetGtid(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverGtidSetParameter, cancellationToken);
-                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateResetGtidRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverGtidSetParameter).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _mySqlFlexibleServerServersRestClient.ResetGtid(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateResetGtidRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

@@ -294,10 +294,15 @@ rename-mapping:
   AdministratorType: MySqlFlexibleServerAdministratorType
   LogFile: MySqlFlexibleServerLogFile
   LogFileListResult: MySqlFlexibleServerLogFileListResult
+  OperationStatus: MySqlFlexibleServerBackupAndExportOperationStatus
+  ResetAllToDefault: MySqlFlexibleServerConfigurationResetAllToDefault
+  ServerGtidSetParameter: MySqlFlexibleServerGtidSetContent
+  ValidateBackupResponse: MySqlFlexibleServerValidateBackupResuilt
 
 override-operation-name:
   CheckNameAvailability_Execute: CheckMySqlFlexibleServerNameAvailability
   Configurations_BatchUpdate: UpdateConfigurations
+  BackupAndExport_ValidateBackup: ValidateBackup
 
 directive:
   - from: FlexibleServers.json
