@@ -11,7 +11,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using Azure.Core.Shared;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -288,7 +287,8 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void ParsesJsonErrors([Values(true, false)] bool hasErrorWrapper)
+        public void ParsesJsonErrors(
+            [Values(true, false)] bool hasErrorWrapper)
         {
             var formattedResponse =
                 "Custom message" + s_nl +
@@ -315,7 +315,8 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void ParsesJsonErrors_ResponseCtor([Values(true, false)] bool hasErrorWrapper)
+        public void ParsesJsonErrors_ResponseCtor(
+            [Values(true, false)] bool hasErrorWrapper)
         {
             var formattedResponse =
                 "Custom message" + s_nl +
@@ -342,7 +343,9 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void ParsesJsonErrors_ResponseCtor_Stream([Values(true, false)] bool canSeek, [Values(true, false)] bool hasErrorWrapper)
+        public void ParsesJsonErrors_ResponseCtor_Stream(
+            [Values(true, false)] bool canSeek,
+            [Values(true, false)] bool hasErrorWrapper)
         {
             var formattedResponse =
                 "Custom message" + s_nl +
@@ -374,7 +377,9 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task ParsesJsonErrors_ResponseCtor_StreamAsync([Values(true, false)] bool canSeek, [Values(true, false)] bool hasErrorWrapper)
+        public async Task ParsesJsonErrors_ResponseCtor_StreamAsync(
+            [Values(true, false)] bool canSeek,
+            [Values(true, false)] bool hasErrorWrapper)
         {
             await Task.Yield();
             var formattedResponse =

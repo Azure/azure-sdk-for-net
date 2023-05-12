@@ -258,6 +258,7 @@ namespace Azure
                 {
                     return false;
                 }
+                // Try the ErrorResponse format and fallback to the ResponseError format.
                 error = System.Text.Json.JsonSerializer.Deserialize<ErrorResponse>(content)?.Error;
                 error ??= System.Text.Json.JsonSerializer.Deserialize<ResponseError>(content);
             }
