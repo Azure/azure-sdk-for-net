@@ -98,6 +98,7 @@ namespace Azure.Developer.DevCenter.Tests
 
             JsonElement remoteConnectionData = JsonDocument.Parse(remoteConnectionResponse.ContentStream).RootElement;
 
+            // Check webUrl
             if (!remoteConnectionData.TryGetProperty("webUrl", out var webUrlJson))
             {
                 FailDueToMissingProperty("webUrl");
@@ -109,6 +110,16 @@ namespace Azure.Developer.DevCenter.Tests
                 && uriResult.Scheme == Uri.UriSchemeHttps;
 
             Assert.True(validConnectionUri);
+
+            // Check RDP connection string
+            if (!remoteConnectionData.TryGetProperty("rdpConnectionUrl", out var rdpConnectionUrlJson))
+            {
+                FailDueToMissingProperty("rdpConnectionUrl");
+            }
+
+            string rdpConnectionUrlString = rdpConnectionUrlJson.ToString();
+            Assert.False(string.IsNullOrEmpty(rdpConnectionUrlString));
+            Assert.True(rdpConnectionUrlString.StartsWith("ms-avd"));
         }
 
         [RecordedTest]
