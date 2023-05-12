@@ -26,6 +26,16 @@ namespace Azure.Communication.JobRouter
         Cancelled,
         /// <summary> classificationFailed. </summary>
         ClassificationFailed,
+        /// <summary> created. </summary>
+        Created,
+        /// <summary> pendingSchedule. </summary>
+        PendingSchedule,
+        /// <summary> scheduled. </summary>
+        Scheduled,
+        /// <summary> scheduleFailed. </summary>
+        ScheduleFailed,
+        /// <summary> waitingForActivation. </summary>
+        WaitingForActivation,
         /// <summary> active. </summary>
         Active
     }
