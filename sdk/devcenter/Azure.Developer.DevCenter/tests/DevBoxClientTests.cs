@@ -49,31 +49,9 @@ namespace Azure.Developer.DevCenter.Tests
         }
 
         [RecordedTest]
-        public async Task StartDevBoxSucceeds()
+        public async Task StartAndStopDevBoxSucceeds()
         {
-            // Start the dev box
-            Operation<BinaryData> devBoxStartOperation = await _devBoxesClient.StartDevBoxAsync(
-                WaitUntil.Completed,
-                TestEnvironment.ProjectName,
-                DevBoxName,
-                userId: TestEnvironment.UserId);
-
-            BinaryData devBoxData = await devBoxStartOperation.WaitForCompletionAsync();
-            JsonElement devBox = JsonDocument.Parse(devBoxData.ToStream()).RootElement;
-
-            if (!devBox.TryGetProperty("status", out var devBoxStatusJson))
-            {
-                FailDueToMissingProperty("status");
-            }
-
-            string devBoxStatus = devBoxStatusJson.ToString();
-            Assert.True(devBoxStatus.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
-        }
-
-        [RecordedTest]
-        public async Task StopDevBoxSucceeds()
-        {
-            // Stop the dev box
+            // At this point we should have a running dev box, let's stop it
             Operation<BinaryData> devBoxStopOperation = await _devBoxesClient.StopDevBoxAsync(
                 WaitUntil.Completed,
                 TestEnvironment.ProjectName,
@@ -89,6 +67,24 @@ namespace Azure.Developer.DevCenter.Tests
             }
 
             string devBoxStatus = devBoxStatusJson.ToString();
+            Assert.True(devBoxStatus.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
+
+            // Start the dev box
+            Operation<BinaryData> devBoxStartOperation = await _devBoxesClient.StartDevBoxAsync(
+                WaitUntil.Completed,
+                TestEnvironment.ProjectName,
+                DevBoxName,
+                userId: TestEnvironment.UserId);
+
+            devBoxData = await devBoxStartOperation.WaitForCompletionAsync();
+            devBox = JsonDocument.Parse(devBoxData.ToStream()).RootElement;
+
+            if (!devBox.TryGetProperty("status", out devBoxStatusJson))
+            {
+                FailDueToMissingProperty("status");
+            }
+
+            devBoxStatus = devBoxStatusJson.ToString();
             Assert.True(devBoxStatus.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
         }
 
