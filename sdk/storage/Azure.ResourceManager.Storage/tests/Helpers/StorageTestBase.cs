@@ -33,10 +33,12 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
         protected SubscriptionResource DefaultSubscription { get; private set; }
         protected StorageTestBase(bool isAsync) : base(isAsync)
         {
+            IgnoreNetworkDependencyVersions();
         }
 
         public StorageTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
+            IgnoreNetworkDependencyVersions();
         }
 
         public static StorageAccountCreateOrUpdateContent GetDefaultStorageAccountParameters(StorageSku sku = null, StorageKind? kind = null, string location = null, ManagedServiceIdentity identity = null)
