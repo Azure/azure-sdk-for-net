@@ -3,6 +3,7 @@
 
 using Azure.Core.TestFramework;
 using Microsoft.AspNetCore.Hosting.Server;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,22 @@ namespace Microsoft.Azure.Data.Extensions.Npgsql.Tests
 
         private string User => GetVariable("POSTGRES_SERVER_ADMIN");
 
-        public string ConnectionString => $"Server={FQDN};Database={Database};Port=5432;User Id={User};Ssl Mode=Require;";
+        public string ConnectionString
+        {
+            get
+            {
+                NpgsqlConnectionStringBuilder connectionStringBuilder = new NpgsqlConnectionStringBuilder
+                {
+                    Host = FQDN,
+                    Database = Database,
+                    Username = User,
+                    Port = 5432,
+                    SslMode = SslMode.Require,
+                    TrustServerCertificate = true,
+                    Timeout = 30
+                };
+                return connectionStringBuilder.ConnectionString;
+            }
+        }
     }
 }
