@@ -154,7 +154,6 @@ namespace Azure.Messaging.ServiceBus
             {
                 foreach (var messageAndTokenSource in Messages)
                 {
-                    messageAndTokenSource.Value.Cancel();
                     messageAndTokenSource.Value.Dispose();
                 }
 
