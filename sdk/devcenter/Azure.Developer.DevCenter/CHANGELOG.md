@@ -1,14 +1,19 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
-
-### Features Added
+## 1.0.0 (2023-05-23)
+This release updates the Azure DevCenter library to use the 2022-04-01 GA API.
 
 ### Breaking Changes
 
-### Bugs Fixed
+ - `EnvironmentsClient` renamed to `DeploymentEnvironmentsClient`
+ - `DevBoxesClient` and `DeploymentEnvironmentsClient` no longer accepts project as a constructor parameter
+ - `DeploymentEnvironmentsClient` now works with "environment definitions" instead of "catalog items"
+ - Createing a new environment requires passing `environmentDefinitionName` instead of `catalogItemName`
+ - Createing a new environment requires passing an additional parameter `catalogName`
 
-### Other Changes
+### Features Added
+
+ - Tests and samples demonstrating the new API
 
 ## 1.0.0-beta.2 (2023-02-07)
 This release updates the Azure DevCenter library to use the 2022-11-11-preview API.
