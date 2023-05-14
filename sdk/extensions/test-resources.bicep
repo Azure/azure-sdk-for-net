@@ -152,7 +152,7 @@ resource postgresAdmin 'Microsoft.DBforPostgreSQL/flexibleServers/administrators
 }
 
 resource postgresFirewall 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@2022-12-01' = {
-  name: 'allowAll'
+  name: 'allow-tests-client-ip'
   parent: postgresServer
   properties: {
     startIpAddress: clientIpAddress
@@ -198,24 +198,8 @@ resource mysqlServer 'Microsoft.DBforMySQL/flexibleServers@2021-12-01-preview' =
     }
   }
   resource database 'databases' = {
-      name: 'passwordless'
-    }
-  
-    // resource aad_param 'parameters' = {
-    //   name: 'aad_auth_only'
-    //   properties: {
-    //     value: 'ON'
-    //   }
-    // }
-    // resource admin 'administrators@2022-01-01' = {
-    //   name: testApplicationOid
-    //   properties: {
-    //     administratorType: 'SERVICEPRINCIPAL'
-    //     identityResourceId: mysqlIdentityService.id
-    //     tenantId: tenantId
-    //     login:
-    //   }
-    // }
+    name: 'passwordless'
+  }
 }
 
 resource aad_auth_only 'Microsoft.DBforMySQL/flexibleServers/configurations@2021-12-01-preview' = {
@@ -235,14 +219,20 @@ resource mysqladmin 'Microsoft.DBforMySQL/flexibleServers/administrators@2021-12
   parent: mysqlServer
   properties: {
     administratorType: 'ActiveDirectory'
-                                identityResourceId: mysqlIdentityService.id
-                                login: testApplicationServicePrincipal
-                                sid: testApplicationOid
-                                tenantId: tenantId
+    identityResourceId: mysqlIdentityService.id
+    login: testApplicationServicePrincipal
+    sid: testApplicationOid
+    tenantId: tenantId
   }
-  // dependsOn: [
-  //   aad_auth_only
-  // ]
+}
+
+resource mysqlFirewall 'Microsoft.DBforMySQL/flexibleServers/firewallRules@2022-01-01' = {
+  name: 'allow-tests-client-ip'
+  parent: mysqlServer
+  properties: {
+    startIpAddress: clientIpAddress
+    endIpAddress: clientIpAddress
+  }
 }
 
 output AZURE_KEYVAULT_URL string = keyVault.properties.vaultUri
@@ -250,3 +240,6 @@ output BLOB_STORAGE_ENDPOINT string = blobAcount.properties.primaryEndpoints.blo
 output POSTGRES_FQDN string = postgresServer.properties.fullyQualifiedDomainName
 output POSTGRES_NAME string = postgresServer.name
 output POSTGRES_SERVER_ADMIN string = postgresAdmin.properties.principalName
+output MYSQL_FQDN string = mysqlServer.properties.fullyQualifiedDomainName
+output MYSQL_NAME string = mysqlServer.name
+output MYSQL_SERVER_ADMIN string = mysqladmin.properties.login
