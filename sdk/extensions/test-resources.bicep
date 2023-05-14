@@ -16,6 +16,7 @@ param location string = resourceGroup().location
 @description('Current IP address of the client.')
 param clientIpAddress string
 
+@secure()
 @description('MySQL password')
 param mysqlPassword string
 
@@ -140,7 +141,7 @@ resource postgresServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' =
   }
 }
 
-resource postgresAdmin 'Microsoft.DBforPostgreSQL/flexibleServers/administrators@2022-11-01-preview' = {
+resource postgresAdmin 'Microsoft.DBforPostgreSQL/flexibleServers/administrators@2022-12-01' = {
   name: testApplicationOid
   parent: postgresServer
   properties: {
@@ -164,41 +165,84 @@ resource mysqlIdentityService 'Microsoft.ManagedIdentity/userAssignedIdentities@
   location: location
 }
 
-resource mysqlServer 'Microsoft.DBforMySQL/flexibleServers@2022-09-30-preview' = {
-  name: baseName
+resource mysqlServer 'Microsoft.DBforMySQL/flexibleServers@2021-12-01-preview' = {
   location: location
-
+  name: baseName
   sku: {
     name: 'Standard_B1ms'
     tier: 'Burstable'
   }
   identity: {
     type: 'UserAssigned'
-    userAssignedIdentities: mysqlIdentityService
+    userAssignedIdentities: {
+      '${mysqlIdentityService.id}': {}
+    }
   }
-
   properties: {
-    version: '8.0'
-    administratorLogin: 'mysqladmin'
+    version: '8.0.21'
+    administratorLogin: 'mydemoadmin'
     administratorLoginPassword: mysqlPassword
+    availabilityZone: '1'
+    highAvailability: {
+      mode: 'Disabled'
+      standbyAvailabilityZone: '2'
+    }
     storage: {
       storageSizeGB: 32
+      iops: 360
+      autoGrow: 'Disabled'
+    }
+    backup: {
+      backupRetentionDays: 7
+      geoRedundantBackup: 'Disabled'
     }
   }
-
   resource database 'databases' = {
-    name: 'passwordless'
-  }
-
-  resource admin 'administrators@2022-01-01' = {
-    name: testApplicationOid
-    properties: {
-      administratorType: 'SERVICEPRINCIPAL'
-      identityResourceId: mysqlIdentityService.id
-      tenantId: tenantId
-      login:
+      name: 'passwordless'
     }
+  
+    // resource aad_param 'parameters' = {
+    //   name: 'aad_auth_only'
+    //   properties: {
+    //     value: 'ON'
+    //   }
+    // }
+    // resource admin 'administrators@2022-01-01' = {
+    //   name: testApplicationOid
+    //   properties: {
+    //     administratorType: 'SERVICEPRINCIPAL'
+    //     identityResourceId: mysqlIdentityService.id
+    //     tenantId: tenantId
+    //     login:
+    //   }
+    // }
+}
+
+resource aad_auth_only 'Microsoft.DBforMySQL/flexibleServers/configurations@2021-12-01-preview' = {
+  name: 'aad_auth_only'
+  parent: mysqlServer
+  properties: {
+    value: 'ON'
+    source: 'user-override'
   }
+  dependsOn: [
+    mysqladmin
+  ]
+}
+
+resource mysqladmin 'Microsoft.DBforMySQL/flexibleServers/administrators@2021-12-01-preview' = {
+  name: 'ActiveDirectory'
+  parent: mysqlServer
+  properties: {
+    administratorType: 'ActiveDirectory'
+                                identityResourceId: mysqlIdentityService.id
+                                login: testApplicationServicePrincipal
+                                sid: testApplicationOid
+                                tenantId: tenantId
+  }
+  // dependsOn: [
+  //   aad_auth_only
+  // ]
 }
 
 output AZURE_KEYVAULT_URL string = keyVault.properties.vaultUri
