@@ -3,6 +3,7 @@
 
 using Azure.Core.TestFramework;
 using Microsoft.AspNetCore.Hosting.Server;
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,24 +14,23 @@ namespace Microsoft.Azure.Data.Extensions.MySqlConnector.Tests
 {
     public class MySqlConnectorTestEnvironment : TestEnvironment
     {
-        private string FQDN => GetVariable("POSTGRES_FQDN");
-        private string Database => GetVariable("POSTGRES_DATABASE");
-
-        private string User => GetVariable("POSTGRES_SERVER_ADMIN");
+        private string FQDN => GetVariable("MYSQL_FQDN");
+        private string Database => GetVariable("MYSQL_DATABASE");
+        private string User => GetVariable("MYSQL_SERVER_ADMIN");
 
         public string ConnectionString
         {
             get
             {
-                NpgsqlConnectionStringBuilder connectionStringBuilder = new NpgsqlConnectionStringBuilder
+                MySqlConnectionStringBuilder connectionStringBuilder = new MySqlConnectionStringBuilder
                 {
-                    Host = FQDN,
+                    Server = FQDN,
+                    UserID = User,
                     Database = Database,
-                    Username = User,
-                    Port = 5432,
-                    SslMode = SslMode.Require,
-                    TrustServerCertificate = true,
-                    Timeout = 30
+                    Port = 3306,
+                    SslMode = MySqlSslMode.Required,
+                    AllowPublicKeyRetrieval = true,
+                    ConnectionTimeout = 30
                 };
                 return connectionStringBuilder.ConnectionString;
             }
