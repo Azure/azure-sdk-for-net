@@ -14,9 +14,8 @@ namespace Azure.ResourceManager.Compute.Tests
     public class ManagedDiskOperationsTests : ComputeTestBase
     {
         public ManagedDiskOperationsTests(bool isAsync, string apiVersion)
-            : base(isAsync, ManagedDiskResource.ResourceType, apiVersion, RecordedTestMode.Record)
+            : base(isAsync, ManagedDiskResource.ResourceType, apiVersion)//, RecordedTestMode.Record)
         {
-            SaveDebugRecordingsOnFailure = true;
         }
 
         private async Task<ManagedDiskResource> CreateDiskAsync(string diskName)

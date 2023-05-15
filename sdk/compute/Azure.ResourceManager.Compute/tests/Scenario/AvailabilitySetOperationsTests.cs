@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Tests
     public class AvailabilitySetOperationsTests : ComputeTestBase
     {
         public AvailabilitySetOperationsTests(bool isAsync, string apiVersion)
-            : base(isAsync, AvailabilitySetResource.ResourceType, apiVersion, RecordedTestMode.Record)
+            : base(isAsync, AvailabilitySetResource.ResourceType, apiVersion)//, RecordedTestMode.Record)
         {
         }
 

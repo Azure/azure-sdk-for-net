@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Tests
     public class DedicatedHostOperationsTests : ComputeTestBase
     {
         public DedicatedHostOperationsTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
