@@ -62,30 +62,13 @@ namespace Azure.AI.ContentSafety.Tests
 
             var image = new ImageData()
             {
-                Content = BinaryData.FromString($"\"{TestData.TestImageContent}\"")
+                Content = BinaryData.FromBytes(File.ReadAllBytes(TestData.TestImageLocation))
             };
-            //var image = new ImageData()
-            //{
-            //    Content = new BinaryData(TestData.TestImageContent)
-            //};
             var request = new AnalyzeImageOptions(image);
             var response = await client.AnalyzeImageAsync(request);
 
             Assert.IsNotNull(response);
             Assert.Greater(response.Value.ViolenceResult.Severity, 0);
         }
-
-        #region Helpers
-
-        private static BinaryData GetContentFromResponse(Response r)
-        {
-            // Workaround azure/azure-sdk-for-net#21048, which prevents .Content from working when dealing with responses
-            // from the playback system.
-
-            MemoryStream ms = new MemoryStream();
-            r.ContentStream.CopyTo(ms);
-            return new BinaryData(ms.ToArray());
-        }
-        #endregion
     }
 }

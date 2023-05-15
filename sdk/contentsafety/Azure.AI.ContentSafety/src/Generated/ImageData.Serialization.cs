@@ -18,11 +18,7 @@ namespace Azure.AI.ContentSafety
             if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Content);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Content.ToString()).RootElement);
-#endif
+                writer.WriteBase64StringValue(Content.ToArray(), "D");
             }
             if (Optional.IsDefined(BlobUrl))
             {
