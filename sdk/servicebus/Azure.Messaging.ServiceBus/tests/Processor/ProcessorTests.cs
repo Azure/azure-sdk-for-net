@@ -368,7 +368,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
-        public async Task LockLost()
+        public async Task CanRaiseLockLostOnMockProcessor()
         {
             var mockProcessor = new MockProcessor();
             bool processMessageCalled = false;
