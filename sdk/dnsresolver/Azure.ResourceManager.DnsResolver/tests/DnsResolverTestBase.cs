@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         protected SubscriptionResource DefaultSubscription { get; private set; }
         public DnsResolverTestBase(bool isAsync) : base(isAsync)
         {
+            IgnoreNetworkDependencyVersions();
         }
 
         public DnsResolverTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
