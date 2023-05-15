@@ -120,13 +120,14 @@ private MultivariateDetectionResult BatchDetect(AnomalyDetectorClient client, st
             resultResponse = client.GetMultivariateBatchDetectionResult(resultId);
             resultStatus = resultResponse.Summary.Status;
             Console.WriteLine($"try: {tryoutCount}, result id: {resultId} Detection status is {resultStatus}");
+            tryoutCount += 1;
         }
 
         if (resultStatus == MultivariateBatchDetectionStatus.Failed)
         {
             Console.WriteLine("Detection failed.");
             Console.WriteLine("Errors:");
-            ErrorResponse error = resultResponse.Results[0].Errors[0];
+            ErrorResponse error = resultResponse.Summary.Errors[0];
             Console.WriteLine($"Error code: {error.Code}. Message: {error.Message}");
             return null;
         }
