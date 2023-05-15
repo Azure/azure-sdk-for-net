@@ -28,7 +28,8 @@ namespace Azure.Messaging.ServiceBus
         public CancellationToken CancellationToken { get; }
 
         /// <summary>
-        /// The <see cref="System.Threading.CancellationToken"/> instance is cancelled when the lock renewal failed to renew the lock.
+        /// The <see cref="System.Threading.CancellationToken"/> instance is cancelled when the lock renewal failed to
+        /// renew the lock or the <see cref="ServiceBusProcessorOptions.MaxAutoLockRenewalDuration"/> has elapsed.
         /// </summary>
         public CancellationToken LockLostToken { get; }
 
