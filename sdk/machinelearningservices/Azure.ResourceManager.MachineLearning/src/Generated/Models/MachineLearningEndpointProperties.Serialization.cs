@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(Properties))
             {
-                if (Properties != null)
+                if (Properties != null && Optional.IsCollectionDefined(Properties))
                 {
                     writer.WritePropertyName("properties"u8);
                     writer.WriteStartObject();

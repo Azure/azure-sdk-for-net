@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(Properties))
             {
-                if (Properties != null)
+                if (Properties != null && Optional.IsCollectionDefined(Properties))
                 {
                     writer.WritePropertyName("properties"u8);
                     writer.WriteStartObject();
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, null);
+                            continue;
                         }
                         else
                         {

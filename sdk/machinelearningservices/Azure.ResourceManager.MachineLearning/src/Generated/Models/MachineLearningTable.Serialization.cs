@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ReferencedUris))
             {
-                if (ReferencedUris != null)
+                if (ReferencedUris != null && Optional.IsCollectionDefined(ReferencedUris))
                 {
                     writer.WritePropertyName("referencedUris"u8);
                     writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(Properties))
             {
-                if (Properties != null)
+                if (Properties != null && Optional.IsCollectionDefined(Properties))
                 {
                     writer.WritePropertyName("properties"u8);
                     writer.WriteStartObject();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                if (Tags != null)
+                if (Tags != null && Optional.IsCollectionDefined(Tags))
                 {
                     writer.WritePropertyName("tags"u8);
                     writer.WriteStartObject();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array.Add(null);
+                            continue;
                         }
                         else
                         {

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
-                if (EnvironmentVariables != null)
+                if (EnvironmentVariables != null && Optional.IsCollectionDefined(EnvironmentVariables))
                 {
                     writer.WritePropertyName("environmentVariables"u8);
                     writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(Properties))
             {
-                if (Properties != null)
+                if (Properties != null && Optional.IsCollectionDefined(Properties))
                 {
                     writer.WritePropertyName("properties"u8);
                     writer.WriteStartObject();

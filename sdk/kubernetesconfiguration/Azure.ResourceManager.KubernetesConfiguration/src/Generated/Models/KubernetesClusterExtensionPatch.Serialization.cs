@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             if (Optional.IsCollectionDefined(ConfigurationSettings))
             {
-                if (ConfigurationSettings != null)
+                if (ConfigurationSettings != null && Optional.IsCollectionDefined(ConfigurationSettings))
                 {
                     writer.WritePropertyName("configurationSettings"u8);
                     writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
             {
-                if (ConfigurationProtectedSettings != null)
+                if (ConfigurationProtectedSettings != null && Optional.IsCollectionDefined(ConfigurationProtectedSettings))
                 {
                     writer.WritePropertyName("configurationProtectedSettings"u8);
                     writer.WriteStartObject();

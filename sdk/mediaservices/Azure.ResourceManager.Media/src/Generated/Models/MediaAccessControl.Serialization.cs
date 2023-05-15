@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array.Add(null);
+                            continue;
                         }
                         else
                         {

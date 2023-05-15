@@ -62,7 +62,7 @@ namespace Azure.Maps.Search.Models
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array.Add(null);
+                            continue;
                         }
                         else
                         {
@@ -71,7 +71,7 @@ namespace Azure.Maps.Search.Models
                             {
                                 if (item0.ValueKind == JsonValueKind.Null)
                                 {
-                                    array0.Add(null);
+                                    continue;
                                 }
                                 else
                                 {

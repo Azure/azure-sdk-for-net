@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(TimeSeriesIdColumnNames))
             {
-                if (TimeSeriesIdColumnNames != null)
+                if (TimeSeriesIdColumnNames != null && Optional.IsCollectionDefined(TimeSeriesIdColumnNames))
                 {
                     writer.WritePropertyName("timeSeriesIdColumnNames"u8);
                     writer.WriteStartArray();

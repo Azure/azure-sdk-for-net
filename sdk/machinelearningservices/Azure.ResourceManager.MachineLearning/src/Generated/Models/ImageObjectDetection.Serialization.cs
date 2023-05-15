@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(SearchSpace))
             {
-                if (SearchSpace != null)
+                if (SearchSpace != null && Optional.IsCollectionDefined(SearchSpace))
                 {
                     writer.WritePropertyName("searchSpace"u8);
                     writer.WriteStartArray();

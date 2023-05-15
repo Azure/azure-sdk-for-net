@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(EnvironmentId);
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
-                if (EnvironmentVariables != null)
+                if (EnvironmentVariables != null && Optional.IsCollectionDefined(EnvironmentVariables))
                 {
                     writer.WritePropertyName("environmentVariables"u8);
                     writer.WriteStartObject();
