@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsCollectionDefined(UriSigningKeys))
             {
-                if (UriSigningKeys != null)
+                if (UriSigningKeys != null && Optional.IsCollectionDefined(UriSigningKeys))
                 {
                     writer.WritePropertyName("urlSigningKeys"u8);
                     writer.WriteStartArray();

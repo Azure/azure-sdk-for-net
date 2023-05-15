@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Advisor
                             {
                                 if (property1.Value.ValueKind == JsonValueKind.Null)
                                 {
-                                    dictionary.Add(property1.Name, null);
+                                    continue;
                                 }
                                 else
                                 {
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Advisor
                             {
                                 if (item.ValueKind == JsonValueKind.Null)
                                 {
-                                    array.Add(null);
+                                    continue;
                                 }
                                 else
                                 {
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Advisor
                                     {
                                         if (property1.Value.ValueKind == JsonValueKind.Null)
                                         {
-                                            dictionary.Add(property1.Name, null);
+                                            continue;
                                         }
                                         else
                                         {
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Advisor
                             {
                                 if (property1.Value.ValueKind == JsonValueKind.Null)
                                 {
-                                    dictionary.Add(property1.Name, null);
+                                    continue;
                                 }
                                 else
                                 {
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Advisor
                             {
                                 if (property1.Value.ValueKind == JsonValueKind.Null)
                                 {
-                                    dictionary.Add(property1.Name, null);
+                                    continue;
                                 }
                                 else
                                 {

@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, null);
+                            continue;
                         }
                         else
                         {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                             {
                                 if (property1.Value.ValueKind == JsonValueKind.Null)
                                 {
-                                    dictionary0.Add(property1.Name, null);
+                                    continue;
                                 }
                                 else
                                 {

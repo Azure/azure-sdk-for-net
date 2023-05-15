@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 if (item.ValueKind == JsonValueKind.Null)
                                 {
-                                    array.Add(null);
+                                    continue;
                                 }
                                 else
                                 {
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 if (item.ValueKind == JsonValueKind.Null)
                                 {
-                                    array.Add(null);
+                                    continue;
                                 }
                                 else
                                 {

@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, null);
+                            continue;
                         }
                         else
                         {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, null);
+                            continue;
                         }
                         else
                         {

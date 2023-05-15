@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array.Add(null);
+                            continue;
                         }
                         else
                         {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array.Add(null);
+                            continue;
                         }
                         else
                         {

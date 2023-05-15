@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array.Add(null);
+                            continue;
                         }
                         else
                         {

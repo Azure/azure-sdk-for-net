@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 if (item.ValueKind == JsonValueKind.Null)
                                 {
-                                    array.Add(null);
+                                    continue;
                                 }
                                 else
                                 {
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 if (item.ValueKind == JsonValueKind.Null)
                                 {
-                                    array.Add(null);
+                                    continue;
                                 }
                                 else
                                 {

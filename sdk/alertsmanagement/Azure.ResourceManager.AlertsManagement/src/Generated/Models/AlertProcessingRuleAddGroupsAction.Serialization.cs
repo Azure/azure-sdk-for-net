@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array.Add(null);
+                            continue;
                         }
                         else
                         {
