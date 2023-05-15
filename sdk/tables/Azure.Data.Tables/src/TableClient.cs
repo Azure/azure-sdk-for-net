@@ -1043,7 +1043,7 @@ namespace Azure.Data.Tables
         /// For example, the following expression would filter entities with a PartitionKey of 'foo': <c>e => e.PartitionKey == "foo"</c>.
         /// </param>
         /// <param name="maxPerPage">
-        /// The maximum number of entities that will be returned per page. The default value, if unspecified, is 1000 for storage accounts and is not limited for Cosmos DB table API.
+        /// The maximum number of entities that will be returned per page. If unspecified, the default value is 1000 for storage accounts and is not limited for Cosmos DB table API.
         /// Note: This value does not limit the total number of results if the result is fully enumerated.
         /// </param>
         /// <param name="select">
@@ -1081,7 +1081,7 @@ namespace Azure.Data.Tables
         /// For example, the following expression would filter entities with a PartitionKey of 'foo': <c>e => e.PartitionKey == "foo"</c>.
         /// </param>
         /// <param name="maxPerPage">
-        /// The maximum number of entities that will be returned per page. The default value, if unspecified, is 1000 for storage accounts and is not limited for Cosmos DB table API.
+        /// The maximum number of entities that will be returned per page. If unspecified, the default value is 1000 for storage accounts and is not limited for Cosmos DB table API.
         /// Note: This value does not limit the total number of results if the result is fully enumerated.
         /// </param>
         /// <param name="select">
@@ -1119,7 +1119,7 @@ namespace Azure.Data.Tables
         /// For example, the following filter would filter entities with a PartitionKey of 'foo': <c>"PartitionKey eq 'foo'"</c>.
         /// </param>
         /// <param name="maxPerPage">
-        /// The maximum number of entities that will be returned per page. The default value, if unspecified, is 1000 for storage accounts and is not limited for Cosmos DB table API.
+        /// The maximum number of entities that will be returned per page. If unspecified, the default value is 1000 for storage accounts and is not limited for Cosmos DB table API.
         /// Note: This value does not limit the total number of results if the result is fully enumerated.
         /// </param>
         /// <param name="select">
@@ -1200,7 +1200,7 @@ namespace Azure.Data.Tables
         /// For example, the following filter would filter entities with a PartitionKey of 'foo': <c>"PartitionKey eq 'foo'"</c>.
         /// </param>
         /// <param name="maxPerPage">
-        /// The maximum number of entities that will be returned per page. The default value, if unspecified, is 1000 for storage accounts and is not limited for Cosmos DB table API.
+        /// The maximum number of entities that will be returned per page. If unspecified, the default value is 1000 for storage accounts and is not limited for Cosmos DB table API.
         /// Note: This value does not limit the total number of results if the result is fully enumerated.
         /// </param>
         /// <param name="select">
