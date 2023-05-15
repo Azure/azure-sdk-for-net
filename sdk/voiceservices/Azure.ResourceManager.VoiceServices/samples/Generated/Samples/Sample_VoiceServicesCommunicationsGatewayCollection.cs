@@ -17,7 +17,7 @@ using Azure.ResourceManager.VoiceServices.Models;
 
 namespace Azure.ResourceManager.VoiceServices.Samples
 {
-    public partial class Sample_CommunicationsGatewayCollection
+    public partial class Sample_VoiceServicesCommunicationsGatewayCollection
     {
         // ListCommunicationsGatewayResource
         [NUnit.Framework.Test]
@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.VoiceServices.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this CommunicationsGatewayResource
-            CommunicationsGatewayCollection collection = resourceGroupResource.GetCommunicationsGateways();
+            // get the collection of this VoiceServicesCommunicationsGatewayResource
+            VoiceServicesCommunicationsGatewayCollection collection = resourceGroupResource.GetVoiceServicesCommunicationsGateways();
 
             // invoke the operation and iterate over the result
-            await foreach (CommunicationsGatewayResource item in collection.GetAllAsync())
+            await foreach (VoiceServicesCommunicationsGatewayResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                CommunicationsGatewayData resourceData = item.Data;
+                VoiceServicesCommunicationsGatewayData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -75,16 +75,16 @@ namespace Azure.ResourceManager.VoiceServices.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this CommunicationsGatewayResource
-            CommunicationsGatewayCollection collection = resourceGroupResource.GetCommunicationsGateways();
+            // get the collection of this VoiceServicesCommunicationsGatewayResource
+            VoiceServicesCommunicationsGatewayCollection collection = resourceGroupResource.GetVoiceServicesCommunicationsGateways();
 
             // invoke the operation
             string communicationsGatewayName = "myname";
-            CommunicationsGatewayResource result = await collection.GetAsync(communicationsGatewayName);
+            VoiceServicesCommunicationsGatewayResource result = await collection.GetAsync(communicationsGatewayName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CommunicationsGatewayData resourceData = result.Data;
+            VoiceServicesCommunicationsGatewayData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.VoiceServices.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this CommunicationsGatewayResource
-            CommunicationsGatewayCollection collection = resourceGroupResource.GetCommunicationsGateways();
+            // get the collection of this VoiceServicesCommunicationsGatewayResource
+            VoiceServicesCommunicationsGatewayCollection collection = resourceGroupResource.GetVoiceServicesCommunicationsGateways();
 
             // invoke the operation
             string communicationsGatewayName = "myname";
@@ -139,16 +139,16 @@ namespace Azure.ResourceManager.VoiceServices.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this CommunicationsGatewayResource
-            CommunicationsGatewayCollection collection = resourceGroupResource.GetCommunicationsGateways();
+            // get the collection of this VoiceServicesCommunicationsGatewayResource
+            VoiceServicesCommunicationsGatewayCollection collection = resourceGroupResource.GetVoiceServicesCommunicationsGateways();
 
             // invoke the operation
             string communicationsGatewayName = "myname";
-            CommunicationsGatewayData data = new CommunicationsGatewayData(new AzureLocation("useast"))
+            VoiceServicesCommunicationsGatewayData data = new VoiceServicesCommunicationsGatewayData(new AzureLocation("useast"))
             {
                 ServiceLocations =
 {
-new ServiceRegionProperties("useast",new PrimaryRegionProperties(new string[]
+new VoiceServicesServiceRegionProperties("useast",new VoiceServicesPrimaryRegionProperties(new string[]
 {
 "198.51.100.1"
 })
@@ -161,7 +161,7 @@ AllowedMediaSourceAddressPrefixes =
 {
 "10.1.2.0/24"
 },
-}),new ServiceRegionProperties("useast2",new PrimaryRegionProperties(new string[]
+}),new VoiceServicesServiceRegionProperties("useast2",new VoiceServicesPrimaryRegionProperties(new string[]
 {
 "198.51.100.2"
 })
@@ -176,25 +176,25 @@ AllowedMediaSourceAddressPrefixes =
 },
 })
 },
-                Connectivity = CommunicationsGatewayConnectivity.PublicAddress,
+                Connectivity = VoiceServicesCommunicationsGatewayConnectivity.PublicAddress,
                 Codecs =
 {
-TeamsCodec.Pcma
+VoiceServicesTeamsCodec.Pcma
 },
-                E911Type = E911Type.Standard,
+                E911Type = VoiceServicesEmergencyCallType.Standard,
                 Platforms =
 {
-CommunicationsPlatform.OperatorConnect
+VoiceServicesCommunicationsPlatform.OperatorConnect
 },
-                AutoGeneratedDomainNameLabelScope = AutoGeneratedDomainNameLabelScope.NoReuse,
+                AutoGeneratedDomainNameLabelScope = VoiceServicesAutoGeneratedDomainNameLabelScope.NoReuse,
                 TeamsVoicemailPilotNumber = "1234567890",
             };
-            ArmOperation<CommunicationsGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, communicationsGatewayName, data);
-            CommunicationsGatewayResource result = lro.Value;
+            ArmOperation<VoiceServicesCommunicationsGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, communicationsGatewayName, data);
+            VoiceServicesCommunicationsGatewayResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CommunicationsGatewayData resourceData = result.Data;
+            VoiceServicesCommunicationsGatewayData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

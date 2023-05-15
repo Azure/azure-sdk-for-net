@@ -17,12 +17,12 @@ using Azure.ResourceManager.VoiceServices.Models;
 
 namespace Azure.ResourceManager.VoiceServices.Samples
 {
-    public partial class Sample_CommunicationsGatewayResource
+    public partial class Sample_VoiceServicesCommunicationsGatewayResource
     {
         // ListCommunicationsGatewayResourceSub
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetCommunicationsGateways_ListCommunicationsGatewayResourceSub()
+        public async Task GetVoiceServicesCommunicationsGateways_ListCommunicationsGatewayResourceSub()
         {
             // Generated from example definition: specification/voiceservices/resource-manager/Microsoft.VoiceServices/stable/2023-01-31/examples/CommunicationsGateways_ListBySubscription.json
             // this example is just showing the usage of "CommunicationsGateways_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.VoiceServices.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (CommunicationsGatewayResource item in subscriptionResource.GetCommunicationsGatewaysAsync())
+            await foreach (VoiceServicesCommunicationsGatewayResource item in subscriptionResource.GetVoiceServicesCommunicationsGatewaysAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                CommunicationsGatewayData resourceData = item.Data;
+                VoiceServicesCommunicationsGatewayData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -64,20 +64,20 @@ namespace Azure.ResourceManager.VoiceServices.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CommunicationsGatewayResource created on azure
-            // for more information of creating CommunicationsGatewayResource, please refer to the document of CommunicationsGatewayResource
+            // this example assumes you already have this VoiceServicesCommunicationsGatewayResource created on azure
+            // for more information of creating VoiceServicesCommunicationsGatewayResource, please refer to the document of VoiceServicesCommunicationsGatewayResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string communicationsGatewayName = "myname";
-            ResourceIdentifier communicationsGatewayResourceId = CommunicationsGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationsGatewayName);
-            CommunicationsGatewayResource communicationsGateway = client.GetCommunicationsGatewayResource(communicationsGatewayResourceId);
+            ResourceIdentifier voiceServicesCommunicationsGatewayResourceId = VoiceServicesCommunicationsGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationsGatewayName);
+            VoiceServicesCommunicationsGatewayResource voiceServicesCommunicationsGateway = client.GetVoiceServicesCommunicationsGatewayResource(voiceServicesCommunicationsGatewayResourceId);
 
             // invoke the operation
-            CommunicationsGatewayResource result = await communicationsGateway.GetAsync();
+            VoiceServicesCommunicationsGatewayResource result = await voiceServicesCommunicationsGateway.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CommunicationsGatewayData resourceData = result.Data;
+            VoiceServicesCommunicationsGatewayData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -95,16 +95,16 @@ namespace Azure.ResourceManager.VoiceServices.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CommunicationsGatewayResource created on azure
-            // for more information of creating CommunicationsGatewayResource, please refer to the document of CommunicationsGatewayResource
+            // this example assumes you already have this VoiceServicesCommunicationsGatewayResource created on azure
+            // for more information of creating VoiceServicesCommunicationsGatewayResource, please refer to the document of VoiceServicesCommunicationsGatewayResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string communicationsGatewayName = "myname";
-            ResourceIdentifier communicationsGatewayResourceId = CommunicationsGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationsGatewayName);
-            CommunicationsGatewayResource communicationsGateway = client.GetCommunicationsGatewayResource(communicationsGatewayResourceId);
+            ResourceIdentifier voiceServicesCommunicationsGatewayResourceId = VoiceServicesCommunicationsGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationsGatewayName);
+            VoiceServicesCommunicationsGatewayResource voiceServicesCommunicationsGateway = client.GetVoiceServicesCommunicationsGatewayResource(voiceServicesCommunicationsGatewayResourceId);
 
             // invoke the operation
-            await communicationsGateway.DeleteAsync(WaitUntil.Completed);
+            await voiceServicesCommunicationsGateway.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -122,21 +122,21 @@ namespace Azure.ResourceManager.VoiceServices.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CommunicationsGatewayResource created on azure
-            // for more information of creating CommunicationsGatewayResource, please refer to the document of CommunicationsGatewayResource
+            // this example assumes you already have this VoiceServicesCommunicationsGatewayResource created on azure
+            // for more information of creating VoiceServicesCommunicationsGatewayResource, please refer to the document of VoiceServicesCommunicationsGatewayResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string communicationsGatewayName = "myname";
-            ResourceIdentifier communicationsGatewayResourceId = CommunicationsGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationsGatewayName);
-            CommunicationsGatewayResource communicationsGateway = client.GetCommunicationsGatewayResource(communicationsGatewayResourceId);
+            ResourceIdentifier voiceServicesCommunicationsGatewayResourceId = VoiceServicesCommunicationsGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationsGatewayName);
+            VoiceServicesCommunicationsGatewayResource voiceServicesCommunicationsGateway = client.GetVoiceServicesCommunicationsGatewayResource(voiceServicesCommunicationsGatewayResourceId);
 
             // invoke the operation
-            CommunicationsGatewayPatch patch = new CommunicationsGatewayPatch();
-            CommunicationsGatewayResource result = await communicationsGateway.UpdateAsync(patch);
+            VoiceServicesCommunicationsGatewayPatch patch = new VoiceServicesCommunicationsGatewayPatch();
+            VoiceServicesCommunicationsGatewayResource result = await voiceServicesCommunicationsGateway.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CommunicationsGatewayData resourceData = result.Data;
+            VoiceServicesCommunicationsGatewayData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
