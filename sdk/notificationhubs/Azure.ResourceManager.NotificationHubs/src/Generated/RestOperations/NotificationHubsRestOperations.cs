@@ -495,9 +495,9 @@ namespace Azure.ResourceManager.NotificationHubs
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
 #if NET6_0_OR_GREATER
-				content.JsonWriter.WriteRawValue(anyObject);
+				content.JsonWriter.WriteRawValue(anyObject.ToArray());
 #else
-                JsonSerializer.Serialize(content.JsonWriter, JsonDocument.Parse(anyObject.ToString()).RootElement);
+                JsonSerializer.Serialize(content.JsonWriter, JsonDocument.Parse(anyObject.ToArray().ToString()).RootElement);
 #endif
                 request.Content = content;
             }
