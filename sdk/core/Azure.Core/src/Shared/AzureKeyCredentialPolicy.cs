@@ -3,6 +3,8 @@
 
 using Azure.Core.Pipeline;
 
+#nullable enable
+
 namespace Azure.Core
 {
     internal class AzureKeyCredentialPolicy : HttpPipelineSynchronousPolicy
