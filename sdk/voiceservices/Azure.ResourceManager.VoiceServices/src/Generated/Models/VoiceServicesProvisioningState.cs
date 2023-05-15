@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.VoiceServices.Models
 {
-    /// <summary>
-    /// Provisioning state of the resource.
-    /// Serialized Name: ProvisioningState
-    /// </summary>
+    /// <summary> Provisioning state of the resource. </summary>
     public readonly partial struct VoiceServicesProvisioningState : IEquatable<VoiceServicesProvisioningState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.VoiceServices.Models
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static VoiceServicesProvisioningState Succeeded { get; } = new VoiceServicesProvisioningState(SucceededValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static VoiceServicesProvisioningState Failed { get; } = new VoiceServicesProvisioningState(FailedValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: ProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static VoiceServicesProvisioningState Canceled { get; } = new VoiceServicesProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="VoiceServicesProvisioningState"/> values are the same. </summary>
         public static bool operator ==(VoiceServicesProvisioningState left, VoiceServicesProvisioningState right) => left.Equals(right);

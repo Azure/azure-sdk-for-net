@@ -10,21 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.VoiceServices.Models
 {
-    /// <summary>
-    /// The service region configuration needed for Teams Callings.
-    /// Serialized Name: ServiceRegionProperties
-    /// </summary>
+    /// <summary> The service region configuration needed for Teams Callings. </summary>
     public partial class VoiceServicesServiceRegionProperties
     {
         /// <summary> Initializes a new instance of VoiceServicesServiceRegionProperties. </summary>
-        /// <param name="name">
-        /// The name of the region in which the resources needed for Teams Calling will be deployed.
-        /// Serialized Name: ServiceRegionProperties.name
-        /// </param>
-        /// <param name="primaryRegionProperties">
-        /// The configuration used in this region as primary, and other regions as backup.
-        /// Serialized Name: ServiceRegionProperties.primaryRegionProperties
-        /// </param>
+        /// <param name="name"> The name of the region in which the resources needed for Teams Calling will be deployed. </param>
+        /// <param name="primaryRegionProperties"> The configuration used in this region as primary, and other regions as backup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="primaryRegionProperties"/> is null. </exception>
         public VoiceServicesServiceRegionProperties(string name, VoiceServicesPrimaryRegionProperties primaryRegionProperties)
         {
@@ -35,15 +26,9 @@ namespace Azure.ResourceManager.VoiceServices.Models
             PrimaryRegionProperties = primaryRegionProperties;
         }
 
-        /// <summary>
-        /// The name of the region in which the resources needed for Teams Calling will be deployed.
-        /// Serialized Name: ServiceRegionProperties.name
-        /// </summary>
+        /// <summary> The name of the region in which the resources needed for Teams Calling will be deployed. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// The configuration used in this region as primary, and other regions as backup.
-        /// Serialized Name: ServiceRegionProperties.primaryRegionProperties
-        /// </summary>
+        /// <summary> The configuration used in this region as primary, and other regions as backup. </summary>
         public VoiceServicesPrimaryRegionProperties PrimaryRegionProperties { get; set; }
     }
 }

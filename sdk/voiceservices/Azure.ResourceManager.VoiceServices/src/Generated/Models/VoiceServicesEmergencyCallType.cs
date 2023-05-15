@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.VoiceServices.Models
 {
-    /// <summary>
-    /// The method for terminating emergency calls to the PSTN.
-    /// Serialized Name: E911Type
-    /// </summary>
+    /// <summary> The method for terminating emergency calls to the PSTN. </summary>
     public readonly partial struct VoiceServicesEmergencyCallType : IEquatable<VoiceServicesEmergencyCallType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.VoiceServices.Models
         private const string StandardValue = "Standard";
         private const string DirectToEsrpValue = "DirectToEsrp";
 
-        /// <summary>
-        /// Emergency calls are not handled different from other calls
-        /// Serialized Name: E911Type.Standard
-        /// </summary>
+        /// <summary> Emergency calls are not handled different from other calls. </summary>
         public static VoiceServicesEmergencyCallType Standard { get; } = new VoiceServicesEmergencyCallType(StandardValue);
-        /// <summary>
-        /// Emergency calls are routed directly to the ESRP
-        /// Serialized Name: E911Type.DirectToEsrp
-        /// </summary>
+        /// <summary> Emergency calls are routed directly to the ESRP. </summary>
         public static VoiceServicesEmergencyCallType DirectToEsrp { get; } = new VoiceServicesEmergencyCallType(DirectToEsrpValue);
         /// <summary> Determines if two <see cref="VoiceServicesEmergencyCallType"/> values are the same. </summary>
         public static bool operator ==(VoiceServicesEmergencyCallType left, VoiceServicesEmergencyCallType right) => left.Equals(right);

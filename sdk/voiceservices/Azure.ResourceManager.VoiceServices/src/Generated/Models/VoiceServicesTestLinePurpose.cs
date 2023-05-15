@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.VoiceServices.Models
 {
-    /// <summary>
-    /// The purpose of the TestLine resource.
-    /// Serialized Name: TestLinePurpose
-    /// </summary>
+    /// <summary> The purpose of the TestLine resource. </summary>
     public readonly partial struct VoiceServicesTestLinePurpose : IEquatable<VoiceServicesTestLinePurpose>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.VoiceServices.Models
         private const string ManualValue = "Manual";
         private const string AutomatedValue = "Automated";
 
-        /// <summary>
-        /// Manual
-        /// Serialized Name: TestLinePurpose.Manual
-        /// </summary>
+        /// <summary> Manual. </summary>
         public static VoiceServicesTestLinePurpose Manual { get; } = new VoiceServicesTestLinePurpose(ManualValue);
-        /// <summary>
-        /// Automated
-        /// Serialized Name: TestLinePurpose.Automated
-        /// </summary>
+        /// <summary> Automated. </summary>
         public static VoiceServicesTestLinePurpose Automated { get; } = new VoiceServicesTestLinePurpose(AutomatedValue);
         /// <summary> Determines if two <see cref="VoiceServicesTestLinePurpose"/> values are the same. </summary>
         public static bool operator ==(VoiceServicesTestLinePurpose left, VoiceServicesTestLinePurpose right) => left.Equals(right);

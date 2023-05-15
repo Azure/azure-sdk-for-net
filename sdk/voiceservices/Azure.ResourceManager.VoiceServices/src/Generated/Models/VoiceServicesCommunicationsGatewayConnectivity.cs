@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.VoiceServices.Models
 {
-    /// <summary>
-    /// How this deployment connects back to the operator network
-    /// Serialized Name: Connectivity
-    /// </summary>
+    /// <summary> How this deployment connects back to the operator network. </summary>
     public readonly partial struct VoiceServicesCommunicationsGatewayConnectivity : IEquatable<VoiceServicesCommunicationsGatewayConnectivity>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
 
         private const string PublicAddressValue = "PublicAddress";
 
-        /// <summary>
-        /// This deployment connects to the operator network using a Public IP address, e.g. when using MAPS
-        /// Serialized Name: Connectivity.PublicAddress
-        /// </summary>
+        /// <summary> This deployment connects to the operator network using a Public IP address, e.g. when using MAPS. </summary>
         public static VoiceServicesCommunicationsGatewayConnectivity PublicAddress { get; } = new VoiceServicesCommunicationsGatewayConnectivity(PublicAddressValue);
         /// <summary> Determines if two <see cref="VoiceServicesCommunicationsGatewayConnectivity"/> values are the same. </summary>
         public static bool operator ==(VoiceServicesCommunicationsGatewayConnectivity left, VoiceServicesCommunicationsGatewayConnectivity right) => left.Equals(right);

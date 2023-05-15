@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.VoiceServices.Models
 {
-    /// <summary>
-    /// The check availability request body.
-    /// Serialized Name: CheckNameAvailabilityRequest
-    /// </summary>
+    /// <summary> The check availability request body. </summary>
     public partial class VoiceServicesCheckNameAvailabilityContent
     {
         /// <summary> Initializes a new instance of VoiceServicesCheckNameAvailabilityContent. </summary>
@@ -20,15 +17,9 @@ namespace Azure.ResourceManager.VoiceServices.Models
         {
         }
 
-        /// <summary>
-        /// The name of the resource for which availability needs to be checked.
-        /// Serialized Name: CheckNameAvailabilityRequest.name
-        /// </summary>
+        /// <summary> The name of the resource for which availability needs to be checked. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// The resource type.
-        /// Serialized Name: CheckNameAvailabilityRequest.type
-        /// </summary>
+        /// <summary> The resource type. </summary>
         public ResourceType? ResourceType { get; set; }
     }
 }

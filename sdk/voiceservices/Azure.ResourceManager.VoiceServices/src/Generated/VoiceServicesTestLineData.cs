@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.VoiceServices
     /// <summary>
     /// A class representing the VoiceServicesTestLine data model.
     /// A TestLine resource
-    /// Serialized Name: TestLine
     /// </summary>
     public partial class VoiceServicesTestLineData : TrackedResourceData
     {
@@ -32,18 +31,9 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="provisioningState">
-        /// Resource provisioning state.
-        /// Serialized Name: TestLine.properties.provisioningState
-        /// </param>
-        /// <param name="phoneNumber">
-        /// The phone number
-        /// Serialized Name: TestLine.properties.phoneNumber
-        /// </param>
-        /// <param name="purpose">
-        /// Purpose of this test line, e.g. automated or manual testing
-        /// Serialized Name: TestLine.properties.purpose
-        /// </param>
+        /// <param name="provisioningState"> Resource provisioning state. </param>
+        /// <param name="phoneNumber"> The phone number. </param>
+        /// <param name="purpose"> Purpose of this test line, e.g. automated or manual testing. </param>
         internal VoiceServicesTestLineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, VoiceServicesProvisioningState? provisioningState, string phoneNumber, VoiceServicesTestLinePurpose? purpose) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
@@ -51,20 +41,11 @@ namespace Azure.ResourceManager.VoiceServices
             Purpose = purpose;
         }
 
-        /// <summary>
-        /// Resource provisioning state.
-        /// Serialized Name: TestLine.properties.provisioningState
-        /// </summary>
+        /// <summary> Resource provisioning state. </summary>
         public VoiceServicesProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// The phone number
-        /// Serialized Name: TestLine.properties.phoneNumber
-        /// </summary>
+        /// <summary> The phone number. </summary>
         public string PhoneNumber { get; set; }
-        /// <summary>
-        /// Purpose of this test line, e.g. automated or manual testing
-        /// Serialized Name: TestLine.properties.purpose
-        /// </summary>
+        /// <summary> Purpose of this test line, e.g. automated or manual testing. </summary>
         public VoiceServicesTestLinePurpose? Purpose { get; set; }
     }
 }

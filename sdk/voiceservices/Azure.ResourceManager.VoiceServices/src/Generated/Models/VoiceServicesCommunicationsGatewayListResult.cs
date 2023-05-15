@@ -13,17 +13,11 @@ using Azure.ResourceManager.VoiceServices;
 
 namespace Azure.ResourceManager.VoiceServices.Models
 {
-    /// <summary>
-    /// The response of a CommunicationsGateway list operation.
-    /// Serialized Name: CommunicationsGatewayListResult
-    /// </summary>
+    /// <summary> The response of a CommunicationsGateway list operation. </summary>
     internal partial class VoiceServicesCommunicationsGatewayListResult
     {
         /// <summary> Initializes a new instance of VoiceServicesCommunicationsGatewayListResult. </summary>
-        /// <param name="value">
-        /// The CommunicationsGateway items on this page
-        /// Serialized Name: CommunicationsGatewayListResult.value
-        /// </param>
+        /// <param name="value"> The CommunicationsGateway items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VoiceServicesCommunicationsGatewayListResult(IEnumerable<VoiceServicesCommunicationsGatewayData> value)
         {
@@ -33,29 +27,17 @@ namespace Azure.ResourceManager.VoiceServices.Models
         }
 
         /// <summary> Initializes a new instance of VoiceServicesCommunicationsGatewayListResult. </summary>
-        /// <param name="value">
-        /// The CommunicationsGateway items on this page
-        /// Serialized Name: CommunicationsGatewayListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: CommunicationsGatewayListResult.nextLink
-        /// </param>
+        /// <param name="value"> The CommunicationsGateway items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         internal VoiceServicesCommunicationsGatewayListResult(IReadOnlyList<VoiceServicesCommunicationsGatewayData> value, Uri nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The CommunicationsGateway items on this page
-        /// Serialized Name: CommunicationsGatewayListResult.value
-        /// </summary>
+        /// <summary> The CommunicationsGateway items on this page. </summary>
         public IReadOnlyList<VoiceServicesCommunicationsGatewayData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: CommunicationsGatewayListResult.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

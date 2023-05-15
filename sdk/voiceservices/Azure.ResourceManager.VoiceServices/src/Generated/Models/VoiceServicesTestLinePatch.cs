@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.VoiceServices.Models
 {
-    /// <summary>
-    /// The type used for update operations of the TestLine.
-    /// Serialized Name: TestLineUpdate
-    /// </summary>
+    /// <summary> The type used for update operations of the TestLine. </summary>
     public partial class VoiceServicesTestLinePatch
     {
         /// <summary> Initializes a new instance of VoiceServicesTestLinePatch. </summary>
@@ -22,10 +19,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary>
-        /// Resource tags.
-        /// Serialized Name: TestLineUpdate.tags
-        /// </summary>
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

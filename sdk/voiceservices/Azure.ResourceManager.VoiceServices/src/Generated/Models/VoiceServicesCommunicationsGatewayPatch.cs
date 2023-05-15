@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.VoiceServices.Models
 {
-    /// <summary>
-    /// The type used for update operations of the CommunicationsGateway.
-    /// Serialized Name: CommunicationsGatewayUpdate
-    /// </summary>
+    /// <summary> The type used for update operations of the CommunicationsGateway. </summary>
     public partial class VoiceServicesCommunicationsGatewayPatch
     {
         /// <summary> Initializes a new instance of VoiceServicesCommunicationsGatewayPatch. </summary>
@@ -22,10 +19,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary>
-        /// Resource tags.
-        /// Serialized Name: CommunicationsGatewayUpdate.tags
-        /// </summary>
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

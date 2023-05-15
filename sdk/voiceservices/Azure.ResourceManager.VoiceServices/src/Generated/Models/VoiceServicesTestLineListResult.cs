@@ -13,17 +13,11 @@ using Azure.ResourceManager.VoiceServices;
 
 namespace Azure.ResourceManager.VoiceServices.Models
 {
-    /// <summary>
-    /// The response of a TestLine list operation.
-    /// Serialized Name: TestLineListResult
-    /// </summary>
+    /// <summary> The response of a TestLine list operation. </summary>
     internal partial class VoiceServicesTestLineListResult
     {
         /// <summary> Initializes a new instance of VoiceServicesTestLineListResult. </summary>
-        /// <param name="value">
-        /// The TestLine items on this page
-        /// Serialized Name: TestLineListResult.value
-        /// </param>
+        /// <param name="value"> The TestLine items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VoiceServicesTestLineListResult(IEnumerable<VoiceServicesTestLineData> value)
         {
@@ -33,29 +27,17 @@ namespace Azure.ResourceManager.VoiceServices.Models
         }
 
         /// <summary> Initializes a new instance of VoiceServicesTestLineListResult. </summary>
-        /// <param name="value">
-        /// The TestLine items on this page
-        /// Serialized Name: TestLineListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: TestLineListResult.nextLink
-        /// </param>
+        /// <param name="value"> The TestLine items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         internal VoiceServicesTestLineListResult(IReadOnlyList<VoiceServicesTestLineData> value, Uri nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The TestLine items on this page
-        /// Serialized Name: TestLineListResult.value
-        /// </summary>
+        /// <summary> The TestLine items on this page. </summary>
         public IReadOnlyList<VoiceServicesTestLineData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: TestLineListResult.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

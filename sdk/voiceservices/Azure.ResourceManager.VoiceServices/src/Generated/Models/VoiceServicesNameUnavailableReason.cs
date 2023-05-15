@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.VoiceServices.Models
 {
-    /// <summary>
-    /// Possible reasons for a name not being available.
-    /// Serialized Name: CheckNameAvailabilityReason
-    /// </summary>
+    /// <summary> Possible reasons for a name not being available. </summary>
     public readonly partial struct VoiceServicesNameUnavailableReason : IEquatable<VoiceServicesNameUnavailableReason>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.VoiceServices.Models
         private const string InvalidValue = "Invalid";
         private const string AlreadyExistsValue = "AlreadyExists";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: CheckNameAvailabilityReason.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static VoiceServicesNameUnavailableReason Invalid { get; } = new VoiceServicesNameUnavailableReason(InvalidValue);
-        /// <summary>
-        /// AlreadyExists
-        /// Serialized Name: CheckNameAvailabilityReason.AlreadyExists
-        /// </summary>
+        /// <summary> AlreadyExists. </summary>
         public static VoiceServicesNameUnavailableReason AlreadyExists { get; } = new VoiceServicesNameUnavailableReason(AlreadyExistsValue);
         /// <summary> Determines if two <see cref="VoiceServicesNameUnavailableReason"/> values are the same. </summary>
         public static bool operator ==(VoiceServicesNameUnavailableReason left, VoiceServicesNameUnavailableReason right) => left.Equals(right);

@@ -204,11 +204,11 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="content"> The check availability request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<VoiceServicesCheckNameAvailabilityResult>> CheckLocalNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, VoiceServicesCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<VoiceServicesCheckNameAvailabilityResult>> CheckVoiceServiceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, VoiceServicesCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckLocalNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckVoiceServiceNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -229,11 +229,11 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="content"> The check availability request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<VoiceServicesCheckNameAvailabilityResult> CheckLocalNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, VoiceServicesCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<VoiceServicesCheckNameAvailabilityResult> CheckVoiceServiceNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, VoiceServicesCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckLocalNameAvailability(location, content, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckVoiceServiceNameAvailability(location, content, cancellationToken);
         }
     }
 }

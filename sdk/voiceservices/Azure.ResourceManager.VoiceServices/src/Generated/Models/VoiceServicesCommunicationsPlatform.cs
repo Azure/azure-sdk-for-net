@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.VoiceServices.Models
 {
-    /// <summary>
-    /// Available platform types.
-    /// Serialized Name: CommunicationsPlatform
-    /// </summary>
+    /// <summary> Available platform types. </summary>
     public readonly partial struct VoiceServicesCommunicationsPlatform : IEquatable<VoiceServicesCommunicationsPlatform>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.VoiceServices.Models
         private const string OperatorConnectValue = "OperatorConnect";
         private const string TeamsPhoneMobileValue = "TeamsPhoneMobile";
 
-        /// <summary>
-        /// OperatorConnect
-        /// Serialized Name: CommunicationsPlatform.OperatorConnect
-        /// </summary>
+        /// <summary> OperatorConnect. </summary>
         public static VoiceServicesCommunicationsPlatform OperatorConnect { get; } = new VoiceServicesCommunicationsPlatform(OperatorConnectValue);
-        /// <summary>
-        /// TeamsPhoneMobile
-        /// Serialized Name: CommunicationsPlatform.TeamsPhoneMobile
-        /// </summary>
+        /// <summary> TeamsPhoneMobile. </summary>
         public static VoiceServicesCommunicationsPlatform TeamsPhoneMobile { get; } = new VoiceServicesCommunicationsPlatform(TeamsPhoneMobileValue);
         /// <summary> Determines if two <see cref="VoiceServicesCommunicationsPlatform"/> values are the same. </summary>
         public static bool operator ==(VoiceServicesCommunicationsPlatform left, VoiceServicesCommunicationsPlatform right) => left.Equals(right);

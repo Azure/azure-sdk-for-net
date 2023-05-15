@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.VoiceServices.Models
 {
-    /// <summary>
-    /// The status of the current CommunicationsGateway resource.
-    /// Serialized Name: Status
-    /// </summary>
+    /// <summary> The status of the current CommunicationsGateway resource. </summary>
     public readonly partial struct VoiceServicesCommunicationsGatewayStatus : IEquatable<VoiceServicesCommunicationsGatewayStatus>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.VoiceServices.Models
         private const string ChangePendingValue = "ChangePending";
         private const string CompleteValue = "Complete";
 
-        /// <summary>
-        /// The resource has been created or updated, but the CommunicationsGateway service has not yet been updated to reflect the changes.
-        /// Serialized Name: Status.ChangePending
-        /// </summary>
+        /// <summary> The resource has been created or updated, but the CommunicationsGateway service has not yet been updated to reflect the changes. </summary>
         public static VoiceServicesCommunicationsGatewayStatus ChangePending { get; } = new VoiceServicesCommunicationsGatewayStatus(ChangePendingValue);
-        /// <summary>
-        /// The CommunicationsGateway service is up and running with the parameters specified in the resource.
-        /// Serialized Name: Status.Complete
-        /// </summary>
+        /// <summary> The CommunicationsGateway service is up and running with the parameters specified in the resource. </summary>
         public static VoiceServicesCommunicationsGatewayStatus Complete { get; } = new VoiceServicesCommunicationsGatewayStatus(CompleteValue);
         /// <summary> Determines if two <see cref="VoiceServicesCommunicationsGatewayStatus"/> values are the same. </summary>
         public static bool operator ==(VoiceServicesCommunicationsGatewayStatus left, VoiceServicesCommunicationsGatewayStatus right) => left.Equals(right);

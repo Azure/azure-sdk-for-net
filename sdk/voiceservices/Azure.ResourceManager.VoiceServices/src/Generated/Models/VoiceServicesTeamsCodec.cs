@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.VoiceServices.Models
 {
-    /// <summary>
-    /// The voice codecs expected for communication with Teams.
-    /// Serialized Name: TeamsCodecs
-    /// </summary>
+    /// <summary> The voice codecs expected for communication with Teams. </summary>
     public readonly partial struct VoiceServicesTeamsCodec : IEquatable<VoiceServicesTeamsCodec>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.VoiceServices.Models
         private const string Silk8Value = "SILK_8";
         private const string Silk16Value = "SILK_16";
 
-        /// <summary>
-        /// PCMA
-        /// Serialized Name: TeamsCodecs.PCMA
-        /// </summary>
+        /// <summary> PCMA. </summary>
         public static VoiceServicesTeamsCodec Pcma { get; } = new VoiceServicesTeamsCodec(PcmaValue);
-        /// <summary>
-        /// PCMU
-        /// Serialized Name: TeamsCodecs.PCMU
-        /// </summary>
+        /// <summary> PCMU. </summary>
         public static VoiceServicesTeamsCodec Pcmu { get; } = new VoiceServicesTeamsCodec(PcmuValue);
-        /// <summary>
-        /// G722
-        /// Serialized Name: TeamsCodecs.G722
-        /// </summary>
+        /// <summary> G722. </summary>
         public static VoiceServicesTeamsCodec G722 { get; } = new VoiceServicesTeamsCodec(G722Value);
-        /// <summary>
-        /// G722_2
-        /// Serialized Name: TeamsCodecs.G722_2
-        /// </summary>
+        /// <summary> G722_2. </summary>
         public static VoiceServicesTeamsCodec G7222 { get; } = new VoiceServicesTeamsCodec(G7222Value);
-        /// <summary>
-        /// SILK_8
-        /// Serialized Name: TeamsCodecs.SILK_8
-        /// </summary>
+        /// <summary> SILK_8. </summary>
         public static VoiceServicesTeamsCodec Silk8 { get; } = new VoiceServicesTeamsCodec(Silk8Value);
-        /// <summary>
-        /// SILK_16
-        /// Serialized Name: TeamsCodecs.SILK_16
-        /// </summary>
+        /// <summary> SILK_16. </summary>
         public static VoiceServicesTeamsCodec Silk16 { get; } = new VoiceServicesTeamsCodec(Silk16Value);
         /// <summary> Determines if two <see cref="VoiceServicesTeamsCodec"/> values are the same. </summary>
         public static bool operator ==(VoiceServicesTeamsCodec left, VoiceServicesTeamsCodec right) => left.Equals(right);
