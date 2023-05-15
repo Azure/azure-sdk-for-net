@@ -153,7 +153,6 @@ namespace Azure.Communication.JobRouter
         public override int GetHashCode() => Value?.GetHashCode() ?? 0;
 
         /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString()
         {
             return Value.ToString();
