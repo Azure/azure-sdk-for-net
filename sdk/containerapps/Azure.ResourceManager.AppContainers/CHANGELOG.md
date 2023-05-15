@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2023-05-15)
 
 ### Features Added
 - Upgrade to 2022-11-01-preview api version
@@ -17,6 +17,9 @@
 - Fix certifaicte password format for environment custom domain
 
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.32.0`
+- Upgraded dependent `Azure.ResourceManager` to `1.5.0`
 
 ## 1.0.3 (2023-03-28)
 
