@@ -21,6 +21,11 @@ namespace Azure.Communication.JobRouter
             JobStateSelector.Closed => "closed",
             JobStateSelector.Cancelled => "cancelled",
             JobStateSelector.ClassificationFailed => "classificationFailed",
+            JobStateSelector.Created => "created",
+            JobStateSelector.PendingSchedule => "pendingSchedule",
+            JobStateSelector.Scheduled => "scheduled",
+            JobStateSelector.ScheduleFailed => "scheduleFailed",
+            JobStateSelector.WaitingForActivation => "waitingForActivation",
             JobStateSelector.Active => "active",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown JobStateSelector value.")
         };
@@ -35,6 +40,11 @@ namespace Azure.Communication.JobRouter
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "closed")) return JobStateSelector.Closed;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "cancelled")) return JobStateSelector.Cancelled;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "classificationFailed")) return JobStateSelector.ClassificationFailed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "created")) return JobStateSelector.Created;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "pendingSchedule")) return JobStateSelector.PendingSchedule;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "scheduled")) return JobStateSelector.Scheduled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "scheduleFailed")) return JobStateSelector.ScheduleFailed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "waitingForActivation")) return JobStateSelector.WaitingForActivation;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "active")) return JobStateSelector.Active;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown JobStateSelector value.");
         }

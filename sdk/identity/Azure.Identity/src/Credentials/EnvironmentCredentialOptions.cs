@@ -51,7 +51,7 @@ namespace Azure.Identity
         internal string Password { get; set; } = EnvironmentVariables.Password;
 
         /// <inheritdoc/>
-        public bool DisableAuthorityValidationAndInstanceDiscovery { get; set; }
+        public bool DisableInstanceDiscovery { get; set; }
 
         /// <summary>
         /// Specifies tenants in addition to the specified <see cref="TenantId"/> for which the credential may acquire tokens.

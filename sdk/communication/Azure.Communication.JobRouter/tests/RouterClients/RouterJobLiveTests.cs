@@ -141,6 +141,51 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
+        public async Task GetJobsWithSchedulingFiltersTest()
+        {
+            RouterClient routerClient = CreateRouterClientWithConnectionString();
+
+            var channelId = GenerateUniqueId($"{nameof(GetJobsWithSchedulingFiltersTest)}-Channel");
+
+            // Setup queue
+            var createQueueResponse = await CreateQueueAsync(nameof(GetJobsWithSchedulingFiltersTest));
+            var createQueue = createQueueResponse.Value;
+
+            // Create 2 jobs - Both should be in Queued state
+            var jobId1 = GenerateUniqueId($"{IdPrefix}{nameof(GetJobsWithSchedulingFiltersTest)}1");
+            var timeToEnqueueJob = GetOrSetScheduledTimeUtc(DateTimeOffset.UtcNow.AddMinutes(1));
+            var createJob1Response = await routerClient.CreateJobAsync(
+                new CreateJobOptions(jobId1, channelId, createQueue.Id)
+                {
+                    Priority = 1,
+                    ScheduledTimeUtc = timeToEnqueueJob,
+                    UnavailableForMatching = true,
+                });
+
+            AddForCleanup(new Task(async () => await routerClient.CancelJobAsync(new CancelJobOptions(jobId1))));
+            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(jobId1)));
+            var createJob1 = createJob1Response.Value;
+            // test get jobs
+            var getJobsResponse = routerClient.GetJobsAsync(new GetJobsOptions()
+            {
+                ChannelId = channelId,
+                QueueId = createQueue.Id,
+                ScheduledAfter = timeToEnqueueJob,
+            });
+            var allJobs = new List<string>();
+
+            await foreach (var jobPage in getJobsResponse.AsPages(pageSizeHint: 1))
+            {
+                foreach (var job in jobPage.Values)
+                {
+                    allJobs.Add(job.RouterJob.Id);
+                }
+            }
+
+            Assert.IsTrue(allJobs.Contains(createJob1.Id));
+        }
+
+        [Test]
         [Ignore(reason: "Temporarily skipped")]
         public async Task CreateJobWithClassificationPolicy_w_StaticPriority()
         {

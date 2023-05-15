@@ -234,17 +234,19 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // We have imported the library/hello-world image in test set-up,
             // so config and blob files pointed to by the manifest are already in the registry.
 
-            var client = CreateBlobClient("library/hello-world");
+            ContainerRegistryContentClient client = CreateBlobClient("library/hello-world");
+
+            await SetDockerManifestPrerequisites(client);
 
             // Act
-            string path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "docker", "hello-world", "manifest.json");
+            string path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "docker", "manifest.json");
             using FileStream fs = File.OpenRead(path);
             BinaryData manifest = BinaryData.FromStream(fs);
 
             SetManifestResult result = await client.SetManifestAsync(manifest, mediaType: ManifestMediaType.DockerManifest);
 
             // Assert
-            Assert.AreEqual("sha256:e6c1c9dcc9c45a3dbfa654f8c8fad5c91529c137c1e2f6eb0995931c0aa74d99", result.Digest);
+            Assert.AreEqual("sha256:721089ae5c4d90e58e3d7f7e6c652a351621fbf37c26eceae23622173ec5a44d", result.Digest);
 
             // The following fails because the manifest media type is set to OciImageManifest by default
             fs.Position = 0;
@@ -275,6 +277,25 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var layer = "654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed";
             var config = "config.json";
             var basePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact");
+
+            // Upload config
+            using (var fs = File.OpenRead(Path.Combine(basePath, config)))
+            {
+                var uploadResult = await client.UploadBlobAsync(fs);
+            }
+
+            // Upload layer
+            using (var fs = File.OpenRead(Path.Combine(basePath, layer)))
+            {
+                var uploadResult = await client.UploadBlobAsync(fs);
+            }
+        }
+
+        private async Task SetDockerManifestPrerequisites(ContainerRegistryContentClient client)
+        {
+            var layer = "ec0488e025553d34358768c43e24b1954e0056ec4700883252c74f3eec273016";
+            var config = "config.json";
+            var basePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "docker");
 
             // Upload config
             using (var fs = File.OpenRead(Path.Combine(basePath, config)))
@@ -523,7 +544,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Act
             Response<DownloadRegistryBlobStreamingResult> downloadResult = await client.DownloadBlobStreamingAsync(digest);
-            Stream downloadedStream = downloadResult.Value.Content;
+            using Stream downloadedStream = downloadResult.Value.Content;
             BinaryData content = BinaryData.FromStream(downloadedStream);
 
             // Assert
@@ -532,7 +553,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.AreEqual(data, content.ToArray());
 
             // Clean up
-            downloadedStream.Dispose();
             await client.DeleteBlobAsync(digest);
         }
 
