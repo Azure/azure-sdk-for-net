@@ -6,7 +6,6 @@ using CoreWCF.Channels;
 using CoreWCF.Configuration;
 using CoreWCF.Queue.Common;
 using CoreWCF.Queue.Common.Configuration;
-using NuGet.Commands;
 
 namespace Azure.Storage.CoreWCF.Channels
 {

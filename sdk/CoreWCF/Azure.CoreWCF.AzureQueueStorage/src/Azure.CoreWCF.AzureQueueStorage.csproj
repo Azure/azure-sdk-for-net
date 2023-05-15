@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Queues" />
-    <PackageReference Include="NuGet.Commands" VersionOverride="6.5.0" />
     <PackageReference Include="System.IO.Pipelines" VersionOverride="6.0.3" />
     <PackageReference Include="CoreWCF.Queue" VersionOverride="1.4.0-preview1" />
   </ItemGroup>
