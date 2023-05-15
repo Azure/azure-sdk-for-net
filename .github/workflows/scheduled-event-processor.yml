@@ -20,6 +20,8 @@ permissions: {}
 
 jobs:
   event-handler:
+    # prevents the job from being executed on forks
+    if: github.repository == 'azure/azure-sdk-for-net'
     permissions:
       issues: write
       pull-requests: write
