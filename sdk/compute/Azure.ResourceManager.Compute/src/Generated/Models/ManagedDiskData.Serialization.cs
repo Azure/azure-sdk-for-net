@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array.Add(null);
+                            continue;
                         }
                         else
                         {

@@ -90,7 +90,7 @@ namespace Azure.Communication.MediaComposition
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array.Add(null);
+                            continue;
                         }
                         else
                         {

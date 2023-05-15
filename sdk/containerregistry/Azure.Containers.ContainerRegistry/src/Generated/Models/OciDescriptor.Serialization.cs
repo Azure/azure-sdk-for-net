@@ -105,7 +105,7 @@ namespace Azure.Containers.ContainerRegistry
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array.Add(null);
+                            continue;
                         }
                         else
                         {

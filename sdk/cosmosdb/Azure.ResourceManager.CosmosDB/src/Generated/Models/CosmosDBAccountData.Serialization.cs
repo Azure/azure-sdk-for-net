@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 if (item.ValueKind == JsonValueKind.Null)
                                 {
-                                    array.Add(null);
+                                    continue;
                                 }
                                 else
                                 {

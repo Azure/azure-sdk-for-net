@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 if (item.ValueKind == JsonValueKind.Null)
                                 {
-                                    array.Add(null);
+                                    continue;
                                 }
                                 else
                                 {
