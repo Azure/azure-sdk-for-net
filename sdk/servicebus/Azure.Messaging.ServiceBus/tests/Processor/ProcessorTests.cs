@@ -384,7 +384,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             mockProcessor.ProcessMessageAsync += args =>
             {
                 processMessageCalled = true;
-                Assert.IsTrue(args.LockLostToken.IsCancellationRequested);
+                Assert.IsTrue(args.LockLostCancellationToken.IsCancellationRequested);
                 return Task.CompletedTask;
             };
 

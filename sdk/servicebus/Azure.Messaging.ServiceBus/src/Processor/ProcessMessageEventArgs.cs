@@ -110,7 +110,7 @@ namespace Azure.Messaging.ServiceBus
 
             bool autoRenew = manager?.ShouldAutoRenewMessageLock() == true;
             _receiveActions = new ProcessorReceiveActions(message, manager, autoRenew);
-            LockLostToken = _receiveActions.GetLockLostToken(message);
+            LockLostCancellationToken = _receiveActions.GetLockLostToken(message);
         }
 
         /// <summary>
