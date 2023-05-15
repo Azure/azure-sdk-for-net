@@ -14,8 +14,8 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-# mgmt-debug: 
-#  show-serialized-names: true
+mgmt-debug: 
+ show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -47,10 +47,29 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+prepend-rp-prefix:
+  - CommunicationsGateway
+  - TestLine
+  - CheckNameAvailability
+  - TestLineListResult
+  - CommunicationsPlatform
+  - CommunicationsGatewayListResult
+  - PrimaryRegionProperties
+  - ServiceRegionProperties
+  - TeamsCodecs
+  - TestLinePurpose
+
 rename-mapping:
-  Status: CommunicationsGatewayStatus
-  ProvisioningState: VoiceServiceProvisioningState
-  Connectivity: CommunicationsGatewayConnectivity
+  Status: VoiceServicesCommunicationsGatewayStatus
+  ProvisioningState: VoiceServicesProvisioningState
+  Connectivity: VoiceServicesCommunicationsGatewayConnectivity
+  OnPremMcpEnabled: IsOnPremMcpEnabled
+  E911Type: VoiceServicesEmergencyCallType
+  CheckNameAvailabilityRequest.type: -|resource-type
+  CheckNameAvailabilityResponse: VoiceServicesCheckNameAvailabilityResult
+  CheckNameAvailabilityReason: VoiceServicesNameUnavailableReason
+  CheckNameAvailabilityRequest: VoiceServicesCheckNameAvailabilityContent
+  CommunicationsGateway.properties.onPremMcpEnabled: IsOnPremMcpEnabled
 
 directive:
   - remove-operation: Operations_List
