@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, null);
+                            continue;
                         }
                         else
                         {

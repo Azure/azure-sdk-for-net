@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteObjectValue(Action);
             if (Optional.IsCollectionDefined(MatchConditions))
             {
-                if (MatchConditions != null)
+                if (MatchConditions != null && Optional.IsCollectionDefined(MatchConditions))
                 {
                     writer.WritePropertyName("matchConditions"u8);
                     writer.WriteStartArray();

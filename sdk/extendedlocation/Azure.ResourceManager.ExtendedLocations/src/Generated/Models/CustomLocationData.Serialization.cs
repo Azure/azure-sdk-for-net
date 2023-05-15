@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                             {
                                 if (item.ValueKind == JsonValueKind.Null)
                                 {
-                                    array.Add(null);
+                                    continue;
                                 }
                                 else
                                 {

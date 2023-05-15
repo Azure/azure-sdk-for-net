@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
             if (Optional.IsCollectionDefined(VmssVmList))
             {
-                if (VmssVmList != null)
+                if (VmssVmList != null && Optional.IsCollectionDefined(VmssVmList))
                 {
                     writer.WritePropertyName("vmssVMList"u8);
                     writer.WriteStartArray();

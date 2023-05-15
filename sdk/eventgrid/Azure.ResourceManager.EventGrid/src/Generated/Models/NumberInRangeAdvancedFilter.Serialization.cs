@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array.Add(null);
+                            continue;
                         }
                         else
                         {
