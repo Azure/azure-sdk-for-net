@@ -3,32 +3,31 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.DataMovement.Tests
 {
     internal class TransferManagerFactory
     {
-        private List<DataTransfer> _dataTransfers;
         private TransferManagerOptions _options;
-
-        public TransferManagerFactory(List<DataTransfer> dataTransfers)
-        {
-            _dataTransfers = dataTransfers;
-        }
 
         public TransferManagerFactory(TransferManagerOptions options)
         {
+            Argument.CheckNotNull(options, nameof(options));
+            Argument.CheckNotNull(options.CheckpointerOptions, nameof(options.CheckpointerOptions));
             _options = options;
         }
 
-        public TransferManager BuildTransferManager()
+        public TransferManager BuildTransferManager(List<DataTransfer> dataTransfers = default)
         {
-            TransferManager transferManager = new TransferManager(_options);
-
-            if (_dataTransfers != null)
+            if (dataTransfers != default)
             {
-                transferManager._dataTransfers = _dataTransfers.ToDictionary(d => d.Id);
+                // populate checkpointer
+                Argument.AssertNotNullOrWhiteSpace(_options.CheckpointerOptions.checkpointerPath, nameof(dataTransfers));
+                LocalTransferCheckpointerFactory checkpointerFactory = new LocalTransferCheckpointerFactory(_options.CheckpointerOptions.checkpointerPath);
+                checkpointerFactory.BuildCheckpointer(dataTransfers);
             }
+            TransferManager transferManager = new TransferManager(_options);
 
             return transferManager;
         }
