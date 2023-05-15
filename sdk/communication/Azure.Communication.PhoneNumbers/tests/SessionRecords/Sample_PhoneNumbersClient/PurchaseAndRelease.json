@@ -4632,7 +4632,7 @@
       }
     },
     {
-      "RequestUri": "https://smstestapp.communication.azure.com/phoneNumbers/\u002BSanitized?api-version=2022-12-01",
+      "RequestUri": "https://smstestapp.communication.azure.com/phoneNumbers/Sanitized/Sanitized",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
