@@ -17,7 +17,17 @@ namespace Azure
         public static dynamic ToDynamicFromJson(this BinaryData utf8Json)
         {
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(utf8Json, DynamicData.DefaultSerializerOptions);
-            return new DynamicData(mdoc.RootElement);
+            return new DynamicData(mdoc.RootElement, DynamicDataNameMapping.None);
+        }
+
+        /// <summary>
+        /// Return the content of the BinaryData as a dynamic type.
+        /// <paramref name="nameMapping">The name mapping to use for reading and writing data.</paramref>
+        /// </summary>
+        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, DynamicDataNameMapping nameMapping)
+        {
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(utf8Json, DynamicData.DefaultSerializerOptions);
+            return new DynamicData(mdoc.RootElement, nameMapping);
         }
     }
 }
