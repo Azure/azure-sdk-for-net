@@ -274,7 +274,7 @@ namespace Azure.Storage.DataMovement
         /// </param>
         /// <returns></returns>
         public virtual async IAsyncEnumerable<DataTransfer> GetTransfersAsync(
-            IEnumerable<StorageTransferStatus> filterByStatus = default)
+            StorageTransferStatus[] filterByStatus = default)
         {
             await SetDataTransfers().ConfigureAwait(false);
             IEnumerable<DataTransfer> totalTransfers;
@@ -284,9 +284,9 @@ namespace Azure.Storage.DataMovement
             }
             else
             {
-                totalTransfers = _dataTransfers.
-                    Select(d => d.Value).
-                    Where(x => filterByStatus.Contains(x.TransferStatus)).ToList();
+                totalTransfers = _dataTransfers
+                    .Select(d => d.Value)
+                    .Where(x => filterByStatus.Contains(x.TransferStatus)).ToList();
             }
             foreach (DataTransfer transfer in totalTransfers)
             {

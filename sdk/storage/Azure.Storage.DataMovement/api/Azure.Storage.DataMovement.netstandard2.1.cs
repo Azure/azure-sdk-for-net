@@ -2,7 +2,7 @@ namespace Azure.Storage.DataMovement
 {
     public partial class DataTransfer
     {
-        internal DataTransfer() { }
+        protected DataTransfer() { }
         public bool HasCompleted { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.Storage.DataMovement.StorageTransferStatus TransferStatus { get { throw null; } }
@@ -117,7 +117,7 @@ namespace Azure.Storage.DataMovement
     {
         protected TransferManager() { }
         public TransferManager(Azure.Storage.DataMovement.TransferManagerOptions options = null) { }
-        public virtual System.Collections.Generic.List<Azure.Storage.DataMovement.DataTransfer> GetTransfers(Azure.Storage.DataMovement.StorageTransferStatus filterByStatus = Azure.Storage.DataMovement.StorageTransferStatus.None) { throw null; }
+        public virtual System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.DataTransfer> GetTransfersAsync(Azure.Storage.DataMovement.StorageTransferStatus[] filterByStatus = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartTransferAsync(Azure.Storage.DataMovement.StorageResource sourceResource, Azure.Storage.DataMovement.StorageResource destinationResource, Azure.Storage.DataMovement.Models.TransferOptions transferOptions = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartTransferAsync(Azure.Storage.DataMovement.StorageResourceContainer sourceResource, Azure.Storage.DataMovement.StorageResourceContainer destinationResource, Azure.Storage.DataMovement.Models.TransferOptions transferOptions = null) { throw null; }
         System.Threading.Tasks.ValueTask System.IAsyncDisposable.DisposeAsync() { throw null; }
