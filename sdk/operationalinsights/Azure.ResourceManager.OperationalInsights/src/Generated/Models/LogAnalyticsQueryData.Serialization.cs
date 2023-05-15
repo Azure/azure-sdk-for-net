@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 if (property1.Value.ValueKind == JsonValueKind.Null)
                                 {
-                                    dictionary.Add(property1.Name, null);
+                                    continue;
                                 }
                                 else
                                 {

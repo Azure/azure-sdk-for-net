@@ -45,7 +45,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             writer.WriteObjectValue(GravityWrapper);
             if (Optional.IsCollectionDefined(KeyFrameIndexes))
             {
-                if (KeyFrameIndexes != null)
+                if (KeyFrameIndexes != null && Optional.IsCollectionDefined(KeyFrameIndexes))
                 {
                     writer.WritePropertyName("keyFrameIndexes"u8);
                     writer.WriteStartArray();

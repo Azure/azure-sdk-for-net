@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array.Add(null);
+                            continue;
                         }
                         else
                         {

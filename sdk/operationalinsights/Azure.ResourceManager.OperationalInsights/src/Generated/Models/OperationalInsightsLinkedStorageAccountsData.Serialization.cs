@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 if (item.ValueKind == JsonValueKind.Null)
                                 {
-                                    array.Add(null);
+                                    continue;
                                 }
                                 else
                                 {

@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             {
                                 if (item.ValueKind == JsonValueKind.Null)
                                 {
-                                    array.Add(null);
+                                    continue;
                                 }
                                 else
                                 {

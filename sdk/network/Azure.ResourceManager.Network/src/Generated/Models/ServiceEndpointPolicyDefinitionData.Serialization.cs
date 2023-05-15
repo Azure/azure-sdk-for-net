@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 if (item.ValueKind == JsonValueKind.Null)
                                 {
-                                    array.Add(null);
+                                    continue;
                                 }
                                 else
                                 {
