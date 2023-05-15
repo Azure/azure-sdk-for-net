@@ -7,9 +7,9 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230515.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "1ae03c0e8596938b604d9b3b5b4d01a1",
+        "x-ms-client-request-id": "a2d4bdb971fdd97dbab0f9addbd6db65",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 15 May 2023 15:53:41 GMT",
+        "x-ms-date": "Mon, 15 May 2023 15:55:33 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -19,12 +19,12 @@
         "Cache-Control": "max-age=21600, private, stale-while-revalidate=86400",
         "Content-Length": "10206",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 15 May 2023 15:53:42 GMT",
-        "MS-CV": "jJ8D3bsymUWhl5rgRNr\u002B\u002Bw.0",
+        "Date": "Mon, 15 May 2023 15:55:34 GMT",
+        "MS-CV": "nb1c/8VCqEearFtJQNVHZw.0",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0hlViZAAAAAACF6z3Z8JERKPfyJO5yMRMU0FPMzFFREdFMTExNwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "09lViZAAAAAAPg9\u002B/446ySLp/xCQf6jrfU0FPMzFFREdFMTIxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "191ms"
+        "X-Processing-Time": "194ms"
       },
       "ResponseBody": {
         "phoneNumberLocalities": [
@@ -733,35 +733,39 @@
       }
     },
     {
-      "RequestUri": "https://smstestapp.communication.azure.com/availablePhoneNumbers/countries/US/areaCodes?phoneNumberType=geographic\u0026assignmentType=person\u0026locality=Anchorage\u0026administrativeDivision=AK\u0026api-version=2022-12-01",
+      "RequestUri": "https://smstestapp.communication.azure.com/availablePhoneNumbers/countries/US/localities?administrativeDivision=AK\u0026api-version=2022-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230515.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "72ab77345db9388e3d19ab889429f5bc",
+        "x-ms-client-request-id": "00be2fe7fb9877ba2fb568ad0ddfc68d",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 15 May 2023 15:53:41 GMT",
+        "x-ms-date": "Mon, 15 May 2023 15:55:33 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-03-07, 2022-12-01, 2022-12-02-preview2",
+        "api-supported-versions": "2022-12-01, 2022-12-02-preview2",
         "Cache-Control": "max-age=21600, private, stale-while-revalidate=86400",
-        "Content-Length": "50",
+        "Content-Length": "144",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 15 May 2023 15:53:44 GMT",
-        "MS-CV": "igGWz\u002BO900GAYnsSxTg7jA.0",
+        "Date": "Mon, 15 May 2023 15:55:34 GMT",
+        "MS-CV": "qwixcaLeVEmRrn0K4HRLkA.0",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0h1ViZAAAAACLQTZxH2SlR6Pq3mxxhfp8U0FPMzFFREdFMTExNwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "091ViZAAAAAA/gV1yy3gnRZ263a7gKl\u002BpU0FPMzFFREdFMTIxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "2054ms"
+        "X-Processing-Time": "189ms"
       },
       "ResponseBody": {
-        "areaCodes": [
+        "phoneNumberLocalities": [
           {
-            "areaCode": "907"
+            "localizedName": "Anchorage",
+            "administrativeDivision": {
+              "localizedName": "AK",
+              "abbreviatedName": "AK"
+            }
           }
         ],
         "nextLink": null
@@ -770,6 +774,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1054975072"
+    "RandomSeed": "565773315"
   }
 }
