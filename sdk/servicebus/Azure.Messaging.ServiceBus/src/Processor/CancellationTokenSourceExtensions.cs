@@ -8,7 +8,7 @@ namespace Azure.Messaging.ServiceBus
 {
     internal static class CancellationTokenSourceExtensions
     {
-        public static void CancelAfter(this CancellationTokenSource cancellationTokenSource,
+        public static void CancelAfterLockExpired(this CancellationTokenSource cancellationTokenSource,
             ServiceBusReceivedMessage receivedMessage)
         {
             if (cancellationTokenSource == null || receivedMessage.LockedUntil == default)

@@ -174,7 +174,7 @@ namespace Azure.Messaging.ServiceBus
         {
             var messageLockLostCancellationSource = new CancellationTokenSource();
             Messages[message] = messageLockLostCancellationSource;
-            messageLockLostCancellationSource.CancelAfter(message);
+            messageLockLostCancellationSource.CancelAfterLockExpired(message);
             return messageLockLostCancellationSource;
         }
 

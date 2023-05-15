@@ -222,7 +222,7 @@ namespace Azure.Messaging.ServiceBus
             await _receiver.RenewMessageLockAsync(message, cancellationToken).ConfigureAwait(false);
             if (_receiveActions.Messages.TryGetValue(message, out var cancellationTokenSource))
             {
-                cancellationTokenSource.CancelAfter(message);
+                cancellationTokenSource.CancelAfterLockExpired(message);
             }
         }
 

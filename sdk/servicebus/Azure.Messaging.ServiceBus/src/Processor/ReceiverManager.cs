@@ -308,7 +308,7 @@ namespace Azure.Messaging.ServiceBus
                     }
 
                     await Receiver.RenewMessageLockAsync(message, cancellationToken).ConfigureAwait(false);
-                    lockExpiredCancellationSource.CancelAfter(message);
+                    lockExpiredCancellationSource.CancelAfterLockExpired(message);
                     ServiceBusEventSource.Log.ProcessorRenewMessageLockComplete(Processor.Identifier, message.LockTokenGuid);
                 }
                 catch (Exception ex) when (!(ex is TaskCanceledException))
