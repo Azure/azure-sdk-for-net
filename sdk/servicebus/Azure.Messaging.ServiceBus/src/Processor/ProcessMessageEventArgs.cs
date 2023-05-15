@@ -31,7 +31,9 @@ namespace Azure.Messaging.ServiceBus
         /// The <see cref="System.Threading.CancellationToken"/> instance is cancelled when the lock renewal failed to
         /// renew the lock or the <see cref="ServiceBusProcessorOptions.MaxAutoLockRenewalDuration"/> has elapsed.
         /// </summary>
-        public CancellationToken LockLostToken { get; }
+        /// <remarks>The cancellation token is triggered by comparing <see cref="ServiceBusReceivedMessage.LockedUntil"/>
+        /// against <see cref="DateTimeOffset.UtcNow"/> and might be subjected to clock drift.</remarks>
+        public CancellationToken LockLostCancellationToken { get; }
 
         /// <summary>
         /// The path of the Service Bus entity that the message was received from.
