@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 if (item.ValueKind == JsonValueKind.Null)
                                 {
-                                    array.Add(null);
+                                    continue;
                                 }
                                 else
                                 {

@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 if (item.ValueKind == JsonValueKind.Null)
                                 {
-                                    array.Add(null);
+                                    continue;
                                 }
                                 else
                                 {

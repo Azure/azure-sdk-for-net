@@ -74,7 +74,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, null);
+                            continue;
                         }
                         else
                         {

@@ -39,7 +39,7 @@ namespace Azure.Data.Tables.Models
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array.Add(null);
+                            continue;
                         }
                         else
                         {
@@ -48,7 +48,7 @@ namespace Azure.Data.Tables.Models
                             {
                                 if (property0.Value.ValueKind == JsonValueKind.Null)
                                 {
-                                    dictionary.Add(property0.Name, null);
+                                    continue;
                                 }
                                 else
                                 {

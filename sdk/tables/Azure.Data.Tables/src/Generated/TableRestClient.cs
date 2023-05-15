@@ -637,7 +637,7 @@ namespace Azure.Data.Tables
                         {
                             if (property.Value.ValueKind == JsonValueKind.Null)
                             {
-                                dictionary.Add(property.Name, null);
+                                continue;
                             }
                             else
                             {
@@ -689,7 +689,7 @@ namespace Azure.Data.Tables
                         {
                             if (property.Value.ValueKind == JsonValueKind.Null)
                             {
-                                dictionary.Add(property.Name, null);
+                                continue;
                             }
                             else
                             {
@@ -1176,7 +1176,7 @@ namespace Azure.Data.Tables
                         {
                             if (property.Value.ValueKind == JsonValueKind.Null)
                             {
-                                dictionary.Add(property.Name, null);
+                                continue;
                             }
                             else
                             {
@@ -1222,7 +1222,7 @@ namespace Azure.Data.Tables
                         {
                             if (property.Value.ValueKind == JsonValueKind.Null)
                             {
-                                dictionary.Add(property.Name, null);
+                                continue;
                             }
                             else
                             {

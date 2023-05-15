@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array.Add(null);
+                            continue;
                         }
                         else
                         {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array.Add(null);
+                            continue;
                         }
                         else
                         {
