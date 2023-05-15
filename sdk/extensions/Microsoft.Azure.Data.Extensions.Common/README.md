@@ -436,21 +436,17 @@ There are more usage examples in project [Microsoft.Azure.Data.Extensions.MySqlC
 
 This repository contains the following Nuget packages:
 
-* [Microsoft.Azure.Data.Extensions.Npgsql](https://github.com/felipmiguel/AzureDb.Passwordless/pkgs/nuget/Microsoft.Azure.Data.Extensions.Npgsql)
-* [Microsoft.Azure.Data.Extensions.MySql](https://github.com/felipmiguel/AzureDb.Passwordless/pkgs/nuget/Microsoft.Azure.Data.Extensions.MySql). This package references [MySql.Data experimental implementation](https://github.com/felipmiguel?tab=packages&repo_name=mysql-connector-net). [!WARNING] This is an experimental and not recommended approach. It can break in future versions of the driver.
-* [Microsoft.Azure.Data.Extensions.MySqlConnector](https://github.com/felipmiguel/AzureDb.Passwordless/pkgs/nuget/Microsoft.Azure.Data.Extensions.MySqlConnector)
-* [Microsoft.Azure.Data.Extensions.Core](https://github.com/felipmiguel/AzureDb.Passwordless/pkgs/nuget/Microsoft.Azure.Data.Extensions.Core). This package is referenced by the other two packages.
+* Microsoft.Azure.Data.Extensions.Npgsql
+* Microsoft.Azure.Data.Extensions.MySqlConnector
+* Microsoft.Azure.Data.Extensions.Core. This package is referenced by the other two packages.
 
 And here the Entity Framework packages:
-* [Microsoft.Azure.Data.Extensions.Npgsql.EntityFrameworkCore](https://github.com/felipmiguel/AzureDb.Passwordless/pkgs/nuget/Microsoft.Azure.Data.Extensions.Npgsql.EntityFrameworkCore)
-* [Microsoft.Azure.Data.Extensions.Pomelo.EntityFrameworkCore](https://github.com/felipmiguel/AzureDb.Passwordless/pkgs/nuget/Microsoft.Azure.Data.Extensions.Pomelo.EntityFrameworkCore)
-* [Microsoft.Azure.Data.Extensions.MySql.EntityFrameworkCore](https://github.com/felipmiguel/AzureDb.Passwordless/pkgs/nuget/Microsoft.Azure.Data.Extensions.MySql.EntityFrameworkCore)
+
+* Microsoft.Azure.Data.Extensions.Npgsql.EntityFrameworkCore
+* Microsoft.Azure.Data.Extensions.Pomelo.EntityFrameworkCore
+* Microsoft.Azure.Data.Extensions.MySql.EntityFrameworkCore
 
 If you want to use above packages you should add the nuget feed to your project:
-
-```bash
-dotnet nuget add source --username [YOUR GITHUB USERID] --password [YOUR PAT] --store-password-in-clear-text --name github "https://nuget.pkg.github.com/felipmiguel/index.json"
-```
 
 You PAT should include the following scope `_read:packages_`.
 
@@ -462,8 +458,8 @@ You PAT should include the following scope `_read:packages_`.
 
 ### Entity Framework Core
 
-There is a sample Entity Framework Core project that can be used with all tests. It is located in [Sample.Repository](./Sample.Repository/). 
-To use it in your project:
+There is a sample Entity Framework Core project that can be used with all tests. It is located in [Sample.Repository](./Sample.Repository/). To use it in your project:
+
 * Reference the project
 * Add a class implementing `IDesignTimeDbContextFactory<ChecklistContext>`
 
