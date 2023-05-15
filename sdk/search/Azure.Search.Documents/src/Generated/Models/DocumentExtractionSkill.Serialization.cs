@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsCollectionDefined(Configuration))
             {
-                if (Configuration != null)
+                if (Configuration != null && Optional.IsCollectionDefined(Configuration))
                 {
                     writer.WritePropertyName("configuration"u8);
                     writer.WriteStartObject();
@@ -146,7 +146,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, null);
+                            continue;
                         }
                         else
                         {

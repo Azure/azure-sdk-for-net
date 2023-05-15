@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array.Add(null);
+                            continue;
                         }
                         else
                         {

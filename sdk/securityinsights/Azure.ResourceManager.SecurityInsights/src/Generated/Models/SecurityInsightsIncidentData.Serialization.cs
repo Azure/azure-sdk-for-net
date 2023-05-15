@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 if (item.ValueKind == JsonValueKind.Null)
                                 {
-                                    array.Add(null);
+                                    continue;
                                 }
                                 else
                                 {

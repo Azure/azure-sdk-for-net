@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsCollectionDefined(InlineEntitiesDefinition))
             {
-                if (InlineEntitiesDefinition != null)
+                if (InlineEntitiesDefinition != null && Optional.IsCollectionDefined(InlineEntitiesDefinition))
                 {
                     writer.WritePropertyName("inlineEntitiesDefinition"u8);
                     writer.WriteStartArray();

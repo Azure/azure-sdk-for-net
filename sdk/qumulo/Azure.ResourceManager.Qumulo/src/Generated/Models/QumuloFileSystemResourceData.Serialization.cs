@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Qumulo
                             {
                                 if (item.ValueKind == JsonValueKind.Null)
                                 {
-                                    array.Add(null);
+                                    continue;
                                 }
                                 else
                                 {

@@ -47,7 +47,7 @@ namespace Azure.Quantum.Jobs.Models
             writer.WriteStringValue(Target);
             if (Optional.IsCollectionDefined(Metadata))
             {
-                if (Metadata != null)
+                if (Metadata != null && Optional.IsCollectionDefined(Metadata))
                 {
                     writer.WritePropertyName("metadata"u8);
                     writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.Quantum.Jobs.Models
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                if (Tags != null)
+                if (Tags != null && Optional.IsCollectionDefined(Tags))
                 {
                     writer.WritePropertyName("tags"u8);
                     writer.WriteStartArray();

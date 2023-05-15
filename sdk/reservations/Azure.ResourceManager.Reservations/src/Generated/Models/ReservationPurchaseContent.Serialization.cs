@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
             if (Optional.IsCollectionDefined(AppliedScopes))
             {
-                if (AppliedScopes != null)
+                if (AppliedScopes != null && Optional.IsCollectionDefined(AppliedScopes))
                 {
                     writer.WritePropertyName("appliedScopes"u8);
                     writer.WriteStartArray();

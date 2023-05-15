@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             if (Optional.IsCollectionDefined(Parameters))
             {
-                if (Parameters != null)
+                if (Parameters != null && Optional.IsCollectionDefined(Parameters))
                 {
                     writer.WritePropertyName("parameters"u8);
                     writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, null);
+                            continue;
                         }
                         else
                         {

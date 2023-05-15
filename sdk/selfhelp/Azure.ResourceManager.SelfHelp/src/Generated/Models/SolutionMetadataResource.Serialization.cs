@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                             {
                                 if (item.ValueKind == JsonValueKind.Null)
                                 {
-                                    array.Add(null);
+                                    continue;
                                 }
                                 else
                                 {

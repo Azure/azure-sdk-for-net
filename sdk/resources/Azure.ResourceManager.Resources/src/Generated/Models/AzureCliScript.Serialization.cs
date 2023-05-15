@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 if (item.ValueKind == JsonValueKind.Null)
                                 {
-                                    array.Add(null);
+                                    continue;
                                 }
                                 else
                                 {

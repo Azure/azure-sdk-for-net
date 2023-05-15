@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                if (Tags != null)
+                if (Tags != null && Optional.IsCollectionDefined(Tags))
                 {
                     writer.WritePropertyName("tags"u8);
                     writer.WriteStartObject();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             if (Optional.IsCollectionDefined(AddressSpace))
             {
-                if (AddressSpace != null)
+                if (AddressSpace != null && Optional.IsCollectionDefined(AddressSpace))
                 {
                     writer.WritePropertyName("addressSpace"u8);
                     writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             if (Optional.IsCollectionDefined(DnsServers))
             {
-                if (DnsServers != null)
+                if (DnsServers != null && Optional.IsCollectionDefined(DnsServers))
                 {
                     writer.WritePropertyName("dnsServers"u8);
                     writer.WriteStartArray();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             if (Optional.IsCollectionDefined(Subnets))
             {
-                if (Subnets != null)
+                if (Subnets != null && Optional.IsCollectionDefined(Subnets))
                 {
                     writer.WritePropertyName("subnets"u8);
                     writer.WriteStartArray();

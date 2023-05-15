@@ -227,7 +227,7 @@ namespace Azure.Search.Documents
                         {
                             if (property.Value.ValueKind == JsonValueKind.Null)
                             {
-                                dictionary.Add(property.Name, null);
+                                continue;
                             }
                             else
                             {
@@ -267,7 +267,7 @@ namespace Azure.Search.Documents
                         {
                             if (property.Value.ValueKind == JsonValueKind.Null)
                             {
-                                dictionary.Add(property.Name, null);
+                                continue;
                             }
                             else
                             {

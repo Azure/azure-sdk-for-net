@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WriteNull("query");
             }
-            if (QuerySubscriptions != null)
+            if (QuerySubscriptions != null && Optional.IsCollectionDefined(QuerySubscriptions))
             {
                 writer.WritePropertyName("querySubscriptions"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new UserDefinedResourcesProperties(query, querySubscriptions);
+            return new UserDefinedResourcesProperties(query, querySubscriptions ?? new List<string>());
         }
     }
 }
