@@ -91,7 +91,9 @@ namespace Azure.Communication.JobRouter
         public int? Priority { get { throw null; } set { } }
         public string QueueId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Communication.JobRouter.WorkerSelector> RequestedWorkerSelectors { get { throw null; } set { } }
+        public System.DateTimeOffset? ScheduledTimeUtc { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.LabelValue> Tags { get { throw null; } set { } }
+        public bool? UnavailableForMatching { get { throw null; } set { } }
     }
     public partial class CreateJobWithClassificationPolicyOptions
     {
@@ -105,7 +107,9 @@ namespace Azure.Communication.JobRouter
         public int? Priority { get { throw null; } set { } }
         public string QueueId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Communication.JobRouter.WorkerSelector> RequestedWorkerSelectors { get { throw null; } set { } }
+        public System.DateTimeOffset? ScheduledTimeUtc { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.LabelValue> Tags { get { throw null; } set { } }
+        public bool? UnavailableForMatching { get { throw null; } set { } }
     }
     public partial class CreateQueueOptions
     {
@@ -174,7 +178,10 @@ namespace Azure.Communication.JobRouter
     {
         public GetJobsOptions() { }
         public string ChannelId { get { throw null; } set { } }
+        public string ClassificationPolicyId { get { throw null; } set { } }
         public string QueueId { get { throw null; } set { } }
+        public System.DateTimeOffset? ScheduledAfter { get { throw null; } set { } }
+        public System.DateTimeOffset? ScheduledBefore { get { throw null; } set { } }
         public Azure.Communication.JobRouter.JobStateSelector Status { get { throw null; } set { } }
     }
     public partial class GetWorkersOptions
@@ -200,7 +207,12 @@ namespace Azure.Communication.JobRouter
         Closed = 5,
         Cancelled = 6,
         ClassificationFailed = 7,
-        Active = 8,
+        Created = 8,
+        PendingSchedule = 9,
+        Scheduled = 10,
+        ScheduleFailed = 11,
+        WaitingForActivation = 12,
+        Active = 13,
     }
     public enum LabelOperator
     {
@@ -243,7 +255,7 @@ namespace Azure.Communication.JobRouter
     }
     public partial class ManualReclassifyExceptionAction : Azure.Communication.JobRouter.ExceptionAction
     {
-        public ManualReclassifyExceptionAction(string queueId, int priority, System.Collections.Generic.IEnumerable<Azure.Communication.JobRouter.WorkerSelector> workerSelectors = null) { }
+        public ManualReclassifyExceptionAction() { }
         public int? Priority { get { throw null; } set { } }
         public string QueueId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Communication.JobRouter.WorkerSelector> WorkerSelectors { get { throw null; } }
@@ -497,7 +509,9 @@ namespace Azure.Communication.JobRouter
         public int? Priority { get { throw null; } set { } }
         public string QueueId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Communication.JobRouter.WorkerSelector> RequestedWorkerSelectors { get { throw null; } set { } }
+        public System.DateTimeOffset? ScheduledTimeUtc { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.LabelValue> Tags { get { throw null; } set { } }
+        public bool? UnavailableForMatching { get { throw null; } set { } }
     }
     public partial class UpdateQueueOptions
     {
@@ -719,7 +733,9 @@ namespace Azure.Communication.JobRouter.Models
         public int? Priority { get { throw null; } set { } }
         public string QueueId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Communication.JobRouter.WorkerSelector> RequestedWorkerSelectors { get { throw null; } set { } }
+        public System.DateTimeOffset? ScheduledTimeUtc { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.LabelValue> Tags { get { throw null; } set { } }
+        public bool? UnavailableForMatching { get { throw null; } set { } }
     }
     public partial class RouterJobItem
     {
@@ -740,7 +756,11 @@ namespace Azure.Communication.JobRouter.Models
         public static Azure.Communication.JobRouter.Models.RouterJobStatus Completed { get { throw null; } }
         public static Azure.Communication.JobRouter.Models.RouterJobStatus Created { get { throw null; } }
         public static Azure.Communication.JobRouter.Models.RouterJobStatus PendingClassification { get { throw null; } }
+        public static Azure.Communication.JobRouter.Models.RouterJobStatus PendingSchedule { get { throw null; } }
         public static Azure.Communication.JobRouter.Models.RouterJobStatus Queued { get { throw null; } }
+        public static Azure.Communication.JobRouter.Models.RouterJobStatus Scheduled { get { throw null; } }
+        public static Azure.Communication.JobRouter.Models.RouterJobStatus ScheduleFailed { get { throw null; } }
+        public static Azure.Communication.JobRouter.Models.RouterJobStatus WaitingForActivation { get { throw null; } }
         public bool Equals(Azure.Communication.JobRouter.Models.RouterJobStatus other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

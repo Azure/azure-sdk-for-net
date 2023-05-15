@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,9 +14,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.DataMovement.Models;
 using Microsoft.CodeAnalysis;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -47,7 +46,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Set transfer options
             options ??= new TransferOptions();
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
@@ -71,7 +70,7 @@ namespace Azure.Storage.DataMovement.Tests
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
             await transfer.AwaitCompletion(tokenSource.Token);
 
-            failureTransferHolder.AssertFailureCheck();
+            testEventsRaised.AssertContainerCompletedCheck(files.Count);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
 
@@ -212,9 +211,11 @@ namespace Azure.Storage.DataMovement.Tests
                 MaximumConcurrency = 1,
             };
             TransferManager transferManager = new TransferManager(managerOptions);
+            TransferOptions options = new TransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
             // Act
-            DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource);
+            DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
 
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             await transfer.AwaitCompletion(tokenSource.Token);
@@ -223,6 +224,7 @@ namespace Azure.Storage.DataMovement.Tests
                 .Select((BlobItem blob) => blob.Name).ToList();
             // Assert
             Assert.IsEmpty(blobs);
+            testEventsRaised.AssertUnexpectedFailureCheck();
         }
 
         [Test]
@@ -478,7 +480,7 @@ namespace Azure.Storage.DataMovement.Tests
                 options);
 
             TransferOptions containerOptions = new TransferOptions();
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(containerOptions);
+            TestEventsRaised testEventsRaised = new TestEventsRaised(containerOptions);
 
             // Act
             DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, containerOptions);
@@ -490,8 +492,110 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 Assert.AreEqual(blob.Properties.BlobType, blobType);
             }
+            testEventsRaised.AssertContainerCompletedCheck(2);
         }
         #endregion DirectoryUploadTests
+
+        #region DirectoryUploadTests_Root
+
+        private async Task<string[]> PopulateLocalTestDirectory(string path)
+        {
+            string file1 = await CreateRandomFileAsync(path, size: 10);
+
+            string dir1 = CreateRandomDirectory(path);
+            string file2 = await CreateRandomFileAsync(dir1, size: 10);
+            string file3 = await CreateRandomFileAsync(dir1, size: 10);
+            string file4 = await CreateRandomFileAsync(dir1, size: 10);
+
+            string dir2 = CreateRandomDirectory(path);
+            string file5 = await CreateRandomFileAsync(dir2, size: 10);
+
+            string[] files = { file1, file2, file3, file4, file5 };
+            return files;
+        }
+
+        [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        public async Task DirectoryUpload_Root()
+        {
+            // Arrange
+            using DisposingLocalDirectory source = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingBlobContainer destination = await GetTestContainerAsync();
+
+            string[] files = await PopulateLocalTestDirectory(source.DirectoryPath);
+
+            TransferManager transferManager = new TransferManager();
+
+            StorageResourceContainer sourceResource =
+                new LocalDirectoryStorageResourceContainer(source.DirectoryPath);
+            StorageResourceContainer destinationResource =
+                new BlobStorageResourceContainer(destination.Container);
+
+            DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource);
+
+            CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            await transfer.AwaitCompletion(tokenSource.Token);
+
+            IEnumerable<string> destinationFiles =
+                (await destination.Container.GetBlobsAsync().ToEnumerableAsync()).Select(b => b.Name);
+
+            Assert.IsTrue(files
+                .Select(f => f.Substring(source.DirectoryPath.Length + 1).Replace("\\", "/"))
+                .OrderBy(f => f)
+                .SequenceEqual(destinationFiles.OrderBy(f => f)));
+        }
+
+        [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        public async Task DirectoryUpload_ContinueOnFailure()
+        {
+            // Arrange
+            using DisposingLocalDirectory source = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingBlobContainer destination = await GetTestContainerAsync();
+
+            string[] files = await PopulateLocalTestDirectory(source.DirectoryPath);
+
+            // Create conflict
+            await destination.Container.UploadBlobAsync(
+                files[0].Substring(source.DirectoryPath.Length + 1), BinaryData.FromString("Hello world"));
+
+            TransferManager transferManager = new TransferManager(new TransferManagerOptions()
+            {
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
+            });
+
+            StorageResourceContainer sourceResource =
+                new LocalDirectoryStorageResourceContainer(source.DirectoryPath);
+            StorageResourceContainer destinationResource =
+                new BlobStorageResourceContainer(destination.Container);
+
+            // Conflict should cause failure
+            TransferOptions options = new TransferOptions()
+            {
+                CreateMode = StorageResourceCreateMode.Fail
+            };
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+
+            // Act
+            DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
+
+            CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            await transfer.AwaitCompletion(tokenSource.Token);
+
+            // Assert
+            IEnumerable<string> destinationFiles =
+                (await destination.Container.GetBlobsAsync().ToEnumerableAsync()).Select(b => b.Name);
+
+            Assert.AreEqual(1, testEventsRaised.FailedEvents.Count);
+
+            // Verify all files exist, meaning files without conflict were transferred
+            Assert.IsTrue(files
+                .Select(f => f.Substring(source.DirectoryPath.Length + 1).Replace("\\", "/"))
+                .OrderBy(f => f)
+                .SequenceEqual(destinationFiles.OrderBy(f => f)));
+        }
+
+        #endregion
 
         #region Single Concurrency
         private async Task CreateTempDirectoryStructure(
@@ -508,6 +612,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         private async Task<DataTransfer> CreateStartTransfer(
+            string sourceDirectoryPath,
             BlobContainerClient containerClient,
             int concurrency,
             bool createFailedCondition = false,
@@ -515,10 +620,8 @@ namespace Azure.Storage.DataMovement.Tests
             int size = Constants.KB)
         {
             // Arrange
-            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
-            string sourceDirectoryPath = CreateRandomDirectory(testDirectory.DirectoryPath);
             string destinationFolderName = GetNewBlobDirectoryName();
-            await CreateTempDirectoryStructure(testDirectory.DirectoryPath, size);
+            await CreateTempDirectoryStructure(sourceDirectoryPath, size);
 
             // Create storage resources
             StorageResourceContainer sourceResource = new LocalDirectoryStorageResourceContainer(sourceDirectoryPath);
@@ -538,7 +641,7 @@ namespace Azure.Storage.DataMovement.Tests
                 string destinationBlobName = $"{destinationFolderName}/blob1";
                 await CreateBlockBlob(
                     containerClient: containerClient,
-                    localSourceFile: Path.Combine(testDirectory.DirectoryPath, destinationBlobName),
+                    localSourceFile: Path.Combine(sourceDirectoryPath, GetNewBlobName()),
                     blobName: destinationBlobName,
                     size: size);
             }
@@ -556,12 +659,13 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
-
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             TransferOptions options = new TransferOptions();
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
             // Create transfer to do a AwaitCompletion
             DataTransfer transfer = await CreateStartTransfer(
+                testDirectory.DirectoryPath,
                 test.Container,
                 1,
                 options: options);
@@ -574,6 +678,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
+            testEventsRaised.AssertContainerCompletedCheck(4);
         }
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
@@ -583,15 +688,17 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             TransferOptions options = new TransferOptions()
             {
                 CreateMode = StorageResourceCreateMode.Fail
             };
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
             // Create transfer to do a AwaitCompletion
             DataTransfer transfer = await CreateStartTransfer(
+                testDirectory.DirectoryPath,
                 test.Container,
                 1,
                 true,
@@ -602,11 +709,11 @@ namespace Azure.Storage.DataMovement.Tests
             await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
+            testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
-            Assert.AreEqual(1, failureTransferHolder.FailedEvents.Count);
-            Assert.IsTrue(failureTransferHolder.FailedEvents.First().Exception.Message.Contains("BlobAlreadyExists"));
+            Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains("BlobAlreadyExists"));
         }
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
@@ -616,16 +723,18 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             // Create transfer options with Skipping available
             TransferOptions options = new TransferOptions()
             {
                 CreateMode = StorageResourceCreateMode.Skip
             };
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
             // Create transfer to do a AwaitCompletion
             DataTransfer transfer = await CreateStartTransfer(
+                testDirectory.DirectoryPath,
                 test.Container,
                 1,
                 true,
@@ -636,7 +745,7 @@ namespace Azure.Storage.DataMovement.Tests
             await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
-            failureTransferHolder.AssertFailureCheck();
+            testEventsRaised.AssertContainerCompletedWithSkippedCheck(1);
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.CompletedWithSkippedTransfers, transfer.TransferStatus);
@@ -648,22 +757,24 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             TransferOptions options = new TransferOptions();
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
             // Create transfer to do a EnsureCompleted
             DataTransfer transfer = await CreateStartTransfer(
-                    test.Container,
-                    1,
-                    options: options);
+                testDirectory.DirectoryPath,
+                test.Container,
+                1,
+                options: options);
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
             transfer.EnsureCompleted(cancellationTokenSource.Token);
 
             // Assert
-            failureTransferHolder.AssertFailureCheck();
+            testEventsRaised.AssertContainerCompletedCheck(4);
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
@@ -676,15 +787,17 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             TransferOptions options = new TransferOptions()
             {
                 CreateMode = StorageResourceCreateMode.Fail
             };
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
             // Create transfer to do a AwaitCompletion
             DataTransfer transfer = await CreateStartTransfer(
+                testDirectory.DirectoryPath,
                 test.Container,
                 1,
                 true,
@@ -695,11 +808,11 @@ namespace Azure.Storage.DataMovement.Tests
             transfer.EnsureCompleted(cancellationTokenSource.Token);
 
             // Assert
+            testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
-            Assert.AreEqual(1, failureTransferHolder.FailedEvents.Count);
-            Assert.IsTrue(failureTransferHolder.FailedEvents.First().Exception.Message.Contains("BlobAlreadyExists"));
+            Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains("BlobAlreadyExists"));
         }
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
@@ -709,16 +822,18 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             // Create transfer options with Skipping available
             TransferOptions options = new TransferOptions()
             {
                 CreateMode = StorageResourceCreateMode.Skip
             };
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
             // Create transfer to do a EnsureCompleted
             DataTransfer transfer = await CreateStartTransfer(
+                testDirectory.DirectoryPath,
                 test.Container,
                 1,
                 true,
@@ -729,7 +844,7 @@ namespace Azure.Storage.DataMovement.Tests
             transfer.EnsureCompleted(cancellationTokenSource.Token);
 
             // Assert
-            failureTransferHolder.AssertFailureCheck();
+            testEventsRaised.AssertContainerCompletedWithSkippedCheck(1);
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.CompletedWithSkippedTransfers, transfer.TransferStatus);

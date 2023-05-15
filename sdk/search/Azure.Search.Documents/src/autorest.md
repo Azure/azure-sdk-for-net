@@ -11,8 +11,8 @@ See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blo
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/932e261a870475e1a29115f62def7bb84e4d7b38/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/904899a23a417768ce1ec1d5f89f33817f8ef8ad/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/e7e775e2f3fe00f25fbd0e7ca0d953e22eef93ff/specification/search/data-plane/Azure.Search/preview/2023-07-01-Preview/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/e7e775e2f3fe00f25fbd0e7ca0d953e22eef93ff/specification/search/data-plane/Azure.Search/preview/2023-07-01-Preview/searchservice.json
 generation1-convenience-client: true
 ```
 
@@ -89,6 +89,17 @@ directive:
 - from: searchservice.json
   where: $.definitions.SearchError
   transform: $["x-ms-client-name"] = "SearchServiceError"
+```
+
+### Rename Vector definition
+
+ It conflicts with https://learn.microsoft.com/dotnet/api/system.numerics.vector?view=net-7.0 which is likely to be used by customers integrating with other .NET AI libraries.
+
+``` yaml
+directive:
+- from: searchindex.json
+  where: $.definitions.Vector
+  transform: $["x-ms-client-name"] = "SearchQueryVector"
 ```
 
 ### Rename one of SearchMode definitions

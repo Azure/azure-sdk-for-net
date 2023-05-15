@@ -5,7 +5,7 @@ using System;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal class EventAwaiterOngoing<TEvent> where TEvent : CallAutomationEventData
+    internal class EventAwaiterOngoing<TEvent> where TEvent : CallAutomationEventBase
     {
         private string _callConnectionId;
         private Action<TEvent> _eventProcessor;

@@ -13,7 +13,7 @@ using Azure.ResourceManager.ServiceNetworking;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
-    /// <summary> The response of a Traffic Controller Frontend list operation. </summary>
+    /// <summary> The response of a Frontend list operation. </summary>
     internal partial class FrontendListResult
     {
         /// <summary> Initializes a new instance of FrontendListResult. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <summary> Initializes a new instance of FrontendListResult. </summary>
         /// <param name="value"> The Frontend items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal FrontendListResult(IReadOnlyList<FrontendData> value, string nextLink)
+        internal FrontendListResult(IReadOnlyList<FrontendData> value, Uri nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <summary> The Frontend items on this page. </summary>
         public IReadOnlyList<FrontendData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

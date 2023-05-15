@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -99,31 +100,38 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void DynamicDataContent()
+        public void IntArrayContent()
         {
-            ReadOnlySpan<byte> utf8Json = """
-                {
-                    "foo" : {
-                       "bar" : 1
-                    }
-                }
-                """u8;
-            ReadOnlyMemory<byte> json = new ReadOnlyMemory<byte>(utf8Json.ToArray());
-
-            using JsonDocument doc = JsonDocument.Parse(json);
-            using MemoryStream expected = new();
-            using Utf8JsonWriter writer = new(expected);
-            doc.WriteTo(writer);
-            writer.Flush();
-            expected.Position = 0;
-
-            using dynamic source = new BinaryData(json).ToDynamicFromJson();
-            using RequestContent content = RequestContent.Create(source);
-            using MemoryStream destination = new();
+            var intArray = new int[] { 1, 2, 3 };
+            var expected = "[1,2,3]";
+            var destination = new MemoryStream();
+            var content = RequestContent.Create(intArray);
 
             content.WriteTo(destination, default);
+            destination.Position = 0;
+            using var reader = new StreamReader(destination);
 
-            CollectionAssert.AreEqual(expected.ToArray(), destination.ToArray());
+            Assert.AreEqual(expected, reader.ReadToEnd());
+        }
+
+        [Test]
+        public void DictionaryContent()
+        {
+            var dictionary = new Dictionary<string, object> { { "keyInt", 1 }, { "keyString", "2" }, { "keyFloat", 3.1f } };
+
+#if NETCOREAPP
+            var expected = "{\"keyInt\":1,\"keyString\":\"2\",\"keyFloat\":3.1}";
+#else
+            var expected = "{\"keyInt\":1,\"keyString\":\"2\",\"keyFloat\":3.0999999}";
+#endif
+            var destination = new MemoryStream();
+            var content = RequestContent.Create(dictionary);
+
+            content.WriteTo(destination, default);
+            destination.Position = 0;
+            using var reader = new StreamReader(destination);
+
+            Assert.AreEqual(expected, reader.ReadToEnd());
         }
     }
 }

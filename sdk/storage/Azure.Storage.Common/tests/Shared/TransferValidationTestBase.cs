@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using FastSerialization;
 using NUnit.Framework;
 
 namespace Azure.Storage.Test.Shared
@@ -582,14 +583,15 @@ namespace Azure.Storage.Test.Shared
         #endregion
 
         #region OpenWrite Tests
-        [TestCaseSource(nameof(GetValidationAlgorithms))]
-        public virtual async Task OpenWriteSuccessfulHashComputation(StorageChecksumAlgorithm algorithm)
+        [Test]
+        public virtual async Task OpenWriteSuccessfulHashComputation(
+            [ValueSource(nameof(GetValidationAlgorithms))] StorageChecksumAlgorithm algorithm,
+            [Values(Constants.KB)] int streamBufferSize,
+            [Values(Constants.KB - 11)] int dataSize)
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
-            const int streamBufferSize = Constants.KB; // this one needs to be 512 multiple for page blobs
-            const int dataSize = Constants.KB - 11; // odd number to get some variance
             const int streamWrites = 10;
 
             var data = GetRandomBuffer(dataSize);
@@ -611,7 +613,7 @@ namespace Azure.Storage.Test.Shared
                 options: clientOptions);
 
             // Act
-            var writeStream = await OpenWriteAsync(client, validationOptions, streamBufferSize);
+            using var writeStream = await OpenWriteAsync(client, validationOptions, streamBufferSize);
 
             // Assert
             checksumPipelineAssertion.CheckRequest = true;
@@ -620,6 +622,7 @@ namespace Azure.Storage.Test.Shared
                 // triggers pipeline assertion
                 await writeStream.WriteAsync(data, 0, data.Length);
             }
+            checksumPipelineAssertion.CheckRequest = false;
         }
 
         [TestCaseSource(nameof(GetValidationAlgorithms))]
@@ -651,17 +654,18 @@ namespace Azure.Storage.Test.Shared
                 options: clientOptions);
 
             // Act
-            var writeStream = await OpenWriteAsync(client, validationOptions, streamBufferSize);
+            using var writeStream = await OpenWriteAsync(client, validationOptions, streamBufferSize);
 
             // Assert
+            tamperPolicy.TransformRequestBody = true;
             AssertWriteChecksumMismatch(async () =>
             {
-                tamperPolicy.TransformRequestBody = true;
                 foreach (var _ in Enumerable.Range(0, streamWrites))
                 {
                     await writeStream.WriteAsync(data, 0, data.Length);
                 }
             }, algorithm);
+            tamperPolicy.TransformRequestBody = false;
         }
 
         [Test]
@@ -689,7 +693,7 @@ namespace Azure.Storage.Test.Shared
                 options: clientOptions);
 
             // Act
-            var writeStream = await OpenWriteAsync(client, default, streamBufferSize);
+            using var writeStream = await OpenWriteAsync(client, default, streamBufferSize);
 
             // Assert
             checksumPipelineAssertion.CheckRequest = true;
@@ -698,6 +702,7 @@ namespace Azure.Storage.Test.Shared
                 // triggers pipeline assertion
                 await writeStream.WriteAsync(data, 0, data.Length);
             }
+            checksumPipelineAssertion.CheckRequest = false;
         }
 
         [Test]
@@ -731,7 +736,7 @@ namespace Azure.Storage.Test.Shared
                 options: clientOptions);
 
             // Act
-            var writeStream = await OpenWriteAsync(client, overrideValidationOptions, streamBufferSize);
+            using var writeStream = await OpenWriteAsync(client, overrideValidationOptions, streamBufferSize);
 
             // Assert
             checksumPipelineAssertion.CheckRequest = true;
@@ -740,6 +745,7 @@ namespace Azure.Storage.Test.Shared
                 // triggers pipeline assertion
                 await writeStream.WriteAsync(data, 0, data.Length);
             }
+            checksumPipelineAssertion.CheckRequest = false;
         }
 
         [Test]
@@ -781,7 +787,7 @@ namespace Azure.Storage.Test.Shared
                 options: clientOptions);
 
             // Act
-            var writeStream = await OpenWriteAsync(client, overrideValidationOptions, streamBufferSize);
+            using var writeStream = await OpenWriteAsync(client, overrideValidationOptions, streamBufferSize);
 
             // Assert
             checksumPipelineAssertion.CheckRequest = true;
@@ -790,6 +796,67 @@ namespace Azure.Storage.Test.Shared
                 // triggers pipeline assertion
                 await writeStream.WriteAsync(data, 0, data.Length);
             }
+            checksumPipelineAssertion.CheckRequest = false;
+        }
+
+        [Test]
+        public virtual async Task OpenWriteSucceedsWithCallerProvidedCrc(
+            [Values(Constants.KB)] int dataSize,
+            [Values(Constants.KB, 200)] int bufferSize)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            byte[] data = GetRandomBuffer(dataSize);
+            Memory<byte> dataCrc = Checksum(data, StorageChecksumAlgorithm.StorageCrc64);
+            UploadTransferValidationOptions validationOptions = new()
+            {
+                ChecksumAlgorithm = StorageChecksumAlgorithm.StorageCrc64,
+                PrecalculatedChecksum = dataCrc
+            };
+
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataSize,
+                createResource: true);
+            Stream writeStream = await OpenWriteAsync(client, validationOptions, bufferSize);
+
+            for (int i = 0; i < dataSize; i += bufferSize)
+            {
+                await writeStream.WriteAsync(data, i, Math.Min(bufferSize, data.Length - i));
+            }
+
+            Assert.DoesNotThrow(writeStream.Dispose);
+        }
+
+        [Test]
+        public virtual async Task OpenWriteFailsOnCallerProvidedCrcMismatch(
+            [Values(Constants.KB)] int dataSize,
+            [Values(Constants.KB, 200)] int bufferSize)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            byte[] data = GetRandomBuffer(dataSize);
+            Memory<byte> garbageDataCrc = new Memory<byte>(GetRandomBuffer(Constants.StorageCrc64SizeInBytes));
+            UploadTransferValidationOptions validationOptions = new()
+            {
+                ChecksumAlgorithm = StorageChecksumAlgorithm.StorageCrc64,
+                PrecalculatedChecksum = garbageDataCrc
+            };
+
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataSize,
+                createResource: true);
+            Stream writeStream = await OpenWriteAsync(client, validationOptions, bufferSize);
+
+            for (int i = 0; i < dataSize; i += bufferSize)
+            {
+                await writeStream.WriteAsync(data, i, Math.Min(bufferSize, data.Length - i));
+            }
+
+            Assert.Throws<InvalidDataException>(writeStream.Dispose);
         }
         #endregion
 
@@ -1862,6 +1929,15 @@ namespace Azure.Storage.Test.Shared
             {
                 Assert.Fail($"Expected: No Exception to be thrown\nBut was: {e}");
             }
+        }
+        #endregion
+
+        #region Inlines
+        private Memory<byte> Checksum(ReadOnlySpan<byte> data, StorageChecksumAlgorithm algorithm)
+        {
+            IHasher hasher = ContentHasher.GetHasherFromAlgorithmId(algorithm);
+            hasher?.AppendHash(data);
+            return hasher?.GetFinalHash() ?? Memory<byte>.Empty;
         }
         #endregion
     }

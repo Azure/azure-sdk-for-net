@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Text analytics positive-negative sentiment analysis, scored as a floating point value in a range of zero to 1. </summary>
+    /// <summary> This skill is deprecated. Use the V3.SentimentSkill instead. </summary>
     public partial class SentimentSkill : SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of SentimentSkill. </summary>
