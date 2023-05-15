@@ -6,6 +6,10 @@
 
 - Add more model factory entries in class `Azure.ResourceManager.Models.ResourceManagerModelFactory` to support more generated models.
 
+### Bugs Fixed
+
+- Fixed [the issue](https://github.com/Azure/azure-sdk-for-net/issues/34796) that tag operations are not properly working.
+
 ## 1.5.0 (2023-04-27)
 
 ### Bugs Fixed
