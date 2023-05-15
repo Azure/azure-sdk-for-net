@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Data.Extensions.MySqlConnector.Tests
     {
         private string FQDN => GetVariable("MYSQL_FQDN");
         private string Database => GetVariable("MYSQL_DATABASE");
-        private string User => GetVariable("MYSQL_SERVER_ADMIN").Substring(0, 32);
+        private string User => GetVariable("MYSQL_SERVER_ADMIN");
 
         public string ConnectionString
         {
