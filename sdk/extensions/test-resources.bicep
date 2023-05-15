@@ -20,6 +20,8 @@ param clientIpAddress string
 @description('MySQL password')
 param mysqlPassword string
 
+var databaseName = 'passwordless'
+
 resource keyVault 'Microsoft.KeyVault/vaults@2019-09-01' = {
   name: baseName
   location: location
@@ -137,7 +139,7 @@ resource postgresServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' =
   }
 
   resource database 'databases' = {
-    name: 'passwordless'
+    name: databaseName
   }
 }
 
@@ -198,7 +200,7 @@ resource mysqlServer 'Microsoft.DBforMySQL/flexibleServers@2021-12-01-preview' =
     }
   }
   resource database 'databases' = {
-    name: 'passwordless'
+    name: databaseName
   }
 }
 
@@ -238,8 +240,8 @@ resource mysqlFirewall 'Microsoft.DBforMySQL/flexibleServers/firewallRules@2022-
 output AZURE_KEYVAULT_URL string = keyVault.properties.vaultUri
 output BLOB_STORAGE_ENDPOINT string = blobAcount.properties.primaryEndpoints.blob
 output POSTGRES_FQDN string = postgresServer.properties.fullyQualifiedDomainName
-output POSTGRES_NAME string = postgresServer.name
+output POSTGRES_DATABASE string = databaseName
 output POSTGRES_SERVER_ADMIN string = postgresAdmin.properties.principalName
 output MYSQL_FQDN string = mysqlServer.properties.fullyQualifiedDomainName
-output MYSQL_NAME string = mysqlServer.name
+output MYSQL_DATABASE string = databaseName
 output MYSQL_SERVER_ADMIN string = mysqladmin.properties.login
