@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query.Models;
 using NUnit.Framework;
@@ -18,7 +19,7 @@ namespace Azure.Monitor.Query.Tests
     {
         private LogsTestData _logsTestData;
 
-        public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync)
+        public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
         }
 
@@ -676,7 +677,6 @@ namespace Azure.Monitor.Query.Tests
             Assert.True(response.Value.Single());
         }
 
-        [LiveOnly]
         [Test]
         public async Task CanQueryResource()
         {
@@ -718,7 +718,6 @@ namespace Azure.Monitor.Query.Tests
             Assert.IsTrue(verifyColumn1 && verifyColumn2);
         }
 
-        [LiveOnly]
         [Test]
         public void VerifyInvalidQueryResourceCheckNoBackslash()
         {
@@ -731,7 +730,6 @@ namespace Azure.Monitor.Query.Tests
             StringAssert.StartsWith("The ResourceIdentifier must start with /subscriptions/ or /providers/.", exception.Message);
         }
 
-        [LiveOnly]
         [Test]
         public async Task CanQueryResourceValidId()
         {
@@ -773,7 +771,6 @@ namespace Azure.Monitor.Query.Tests
             Assert.IsTrue(verifyColumn1 && verifyColumn2);
         }
 
-        [LiveOnly]
         [Test]
         public void VerifyInvalidQueryResourceCheckMultipleBackslash()
         {
@@ -790,7 +787,6 @@ namespace Azure.Monitor.Query.Tests
             StringAssert.StartsWith("The ResourceIdentifier must start with /subscriptions/ or /providers/.", exception.Message);
         }
 
-        [LiveOnly]
         [Test]
         public void VerifyQueryResourceInvalidId()
         {

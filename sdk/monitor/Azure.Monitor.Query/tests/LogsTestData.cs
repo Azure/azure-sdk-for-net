@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query;
+using NUnit.Framework;
 
 namespace Azure.Monitor.Query.Tests
 {
@@ -103,8 +104,9 @@ namespace Azure.Monitor.Query.Tests
 
         private async Task InitializeData(string workspaceId, string workspaceKey)
         {
+            TestContext.Progress.WriteLine("InitializeData");
             var count = await QueryCount(workspaceId);
-
+            TestContext.Progress.WriteLine(count);
             if (count == 0)
             {
                 var senderClient = new LogSenderClient(workspaceId, _testEnvironment.MonitorIngestionEndpoint, workspaceKey);
@@ -119,6 +121,7 @@ namespace Azure.Monitor.Query.Tests
             {
                 await Task.Delay(TimeSpan.FromSeconds(30));
                 count = await QueryCount(workspaceId);
+                TestContext.Progress.WriteLine(count);
             }
         }
 
@@ -140,19 +143,31 @@ namespace Azure.Monitor.Query.Tests
         private async Task InitializeStorageAccount()
         {
             var client = new LogsQueryClient(_testEnvironment.Credential);
-
+            TestContext.Progress.WriteLine("InitializeStorageAccount");
             while (true)
             {
-                var result = await client.QueryResourceAsync(new ResourceIdentifier(_testEnvironment.StorageAccountId), "search *", DataTimeRange).ConfigureAwait(false);
-                if (result.Value.Table.Rows.Count > 0 && result.Value.Table.Columns.Count > 0)
+                try
                 {
-                    // Make sure StorageAccount set-up is complete and data is there before beginning testing
-                    break;
+                    var result = await client
+                        .QueryResourceAsync(new ResourceIdentifier(_testEnvironment.StorageAccountId), "search *", DataTimeRange)
+                        .ConfigureAwait(false);
+                    if (result.Value.Table.Rows.Count > 0 && result.Value.Table.Columns.Count > 0)
+                    {
+                        TestContext.Progress.WriteLine($"Storage account initialized. Rows: {result.Value.Table.Rows.Count}, Columns: {result.Value.Table.Columns.Count}");
+                        // Make sure StorageAccount set-up is complete and data is there before beginning testing
+                        break;
+                    }
+                    else
+                    {
+                        TestContext.Progress.WriteLine(
+                            $"Rows: {result.Value.Table.Rows.Count}, Columns: {result.Value.Table.Columns.Count}");
+                        // Delay for 30 seconds to give time for StorageAccount to initialize
+                        await Task.Delay(TimeSpan.FromSeconds(30));
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    // Delay for 30 seconds to give time for StorageAccount to initialize
-                    await Task.Delay(TimeSpan.FromSeconds(30));
+                    TestContext.Progress.WriteLine(e);
                 }
             }
         }
