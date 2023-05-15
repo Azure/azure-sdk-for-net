@@ -6,7 +6,7 @@ namespace Azure.Core.Dynamic
     /// <summary>
     /// Options for getting and setting DynamicData properties.
     /// </summary>
-    public enum DynamicDataNameMapping
+    public enum DynamicPropertyNameHandling
     {
         /// <summary>
         /// Properties are read from and written to the data buffer with the same casing as the DynamicData property.

@@ -31,10 +31,10 @@ namespace Azure.Core.Dynamic
         private static readonly MethodInfo SetViaIndexerMethod = typeof(DynamicData).GetMethod(nameof(SetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
         private MutableJsonElement _element;
-        private readonly DynamicDataNameMapping _nameMapping;
+        private readonly DynamicPropertyNameHandling _nameMapping;
         private readonly JsonSerializerOptions _serializerOptions;
 
-        internal DynamicData(MutableJsonElement element, DynamicDataNameMapping nameMapping)
+        internal DynamicData(MutableJsonElement element, DynamicPropertyNameHandling nameMapping)
         {
             _element = element;
             _nameMapping = nameMapping;
@@ -317,7 +317,7 @@ namespace Azure.Core.Dynamic
             public override DynamicData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return new DynamicData(new MutableJsonDocument(document, options).RootElement, DynamicDataNameMapping.None);
+                return new DynamicData(new MutableJsonDocument(document, options).RootElement, DynamicPropertyNameHandling.None);
             }
 
             public override void Write(Utf8JsonWriter writer, DynamicData value, JsonSerializerOptions options)
