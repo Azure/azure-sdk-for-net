@@ -173,12 +173,12 @@ namespace Azure.Storage.DataMovement
             }
         }
 
+        internal bool CanPause()
+            => _status == StorageTransferStatus.InProgress;
+
         public async Task PauseIfRunningAsync(CancellationToken cancellationToken)
         {
-            if (StorageTransferStatus.Paused == _status ||
-                StorageTransferStatus.Completed == _status ||
-                StorageTransferStatus.CompletedWithSkippedTransfers == _status ||
-                StorageTransferStatus.CompletedWithFailedTransfers == _status)
+            if (!CanPause())
             {
                 return;
             }

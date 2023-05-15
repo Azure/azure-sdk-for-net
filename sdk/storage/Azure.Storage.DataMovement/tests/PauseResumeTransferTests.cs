@@ -15,11 +15,15 @@ using Azure.Storage.DataMovement.Models.JobPlan;
 using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using System.Collections.Generic;
+using Moq;
+using System.Linq;
 
 namespace Azure.Storage.DataMovement.Tests
 {
     public class PauseResumeTransferTests : DataMovementBlobTestBase
     {
+        private readonly CancellationToken _mockingToken = new();
+
         public PauseResumeTransferTests(
             bool async,
             BlobClientOptions.ServiceVersion serviceVersion)
@@ -819,6 +823,45 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationResource: destinationResource,
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container);
+        }
+
+        [Test]
+        public async Task PauseAllTriggersCorrectPauses()
+        {
+            List<Mock<DataTransfer>> pausable = new();
+            List<Mock<DataTransfer>> unpausable = new();
+            TransferManager manager = new();
+            foreach (StorageTransferStatus state in Enum.GetValues(typeof(StorageTransferStatus)).Cast<StorageTransferStatus>())
+            {
+                bool canPause = state == StorageTransferStatus.InProgress;
+                Mock<DataTransfer> transfer = new(MockBehavior.Loose)
+                {
+                    CallBase = true,
+                };
+                transfer.Setup(t => t.CanPause()).Returns(canPause);
+                transfer.Setup(t => t.PauseIfRunningAsync(_mockingToken)).Returns(Task.CompletedTask);
+                if (canPause)
+                {
+                    pausable.Add(transfer);
+                }
+                else
+                {
+                    unpausable.Add(transfer);
+                }
+                manager._dataTransfers.Add(Guid.NewGuid().ToString(), transfer.Object);
+            }
+
+            await manager.PauseAllRunningTransfersAsync(_mockingToken);
+
+            foreach (Mock<DataTransfer> transfer in pausable)
+            {
+                transfer.Verify(t => t.PauseIfRunningAsync(_mockingToken), Times.Once());
+            }
+            foreach (Mock<DataTransfer> transfer in pausable.Concat(unpausable))
+            {
+                transfer.Verify(t => t.CanPause(), Times.Once());
+                transfer.VerifyNoOtherCalls();
+            }
         }
     }
 }
