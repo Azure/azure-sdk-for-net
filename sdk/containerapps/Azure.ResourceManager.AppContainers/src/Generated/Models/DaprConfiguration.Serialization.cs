@@ -10,32 +10,30 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    internal partial class EnvironmentSkuProperties : IUtf8JsonSerializable
+    internal partial class DaprConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name.ToString());
             writer.WriteEndObject();
         }
 
-        internal static EnvironmentSkuProperties DeserializeEnvironmentSkuProperties(JsonElement element)
+        internal static DaprConfiguration DeserializeDaprConfiguration(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            AppContainersSkuName name = default;
+            Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (property.NameEquals("version"u8))
                 {
-                    name = new AppContainersSkuName(property.Value.GetString());
+                    version = property.Value.GetString();
                     continue;
                 }
             }
-            return new EnvironmentSkuProperties(name);
+            return new DaprConfiguration(version.Value);
         }
     }
 }

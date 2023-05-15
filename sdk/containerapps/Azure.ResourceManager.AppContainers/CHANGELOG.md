@@ -3,10 +3,18 @@
 ## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
-
-### Breaking Changes
+- Upgrade to 2022-11-01-preview api version
+- Add API to start, stop and executions for ContainerAppJobs
+- Support keyvault for container app secret
+- Add managedBy for ContainerApps
+- Add keda/dapr version support
+- Add API to support ManagedCertificate
+- Add AppState and LatestReadyRevisionName
+- Add Client certificate mode for mTLS authentication and corsPolicy for Container App
+- Add Friendly workload profile name support
 
 ### Bugs Fixed
+- Fix certifaicte password format for environment custom domain
 
 ### Other Changes
 

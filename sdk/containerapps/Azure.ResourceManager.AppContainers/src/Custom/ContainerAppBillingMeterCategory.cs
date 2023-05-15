@@ -11,6 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Used to map workload profile types to billing meter. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public readonly partial struct ContainerAppBillingMeterCategory : IEquatable<ContainerAppBillingMeterCategory>
     {
         private readonly string _value;
