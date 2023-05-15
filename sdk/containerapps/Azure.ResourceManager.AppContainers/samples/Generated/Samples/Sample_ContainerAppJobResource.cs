@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // invoke the operation
             ContainerAppJobPatch patch = new ContainerAppJobPatch()
             {
-                Properties = new ContainerAppJobPatchPropertiesProperties()
+                Properties = new ContainerAppJobPatchProperties()
                 {
                     Configuration = new ContainerAppJobConfiguration(ContainerAppJobTriggerType.Manual, 10)
                     {

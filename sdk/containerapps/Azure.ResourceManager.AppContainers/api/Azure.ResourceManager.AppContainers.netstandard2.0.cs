@@ -1680,12 +1680,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         public ContainerAppJobPatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.AppContainers.Models.ContainerAppJobPatchPropertiesProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppJobPatchProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class ContainerAppJobPatchPropertiesProperties
+    public partial class ContainerAppJobPatchProperties
     {
-        public ContainerAppJobPatchPropertiesProperties() { }
+        public ContainerAppJobPatchProperties() { }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppJobConfiguration Configuration { get { throw null; } set { } }
         public string EnvironmentId { get { throw null; } set { } }
         public string EventStreamEndpoint { get { throw null; } set { } }

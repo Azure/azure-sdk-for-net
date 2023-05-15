@@ -210,7 +210,7 @@ rename-mapping:
   TriggerType: ContainerAppJobTriggerType
   JobTemplate: ContainerAppJobTemplate
   JobProvisioningState: ContainerAppJobProvisioningState
-  JobPatchPropertiesProperties: ContainerAppJobPatchPropertiesProperties
+  JobPatchPropertiesProperties: ContainerAppJobPatchProperties
   JobExecution: ContainerAppJobExecution
   JobExecutionBase: ContainerAppJobExecutionBase
   JobExecutionTemplate: ContainerAppJobExecutionTemplate

@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The ContainerAppJobPatchPropertiesProperties. </summary>
-    public partial class ContainerAppJobPatchPropertiesProperties
+    /// <summary> The ContainerAppJobPatchProperties. </summary>
+    public partial class ContainerAppJobPatchProperties
     {
-        /// <summary> Initializes a new instance of ContainerAppJobPatchPropertiesProperties. </summary>
-        public ContainerAppJobPatchPropertiesProperties()
+        /// <summary> Initializes a new instance of ContainerAppJobPatchProperties. </summary>
+        public ContainerAppJobPatchProperties()
         {
             OutboundIPAddresses = new ChangeTrackingList<string>();
         }
