@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+		<Description>This is the Microsoft.Azure.Data.Extensions.Npgsql.EntityFrameworkCore client library for developing .NET applications that uses AzureAD authentication for EntityFrameworkCore to connect to MySql databases.</Description>
+		<AssemblyTitle>Azure SDK Code Generation Microsoft.Azure.Data.Extensions.Pomelo.EntityFrameworkCore for Azure Data Plane</AssemblyTitle>
+		<Version>1.0.3-beta.20</Version>
+		<PackageTags>Azure Microsoft.Azure.Data.Extensions.Pomelo.EntityFrameworkCore MySql MySqlConnector AzureAD Passwordless EntityFrameworkCore</PackageTags>
+		<RequiredTargetFrameworks>net6.0;net7.0</RequiredTargetFrameworks>
+		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+
+    <!-- Make sure that we don't pull in additional dependencies during build or package -->
+    <ImportDefaultReferences>false</ImportDefaultReferences>
+
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
+    <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
+ </PropertyGroup>
+
+  <ItemGroup>
+		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Microsoft.Azure.Data.Extensions.MySqlConnector\src\Microsoft.Azure.Data.Extensions.MySqlConnector.csproj" />
+  </ItemGroup>
+
+
+
+</Project>

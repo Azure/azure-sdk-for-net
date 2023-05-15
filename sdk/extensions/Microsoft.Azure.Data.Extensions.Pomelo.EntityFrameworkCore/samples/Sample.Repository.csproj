@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RequiredTargetFrameworks>net6.0</RequiredTargetFrameworks>
+		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\src\Microsoft.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.csproj" />
+	</ItemGroup>
+
+</Project>

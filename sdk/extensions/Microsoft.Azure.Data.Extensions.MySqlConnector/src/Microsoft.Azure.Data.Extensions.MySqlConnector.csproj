@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>This is the Microsoft.Azure.Data.Extensions.Common client library for developing .NET applications with rich experience.</Description>
-    <AssemblyTitle>Azure SDK Code Generation Microsoft.Azure.Data.Extensions.Common for Azure Data Plane</AssemblyTitle>
+    <Description>This is the Microsoft.Azure.Data.Extensions.MySqlConnector client library for developing .NET applications that uses AzureAD authentication to connect to MySql databases.</Description>
+    <AssemblyTitle>Azure SDK Code Generation Microsoft.Azure.Data.Extensions.MySqlConnector for Azure Data Plane</AssemblyTitle>
     <Version>1.0.3-beta.20</Version>
-    <PackageTags>Azure Microsoft.Azure.Data.Extensions.Common</PackageTags>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <PackageTags>Azure Microsoft.Azure.Data.Extensions.MySqlConnector MySql AzureAD Passwordless</PackageTags>
+		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
     <!-- Make sure that we don't pull in additional dependencies during build or package -->
     <ImportDefaultReferences>false</ImportDefaultReferences>

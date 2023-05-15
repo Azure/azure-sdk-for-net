@@ -1,10 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>This is the Microsoft.Azure.Data.Extensions.Common client library for developing .NET applications with rich experience.</Description>
-    <AssemblyTitle>Azure SDK Code Generation Microsoft.Azure.Data.Extensions.Common for Azure Data Plane</AssemblyTitle>
-    <Version>1.0.3-beta.20</Version>
-    <PackageTags>Azure Microsoft.Azure.Data.Extensions.Common</PackageTags>
+		<Description>This is the Microsoft.Azure.Data.Extensions.Npgsql client library for developing .NET applications that uses AzureAD authentication to connect to Postgresql databases.</Description>
+		<AssemblyTitle>Azure SDK Code Generation Microsoft.Azure.Data.Extensions.Npgsql for Azure Data Plane</AssemblyTitle>
+		<Version>1.0.3-beta.20</Version>
+		<PackageTags>Azure Microsoft.Azure.Data.Extensions.Npgsql Postgresql AzureAD Passwordless</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
     <!-- Make sure that we don't pull in additional dependencies during build or package -->

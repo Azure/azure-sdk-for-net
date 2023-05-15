@@ -4,9 +4,9 @@
 using Azure.Core.TestFramework;
 using MySqlConnector;
 
-namespace Microsoft.Azure.Data.Extensions.MySqlConnector.Tests
+namespace Microsoft.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.Tests
 {
-    public class MySqlConnectorTestEnvironment : TestEnvironment
+    public class MySqlTestEnvironment : TestEnvironment
     {
         private string FQDN => GetVariable("MYSQL_FQDN");
         private string Database => GetVariable("MYSQL_DATABASE");
