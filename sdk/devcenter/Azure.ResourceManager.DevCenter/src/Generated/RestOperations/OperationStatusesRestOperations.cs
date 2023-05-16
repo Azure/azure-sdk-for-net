@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OperationStatus>> GetAsync(string subscriptionId, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        public async Task<Response<DevCenterOperationStatus>> GetAsync(string subscriptionId, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                 case 202:
                     {
-                        OperationStatus value = default;
+                        DevCenterOperationStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OperationStatus.DeserializeOperationStatus(document.RootElement);
+                        value = DevCenterOperationStatus.DeserializeDevCenterOperationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OperationStatus> Get(string subscriptionId, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        public Response<DevCenterOperationStatus> Get(string subscriptionId, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                 case 202:
                     {
-                        OperationStatus value = default;
+                        DevCenterOperationStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OperationStatus.DeserializeOperationStatus(document.RootElement);
+                        value = DevCenterOperationStatus.DeserializeDevCenterOperationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

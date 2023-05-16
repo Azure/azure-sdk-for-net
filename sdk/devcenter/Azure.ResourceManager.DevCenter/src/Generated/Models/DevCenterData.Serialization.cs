@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DevCenter
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<DevCenterProvisioningState> provisioningState = default;
             Optional<Uri> devCenterUri = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new DevCenterProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("devCenterUri"u8))

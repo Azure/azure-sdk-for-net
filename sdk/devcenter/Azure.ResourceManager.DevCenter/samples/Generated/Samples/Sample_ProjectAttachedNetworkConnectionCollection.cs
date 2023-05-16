@@ -29,16 +29,16 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ProjectResource created on azure
-            // for more information of creating ProjectResource, please refer to the document of ProjectResource
+            // this example assumes you already have this DevCenterProjectResource created on azure
+            // for more information of creating DevCenterProjectResource, please refer to the document of DevCenterProjectResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string projectName = "DevProject";
-            ResourceIdentifier projectResourceId = ProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
-            ProjectResource project = client.GetProjectResource(projectResourceId);
+            ResourceIdentifier devCenterProjectResourceId = DevCenterProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
+            DevCenterProjectResource devCenterProject = client.GetDevCenterProjectResource(devCenterProjectResourceId);
 
             // get the collection of this ProjectAttachedNetworkConnectionResource
-            ProjectAttachedNetworkConnectionCollection collection = project.GetProjectAttachedNetworkConnections();
+            ProjectAttachedNetworkConnectionCollection collection = devCenterProject.GetProjectAttachedNetworkConnections();
 
             // invoke the operation and iterate over the result
             await foreach (ProjectAttachedNetworkConnectionResource item in collection.GetAllAsync())
@@ -66,16 +66,16 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ProjectResource created on azure
-            // for more information of creating ProjectResource, please refer to the document of ProjectResource
+            // this example assumes you already have this DevCenterProjectResource created on azure
+            // for more information of creating DevCenterProjectResource, please refer to the document of DevCenterProjectResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string projectName = "DevProject";
-            ResourceIdentifier projectResourceId = ProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
-            ProjectResource project = client.GetProjectResource(projectResourceId);
+            ResourceIdentifier devCenterProjectResourceId = DevCenterProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
+            DevCenterProjectResource devCenterProject = client.GetDevCenterProjectResource(devCenterProjectResourceId);
 
             // get the collection of this ProjectAttachedNetworkConnectionResource
-            ProjectAttachedNetworkConnectionCollection collection = project.GetProjectAttachedNetworkConnections();
+            ProjectAttachedNetworkConnectionCollection collection = devCenterProject.GetProjectAttachedNetworkConnections();
 
             // invoke the operation
             string attachedNetworkConnectionName = "network-uswest3";
@@ -101,16 +101,16 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ProjectResource created on azure
-            // for more information of creating ProjectResource, please refer to the document of ProjectResource
+            // this example assumes you already have this DevCenterProjectResource created on azure
+            // for more information of creating DevCenterProjectResource, please refer to the document of DevCenterProjectResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string projectName = "DevProject";
-            ResourceIdentifier projectResourceId = ProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
-            ProjectResource project = client.GetProjectResource(projectResourceId);
+            ResourceIdentifier devCenterProjectResourceId = DevCenterProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
+            DevCenterProjectResource devCenterProject = client.GetDevCenterProjectResource(devCenterProjectResourceId);
 
             // get the collection of this ProjectAttachedNetworkConnectionResource
-            ProjectAttachedNetworkConnectionCollection collection = project.GetProjectAttachedNetworkConnections();
+            ProjectAttachedNetworkConnectionCollection collection = devCenterProject.GetProjectAttachedNetworkConnections();
 
             // invoke the operation
             string attachedNetworkConnectionName = "network-uswest3";

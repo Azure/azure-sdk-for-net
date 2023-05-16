@@ -30,28 +30,28 @@ namespace Azure.ResourceManager.DevCenter.Tests
             var devCenterResponse = await Client.GetDevCenterResource(devCenterId).GetAsync();
             var devCenterResource = devCenterResponse.Value;
 
-            GalleryCollection resourceCollection = devCenterResource.GetGalleries();
+            DevCenterGalleryCollection resourceCollection = devCenterResource.GetDevCenterGalleries();
 
             string resourceName = "sdktestgallery";
 
             // Create a Gallery resource
 
-            var galleryData = new GalleryData()
+            var galleryData = new DevCenterGalleryData()
             {
-                GalleryResourceId = TestEnvironment.DefaultComputeGalleryId,
+                GalleryResourceId = new ResourceIdentifier(TestEnvironment.DefaultComputeGalleryId),
             };
-            GalleryResource createdResource
+            DevCenterGalleryResource createdResource
                 = (await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, galleryData)).Value;
 
             Assert.NotNull(createdResource);
             Assert.NotNull(createdResource.Data);
 
             // List
-            List<GalleryResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
+            List<DevCenterGalleryResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(resources.Any(r => r.Id == createdResource.Id));
 
             // Get
-            Response<GalleryResource> retrievedResource = await resourceCollection.GetAsync(resourceName);
+            Response<DevCenterGalleryResource> retrievedResource = await resourceCollection.GetAsync(resourceName);
             Assert.NotNull(retrievedResource.Value);
             Assert.NotNull(retrievedResource.Value.Data);
 

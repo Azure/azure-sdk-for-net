@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // invoke the operation
             DevBoxDefinitionPatch patch = new DevBoxDefinitionPatch()
             {
-                ImageReference = new ImageReference()
+                ImageReference = new DevCenterImageReference()
                 {
-                    Id = "/subscriptions/0ac520ee-14c0-480f-b6c9-0a90c58ffff/resourceGroups/Example/providers/Microsoft.DevCenter/devcenters/Contoso/galleries/contosogallery/images/exampleImage/version/2.0.0",
+                    Id = new ResourceIdentifier("/subscriptions/0ac520ee-14c0-480f-b6c9-0a90c58ffff/resourceGroups/Example/providers/Microsoft.DevCenter/devcenters/Contoso/galleries/contosogallery/images/exampleImage/version/2.0.0"),
                 },
             };
             ArmOperation<DevBoxDefinitionResource> lro = await devBoxDefinition.UpdateAsync(WaitUntil.Completed, patch);

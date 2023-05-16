@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="devCenterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="devCenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ImageListResult>> ListByDevCenterAsync(string subscriptionId, string resourceGroupName, string devCenterName, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DevCenterImageListResult>> ListByDevCenterAsync(string subscriptionId, string resourceGroupName, string devCenterName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ImageListResult value = default;
+                        DevCenterImageListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ImageListResult.DeserializeImageListResult(document.RootElement);
+                        value = DevCenterImageListResult.DeserializeDevCenterImageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="devCenterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="devCenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ImageListResult> ListByDevCenter(string subscriptionId, string resourceGroupName, string devCenterName, int? top = null, CancellationToken cancellationToken = default)
+        public Response<DevCenterImageListResult> ListByDevCenter(string subscriptionId, string resourceGroupName, string devCenterName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ImageListResult value = default;
+                        DevCenterImageListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ImageListResult.DeserializeImageListResult(document.RootElement);
+                        value = DevCenterImageListResult.DeserializeDevCenterImageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="galleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ImageListResult>> ListByGalleryAsync(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DevCenterImageListResult>> ListByGalleryAsync(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -171,9 +171,9 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ImageListResult value = default;
+                        DevCenterImageListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ImageListResult.DeserializeImageListResult(document.RootElement);
+                        value = DevCenterImageListResult.DeserializeDevCenterImageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="galleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ImageListResult> ListByGallery(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, int? top = null, CancellationToken cancellationToken = default)
+        public Response<DevCenterImageListResult> ListByGallery(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -203,9 +203,9 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ImageListResult value = default;
+                        DevCenterImageListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ImageListResult.DeserializeImageListResult(document.RootElement);
+                        value = DevCenterImageListResult.DeserializeDevCenterImageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/>, <paramref name="galleryName"/> or <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/>, <paramref name="galleryName"/> or <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ImageData>> GetAsync(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, string imageName, CancellationToken cancellationToken = default)
+        public async Task<Response<DevCenterImageData>> GetAsync(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -260,13 +260,13 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ImageData value = default;
+                        DevCenterImageData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ImageData.DeserializeImageData(document.RootElement);
+                        value = DevCenterImageData.DeserializeDevCenterImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ImageData)null, message.Response);
+                    return Response.FromValue((DevCenterImageData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/>, <paramref name="galleryName"/> or <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/>, <paramref name="galleryName"/> or <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ImageData> Get(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, string imageName, CancellationToken cancellationToken = default)
+        public Response<DevCenterImageData> Get(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -295,13 +295,13 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ImageData value = default;
+                        DevCenterImageData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ImageData.DeserializeImageData(document.RootElement);
+                        value = DevCenterImageData.DeserializeDevCenterImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ImageData)null, message.Response);
+                    return Response.FromValue((DevCenterImageData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="devCenterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="devCenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ImageListResult>> ListByDevCenterNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DevCenterImageListResult>> ListByDevCenterNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -343,9 +343,9 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ImageListResult value = default;
+                        DevCenterImageListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ImageListResult.DeserializeImageListResult(document.RootElement);
+                        value = DevCenterImageListResult.DeserializeDevCenterImageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="devCenterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="devCenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ImageListResult> ListByDevCenterNextPage(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, int? top = null, CancellationToken cancellationToken = default)
+        public Response<DevCenterImageListResult> ListByDevCenterNextPage(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -375,9 +375,9 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ImageListResult value = default;
+                        DevCenterImageListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ImageListResult.DeserializeImageListResult(document.RootElement);
+                        value = DevCenterImageListResult.DeserializeDevCenterImageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="galleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ImageListResult>> ListByGalleryNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DevCenterImageListResult>> ListByGalleryNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -423,9 +423,9 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ImageListResult value = default;
+                        DevCenterImageListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ImageListResult.DeserializeImageListResult(document.RootElement);
+                        value = DevCenterImageListResult.DeserializeDevCenterImageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="galleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="devCenterName"/> or <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ImageListResult> ListByGalleryNextPage(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, int? top = null, CancellationToken cancellationToken = default)
+        public Response<DevCenterImageListResult> ListByGalleryNextPage(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -457,9 +457,9 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ImageListResult value = default;
+                        DevCenterImageListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ImageListResult.DeserializeImageListResult(document.RootElement);
+                        value = DevCenterImageListResult.DeserializeDevCenterImageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

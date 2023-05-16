@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
 
             var devCenterData = new AttachedNetworkConnectionData()
             {
-                NetworkConnectionId = TestEnvironment.DefaultNetworkConnection2Id,
+                NetworkConnectionId = new ResourceIdentifier(TestEnvironment.DefaultNetworkConnection2Id),
             };
 
             AttachedNetworkConnectionResource createdResource

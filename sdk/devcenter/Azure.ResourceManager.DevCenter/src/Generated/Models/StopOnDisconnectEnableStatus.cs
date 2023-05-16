@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.DevCenter.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+        private const string IsEnabledValue = "Enabled";
+        private const string IsDisabledValue = "Disabled";
 
         /// <summary> Enabled. </summary>
-        public static StopOnDisconnectEnableStatus Enabled { get; } = new StopOnDisconnectEnableStatus(EnabledValue);
+        public static StopOnDisconnectEnableStatus IsEnabled { get; } = new StopOnDisconnectEnableStatus(IsEnabledValue);
         /// <summary> Disabled. </summary>
-        public static StopOnDisconnectEnableStatus Disabled { get; } = new StopOnDisconnectEnableStatus(DisabledValue);
+        public static StopOnDisconnectEnableStatus IsDisabled { get; } = new StopOnDisconnectEnableStatus(IsDisabledValue);
         /// <summary> Determines if two <see cref="StopOnDisconnectEnableStatus"/> values are the same. </summary>
         public static bool operator ==(StopOnDisconnectEnableStatus left, StopOnDisconnectEnableStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StopOnDisconnectEnableStatus"/> values are not the same. </summary>

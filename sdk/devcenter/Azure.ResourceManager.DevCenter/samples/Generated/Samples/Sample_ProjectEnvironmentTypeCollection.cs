@@ -32,16 +32,16 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ProjectResource created on azure
-            // for more information of creating ProjectResource, please refer to the document of ProjectResource
+            // this example assumes you already have this DevCenterProjectResource created on azure
+            // for more information of creating DevCenterProjectResource, please refer to the document of DevCenterProjectResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string projectName = "ContosoProj";
-            ResourceIdentifier projectResourceId = ProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
-            ProjectResource project = client.GetProjectResource(projectResourceId);
+            ResourceIdentifier devCenterProjectResourceId = DevCenterProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
+            DevCenterProjectResource devCenterProject = client.GetDevCenterProjectResource(devCenterProjectResourceId);
 
             // get the collection of this ProjectEnvironmentTypeResource
-            ProjectEnvironmentTypeCollection collection = project.GetProjectEnvironmentTypes();
+            ProjectEnvironmentTypeCollection collection = devCenterProject.GetProjectEnvironmentTypes();
 
             // invoke the operation and iterate over the result
             await foreach (ProjectEnvironmentTypeResource item in collection.GetAllAsync())
@@ -69,16 +69,16 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ProjectResource created on azure
-            // for more information of creating ProjectResource, please refer to the document of ProjectResource
+            // this example assumes you already have this DevCenterProjectResource created on azure
+            // for more information of creating DevCenterProjectResource, please refer to the document of DevCenterProjectResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string projectName = "ContosoProj";
-            ResourceIdentifier projectResourceId = ProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
-            ProjectResource project = client.GetProjectResource(projectResourceId);
+            ResourceIdentifier devCenterProjectResourceId = DevCenterProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
+            DevCenterProjectResource devCenterProject = client.GetDevCenterProjectResource(devCenterProjectResourceId);
 
             // get the collection of this ProjectEnvironmentTypeResource
-            ProjectEnvironmentTypeCollection collection = project.GetProjectEnvironmentTypes();
+            ProjectEnvironmentTypeCollection collection = devCenterProject.GetProjectEnvironmentTypes();
 
             // invoke the operation
             string environmentTypeName = "DevTest";
@@ -104,16 +104,16 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ProjectResource created on azure
-            // for more information of creating ProjectResource, please refer to the document of ProjectResource
+            // this example assumes you already have this DevCenterProjectResource created on azure
+            // for more information of creating DevCenterProjectResource, please refer to the document of DevCenterProjectResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string projectName = "ContosoProj";
-            ResourceIdentifier projectResourceId = ProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
-            ProjectResource project = client.GetProjectResource(projectResourceId);
+            ResourceIdentifier devCenterProjectResourceId = DevCenterProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
+            DevCenterProjectResource devCenterProject = client.GetDevCenterProjectResource(devCenterProjectResourceId);
 
             // get the collection of this ProjectEnvironmentTypeResource
-            ProjectEnvironmentTypeCollection collection = project.GetProjectEnvironmentTypes();
+            ProjectEnvironmentTypeCollection collection = devCenterProject.GetProjectEnvironmentTypes();
 
             // invoke the operation
             string environmentTypeName = "DevTest";
@@ -135,16 +135,16 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ProjectResource created on azure
-            // for more information of creating ProjectResource, please refer to the document of ProjectResource
+            // this example assumes you already have this DevCenterProjectResource created on azure
+            // for more information of creating DevCenterProjectResource, please refer to the document of DevCenterProjectResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string projectName = "ContosoProj";
-            ResourceIdentifier projectResourceId = ProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
-            ProjectResource project = client.GetProjectResource(projectResourceId);
+            ResourceIdentifier devCenterProjectResourceId = DevCenterProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
+            DevCenterProjectResource devCenterProject = client.GetDevCenterProjectResource(devCenterProjectResourceId);
 
             // get the collection of this ProjectEnvironmentTypeResource
-            ProjectEnvironmentTypeCollection collection = project.GetProjectEnvironmentTypes();
+            ProjectEnvironmentTypeCollection collection = devCenterProject.GetProjectEnvironmentTypes();
 
             // invoke the operation
             string environmentTypeName = "DevTest";
@@ -157,19 +157,19 @@ namespace Azure.ResourceManager.DevCenter.Samples
 [new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/identityGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity1")] = new UserAssignedIdentity(),
 },
                 },
-                DeploymentTargetId = "/subscriptions/00000000-0000-0000-0000-000000000000",
-                Status = EnvironmentTypeEnableStatus.Enabled,
+                DeploymentTargetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000"),
+                Status = EnvironmentTypeEnableStatus.IsEnabled,
                 Roles =
 {
-["4cbf0b6c-e750-441c-98a7-10da8387e4d6"] = new EnvironmentRole(),
+["4cbf0b6c-e750-441c-98a7-10da8387e4d6"] = new DevCenterEnvironmentRole(),
 },
                 UserRoleAssignments =
 {
-["e45e3m7c-176e-416a-b466-0c5ec8298f8a"] = new UserRoleAssignmentValue()
+["e45e3m7c-176e-416a-b466-0c5ec8298f8a"] = new DevCenterUserRoleAssignmentValue()
 {
 Roles =
 {
-["4cbf0b6c-e750-441c-98a7-10da8387e4d6"] = new EnvironmentRole(),
+["4cbf0b6c-e750-441c-98a7-10da8387e4d6"] = new DevCenterEnvironmentRole(),
 },
 },
 },

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
         public async Task ProjectEnvironmentTypeResourceFull()
         {
             ResourceIdentifier projectId = new ResourceIdentifier(TestEnvironment.DefaultProjectId);
-            var projectResponse = await Client.GetProjectResource(projectId).GetAsync();
+            var projectResponse = await Client.GetDevCenterProjectResource(projectId).GetAsync();
             var projectResource = projectResponse.Value;
 
             ProjectEnvironmentTypeCollection resourceCollection = projectResource.GetProjectEnvironmentTypes();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.DevCenter.Tests
 
             var data = new ProjectEnvironmentTypeData(TestEnvironment.Location)
             {
-                DeploymentTargetId = $"/subscriptions/{projectResource.Id.SubscriptionId}",
-                Status = EnvironmentTypeEnableStatus.Enabled,
+                DeploymentTargetId = new ResourceIdentifier($"/subscriptions/{projectResource.Id.SubscriptionId}"),
+                Status = EnvironmentTypeEnableStatus.IsEnabled,
             };
 
-            data.UserRoleAssignments[TestEnvironment.TestUserOid] = new UserRoleAssignmentValue(new Dictionary<string, EnvironmentRole> { { "4cbf0b6c-e750-441c-98a7-10da8387e4d6", new EnvironmentRole() } });
-            data.CreatorRoleAssignment = new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(new Dictionary<string, EnvironmentRole> { { "4cbf0b6c-e750-441c-98a7-10da8387e4d6", new EnvironmentRole() } });
+            data.UserRoleAssignments[TestEnvironment.TestUserOid] = new DevCenterUserRoleAssignmentValue(new Dictionary<string, DevCenterEnvironmentRole> { { "4cbf0b6c-e750-441c-98a7-10da8387e4d6", new DevCenterEnvironmentRole() } });
+            data.CreatorRoleAssignment = new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(new Dictionary<string, DevCenterEnvironmentRole> { { "4cbf0b6c-e750-441c-98a7-10da8387e4d6", new DevCenterEnvironmentRole() } });
 
             ProjectEnvironmentTypeResource createdResource
                 = (await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, ProjectEnvironmentTypeName, data)).Value;

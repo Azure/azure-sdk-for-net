@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal AllowedEnvironmentTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal AllowedEnvironmentTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
         }
 
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DevCenterProvisioningState? ProvisioningState { get; }
     }
 }

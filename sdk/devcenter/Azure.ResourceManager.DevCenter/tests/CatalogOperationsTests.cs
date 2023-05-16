@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.DevCenter.Tests
             var devCenterResponse = await Client.GetDevCenterResource(devCenterId).GetAsync();
             var devCenterResource = devCenterResponse.Value;
 
-            CatalogCollection resourceCollection = devCenterResource.GetCatalogs();
+            DevCenterCatalogCollection resourceCollection = devCenterResource.GetDevCenterCatalogs();
 
             string resourceName = "sdktest-catalog";
 
             // Create a Catalog resource
 
-            var catalogData = new CatalogData()
+            var catalogData = new DevCenterCatalogData()
             {
-                GitHub = new GitCatalog
+                GitHub = new DevCenterGitCatalog
                 {
                     Uri = new Uri(TestEnvironment.GitHubRepoUri),
                     Path = TestEnvironment.GitHubRepoPath,
@@ -46,18 +46,18 @@ namespace Azure.ResourceManager.DevCenter.Tests
                     SecretIdentifier = TestEnvironment.CatalogKeyVaultSecretIdentifier,
                 }
             };
-            CatalogResource createdResource
+            DevCenterCatalogResource createdResource
                 = (await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, catalogData)).Value;
 
             Assert.NotNull(createdResource);
             Assert.NotNull(createdResource.Data);
 
             // List
-            List<CatalogResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
+            List<DevCenterCatalogResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(resources.Any(r => r.Id == createdResource.Id));
 
             // Get
-            Response<CatalogResource> retrievedResource = await resourceCollection.GetAsync(resourceName);
+            Response<DevCenterCatalogResource> retrievedResource = await resourceCollection.GetAsync(resourceName);
             Assert.NotNull(retrievedResource.Value);
             Assert.NotNull(retrievedResource.Value.Data);
 

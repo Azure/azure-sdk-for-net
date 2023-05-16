@@ -87,15 +87,15 @@ namespace Azure.ResourceManager.DevCenter.Samples
 [new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/identityGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity1")] = new UserAssignedIdentity(),
 },
                 },
-                DeploymentTargetId = "/subscriptions/00000000-0000-0000-0000-000000000000",
-                Status = EnvironmentTypeEnableStatus.Enabled,
+                DeploymentTargetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000"),
+                Status = EnvironmentTypeEnableStatus.IsEnabled,
                 UserRoleAssignments =
 {
-["e45e3m7c-176e-416a-b466-0c5ec8298f8a"] = new UserRoleAssignmentValue()
+["e45e3m7c-176e-416a-b466-0c5ec8298f8a"] = new DevCenterUserRoleAssignmentValue()
 {
 Roles =
 {
-["4cbf0b6c-e750-441c-98a7-10da8387e4d6"] = new EnvironmentRole(),
+["4cbf0b6c-e750-441c-98a7-10da8387e4d6"] = new DevCenterEnvironmentRole(),
 },
 },
 },

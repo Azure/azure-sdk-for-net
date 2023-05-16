@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public ProjectEnvironmentTypePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            UserRoleAssignments = new ChangeTrackingDictionary<string, UserRoleAssignmentValue>();
+            UserRoleAssignments = new ChangeTrackingDictionary<string, DevCenterUserRoleAssignmentValue>();
         }
 
         /// <summary> Resource tags. </summary>
@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Managed identity properties. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Id of a subscription that the environment type will be mapped to. The environment&apos;s resources will be deployed into this subscription. </summary>
-        public string DeploymentTargetId { get; set; }
+        public ResourceIdentifier DeploymentTargetId { get; set; }
         /// <summary> Defines whether this Environment Type can be used in this Project. </summary>
         public EnvironmentTypeEnableStatus? Status { get; set; }
         /// <summary> The role definition assigned to the environment creator on backing resources. </summary>
         internal ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment CreatorRoleAssignment { get; set; }
         /// <summary> A map of roles to assign to the environment creator. </summary>
-        public IDictionary<string, EnvironmentRole> Roles
+        public IDictionary<string, DevCenterEnvironmentRole> Roles
         {
             get
             {
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> Role Assignments created on environment backing resources. This is a mapping from a user object ID to an object of role definition IDs. </summary>
-        public IDictionary<string, UserRoleAssignmentValue> UserRoleAssignments { get; }
+        public IDictionary<string, DevCenterUserRoleAssignmentValue> UserRoleAssignments { get; }
     }
 }

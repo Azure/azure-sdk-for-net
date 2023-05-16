@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevCenter
     /// A Class representing an AllowedEnvironmentType along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AllowedEnvironmentTypeResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetAllowedEnvironmentTypeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProjectResource" /> using the GetAllowedEnvironmentType method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterProjectResource" /> using the GetAllowedEnvironmentType method.
     /// </summary>
     public partial class AllowedEnvironmentTypeResource : ArmResource
     {

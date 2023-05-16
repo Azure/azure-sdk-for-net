@@ -23,25 +23,25 @@ namespace Azure.ResourceManager.DevCenter.Tests
         {
             ResourceIdentifier devCenterId = new ResourceIdentifier(TestEnvironment.DefaultDevCenterId);
 
-            EnvironmentTypeCollection resourceCollection = Client.GetDevCenterResource(devCenterId).GetEnvironmentTypes();
+            DevCenterEnvironmentTypeCollection resourceCollection = Client.GetDevCenterResource(devCenterId).GetDevCenterEnvironmentTypes();
 
             string environmentTypeName = "sdk-envType";
 
             // Create an EnvironmentType resource
 
-            var data = new EnvironmentTypeData();
-            EnvironmentTypeResource createdResource
+            var data = new DevCenterEnvironmentTypeData();
+            DevCenterEnvironmentTypeResource createdResource
                 = (await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, environmentTypeName, data)).Value;
 
             Assert.NotNull(createdResource);
             Assert.NotNull(createdResource.Data);
 
             // List EnvironmentTypes
-            List<EnvironmentTypeResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
+            List<DevCenterEnvironmentTypeResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(resources.Any(r => r.Id == createdResource.Id));
 
             // Get
-            Response<EnvironmentTypeResource> retrievedEnvironmentType = await resourceCollection.GetAsync(environmentTypeName);
+            Response<DevCenterEnvironmentTypeResource> retrievedEnvironmentType = await resourceCollection.GetAsync(environmentTypeName);
             Assert.NotNull(retrievedEnvironmentType.Value);
             Assert.NotNull(retrievedEnvironmentType.Value.Data);
 

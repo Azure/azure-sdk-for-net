@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="location"> The location. </param>
         public ProjectEnvironmentTypeData(AzureLocation location) : base(location)
         {
-            UserRoleAssignments = new ChangeTrackingDictionary<string, UserRoleAssignmentValue>();
+            UserRoleAssignments = new ChangeTrackingDictionary<string, DevCenterUserRoleAssignmentValue>();
         }
 
         /// <summary> Initializes a new instance of ProjectEnvironmentTypeData. </summary>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="creatorRoleAssignment"> The role definition assigned to the environment creator on backing resources. </param>
         /// <param name="userRoleAssignments"> Role Assignments created on environment backing resources. This is a mapping from a user object ID to an object of role definition IDs. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal ProjectEnvironmentTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string deploymentTargetId, EnvironmentTypeEnableStatus? status, ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment creatorRoleAssignment, IDictionary<string, UserRoleAssignmentValue> userRoleAssignments, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal ProjectEnvironmentTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ResourceIdentifier deploymentTargetId, EnvironmentTypeEnableStatus? status, ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment creatorRoleAssignment, IDictionary<string, DevCenterUserRoleAssignmentValue> userRoleAssignments, DevCenterProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             DeploymentTargetId = deploymentTargetId;
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> Managed identity properties. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Id of a subscription that the environment type will be mapped to. The environment&apos;s resources will be deployed into this subscription. </summary>
-        public string DeploymentTargetId { get; set; }
+        public ResourceIdentifier DeploymentTargetId { get; set; }
         /// <summary> Defines whether this Environment Type can be used in this Project. </summary>
         public EnvironmentTypeEnableStatus? Status { get; set; }
         /// <summary> The role definition assigned to the environment creator on backing resources. </summary>
         internal ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment CreatorRoleAssignment { get; set; }
         /// <summary> A map of roles to assign to the environment creator. </summary>
-        public IDictionary<string, EnvironmentRole> Roles
+        public IDictionary<string, DevCenterEnvironmentRole> Roles
         {
             get
             {
@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Role Assignments created on environment backing resources. This is a mapping from a user object ID to an object of role definition IDs. </summary>
-        public IDictionary<string, UserRoleAssignmentValue> UserRoleAssignments { get; }
+        public IDictionary<string, DevCenterUserRoleAssignmentValue> UserRoleAssignments { get; }
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DevCenterProvisioningState? ProvisioningState { get; }
     }
 }

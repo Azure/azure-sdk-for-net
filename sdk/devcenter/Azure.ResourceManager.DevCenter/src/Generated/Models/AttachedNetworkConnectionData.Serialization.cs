@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.DevCenter
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> networkConnectionId = default;
-            Optional<string> networkConnectionLocation = default;
-            Optional<HealthCheckStatus> healthCheckStatus = default;
+            Optional<DevCenterProvisioningState> provisioningState = default;
+            Optional<ResourceIdentifier> networkConnectionId = default;
+            Optional<AzureLocation> networkConnectionLocation = default;
+            Optional<DevCenterHealthCheckStatus> healthCheckStatus = default;
             Optional<DomainJoinType> domainJoinType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -84,17 +84,25 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new DevCenterProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("networkConnectionId"u8))
                         {
-                            networkConnectionId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkConnectionId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("networkConnectionLocation"u8))
                         {
-                            networkConnectionLocation = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkConnectionLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("healthCheckStatus"u8))
@@ -103,7 +111,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            healthCheckStatus = new HealthCheckStatus(property0.Value.GetString());
+                            healthCheckStatus = new DevCenterHealthCheckStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("domainJoinType"u8))
@@ -119,7 +127,7 @@ namespace Azure.ResourceManager.DevCenter
                     continue;
                 }
             }
-            return new AttachedNetworkConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), networkConnectionId.Value, networkConnectionLocation.Value, Optional.ToNullable(healthCheckStatus), Optional.ToNullable(domainJoinType));
+            return new AttachedNetworkConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), networkConnectionId.Value, Optional.ToNullable(networkConnectionLocation), Optional.ToNullable(healthCheckStatus), Optional.ToNullable(domainJoinType));
         }
     }
 }

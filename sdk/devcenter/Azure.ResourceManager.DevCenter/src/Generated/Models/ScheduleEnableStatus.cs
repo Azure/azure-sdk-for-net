@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.DevCenter.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+        private const string IsEnabledValue = "Enabled";
+        private const string IsDisabledValue = "Disabled";
 
         /// <summary> Enabled. </summary>
-        public static ScheduleEnableStatus Enabled { get; } = new ScheduleEnableStatus(EnabledValue);
+        public static ScheduleEnableStatus IsEnabled { get; } = new ScheduleEnableStatus(IsEnabledValue);
         /// <summary> Disabled. </summary>
-        public static ScheduleEnableStatus Disabled { get; } = new ScheduleEnableStatus(DisabledValue);
+        public static ScheduleEnableStatus IsDisabled { get; } = new ScheduleEnableStatus(IsDisabledValue);
         /// <summary> Determines if two <see cref="ScheduleEnableStatus"/> values are the same. </summary>
         public static bool operator ==(ScheduleEnableStatus left, ScheduleEnableStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScheduleEnableStatus"/> values are not the same. </summary>

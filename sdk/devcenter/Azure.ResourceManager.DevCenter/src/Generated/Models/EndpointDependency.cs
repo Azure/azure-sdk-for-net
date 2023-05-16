@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of EndpointDependency. </summary>
         internal EndpointDependency()
         {
-            EndpointDetails = new ChangeTrackingList<EndpointDetail>();
+            EndpointDetails = new ChangeTrackingList<DevCenterEndpointDetail>();
         }
 
         /// <summary> Initializes a new instance of EndpointDependency. </summary>
         /// <param name="domainName"> The domain name of the dependency. Domain names may be fully qualified or may contain a * wildcard. </param>
         /// <param name="description"> Human-readable supplemental information about the dependency and when it is applicable. </param>
         /// <param name="endpointDetails"> The list of connection details for this endpoint. </param>
-        internal EndpointDependency(string domainName, string description, IReadOnlyList<EndpointDetail> endpointDetails)
+        internal EndpointDependency(string domainName, string description, IReadOnlyList<DevCenterEndpointDetail> endpointDetails)
         {
             DomainName = domainName;
             Description = description;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Human-readable supplemental information about the dependency and when it is applicable. </summary>
         public string Description { get; }
         /// <summary> The list of connection details for this endpoint. </summary>
-        public IReadOnlyList<EndpointDetail> EndpointDetails { get; }
+        public IReadOnlyList<DevCenterEndpointDetail> EndpointDetails { get; }
     }
 }

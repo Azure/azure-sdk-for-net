@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="identity"> Managed identity properties. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="devCenterUri"> The URI of the Dev Center. </param>
-        internal DevCenterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ProvisioningState? provisioningState, Uri devCenterUri) : base(id, name, resourceType, systemData, tags, location)
+        internal DevCenterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, DevCenterProvisioningState? provisioningState, Uri devCenterUri) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> Managed identity properties. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DevCenterProvisioningState? ProvisioningState { get; }
         /// <summary> The URI of the Dev Center. </summary>
         public Uri DevCenterUri { get; }
     }

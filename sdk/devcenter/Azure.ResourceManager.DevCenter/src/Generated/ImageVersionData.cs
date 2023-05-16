@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="excludeFromLatest"> If the version should be excluded from being treated as the latest version. </param>
         /// <param name="osDiskImageSizeInGb"> The size of the OS disk image, in GB. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal ImageVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string namePropertiesName, DateTimeOffset? publishedOn, bool? excludeFromLatest, int? osDiskImageSizeInGb, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal ImageVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string namePropertiesName, DateTimeOffset? publishedOn, bool? excludeFromLatest, int? osDiskImageSizeInGb, DevCenterProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             NamePropertiesName = namePropertiesName;
             PublishedOn = publishedOn;
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> The size of the OS disk image, in GB. </summary>
         public int? OSDiskImageSizeInGb { get; }
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DevCenterProvisioningState? ProvisioningState { get; }
     }
 }

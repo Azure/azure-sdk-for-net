@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.DevCenter
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> deploymentTargetId = default;
+            Optional<ResourceIdentifier> deploymentTargetId = default;
             Optional<EnvironmentTypeEnableStatus> status = default;
             Optional<ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment> creatorRoleAssignment = default;
-            Optional<IDictionary<string, UserRoleAssignmentValue>> userRoleAssignments = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<IDictionary<string, DevCenterUserRoleAssignmentValue>> userRoleAssignments = default;
+            Optional<DevCenterProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -151,7 +151,11 @@ namespace Azure.ResourceManager.DevCenter
                     {
                         if (property0.NameEquals("deploymentTargetId"u8))
                         {
-                            deploymentTargetId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            deploymentTargetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -178,10 +182,10 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            Dictionary<string, UserRoleAssignmentValue> dictionary = new Dictionary<string, UserRoleAssignmentValue>();
+                            Dictionary<string, DevCenterUserRoleAssignmentValue> dictionary = new Dictionary<string, DevCenterUserRoleAssignmentValue>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, UserRoleAssignmentValue.DeserializeUserRoleAssignmentValue(property1.Value));
+                                dictionary.Add(property1.Name, DevCenterUserRoleAssignmentValue.DeserializeDevCenterUserRoleAssignmentValue(property1.Value));
                             }
                             userRoleAssignments = dictionary;
                             continue;
@@ -192,7 +196,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new DevCenterProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

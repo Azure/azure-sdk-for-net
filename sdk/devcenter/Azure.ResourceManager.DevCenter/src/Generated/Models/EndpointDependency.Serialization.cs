@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
             Optional<string> domainName = default;
             Optional<string> description = default;
-            Optional<IReadOnlyList<EndpointDetail>> endpointDetails = default;
+            Optional<IReadOnlyList<DevCenterEndpointDetail>> endpointDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainName"u8))
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    List<EndpointDetail> array = new List<EndpointDetail>();
+                    List<DevCenterEndpointDetail> array = new List<DevCenterEndpointDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EndpointDetail.DeserializeEndpointDetail(item));
+                        array.Add(DevCenterEndpointDetail.DeserializeDevCenterEndpointDetail(item));
                     }
                     endpointDetails = array;
                     continue;

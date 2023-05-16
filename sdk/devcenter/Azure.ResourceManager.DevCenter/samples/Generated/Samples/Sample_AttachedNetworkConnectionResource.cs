@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // invoke the operation
             AttachedNetworkConnectionData data = new AttachedNetworkConnectionData()
             {
-                NetworkConnectionId = "/subscriptions/0ac520ee-14c0-480f-b6c9-0a90c58ffff/resourceGroups/rg1/providers/Microsoft.DevCenter/NetworkConnections/network-uswest3",
+                NetworkConnectionId = new ResourceIdentifier("/subscriptions/0ac520ee-14c0-480f-b6c9-0a90c58ffff/resourceGroups/rg1/providers/Microsoft.DevCenter/NetworkConnections/network-uswest3"),
             };
             ArmOperation<AttachedNetworkConnectionResource> lro = await attachedNetworkConnection.UpdateAsync(WaitUntil.Completed, data);
             AttachedNetworkConnectionResource result = lro.Value;

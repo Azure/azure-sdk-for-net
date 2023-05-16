@@ -69,14 +69,14 @@ namespace Azure.ResourceManager.DevCenter
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ImageReference> imageReference = default;
+            Optional<DevCenterImageReference> imageReference = default;
             Optional<DevCenterSku> sku = default;
             Optional<string> osStorageType = default;
-            Optional<HibernateSupport> hibernateSupport = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<DevCenterHibernateSupport> hibernateSupport = default;
+            Optional<DevCenterProvisioningState> provisioningState = default;
             Optional<ImageValidationStatus> imageValidationStatus = default;
             Optional<ImageValidationErrorDetails> imageValidationErrorDetails = default;
-            Optional<ImageReference> activeImageReference = default;
+            Optional<DevCenterImageReference> activeImageReference = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            imageReference = ImageReference.DeserializeImageReference(property0.Value);
+                            imageReference = DevCenterImageReference.DeserializeDevCenterImageReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sku"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            hibernateSupport = new HibernateSupport(property0.Value.GetString());
+                            hibernateSupport = new DevCenterHibernateSupport(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new DevCenterProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("imageValidationStatus"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            activeImageReference = ImageReference.DeserializeImageReference(property0.Value);
+                            activeImageReference = DevCenterImageReference.DeserializeDevCenterImageReference(property0.Value);
                             continue;
                         }
                     }

@@ -29,18 +29,18 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ImageResource created on azure
-            // for more information of creating ImageResource, please refer to the document of ImageResource
+            // this example assumes you already have this DevCenterImageResource created on azure
+            // for more information of creating DevCenterImageResource, please refer to the document of DevCenterImageResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
             string galleryName = "DefaultDevGallery";
             string imageName = "Win11";
-            ResourceIdentifier imageResourceId = ImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, galleryName, imageName);
-            ImageResource image = client.GetImageResource(imageResourceId);
+            ResourceIdentifier devCenterImageResourceId = DevCenterImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, galleryName, imageName);
+            DevCenterImageResource devCenterImage = client.GetDevCenterImageResource(devCenterImageResourceId);
 
             // get the collection of this ImageVersionResource
-            ImageVersionCollection collection = image.GetImageVersions();
+            ImageVersionCollection collection = devCenterImage.GetImageVersions();
 
             // invoke the operation and iterate over the result
             await foreach (ImageVersionResource item in collection.GetAllAsync())
@@ -68,18 +68,18 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ImageResource created on azure
-            // for more information of creating ImageResource, please refer to the document of ImageResource
+            // this example assumes you already have this DevCenterImageResource created on azure
+            // for more information of creating DevCenterImageResource, please refer to the document of DevCenterImageResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
             string galleryName = "DefaultDevGallery";
             string imageName = "Win11";
-            ResourceIdentifier imageResourceId = ImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, galleryName, imageName);
-            ImageResource image = client.GetImageResource(imageResourceId);
+            ResourceIdentifier devCenterImageResourceId = DevCenterImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, galleryName, imageName);
+            DevCenterImageResource devCenterImage = client.GetDevCenterImageResource(devCenterImageResourceId);
 
             // get the collection of this ImageVersionResource
-            ImageVersionCollection collection = image.GetImageVersions();
+            ImageVersionCollection collection = devCenterImage.GetImageVersions();
 
             // invoke the operation
             string versionName = "1.0.0";
@@ -105,18 +105,18 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ImageResource created on azure
-            // for more information of creating ImageResource, please refer to the document of ImageResource
+            // this example assumes you already have this DevCenterImageResource created on azure
+            // for more information of creating DevCenterImageResource, please refer to the document of DevCenterImageResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
             string galleryName = "DefaultDevGallery";
             string imageName = "Win11";
-            ResourceIdentifier imageResourceId = ImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, galleryName, imageName);
-            ImageResource image = client.GetImageResource(imageResourceId);
+            ResourceIdentifier devCenterImageResourceId = DevCenterImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, galleryName, imageName);
+            DevCenterImageResource devCenterImage = client.GetDevCenterImageResource(devCenterImageResourceId);
 
             // get the collection of this ImageVersionResource
-            ImageVersionCollection collection = image.GetImageVersions();
+            ImageVersionCollection collection = devCenterImage.GetImageVersions();
 
             // invoke the operation
             string versionName = "1.0.0";

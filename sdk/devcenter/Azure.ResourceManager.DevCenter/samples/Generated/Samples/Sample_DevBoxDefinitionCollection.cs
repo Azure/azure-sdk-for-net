@@ -149,12 +149,12 @@ namespace Azure.ResourceManager.DevCenter.Samples
             string devBoxDefinitionName = "WebDevBox";
             DevBoxDefinitionData data = new DevBoxDefinitionData(new AzureLocation("centralus"))
             {
-                ImageReference = new ImageReference()
+                ImageReference = new DevCenterImageReference()
                 {
-                    Id = "/subscriptions/0ac520ee-14c0-480f-b6c9-0a90c58ffff/resourceGroups/Example/providers/Microsoft.DevCenter/devcenters/Contoso/galleries/contosogallery/images/exampleImage/version/1.0.0",
+                    Id = new ResourceIdentifier("/subscriptions/0ac520ee-14c0-480f-b6c9-0a90c58ffff/resourceGroups/Example/providers/Microsoft.DevCenter/devcenters/Contoso/galleries/contosogallery/images/exampleImage/version/1.0.0"),
                 },
                 Sku = new DevCenterSku("Preview"),
-                HibernateSupport = HibernateSupport.Enabled,
+                HibernateSupport = DevCenterHibernateSupport.IsEnabled,
             };
             ArmOperation<DevBoxDefinitionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, devBoxDefinitionName, data);
             DevBoxDefinitionResource result = lro.Value;

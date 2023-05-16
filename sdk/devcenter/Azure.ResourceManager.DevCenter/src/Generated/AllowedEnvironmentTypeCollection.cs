@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
     /// A class representing a collection of <see cref="AllowedEnvironmentTypeResource" /> and their operations.
-    /// Each <see cref="AllowedEnvironmentTypeResource" /> in the collection will belong to the same instance of <see cref="ProjectResource" />.
-    /// To get an <see cref="AllowedEnvironmentTypeCollection" /> instance call the GetAllowedEnvironmentTypes method from an instance of <see cref="ProjectResource" />.
+    /// Each <see cref="AllowedEnvironmentTypeResource" /> in the collection will belong to the same instance of <see cref="DevCenterProjectResource" />.
+    /// To get an <see cref="AllowedEnvironmentTypeCollection" /> instance call the GetAllowedEnvironmentTypes method from an instance of <see cref="DevCenterProjectResource" />.
     /// </summary>
     public partial class AllowedEnvironmentTypeCollection : ArmCollection, IEnumerable<AllowedEnvironmentTypeResource>, IAsyncEnumerable<AllowedEnvironmentTypeResource>
     {
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.DevCenter
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ProjectResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ProjectResource.ResourceType), nameof(id));
+            if (id.ResourceType != DevCenterProjectResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DevCenterProjectResource.ResourceType), nameof(id));
         }
 
         /// <summary>

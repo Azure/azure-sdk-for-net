@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         // Get OperationStatus
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetOperationStatus_GetOperationStatus()
+        public async Task GetDevCenterOperationStatus_GetOperationStatus()
         {
             // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/OperationStatus_Get.json
             // this example is just showing the usage of "OperationStatuses_Get" operation, for the dependent resources, they will have to be created separately.
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // invoke the operation
             AzureLocation location = new AzureLocation("westus3");
             string operationId = "3fa1a29d-e807-488d-81d1-f1c5456a08cd";
-            OperationStatus result = await subscriptionResource.GetOperationStatusAsync(location, operationId);
+            DevCenterOperationStatus result = await subscriptionResource.GetDevCenterOperationStatusAsync(location, operationId);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         // listUsages
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetUsagesByLocation_ListUsages()
+        public async Task GetDevCenterUsagesByLocationAsync_ListUsages()
         {
             // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Usages_ListByLocation.json
             // this example is just showing the usage of "Usages_ListByLocation" operation, for the dependent resources, they will have to be created separately.
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("westus");
-            await foreach (DevCenterUsage item in subscriptionResource.GetUsagesByLocationAsync(location))
+            await foreach (DevCenterUsage item in subscriptionResource.GetDevCenterUsagesByLocationAsyncAsync(location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         // NameAvailability
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task ExecuteCheckNameAvailability_NameAvailability()
+        public async Task ExecuteDevCenterCheckNameAvailabilityAsync_NameAvailability()
         {
             // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/CheckNameAvailability.json
             // this example is just showing the usage of "CheckNameAvailability_Execute" operation, for the dependent resources, they will have to be created separately.
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.DevCenter.Samples
             CheckNameAvailabilityContent content = new CheckNameAvailabilityContent()
             {
                 Name = "name1",
-                ResourceType = "Microsoft.DevCenter/devcenters",
+                ResourceType = new ResourceType("Microsoft.DevCenter/devcenters"),
             };
-            CheckNameAvailabilityResponse result = await subscriptionResource.ExecuteCheckNameAvailabilityAsync(content);
+            CheckNameAvailabilityResponse result = await subscriptionResource.ExecuteDevCenterCheckNameAvailabilityAsyncAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         // Skus_ListBySubscription
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetSkusBySubscription_SkusListBySubscription()
+        public async Task GetDevCenterSkusBySubscriptionAsync_SkusListBySubscription()
         {
             // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Skus_ListBySubscription.json
             // this example is just showing the usage of "Skus_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (DevCenterSkuDetails item in subscriptionResource.GetSkusBySubscriptionAsync())
+            await foreach (DevCenterSkuDetails item in subscriptionResource.GetDevCenterSkusBySubscriptionAsyncAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
+                writer.WriteStringValue(ResourceType.Value);
             }
             writer.WriteEndObject();
         }
