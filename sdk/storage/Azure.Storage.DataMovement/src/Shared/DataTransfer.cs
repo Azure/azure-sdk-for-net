@@ -96,37 +96,5 @@ namespace Azure.Storage.DataMovement
         {
             await _state.PauseIfRunningAsync(cancellationToken).ConfigureAwait(false);
         }
-
-        /// <summary>
-        /// stub
-        /// </summary>
-        /// <param name="sourceCredential"></param>
-        /// <param name="destinationCredential"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public Task ResumeAsync(
-            object sourceCredential,
-            object destinationCredential,
-            CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// stub
-        /// </summary>
-        /// <param name="sourceCredential"></param>
-        /// <param name="destinationCredential"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public Task ResumeAsync(
-            StorageTransferCredentials sourceCredential,
-            StorageTransferCredentials destinationCredential,
-            CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
