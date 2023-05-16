@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.SelfHelp
         public SelfHelpDiagnosticData()
         {
             GlobalParameters = new ChangeTrackingDictionary<string, string>();
-            DiagnosticInsights = new ChangeTrackingList<DiagnosticInvocation>();
-            Diagnostics = new ChangeTrackingList<DiagnosticInfo>();
+            DiagnosticInsights = new ChangeTrackingList<SelfHelpDiagnosticInvocation>();
+            Diagnostics = new ChangeTrackingList<SelfHelpDiagnosticInfo>();
         }
 
         /// <summary> Initializes a new instance of SelfHelpDiagnosticData. </summary>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// Array of Diagnostics.
         /// Serialized Name: DiagnosticResource.properties.diagnostics
         /// </param>
-        internal SelfHelpDiagnosticData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> globalParameters, IList<DiagnosticInvocation> diagnosticInsights, string acceptedTime, ProvisioningState? provisioningState, IReadOnlyList<DiagnosticInfo> diagnostics) : base(id, name, resourceType, systemData)
+        internal SelfHelpDiagnosticData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> globalParameters, IList<SelfHelpDiagnosticInvocation> diagnosticInsights, string acceptedTime, SelfHelpProvisioningState? provisioningState, IReadOnlyList<SelfHelpDiagnosticInfo> diagnostics) : base(id, name, resourceType, systemData)
         {
             GlobalParameters = globalParameters;
             DiagnosticInsights = diagnosticInsights;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// SolutionIds that are needed to be invoked.
         /// Serialized Name: DiagnosticResource.properties.insights
         /// </summary>
-        public IList<DiagnosticInvocation> DiagnosticInsights { get; }
+        public IList<SelfHelpDiagnosticInvocation> DiagnosticInsights { get; }
         /// <summary>
         /// Diagnostic Request Accepted time.
         /// Serialized Name: DiagnosticResource.properties.acceptedAt
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.SelfHelp
         /// Status of diagnostic provisioning.
         /// Serialized Name: DiagnosticResource.properties.provisioningState
         /// </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public SelfHelpProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// Array of Diagnostics.
         /// Serialized Name: DiagnosticResource.properties.diagnostics
         /// </summary>
-        public IReadOnlyList<DiagnosticInfo> Diagnostics { get; }
+        public IReadOnlyList<SelfHelpDiagnosticInfo> Diagnostics { get; }
     }
 }

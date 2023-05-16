@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class DiagnosticInsight
+    public partial class SelfHelpDiagnosticInsight
     {
-        internal static DiagnosticInsight DeserializeDiagnosticInsight(JsonElement element)
+        internal static SelfHelpDiagnosticInsight DeserializeSelfHelpDiagnosticInsight(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             Optional<string> id = default;
             Optional<string> title = default;
             Optional<string> results = default;
-            Optional<ImportanceLevel> importanceLevel = default;
+            Optional<SelfHelpImportanceLevel> importanceLevel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    importanceLevel = new ImportanceLevel(property.Value.GetString());
+                    importanceLevel = new SelfHelpImportanceLevel(property.Value.GetString());
                     continue;
                 }
             }
-            return new DiagnosticInsight(id.Value, title.Value, results.Value, Optional.ToNullable(importanceLevel));
+            return new SelfHelpDiagnosticInsight(id.Value, title.Value, results.Value, Optional.ToNullable(importanceLevel));
         }
     }
 }

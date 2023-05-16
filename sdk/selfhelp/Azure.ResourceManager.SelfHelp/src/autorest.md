@@ -54,10 +54,10 @@ list-exception:
 
 rename-mapping:
   DiagnosticResource: SelfHelpDiagnostic
-  Status: DiagnosticStatus
-  Insight: DiagnosticInsight
+  Status: SelfHelpDiagnosticStatus
+  Insight: SelfHelpDiagnosticInsight
   Error: SelfHelpError
-  Diagnostic: DiagnosticInfo
+  Diagnostic: SelfHelpDiagnosticInfo
   DiagnosticResource.properties.acceptedAt: acceptedTime
   Insight.id: InsightId
   Insight.title: InsightTitle
@@ -76,5 +76,15 @@ rename-mapping:
   Error.details: ErrorDetails
   SolutionMetadataResource.properties.description: SolutionDescription
   DiagnosticResource.properties.insights: DiagnosticInsights
+  CheckNameAvailabilityRequest: SelfHelpCheckNameAvailabilityContent
+  CheckNameAvailabilityRequest.type: ResourceType
+  CheckNameAvailabilityResponse: SelfHelpCheckNameAvailabilityResult
+  DiagnosticInvocation: SelfHelpDiagnosticInvocation
+  ImportanceLevel: SelfHelpImportanceLevel
+  ProvisioningState: SelfHelpProvisioningState
+  SolutionMetadataResource: SelfHelpSolutionMetadata
 
+override-operation-name:
+  Diagnostics_CheckNameAvailability: CheckSelfHelpNameAvailability
+  DiscoverySolution_List: GetSelfHelpDiscoverySolutions
 ```

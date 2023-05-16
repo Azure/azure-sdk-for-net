@@ -11,10 +11,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// The check availability request body.
     /// Serialized Name: CheckNameAvailabilityRequest
     /// </summary>
-    public partial class CheckNameAvailabilityContent
+    public partial class SelfHelpCheckNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityContent. </summary>
-        public CheckNameAvailabilityContent()
+        /// <summary> Initializes a new instance of SelfHelpCheckNameAvailabilityContent. </summary>
+        public SelfHelpCheckNameAvailabilityContent()
         {
         }
 

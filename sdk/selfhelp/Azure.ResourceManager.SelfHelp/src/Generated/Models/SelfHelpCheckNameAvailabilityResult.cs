@@ -11,14 +11,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// Response for whether the requested resource name is available or not.
     /// Serialized Name: CheckNameAvailabilityResponse
     /// </summary>
-    public partial class CheckNameAvailabilityResponse
+    public partial class SelfHelpCheckNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
-        internal CheckNameAvailabilityResponse()
+        /// <summary> Initializes a new instance of SelfHelpCheckNameAvailabilityResult. </summary>
+        internal SelfHelpCheckNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of SelfHelpCheckNameAvailabilityResult. </summary>
         /// <param name="isNameAvailable">
         /// Returns true or false depending on the availability of the name
         /// Serialized Name: CheckNameAvailabilityResponse.nameAvailable
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// Gets an error message explaining the &apos;reason&apos; value with more details. This field is returned iif nameAvailable is false.
         /// Serialized Name: CheckNameAvailabilityResponse.message
         /// </param>
-        internal CheckNameAvailabilityResponse(bool? isNameAvailable, string notAvailableReason, string errorMessage)
+        internal SelfHelpCheckNameAvailabilityResult(bool? isNameAvailable, string notAvailableReason, string errorMessage)
         {
             IsNameAvailable = isNameAvailable;
             NotAvailableReason = notAvailableReason;

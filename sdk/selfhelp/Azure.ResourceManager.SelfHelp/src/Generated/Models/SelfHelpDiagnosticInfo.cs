@@ -14,15 +14,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// Properties returned with in an insight.
     /// Serialized Name: Diagnostic
     /// </summary>
-    public partial class DiagnosticInfo
+    public partial class SelfHelpDiagnosticInfo
     {
-        /// <summary> Initializes a new instance of DiagnosticInfo. </summary>
-        internal DiagnosticInfo()
+        /// <summary> Initializes a new instance of SelfHelpDiagnosticInfo. </summary>
+        internal SelfHelpDiagnosticInfo()
         {
-            DiagnosticInsights = new ChangeTrackingList<DiagnosticInsight>();
+            DiagnosticInsights = new ChangeTrackingList<SelfHelpDiagnosticInsight>();
         }
 
-        /// <summary> Initializes a new instance of DiagnosticInfo. </summary>
+        /// <summary> Initializes a new instance of SelfHelpDiagnosticInfo. </summary>
         /// <param name="solutionId">
         /// Solution Id
         /// Serialized Name: Diagnostic.solutionId
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// Error definition.
         /// Serialized Name: Diagnostic.error
         /// </param>
-        internal DiagnosticInfo(string solutionId, DiagnosticStatus? diagnosticStatus, IReadOnlyList<DiagnosticInsight> diagnosticInsights, SelfHelpError errorInfo)
+        internal SelfHelpDiagnosticInfo(string solutionId, SelfHelpDiagnosticStatus? diagnosticStatus, IReadOnlyList<SelfHelpDiagnosticInsight> diagnosticInsights, SelfHelpError errorInfo)
         {
             SolutionId = solutionId;
             DiagnosticStatus = diagnosticStatus;
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// Denotes the status of the diagnostic resource.
         /// Serialized Name: Diagnostic.status
         /// </summary>
-        public DiagnosticStatus? DiagnosticStatus { get; }
+        public SelfHelpDiagnosticStatus? DiagnosticStatus { get; }
         /// <summary>
         /// The problems (if any) detected by this insight.
         /// Serialized Name: Diagnostic.insights
         /// </summary>
-        public IReadOnlyList<DiagnosticInsight> DiagnosticInsights { get; }
+        public IReadOnlyList<SelfHelpDiagnosticInsight> DiagnosticInsights { get; }
         /// <summary>
         /// Error definition.
         /// Serialized Name: Diagnostic.error

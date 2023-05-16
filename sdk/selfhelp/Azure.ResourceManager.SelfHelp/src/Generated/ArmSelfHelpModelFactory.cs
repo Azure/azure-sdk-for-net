@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmSelfHelpModelFactory
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of SelfHelpCheckNameAvailabilityResult. </summary>
         /// <param name="isNameAvailable">
         /// Returns true or false depending on the availability of the name
         /// Serialized Name: CheckNameAvailabilityResponse.nameAvailable
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// Gets an error message explaining the &apos;reason&apos; value with more details. This field is returned iif nameAvailable is false.
         /// Serialized Name: CheckNameAvailabilityResponse.message
         /// </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityResponse"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityResponse CheckNameAvailabilityResponse(bool? isNameAvailable = null, string notAvailableReason = null, string errorMessage = null)
+        /// <returns> A new <see cref="Models.SelfHelpCheckNameAvailabilityResult"/> instance for mocking. </returns>
+        public static SelfHelpCheckNameAvailabilityResult SelfHelpCheckNameAvailabilityResult(bool? isNameAvailable = null, string notAvailableReason = null, string errorMessage = null)
         {
-            return new CheckNameAvailabilityResponse(isNameAvailable, notAvailableReason, errorMessage);
+            return new SelfHelpCheckNameAvailabilityResult(isNameAvailable, notAvailableReason, errorMessage);
         }
 
         /// <summary> Initializes a new instance of SelfHelpDiagnosticData. </summary>
@@ -62,16 +62,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// Serialized Name: DiagnosticResource.properties.diagnostics
         /// </param>
         /// <returns> A new <see cref="SelfHelp.SelfHelpDiagnosticData"/> instance for mocking. </returns>
-        public static SelfHelpDiagnosticData SelfHelpDiagnosticData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> globalParameters = null, IEnumerable<DiagnosticInvocation> diagnosticInsights = null, string acceptedTime = null, ProvisioningState? provisioningState = null, IEnumerable<DiagnosticInfo> diagnostics = null)
+        public static SelfHelpDiagnosticData SelfHelpDiagnosticData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> globalParameters = null, IEnumerable<SelfHelpDiagnosticInvocation> diagnosticInsights = null, string acceptedTime = null, SelfHelpProvisioningState? provisioningState = null, IEnumerable<SelfHelpDiagnosticInfo> diagnostics = null)
         {
             globalParameters ??= new Dictionary<string, string>();
-            diagnosticInsights ??= new List<DiagnosticInvocation>();
-            diagnostics ??= new List<DiagnosticInfo>();
+            diagnosticInsights ??= new List<SelfHelpDiagnosticInvocation>();
+            diagnostics ??= new List<SelfHelpDiagnosticInfo>();
 
             return new SelfHelpDiagnosticData(id, name, resourceType, systemData, globalParameters, diagnosticInsights?.ToList(), acceptedTime, provisioningState, diagnostics?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DiagnosticInfo. </summary>
+        /// <summary> Initializes a new instance of SelfHelpDiagnosticInfo. </summary>
         /// <param name="solutionId">
         /// Solution Id
         /// Serialized Name: Diagnostic.solutionId
@@ -88,15 +88,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// Error definition.
         /// Serialized Name: Diagnostic.error
         /// </param>
-        /// <returns> A new <see cref="Models.DiagnosticInfo"/> instance for mocking. </returns>
-        public static DiagnosticInfo DiagnosticInfo(string solutionId = null, DiagnosticStatus? diagnosticStatus = null, IEnumerable<DiagnosticInsight> diagnosticInsights = null, SelfHelpError errorInfo = null)
+        /// <returns> A new <see cref="Models.SelfHelpDiagnosticInfo"/> instance for mocking. </returns>
+        public static SelfHelpDiagnosticInfo SelfHelpDiagnosticInfo(string solutionId = null, SelfHelpDiagnosticStatus? diagnosticStatus = null, IEnumerable<SelfHelpDiagnosticInsight> diagnosticInsights = null, SelfHelpError errorInfo = null)
         {
-            diagnosticInsights ??= new List<DiagnosticInsight>();
+            diagnosticInsights ??= new List<SelfHelpDiagnosticInsight>();
 
-            return new DiagnosticInfo(solutionId, diagnosticStatus, diagnosticInsights?.ToList(), errorInfo);
+            return new SelfHelpDiagnosticInfo(solutionId, diagnosticStatus, diagnosticInsights?.ToList(), errorInfo);
         }
 
-        /// <summary> Initializes a new instance of DiagnosticInsight. </summary>
+        /// <summary> Initializes a new instance of SelfHelpDiagnosticInsight. </summary>
         /// <param name="insightId">
         /// Article id.
         /// Serialized Name: Insight.id
@@ -113,10 +113,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// Importance level of the insight.
         /// Serialized Name: Insight.importanceLevel
         /// </param>
-        /// <returns> A new <see cref="Models.DiagnosticInsight"/> instance for mocking. </returns>
-        public static DiagnosticInsight DiagnosticInsight(string insightId = null, string insightTitle = null, string insightResults = null, ImportanceLevel? insightImportanceLevel = null)
+        /// <returns> A new <see cref="Models.SelfHelpDiagnosticInsight"/> instance for mocking. </returns>
+        public static SelfHelpDiagnosticInsight SelfHelpDiagnosticInsight(string insightId = null, string insightTitle = null, string insightResults = null, SelfHelpImportanceLevel? insightImportanceLevel = null)
         {
-            return new DiagnosticInsight(insightId, insightTitle, insightResults, insightImportanceLevel);
+            return new SelfHelpDiagnosticInsight(insightId, insightTitle, insightResults, insightImportanceLevel);
         }
 
         /// <summary> Initializes a new instance of SelfHelpError. </summary>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SelfHelpError(errorCode, errorType, errorMessage, errorDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SolutionMetadataResource. </summary>
+        /// <summary> Initializes a new instance of SelfHelpSolutionMetadata. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// Required parameters for invoking this particular solution.
         /// Serialized Name: SolutionMetadataResource.properties.requiredParameterSets
         /// </param>
-        /// <returns> A new <see cref="Models.SolutionMetadataResource"/> instance for mocking. </returns>
-        public static SolutionMetadataResource SolutionMetadataResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string solutionId = null, string solutionType = null, string solutionDescription = null, IEnumerable<IList<string>> requiredParameterSets = null)
+        /// <returns> A new <see cref="Models.SelfHelpSolutionMetadata"/> instance for mocking. </returns>
+        public static SelfHelpSolutionMetadata SelfHelpSolutionMetadata(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string solutionId = null, string solutionType = null, string solutionDescription = null, IEnumerable<IList<string>> requiredParameterSets = null)
         {
             requiredParameterSets ??= new List<IList<string>>();
 
-            return new SolutionMetadataResource(id, name, resourceType, systemData, solutionId, solutionType, solutionDescription, requiredParameterSets?.ToList());
+            return new SelfHelpSolutionMetadata(id, name, resourceType, systemData, solutionId, solutionType, solutionDescription, requiredParameterSets?.ToList());
         }
     }
 }

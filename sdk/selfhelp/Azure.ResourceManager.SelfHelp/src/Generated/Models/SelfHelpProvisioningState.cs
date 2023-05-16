@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// Status of diagnostic provisioning.
     /// Serialized Name: ProvisioningState
     /// </summary>
-    public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>
+    public readonly partial struct SelfHelpProvisioningState : IEquatable<SelfHelpProvisioningState>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpProvisioningState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProvisioningState(string value)
+        public SelfHelpProvisioningState(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -34,34 +34,34 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// All Diagnostics in the Batch succeeded.
         /// Serialized Name: ProvisioningState.Succeeded
         /// </summary>
-        public static ProvisioningState Succeeded { get; } = new ProvisioningState(SucceededValue);
+        public static SelfHelpProvisioningState Succeeded { get; } = new SelfHelpProvisioningState(SucceededValue);
         /// <summary>
         /// Some Diagnostics are still running or failed.
         /// Serialized Name: ProvisioningState.PartialComplete
         /// </summary>
-        public static ProvisioningState PartialComplete { get; } = new ProvisioningState(PartialCompleteValue);
+        public static SelfHelpProvisioningState PartialComplete { get; } = new SelfHelpProvisioningState(PartialCompleteValue);
         /// <summary>
         /// All Diagnostics failed to run.
         /// Serialized Name: ProvisioningState.Failed
         /// </summary>
-        public static ProvisioningState Failed { get; } = new ProvisioningState(FailedValue);
+        public static SelfHelpProvisioningState Failed { get; } = new SelfHelpProvisioningState(FailedValue);
         /// <summary>
         /// When Diagnostic request gets canceled.
         /// Serialized Name: ProvisioningState.Canceled
         /// </summary>
-        public static ProvisioningState Canceled { get; } = new ProvisioningState(CanceledValue);
-        /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
-        public static bool operator ==(ProvisioningState left, ProvisioningState right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ProvisioningState"/> values are not the same. </summary>
-        public static bool operator !=(ProvisioningState left, ProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ProvisioningState"/>. </summary>
-        public static implicit operator ProvisioningState(string value) => new ProvisioningState(value);
+        public static SelfHelpProvisioningState Canceled { get; } = new SelfHelpProvisioningState(CanceledValue);
+        /// <summary> Determines if two <see cref="SelfHelpProvisioningState"/> values are the same. </summary>
+        public static bool operator ==(SelfHelpProvisioningState left, SelfHelpProvisioningState right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="SelfHelpProvisioningState"/> values are not the same. </summary>
+        public static bool operator !=(SelfHelpProvisioningState left, SelfHelpProvisioningState right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="SelfHelpProvisioningState"/>. </summary>
+        public static implicit operator SelfHelpProvisioningState(string value) => new SelfHelpProvisioningState(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ProvisioningState other && Equals(other);
+        public override bool Equals(object obj) => obj is SelfHelpProvisioningState other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(ProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SelfHelpProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

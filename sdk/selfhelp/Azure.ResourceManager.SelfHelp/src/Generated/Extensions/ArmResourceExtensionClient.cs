@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.SelfHelp
         /// </summary>
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityDiagnosticAsync(CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SelfHelpCheckNameAvailabilityResult>> CheckSelfHelpNameAvailabilityAsync(SelfHelpCheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = SelfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckNameAvailabilityDiagnostic");
+            using var scope = SelfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckSelfHelpNameAvailability");
             scope.Start();
             try
             {
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.SelfHelp
         /// </summary>
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResponse> CheckNameAvailabilityDiagnostic(CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public virtual Response<SelfHelpCheckNameAvailabilityResult> CheckSelfHelpNameAvailability(SelfHelpCheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = SelfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckNameAvailabilityDiagnostic");
+            using var scope = SelfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckSelfHelpNameAvailability");
             scope.Start();
             try
             {
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="filter"> Can be used to filter solutionIds by &apos;ProblemClassificationId&apos;. The filter supports only &apos;and&apos; and &apos;eq&apos; operators. Example: $filter=ProblemClassificationId eq &apos;1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e&apos; and ProblemClassificationId eq &apos;0a9673c2-7af6-4e19-90d3-4ee2461076d9&apos;. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SolutionMetadataResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SolutionMetadataResource> GetDiscoverySolutionsAsync(string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SelfHelpSolutionMetadata" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutionsAsync(string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionRestClient.CreateListRequest(Id, filter, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiscoverySolutionRestClient.CreateListNextPageRequest(nextLink, Id, filter, skiptoken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SolutionMetadataResource.DeserializeSolutionMetadataResource, DiscoverySolutionClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetDiscoverySolutions", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SelfHelpSolutionMetadata.DeserializeSelfHelpSolutionMetadata, DiscoverySolutionClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetSelfHelpDiscoverySolutions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -156,12 +156,12 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="filter"> Can be used to filter solutionIds by &apos;ProblemClassificationId&apos;. The filter supports only &apos;and&apos; and &apos;eq&apos; operators. Example: $filter=ProblemClassificationId eq &apos;1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e&apos; and ProblemClassificationId eq &apos;0a9673c2-7af6-4e19-90d3-4ee2461076d9&apos;. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SolutionMetadataResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SolutionMetadataResource> GetDiscoverySolutions(string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SelfHelpSolutionMetadata" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutions(string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionRestClient.CreateListRequest(Id, filter, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiscoverySolutionRestClient.CreateListNextPageRequest(nextLink, Id, filter, skiptoken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SolutionMetadataResource.DeserializeSolutionMetadataResource, DiscoverySolutionClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetDiscoverySolutions", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SelfHelpSolutionMetadata.DeserializeSelfHelpSolutionMetadata, DiscoverySolutionClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetSelfHelpDiscoverySolutions", "value", "nextLink", cancellationToken);
         }
     }
 }
