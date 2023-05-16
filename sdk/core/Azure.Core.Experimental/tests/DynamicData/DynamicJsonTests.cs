@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using Azure.Core.Dynamic;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -1049,6 +1050,48 @@ namespace Azure.Core.Tests
         [Test]
         public void CanRoundTripUnixDateTime()
         {
+            DynamicDataOptions options = new DynamicDataOptions()
+            {
+                DateTimeHandling = DynamicDateTimeHandling.UnixTime
+            };
+
+            dynamic value = BinaryData.FromString("""{ "foo": 0 }""").ToDynamicFromJson(options);
+
+            // Existing value
+            value.Foo = DateTimeOffset.UtcNow;
+
+            // New Value
+            value.Bar = DateTimeOffset.UtcNow.AddDays(1);
+
+            void validate(dynamic a, dynamic b)
+            {
+                Assert.AreEqual((long)a, (long)b);
+                Assert.AreEqual((DateTime)a, (DateTime)b);
+                Assert.AreEqual((DateTimeOffset)a, (DateTimeOffset)b);
+            }
+
+            string json = value.ToString();
+            dynamic fromString = BinaryData.FromString(json).ToDynamicFromJson(options);
+            validate(value.Foo, fromString.Foo);
+            validate(value.Bar, fromString.Bar);
+
+            BinaryData data = GetWriteToBuffer(value);
+            dynamic fromWriteTo = data.ToDynamicFromJson(options);
+            validate(value.Foo, fromWriteTo.Foo);
+            validate(value.Bar, fromWriteTo.Bar);
+        }
+
+        [Test]
+        public void ThrowsOnNonUtcDateTimeAssignment()
+        {
+            DynamicDataOptions options = new DynamicDataOptions()
+            {
+                DateTimeHandling = DynamicDateTimeHandling.UnixTime
+            };
+
+            dynamic value = BinaryData.FromString("""{ "foo": 0 }""").ToDynamicFromJson(options);
+
+            Assert.Throws<NotSupportedException>(() => value.Foo = DateTime.Now);
         }
 
         [Test]

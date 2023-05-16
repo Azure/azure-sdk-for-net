@@ -142,6 +142,11 @@ namespace Azure.Core.Dynamic
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
+            if (HasTypeMapping(value))
+            {
+                value = MapType(value);
+            }
+
             if (!char.IsUpper(name[0]))
             {
                 // Lookup name is camelCase, so set unchanged.
@@ -167,6 +172,20 @@ namespace Azure.Core.Dynamic
 
             // Binding machinery expects the call site signature to return an object
             return null;
+        }
+
+        private static bool HasTypeMapping(object value) => value switch
+        {
+            DateTime => true,
+            DateTimeOffset => true,
+            TimeSpan => true,
+            _ => false
+        };
+
+        private object MapType(object value)
+        {
+            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(value, _serializerOptions);
+            return JsonDocument.Parse(bytes);
         }
 
         private object? SetViaIndexer(object index, object value)
