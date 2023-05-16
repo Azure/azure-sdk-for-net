@@ -401,7 +401,10 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2023_08_03)]
-        public async Task CreateAsync_EnableSnapshotVirtualDirectoryAccess()
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CreateAsync_EnableSnapshotVirtualDirectoryAccess(bool? enableSnapshotVirtualDirectoryAccess)
         {
             // Arrange
             var shareName = GetNewShareName();
@@ -410,7 +413,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareCreateOptions options = new ShareCreateOptions
             {
                 Protocols = ShareProtocols.Nfs,
-                EnableSnapshotVirtualDirectoryAccess = true,
+                EnableSnapshotVirtualDirectoryAccess = enableSnapshotVirtualDirectoryAccess,
             };
 
             try
@@ -421,6 +424,14 @@ namespace Azure.Storage.Files.Shares.Tests
                 // Assert
                 Response<ShareProperties> response = await share.GetPropertiesAsync();
                 Assert.AreEqual(ShareProtocols.Nfs, response.Value.Protocols);
+                if (enableSnapshotVirtualDirectoryAccess == true || enableSnapshotVirtualDirectoryAccess == null)
+                {
+                    Assert.IsTrue(response.Value.EnableSnapshotVirtualDirectoryAccess);
+                }
+                else
+                {
+                    Assert.IsFalse(response.Value.EnableSnapshotVirtualDirectoryAccess);
+                }
             }
             finally
             {
