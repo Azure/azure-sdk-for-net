@@ -485,7 +485,7 @@ namespace Azure.Storage.Files.Shares
                 options?.AccessTier,
                 options?.Protocols,
                 options?.RootSquash,
-                options?.EnableSnapshotVirtualAccess,
+                options?.EnableSnapshotVirtualDirectoryAccess,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -523,7 +523,7 @@ namespace Azure.Storage.Files.Shares
                 options?.AccessTier,
                 options?.Protocols,
                 options?.RootSquash,
-                options?.EnableSnapshotVirtualAccess,
+                options?.EnableSnapshotVirtualDirectoryAccess,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -566,7 +566,7 @@ namespace Azure.Storage.Files.Shares
                 accessTier: default,
                 enabledProtocols: default,
                 rootSquash: default,
-                enableSnapshotVirtualAccess: default,
+                enableSnapshotVirtualDirectoryAccess: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -609,7 +609,7 @@ namespace Azure.Storage.Files.Shares
                 accessTier: default,
                 enabledProtocols: default,
                 rootSquash: default,
-                enableSnapshotVirtualAccess: default,
+                enableSnapshotVirtualDirectoryAccess: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -638,7 +638,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="rootSquash">
         /// Squash root to set on the share.
         /// </param>
-        /// <param name="enableSnapshotVirtualAccess">
+        /// <param name="enableSnapshotVirtualDirectoryAccess">
         /// Optional. Supported in version 2023-08-03 and above.
         /// Specifies whether the snapshot virtual directory should be accessible at the root of share mount point when NFS is enabled.
         /// If not specified, the default is true.
@@ -667,7 +667,7 @@ namespace Azure.Storage.Files.Shares
             ShareAccessTier? accessTier,
             ShareProtocols? enabledProtocols,
             ShareRootSquash? rootSquash,
-            bool? enableSnapshotVirtualAccess,
+            bool? enableSnapshotVirtualDirectoryAccess,
             bool async,
             CancellationToken cancellationToken,
             string operationName = default)
@@ -696,7 +696,7 @@ namespace Azure.Storage.Files.Shares
                             accessTier: accessTier,
                             enabledProtocols: enabledProtocols.ToShareEnableProtocolsString(),
                             rootSquash: rootSquash,
-                            enableSnapshotVirtualAccess: enableSnapshotVirtualAccess,
+                            enableSnapshotVirtualDirectoryAccess: enableSnapshotVirtualDirectoryAccess,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -708,7 +708,7 @@ namespace Azure.Storage.Files.Shares
                             accessTier: accessTier,
                             enabledProtocols: enabledProtocols.ToShareEnableProtocolsString(),
                             rootSquash: rootSquash,
-                            enableSnapshotVirtualAccess: enableSnapshotVirtualAccess,
+                            enableSnapshotVirtualDirectoryAccess: enableSnapshotVirtualDirectoryAccess,
                             cancellationToken: cancellationToken);
                     }
 
@@ -765,7 +765,7 @@ namespace Azure.Storage.Files.Shares
                 options?.AccessTier,
                 options?.Protocols,
                 options?.RootSquash,
-                options?.EnableSnapshotVirtualAccess,
+                options?.EnableSnapshotVirtualDirectoryAccess,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -802,7 +802,7 @@ namespace Azure.Storage.Files.Shares
                 options?.AccessTier,
                 options?.Protocols,
                 options?.RootSquash,
-                options?.EnableSnapshotVirtualAccess,
+                options?.EnableSnapshotVirtualDirectoryAccess,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -844,7 +844,7 @@ namespace Azure.Storage.Files.Shares
                 accessTier: default,
                 enabledProtocols: default,
                 squashRoot: default,
-                enableSnapshotVirtualAccess: default,
+                enableSnapshotVirtualDirectoryAccess: default,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -885,7 +885,7 @@ namespace Azure.Storage.Files.Shares
                 accessTier: default,
                 enabledProtocols: default,
                 squashRoot: default,
-                enableSnapshotVirtualAccess: default,
+                enableSnapshotVirtualDirectoryAccess: default,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -913,7 +913,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="squashRoot">
         /// Squash root to set on the share.
         /// </param>
-        /// <param name="enableSnapshotVirtualAccess">
+        /// <param name="enableSnapshotVirtualDirectoryAccess">
         /// Optional. Supported in version 2023-08-03 and above.
         /// Specifies whether the snapshot virtual directory should be accessible at the root of share mount point when NFS is enabled.
         /// If not specified, the default is true.
@@ -939,7 +939,7 @@ namespace Azure.Storage.Files.Shares
             ShareAccessTier? accessTier,
             ShareProtocols? enabledProtocols,
             ShareRootSquash? squashRoot,
-            bool? enableSnapshotVirtualAccess,
+            bool? enableSnapshotVirtualDirectoryAccess,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -959,7 +959,7 @@ namespace Azure.Storage.Files.Shares
                         accessTier,
                         enabledProtocols,
                         squashRoot,
-                        enableSnapshotVirtualAccess,
+                        enableSnapshotVirtualDirectoryAccess,
                         async,
                         cancellationToken,
                         operationName: $"{nameof(ShareClient)}.{nameof(CreateIfNotExists)}")

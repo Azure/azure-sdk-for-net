@@ -44,7 +44,7 @@ namespace Azure.Storage.Files.Shares
             _fileRequestIntent = fileRequestIntent;
         }
 
-        internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata, int? quota, ShareAccessTier? accessTier, string enabledProtocols, ShareRootSquash? rootSquash, bool? enableSnapshotVirtualAccess)
+        internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata, int? quota, ShareAccessTier? accessTier, string enabledProtocols, ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -78,9 +78,9 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-root-squash", rootSquash.Value.ToSerialString());
             }
-            if (enableSnapshotVirtualAccess != null)
+            if (enableSnapshotVirtualDirectoryAccess != null)
             {
-                request.Headers.Add("x-ms-enable-snapshot-virtual-access", enableSnapshotVirtualAccess.Value);
+                request.Headers.Add("x-ms-enable-snapshot-virtual-directory-access", enableSnapshotVirtualDirectoryAccess.Value);
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -93,11 +93,11 @@ namespace Azure.Storage.Files.Shares
         /// <param name="accessTier"> Specifies the access tier of the share. </param>
         /// <param name="enabledProtocols"> Protocols to enable on the share. </param>
         /// <param name="rootSquash"> Root squash to set on the share.  Only valid for NFS shares. </param>
-        /// <param name="enableSnapshotVirtualAccess"> The Boolean to use. </param>
+        /// <param name="enableSnapshotVirtualDirectoryAccess"> The Boolean to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareCreateHeaders>> CreateAsync(int? timeout = null, IDictionary<string, string> metadata = null, int? quota = null, ShareAccessTier? accessTier = null, string enabledProtocols = null, ShareRootSquash? rootSquash = null, bool? enableSnapshotVirtualAccess = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ShareCreateHeaders>> CreateAsync(int? timeout = null, IDictionary<string, string> metadata = null, int? quota = null, ShareAccessTier? accessTier = null, string enabledProtocols = null, ShareRootSquash? rootSquash = null, bool? enableSnapshotVirtualDirectoryAccess = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, metadata, quota, accessTier, enabledProtocols, rootSquash, enableSnapshotVirtualAccess);
+            using var message = CreateCreateRequest(timeout, metadata, quota, accessTier, enabledProtocols, rootSquash, enableSnapshotVirtualDirectoryAccess);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ShareCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -116,11 +116,11 @@ namespace Azure.Storage.Files.Shares
         /// <param name="accessTier"> Specifies the access tier of the share. </param>
         /// <param name="enabledProtocols"> Protocols to enable on the share. </param>
         /// <param name="rootSquash"> Root squash to set on the share.  Only valid for NFS shares. </param>
-        /// <param name="enableSnapshotVirtualAccess"> The Boolean to use. </param>
+        /// <param name="enableSnapshotVirtualDirectoryAccess"> The Boolean to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareCreateHeaders> Create(int? timeout = null, IDictionary<string, string> metadata = null, int? quota = null, ShareAccessTier? accessTier = null, string enabledProtocols = null, ShareRootSquash? rootSquash = null, bool? enableSnapshotVirtualAccess = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ShareCreateHeaders> Create(int? timeout = null, IDictionary<string, string> metadata = null, int? quota = null, ShareAccessTier? accessTier = null, string enabledProtocols = null, ShareRootSquash? rootSquash = null, bool? enableSnapshotVirtualDirectoryAccess = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, metadata, quota, accessTier, enabledProtocols, rootSquash, enableSnapshotVirtualAccess);
+            using var message = CreateCreateRequest(timeout, metadata, quota, accessTier, enabledProtocols, rootSquash, enableSnapshotVirtualDirectoryAccess);
             _pipeline.Send(message, cancellationToken);
             var headers = new ShareCreateHeaders(message.Response);
             switch (message.Response.Status)

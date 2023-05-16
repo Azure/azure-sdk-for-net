@@ -401,7 +401,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2023_08_03)]
-        public async Task CreateAsync_EnableSnapshotVirtualAcess()
+        public async Task CreateAsync_EnableSnapshotVirtualDirectoryAccess()
         {
             // Arrange
             var shareName = GetNewShareName();
@@ -410,7 +410,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareCreateOptions options = new ShareCreateOptions
             {
                 Protocols = ShareProtocols.Nfs,
-                EnableSnapshotVirtualAccess = true,
+                EnableSnapshotVirtualDirectoryAccess = true,
             };
 
             try

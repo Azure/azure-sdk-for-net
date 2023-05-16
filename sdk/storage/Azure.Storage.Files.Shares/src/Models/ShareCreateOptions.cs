@@ -45,6 +45,6 @@ namespace Azure.Storage.Files.Shares.Models
         /// Specifies whether the snapshot virtual directory should be accessible at the root of share mount point when NFS is enabled.
         /// If not specified, the default is true.
         /// </summary>
-        public bool? EnableSnapshotVirtualAccess { get; set; }
+        public bool? EnableSnapshotVirtualDirectoryAccess { get; set; }
     }
 }

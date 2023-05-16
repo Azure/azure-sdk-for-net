@@ -886,7 +886,7 @@ namespace Azure.Storage.Files.Shares
                 accessTier: options?.AccessTier,
                 enabledProtocols: options?.Protocols,
                 rootSquash: options?.RootSquash,
-                enableSnapshotVirtualAccess: options?.EnableSnapshotVirtualAccess,
+                enableSnapshotVirtualDirectoryAccess: options?.EnableSnapshotVirtualDirectoryAccess,
                 async: false,
                 cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -935,7 +935,7 @@ namespace Azure.Storage.Files.Shares
                 accessTier: options?.AccessTier,
                 enabledProtocols: options?.Protocols,
                 rootSquash: options?.RootSquash,
-                enableSnapshotVirtualAccess: options?.EnableSnapshotVirtualAccess,
+                enableSnapshotVirtualDirectoryAccess: options?.EnableSnapshotVirtualDirectoryAccess,
                 async: true,
                 cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -989,7 +989,7 @@ namespace Azure.Storage.Files.Shares
                 accessTier: default,
                 enabledProtocols: default,
                 rootSquash: default,
-                enableSnapshotVirtualAccess: default,
+                enableSnapshotVirtualDirectoryAccess: default,
                 async: false,
                 cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -1043,7 +1043,7 @@ namespace Azure.Storage.Files.Shares
                 accessTier: default,
                 enabledProtocols: default,
                 rootSquash: default,
-                enableSnapshotVirtualAccess: default,
+                enableSnapshotVirtualDirectoryAccess: default,
                 async: true,
                 cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
