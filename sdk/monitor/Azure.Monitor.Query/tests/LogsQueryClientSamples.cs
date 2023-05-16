@@ -79,7 +79,7 @@ namespace Azure.Monitor.Query.Tests
 
         [Test]
         [Explicit]
-        public async Task QueryLogsAsTable()
+        public async Task QueryLogsByWorkspaceAsTable()
         {
             #region Snippet:QueryLogsAsTable
 #if SNIPPET
@@ -90,18 +90,18 @@ namespace Azure.Monitor.Query.Tests
             #region Snippet:CreateLogsClient
             var client = new LogsQueryClient(new DefaultAzureCredential());
             #endregion
-            Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
+
+            Response<LogsQueryResult> result = await client.QueryWorkspaceAsync(
                 workspaceId,
                 "AzureActivity | top 10 by TimeGenerated",
                 new QueryTimeRange(TimeSpan.FromDays(1)));
 
-            LogsTable table = response.Value.Table;
+            LogsTable table = result.Value.Table;
 
             foreach (var row in table.Rows)
             {
-                Console.WriteLine(row["OperationName"] + " " + row["ResourceGroup"]);
+                Console.WriteLine($"{row["OperationName"]} {row["ResourceGroup"]}");
             }
-
             #endregion
         }
 
@@ -382,28 +382,26 @@ namespace Azure.Monitor.Query.Tests
 
         [Test]
         [Explicit]
-        public async Task QueryResource()
+        public async Task QueryLogsByResourceAsTable()
         {
             #region Snippet:QueryResource
+#if SNIPPET
+            string resourceId = "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/<resource_provider>/<resource>";
+#else
+            string resourceId = TestEnvironment.StorageAccountId;
+#endif
             var client = new LogsQueryClient(new DefaultAzureCredential());
 
-            var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
-                "search *",
-                new QueryTimeRange(TimeSpan.FromDays(5)));
+            Response<LogsQueryResult> result = await client.QueryResourceAsync(
+                new ResourceIdentifier(resourceId),
+                "AzureActivity | top 10 by TimeGenerated",
+                new QueryTimeRange(TimeSpan.FromDays(1)));
 
-            var resultTable = results.Value.Table;
+            LogsTable table = result.Value.Table;
 
-            foreach (LogsTableRow rows in resultTable.Rows)
+            foreach (LogsTableRow row in table.Rows)
             {
-                foreach (var row in rows)
-                {
-                    Console.WriteLine(row);
-                }
-            }
-
-            foreach (LogsTableColumn columns in resultTable.Columns)
-            {
-                Console.WriteLine("Name: " + columns.Name + " Type: " + columns.Type);
+                Console.WriteLine($"{row["OperationName"]} {row["ResourceGroup"]}");
             }
             #endregion
         }

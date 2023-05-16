@@ -1,0 +1,72 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://smstestapp.communication.azure.com/availablePhoneNumbers/countries?api-version=2022-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230515.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7cd7c09aa2d7b5144ff6650f60d1f91a",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Mon, 15 May 2023 15:55:26 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2022-12-01, 2022-12-02-preview2",
+        "Cache-Control": "max-age=21600, private, stale-while-revalidate=86400",
+        "Content-Length": "420",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 15 May 2023 15:55:29 GMT",
+        "MS-CV": "NoGZ9Gvn5EGc8VGhHMN2Bw.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "X-Azure-Ref": "071ViZAAAAAAZylk\u002BSrKyTInktC5OH1AFU0FPMzFFREdFMTIxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "2527ms"
+      },
+      "ResponseBody": {
+        "countries": [
+          {
+            "localizedName": "Canada",
+            "countryCode": "CA"
+          },
+          {
+            "localizedName": "Denmark",
+            "countryCode": "DK"
+          },
+          {
+            "localizedName": "Ireland",
+            "countryCode": "IE"
+          },
+          {
+            "localizedName": "Italy",
+            "countryCode": "IT"
+          },
+          {
+            "localizedName": "Puerto Rico",
+            "countryCode": "PR"
+          },
+          {
+            "localizedName": "Sweden",
+            "countryCode": "SE"
+          },
+          {
+            "localizedName": "United Kingdom",
+            "countryCode": "GB"
+          },
+          {
+            "localizedName": "United States",
+            "countryCode": "US"
+          }
+        ],
+        "nextLink": null
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "1552542917"
+  }
+}
