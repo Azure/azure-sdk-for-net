@@ -273,31 +273,6 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("TextAnalyticsRequestOptions.DisableServiceLogs is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
         }
 
-        [RecordedTest]
-        [RetryOnInternalServerError]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
-        public async Task AnalyzeOperationRecognizeLinkedEntitiesWithAutoDetectedLanguageTest()
-        {
-            TextAnalyticsClient client = GetClient();
-            List<string> documents = s_batchConvenienceDocuments;
-            Dictionary<string, List<string>> expectedOutput = s_expectedBatchOutput;
-            TextAnalyticsActions actions = new()
-            {
-                RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>() { new RecognizeLinkedEntitiesAction() },
-            };
-
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto");
-            await operation.WaitForCompletionAsync();
-
-            // Take the first page.
-            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> actionResults = resultCollection.RecognizeLinkedEntitiesResults;
-            Assert.IsNotNull(actionResults);
-
-            RecognizeLinkedEntitiesResultCollection results = actionResults.FirstOrDefault().DocumentsResults;
-            ValidateBatchDocumentsResult(results, expectedOutput, isLanguageAutoDetected: true);
-        }
-
         private void ValidateInDocumenResult(LinkedEntityCollection entities, List<string> minimumExpectedOutput)
         {
             Assert.IsNotNull(entities.Warnings);
@@ -334,8 +309,7 @@ namespace Azure.AI.TextAnalytics.Tests
         private void ValidateBatchDocumentsResult(
             RecognizeLinkedEntitiesResultCollection results,
             Dictionary<string,List<string>> minimumExpectedOutput,
-            bool includeStatistics = default,
-            bool isLanguageAutoDetected = default)
+            bool includeStatistics = default)
         {
             Assert.That(results.ModelVersion, Is.Not.Null.And.Not.Empty);
 
@@ -368,21 +342,6 @@ namespace Azure.AI.TextAnalytics.Tests
                 {
                     Assert.AreEqual(0, result.Statistics.CharacterCount);
                     Assert.AreEqual(0, result.Statistics.TransactionCount);
-                }
-
-                if (isLanguageAutoDetected)
-                {
-                    Assert.IsNotNull(result.DetectedLanguage);
-                    Assert.That(result.DetectedLanguage.Value.Name, Is.Not.Null.And.Not.Empty);
-                    Assert.That(result.DetectedLanguage.Value.Iso6391Name, Is.Not.Null.And.Not.Empty);
-                    Assert.GreaterOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 0.0);
-                    Assert.LessOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 1.0);
-                    Assert.IsNotNull(result.DetectedLanguage.Value.Warnings);
-                    Assert.IsEmpty(result.DetectedLanguage.Value.Warnings);
-                }
-                else
-                {
-                    Assert.IsNull(result.DetectedLanguage);
                 }
 
                 ValidateInDocumenResult(result.Entities, minimumExpectedOutput[result.Id]);

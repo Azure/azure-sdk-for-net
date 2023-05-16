@@ -2207,7 +2207,7 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2023_04_01"/>, and newer.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the documents are written in.</param>
@@ -2241,7 +2241,7 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2023_04_01"/>, and newer.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional <see cref="ExtractiveSummarizeOptions"/> used to configure the operation.</param>
@@ -2273,7 +2273,7 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2023_04_01"/>, and newer.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the documents are written in.</param>
@@ -2307,7 +2307,7 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2023_04_01"/>, and newer.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional <see cref="ExtractiveSummarizeOptions"/> used to configure the operation.</param>
@@ -2343,7 +2343,7 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2023_04_01"/>, and newer.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the documents are written in.</param>
@@ -2377,7 +2377,7 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2023_04_01"/>, and newer.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional <see cref="AbstractiveSummarizeOptions"/> used to configure the operation.</param>
@@ -2409,7 +2409,7 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2023_04_01"/>, and newer.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the documents are written in.</param>
@@ -2443,7 +2443,7 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2023_04_01"/>, and newer.
         /// </remarks>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional <see cref="AbstractiveSummarizeOptions"/> used to configure the operation.</param>

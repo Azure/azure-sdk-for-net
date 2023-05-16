@@ -764,7 +764,6 @@ Samples are provided for each main functional area, and for each area, samples a
 * [Understand how to work with long-running operations][lro_sample]
 * [Running multiple actions in one or more documents][analyze_operation_sample]
 * [Analyze Sentiment with Opinion Mining][analyze_sentiment_opinion_mining_sample]
-* [Resolve entities to standard formats with NER resolutions][ner_resolutions_sample]
 * [Mock a client for testing][mock_client_sample] using the [Moq][moq] library
 
 ## Contributing
@@ -790,7 +789,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [lro_sample]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_LROPolling.md
 [analyze_operation_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_AnalyzeActions.md
 [analyze_sentiment_opinion_mining_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2.1_AnalyzeSentimentWithOpinionMining.md
-[ner_resolutions_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_RecognizeEntitiesWithResolutions.md
 [mock_client_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_MockClient.md
 
 [healthcare]: https://docs.microsoft.com/azure/cognitive-services/language-service/text-analytics-for-health/overview?tabs=ner
