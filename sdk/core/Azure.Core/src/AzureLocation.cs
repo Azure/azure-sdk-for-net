@@ -299,6 +299,16 @@ namespace Azure.Core
         /// </summary>
         public static AzureLocation USGovIowa { get; } = CreateStaticReference("usgoviowa", "US Gov Iowa");
 
+		/// <summary>
+        /// Public cloud location for East US 2 EUAP.
+        /// </summary>
+        public static AzureLocation EastUS2Euap { get; } = CreateStaticReference("eastus2euap", "East US 2 EUAP");
+
+		/// <summary>
+        /// Public cloud location for Central US EUAP.
+        /// </summary>
+        public static AzureLocation CentralUSEuap { get; } = CreateStaticReference("centraluseuap", "Central US EUAP");
+
         #endregion
 
         /// <summary> Initializes a new instance of Location. </summary>

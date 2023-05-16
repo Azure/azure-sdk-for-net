@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
     {
         private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
-        private static AzureLocation Location = new AzureLocation("eastus2", "East US 2");
+        private static AzureLocation Location = new AzureLocation("eastus2euap", "East US 2 EUAP");
 
         public ElasticPoolTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.AreEqual(0, list.Count);
         }
 
-        /*[Test]
+        [Test]
         [RecordedTest]
         public async Task ElasticPoolApiTestsWithEnclaves()
         {
@@ -160,6 +160,6 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 list = await collection.GetAllAsync().ToEnumerableAsync();
                 Assert.AreEqual(0, list.Count);
             }
-        }*/
+        }
     }
 }
