@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The time frame for pulling data for the query. If custom, then a specific time period must be provided. </summary>
+    /// <summary> The time frame for pulling data for the export. If custom, then a specific time period must be provided. </summary>
     public readonly partial struct TimeframeType : IEquatable<TimeframeType>
     {
         private readonly string _value;

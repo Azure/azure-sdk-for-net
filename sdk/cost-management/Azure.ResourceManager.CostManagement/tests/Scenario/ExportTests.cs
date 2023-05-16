@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CostManagement.Tests
         }
 
         [RecordedTest]
-        [Ignore("Linked issue: https://github.com/Azure/azure-rest-api-specs/issues/23704")]
+        //[Ignore("Linked issue: https://github.com/Azure/azure-rest-api-specs/issues/23704")]
         public async Task CreateOrUpdateExistGetGetAllDelete()
         {
             // create a storage account

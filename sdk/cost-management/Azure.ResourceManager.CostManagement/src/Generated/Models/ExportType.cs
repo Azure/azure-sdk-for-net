@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The type of the query. </summary>
+    /// <summary> The type of the export. Note that &apos;Usage&apos; is equivalent to &apos;ActualCost&apos; and is applicable to exports that do not yet provide data for charges or amortization for service reservations. </summary>
     public readonly partial struct ExportType : IEquatable<ExportType>
     {
         private readonly string _value;

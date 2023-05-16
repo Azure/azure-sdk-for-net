@@ -30,15 +30,12 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> This can be &apos;{externalSubscriptionId}&apos; for linked account or &apos;{externalBillingAccountId}&apos; for consolidated account used with dimension/query operations. </summary>
         public string ExternalCloudProviderId { get; }
         /// <summary> May be used to filter dimensions by properties/category, properties/usageStart, properties/usageEnd. Supported operators are &apos;eq&apos;,&apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;. </summary>
-        public string Filter { get; set; } = null;
-
+        public string Filter { get; set; }
         /// <summary> May be used to expand the properties/data within a dimension category. By default, data is not included when listing dimensions. </summary>
-        public string Expand { get; set; } = null;
-
+        public string Expand { get; set; }
         /// <summary> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </summary>
-        public string Skiptoken { get; set; } = null;
-
+        public string Skiptoken { get; set; }
         /// <summary> May be used to limit the number of results to the most recent N dimension data. </summary>
-        public int? Top { get; set; } = null;
+        public int? Top { get; set; }
     }
 }

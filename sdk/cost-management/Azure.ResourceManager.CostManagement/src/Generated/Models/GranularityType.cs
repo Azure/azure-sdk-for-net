@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The granularity of rows in the forecast. </summary>
+    /// <summary> The granularity of rows in the export. Currently only &apos;Daily&apos; is supported. </summary>
     public readonly partial struct GranularityType : IEquatable<GranularityType>
     {
         private readonly string _value;
