@@ -21,7 +21,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             {
                 return null;
             }
-            string jobId = default;
+            Guid jobId = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset expirationDateTime = default;
             DateTimeOffset lastUpdateDateTime = default;
@@ -32,7 +32,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             {
                 if (property.NameEquals("jobId"u8))
                 {
-                    jobId = property.Value.GetString();
+                    jobId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("createdDateTime"u8))
