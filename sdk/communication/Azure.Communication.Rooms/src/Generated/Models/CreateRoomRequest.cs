@@ -17,16 +17,14 @@ namespace Azure.Communication.Rooms
         /// <summary> Initializes a new instance of CreateRoomRequest. </summary>
         public CreateRoomRequest()
         {
-            Participants = new ChangeTrackingList<RoomParticipantInternal>();
+            Participants = new ChangeTrackingDictionary<string, ParticipantProperties>();
         }
 
-        /// <summary> The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
+        /// <summary> The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. The default value is the current date time. </summary>
         public DateTimeOffset? ValidFrom { get; set; }
-        /// <summary> The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
+        /// <summary> The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. The default value is the current date time plus 180 days. </summary>
         public DateTimeOffset? ValidUntil { get; set; }
-        /// <summary> The Policy based on which Participants can join a room. </summary>
-        public RoomJoinPolicy? RoomJoinPolicy { get; set; }
-        /// <summary> (Optional) Collection of participants invited to the room. </summary>
-        public IList<RoomParticipantInternal> Participants { get; }
+        /// <summary> (Optional) Participants to be invited to the room. </summary>
+        public IDictionary<string, ParticipantProperties> Participants { get; }
     }
 }

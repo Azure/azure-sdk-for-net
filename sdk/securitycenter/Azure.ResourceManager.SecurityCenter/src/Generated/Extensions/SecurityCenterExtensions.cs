@@ -1306,6 +1306,184 @@ namespace Azure.ResourceManager.SecurityCenter
             return client.GetSqlVulnerabilityAssessmentBaselineRules(scope).Get(ruleId, workspaceId, cancellationToken);
         }
 
+        /// <summary>
+        /// Details of the information protection policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/informationProtectionPolicies/{informationProtectionPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InformationProtectionPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="informationProtectionPolicyName"> Name of the information protection policy. </param>
+        /// <param name="informationProtectionPolicy"> Information protection policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="informationProtectionPolicy"/> is null. </exception>
+        public static async Task<Response<InformationProtectionPolicy>> CreateOrUpdateInformationProtectionPolicyAsync(this ArmClient client, ResourceIdentifier scope, InformationProtectionPolicyName informationProtectionPolicyName, InformationProtectionPolicy informationProtectionPolicy, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(informationProtectionPolicy, nameof(informationProtectionPolicy));
+
+            return await GetArmResourceExtensionClient(client, scope).CreateOrUpdateInformationProtectionPolicyAsync(informationProtectionPolicyName, informationProtectionPolicy, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Details of the information protection policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/informationProtectionPolicies/{informationProtectionPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InformationProtectionPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="informationProtectionPolicyName"> Name of the information protection policy. </param>
+        /// <param name="informationProtectionPolicy"> Information protection policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="informationProtectionPolicy"/> is null. </exception>
+        public static Response<InformationProtectionPolicy> CreateOrUpdateInformationProtectionPolicy(this ArmClient client, ResourceIdentifier scope, InformationProtectionPolicyName informationProtectionPolicyName, InformationProtectionPolicy informationProtectionPolicy, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(informationProtectionPolicy, nameof(informationProtectionPolicy));
+
+            return GetArmResourceExtensionClient(client, scope).CreateOrUpdateInformationProtectionPolicy(informationProtectionPolicyName, informationProtectionPolicy, cancellationToken);
+        }
+
+        /// <summary>
+        /// Information protection policies of a specific management group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/informationProtectionPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InformationProtectionPolicies_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static AsyncPageable<InformationProtectionPolicy> GetInformationProtectionPoliciesAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetInformationProtectionPoliciesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Information protection policies of a specific management group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/informationProtectionPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InformationProtectionPolicies_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Pageable<InformationProtectionPolicy> GetInformationProtectionPolicies(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetInformationProtectionPolicies(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get security sub-assessments on all your scanned resources inside a subscription scope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/subAssessments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubAssessments_ListAll</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static AsyncPageable<SecuritySubAssessmentResource> GetSecuritySubAssessmentsAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetSecuritySubAssessmentsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get security sub-assessments on all your scanned resources inside a subscription scope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/subAssessments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubAssessments_ListAll</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Pageable<SecuritySubAssessmentResource> GetSecuritySubAssessments(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetSecuritySubAssessments(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get security assessments on all your scanned resources inside a scope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assessments_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static AsyncPageable<SecurityAssessmentResource> GetSecurityAssessmentsAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetSecurityAssessmentsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get security assessments on all your scanned resources inside a scope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assessments_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Pageable<SecurityAssessmentResource> GetSecurityAssessments(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetSecurityAssessments(cancellationToken);
+        }
+
         /// <summary> Gets a collection of CustomAssessmentAutomationResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CustomAssessmentAutomationResources and their operations over a CustomAssessmentAutomationResource. </returns>

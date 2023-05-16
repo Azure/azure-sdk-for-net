@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Workloads.Samples
             SapMonitorData data = new SapMonitorData(new AzureLocation("westus"))
             {
                 AppLocation = new AzureLocation("westus"),
-                RoutingPreference = RoutingPreference.RouteAll,
+                RoutingPreference = SapRoutingPreference.RouteAll,
                 ManagedResourceGroupName = "myManagedRg",
                 LogAnalyticsWorkspaceArmId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.operationalinsights/workspaces/myWorkspace"),
                 MonitorSubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet"),

@@ -121,7 +121,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [Ignore("Test file IRS-1040_2.pdf hasn't been uploaded to GitHub yet.")]
+        [ServiceVersion(Min = DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)]
         public async Task ClassifyDocumentOperationCanPollFromNewObject()
         {
             var client = CreateDocumentAnalysisClient(out var nonInstrumentedClient);
@@ -135,10 +135,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             await sameOperation.WaitForCompletionAsync();
 
             Assert.IsTrue(sameOperation.HasValue);
-            Assert.AreEqual(4, sameOperation.Value.Pages);
+            Assert.AreEqual(4, sameOperation.Value.Pages.Count);
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)]
         public async Task BuildClassifierOperationCanPollFromNewObject()
         {
             var client = CreateDocumentModelAdministrationClient(out var nonInstrumentedClient);
@@ -176,6 +177,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)]
         public async Task BuildClassifierOperationPercentageCompletedValue()
         {
             var client = CreateDocumentModelAdministrationClient(out var nonInstrumentedClient);

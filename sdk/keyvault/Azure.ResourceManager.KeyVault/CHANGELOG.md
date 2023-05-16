@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,17 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.1 (2023-05-05)
+
+### Features Added
+
+- Add `Secret` operations
+- Add some new properties for `ManagedHsmProperties`
+
+### Other Changes
+
+- Upgraded API version to `2023-02-01`.
 
 ## 1.1.0 (2023-02-13)
 

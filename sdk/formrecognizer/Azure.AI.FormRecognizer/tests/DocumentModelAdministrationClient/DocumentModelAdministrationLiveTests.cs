@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -20,10 +20,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     [IgnoreServiceError(400, "InvalidRequest", Message = "Content is not accessible: Invalid data URL", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28923")]
     public class DocumentModelAdministrationLiveTests : DocumentAnalysisLiveTestBase
     {
-        private readonly IReadOnlyDictionary<string, string> _testingTags = new Dictionary<string, string>()
+        private static readonly DocumentBuildMode[] s_buildDocumentModelTestCases = new[]
         {
-            { "ordinary tag", "an ordinary tag" },
-            { "crazy tag", "a CRAZY tag 123!@#$%^&*()[]{}\\/?.,<>" }
+            DocumentBuildMode.Template,
+            DocumentBuildMode.Neural
         };
 
         /// <summary>
@@ -38,135 +38,145 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         #region Build
 
         [RecordedTest]
-        public async Task BuildModelCanAuthenticateWithTokenCredential()
+        public async Task BuildDocumentModelCanAuthenticateWithTokenCredential()
         {
             var client = CreateDocumentModelAdministrationClient(useTokenCredential: true);
+            var modelId = Recording.GenerateId();
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
-            var modelId = Recording.GenerateId();
-            BuildDocumentModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId);
+            BuildDocumentModelOperation operation = null;
+
+            try
+            {
+                operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId);
+            }
+            finally
+            {
+                if (operation != null && operation.HasValue)
+                {
+                    await client.DeleteDocumentModelAsync(modelId);
+                }
+            }
 
             // Sanity check to make sure we got an actual response back from the service.
-            Assert.IsNotNull(operation.Value.ModelId);
-
-            await client.DeleteDocumentModelAsync(modelId);
+            Assert.AreEqual(modelId, operation.Value.ModelId);
         }
 
         [RecordedTest]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task BuildModel(bool singlePage)
+        [TestCaseSource(nameof(s_buildDocumentModelTestCases))]
+        public async Task BuildDocumentModel(DocumentBuildMode buildMode)
         {
-            var client = CreateDocumentModelAdministrationClient();
-            var trainingFilesUri = new Uri(singlePage ? TestEnvironment.BlobContainerSasUrl : TestEnvironment.MultipageBlobContainerSasUrl);
-            var modelId = Recording.GenerateId();
-
-            BuildDocumentModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId);
-
-            Assert.IsTrue(operation.HasValue);
-
-            DocumentModelDetails model = operation.Value;
-
-            ValidateDocumentModelDetails(model);
-
-            Assert.AreEqual(1, model.DocumentTypes.Count);
-            Assert.IsTrue(model.DocumentTypes.ContainsKey(modelId));
-
-            DocumentTypeDetails documentType = model.DocumentTypes[modelId];
-
-            Assert.AreEqual(DocumentBuildMode.Template, documentType.BuildMode);
-        }
-
-        [RecordedTest]
-        public async Task BuildModelWithNeuralBuildMode()
-        {
-            // Test takes too long to finish running, and seems to cause multiple failures in our
-            // live test pipeline. Until we find a way to run it without flakiness, this test will
-            // be ignored when running in Live mode.
-
-            if (Recording.Mode == RecordedTestMode.Live)
+            if (buildMode == DocumentBuildMode.Neural && Recording.Mode == RecordedTestMode.Live)
             {
+                // Test takes too long to finish running, and seems to cause multiple failures in our
+                // live test pipeline. Until we find a way to run it without flakiness, this test will
+                // be ignored when running in Live mode.
                 Assert.Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27042");
             }
 
             var client = CreateDocumentModelAdministrationClient();
-            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             var modelId = Recording.GenerateId();
+            var startTime = Recording.UtcNow;
+            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+            var prefix = "subfolder";
+            var options = new BuildDocumentModelOptions()
+            {
+                Description = $"This model was generated by a .NET test: {nameof(BuildDocumentModel)}",
+                Tags = { { "tag1", "value1" }, { "tag2", "value2" } }
+            };
 
-            BuildDocumentModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Started, trainingFilesUri, DocumentBuildMode.Neural, modelId);
+            BuildDocumentModelOperation operation = null;
 
-            await operation.WaitForCompletionAsync(TimeSpan.FromMinutes(1));
+            try
+            {
+                operation = await client.BuildDocumentModelAsync(WaitUntil.Started, trainingFilesUri, buildMode, modelId, prefix, options);
+
+                await (buildMode == DocumentBuildMode.Neural
+                    ? operation.WaitForCompletionAsync(TimeSpan.FromMinutes(1))
+                    : operation.WaitForCompletionAsync());
+            }
+            finally
+            {
+                if (operation != null && operation.HasValue)
+                {
+                    await client.DeleteDocumentModelAsync(modelId);
+                }
+            }
 
             Assert.IsTrue(operation.HasValue);
 
             DocumentModelDetails model = operation.Value;
 
-            ValidateDocumentModelDetails(model);
+            Assert.AreEqual(modelId, model.ModelId);
+            Assert.AreEqual(options.Description, model.Description);
+            Assert.AreEqual(ServiceVersionString, model.ApiVersion);
+            Assert.Greater(model.CreatedOn, startTime);
+
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)
+            {
+                Assert.Greater(model.ExpiresOn, model.CreatedOn);
+            }
+            else
+            {
+                // We have changed the following validation because of a service bug. This needs to be updated once the bug is fixed.
+                // More information: https://github.com/Azure/azure-sdk-for-net/issues/35809
+
+                // The expected behavior. This must be added back once the service bug is fixed.
+                // Assert.IsNull(model.ExpiresOn);
+
+                // The current behavior. This assertion must be removed once the service bug is fixed.
+                Assert.Greater(model.ExpiresOn, model.CreatedOn);
+            }
+
+            CollectionAssert.AreEquivalent(options.Tags, model.Tags);
 
             Assert.AreEqual(1, model.DocumentTypes.Count);
-            Assert.IsTrue(model.DocumentTypes.ContainsKey(modelId));
 
             DocumentTypeDetails documentType = model.DocumentTypes[modelId];
 
-            Assert.AreEqual(DocumentBuildMode.Neural, documentType.BuildMode);
-        }
+            Assert.IsNull(documentType.Description);
+            Assert.AreEqual(buildMode, documentType.BuildMode);
 
-        [RecordedTest]
-        public async Task BuildModelSucceedsWithValidPrefix()
-        {
-            var client = CreateDocumentModelAdministrationClient();
-            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-            var modelId = Recording.GenerateId();
-
-            BuildDocumentModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId, "subfolder/");
-
-            Assert.IsTrue(operation.HasValue);
-            Assert.IsNotNull(operation.Value.ModelId);
-        }
-
-        [RecordedTest]
-        [Ignore("https://github.com/azure/azure-sdk-for-net/issues/28272")]
-        public void BuildModelFailsWithInvalidPrefix()
-        {
-            var client = CreateDocumentModelAdministrationClient();
-            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-            var modelId = Recording.GenerateId();
-
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.BuildDocumentModelAsync(WaitUntil.Started, trainingFilesUri, DocumentBuildMode.Template, modelId, "subfolder"));
-            Assert.AreEqual("InvalidRequest", ex.ErrorCode);
-        }
-
-        [RecordedTest]
-        public async Task BuildModelWithTags()
-        {
-            var client = CreateDocumentModelAdministrationClient();
-            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-            var modelId = Recording.GenerateId();
-
-            var options = new BuildDocumentModelOptions();
-
-            foreach (var tag in _testingTags)
+            if (buildMode == DocumentBuildMode.Template)
             {
-                options.Tags.Add(tag);
+                CollectionAssert.AreEquivalent(documentType.FieldConfidence.Keys, documentType.FieldSchema.Keys);
+
+                foreach (float confidence in documentType.FieldConfidence.Values)
+                {
+                    Assert.GreaterOrEqual(confidence, 0f);
+                    Assert.LessOrEqual(confidence, 1f);
+                }
+            }
+            else
+            {
+                Assert.IsEmpty(documentType.FieldConfidence);
             }
 
-            BuildDocumentModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId, options: options);
+            foreach (DocumentFieldSchema fieldSchema in documentType.FieldSchema.Values)
+            {
+                Assert.IsNull(fieldSchema.Description);
+                Assert.IsNull(fieldSchema.Example);
+                Assert.IsNull(fieldSchema.Items);
+                Assert.IsEmpty(fieldSchema.Properties);
+            }
 
-            DocumentModelDetails model = operation.Value;
+            DocumentFieldSchema merchantSchema = documentType.FieldSchema["Merchant"];
+            DocumentFieldSchema quantitySchema = documentType.FieldSchema["Quantity"];
 
-            CollectionAssert.AreEquivalent(_testingTags, model.Tags);
+            Assert.AreEqual(DocumentFieldType.String, merchantSchema.Type);
+            Assert.AreEqual(DocumentFieldType.Double, quantitySchema.Type);
         }
 
         [RecordedTest]
-        public void BuildModelError()
+        public void BuildDocumentModelThrowsWhenTrainingFilesAreMissing()
         {
             var client = CreateDocumentModelAdministrationClient();
             var modelId = Recording.GenerateId();
+            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+            var prefix = "testfolder"; // folder exists but most training files are missing
 
-            var containerUrl = new Uri("https://someUrl");
-
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.BuildDocumentModelAsync(WaitUntil.Started, containerUrl, DocumentBuildMode.Template, modelId));
-            Assert.AreEqual("InvalidArgument", ex.ErrorCode);
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.BuildDocumentModelAsync(WaitUntil.Started, trainingFilesUri, DocumentBuildMode.Template, modelId, prefix));
+            Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
 
         #endregion
@@ -176,68 +186,46 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task CopyModelTo(bool useTokenCredential)
+        public async Task CopyDocumentModelTo(bool useTokenCredential)
         {
-            var sourceClient = CreateDocumentModelAdministrationClient(useTokenCredential);
-            var targetClient = CreateDocumentModelAdministrationClient(useTokenCredential);
+            var client = CreateDocumentModelAdministrationClient(useTokenCredential);
+            var sourceModelId = Recording.GenerateId();
             var modelId = Recording.GenerateId();
+            var description = $"This model was generated by a .NET test: {nameof(CopyDocumentModelTo)}";
+            var tags = new Dictionary<string, string>() { { "tag1", "value1" }, { "tag2", "value2" } };
+            var startTime = Recording.UtcNow;
 
-            await using var trainedModel = await BuildDisposableDocumentModelAsync(modelId);
+            await using var disposableModel = await BuildDisposableDocumentModelAsync(sourceModelId);
 
-            var targetModelId = Recording.GenerateId();
-            DocumentModelCopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(targetModelId);
+            DocumentModelCopyAuthorization copyAuthorization = await client.GetCopyAuthorizationAsync(modelId, description, tags);
+            CopyDocumentModelToOperation operation = null;
 
-            CopyDocumentModelToOperation operation = await sourceClient.CopyDocumentModelToAsync(WaitUntil.Completed, trainedModel.ModelId, targetAuth);
+            try
+            {
+                operation = await client.CopyDocumentModelToAsync(WaitUntil.Completed, sourceModelId, copyAuthorization);
+            }
+            finally
+            {
+                if (operation != null && operation.HasValue)
+                {
+                    await client.DeleteDocumentModelAsync(modelId);
+                }
+            }
 
             Assert.IsTrue(operation.HasValue);
 
-            DocumentModelDetails copiedModel = operation.Value;
+            DocumentModelDetails sourceModel = disposableModel.Value;
+            DocumentModelDetails model = operation.Value;
 
-            ValidateDocumentModelDetails(copiedModel);
-            Assert.AreEqual(targetAuth.TargetModelId, copiedModel.ModelId);
-            Assert.AreNotEqual(trainedModel.ModelId, copiedModel.ModelId);
+            Assert.AreEqual(modelId, model.ModelId);
+            Assert.AreEqual(description, model.Description);
+            Assert.AreEqual(ServiceVersionString, model.ApiVersion);
+            Assert.Greater(model.CreatedOn, startTime);
+            Assert.Greater(model.ExpiresOn, model.CreatedOn);
 
-            Assert.AreEqual(1, copiedModel.DocumentTypes.Count);
-            Assert.IsTrue(copiedModel.DocumentTypes.ContainsKey(modelId));
+            CollectionAssert.AreEquivalent(tags, model.Tags);
 
-            DocumentTypeDetails documentType = copiedModel.DocumentTypes[modelId];
-
-            Assert.AreEqual(DocumentBuildMode.Template, documentType.BuildMode);
-        }
-
-        [RecordedTest]
-        public async Task CopyModelToWithTags()
-        {
-            var sourceClient = CreateDocumentModelAdministrationClient();
-            var targetClient = CreateDocumentModelAdministrationClient();
-            var modelId = Recording.GenerateId();
-
-            await using var trainedModel = await BuildDisposableDocumentModelAsync(modelId);
-
-            var tags = _testingTags.ToDictionary(t => t.Key, t => t.Value);
-
-            var targetModelId = Recording.GenerateId();
-            DocumentModelCopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(targetModelId, tags: tags);
-            CopyDocumentModelToOperation operation = await sourceClient.CopyDocumentModelToAsync(WaitUntil.Completed, trainedModel.ModelId, targetAuth);
-
-            DocumentModelDetails copiedModel = operation.Value;
-
-            CollectionAssert.AreEquivalent(_testingTags, copiedModel.Tags);
-
-            await sourceClient.DeleteDocumentModelAsync(targetModelId);
-        }
-
-        [RecordedTest]
-        public async Task CopyModelToErrorAsync()
-        {
-            var sourceClient = CreateDocumentModelAdministrationClient();
-            var targetClient = CreateDocumentModelAdministrationClient();
-
-            var modelId = Recording.GenerateId();
-            DocumentModelCopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(modelId);
-
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await sourceClient.CopyDocumentModelToAsync(WaitUntil.Started, modelId, targetAuth));
-            Assert.AreEqual("InvalidRequest", ex.ErrorCode);
+            AssertDocumentTypeDictionariesAreEquivalent(sourceModel.DocumentTypes, model.DocumentTypes);
         }
 
         #endregion Copy
@@ -245,77 +233,67 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         #region Compose
 
         [RecordedTest]
-        [TestCase(false)]
         [TestCase(true)]
-        public async Task ComposeModel(bool useTokenCredential)
+        [TestCase(false)]
+        public async Task ComposeDocumentModel(bool useTokenCredential)
         {
             var client = CreateDocumentModelAdministrationClient(useTokenCredential);
+            var componentModelIds = new string[] { Recording.GenerateId(), Recording.GenerateId() };
+            var modelId = Recording.GenerateId();
+            var description = $"This model was generated by a .NET test: {nameof(ComposeDocumentModel)}";
+            var tags = new Dictionary<string, string>() { { "tag1", "value1" }, { "tag2", "value2" } };
+            var startTime = Recording.UtcNow;
 
-            var modelAId = Recording.GenerateId();
-            var modelBId = Recording.GenerateId();
+            await using var disposableModel0 = await BuildDisposableDocumentModelAsync(componentModelIds[0], ContainerType.Singleforms);
+            await using var disposableModel1 = await BuildDisposableDocumentModelAsync(componentModelIds[1], ContainerType.SelectionMarks);
 
-            await using var trainedModelA = await BuildDisposableDocumentModelAsync(modelAId);
-            await using var trainedModelB = await BuildDisposableDocumentModelAsync(modelBId);
+            ComposeDocumentModelOperation operation = null;
 
-            var modelIds = new List<string> { trainedModelA.ModelId, trainedModelB.ModelId };
-
-            var composedModelId = Recording.GenerateId();
-            ComposeDocumentModelOperation operation = await client.ComposeDocumentModelAsync(WaitUntil.Completed, modelIds, composedModelId);
+            try
+            {
+                operation = await client.ComposeDocumentModelAsync(WaitUntil.Completed, componentModelIds, modelId, description, tags);
+            }
+            finally
+            {
+                if (operation != null && operation.HasValue)
+                {
+                    await client.DeleteDocumentModelAsync(modelId);
+                }
+            }
 
             Assert.IsTrue(operation.HasValue);
 
-            DocumentModelDetails composedModel = operation.Value;
+            DocumentModelDetails componentModel0 = disposableModel0.Value;
+            DocumentModelDetails componentModel1 = disposableModel1.Value;
+            DocumentModelDetails model = operation.Value;
 
-            ValidateDocumentModelDetails(composedModel);
+            Assert.AreEqual(modelId, model.ModelId);
+            Assert.AreEqual(description, model.Description);
+            Assert.AreEqual(ServiceVersionString, model.ApiVersion);
+            Assert.Greater(model.CreatedOn, startTime);
+            Assert.Greater(model.ExpiresOn, model.CreatedOn);
 
-            Assert.AreEqual(2, composedModel.DocumentTypes.Count);
-            Assert.IsTrue(composedModel.DocumentTypes.ContainsKey(modelAId));
-            Assert.IsTrue(composedModel.DocumentTypes.ContainsKey(modelBId));
+            CollectionAssert.AreEquivalent(tags, model.Tags);
 
-            DocumentTypeDetails documentTypeA = composedModel.DocumentTypes[modelAId];
-            DocumentTypeDetails documentTypeB = composedModel.DocumentTypes[modelBId];
+            Assert.AreEqual(2, model.DocumentTypes.Count);
 
-            Assert.AreEqual(DocumentBuildMode.Template, documentTypeA.BuildMode);
-            Assert.AreEqual(DocumentBuildMode.Template, documentTypeB.BuildMode);
+            DocumentTypeDetails expectedDocumentType0 = componentModel0.DocumentTypes[componentModel0.ModelId];
+            DocumentTypeDetails expectedDocumentType1 = componentModel1.DocumentTypes[componentModel1.ModelId];
+            DocumentTypeDetails documentType0 = model.DocumentTypes[componentModel0.ModelId];
+            DocumentTypeDetails documentType1 = model.DocumentTypes[componentModel1.ModelId];
+
+            AssertDocumentTypesAreEqual(expectedDocumentType0, documentType0);
+            AssertDocumentTypesAreEqual(expectedDocumentType1, documentType1);
         }
 
         [RecordedTest]
-        public async Task ComposeModelWithTags()
+        public void ComposeDocumentModelThrowsWhenComponentModelDoesNotExist()
         {
             var client = CreateDocumentModelAdministrationClient();
-
-            var modelAId = Recording.GenerateId();
-            var modelBId = Recording.GenerateId();
-
-            await using var trainedModelA = await BuildDisposableDocumentModelAsync(modelAId);
-            await using var trainedModelB = await BuildDisposableDocumentModelAsync(modelBId);
-
-            var modelIds = new List<string> { trainedModelA.ModelId, trainedModelB.ModelId };
-            var tags = _testingTags.ToDictionary(t => t.Key, t => t.Value);
-
-            var composedModelId = Recording.GenerateId();
-            ComposeDocumentModelOperation operation = await client.ComposeDocumentModelAsync(WaitUntil.Completed, modelIds, composedModelId, tags: tags);
-
-            DocumentModelDetails composedModel = operation.Value;
-
-            CollectionAssert.AreEquivalent(_testingTags, composedModel.Tags);
-
-            await client.DeleteDocumentModelAsync(composedModelId);
-        }
-
-        [RecordedTest]
-        public async Task ComposeModelFailsWithInvalidId()
-        {
-            var client = CreateDocumentModelAdministrationClient();
-
+            var fakeComponentModelIds = new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001" };
             var modelId = Recording.GenerateId();
 
-            await using var trainedModel = await BuildDisposableDocumentModelAsync(modelId);
-
-            var modelIds = new List<string> { trainedModel.ModelId, "00000000-0000-0000-0000-000000000000" };
-
-            var composedModelId = Recording.GenerateId();
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.ComposeDocumentModelAsync(WaitUntil.Started, modelIds, composedModelId));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.ComposeDocumentModelAsync(WaitUntil.Started, fakeComponentModelIds, modelId));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
 
@@ -324,22 +302,121 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         #region Get
 
         [RecordedTest]
-        public async Task GetPrebuiltModel()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetDocumentModel(bool useTokenCredential)
+        {
+            var client = CreateDocumentModelAdministrationClient(useTokenCredential);
+            var modelId = Recording.GenerateId();
+            var options = new BuildDocumentModelOptions()
+            {
+                Description = $"This model was generated by a .NET test: {nameof(GetDocumentModel)}",
+                Tags = { { "tag1", "value1" }, { "tag2", "value2" } }
+            };
+            await using var disposableModel = await BuildDisposableDocumentModelAsync(modelId, options: options);
+
+            DocumentModelDetails expected = disposableModel.Value;
+            DocumentModelDetails model = await client.GetDocumentModelAsync(modelId);
+
+            Assert.AreEqual(expected.ModelId, model.ModelId);
+            Assert.AreEqual(expected.Description, model.Description);
+            Assert.AreEqual(expected.ApiVersion, model.ApiVersion);
+            Assert.AreEqual(expected.CreatedOn, model.CreatedOn);
+            Assert.AreEqual(expected.ExpiresOn, model.ExpiresOn);
+
+            CollectionAssert.AreEquivalent(expected.Tags, model.Tags);
+
+            AssertDocumentTypeDictionariesAreEquivalent(expected.DocumentTypes, model.DocumentTypes);
+        }
+
+        [RecordedTest]
+        public void GetDocumentModelThrowsWhenModelDoesNotExist()
         {
             var client = CreateDocumentModelAdministrationClient();
+            var fakeId = "00000000-0000-0000-0000-000000000000";
 
-            DocumentModelDetails model = await client.GetDocumentModelAsync("prebuilt-businessCard");
-
-            ValidateDocumentModelDetails(model);
-            Assert.NotNull(model.Description);
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetDocumentModelAsync(fakeId));
+            Assert.AreEqual("NotFound", ex.ErrorCode);
         }
 
         #endregion
 
+        #region List
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetDocumentModels(bool useTokenCredential)
+        {
+            var client = CreateDocumentModelAdministrationClient(useTokenCredential);
+            var modelIds = new string[] { Recording.GenerateId(), Recording.GenerateId() };
+            var options = new BuildDocumentModelOptions()
+            {
+                Description = $"This model was generated by a .NET test: {nameof(GetDocumentModels)}",
+                Tags = { { "tag1", "value1" }, { "tag2", "value2" } }
+            };
+
+            await using var disposableModel0 = await BuildDisposableDocumentModelAsync(modelIds[0], options: options);
+            await using var disposableModel1 = await BuildDisposableDocumentModelAsync(modelIds[1], options: options);
+
+            var idMapping = new Dictionary<string, DocumentModelSummary>();
+            var expectedIdMapping = new Dictionary<string, DocumentModelDetails>()
+            {
+                { modelIds[0], disposableModel0.Value },
+                { modelIds[1], disposableModel1.Value }
+            };
+
+            await foreach (DocumentModelSummary model in client.GetDocumentModelsAsync())
+            {
+                if (expectedIdMapping.ContainsKey(model.ModelId))
+                {
+                    idMapping.Add(model.ModelId, model);
+                }
+
+                if (idMapping.Count == expectedIdMapping.Count)
+                {
+                    break;
+                }
+            }
+
+            foreach (string id in expectedIdMapping.Keys)
+            {
+                Assert.True(idMapping.ContainsKey(id));
+
+                DocumentModelSummary model = idMapping[id];
+                DocumentModelDetails expected = expectedIdMapping[id];
+
+                Assert.AreEqual(expected.ModelId, model.ModelId);
+                Assert.AreEqual(expected.Description, model.Description);
+                Assert.AreEqual(expected.ApiVersion, model.ApiVersion);
+                Assert.AreEqual(expected.CreatedOn, model.CreatedOn);
+                Assert.AreEqual(expected.ExpiresOn, model.ExpiresOn);
+
+                CollectionAssert.AreEquivalent(expected.Tags, model.Tags);
+            }
+        }
+
+        #endregion List
+
         #region Delete
 
         [RecordedTest]
-        public void DeleteModelFailsWhenModelDoesNotExist()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task DeleteDocumentModel(bool useTokenCredential)
+        {
+            var client = CreateDocumentModelAdministrationClient(useTokenCredential);
+            var modelId = Recording.GenerateId();
+
+            await BuildDisposableDocumentModelAsync(modelId);
+
+            var response = await client.DeleteDocumentModelAsync(modelId);
+
+            Assert.AreEqual((int)HttpStatusCode.NoContent, response.Status);
+        }
+
+        [RecordedTest]
+        public void DeleteDocumentModelThrowsWhenModelDoesNotExist()
         {
             var client = CreateDocumentModelAdministrationClient();
             var fakeModelId = "00000000-0000-0000-0000-000000000000";
@@ -353,43 +430,71 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         public async Task GetCopyAuthorization()
         {
-            var targetClient = CreateDocumentModelAdministrationClient();
+            var client = CreateDocumentModelAdministrationClient();
             var modelId = Recording.GenerateId();
 
-            DocumentModelCopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(modelId);
+            DocumentModelCopyAuthorization copyAuthorization = await client.GetCopyAuthorizationAsync(modelId);
 
-            Assert.IsNotNull(targetAuth.TargetModelId);
-            Assert.AreEqual(modelId, targetAuth.TargetModelId);
-            Assert.IsNotNull(targetAuth.AccessToken);
-            Assert.IsNotNull(targetAuth.TargetResourceId);
-            Assert.IsNotNull(targetAuth.TargetResourceRegion);
+            Assert.AreEqual(modelId, copyAuthorization.TargetModelId);
+            Assert.AreEqual(TestEnvironment.ResourceId, copyAuthorization.TargetResourceId);
+            Assert.AreEqual(TestEnvironment.ResourceRegion, copyAuthorization.TargetResourceRegion);
+            Assert.IsNotNull(copyAuthorization.AccessToken);
+            Assert.IsNotEmpty(copyAuthorization.AccessToken);
+            Assert.Greater(copyAuthorization.ExpiresOn, Recording.UtcNow);
         }
 
-        private void ValidateDocumentModelDetails(DocumentModelDetails model, string description = null, IReadOnlyDictionary<string, string> tags = null)
+        private void AssertFieldSchemasAreEqual(DocumentFieldSchema fieldSchema1, DocumentFieldSchema fieldSchema2)
         {
-            if (description != null)
+            if (fieldSchema1 == null)
             {
-                Assert.AreEqual(description, model.Description);
-            }
-
-            if (tags != null)
-            {
-                CollectionAssert.AreEquivalent(tags, model.Tags);
-            }
-
-            Assert.IsNotNull(model.ModelId);
-            Assert.AreNotEqual(default(DateTimeOffset), model.CreatedOn);
-
-            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)
-            {
-                if (model.ExpiresOn.HasValue)
-                {
-                    Assert.Greater(model.ExpiresOn, model.CreatedOn);
-                }
+                Assert.Null(fieldSchema2);
             }
             else
             {
-                Assert.Null(model.ExpiresOn);
+                Assert.NotNull(fieldSchema2);
+
+                Assert.AreEqual(fieldSchema1.Type, fieldSchema2.Type);
+                Assert.AreEqual(fieldSchema1.Description, fieldSchema2.Description);
+                Assert.AreEqual(fieldSchema1.Example, fieldSchema2.Example);
+
+                AssertFieldSchemasAreEqual(fieldSchema1.Items, fieldSchema2.Items);
+                AssertFieldSchemaDictionariesAreEquivalent(fieldSchema1.Properties, fieldSchema2.Properties);
+            }
+        }
+
+        private void AssertFieldSchemaDictionariesAreEquivalent(IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchemas1, IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchemas2)
+        {
+            Assert.AreEqual(fieldSchemas1.Count, fieldSchemas2.Count);
+
+            foreach (string key in fieldSchemas1.Keys)
+            {
+                DocumentFieldSchema fieldSchema1 = fieldSchemas1[key];
+                DocumentFieldSchema fieldSchema2 = fieldSchemas2[key];
+
+                AssertFieldSchemasAreEqual(fieldSchema1, fieldSchema2);
+            }
+        }
+
+        private void AssertDocumentTypesAreEqual(DocumentTypeDetails docType1, DocumentTypeDetails docType2)
+        {
+            Assert.AreEqual(docType1.Description, docType2.Description);
+            Assert.AreEqual(docType1.BuildMode, docType2.BuildMode);
+
+            CollectionAssert.AreEquivalent(docType1.FieldConfidence, docType2.FieldConfidence);
+
+            AssertFieldSchemaDictionariesAreEquivalent(docType1.FieldSchema, docType2.FieldSchema);
+        }
+
+        private void AssertDocumentTypeDictionariesAreEquivalent(IReadOnlyDictionary<string, DocumentTypeDetails> docTypes1, IReadOnlyDictionary<string, DocumentTypeDetails> docTypes2)
+        {
+            Assert.AreEqual(docTypes1.Count, docTypes2.Count);
+
+            foreach (string key in docTypes1.Keys)
+            {
+                DocumentTypeDetails docType1 = docTypes1[key];
+                DocumentTypeDetails docType2 = docTypes2[key];
+
+                AssertDocumentTypesAreEqual(docType1, docType2);
             }
         }
     }

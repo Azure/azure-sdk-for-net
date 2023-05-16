@@ -10,7 +10,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> A premium billing meter. </summary>
+    /// <summary> Billing meter. </summary>
     public partial class ContainerAppBillingMeter : ResourceData
     {
         /// <summary> Initializes a new instance of ContainerAppBillingMeter. </summary>

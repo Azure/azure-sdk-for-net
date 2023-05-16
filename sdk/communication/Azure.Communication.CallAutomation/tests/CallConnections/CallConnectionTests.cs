@@ -122,7 +122,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
-            var response = await callConnection.TransferCallToParticipantAsync(callInvite).ConfigureAwait(false);
+            var response = await callConnection.TransferCallToParticipantAsync(callInvite.Target).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             verifyOperationContext(response);
         }
@@ -132,7 +132,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
-            var response = await callConnection.TransferCallToParticipantAsync(new TransferToParticipantOptions(callInvite)).ConfigureAwait(false);
+            var response = await callConnection.TransferCallToParticipantAsync(new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier)).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             verifyOperationContext(response);
         }
@@ -142,7 +142,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
-            var response = callConnection.TransferCallToParticipant(callInvite);
+            var response = callConnection.TransferCallToParticipant(callInvite.Target);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             verifyOperationContext(response);
         }
@@ -152,7 +152,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
-            var response = callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite));
+            var response = callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier));
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             verifyOperationContext(response);
         }
@@ -162,7 +162,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.TransferCallToParticipantAsync(new TransferToParticipantOptions(callInvite)).ConfigureAwait(false));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.TransferCallToParticipantAsync(new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier)).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -172,7 +172,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite)));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier)));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -182,7 +182,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callConnection = CreateMockCallConnection(202);
 
-            var options = new TransferToParticipantOptions(callInvite) {
+            var options = new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier) {
                 OperationContext = new string('a', 1 + CallAutomationConstants.InputValidation.StringMaxLength)
             };
             ArgumentException? ex = Assert.Throws<ArgumentException>(() => callConnection.TransferCallToParticipant(options));
@@ -277,8 +277,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         public async Task GetParticipantAsync_200OK(string participantMri)
         {
             var callConnection = CreateMockCallConnection(200, GetParticipantPayload);
+            var participantIdentifier = new CommunicationUserIdentifier(participantMri);
 
-            var response = await callConnection.GetParticipantAsync(participantMri).ConfigureAwait(false);
+            var response = await callConnection.GetParticipantAsync(participantIdentifier).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
             verifyGetParticipantResult(response);
         }
@@ -287,8 +288,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         public void GetParticipant_200OK(string participantMri)
         {
             var callConnection = CreateMockCallConnection(200, GetParticipantPayload);
+            var participantIdentifier = new CommunicationUserIdentifier(participantMri);
 
-            var response = callConnection.GetParticipant(participantMri);
+            var response = callConnection.GetParticipant(participantIdentifier);
             Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
             verifyGetParticipantResult(response);
         }
@@ -297,8 +299,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         public void GetParticipantAsync_404NotFound(string participantMri)
         {
             var callConnection = CreateMockCallConnection(404);
+            var participantIdentifier = new CommunicationUserIdentifier(participantMri);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.GetParticipantAsync(participantMri).ConfigureAwait(false));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.GetParticipantAsync(participantIdentifier).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -307,8 +310,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         public void GetParticipant_404NotFound(string participantMri)
         {
             var callConnection = CreateMockCallConnection(404);
+            var participantIdentifier = new CommunicationUserIdentifier(participantMri);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.GetParticipant(participantMri));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.GetParticipant(participantIdentifier));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }

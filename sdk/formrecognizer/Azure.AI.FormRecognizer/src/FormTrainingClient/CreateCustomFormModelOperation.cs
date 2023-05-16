@@ -165,12 +165,10 @@ namespace Azure.AI.FormRecognizer.Training
             }
             else if (status == CustomFormModelStatus.Invalid)
             {
-                RequestFailedException requestFailedException = await ClientCommon.CreateExceptionForFailedOperationAsync(
-                                                                      async,
-                                                                      _diagnostics,
-                                                                      rawResponse,
-                                                                      response.Value.TrainResult.Errors,
-                                                                      $"Invalid model created with ID {response.Value.ModelInfo.ModelId}").ConfigureAwait(false);
+                RequestFailedException requestFailedException = ClientCommon.CreateExceptionForFailedOperation(
+                    rawResponse,
+                    response.Value.TrainResult.Errors,
+                    $"Invalid model created with ID {response.Value.ModelInfo.ModelId}");
 
                 return OperationState<CustomFormModel>.Failure(rawResponse, requestFailedException);
             }

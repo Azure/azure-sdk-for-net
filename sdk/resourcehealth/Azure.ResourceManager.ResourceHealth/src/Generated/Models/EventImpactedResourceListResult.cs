@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Initializes a new instance of EventImpactedResourceListResult. </summary>
         /// <param name="value"> The list of eventImpactedResources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal EventImpactedResourceListResult(IEnumerable<EventImpactedResourceData> value)
+        internal EventImpactedResourceListResult(IEnumerable<ResourceHealthEventImpactedResourceData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Initializes a new instance of EventImpactedResourceListResult. </summary>
         /// <param name="value"> The list of eventImpactedResources. </param>
         /// <param name="nextLink"> The URI to fetch the next page of events. Call ListNext() with this URI to fetch the next page of impacted resource. </param>
-        internal EventImpactedResourceListResult(IReadOnlyList<EventImpactedResourceData> value, string nextLink)
+        internal EventImpactedResourceListResult(IReadOnlyList<ResourceHealthEventImpactedResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of eventImpactedResources. </summary>
-        public IReadOnlyList<EventImpactedResourceData> Value { get; }
+        public IReadOnlyList<ResourceHealthEventImpactedResourceData> Value { get; }
         /// <summary> The URI to fetch the next page of events. Call ListNext() with this URI to fetch the next page of impacted resource. </summary>
         public string NextLink { get; }
     }
