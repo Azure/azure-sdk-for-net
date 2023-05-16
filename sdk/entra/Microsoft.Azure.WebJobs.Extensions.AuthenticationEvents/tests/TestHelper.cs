@@ -131,7 +131,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         internal static AuthenticationEventResponseHandler GetAuthenticationEventResponseHandler(HttpRequestMessage mockedRequest)
         {
             AuthenticationEventResponseHandler eventsResponseHandler = null;
-#if NET461
+#if NETFRAMEWORK
             eventsResponseHandler = (AuthenticationEventResponseHandler)mockedRequest.Properties[AuthenticationEventResponseHandler.EventResponseProperty];
 #else
             HttpRequestOptionsKey<AuthenticationEventResponseHandler> optionsKey = new(AuthenticationEventResponseHandler.EventResponseProperty);
