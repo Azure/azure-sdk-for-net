@@ -1047,6 +1047,11 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void CanRoundTripUnixDateTime()
+        {
+        }
+
+        [Test]
         public void CanDifferentiateBetweenNullAndAbsent()
         {
             dynamic json = BinaryData.FromString("""{ "foo": null }""").ToDynamicFromJson();

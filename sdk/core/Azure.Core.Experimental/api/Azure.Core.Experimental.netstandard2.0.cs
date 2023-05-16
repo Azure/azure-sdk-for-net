@@ -3,6 +3,7 @@ namespace Azure
     public static partial class BinaryDataExtensions
     {
         public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json) { throw null; }
+        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Dynamic.DynamicDataOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Value
@@ -141,5 +142,16 @@ namespace Azure.Core.Dynamic
         public static bool operator !=(Azure.Core.Dynamic.DynamicData? left, object? right) { throw null; }
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class DynamicDataOptions
+    {
+        public static Azure.Core.Dynamic.DynamicDataOptions Default;
+        public DynamicDataOptions() { }
+        public Azure.Core.Dynamic.DynamicDateTimeHandling DateTimeHandling { get { throw null; } set { } }
+    }
+    public enum DynamicDateTimeHandling
+    {
+        Rfc3339 = 0,
+        UnixTime = 1,
     }
 }
