@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.SelfHelp.Tests.Scenario
 
         private SelfHelpDiagnosticData CreateDiagnosticResourceData(ResourceIdentifier scope)
         {
-            List<DiagnosticInvocation> insights = new List<DiagnosticInvocation>
+            List<SelfHelpDiagnosticInvocation> insights = new List<SelfHelpDiagnosticInvocation>
             {
-                new DiagnosticInvocation(){SolutionId = "Demo2InsightV2",}
+                new SelfHelpDiagnosticInvocation(){SolutionId = "Demo2InsightV2",}
             };
             Dictionary<string, string> globalParameters = new Dictionary<string, string>();
             globalParameters.Add("startTime", "2020-07-01");
