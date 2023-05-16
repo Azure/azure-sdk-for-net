@@ -641,7 +641,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual(1, (int)dynamicJson.Foo);
             Assert.AreEqual(3, (int)dynamicJson.bar);
             Assert.AreEqual(3, (int)dynamicJson.Bar);
-            Assert.Throws<InvalidOperationException>(() => _ = dynamicJson["Bar"]);
+            Assert.Throws<KeyNotFoundException>(() => _ = dynamicJson["Bar"]);
 
             // This updates the PascalCase property and not the camelCase one.
             dynamicJson.Foo = 4;
@@ -1058,7 +1058,8 @@ namespace Azure.Core.Tests
 
             // Indexer lookup mimics JsonNode behavior and so throws if a property is absent.
             Assert.IsTrue(json["foo"] == null);
-            Assert.Throws<InvalidOperationException>(() => _ = json["bar"]);
+            Assert.Throws<KeyNotFoundException>(() => _ = json["bar"]);
+            Assert.Throws<KeyNotFoundException>(() => { if (json["bar"] == null) { ; } });
         }
 
         #region Helpers
