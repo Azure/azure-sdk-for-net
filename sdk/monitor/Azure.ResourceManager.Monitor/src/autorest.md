@@ -14,7 +14,6 @@ output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
-  lenient-model-deduplication: true
   flatten-payloads: false
 
 format-by-name-rules:
@@ -367,6 +366,18 @@ directive:
   - from: v3/types.json
     where: $.definitions.TrackedResource
     transform: $["x-ms-client-name"] = "CommonTrackedResourceV3"
+  - from: v4/privatelinks.json
+    where: $.definitions.PrivateEndpoint
+    transform: $["x-ms-client-name"] = "CommonPrivateEndpointV4"
+  - from: v4/privatelinks.json
+    where: $.definitions.PrivateEndpointConnection
+    transform: $["x-ms-client-name"] = "CommonPrivateEndpointConnectionV4"
+  - from: v4/privatelinks.json
+    where: $.definitions.PrivateEndpointConnectionProperties
+    transform: $["x-ms-client-name"] = "CommonPrivateEndpointConnectionPropertiesV4"
+  - from: v4/types.json
+    where: $.definitions.Resource
+    transform: $["x-ms-client-name"] = "CommonResourceV4"
   # in order to let the ResponseError replace the ErrorResponseCommon in monitor, we need to add a target property to it
   - from: swagger-document
     where: $.definitions.ErrorResponseCommon.properties
