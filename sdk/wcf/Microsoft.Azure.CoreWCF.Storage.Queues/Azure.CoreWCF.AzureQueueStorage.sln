@@ -8,7 +8,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{73CF9B6D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DAAE6286-93E2-4F2B-81D2-A32A9F024595}"
 	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
 		..\azure-pipelines-ci.yml = ..\azure-pipelines-ci.yml
 		..\azure-pipelines.yml = ..\azure-pipelines.yml
 		..\Directory.Build.props = ..\Directory.Build.props
