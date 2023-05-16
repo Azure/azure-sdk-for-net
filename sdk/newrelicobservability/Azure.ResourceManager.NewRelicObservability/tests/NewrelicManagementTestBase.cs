@@ -6,7 +6,11 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
+using System;
 using System.Threading.Tasks;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NewRelicObservability.Models;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NewRelicObservability.Tests
 {
@@ -14,6 +18,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Tests
     {
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
+        protected AzureLocation DefaultLocation => AzureLocation.EastUS;
+
+        private ResourceGroupResource _resourceGroup;
 
         protected NewrelicManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -32,12 +39,52 @@ namespace Azure.ResourceManager.NewRelicObservability.Tests
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
         {
-            string rgName = Recording.GenerateAssetName(rgNamePrefix);
-            ResourceGroupData input = new ResourceGroupData(location);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
+            string rgName = Recording.GenerateAssetName("SDKTestNRRG-");
+            ResourceGroupData input = new ResourceGroupData(DefaultLocation);
+            var lro = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
+        }
+
+        protected async Task<NewRelicMonitorResourceCollection> GetMonitorResourceCollectionAsync()
+        {
+            _resourceGroup = await CreateResourceGroupAsync();
+            return _resourceGroup.GetNewRelicMonitorResources();
+        }
+
+        protected async Task<NewRelicMonitorResource> CreateMonitorResourceAsync(string monitorName)
+        {
+            var collection = await GetMonitorResourceCollectionAsync();
+            var input = GetMonitorInput();
+
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, monitorName, input);
+            return lro.Value;
+        }
+
+        public NewRelicMonitorResourceData GetMonitorInput()
+        {
+            var aadDomains = new List<string>();
+            aadDomains.Add("SDKTest");
+
+            return new NewRelicMonitorResourceData(DefaultLocation)
+            {
+                UserInfo = new UserInfo
+                {
+                    FirstName = "vipray",
+                    LastName = "jain",
+                    PhoneNumber = "1234567890",
+                    Country = "IN",
+                    EmailAddress = "viprayjain@microsoft.com"
+                },
+                PlanData = new PlanData
+                {
+                    UsageType = "PAYG",
+                    BillingCycle = "MONTHLY",
+                    PlanDetails = "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                    EffectiveOn = new System.DateTimeOffset(2022, 9, 28, 8, 12, 30, new System.TimeSpan(1, 0, 0))
+                }
+            };
         }
     }
 }

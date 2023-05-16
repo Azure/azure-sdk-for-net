@@ -1,0 +1,2880 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-6b6013b147fe0a4bb8a7af67c29311e8-d6168a9ba930d145-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.5.0 (.NET Framework 4.8.4614.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "6cff3b513a052d351e7af33417218e81",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "393",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 May 2023 11:56:58 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "5c800e91-95b8-4c7c-a39d-886930d89332",
+        "x-ms-ratelimit-remaining-subscription-reads": "11988",
+        "x-ms-request-id": "5c800e91-95b8-4c7c-a39d-886930d89332",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230516T115658Z:5c800e91-95b8-4c7c-a39d-886930d89332"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "272c26cb-7026-4b37-b190-7cb7b2abecb0",
+        "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+        "displayName": "NewRelic-PayG",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Public_2014-09-01",
+          "quotaId": "PayAsYouGo_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/providers/NewRelic.Observability/monitors?api-version=2022-07-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.NewRelicObservability/1.0.0-alpha.20230516.1 (.NET Framework 4.8.4614.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "3b1fea5240b19ff7c2f44da91b0180cd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "74738",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 May 2023 11:56:58 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b1f6433d-1b8b-4d15-b8f7-846b5ef33b54",
+        "x-ms-original-request-ids": [
+          "a9a1321e-33ab-4e64-95af-e96b6748b7b4",
+          "7566f6da-f006-4558-b13f-c862b7f6b15f",
+          "759700f3-05c6-4385-bf21-192cc85decb3"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": "11987",
+        "x-ms-request-id": "b1f6433d-1b8b-4d15-b8f7-846b5ef33b54",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230516T115659Z:b1f6433d-1b8b-4d15-b8f7-846b5ef33b54"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/gaurav-test/providers/NewRelic.Observability/monitors/gaura-test-31-prod-1",
+            "name": "gaura-test-31-prod-1",
+            "type": "newrelic.observability/monitors",
+            "location": "eastus",
+            "tags": {},
+            "systemData": {
+              "createdBy": "gauravbang@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-03-31T11:09:44.0356961Z",
+              "lastModifiedBy": "gauravbang@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-03-31T11:09:44.0356961Z"
+            },
+            "identity": {
+              "principalId": "ab1b948e-8bf9-4323-9219-768911c151c2",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "userId": "",
+                "accountInfo": {
+                  "accountId": "3877706"
+                },
+                "organizationInfo": {
+                  "organizationId": "bf303b25-eb22-4ce3-87b3-e654ac0551bd"
+                }
+              },
+              "userInfo": {
+                "firstName": "Gaurav",
+                "lastName": "Bang",
+                "emailAddress": "gauravbang@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-03-31T11:09:17.511Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/saurgupta_RG/providers/NewRelic.Observability/monitors/saurgupta_24_04_23_03",
+            "name": "saurgupta_24_04_23_03",
+            "type": "newrelic.observability/monitors",
+            "location": "eastus",
+            "tags": {},
+            "systemData": {
+              "createdBy": "saurgupta@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-04-24T11:22:32.8240548Z",
+              "lastModifiedBy": "saurgupta@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-04-24T11:22:32.8240548Z"
+            },
+            "identity": {
+              "principalId": "b1172bdf-ce94-4e90-9936-feba02d8fbea",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Failed",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "3908414"
+                },
+                "organizationInfo": {
+                  "organizationId": "44bc490a-1ce3-4099-a6e8-03bc0969eac5"
+                }
+              },
+              "userInfo": {
+                "firstName": "Saurabh",
+                "lastName": "Gupta",
+                "emailAddress": "saurgupta@microsoft.com",
+                "phoneNumber": "4257050556"
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-04-24T11:22:09.495Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/harsh-rg/providers/NewRelic.Observability/monitors/EUS_Linked_Harsh",
+            "name": "EUS_Linked_Harsh",
+            "type": "newrelic.observability/monitors",
+            "location": "eastus",
+            "tags": {},
+            "systemData": {
+              "createdBy": "harshkumar@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-05-09T04:25:47.1504858Z",
+              "lastModifiedBy": "harshkumar@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-05-09T04:25:47.1504858Z"
+            },
+            "identity": {
+              "principalId": "50c29fb4-d10b-4acd-aa8e-34a3e2b12933",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "NEWRELIC",
+              "accountCreationSource": "NEWRELIC",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "3926773"
+                },
+                "organizationInfo": {
+                  "organizationId": "b0ba4369-4978-40f1-954a-9060ab01ada5"
+                }
+              },
+              "userInfo": {
+                "firstName": "Harsh",
+                "lastName": "Kumar",
+                "emailAddress": "harshkumar@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "effectiveDate": "0001-01-01T00:00:00Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/vip-rg/providers/NewRelic.Observability/monitors/vip-test-EastUs-1",
+            "name": "vip-test-EastUs-1",
+            "type": "newrelic.observability/monitors",
+            "location": "eastus",
+            "tags": {},
+            "systemData": {
+              "createdBy": "viprayjain@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-05-12T05:49:50.7040281Z",
+              "lastModifiedBy": "viprayjain@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-05-12T05:49:50.7040281Z"
+            },
+            "identity": {
+              "principalId": "25ea70bd-c483-4f1b-94cf-6ed573802467",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "3933337"
+                },
+                "organizationInfo": {
+                  "organizationId": "30fe9d9e-4c72-4b0e-8d43-97c4ecd636d4"
+                }
+              },
+              "userInfo": {
+                "firstName": "Vipray",
+                "lastName": "Jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-05-12T05:49:24.748Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/kansingh-RG/providers/NewRelic.Observability/monitors/kansingh_15may_1",
+            "name": "kansingh_15may_1",
+            "type": "newrelic.observability/monitors",
+            "location": "eastus",
+            "tags": {},
+            "systemData": {
+              "createdBy": "kansingh@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-05-15T08:27:47.7970631Z",
+              "lastModifiedBy": "kansingh@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-05-15T08:27:47.7970631Z"
+            },
+            "identity": {
+              "principalId": "4befaf2b-5637-44f3-af93-d7d4718473e1",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "3935985"
+                },
+                "organizationInfo": {
+                  "organizationId": "ed97f5b7-b73c-48b7-94e8-1f39e9897d83"
+                }
+              },
+              "userInfo": {
+                "firstName": "Kanupriya",
+                "lastName": "Singh",
+                "emailAddress": "kansingh@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-05-15T08:27:30.195Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-6892/providers/NewRelic.Observability/monitors/testNR-3090",
+            "name": "testNR-3090",
+            "type": "newrelic.observability/monitors",
+            "location": "eastus",
+            "tags": {},
+            "systemData": {
+              "createdBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+              "createdByType": "Application",
+              "createdAt": "2023-05-16T10:51:16.9486185Z",
+              "lastModifiedBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-05-16T10:51:16.9486185Z"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "3937639"
+                },
+                "organizationInfo": {
+                  "organizationId": "f7a41b6e-3ec0-4ecd-89f7-336bdfee10e9"
+                }
+              },
+              "userInfo": {
+                "firstName": "vipray",
+                "lastName": "jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": "1234567890"
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2022-09-28T07:12:30Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-1166/providers/NewRelic.Observability/monitors/testNR-6156",
+            "name": "testNR-6156",
+            "type": "newrelic.observability/monitors",
+            "location": "eastus",
+            "tags": {},
+            "systemData": {
+              "createdBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+              "createdByType": "Application",
+              "createdAt": "2023-05-16T10:54:27.1489017Z",
+              "lastModifiedBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-05-16T10:54:27.1489017Z"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "3937645"
+                },
+                "organizationInfo": {
+                  "organizationId": "4a801b86-19a9-475d-a249-dfdd673cd053"
+                }
+              },
+              "userInfo": {
+                "firstName": "vipray",
+                "lastName": "jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": "1234567890"
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2022-09-28T07:12:30Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-1139/providers/NewRelic.Observability/monitors/testNR-3135",
+            "name": "testNR-3135",
+            "type": "newrelic.observability/monitors",
+            "location": "eastus",
+            "tags": {},
+            "systemData": {
+              "createdBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+              "createdByType": "Application",
+              "createdAt": "2023-05-16T11:07:57.570533Z",
+              "lastModifiedBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-05-16T11:07:57.570533Z"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "3937666"
+                },
+                "organizationInfo": {
+                  "organizationId": "62381ebe-c169-426d-8f8e-17b1f2162636"
+                }
+              },
+              "userInfo": {
+                "firstName": "vipray",
+                "lastName": "jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": "1234567890"
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2022-09-28T07:12:30Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-8508/providers/NewRelic.Observability/monitors/testNR-508",
+            "name": "testNR-508",
+            "type": "newrelic.observability/monitors",
+            "location": "eastus",
+            "tags": {},
+            "systemData": {
+              "createdBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+              "createdByType": "Application",
+              "createdAt": "2023-05-16T11:39:10.745577Z",
+              "lastModifiedBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-05-16T11:39:10.745577Z"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "3937705"
+                },
+                "organizationInfo": {
+                  "organizationId": "052e4635-1b1a-4877-843c-e956b4f86c9c"
+                }
+              },
+              "userInfo": {
+                "firstName": "vipray",
+                "lastName": "jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": "1234567890"
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2022-09-28T07:12:30Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-8938/providers/NewRelic.Observability/monitors/testNR-6786",
+            "name": "testNR-6786",
+            "type": "newrelic.observability/monitors",
+            "location": "eastus",
+            "tags": {},
+            "systemData": {
+              "createdBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+              "createdByType": "Application",
+              "createdAt": "2023-05-16T11:40:43.9359104Z",
+              "lastModifiedBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-05-16T11:40:43.9359104Z"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "3937708"
+                },
+                "organizationInfo": {
+                  "organizationId": "e54a81ad-15ad-4199-b075-0f9bbc361293"
+                }
+              },
+              "userInfo": {
+                "firstName": "vipray",
+                "lastName": "jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": "1234567890"
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2022-09-28T07:12:30Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-7316/providers/NewRelic.Observability/monitors/testNR-4850",
+            "name": "testNR-4850",
+            "type": "newrelic.observability/monitors",
+            "location": "eastus",
+            "tags": {},
+            "systemData": {
+              "createdBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+              "createdByType": "Application",
+              "createdAt": "2023-05-16T11:51:07.8126086Z",
+              "lastModifiedBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-05-16T11:51:07.8126086Z"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "3937718"
+                },
+                "organizationInfo": {
+                  "organizationId": "480799c5-783e-4a60-994b-951b40b9162d"
+                }
+              },
+              "userInfo": {
+                "firstName": "vipray",
+                "lastName": "jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": "1234567890"
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2022-09-28T07:12:30Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-4234/providers/NewRelic.Observability/monitors/testNR-1247",
+            "name": "testNR-1247",
+            "type": "newrelic.observability/monitors",
+            "location": "eastus",
+            "tags": {},
+            "systemData": {
+              "createdBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+              "createdByType": "Application",
+              "createdAt": "2023-05-16T11:52:37.6209664Z",
+              "lastModifiedBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-05-16T11:52:37.6209664Z"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "3937722"
+                },
+                "organizationInfo": {
+                  "organizationId": "43a8ca1d-95b4-4fb7-9437-f2706318a3fe"
+                }
+              },
+              "userInfo": {
+                "firstName": "vipray",
+                "lastName": "jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": "1234567890"
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2022-09-28T07:12:30Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-9588/providers/NewRelic.Observability/monitors/testNR-2034",
+            "name": "testNR-2034",
+            "type": "newrelic.observability/monitors",
+            "location": "eastus",
+            "tags": {},
+            "systemData": {
+              "createdBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+              "createdByType": "Application",
+              "createdAt": "2023-05-16T11:53:37.6738892Z",
+              "lastModifiedBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-05-16T11:53:37.6738892Z"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "3937726"
+                },
+                "organizationInfo": {
+                  "organizationId": "71954250-e75b-41fd-aa3d-a350152be60a"
+                }
+              },
+              "userInfo": {
+                "firstName": "vipray",
+                "lastName": "jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": "1234567890"
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2022-09-28T07:12:30Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-1123/providers/NewRelic.Observability/monitors/testNR-7530",
+            "name": "testNR-7530",
+            "type": "newrelic.observability/monitors",
+            "location": "eastus",
+            "tags": {},
+            "systemData": {
+              "createdBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+              "createdByType": "Application",
+              "createdAt": "2023-05-16T11:54:27.5959036Z",
+              "lastModifiedBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-05-16T11:54:27.5959036Z"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "3937729"
+                },
+                "organizationInfo": {
+                  "organizationId": "ad0692fe-5558-4f5d-aaf5-0894e8071c75"
+                }
+              },
+              "userInfo": {
+                "firstName": "vipray",
+                "lastName": "jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": "1234567890"
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2022-09-28T07:12:30Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-4481/providers/NewRelic.Observability/monitors/testNR-6307",
+            "name": "testNR-6307",
+            "type": "newrelic.observability/monitors",
+            "location": "eastus",
+            "tags": {},
+            "systemData": {
+              "createdBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+              "createdByType": "Application",
+              "createdAt": "2023-05-16T11:55:16.8147167Z",
+              "lastModifiedBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-05-16T11:55:16.8147167Z"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "3937730"
+                },
+                "organizationInfo": {
+                  "organizationId": "3ecc7711-155d-4342-8971-edec5747e6d4"
+                }
+              },
+              "userInfo": {
+                "firstName": "vipray",
+                "lastName": "jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": "1234567890"
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2022-09-28T07:12:30Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-5396/providers/NewRelic.Observability/monitors/testNR-75",
+            "name": "testNR-75",
+            "type": "newrelic.observability/monitors",
+            "location": "eastus",
+            "tags": {},
+            "systemData": {
+              "createdBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+              "createdByType": "Application",
+              "createdAt": "2023-05-16T11:56:05.7523301Z",
+              "lastModifiedBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-05-16T11:56:05.7523301Z"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "3937731"
+                },
+                "organizationInfo": {
+                  "organizationId": "2430eeb8-9f3a-446d-8e19-152d73e252be"
+                }
+              },
+              "userInfo": {
+                "firstName": "vipray",
+                "lastName": "jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": "1234567890"
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2022-09-28T07:12:30Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/gaurav-test/providers/NewRelic.Observability/monitors/gaurav-testing-8-3-1",
+            "name": "gaurav-testing-8-3-1",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "gauravbang@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-03-08T09:41:40.0331875Z",
+              "lastModifiedBy": "gauravbang@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-03-08T09:41:40.0331875Z"
+            },
+            "identity": {
+              "principalId": "59a57071-f81b-4ed3-8a4f-91a925f9c182",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "userId": "",
+                "accountInfo": {
+                  "accountId": "11823108"
+                },
+                "organizationInfo": {
+                  "organizationId": "1ee672c1-7cec-4d2d-8fbf-a13e3f28ba3d"
+                }
+              },
+              "userInfo": {
+                "firstName": "Gaurav",
+                "lastName": "Bang",
+                "emailAddress": "gauravbang@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-03-08T09:41:13.088Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/dipesh_test/providers/NewRelic.Observability/monitors/test_13_3_1",
+            "name": "test_13_3_1",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "dipeshbhakat@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-03-13T04:30:35.2584238Z",
+              "lastModifiedBy": "dipeshbhakat@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-03-13T04:30:35.2584238Z"
+            },
+            "identity": {
+              "principalId": "5f63772c-3bdf-44b4-86ed-fdfde1974703",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "userId": "",
+                "accountInfo": {
+                  "accountId": "11823900"
+                },
+                "organizationInfo": {
+                  "organizationId": "f97588f3-2353-43b2-a4f5-dd8b4b8bd5eb"
+                }
+              },
+              "userInfo": {
+                "firstName": "Dipesh",
+                "lastName": "Bhakat",
+                "emailAddress": "dipeshbhakat@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-03-13T04:29:52.569Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/vip-rg/providers/NewRelic.Observability/monitors/vip-test-14Mar23-CEUAP-LinkACC-1",
+            "name": "vip-test-14Mar23-CEUAP-LinkACC-1",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "viprayjain@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-03-14T04:37:29.4272141Z",
+              "lastModifiedBy": "viprayjain@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-03-14T04:37:29.4272141Z"
+            },
+            "identity": {
+              "principalId": "a942086a-2e74-4bbc-b9cb-913d281652e7",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "NEWRELIC",
+              "accountCreationSource": "NEWRELIC",
+              "provisioningState": "Failed",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11824310"
+                },
+                "organizationInfo": {
+                  "organizationId": "b05c5b7f-f214-48da-9b62-7642f50f20eb"
+                }
+              },
+              "userInfo": {
+                "firstName": "Vipray",
+                "lastName": "Jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-03-14T04:36:59.7Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/gaurav-test/providers/NewRelic.Observability/monitors/gaurav-linkNRorg",
+            "name": "gaurav-linkNRorg",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "gauravbang@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-03-14T18:08:10.3253686Z",
+              "lastModifiedBy": "gauravbang@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-03-14T18:08:10.3253686Z"
+            },
+            "identity": {
+              "principalId": "00c2da54-a2ce-4f76-9260-dfa69be2fb75",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "NEWRELIC",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11824478"
+                },
+                "organizationInfo": {
+                  "organizationId": "b05c5b7f-f214-48da-9b62-7642f50f20eb"
+                }
+              },
+              "userInfo": {
+                "firstName": "Gaurav",
+                "lastName": "Bang",
+                "emailAddress": "gauravbang@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "effectiveDate": "0001-01-01T00:00:00Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/saurgupta_RG/providers/NewRelic.Observability/monitors/saurgupta_15_03_23_01",
+            "name": "saurgupta_15_03_23_01",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "saurgupta@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-03-15T04:57:49.1688805Z",
+              "lastModifiedBy": "saurgupta@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-03-15T04:57:49.1688805Z"
+            },
+            "identity": {
+              "principalId": "e3d6ca1b-cd67-4790-ac1e-566d3db98ca5",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "userId": "",
+                "accountInfo": {
+                  "accountId": "11824616"
+                },
+                "organizationInfo": {
+                  "organizationId": "e4dde9c4-1020-4127-bc4c-f7637a5bb4f7"
+                }
+              },
+              "userInfo": {
+                "firstName": "Saurabh",
+                "lastName": "Gupta",
+                "emailAddress": "saurgupta@microsoft.com",
+                "phoneNumber": "4257050556"
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-03-15T04:57:20.623Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/gaurav-test/providers/NewRelic.Observability/monitors/gaurav-testing-15-3-Pro_org",
+            "name": "gaurav-testing-15-3-Pro_org",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "gauravbang@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-03-15T10:20:47.220948Z",
+              "lastModifiedBy": "gauravbang@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-03-15T10:20:47.220948Z"
+            },
+            "identity": {
+              "principalId": "28862184-112d-4701-bc98-ba357dd48da7",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "userId": "",
+                "accountInfo": {
+                  "accountId": "11824630"
+                },
+                "organizationInfo": {
+                  "organizationId": "7e958091-9552-4f8c-8b98-afe2d45d37b8"
+                }
+              },
+              "userInfo": {
+                "firstName": "Gaurav",
+                "lastName": "Bang",
+                "emailAddress": "gauravbang@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-03-15T10:20:28.933Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/gaurav-test/providers/NewRelic.Observability/monitors/gaurav-test-aurto-Role-2",
+            "name": "gaurav-test-aurto-Role-2",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "gauravbang@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-03-15T16:18:55.0229083Z",
+              "lastModifiedBy": "gauravbang@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-03-15T16:18:55.0229083Z"
+            },
+            "identity": {
+              "principalId": "a1c2d46a-6bea-490e-9b04-9d1ccd9b68ba",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Failed",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "userId": null,
+                "accountInfo": null,
+                "organizationInfo": null
+              },
+              "userInfo": {
+                "firstName": "Gaurav",
+                "lastName": "Bang",
+                "emailAddress": "gauravbang@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "usageType": null,
+                "billingCycle": null,
+                "planDetails": null,
+                "effectiveDate": "0001-01-01T00:00:00Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/gaurav-test/providers/NewRelic.Observability/monitors/gaurav-testing-auto-role-3",
+            "name": "gaurav-testing-auto-role-3",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "gauravbang@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-03-15T16:56:01.1054503Z",
+              "lastModifiedBy": "gauravbang@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-03-15T16:56:01.1054503Z"
+            },
+            "identity": {
+              "principalId": "616b8733-aab5-478a-b07a-8c1823b46a47",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "NEWRELIC",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11824684"
+                },
+                "organizationInfo": {
+                  "organizationId": "b05c5b7f-f214-48da-9b62-7642f50f20eb"
+                }
+              },
+              "userInfo": {
+                "firstName": "Gaurav",
+                "lastName": "Bang",
+                "emailAddress": "gauravbang@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "effectiveDate": "0001-01-01T00:00:00Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/saurgupta_RG/providers/NewRelic.Observability/monitors/saurgupta_27_03_23_01",
+            "name": "saurgupta_27_03_23_01",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "lastModifiedBy": "saurgupta@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-03-27T09:14:20.3022742Z"
+            },
+            "identity": {
+              "principalId": "8035763f-50d7-43dc-9506-0a13aa2c562c",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Failed",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "userId": null,
+                "accountInfo": null,
+                "organizationInfo": {
+                  "organizationId": "fe5759fb-092a-4353-906b-74df3b17f3d4"
+                }
+              },
+              "userInfo": {
+                "firstName": "Saurabh",
+                "lastName": "Gupta",
+                "emailAddress": "saurgupta@microsoft.com",
+                "phoneNumber": "4257050556"
+              },
+              "planData": {
+                "usageType": null,
+                "billingCycle": null,
+                "planDetails": null,
+                "effectiveDate": "0001-01-01T00:00:00Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/saurgupta_RG/providers/NewRelic.Observability/monitors/saurgupta_27_03_23_02",
+            "name": "saurgupta_27_03_23_02",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "saurgupta@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-03-27T09:21:34.9721531Z",
+              "lastModifiedBy": "saurgupta@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-03-27T09:21:34.9721531Z"
+            },
+            "identity": {
+              "principalId": "5d3eceb2-b8cc-45f6-899f-d0e25e7db505",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Failed",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "userId": null,
+                "accountInfo": null,
+                "organizationInfo": {
+                  "organizationId": "fe5759fb-092a-4353-906b-74df3b17f3d4"
+                }
+              },
+              "userInfo": {
+                "firstName": "Saurabh",
+                "lastName": "Gupta",
+                "emailAddress": "saurgupta@microsoft.com",
+                "phoneNumber": "4257050556"
+              },
+              "planData": {
+                "usageType": null,
+                "billingCycle": null,
+                "planDetails": null,
+                "effectiveDate": "0001-01-01T00:00:00Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/saurgupta_RG/providers/NewRelic.Observability/monitors/saurgupta_27_03_23_03",
+            "name": "saurgupta_27_03_23_03",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "saurgupta@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-03-27T10:55:52.0921309Z",
+              "lastModifiedBy": "saurgupta@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-03-27T10:55:52.0921309Z"
+            },
+            "identity": {
+              "principalId": "faba6b5e-59a3-4e20-bf52-f0a8aca2ef07",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "NEWRELIC",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Failed",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11826589"
+                },
+                "organizationInfo": {
+                  "organizationId": "fe5759fb-092a-4353-906b-74df3b17f3d4"
+                }
+              },
+              "userInfo": {
+                "firstName": "Saurabh",
+                "lastName": "Gupta",
+                "emailAddress": "saurgupta@microsoft.com",
+                "phoneNumber": "4257050556"
+              },
+              "planData": {
+                "effectiveDate": "0001-01-01T00:00:00Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/vip-rg/providers/NewRelic.Observability/monitors/vip-test-27Mar23-CEUAP-LinkNRAcc-1",
+            "name": "vip-test-27Mar23-CEUAP-LinkNRAcc-1",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "viprayjain@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-03-27T11:42:00.3056625Z",
+              "lastModifiedBy": "viprayjain@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-03-27T11:42:00.3056625Z"
+            },
+            "identity": {
+              "principalId": "42899ab3-af5f-4034-8aad-55fbe82108d8",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "NEWRELIC",
+              "accountCreationSource": "NEWRELIC",
+              "provisioningState": "Failed",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11826594"
+                },
+                "organizationInfo": {
+                  "organizationId": "fe5759fb-092a-4353-906b-74df3b17f3d4"
+                }
+              },
+              "userInfo": {
+                "firstName": "Vipray",
+                "lastName": "Jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "effectiveDate": "0001-01-01T00:00:00Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/saurgupta_RG/providers/NewRelic.Observability/monitors/saurgupta_28_03_23_01",
+            "name": "saurgupta_28_03_23_01",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "saurgupta@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-03-28T08:09:47.2965032Z",
+              "lastModifiedBy": "f73fdc11-ed25-4c35-a93a-f525ab3fd649",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-05-09T09:38:37.9892137Z"
+            },
+            "identity": {
+              "principalId": "6f616062-2081-4c85-b090-bad52e121f56",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Failed",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11826838"
+                },
+                "organizationInfo": {
+                  "organizationId": "fe5759fb-092a-4353-906b-74df3b17f3d4"
+                }
+              },
+              "userInfo": {
+                "firstName": "Saurabh",
+                "lastName": "Gupta",
+                "emailAddress": "saurgupta@microsoft.com",
+                "phoneNumber": "4257050556"
+              },
+              "planData": {
+                "usageType": "COMMITTED",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py@PUBIDnewrelicinc1635200720692.newrelic_liftr_payg",
+                "effectiveDate": "2023-05-09T09:38:00.25Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/vip-rg/providers/NewRelic.Observability/monitors/vip-test-28Mar23-CEUAP-LinkOrg-1",
+            "name": "vip-test-28Mar23-CEUAP-LinkOrg-1",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "viprayjain@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-03-28T09:16:32.5041057Z",
+              "lastModifiedBy": "viprayjain@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-03-28T09:16:32.5041057Z"
+            },
+            "identity": {
+              "principalId": "589becfd-0fc2-4e4b-95cb-8150886c9372",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "NEWRELIC",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Failed",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11826842"
+                },
+                "organizationInfo": {
+                  "organizationId": "fe5759fb-092a-4353-906b-74df3b17f3d4"
+                }
+              },
+              "userInfo": {
+                "firstName": "Vipray",
+                "lastName": "Jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "effectiveDate": "0001-01-01T00:00:00Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/saurgupta_RG/providers/NewRelic.Observability/monitors/saurgupta_28_03_23_02",
+            "name": "saurgupta_28_03_23_02",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "saurgupta@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-03-28T12:04:18.7332277Z",
+              "lastModifiedBy": "f73fdc11-ed25-4c35-a93a-f525ab3fd649",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-05-09T09:38:38.3172955Z"
+            },
+            "identity": {
+              "principalId": "2075e7df-6260-4329-8d32-c031f854be21",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Failed",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11826851"
+                },
+                "organizationInfo": {
+                  "organizationId": "fe5759fb-092a-4353-906b-74df3b17f3d4"
+                }
+              },
+              "userInfo": {
+                "firstName": "Saurabh",
+                "lastName": "Gupta",
+                "emailAddress": "saurgupta@microsoft.com",
+                "phoneNumber": "4257050556"
+              },
+              "planData": {
+                "effectiveDate": "2023-05-09T09:38:00.25Z",
+                "usageType": "COMMITTED",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py@PUBIDnewrelicinc1635200720692.newrelic_liftr_payg"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/dipesh_test/providers/NewRelic.Observability/monitors/dipesh_test_3_30_1",
+            "name": "dipesh_test_3_30_1",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "dipeshbhakat@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-03-30T07:05:10.426026Z",
+              "lastModifiedBy": "dipeshbhakat@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-03-30T07:05:10.426026Z"
+            },
+            "identity": {
+              "principalId": "12d001d2-7be0-48ad-97fa-6caca31b40d0",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11827357"
+                },
+                "organizationInfo": {
+                  "organizationId": "b4950cae-9384-40c3-8849-ff30354e4764"
+                }
+              },
+              "userInfo": {
+                "firstName": "Dipesh",
+                "lastName": "Bhakat",
+                "emailAddress": "dipeshbhakat@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-03-30T07:04:40.4Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/dipesh_test/providers/NewRelic.Observability/monitors/dipesh_test_automonitoring_3_31",
+            "name": "dipesh_test_automonitoring_3_31",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "dipeshbhakat@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-03-31T09:40:40.3833976Z",
+              "lastModifiedBy": "dipeshbhakat@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-03-31T09:40:40.3833976Z"
+            },
+            "identity": {
+              "principalId": "7b24fed8-66b1-4d7d-89e1-990d8e6ea3e6",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11827596"
+                },
+                "organizationInfo": {
+                  "organizationId": "217c8ebc-cfbf-44c8-8aa7-329199bb88b6"
+                }
+              },
+              "userInfo": {
+                "firstName": "Dipesh",
+                "lastName": "Bhakat",
+                "emailAddress": "dipeshbhakat@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-03-31T09:40:03.079Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/gaurav-test/providers/NewRelic.Observability/monitors/gaurav-test-canary-auto-2",
+            "name": "gaurav-test-canary-auto-2",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "gauravbang@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-03-31T11:51:42.313165Z",
+              "lastModifiedBy": "gauravbang@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-03-31T11:51:42.313165Z"
+            },
+            "identity": {
+              "principalId": "eaab4f37-c5db-4db1-8ef5-70e37ff3cd5f",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11827602"
+                },
+                "organizationInfo": {
+                  "organizationId": "4a4a71ca-a850-4449-8c6a-e6ba65e9c7ec"
+                }
+              },
+              "userInfo": {
+                "firstName": "Gaurav",
+                "lastName": "Bang",
+                "emailAddress": "gauravbang@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-03-31T11:51:18.995Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/dipesh_test/providers/NewRelic.Observability/monitors/test_automonitoring_2_dipesh",
+            "name": "test_automonitoring_2_dipesh",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "dipeshbhakat@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-03-31T12:01:35.9357989Z",
+              "lastModifiedBy": "dipeshbhakat@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-03-31T12:01:35.9357989Z"
+            },
+            "identity": {
+              "principalId": "25c3c518-316e-4da4-a6f4-79630717a5da",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11827623"
+                },
+                "organizationInfo": {
+                  "organizationId": "7b7a4854-743e-44ad-9acb-cc9ce73d8680"
+                }
+              },
+              "userInfo": {
+                "firstName": "Dipesh",
+                "lastName": "Bhakat",
+                "emailAddress": "dipeshbhakat@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-03-31T12:00:59.046Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/vip-rg/providers/NewRelic.Observability/monitors/vip-test-04Apr23-CEUAP-New-1",
+            "name": "vip-test-04Apr23-CEUAP-New-1",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "viprayjain@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-04-04T04:22:29.0391839Z",
+              "lastModifiedBy": "viprayjain@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-04-04T04:22:29.0391839Z"
+            },
+            "identity": {
+              "principalId": "210506c3-7eef-431f-b250-ca9c93228d63",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Failed",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11828133"
+                },
+                "organizationInfo": {
+                  "organizationId": "168bbf87-e890-4a7b-a7c7-e8ceffdab870"
+                }
+              },
+              "userInfo": {
+                "firstName": "Vipray",
+                "lastName": "Jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-04-04T04:22:03.081Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/saurgupta_RG/providers/NewRelic.Observability/monitors/saurgupta_05_04_23_01",
+            "name": "saurgupta_05_04_23_01",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "saurgupta@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-04-05T08:33:53.7023903Z",
+              "lastModifiedBy": "f73fdc11-ed25-4c35-a93a-f525ab3fd649",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-05-09T09:38:39.2862133Z"
+            },
+            "identity": {
+              "principalId": "5fba8e2d-c4fc-42a0-8c68-1b178d0e3693",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11828436"
+                },
+                "organizationInfo": {
+                  "organizationId": "fe5759fb-092a-4353-906b-74df3b17f3d4"
+                }
+              },
+              "userInfo": {
+                "firstName": "Saurabh",
+                "lastName": "Gupta",
+                "emailAddress": "saurgupta@microsoft.com",
+                "phoneNumber": "4257050556"
+              },
+              "planData": {
+                "effectiveDate": "2023-05-09T09:38:00.25Z",
+                "usageType": "COMMITTED",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py@PUBIDnewrelicinc1635200720692.newrelic_liftr_payg"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/vip-rg/providers/NewRelic.Observability/monitors/vip-test-05Apr23-CEUAP-LinkOrg-1",
+            "name": "vip-test-05Apr23-CEUAP-LinkOrg-1",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "viprayjain@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-04-05T08:42:34.0181239Z",
+              "lastModifiedBy": "viprayjain@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-04-05T08:42:34.0181239Z"
+            },
+            "identity": {
+              "principalId": "6db1fd59-ff7f-4724-b4f1-473c6115a657",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "NEWRELIC",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Failed",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11828437"
+                },
+                "organizationInfo": {
+                  "organizationId": "fe5759fb-092a-4353-906b-74df3b17f3d4"
+                }
+              },
+              "userInfo": {
+                "firstName": "Vipray",
+                "lastName": "Jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "effectiveDate": "0001-01-01T00:00:00Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/vip-rg/providers/NewRelic.Observability/monitors/vip-test-19Apr23-CUEAP-LinkOrg-1",
+            "name": "vip-test-19Apr23-CUEAP-LinkOrg-1",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "viprayjain@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-04-19T11:28:09.8061387Z",
+              "lastModifiedBy": "viprayjain@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-04-19T11:28:09.8061387Z"
+            },
+            "identity": {
+              "principalId": "652840ea-5e96-4005-b2ea-51f39c2a7d7c",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "NEWRELIC",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Failed",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11832585"
+                },
+                "organizationInfo": {
+                  "organizationId": "fe5759fb-092a-4353-906b-74df3b17f3d4"
+                }
+              },
+              "userInfo": {
+                "firstName": "Vipray",
+                "lastName": "Jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "effectiveDate": "0001-01-01T00:00:00Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/saurgupta_RG/providers/NewRelic.Observability/monitors/saurgupta_21_04_23_03",
+            "name": "saurgupta_21_04_23_03",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "saurgupta@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-04-21T11:29:46.1598733Z",
+              "lastModifiedBy": "saurgupta@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-04-21T11:29:46.1598733Z"
+            },
+            "identity": {
+              "principalId": "0b7c8541-4c24-44a1-9566-5d850172db50",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11833107"
+                },
+                "organizationInfo": {
+                  "organizationId": "7e8a045c-620d-43ad-955a-16dbc48b0796"
+                }
+              },
+              "userInfo": {
+                "firstName": "Saurabh",
+                "lastName": "Gupta",
+                "emailAddress": "saurgupta@microsoft.com",
+                "phoneNumber": "4257050556"
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-04-21T11:29:24.332Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/saurgupta_RG/providers/NewRelic.Observability/monitors/saurgupta_21_04_23_04",
+            "name": "saurgupta_21_04_23_04",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "saurgupta@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-04-21T11:35:23.5801822Z",
+              "lastModifiedBy": "f73fdc11-ed25-4c35-a93a-f525ab3fd649",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-05-09T09:38:40.12989Z"
+            },
+            "identity": {
+              "principalId": "0a123d99-6836-4e83-84e8-679a9d69ec7f",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11833108"
+                },
+                "organizationInfo": {
+                  "organizationId": "fe5759fb-092a-4353-906b-74df3b17f3d4"
+                }
+              },
+              "userInfo": {
+                "firstName": "Saurabh",
+                "lastName": "Gupta",
+                "emailAddress": "saurgupta@microsoft.com",
+                "phoneNumber": "4257050556"
+              },
+              "planData": {
+                "effectiveDate": "2023-05-09T09:38:00.25Z",
+                "usageType": "COMMITTED",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py@PUBIDnewrelicinc1635200720692.newrelic_liftr_payg"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/vip-rg/providers/NewRelic.Observability/monitors/vip-test-LinkOrg-21Apr23-CEUAP-1",
+            "name": "vip-test-LinkOrg-21Apr23-CEUAP-1",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "viprayjain@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-04-21T11:50:12.0626614Z",
+              "lastModifiedBy": "viprayjain@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-04-21T11:50:12.0626614Z"
+            },
+            "identity": {
+              "principalId": "cb9e0b4b-f023-459f-8d40-051d3fb801d5",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "NEWRELIC",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Failed",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11833109"
+                },
+                "organizationInfo": {
+                  "organizationId": "fe5759fb-092a-4353-906b-74df3b17f3d4"
+                }
+              },
+              "userInfo": {
+                "firstName": "Vipray",
+                "lastName": "Jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "effectiveDate": "0001-01-01T00:00:00Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/saurgupta_RG/providers/NewRelic.Observability/monitors/saurgupta_24_04_23_01",
+            "name": "saurgupta_24_04_23_01",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "saurgupta@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-04-24T03:33:40.6315557Z",
+              "lastModifiedBy": "f73fdc11-ed25-4c35-a93a-f525ab3fd649",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-05-09T09:38:40.3486844Z"
+            },
+            "identity": {
+              "principalId": "ecc769f1-0815-424c-bc4a-cf3f4cb0f0de",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11833430"
+                },
+                "organizationInfo": {
+                  "organizationId": "fe5759fb-092a-4353-906b-74df3b17f3d4"
+                }
+              },
+              "userInfo": {
+                "firstName": "Saurabh",
+                "lastName": "Gupta",
+                "emailAddress": "saurgupta@microsoft.com",
+                "phoneNumber": "4257050556"
+              },
+              "planData": {
+                "effectiveDate": "2023-05-09T09:38:00.25Z",
+                "usageType": "COMMITTED",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py@PUBIDnewrelicinc1635200720692.newrelic_liftr_payg"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/vip-rg/providers/NewRelic.Observability/monitors/vip-test-27Apr23-CEUAP-LinkOrg-Dusra",
+            "name": "vip-test-27Apr23-CEUAP-LinkOrg-Dusra",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "viprayjain@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-04-27T07:09:03.3442333Z",
+              "lastModifiedBy": "f73fdc11-ed25-4c35-a93a-f525ab3fd649",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-05-09T09:38:40.6455505Z"
+            },
+            "identity": {
+              "principalId": "09a0e68f-aaf8-45e8-80bd-f9dfc70b2e9d",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11834112"
+                },
+                "organizationInfo": {
+                  "organizationId": "fe5759fb-092a-4353-906b-74df3b17f3d4"
+                }
+              },
+              "userInfo": {
+                "firstName": "Vipray",
+                "lastName": "Jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "effectiveDate": "2023-05-09T09:38:00.25Z",
+                "usageType": "COMMITTED",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py@PUBIDnewrelicinc1635200720692.newrelic_liftr_payg"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/Contoso_Trial_RG/providers/NewRelic.Observability/monitors/Contoso_Trial_NewRelic",
+            "name": "Contoso_Trial_NewRelic",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "visinghv@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-04-27T09:40:49.4490184Z",
+              "lastModifiedBy": "visinghv@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-04-27T09:40:49.4490184Z"
+            },
+            "identity": {
+              "principalId": "6e758e6e-eeb5-4d1e-8f48-9123bafcc213",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11834121"
+                },
+                "organizationInfo": {
+                  "organizationId": "baf5ad21-0180-4201-a7fb-2cc0b1a45062"
+                }
+              },
+              "userInfo": {
+                "firstName": "Vikas",
+                "lastName": "Singhvi",
+                "emailAddress": "visinghv@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-04-27T09:40:16.459Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/dipesh_test/providers/NewRelic.Observability/monitors/dipesh_test_accessibility",
+            "name": "dipesh_test_accessibility",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "dipeshbhakat@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-04-28T15:25:56.6263226Z",
+              "lastModifiedBy": "dipeshbhakat@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-04-28T15:25:56.6263226Z"
+            },
+            "identity": {
+              "principalId": "a6031395-056d-4e0b-8e5e-aaa8b74b7e71",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11834507"
+                },
+                "organizationInfo": {
+                  "organizationId": "931ba244-498a-4c90-a330-9c6efc89d8ca"
+                }
+              },
+              "userInfo": {
+                "firstName": "Dipesh",
+                "lastName": "Bhakat",
+                "emailAddress": "dipeshbhakat@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-04-28T15:24:55.21Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/acctest9482/providers/NewRelic.Observability/monitors/acctest2985",
+            "name": "acctest2985",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {
+              "key6976": "oaxfhf"
+            },
+            "systemData": {
+              "createdBy": "dipeshbhakat@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-05-02T11:33:12.1997957Z",
+              "lastModifiedBy": "dipeshbhakat@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-05-02T11:33:12.1997957Z"
+            },
+            "identity": {
+              "principalId": "7bc5a722-008c-4793-b00d-050cb2aa54af",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Failed",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "userId": "vcscxlncofcuduadesd",
+                "accountInfo": {
+                  "accountId": "xhqmg"
+                },
+                "organizationInfo": {
+                  "organizationId": "k"
+                }
+              },
+              "userInfo": {
+                "firstName": "Alice",
+                "lastName": "Bob",
+                "emailAddress": "dipeshbhakat@microsoft.com",
+                "phoneNumber": "123456"
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-04-20T14:32:58.091Z"
+              },
+              "liftrResourceCategory": "Unknown",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/acctest9482/providers/NewRelic.Observability/monitors/acctestterraform1",
+            "name": "acctestterraform1",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {
+              "Env": "Dev"
+            },
+            "systemData": {
+              "createdBy": "dipeshbhakat@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-05-02T11:50:50.371331Z",
+              "lastModifiedBy": "dipeshbhakat@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-05-02T11:50:50.371331Z"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11835067"
+                },
+                "organizationInfo": {
+                  "organizationId": "d14d6171-51e7-4983-8835-9d028c34e038"
+                }
+              },
+              "userInfo": {
+                "firstName": "Alice",
+                "lastName": "Bob",
+                "emailAddress": "dipeshbhakat@microsoft.com",
+                "phoneNumber": "123456"
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-04-20T14:32:58.091Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/vip-rg/providers/NewRelic.Observability/monitors/vip-test-04May23-CEUAP-1",
+            "name": "vip-test-04May23-CEUAP-1",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "viprayjain@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-05-04T11:46:09.711504Z",
+              "lastModifiedBy": "viprayjain@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-05-04T11:46:09.711504Z"
+            },
+            "identity": {
+              "principalId": "3f91471c-e1fb-4374-836d-a373b3a8963e",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11835577"
+                },
+                "organizationInfo": {
+                  "organizationId": "73aa5d71-5a7c-4a08-a489-44f14d7accb3"
+                }
+              },
+              "userInfo": {
+                "firstName": "Vipray",
+                "lastName": "Jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-05-04T11:45:45.519Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/harsh-rg/providers/NewRelic.Observability/monitors/Harsh_PostMan1",
+            "name": "Harsh_PostMan1",
+            "type": "newrelic.observability/monitors",
+            "location": "Central US EUAP",
+            "systemData": {
+              "lastModifiedBy": "harshkumar@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-05-09T05:07:39.0022253Z"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11836430"
+                },
+                "organizationInfo": {
+                  "organizationId": "2e7473e9-0de2-4309-b75e-224dff27b1c8"
+                }
+              },
+              "userInfo": {
+                "firstName": "Harsh",
+                "lastName": "Kumar",
+                "emailAddress": "harshkumar@microsoft.com",
+                "phoneNumber": "1234567890"
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2022-10-25T13:14:33Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/harsh-rg/providers/NewRelic.Observability/monitors/Harsh_PostMan_0905_1",
+            "name": "Harsh_PostMan_0905_1",
+            "type": "newrelic.observability/monitors",
+            "location": "Central US EUAP",
+            "tags": {
+              "Environment": "Canary",
+              "CustomTag": "Harsh"
+            },
+            "systemData": {
+              "createdBy": "harshkumar@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-05-09T05:13:23.7186022Z",
+              "lastModifiedBy": "harshkumar@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-05-09T05:13:23.7186022Z"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11836432"
+                },
+                "organizationInfo": {
+                  "organizationId": "72b3349f-7734-4d26-b15f-c5558e034d88"
+                }
+              },
+              "userInfo": {
+                "firstName": "Harsh",
+                "lastName": "Kumar",
+                "emailAddress": "harshkumar@microsoft.com",
+                "phoneNumber": "1234567890"
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-05-09T13:14:33Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/harsh-rg/providers/NewRelic.Observability/monitors/Uxuxuxuxuuxux",
+            "name": "Uxuxuxuxuuxux",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "harshkumar@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-05-09T07:53:15.7591101Z",
+              "lastModifiedBy": "harshkumar@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-05-09T07:53:15.7591101Z"
+            },
+            "identity": {
+              "principalId": "df61d5f3-c082-46c6-b1c9-3ce15b6c1bc2",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11836445"
+                },
+                "organizationInfo": {
+                  "organizationId": "4ac7da6c-ad33-4b03-b979-e06c5a53c1bf"
+                }
+              },
+              "userInfo": {
+                "firstName": "Harsh",
+                "lastName": "Kumar",
+                "emailAddress": "harshkumar@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-05-09T07:52:50.809Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/vip-rg/providers/NewRelic.Observability/monitors/vip-test-09May23-CEUAP-LinkOrg-1",
+            "name": "vip-test-09May23-CEUAP-LinkOrg-1",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "viprayjain@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-05-09T09:58:49.8786547Z",
+              "lastModifiedBy": "viprayjain@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-05-09T09:58:49.8786547Z"
+            },
+            "identity": {
+              "principalId": "a03ef895-af2e-4c18-abec-cf24fd4dbc3e",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11836452"
+                },
+                "organizationInfo": {
+                  "organizationId": "fe5759fb-092a-4353-906b-74df3b17f3d4"
+                }
+              },
+              "userInfo": {
+                "firstName": "Vipray",
+                "lastName": "Jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "usageType": "COMMITTED",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py@PUBIDnewrelicinc1635200720692.newrelic_liftr_payg",
+                "effectiveDate": "2023-05-09T09:58:25.128Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/vip-rg/providers/NewRelic.Observability/monitors/vip-test-11May23-CEUAP-New-1",
+            "name": "vip-test-11May23-CEUAP-New-1",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "viprayjain@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-05-11T05:11:05.1980648Z",
+              "lastModifiedBy": "viprayjain@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-05-11T05:11:05.1980648Z"
+            },
+            "identity": {
+              "principalId": "f6594702-5c0f-4e51-802f-27001d5c6381",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11836926"
+                },
+                "organizationInfo": {
+                  "organizationId": "ab30104e-fcd0-442d-9941-e011966dc14e"
+                }
+              },
+              "userInfo": {
+                "firstName": "Vipray",
+                "lastName": "Jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-05-11T05:10:42.059Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/vip-rg/providers/NewRelic.Observability/monitors/vip-test-06Apr23-E2EUAP-New-1",
+            "name": "vip-test-06Apr23-E2EUAP-New-1",
+            "type": "newrelic.observability/monitors",
+            "location": "eastus2euap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "viprayjain@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-04-06T09:21:33.5996793Z",
+              "lastModifiedBy": "viprayjain@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-04-06T09:21:33.5996793Z"
+            },
+            "identity": {
+              "principalId": "db26da00-bfc6-480a-8f3d-74841282eac8",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Failed",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11828669"
+                },
+                "organizationInfo": {
+                  "organizationId": "b02e8dc9-510f-4eeb-8dce-29c0ec578021"
+                }
+              },
+              "userInfo": {
+                "firstName": "Vipray",
+                "lastName": "Jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-04-06T09:21:15.156Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/vip-rg/providers/NewRelic.Observability/monitors/vip-test-10Apr23-E2EUAP-New-1",
+            "name": "vip-test-10Apr23-E2EUAP-New-1",
+            "type": "newrelic.observability/monitors",
+            "location": "eastus2euap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "viprayjain@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-04-10T09:52:16.123138Z",
+              "lastModifiedBy": "viprayjain@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-04-10T09:52:16.123138Z"
+            },
+            "identity": {
+              "principalId": "f5fc7ccf-afd8-45d6-aec0-b02579adcd6c",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Failed",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11829388"
+                },
+                "organizationInfo": {
+                  "organizationId": "ef15e0cd-0a85-489d-94ac-40b0282f882d"
+                }
+              },
+              "userInfo": {
+                "firstName": "Vipray",
+                "lastName": "Jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-04-10T09:51:54.762Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/vip-rg/providers/NewRelic.Observability/monitors/vip-test-10Apr23-E2EUAP-New-2",
+            "name": "vip-test-10Apr23-E2EUAP-New-2",
+            "type": "newrelic.observability/monitors",
+            "location": "eastus2euap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "viprayjain@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-04-10T10:04:51.9373616Z",
+              "lastModifiedBy": "viprayjain@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-04-10T10:04:51.9373616Z"
+            },
+            "identity": {
+              "principalId": "4122579c-c5f8-4449-968a-9cd9b2aa1ae9",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Failed",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11829389"
+                },
+                "organizationInfo": {
+                  "organizationId": "8df4fa2d-c623-45b8-88a3-b12c369aaf71"
+                }
+              },
+              "userInfo": {
+                "firstName": "Vipray",
+                "lastName": "Jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                "effectiveDate": "2023-04-10T10:04:28.712Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/vip-rg/providers/NewRelic.Observability/monitors/vip-test-fail20-EEUAP",
+            "name": "vip-test-fail20-EEUAP",
+            "type": "newrelic.observability/monitors",
+            "location": "eastus2euap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "viprayjain@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-05-04T11:07:08.9420097Z",
+              "lastModifiedBy": "viprayjain@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-05-04T11:07:08.9420097Z"
+            },
+            "identity": {
+              "principalId": "5e2bf171-e338-427c-8e06-9d0892167d01",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Accepted",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "userId": null,
+                "accountInfo": null,
+                "organizationInfo": null
+              },
+              "userInfo": {
+                "firstName": "Vipray",
+                "lastName": "Jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py@PUBIDnewrelicinc1635200720692.newrelic_liftr_payg",
+                "effectiveDate": "2023-05-04T11:06:35.524Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          },
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/vip-rg/providers/NewRelic.Observability/monitors/vip-test-09May23-EEUAP-2",
+            "name": "vip-test-09May23-EEUAP-2",
+            "type": "newrelic.observability/monitors",
+            "location": "eastus2euap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "viprayjain@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-05-09T07:54:05.0055023Z",
+              "lastModifiedBy": "viprayjain@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-05-09T07:54:05.0055023Z"
+            },
+            "identity": {
+              "principalId": "7db46715-1670-44c4-8e33-69b8e2f2e1cd",
+              "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+              "type": "SystemAssigned"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11836446"
+                },
+                "organizationInfo": {
+                  "organizationId": "fbf78759-f886-494c-bdbb-659318e2a793"
+                }
+              },
+              "userInfo": {
+                "firstName": "Vipray",
+                "lastName": "Jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": ""
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py@PUBIDnewrelicinc1635200720692.newrelic_liftr_payg",
+                "effectiveDate": "2023-05-09T07:53:34.004Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "RandomSeed": "1963649199",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "272c26cb-7026-4b37-b190-7cb7b2abecb0"
+  }
+}
