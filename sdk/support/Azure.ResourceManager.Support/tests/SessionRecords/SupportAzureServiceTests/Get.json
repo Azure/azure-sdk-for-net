@@ -1,0 +1,85 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/tenants?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-8e9c64a1fb57193d8d5bf848b542c828-50ce72b86d9d3514-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.5.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "50bd6384baa43f59c663956f376a60b7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "140",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 May 2023 07:12:21 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ca570f43-de9c-4b30-8f83-13547d6cf821",
+        "x-ms-ratelimit-remaining-tenant-reads": "11997",
+        "x-ms-request-id": "ca570f43-de9c-4b30-8f83-13547d6cf821",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230516T071221Z:ca570f43-de9c-4b30-8f83-13547d6cf821"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/tenants/72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "tenantCategory": "Home"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Support/services/484e2236-bc6d-b1bb-76d2-7d09278cf9ea?api-version=2020-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-fdd4ff1a02122e1aa32ba48e67a835a6-fb1eefc9262dc359-00",
+        "User-Agent": "azsdk-net-ResourceManager.Support/1.1.0-alpha.20230516.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "833ab706768d3b958b8bc682685630ff",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "229",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 May 2023 07:12:21 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b2ec4458-1a76-4303-9c5a-2a1cca893a96",
+        "x-ms-ratelimit-remaining-tenant-reads": "11996",
+        "x-ms-request-id": "b2ec4458-1a76-4303-9c5a-2a1cca893a96",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230516T071221Z:b2ec4458-1a76-4303-9c5a-2a1cca893a96"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.Support/services/484e2236-bc6d-b1bb-76d2-7d09278cf9ea",
+        "name": "484e2236-bc6d-b1bb-76d2-7d09278cf9ea",
+        "type": "Microsoft.Support/services",
+        "properties": {
+          "displayName": "Activity Logs",
+          "resourceTypes": []
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "231099700",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}
