@@ -91,9 +91,11 @@ namespace Azure.Storage.DataMovement
         ///
         /// Will return true if the pause has taken place.
         /// </returns>
-        public async Task PauseIfRunningAsync(CancellationToken cancellationToken = default)
+        public virtual async Task PauseIfRunningAsync(CancellationToken cancellationToken = default)
         {
             await _state.PauseIfRunningAsync(cancellationToken).ConfigureAwait(false);
         }
+
+        internal virtual bool CanPause() => _state.CanPause();
     }
 }
