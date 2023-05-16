@@ -85,6 +85,16 @@ namespace Microsoft.Extensions.Hosting
 
                     section.Bind(options);
 
+                    if (options.MinMessageBatchSize > options.MaxMessageBatchSize)
+                    {
+                        throw new InvalidOperationException("The minimum message batch size must be less than the maximum message batch size");
+                    }
+
+                    if (options.MaxBatchWaitTime > TimeSpan.FromSeconds(150))
+                    {
+                        throw new InvalidOperationException("This value should be no longer then 50% of the entity message lock duration, meaning the maximum allowed value is 2 minutes and 30 seconds. Otherwise, you may get lock exceptions when messages are pulled from the cache.");
+                    }
+
                     configure(options);
                 });
 

@@ -1,5 +1,17 @@
 # Release History
 
+## 12.0.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+- Fix to prevent empty strings or null to be passed as paths for `LocalFileStorageResource` and `LocalDirectoryStorageResourceContainer`.
+- Fixed `ErrorHandlingOptions.ContinueOnFailure` not be respected.
+
+### Other Changes
+
 ## 12.0.0-beta.2 (2023-04-26)
 - [BREAKING CHANGE] Combined `SingleTransferOptions` and `ContainerTransferOptions` into `TransferOptions`.
 - [BREAKING CHANGE] If `TransferOptions.CreateMode` is not specified, it will default to `StorageResourceCreateMode.Fail` instead of `Overwrite`.

@@ -238,8 +238,17 @@ namespace Azure.Data.Tables
             return message;
         }
 
-        /// <summary> Creates a new table under the given account. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <summary>
+        /// [Protocol Method] Creates a new table under the given account.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="format"> Specifies the media type for the response. Allowed values: &quot;application/json;odata=nometadata&quot; | &quot;application/json;odata=minimalmetadata&quot; | &quot;application/json;odata=fullmetadata&quot;. </param>
         /// <param name="responsePreference"> Specifies whether the response should include the inserted entity in the payload. Possible values are return-no-content and return-content. Allowed values: &quot;return-no-content&quot; | &quot;return-content&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -264,8 +273,17 @@ namespace Azure.Data.Tables
             }
         }
 
-        /// <summary> Creates a new table under the given account. </summary>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <summary>
+        /// [Protocol Method] Creates a new table under the given account.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="format"> Specifies the media type for the response. Allowed values: &quot;application/json;odata=nometadata&quot; | &quot;application/json;odata=minimalmetadata&quot; | &quot;application/json;odata=fullmetadata&quot;. </param>
         /// <param name="responsePreference"> Specifies whether the response should include the inserted entity in the payload. Possible values are return-no-content and return-content. Allowed values: &quot;return-no-content&quot; | &quot;return-content&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -368,7 +386,16 @@ namespace Azure.Data.Tables
             return message;
         }
 
-        /// <summary> Operation permanently deletes the specified table. </summary>
+        /// <summary>
+        /// [Protocol Method] Operation permanently deletes the specified table.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="table"> The name of the table. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>
@@ -393,7 +420,16 @@ namespace Azure.Data.Tables
             }
         }
 
-        /// <summary> Operation permanently deletes the specified table. </summary>
+        /// <summary>
+        /// [Protocol Method] Operation permanently deletes the specified table.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="table"> The name of the table. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> is null. </exception>

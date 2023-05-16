@@ -29,16 +29,21 @@ namespace Azure.Storage.DataMovement.Tests
         // the path are not stored in the job plan file
         // We expect only the path and the URL without the query
         // to be stored
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/36016")]
         [RecordedTest]
         public async Task CheckpointerWithSasAsync()
         {
             // Arrange
-            DisposingLocalDirectory disposingLocalDirectory = GetTestLocalDirectory();
+            DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
             var containerName = GetNewContainerName();
             var sourceBlobName = GetNewBlobName();
             await using DisposingBlobContainer test = await GetTestContainerAsync(containerName: containerName);
 
-            BlobBaseClient sourceBlob = await CreateBlockBlob(test.Container, Path.GetTempFileName(), sourceBlobName, Constants.KB * 4);
+            BlobBaseClient sourceBlob = await CreateBlockBlob(
+                containerClient: test.Container,
+                localSourceFile: Path.Combine(disposingLocalDirectory.DirectoryPath, sourceBlobName),
+                blobName: sourceBlobName,
+                size: Constants.KB * 4);
 
             // Create Source with SAS
             BlockBlobClient sasSourceBlob = InstrumentClient(
@@ -50,7 +55,11 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Create Destination with SAS
             string destinationBlobName = GetNewBlobName();
-            BlockBlobClient destinationBlob = await CreateBlockBlob(test.Container, Path.GetTempFileName(), destinationBlobName, Constants.KB*4);
+            BlockBlobClient destinationBlob = await CreateBlockBlob(
+                containerClient: test.Container,
+                localSourceFile: Path.Combine(disposingLocalDirectory.DirectoryPath, destinationBlobName),
+                blobName: destinationBlobName,
+                size: Constants.KB*4);
             BlockBlobClient sasDestinationBlob = InstrumentClient(
                 GetServiceClient_BlobServiceSas_Blob(
                     containerName: containerName,
@@ -106,7 +115,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task CheckpointerMismatch_Source()
         {
             // Arrange
-            DisposingLocalDirectory disposingLocalDirectory = GetTestLocalDirectory();
+            DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
             var containerName = GetNewContainerName();
             await using DisposingBlobContainer test = await GetTestContainerAsync(containerName: containerName);
 
@@ -165,7 +174,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task CheckpointerMismatch_Destination()
         {
             // Arrange
-            DisposingLocalDirectory disposingLocalDirectory = GetTestLocalDirectory();
+            DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
             var containerName = GetNewContainerName();
             await using DisposingBlobContainer test = await GetTestContainerAsync(containerName: containerName);
 
@@ -224,7 +233,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task CheckpointerMismatch_CreateMode_Overwrite()
         {
             // Arrange
-            DisposingLocalDirectory disposingLocalDirectory = GetTestLocalDirectory();
+            DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
             var containerName = GetNewContainerName();
             await using DisposingBlobContainer test = await GetTestContainerAsync(containerName: containerName);
 

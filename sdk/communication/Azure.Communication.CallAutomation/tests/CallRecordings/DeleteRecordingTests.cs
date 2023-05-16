@@ -17,7 +17,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
         public void DeleteRecording_Returns200Ok()
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200);
-            var response = callAutomationClient.GetCallRecording().DeleteRecording(new Uri(AmsDeleteUrl));
+            var response = callAutomationClient.GetCallRecording().Delete(new Uri(AmsDeleteUrl));
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
 
@@ -25,7 +25,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
         public async Task DeleteRecordingAsync_Returns200Ok()
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200);
-            var response = await callAutomationClient.GetCallRecording().DeleteRecordingAsync(new Uri(AmsDeleteUrl)).ConfigureAwait(false);
+            var response = await callAutomationClient.GetCallRecording().DeleteAsync(new Uri(AmsDeleteUrl)).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
 
@@ -34,7 +34,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.GetCallRecording().DeleteRecording(new Uri(AmsDeleteUrl)));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.GetCallRecording().Delete(new Uri(AmsDeleteUrl)));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -43,7 +43,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
         public void DeleteRecording_Returns401Unauthorized()
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(401);
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.GetCallRecording().DeleteRecording(new Uri(AmsDeleteUrl)));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.GetCallRecording().Delete(new Uri(AmsDeleteUrl)));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 401);
         }

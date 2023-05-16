@@ -58,15 +58,8 @@ namespace Azure.Storage.Files.Shares
                     .ConfigureAwait(false);
 
                 _writeIndex += _buffer.Length;
-                _buffer.Clear();
             }
         }
-
-        protected override async Task FlushInternal(
-            UploadTransferValidationOptions validationOptions,
-            bool async,
-            CancellationToken cancellationToken)
-            => await AppendInternal(validationOptions, async, cancellationToken).ConfigureAwait(false);
 
         protected override void ValidateBufferSize(long bufferSize)
         {

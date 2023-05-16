@@ -60,15 +60,24 @@ namespace Azure.Analytics.Purview.Share
             _apiVersion = options.Version;
         }
 
-        /// <summary> Get asset in a sentShare. </summary>
+        /// <summary>
+        /// [Protocol Method] Get asset in a sentShare.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="assetName"> The name of the asset. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/> or <paramref name="assetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/AssetsClient.xml" path="doc/members/member[@name='GetAssetAsync(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AssetsClient.xml" path="doc/members/member[@name='GetAssetAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetAssetAsync(string sentShareName, string assetName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -88,15 +97,24 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> Get asset in a sentShare. </summary>
+        /// <summary>
+        /// [Protocol Method] Get asset in a sentShare.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="assetName"> The name of the asset. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/> or <paramref name="assetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/AssetsClient.xml" path="doc/members/member[@name='GetAsset(String,String,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AssetsClient.xml" path="doc/members/member[@name='GetAsset(string,string,RequestContext)']/*" />
         public virtual Response GetAsset(string sentShareName, string assetName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -116,7 +134,16 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> List Assets in a share. </summary>
+        /// <summary>
+        /// [Protocol Method] List Assets in a share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -126,7 +153,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/AssetsClient.xml" path="doc/members/member[@name='GetAssetsAsync(String,String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/AssetsClient.xml" path="doc/members/member[@name='GetAssetsAsync(string,string,string,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAssetsAsync(string sentShareName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -136,7 +163,16 @@ namespace Azure.Analytics.Purview.Share
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AssetsClient.GetAssets", "value", "nextLink", context);
         }
 
-        /// <summary> List Assets in a share. </summary>
+        /// <summary>
+        /// [Protocol Method] List Assets in a share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -146,7 +182,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/AssetsClient.xml" path="doc/members/member[@name='GetAssets(String,String,String,String,RequestContext)']/*" />
+        /// <include file="Docs/AssetsClient.xml" path="doc/members/member[@name='GetAssets(string,string,string,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAssets(string sentShareName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -156,17 +192,26 @@ namespace Azure.Analytics.Purview.Share
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AssetsClient.GetAssets", "value", "nextLink", context);
         }
 
-        /// <summary> Adds a new asset to an existing share. </summary>
+        /// <summary>
+        /// [Protocol Method] Adds a new asset to an existing share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="assetName"> The name of the asset. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/>, <paramref name="assetName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/AssetsClient.xml" path="doc/members/member[@name='CreateAsync(WaitUntil,String,String,RequestContent,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/AssetsClient.xml" path="doc/members/member[@name='CreateAsync(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateAsync(WaitUntil waitUntil, string sentShareName, string assetName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -187,17 +232,26 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> Adds a new asset to an existing share. </summary>
+        /// <summary>
+        /// [Protocol Method] Adds a new asset to an existing share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="assetName"> The name of the asset. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/>, <paramref name="assetName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/AssetsClient.xml" path="doc/members/member[@name='Create(WaitUntil,String,String,RequestContent,RequestContext)']/*" />
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/AssetsClient.xml" path="doc/members/member[@name='Create(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> Create(WaitUntil waitUntil, string sentShareName, string assetName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -218,7 +272,16 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> Delete asset in a sentShare. </summary>
+        /// <summary>
+        /// [Protocol Method] Delete asset in a sentShare.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="assetName"> The name of the asset. </param>
@@ -227,7 +290,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/AssetsClient.xml" path="doc/members/member[@name='DeleteAsync(WaitUntil,String,String,RequestContext)']/*" />
+        /// <include file="Docs/AssetsClient.xml" path="doc/members/member[@name='DeleteAsync(WaitUntil,string,string,RequestContext)']/*" />
         public virtual async Task<Operation> DeleteAsync(WaitUntil waitUntil, string sentShareName, string assetName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -247,7 +310,16 @@ namespace Azure.Analytics.Purview.Share
             }
         }
 
-        /// <summary> Delete asset in a sentShare. </summary>
+        /// <summary>
+        /// [Protocol Method] Delete asset in a sentShare.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="assetName"> The name of the asset. </param>
@@ -256,7 +328,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/AssetsClient.xml" path="doc/members/member[@name='Delete(WaitUntil,String,String,RequestContext)']/*" />
+        /// <include file="Docs/AssetsClient.xml" path="doc/members/member[@name='Delete(WaitUntil,string,string,RequestContext)']/*" />
         public virtual Operation Delete(WaitUntil waitUntil, string sentShareName, string assetName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -96,6 +97,41 @@ namespace Azure.Core.Tests
             content.WriteTo(destination, default);
 
             CollectionAssert.AreEqual(expected, destination.ToArray());
+        }
+
+        [Test]
+        public void IntArrayContent()
+        {
+            var intArray = new int[] { 1, 2, 3 };
+            var expected = "[1,2,3]";
+            var destination = new MemoryStream();
+            var content = RequestContent.Create(intArray);
+
+            content.WriteTo(destination, default);
+            destination.Position = 0;
+            using var reader = new StreamReader(destination);
+
+            Assert.AreEqual(expected, reader.ReadToEnd());
+        }
+
+        [Test]
+        public void DictionaryContent()
+        {
+            var dictionary = new Dictionary<string, object> { { "keyInt", 1 }, { "keyString", "2" }, { "keyFloat", 3.1f } };
+
+#if NETCOREAPP
+            var expected = "{\"keyInt\":1,\"keyString\":\"2\",\"keyFloat\":3.1}";
+#else
+            var expected = "{\"keyInt\":1,\"keyString\":\"2\",\"keyFloat\":3.0999999}";
+#endif
+            var destination = new MemoryStream();
+            var content = RequestContent.Create(dictionary);
+
+            content.WriteTo(destination, default);
+            destination.Position = 0;
+            using var reader = new StreamReader(destination);
+
+            Assert.AreEqual(expected, reader.ReadToEnd());
         }
     }
 }

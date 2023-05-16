@@ -322,25 +322,19 @@ namespace Azure.Monitor.Query
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
         /// <example snippet="Snippet:QueryResource">
         /// <code language="csharp">
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
-        /// var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
-        ///     &quot;search *&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(5)));
+        /// Response&lt;LogsQueryResult&gt; result = await client.QueryResourceAsync(
+        ///     new ResourceIdentifier(resourceId),
+        ///     &quot;AzureActivity | top 10 by TimeGenerated&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
         ///
-        /// var resultTable = results.Value.Table;
+        /// LogsTable table = result.Value.Table;
         ///
-        /// foreach (LogsTableRow rows in resultTable.Rows)
+        /// foreach (LogsTableRow row in table.Rows)
         /// {
-        ///     foreach (var row in rows)
-        ///     {
-        ///         Console.WriteLine(row);
-        ///     }
-        /// }
-        ///
-        /// foreach (LogsTableColumn columns in resultTable.Columns)
-        /// {
-        ///     Console.WriteLine(&quot;Name: &quot; + columns.Name + &quot; Type: &quot; + columns.Type);
+        ///     Console.WriteLine($&quot;{row[&quot;OperationName&quot;]} {row[&quot;ResourceGroup&quot;]}&quot;);
         /// }
         /// </code>
         /// </example>
@@ -362,25 +356,19 @@ namespace Azure.Monitor.Query
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
         /// <example snippet="Snippet:QueryResource">
         /// <code language="csharp">
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
-        /// var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
-        ///     &quot;search *&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(5)));
+        /// Response&lt;LogsQueryResult&gt; result = await client.QueryResourceAsync(
+        ///     new ResourceIdentifier(resourceId),
+        ///     &quot;AzureActivity | top 10 by TimeGenerated&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
         ///
-        /// var resultTable = results.Value.Table;
+        /// LogsTable table = result.Value.Table;
         ///
-        /// foreach (LogsTableRow rows in resultTable.Rows)
+        /// foreach (LogsTableRow row in table.Rows)
         /// {
-        ///     foreach (var row in rows)
-        ///     {
-        ///         Console.WriteLine(row);
-        ///     }
-        /// }
-        ///
-        /// foreach (LogsTableColumn columns in resultTable.Columns)
-        /// {
-        ///     Console.WriteLine(&quot;Name: &quot; + columns.Name + &quot; Type: &quot; + columns.Type);
+        ///     Console.WriteLine($&quot;{row[&quot;OperationName&quot;]} {row[&quot;ResourceGroup&quot;]}&quot;);
         /// }
         /// </code>
         /// </example>
@@ -402,25 +390,19 @@ namespace Azure.Monitor.Query
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
         /// <example snippet="Snippet:QueryResource">
         /// <code language="csharp">
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
-        /// var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
-        ///     &quot;search *&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(5)));
+        /// Response&lt;LogsQueryResult&gt; result = await client.QueryResourceAsync(
+        ///     new ResourceIdentifier(resourceId),
+        ///     &quot;AzureActivity | top 10 by TimeGenerated&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
         ///
-        /// var resultTable = results.Value.Table;
+        /// LogsTable table = result.Value.Table;
         ///
-        /// foreach (LogsTableRow rows in resultTable.Rows)
+        /// foreach (LogsTableRow row in table.Rows)
         /// {
-        ///     foreach (var row in rows)
-        ///     {
-        ///         Console.WriteLine(row);
-        ///     }
-        /// }
-        ///
-        /// foreach (LogsTableColumn columns in resultTable.Columns)
-        /// {
-        ///     Console.WriteLine(&quot;Name: &quot; + columns.Name + &quot; Type: &quot; + columns.Type);
+        ///     Console.WriteLine($&quot;{row[&quot;OperationName&quot;]} {row[&quot;ResourceGroup&quot;]}&quot;);
         /// }
         /// </code>
         /// </example>
@@ -433,12 +415,12 @@ namespace Azure.Monitor.Query
         /// <returns>The logs matching the query.</returns>
         public virtual Response<LogsQueryResult> QueryResource(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
-            string resource = resourceId.ToString();
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(QueryResource)}");
             scope.Start();
             try
             {
-                resource.TrimStart('/');
+                // Call Parse to validate resourceId, then trim preceding / as generated code cannot handle it: https://github.com/Azure/autorest.csharp/issues/3322
+                string resource = ResourceIdentifier.Parse(resourceId).ToString().TrimStart('/');
                 return ExecuteAsync(resource, query, timeRange, options, async: false, isWorkspace: false, cancellationToken).EnsureCompleted();
             }
             catch (Exception e)
@@ -452,25 +434,19 @@ namespace Azure.Monitor.Query
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
         /// <example snippet="Snippet:QueryResource">
         /// <code language="csharp">
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
-        /// var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
-        ///     &quot;search *&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(5)));
+        /// Response&lt;LogsQueryResult&gt; result = await client.QueryResourceAsync(
+        ///     new ResourceIdentifier(resourceId),
+        ///     &quot;AzureActivity | top 10 by TimeGenerated&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
         ///
-        /// var resultTable = results.Value.Table;
+        /// LogsTable table = result.Value.Table;
         ///
-        /// foreach (LogsTableRow rows in resultTable.Rows)
+        /// foreach (LogsTableRow row in table.Rows)
         /// {
-        ///     foreach (var row in rows)
-        ///     {
-        ///         Console.WriteLine(row);
-        ///     }
-        /// }
-        ///
-        /// foreach (LogsTableColumn columns in resultTable.Columns)
-        /// {
-        ///     Console.WriteLine(&quot;Name: &quot; + columns.Name + &quot; Type: &quot; + columns.Type);
+        ///     Console.WriteLine($&quot;{row[&quot;OperationName&quot;]} {row[&quot;ResourceGroup&quot;]}&quot;);
         /// }
         /// </code>
         /// </example>
@@ -483,12 +459,12 @@ namespace Azure.Monitor.Query
         /// <returns>The logs matching the query.</returns>
         public virtual async Task<Response<LogsQueryResult>> QueryResourceAsync(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
-            string resource = resourceId.ToString();
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(QueryResource)}");
             scope.Start();
             try
             {
-                resource.TrimStart('/');
+                // Call Parse to validate resourceId, then trim preceding / as generated code cannot handle it: https://github.com/Azure/autorest.csharp/issues/3322
+                string resource = ResourceIdentifier.Parse(resourceId).ToString().TrimStart('/');
                 return await ExecuteAsync(resource, query, timeRange, options, async: true, isWorkspace: false, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -719,14 +695,7 @@ namespace Azure.Monitor.Query
                 }
                 default:
                 {
-                    if (async)
-                    {
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
+                    throw new RequestFailedException(message.Response);
                 }
             }
         }
@@ -780,14 +749,7 @@ namespace Azure.Monitor.Query
                 }
                 default:
                 {
-                    if (async)
-                    {
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
+                    throw new RequestFailedException(message.Response);
                 }
             }
         }
