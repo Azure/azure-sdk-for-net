@@ -93,7 +93,9 @@ namespace Azure.Core.Dynamic
                     {
                         return new DynamicData(element);
                     }
-                    return null;
+
+                    throw new InvalidOperationException($"Could not find JSON member with name '{propertyName}'.");
+
                 case int arrayIndex:
                     return new DynamicData(_element.GetIndexElement(arrayIndex));
             }
