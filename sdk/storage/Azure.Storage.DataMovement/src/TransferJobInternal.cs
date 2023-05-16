@@ -199,7 +199,7 @@ namespace Azure.Storage.DataMovement
             _isSingleResource = true;
             _initialTransferSize = transferOptions?.InitialTransferSize;
             _maximumTransferChunkSize = transferOptions?.MaximumTransferChunkSize;
-            _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandler, transferOptions?.BytesTransferredHandler);
+            _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandler, transferOptions?.ProgressHandlerOptions);
         }
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace Azure.Storage.DataMovement
             _sourceResourceContainer = sourceResource;
             _destinationResourceContainer = destinationResource;
             _isSingleResource = false;
-            _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandler, transferOptions?.BytesTransferredHandler);
+            _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandler, transferOptions?.ProgressHandlerOptions);
         }
 
         public void Dispose()
@@ -319,6 +319,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public async Task JobPartEvent(TransferStatusEventArgs args)
         {
+            Console.WriteLine($"JobPartEvent: Status = {args.StorageTransferStatus}, Job Status = {_dataTransfer._state.GetTransferStatus()}");
             // NOTE: There is a chance this event can be triggered after the transfer has
             // completed if more job parts complete before the next instance of this event is handled.
 

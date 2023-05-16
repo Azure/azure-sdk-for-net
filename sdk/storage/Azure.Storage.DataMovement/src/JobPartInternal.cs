@@ -302,12 +302,10 @@ namespace Azure.Storage.DataMovement
                 // Progress tracking, do before invoking the event below
                 if (transferStatus == StorageTransferStatus.InProgress)
                 {
-                    Console.WriteLine("Reporting InProgress");
                     _progressTracker.IncrementInProgressFiles();
                 }
                 else if (transferStatus == StorageTransferStatus.Completed)
                 {
-                    Console.WriteLine("Reporting Completed");
                     _progressTracker.IncrementCompletedFiles();
                 }
                 else if (transferStatus == StorageTransferStatus.CompletedWithSkippedTransfers)
@@ -556,6 +554,7 @@ namespace Azure.Storage.DataMovement
                 }
                 else if (_dataTransfer.TransferStatus == StorageTransferStatus.CancellationInProgress)
                 {
+                    Console.WriteLine("TransferStatus == CancellationInProgress");
                     await OnTransferStatusChanged(StorageTransferStatus.CompletedWithFailedTransfers).ConfigureAwait(false);
                 }
             }

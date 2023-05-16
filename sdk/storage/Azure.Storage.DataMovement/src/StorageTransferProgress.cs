@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Storage.DataMovement.Models;
+
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
@@ -33,5 +35,11 @@ namespace Azure.Storage.DataMovement
         /// Number of files that are queued up for transfer. This will vary depending when all the files discoverable for the full transfers have been queued.
         /// </summary>
         public long QueuedCount { get; internal set; }
+
+        /// <summary>
+        /// Number of bytes transferred across all files.
+        /// Only populated if <see cref="ProgressHandlerOptions.TrackBytesTransferred"/> is set.
+        /// </summary>
+        public long? BytesTransferred { get; internal set; }
     }
 }

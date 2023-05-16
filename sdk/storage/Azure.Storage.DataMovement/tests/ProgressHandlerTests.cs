@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -14,8 +15,9 @@ namespace Azure.Storage.DataMovement.Tests
 {
     public class ProgressHandlerTests : DataMovementBlobTestBase
     {
-        private BinaryData _data = BinaryData.FromString("Hello World!");
+        private int _size = Constants.KB;
         private string[] _testFiles = { "file1", "dir1/file1", "dir1/file2", "dir1/file3", "dir2/file1" };
+        private long[] _expectedBytesTransferred = { 0, 1024, 2048, 3072, 4096, 5120 };
 
         public ProgressHandlerTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, default)
@@ -26,31 +28,33 @@ namespace Azure.Storage.DataMovement.Tests
         {
             foreach (string file in _testFiles)
             {
-                await container.UploadBlobAsync(file, _data);
+                await container.UploadBlobAsync(file, BinaryData.FromBytes(GetRandomBuffer(_size)));
             }
         }
 
         private async Task PopulateTestLocalDirectory(string directoryPath)
         {
             // Manually follows _testFiles pattern
-            await CreateRandomFileAsync(directoryPath, "file1", size: Constants.KB);
+            await CreateRandomFileAsync(directoryPath, "file1", size: _size);
 
             string subFolder = CreateRandomDirectory(directoryPath, "dir1");
-            await CreateRandomFileAsync(subFolder, "file1", size: Constants.KB);
-            await CreateRandomFileAsync(subFolder, "file2", size: Constants.KB);
-            await CreateRandomFileAsync(subFolder, "file3", size: Constants.KB);
+            await CreateRandomFileAsync(subFolder, "file1", size: _size);
+            await CreateRandomFileAsync(subFolder, "file2", size: _size);
+            await CreateRandomFileAsync(subFolder, "file3", size: _size);
 
             string subFolder2 = CreateRandomDirectory(directoryPath, "dir2");
-            await CreateRandomFileAsync(subFolder2, "file1", size: Constants.KB);
+            await CreateRandomFileAsync(subFolder2, "file1", size: _size);
         }
 
         private async Task TransferAndAssertProgress(
             StorageResourceContainer source,
             StorageResourceContainer destination,
+            long[] expectedBytesTransferred,
             int fileCount,
             int skippedCount = 0,
             int failedCount = 0,
             TransferManagerOptions transferManagerOptions = default,
+            ProgressHandlerOptions progressHandlerOptions = default,
             StorageResourceCreateMode createMode = StorageResourceCreateMode.Overwrite)
         {
             transferManagerOptions ??= new TransferManagerOptions()
@@ -64,14 +68,20 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOptions transferOptions = new TransferOptions()
             {
                 ProgressHandler = progressHandler,
+                ProgressHandlerOptions = progressHandlerOptions ?? new ProgressHandlerOptions()
+                {
+                    TrackBytesTransferred = true
+                },
                 CreateMode = createMode,
             };
 
             DataTransfer transfer = await transferManager.StartTransferAsync(source, destination, transferOptions);
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             await transfer.AwaitCompletion(tokenSource.Token);
+            Console.WriteLine("Transfer completed");
 
             progressHandler.AssertProgress(fileCount, skippedCount, failedCount);
+            progressHandler.AssertBytesTransferred(expectedBytesTransferred);
         }
 
         [Test]
@@ -90,7 +100,11 @@ namespace Azure.Storage.DataMovement.Tests
                 new LocalDirectoryStorageResourceContainer(destination.DirectoryPath);
 
             // Act / Assert
-            await TransferAndAssertProgress(sourceResource, destinationResource, 5 /* fileCount */);
+            await TransferAndAssertProgress(
+                sourceResource,
+                destinationResource,
+                _expectedBytesTransferred,
+                5 /* fileCount */);
         }
 
         [Test]
@@ -109,7 +123,11 @@ namespace Azure.Storage.DataMovement.Tests
                 new BlobStorageResourceContainer(destination.Container);
 
             // Act / Assert
-            await TransferAndAssertProgress(sourceResource, destinationResource, 5 /* fileCount */);
+            await TransferAndAssertProgress(
+                sourceResource,
+                destinationResource,
+                _expectedBytesTransferred,
+                5 /* fileCount */);
         }
 
         [Test]
@@ -132,7 +150,11 @@ namespace Azure.Storage.DataMovement.Tests
                 });
 
             // Act / Assert
-            await TransferAndAssertProgress(sourceResource, destinationResource, 5 /* fileCount */);
+            await TransferAndAssertProgress(
+                sourceResource,
+                destinationResource,
+                _expectedBytesTransferred,
+                5 /* fileCount */);
         }
 
         [Test]
@@ -148,8 +170,8 @@ namespace Azure.Storage.DataMovement.Tests
             await PopulateTestLocalDirectory(source.DirectoryPath);
 
             // Create conflicts
-            await destination.Container.UploadBlobAsync(_testFiles[0], _data);
-            await destination.Container.UploadBlobAsync(_testFiles[2], _data);
+            await destination.Container.UploadBlobAsync(_testFiles[0], BinaryData.FromBytes(GetRandomBuffer(_size)));
+            await destination.Container.UploadBlobAsync(_testFiles[2], BinaryData.FromBytes(GetRandomBuffer(_size)));
 
             StorageResourceContainer sourceResource =
                 new LocalDirectoryStorageResourceContainer(source.DirectoryPath);
@@ -160,6 +182,7 @@ namespace Azure.Storage.DataMovement.Tests
             await TransferAndAssertProgress(
                 sourceResource,
                 destinationResource,
+                _expectedBytesTransferred.Take(_expectedBytesTransferred.Length - 2).ToArray(),
                 fileCount: 5,
                 skippedCount: createMode == StorageResourceCreateMode.Skip ? 2 : 0,
                 failedCount: createMode == StorageResourceCreateMode.Fail ? 2 : 0,

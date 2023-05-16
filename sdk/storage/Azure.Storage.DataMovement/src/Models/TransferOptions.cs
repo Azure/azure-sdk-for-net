@@ -43,9 +43,9 @@ namespace Azure.Storage.DataMovement.Models
         public IProgress<StorageTransferProgress> ProgressHandler { get; set; }
 
         /// <summary>
-        /// Optional. An <see cref="IProgress{Long}"/> for tracking number of bytes transferred during a transfer.
+        /// Optional. Options for changing behavior of the ProgressHandler.
         /// </summary>
-        public IProgress<long> BytesTransferredHandler { get; set; }
+        public ProgressHandlerOptions ProgressHandlerOptions { get; set; }
 
         /// <summary>
         /// Check if two ParallelTransferOptions instances are equal.
