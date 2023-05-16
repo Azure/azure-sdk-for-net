@@ -1441,6 +1441,53 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2023_08_03)]
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task SetPropertiesAsync_EnableSnapshotVirtualDirectoryAccess(bool? enableSnapshotVirtualDirectoryAccess)
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareCreateOptions options = new ShareCreateOptions
+            {
+                Protocols = ShareProtocols.Nfs
+            };
+
+            try
+            {
+                await share.CreateAsync(options);
+
+                ShareSetPropertiesOptions setPropertiesOptions = new ShareSetPropertiesOptions
+                {
+                    EnableSnapshotVirtualDirectoryAccess = enableSnapshotVirtualDirectoryAccess,
+                    AccessTier = ShareAccessTier.TransactionOptimized
+                };
+
+                // Act
+                await share.SetPropertiesAsync(setPropertiesOptions);
+
+                // Assert
+                Response<ShareProperties> response = await share.GetPropertiesAsync();
+                Assert.AreEqual(ShareProtocols.Nfs, response.Value.Protocols);
+                if (enableSnapshotVirtualDirectoryAccess == true || enableSnapshotVirtualDirectoryAccess == null)
+                {
+                    Assert.IsTrue(response.Value.EnableSnapshotVirtualDirectoryAccess);
+                }
+                else
+                {
+                    Assert.IsFalse(response.Value.EnableSnapshotVirtualDirectoryAccess);
+                }
+            }
+            finally
+            {
+                await share.DeleteAsync();
+            }
+        }
+
+        [RecordedTest]
         public async Task SetQuotaAsync()
         {
             await using DisposingShare test = await GetTestShareAsync();

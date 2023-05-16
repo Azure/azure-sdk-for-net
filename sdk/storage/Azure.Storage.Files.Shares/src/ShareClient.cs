@@ -1929,6 +1929,7 @@ namespace Azure.Storage.Files.Shares
                 quotaInGB: options?.QuotaInGB,
                 accessTier: options?.AccessTier,
                 rootSquash: options?.RootSquash,
+                enableSnapshotVirtualDirectoryAccess: options?.EnableSnapshotVirtualDirectoryAccess,
                 conditions: options?.Conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetProperties)}",
                 async: false,
@@ -1964,6 +1965,7 @@ namespace Azure.Storage.Files.Shares
                 quotaInGB: options?.QuotaInGB,
                 accessTier: options?.AccessTier,
                 rootSquash: options?.RootSquash,
+                enableSnapshotVirtualDirectoryAccess: options?.EnableSnapshotVirtualDirectoryAccess,
                 conditions: options?.Conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetProperties)}",
                 async: true,
@@ -1986,6 +1988,11 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="rootSquash">
         /// The root squash to set for the share.  Only valid for NFS shares.
+        /// </param>
+        /// <param name="enableSnapshotVirtualDirectoryAccess">
+        /// Optional. Supported in version 2023-08-03 and above.
+        /// Specifies whether the snapshot virtual directory should be accessible at the root of share mount point when NFS is enabled.
+        /// If not specified, the default is true.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -2013,6 +2020,7 @@ namespace Azure.Storage.Files.Shares
             int? quotaInGB,
             ShareAccessTier? accessTier,
             ShareRootSquash? rootSquash,
+            bool? enableSnapshotVirtualDirectoryAccess,
             ShareFileRequestConditions conditions,
             string operationName,
             bool async,
@@ -2041,6 +2049,7 @@ namespace Azure.Storage.Files.Shares
                             quota: quotaInGB,
                             accessTier: accessTier,
                             rootSquash: rootSquash,
+                            enableSnapshotVirtualDirectoryAccess: enableSnapshotVirtualDirectoryAccess,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -2051,6 +2060,7 @@ namespace Azure.Storage.Files.Shares
                             quota: quotaInGB,
                             accessTier: accessTier,
                             rootSquash: rootSquash,
+                            enableSnapshotVirtualDirectoryAccess: enableSnapshotVirtualDirectoryAccess,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
@@ -2111,6 +2121,7 @@ namespace Azure.Storage.Files.Shares
                 quotaInGB: quotaInGB,
                 accessTier: default,
                 rootSquash: default,
+                enableSnapshotVirtualDirectoryAccess: default,
                 conditions: conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: false,
@@ -2153,6 +2164,7 @@ namespace Azure.Storage.Files.Shares
                 quotaInGB: quotaInGB,
                 accessTier: default,
                 rootSquash: default,
+                enableSnapshotVirtualDirectoryAccess: default,
                 conditions: conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: true,
@@ -2193,6 +2205,7 @@ namespace Azure.Storage.Files.Shares
                 quotaInGB: quotaInGB,
                 accessTier: default,
                 rootSquash: default,
+                enableSnapshotVirtualDirectoryAccess: default,
                 conditions: default,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: false,
@@ -2232,6 +2245,7 @@ namespace Azure.Storage.Files.Shares
                 quotaInGB: quotaInGB,
                 accessTier: default,
                 rootSquash: default,
+                enableSnapshotVirtualDirectoryAccess: default,
                 conditions: default,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: true,
