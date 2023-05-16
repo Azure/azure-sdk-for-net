@@ -64,7 +64,6 @@ rename-mapping:
   Status: VoiceServicesCommunicationsGatewayStatus
   ProvisioningState: VoiceServicesProvisioningState
   Connectivity: VoiceServicesCommunicationsGatewayConnectivity
-  OnPremMcpEnabled: IsOnPremMcpEnabled
   E911Type: VoiceServicesEmergencyCallType
   CheckNameAvailabilityRequest.type: -|resource-type
   CheckNameAvailabilityResponse: VoiceServicesCheckNameAvailabilityResult
@@ -73,7 +72,7 @@ rename-mapping:
   CommunicationsGateway.properties.onPremMcpEnabled: IsOnPremMcpEnabled
 
 override-operation-name:
-  NameAvailability_CheckLocal: CheckVoiceServiceNameAvailability
+  NameAvailability_CheckLocal: CheckVoiceServicesNameAvailability
 
 directive:
   - remove-operation: Operations_List

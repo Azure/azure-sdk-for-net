@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="content"> The check availability request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VoiceServicesCheckNameAvailabilityResult>> CheckVoiceServiceNameAvailabilityAsync(AzureLocation location, VoiceServicesCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VoiceServicesCheckNameAvailabilityResult>> CheckVoiceServicesNameAvailabilityAsync(AzureLocation location, VoiceServicesCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = NameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckVoiceServiceNameAvailability");
+            using var scope = NameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckVoiceServicesNameAvailability");
             scope.Start();
             try
             {
@@ -139,9 +139,9 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="content"> The check availability request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VoiceServicesCheckNameAvailabilityResult> CheckVoiceServiceNameAvailability(AzureLocation location, VoiceServicesCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<VoiceServicesCheckNameAvailabilityResult> CheckVoiceServicesNameAvailability(AzureLocation location, VoiceServicesCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = NameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckVoiceServiceNameAvailability");
+            using var scope = NameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckVoiceServicesNameAvailability");
             scope.Start();
             try
             {
