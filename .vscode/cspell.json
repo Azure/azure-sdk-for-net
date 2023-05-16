@@ -69,6 +69,7 @@
     "fhir",
     "finalizer",
     "finalizers",
+    "hnsw",
     "illumos",
     "interventional",
     "ints",
@@ -313,7 +314,8 @@
     {
       "filename": "**/sdk/newrelic/**/*.cs",
       "words": [
-        "liftr"
+        "liftr",
+        "payg"
       ]
     },
     {

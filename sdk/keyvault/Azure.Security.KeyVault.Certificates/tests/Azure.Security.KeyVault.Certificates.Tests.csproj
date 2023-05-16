@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <!-- Several types and methods we need are implemented in net47 or above, so test our light-up features against at least net47 to make sure they work or fall back as expected. -->
-    <!-- If this changes, check that exclusionary preproc conditions like `!NET461 && !NET47` are updated in tests, samples. -->
+    <!-- If this changes, check that exclusionary preproc conditions like `!NET462 && !NET47` are updated in tests, samples. -->
     <TargetFrameworks>$(RequiredTargetFrameworks);net47</TargetFrameworks>
   </PropertyGroup>
 

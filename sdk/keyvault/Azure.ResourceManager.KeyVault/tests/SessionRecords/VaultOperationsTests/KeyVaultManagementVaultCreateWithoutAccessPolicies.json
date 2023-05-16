@@ -86,7 +86,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-1824/providers/Microsoft.KeyVault/vaults/sdktest-vault-8409?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-1824/providers/Microsoft.KeyVault/vaults/sdktest-vault-8409?api-version=2023-02-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -158,7 +158,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-1824/providers/Microsoft.KeyVault/vaults/sdktest-vault-8409?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-1824/providers/Microsoft.KeyVault/vaults/sdktest-vault-8409?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -217,7 +217,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-1824/providers/Microsoft.KeyVault/vaults/sdktest-vault-8409?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-1824/providers/Microsoft.KeyVault/vaults/sdktest-vault-8409?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -276,7 +276,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-1824/providers/Microsoft.KeyVault/vaults/sdktest-vault-8409?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-1824/providers/Microsoft.KeyVault/vaults/sdktest-vault-8409?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -335,7 +335,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-1824/providers/Microsoft.KeyVault/vaults/sdktest-vault-8409?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-1824/providers/Microsoft.KeyVault/vaults/sdktest-vault-8409?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -394,7 +394,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-1824/providers/Microsoft.KeyVault/vaults/sdktest-vault-8409?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-1824/providers/Microsoft.KeyVault/vaults/sdktest-vault-8409?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -453,7 +453,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-1824/providers/Microsoft.KeyVault/vaults/sdktest-vault-8409?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-1824/providers/Microsoft.KeyVault/vaults/sdktest-vault-8409?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -512,7 +512,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-1824/providers/Microsoft.KeyVault/vaults/sdktest-vault-8409?api-version=2021-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-1824/providers/Microsoft.KeyVault/vaults/sdktest-vault-8409?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
