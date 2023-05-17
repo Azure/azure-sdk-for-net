@@ -5,7 +5,7 @@
 ### Features Added
 
 - Added `BatchAccountCertificateData.ThumbprintString`, `BatchAccountCertificateCreateOrUpdateContent.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
-  `BatchAccountCertificateData.Thumbprint`, `BatchAccountCertificateCreateOrUpdateContent.Thumbprint` have been hidden but is still available.
+  `BatchAccountCertificateData.Thumbprint`, `BatchAccountCertificateCreateOrUpdateContent.Thumbprint` have been hidden but are still available.
 
 ### Breaking Changes
 
