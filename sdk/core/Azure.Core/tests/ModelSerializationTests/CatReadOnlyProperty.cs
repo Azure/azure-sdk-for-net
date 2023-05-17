@@ -112,13 +112,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             bytesConsumed = 0;
             try
             {
-                JsonDocument jsonDocument = JsonDocument.Parse(stream);
-                var model = DeserializeCatReadOnlyProperty(jsonDocument.RootElement, options ?? new SerializableOptions());
-                this.Weight = model.Weight;
-                this.IsHungry = model.IsHungry;
-                this.HasWhiskers = model.HasWhiskers;
-                this.IsHungry = model.IsHungry;
-                this.RawData = model.RawData;
+                Deserialize(stream, options);
                 bytesConsumed = stream.Length;
                 return true;
             }
@@ -133,14 +127,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             bytesWritten = 0;
             try
             {
-                JsonWriterOptions jsonWriterOptions = new JsonWriterOptions();
-                if (options.PrettyPrint)
-                {
-                    jsonWriterOptions.Indented = true;
-                }
-                Utf8JsonWriter writer = new Utf8JsonWriter(stream, jsonWriterOptions);
-                ((IUtf8JsonSerializable)this).Write(writer, options ?? new SerializableOptions());
-                writer.Flush();
+                Serialize(stream, options);
                 bytesWritten = (int)stream.Length;
                 return true;
             }
@@ -152,39 +139,25 @@ namespace Azure.Core.Tests.ModelSerializationTests
 
         public new void Deserialize(Stream stream, SerializableOptions options = default)
         {
-            try
-            {
-                JsonDocument jsonDocument = JsonDocument.Parse(stream);
-                var model = DeserializeCatReadOnlyProperty(jsonDocument.RootElement, options ?? new SerializableOptions());
-                this.Weight = model.Weight;
-                this.IsHungry = model.IsHungry;
-                this.HasWhiskers = model.HasWhiskers;
-                this.IsHungry = model.IsHungry;
-                this.RawData = model.RawData;
-            }
-            catch
-            {
-                throw new RequestFailedException("Model could not be deserialized.");
-            }
+            JsonDocument jsonDocument = JsonDocument.Parse(stream);
+            var model = DeserializeCatReadOnlyProperty(jsonDocument.RootElement, options ?? new SerializableOptions());
+            this.Weight = model.Weight;
+            this.IsHungry = model.IsHungry;
+            this.HasWhiskers = model.HasWhiskers;
+            this.IsHungry = model.IsHungry;
+            this.RawData = model.RawData;
         }
 
         public new void Serialize(Stream stream, SerializableOptions options = default)
         {
-            try
+            JsonWriterOptions jsonWriterOptions = new JsonWriterOptions();
+            if (options.PrettyPrint)
             {
-                JsonWriterOptions jsonWriterOptions = new JsonWriterOptions();
-                if (options.PrettyPrint)
-                {
-                    jsonWriterOptions.Indented = true;
-                }
-                Utf8JsonWriter writer = new Utf8JsonWriter(stream, jsonWriterOptions);
-                ((IUtf8JsonSerializable)this).Write(writer, options ?? new SerializableOptions());
-                writer.Flush();
+                jsonWriterOptions.Indented = true;
             }
-            catch
-            {
-                throw new RequestFailedException("Model could not be deserialized.");
-            }
+            Utf8JsonWriter writer = new Utf8JsonWriter(stream, jsonWriterOptions);
+            ((IUtf8JsonSerializable)this).Write(writer, options ?? new SerializableOptions());
+            writer.Flush();
         }
         #endregion
     }
