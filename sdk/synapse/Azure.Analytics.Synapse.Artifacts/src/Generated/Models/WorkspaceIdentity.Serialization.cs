@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(Type.ToString());
             writer.WriteEndObject();
         }
 
@@ -29,14 +29,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            string type = default;
+            WorkspaceIdentityType type = default;
             Optional<string> principalId = default;
             Optional<string> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new WorkspaceIdentityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("principalId"u8))
