@@ -20,7 +20,7 @@ namespace Azure.Monitor.Query.Tests
     {
         private LogsTestData _logsTestData;
 
-        public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync)
+        public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Live)
         {
         }
 
@@ -686,7 +686,7 @@ namespace Azure.Monitor.Query.Tests
         {
             TestContext.Progress.WriteLine("Test start");
             var client = CreateClient();
-            TestContext.Progress.WriteLine(TestEnvironment.StorageAccountId);
+            TestContext.Progress.WriteLine(TestEnvironment.ResourceId);
             var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.ResourceId), "search *", _logsTestData.DataTimeRange).ConfigureAwait(false);
 
             Assert.AreEqual(LogsQueryResultStatus.Success, results.Value.Status);
