@@ -39,7 +39,12 @@ namespace Azure.Core.Dynamic
         {
             _element = element;
             _nameMapping = nameMapping;
-            _serializerOptions = DefaultSerializerOptions;
+            _serializerOptions = _nameMapping switch
+            {
+                DynamicCaseMapping.None => DefaultSerializerOptions,
+                DynamicCaseMapping.PascalToCamel => new() { PropertyNameCaseInsensitive = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase },
+                _ => throw new NotImplementedException()
+            };
         }
 
         internal void WriteTo(Stream stream)
