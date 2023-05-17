@@ -11,13 +11,21 @@ function Update-AutorestMd([string]$file) {
     $store | Out-File -FilePath $file
 }
 
-function Update-ChangeLog([string]$file) {
+function Update-ChangeLog([string]$file, [string]$releasedate) {
     $flag = $true
     $fileContent = Get-Content $file
     $store = @()
     foreach ($item in $fileContent) {
+        if ($item.Contains("(Unreleased)") -and $flag) {
+            $store += $item.Replace("Unreleased", $releasedate)
+            continue
+        }
         if ($item.Contains("### Breaking Changes") -and $flag) {
             $store += "- Add model factory`n"
+        }
+        if ($item.Contains("### Other Changes") -and $flag) {
+            $store += "- Upgraded dependent `Azure.Core` to `1.32.0`."
+            $store += "- Upgraded dependent `Azure.ResourceManager` to `1.6.0`.`n"
             $flag = $false
         }
         $store += $item
@@ -26,10 +34,10 @@ function Update-ChangeLog([string]$file) {
 }
 
 function  Enable-ModelFactory {
-    # param(
-    #     [Parameter()]
-    #     [bool]$output = $false
-    # )
+    param(
+        [Parameter()]
+        [string]$releasedate = "2023-06-01"
+    )
     process {
         try {
             $sdkRootPath = Resolve-Path "$PSScriptRoot/../../sdk/$ServiceDirectory"
@@ -48,28 +56,14 @@ function  Enable-ModelFactory {
             
                 & dotnet build /t:GenerateCode
 
-                $changelogFile = $file.Replace("src\autorest.md","CHANGELOG.md")
+                # If generate succeeds then update the changelog file
+                $changelogFile = $file.Replace("src\autorest.md", "CHANGELOG.md")
                 if ($?) {
-                    Update-ChangeLog($changelogFile)
+                    Update-ChangeLog -file $changelogFile -releasedate $releasedate
                 }
-
-                # if ([string]::IsNullOrWhitespace($AutorestPath)) { 
-                #     dotnet build /t:GenerateCode
-                # }
-                # else {
-                #     autorest .\autorest.md --use:$AutorestPath
-                # }
             }
         }
-
-        # Update CHANGLOG file
-        # $files = Get-ChildItem -Path $sdkRootPath -Recurse -Filter CHANGELOG.md | % { $_.FullName }
-        # foreach ($file in $files) {
-        #     if ($file.Contains("Azure.ResourceManager")) {
-        #         Update-ChangeLog($file)
-        #     }
-        # }
     }
 }
 
-Enable-ModelFactory
+Enable-ModelFactory -releasedate "2023-05-17"
