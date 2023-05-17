@@ -26,8 +26,10 @@ namespace Azure.ResourceManager.Batch
         public Azure.ResourceManager.Batch.Models.BatchAccountCertificateProvisioningState? ProvisioningState { get { throw null; } }
         public System.DateTimeOffset? ProvisioningStateTransitOn { get { throw null; } }
         public string PublicData { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.BinaryData Thumbprint { get { throw null; } set { } }
         public string ThumbprintAlgorithm { get { throw null; } set { } }
+        public string ThumbprintString { get { throw null; } set { } }
     }
     public partial class BatchAccountCertificateResource : Azure.ResourceManager.ArmResource
     {
@@ -425,8 +427,10 @@ namespace Azure.ResourceManager.Batch.Models
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.BatchAccountCertificateFormat? Format { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.BinaryData Thumbprint { get { throw null; } set { } }
         public string ThumbprintAlgorithm { get { throw null; } set { } }
+        public string ThumbprintString { get { throw null; } set { } }
     }
     public enum BatchAccountCertificateFormat
     {

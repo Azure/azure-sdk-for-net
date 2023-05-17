@@ -329,6 +329,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public bool? IsVerified { get { throw null; } set { } }
         public string Subject { get { throw null; } }
         public System.BinaryData Thumbprint { get { throw null; } }
+        public string ThumbprintString { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
     }
     public partial class IotHubCertificatePropertiesWithNonce
@@ -340,6 +341,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public bool? IsVerified { get { throw null; } }
         public string Subject { get { throw null; } }
         public System.BinaryData Thumbprint { get { throw null; } }
+        public string ThumbprintString { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
         public string VerificationCode { get { throw null; } }
     }
