@@ -64,21 +64,19 @@ namespace Azure.Core.Dynamic
 
             // If we're using the PascalToCamel mapping and the strict name lookup
             // failed, do a second lookup with a camelCase name as well.
-            if (char.IsUpper(name[0]))
+            if (_nameMapping == DynamicCaseMapping.PascalToCamel && char.IsUpper(name[0]))
             {
-                if (_element.TryGetProperty(GetAsCamelCase(name), out element))
+                if (_element.TryGetProperty(ConvertToCamelCase(name), out element))
                 {
                     return new DynamicData(element, _nameMapping);
                 }
             }
 
+            // Mimic Azure SDK model behavior for optional properties.
             return null;
         }
 
-        private static string GetAsCamelCase(string value)
-        {
-            return JsonNamingPolicy.CamelCase.ConvertName(value);
-        }
+        private static string ConvertToCamelCase(string value) => JsonNamingPolicy.CamelCase.ConvertName(value);
 
         private object? GetViaIndexer(object index)
         {
@@ -113,30 +111,12 @@ namespace Azure.Core.Dynamic
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
+            if (_nameMapping == DynamicCaseMapping.PascalToCamel)
+            {
+                name = ConvertToCamelCase(name);
+            }
+
             _element = _element.SetProperty(name, value);
-
-            //if (!char.IsUpper(name[0]))
-            //{
-            //    // Lookup name is camelCase, so set unchanged.
-            //    _element = _element.SetProperty(name, value);
-            //    return null;
-            //}
-
-            //// Lookup name is PascalCase, so check for the property as PascalCase then camelCase.
-            //if (_element.TryGetProperty(name, out MutableJsonElement element))
-            //{
-            //    element.Set(value);
-            //    return null;
-            //}
-
-            //if (_element.TryGetProperty(GetAsCamelCase(name), out element))
-            //{
-            //    element.Set(value);
-            //    return null;
-            //}
-
-            //// It's a new property, so set with a camelCase member name.
-            //_element = _element.SetProperty(GetAsCamelCase(name), value);
 
             // Binding machinery expects the call site signature to return an object
             return null;
