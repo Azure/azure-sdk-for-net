@@ -7,7 +7,7 @@ steps:
           -OutFile "mdoc.zip" | Wait-Process; Expand-Archive -Path "mdoc.zip" -DestinationPath "./mdoc/"
       } catch {
         $_.Exception | Format-List | Out-Host
-        $_
+        throw
       }
 
       Write-Host "Download and Extract docfx to Build.BinariesDirectory/docfx"
@@ -16,7 +16,7 @@ steps:
         -OutFile "docfx.zip" | Wait-Process; Expand-Archive -Path "docfx.zip" -DestinationPath "./docfx/"
       } catch {
         $_.Exception | Format-List | Out-Host
-        $_
+        throw
       }
 
       Write-Host "Restore ${{parameters.DocGenerationDir}}/assets/docgen.csproj, to get ECMA2Yml and popimport"
