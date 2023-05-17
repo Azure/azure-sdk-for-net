@@ -967,7 +967,7 @@ namespace Azure.Core.Tests
         public void CanExplicitCastToDateTime()
         {
             DateTime dateTime = DateTime.Now;
-            string dateTimeString = MutableJsonElementTests.FormatDateTime(dateTime);
+            string dateTimeString = FormatDateTime(dateTime);
             dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson();
 
             // Get from parsed JSON
@@ -990,12 +990,12 @@ namespace Azure.Core.Tests
             Assert.IsTrue((DateTime)json.Bar == barValue);
 
             // Also works as a string
-            string fooValueString = MutableJsonElementTests.FormatDateTime(fooValue);
+            string fooValueString = FormatDateTime(fooValue);
             Assert.AreEqual(fooValueString, (string)json.Foo);
             Assert.IsTrue(fooValueString == json.Foo);
             Assert.IsTrue(json.Foo == fooValueString);
 
-            string barValueString = MutableJsonElementTests.FormatDateTime(barValue);
+            string barValueString = FormatDateTime(barValue);
             Assert.AreEqual(barValueString, (string)json.Bar);
             Assert.IsTrue(barValueString == json.Bar);
             Assert.IsTrue(json.Bar == barValueString);
@@ -1009,7 +1009,7 @@ namespace Azure.Core.Tests
         public void CanExplicitCastToDateTimeOffset()
         {
             DateTimeOffset dateTime = DateTimeOffset.UtcNow;
-            string dateTimeString = MutableJsonElementTests.FormatDateTimeOffset(dateTime);
+            string dateTimeString = FormatDateTimeOffset(dateTime);
             dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson();
 
             // Get from parsed JSON
@@ -1045,6 +1045,11 @@ namespace Azure.Core.Tests
             // Doesn't work for non-string change
             json.Foo = "false";
             Assert.Throws<InvalidCastException>(() => { DateTimeOffset d = (DateTimeOffset)json.Foo; });
+        }
+
+        internal static string FormatDateTime(DateTime d)
+        {
+            return d.ToUniversalTime().ToString("o");
         }
 
         internal static string FormatDateTimeOffset(DateTimeOffset d)
