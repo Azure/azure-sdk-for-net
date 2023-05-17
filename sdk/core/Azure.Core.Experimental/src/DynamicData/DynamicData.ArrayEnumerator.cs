@@ -17,9 +17,9 @@ namespace Azure.Core.Dynamic
         internal struct ArrayEnumerator : IEnumerable<DynamicData>, IEnumerator<DynamicData>
         {
             private MutableJsonElement.ArrayEnumerator _enumerator;
-            private DynamicPropertyNameHandling _nameMapping;
+            private DynamicCaseMapping _nameMapping;
 
-            internal ArrayEnumerator(MutableJsonElement.ArrayEnumerator enumerator, DynamicPropertyNameHandling nameMapping)
+            internal ArrayEnumerator(MutableJsonElement.ArrayEnumerator enumerator, DynamicCaseMapping nameMapping)
             {
                 _enumerator = enumerator;
                 _nameMapping = nameMapping;

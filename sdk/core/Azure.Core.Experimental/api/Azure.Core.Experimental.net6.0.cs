@@ -3,7 +3,7 @@ namespace Azure
     public static partial class BinaryDataExtensions
     {
         public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json) { throw null; }
-        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Dynamic.DynamicPropertyNameHandling nameHandling) { throw null; }
+        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Dynamic.DynamicCaseMapping nameHandling) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Value
@@ -113,6 +113,11 @@ namespace Azure
 }
 namespace Azure.Core.Dynamic
 {
+    public enum DynamicCaseMapping
+    {
+        None = 0,
+        PascalToCamel = 1,
+    }
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public sealed partial class DynamicData : System.Dynamic.IDynamicMetaObjectProvider, System.IDisposable
     {
@@ -142,10 +147,5 @@ namespace Azure.Core.Dynamic
         public static bool operator !=(Azure.Core.Dynamic.DynamicData? left, object? right) { throw null; }
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public enum DynamicPropertyNameHandling
-    {
-        None = 0,
-        ReadPascalCaseWriteCamelCase = 1,
     }
 }

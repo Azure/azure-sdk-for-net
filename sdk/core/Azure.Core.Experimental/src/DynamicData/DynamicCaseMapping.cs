@@ -6,7 +6,7 @@ namespace Azure.Core.Dynamic
     /// <summary>
     /// Options for getting and setting DynamicData properties.
     /// </summary>
-    public enum DynamicPropertyNameHandling
+    public enum DynamicCaseMapping
     {
         /// <summary>
         /// Properties are read from and written to the data buffer with the same casing as the DynamicData property.
@@ -17,6 +17,6 @@ namespace Azure.Core.Dynamic
         /// A "PascalCase" DynamicData property can be used to read and set "camelCase" properties that exist in the data buffer.
         /// New properties are written to the data buffer using "camelCase" property names.
         /// </summary>
-        ReadPascalCaseWriteCamelCase = 1
+        PascalToCamel = 1
     }
 }
