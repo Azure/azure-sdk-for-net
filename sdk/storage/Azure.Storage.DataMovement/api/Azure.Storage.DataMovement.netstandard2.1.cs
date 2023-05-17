@@ -23,7 +23,6 @@ namespace Azure.Storage.DataMovement
         public override string Path { get { throw null; } }
         public override System.Uri Uri { get { throw null; } }
         public override Azure.Storage.DataMovement.StorageResource GetChildStorageResource(string childPath) { throw null; }
-        public override Azure.Storage.DataMovement.StorageResourceContainer GetParentStorageResourceContainer() { throw null; }
         public override System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.StorageResourceBase> GetStorageResourcesAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class LocalFileStorageResource : Azure.Storage.DataMovement.StorageResource
@@ -79,7 +78,6 @@ namespace Azure.Storage.DataMovement
         protected StorageResourceContainer() { }
         public override bool IsContainer { get { throw null; } }
         public abstract Azure.Storage.DataMovement.StorageResource GetChildStorageResource(string path);
-        public abstract Azure.Storage.DataMovement.StorageResourceContainer GetParentStorageResourceContainer();
         public abstract System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.StorageResourceBase> GetStorageResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
     public enum StorageResourceCreateMode
