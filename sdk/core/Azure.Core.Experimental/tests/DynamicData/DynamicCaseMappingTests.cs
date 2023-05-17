@@ -4,8 +4,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Text.Json;
 using Azure.Core.Dynamic;
 using NUnit.Framework;
 
@@ -13,17 +11,7 @@ namespace Azure.Core.Tests
 {
     public class DynamicCaseMappingTests
     {
-        [Test]
-        public void CanGetCamelCasePropertyEitherCase()
-        {
-            string json = """{ "foo" : 1 }""";
-
-            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
-
-            Assert.AreEqual(1, (int)dynamicJson.foo);
-            Assert.AreEqual(1, (int)dynamicJson.Foo);
-        }
-
+        #region Tests of strict naming, CaseMapping.None
         [Test]
         public void CannotGetPascalCasePropertyCamelCase()
         {
@@ -59,6 +47,39 @@ namespace Azure.Core.Tests
             Assert.AreEqual(4, (int)dynamicJson.Foo);
             Assert.AreEqual(3, (int)dynamicJson.bar);
             Assert.AreEqual(5, (int)dynamicJson.Bar);
+        }
+
+        [Test]
+        public void CanSetPascalCaseProperties()
+        {
+            string json = """{ "Foo": 1 }""";
+
+            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson();
+
+            // Existing property access does not add a camelCase property.
+            dynamicJson.Foo = 2;
+
+            // New property is created as camelCase
+            dynamicJson.Bar = 3;
+
+            Assert.AreEqual(null, dynamicJson.foo);
+            Assert.AreEqual(2, (int)dynamicJson.Foo);
+            Assert.AreEqual(3, (int)dynamicJson.bar);
+            Assert.AreEqual(3, (int)dynamicJson.Bar);
+        }
+        #endregion
+
+        #region Tests of PascalCase naming, CaseMapping.PascalToCamel
+
+        [Test]
+        public void CanGetCamelCasePropertyEitherCase()
+        {
+            string json = """{ "foo" : 1 }""";
+
+            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+
+            Assert.AreEqual(1, (int)dynamicJson.foo);
+            Assert.AreEqual(1, (int)dynamicJson.Foo);
         }
 
         [Test]
@@ -126,25 +147,6 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanSetPascalCaseProperties()
-        {
-            string json = """{ "Foo": 1 }""";
-
-            dynamic dynamicJson = new BinaryData(json).ToDynamicFromJson();
-
-            // Existing property access does not add a camelCase property.
-            dynamicJson.Foo = 2;
-
-            // New property is created as camelCase
-            dynamicJson.Bar = 3;
-
-            Assert.AreEqual(null, dynamicJson.foo);
-            Assert.AreEqual(2, (int)dynamicJson.Foo);
-            Assert.AreEqual(3, (int)dynamicJson.bar);
-            Assert.AreEqual(3, (int)dynamicJson.Bar);
-        }
-
-        [Test]
         public void CanGetPascalCaseNestedProperties()
         {
             string json = """
@@ -167,69 +169,9 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanEnumerateArrayCamelGetters()
-        {
-            dynamic jsonData = GetDynamicJson("""
-                {
-                    "array": [
-                        {
-                            "foo": "a"
-                        },
-                        {
-                            "foo": "b"
-                        }
-                    ]
-                }
-                """);
-
-            IEnumerable ary = (IEnumerable)jsonData.array;
-            IEnumerator e = ary.GetEnumerator();
-
-            Assert.IsTrue(e.MoveNext());
-            dynamic item = e.Current;
-            Assert.AreEqual("a", (string)item.foo);
-
-            Assert.IsTrue(e.MoveNext());
-            item = e.Current;
-            Assert.AreEqual("b", (string)item.foo);
-
-            Assert.IsFalse(e.MoveNext());
-        }
-
-        [Test]
-        public void CanEnumerateArrayPascalGetters()
-        {
-            dynamic jsonData = GetDynamicJson("""
-                {
-                    "array": [
-                        {
-                            "foo": "a"
-                        },
-                        {
-                            "foo": "b"
-                        }
-                    ]
-                }
-                """);
-
-            IEnumerable ary = (IEnumerable)jsonData.Array;
-            IEnumerator e = ary.GetEnumerator();
-
-            Assert.IsTrue(e.MoveNext());
-            dynamic item = e.Current;
-            Assert.AreEqual("a", (string)item.Foo);
-
-            Assert.IsTrue(e.MoveNext());
-            item = e.Current;
-            Assert.AreEqual("b", (string)item.Foo);
-
-            Assert.IsFalse(e.MoveNext());
-        }
-
-        [Test]
         public void CanEnumeratePropertiesCamelGetters()
         {
-            dynamic jsonData = GetDynamicJson("""
+            dynamic jsonData = BinaryData.FromString("""
                 {
                     "a": {
                         "description": "description of a",
@@ -240,7 +182,7 @@ namespace Azure.Core.Tests
                         "index": 2
                     }
                 }
-                """);
+                """).ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 
             IEnumerable ary = (IEnumerable)jsonData;
             IEnumerator e = ary.GetEnumerator();
@@ -263,7 +205,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanEnumeratePropertiesPascalGetters()
         {
-            dynamic jsonData = GetDynamicJson("""
+            dynamic jsonData = BinaryData.FromString("""
                 {
                     "a": {
                         "description": "description of a",
@@ -274,7 +216,7 @@ namespace Azure.Core.Tests
                         "index": 2
                     }
                 }
-                """);
+                """).ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 
             IEnumerable ary = (IEnumerable)jsonData;
             IEnumerator e = ary.GetEnumerator();
@@ -293,5 +235,67 @@ namespace Azure.Core.Tests
 
             Assert.IsFalse(e.MoveNext());
         }
+
+        [Test]
+        public void CanEnumerateArrayCamelGetters()
+        {
+            dynamic jsonData = BinaryData.FromString("""
+                {
+                    "array": [
+                        {
+                            "foo": "a"
+                        },
+                        {
+                            "foo": "b"
+                        }
+                    ]
+                }
+                """).ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+
+            IEnumerable ary = (IEnumerable)jsonData.array;
+            IEnumerator e = ary.GetEnumerator();
+
+            Assert.IsTrue(e.MoveNext());
+            dynamic item = e.Current;
+            Assert.AreEqual("a", (string)item.foo);
+
+            Assert.IsTrue(e.MoveNext());
+            item = e.Current;
+            Assert.AreEqual("b", (string)item.foo);
+
+            Assert.IsFalse(e.MoveNext());
+        }
+
+        [Test]
+        public void CanEnumerateArrayPascalGetters()
+        {
+            dynamic jsonData = BinaryData.FromString("""
+                {
+                    "array": [
+                        {
+                            "foo": "a"
+                        },
+                        {
+                            "foo": "b"
+                        }
+                    ]
+                }
+                """).ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+
+            IEnumerable ary = (IEnumerable)jsonData.Array;
+            IEnumerator e = ary.GetEnumerator();
+
+            Assert.IsTrue(e.MoveNext());
+            dynamic item = e.Current;
+            Assert.AreEqual("a", (string)item.Foo);
+
+            Assert.IsTrue(e.MoveNext());
+            item = e.Current;
+            Assert.AreEqual("b", (string)item.Foo);
+
+            Assert.IsFalse(e.MoveNext());
+        }
+
+        #endregion
     }
 }
