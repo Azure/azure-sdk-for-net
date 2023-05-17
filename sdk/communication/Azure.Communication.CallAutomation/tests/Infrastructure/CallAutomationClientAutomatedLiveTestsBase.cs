@@ -199,8 +199,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                     {
                         using (Recording.DisableRecording())
                         {
-                            var hangUpOptions = new HangUpOptions(true);
-                            await client.GetCallConnection(callConnectionId).HangUpAsync(hangUpOptions).ConfigureAwait(false);
+                            await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
                         }
                     }
                 }

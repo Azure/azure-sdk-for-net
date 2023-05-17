@@ -63,12 +63,13 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManager transferManager = new TransferManager(transferManagerOptions);
 
             StorageResourceContainer sourceResource =
-                new BlobDirectoryStorageResourceContainer(container, sourceBlobPrefix);
+                new BlobStorageResourceContainer(container, new() { DirectoryPrefix = sourceBlobPrefix });
             StorageResourceContainer destinationResource =
-                new BlobDirectoryStorageResourceContainer(container, destinationBlobPrefix,
+                new BlobStorageResourceContainer(container,
                 new BlobStorageResourceContainerOptions()
                 {
-                    CopyMethod = TransferCopyMethod.AsyncCopy
+                    CopyMethod = TransferCopyMethod.AsyncCopy,
+                    DirectoryPrefix = destinationBlobPrefix,
                 });
 
             DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
@@ -224,8 +225,8 @@ namespace Azure.Storage.DataMovement.Tests
             var dirName2 = GetNewBlobDirectoryName();
 
             // Set up destination client
-            StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(test.Container, dirName);
-            StorageResourceContainer sourceResource = new BlobDirectoryStorageResourceContainer(test.Container, dirName2);
+            StorageResourceContainer destinationResource = new BlobStorageResourceContainer(test.Container, new() { DirectoryPrefix = dirName });
+            StorageResourceContainer sourceResource = new BlobStorageResourceContainer(test.Container, new() { DirectoryPrefix = dirName2 });
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
@@ -526,13 +527,13 @@ namespace Azure.Storage.DataMovement.Tests
             await CreateBlobDirectoryTree(containerClient, sourceFolderPath, sourceBlobPrefix, size);
 
             // Create new source block blob.
-            StorageResourceContainer sourceResource = new BlobDirectoryStorageResourceContainer(containerClient, sourceBlobPrefix);
-            StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(
+            StorageResourceContainer sourceResource = new BlobStorageResourceContainer(containerClient, new() { DirectoryPrefix = sourceBlobPrefix });
+            StorageResourceContainer destinationResource = new BlobStorageResourceContainer(
                 containerClient,
-                destBlobPrefix,
                 new BlobStorageResourceContainerOptions()
                 {
-                    CopyMethod = TransferCopyMethod.AsyncCopy
+                    CopyMethod = TransferCopyMethod.AsyncCopy,
+                    DirectoryPrefix = destBlobPrefix,
                 });
 
             // If we want a failure condition to happen
