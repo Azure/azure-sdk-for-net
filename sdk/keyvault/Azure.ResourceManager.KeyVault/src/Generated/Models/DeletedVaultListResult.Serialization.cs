@@ -12,15 +12,15 @@ using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    internal partial class KeyVaultListResult
+    internal partial class DeletedVaultListResult
     {
-        internal static KeyVaultListResult DeserializeKeyVaultListResult(JsonElement element)
+        internal static DeletedVaultListResult DeserializeDeletedVaultListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<KeyVaultData>> value = default;
+            Optional<IReadOnlyList<DeletedKeyVaultData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    List<KeyVaultData> array = new List<KeyVaultData>();
+                    List<DeletedKeyVaultData> array = new List<DeletedKeyVaultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultData.DeserializeKeyVaultData(item));
+                        array.Add(DeletedKeyVaultData.DeserializeDeletedKeyVaultData(item));
                     }
                     value = array;
                     continue;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new KeyVaultListResult(Optional.ToList(value), nextLink.Value);
+            return new DeletedVaultListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }
