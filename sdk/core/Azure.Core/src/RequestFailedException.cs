@@ -247,6 +247,7 @@ namespace Azure
         {
             error = null;
             data = null;
+
             try
             {
                 // The response content is buffered at this point.
@@ -257,7 +258,9 @@ namespace Azure
                 {
                     return false;
                 }
+                // Try the ErrorResponse format and fallback to the ResponseError format.
                 error = System.Text.Json.JsonSerializer.Deserialize<ErrorResponse>(content)?.Error;
+                error ??= System.Text.Json.JsonSerializer.Deserialize<ResponseError>(content);
             }
             catch (Exception)
             {

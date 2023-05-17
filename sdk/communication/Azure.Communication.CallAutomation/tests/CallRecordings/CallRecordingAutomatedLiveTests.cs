@@ -191,8 +191,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                     // Assert.IsTrue(((CallRecordingStateChanged)recordingStartedEvent!).CallConnectionId == callConnectionId);
 
                     // try hangup
-                    var hangUpOptions = new HangUpOptions(true);
-                    await response.CallConnection.HangUpAsync(hangUpOptions).ConfigureAwait(false);
+                    await response.CallConnection.HangUpAsync(true).ConfigureAwait(false);
                     var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(disconnectedEvent);
                     Assert.IsTrue(disconnectedEvent is CallDisconnected);
@@ -292,8 +291,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                     // Assert.IsTrue(((CallRecordingStateChanged)recordingStartedEvent!).CallConnectionId == callConnectionId);
 
                     // try hangup
-                    var hangUpOptions = new HangUpOptions(true);
-                    await response.CallConnection.HangUpAsync(hangUpOptions).ConfigureAwait(false);
+                    await response.CallConnection.HangUpAsync(true).ConfigureAwait(false);
                     var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(disconnectedEvent);
                     Assert.IsTrue(disconnectedEvent is CallDisconnected);
