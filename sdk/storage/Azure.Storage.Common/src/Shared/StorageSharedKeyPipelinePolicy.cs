@@ -112,7 +112,7 @@ namespace Azure.Storage
                 }
             }
 
-            headers.Sort(static (x, y) => string.Compare(x.Name, y.Name));
+            headers.Sort(static (x, y) => string.CompareOrdinal(x.Name, y.Name));
 
             foreach (var header in headers)
             {
