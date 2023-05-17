@@ -257,7 +257,7 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetAnalyzeConversationJobStatusAsync(Guid,Boolean,RequestContext)">
+    <member name="GetAnalyzeConversationJobStatusAsync(Guid,bool?,RequestContext)">
 <example>
 This sample shows how to call GetAnalyzeConversationJobStatusAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -343,7 +343,7 @@ Schema for <c>AnalyzeConversationJobState</c>:
 
 </remarks>
     </member>
-    <member name="GetAnalyzeConversationJobStatus(Guid,Boolean,RequestContext)">
+    <member name="GetAnalyzeConversationJobStatus(Guid,bool?,RequestContext)">
 <example>
 This sample shows how to call GetAnalyzeConversationJobStatus with required parameters and parse the result.
 <code><![CDATA[

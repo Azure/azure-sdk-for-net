@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.DataMovement.Models;
 using NUnit.Framework;
 using Azure.Storage.DataMovement.Blobs;
@@ -128,6 +129,8 @@ namespace Azure.Storage.DataMovement.Tests
             List<string> destinationBlobNames = default,
             List<TransferOptions> options = default)
         {
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
+
             // Populate blobNames list for number of blobs to be created
             if (sourceBlobNames == default || sourceBlobNames?.Count == 0)
             {
@@ -191,7 +194,7 @@ namespace Azure.Storage.DataMovement.Tests
                     bool completed = false;
                     // Set up Blob to be Copyed
                     using Stream originalStream = await CreateLimitedMemoryStream(size);
-                    string localSourceFile = Path.GetTempFileName();
+                    string localSourceFile = Path.Combine(testDirectory.DirectoryPath, sourceBlobNames[i]);
                     BlockBlobClient originalBlob = await CreateBlockBlob(container, localSourceFile, sourceBlobNames[i], size);
 
                     // Set up event handler for the respective blob
@@ -272,7 +275,7 @@ namespace Azure.Storage.DataMovement.Tests
             List<TransferOptions> optionsList = new List<TransferOptions>() { options };
 
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
 
             // No Option Copy bag or manager options bag, plain Copy
             await CopyBlockBlobsAndVerify(
@@ -295,7 +298,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task BlockBlobToBlockBlob_EventHandler()
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
 
             int waitTimeInSec = 10;
             bool progressSeen = false;
@@ -327,7 +330,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task BlockBlobToBlockBlob_SmallSize(long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
 
             await CopyBlockBlobsAndVerify(
                 testContainer.Container,
@@ -346,7 +349,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task BlockBlobToBlockBlob_LargeSize(long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
 
             await CopyBlockBlobsAndVerify(
                 testContainer.Container,
@@ -366,7 +369,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task BlockBlobToBlockBlob_SmallMultiple(int blobCount, long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
 
             await CopyBlockBlobsAndVerify(
                 testContainer.Container,
@@ -386,7 +389,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task BlockBlobToBlockBlob_LargeMultiple(int blobCount, long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
 
             await CopyBlockBlobsAndVerify(
                 testContainer.Container,
@@ -402,7 +405,7 @@ namespace Azure.Storage.DataMovement.Tests
             Exception exception = default;
             bool sourceResourceCheck = false;
             bool destinationResourceCheck = false;
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
             int size = Constants.KB;
 
             // Act
@@ -473,7 +476,7 @@ namespace Azure.Storage.DataMovement.Tests
             Exception exception = default;
             bool sourceResourceCheck = false;
             bool destinationResourceCheck = false;
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
             int size = Constants.KB;
 
             // Act
@@ -597,8 +600,9 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             // Create source local file for checking, and source blob
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string blobName = GetNewBlobName();
-            string originalSourceFile = Path.GetTempFileName();
+            string originalSourceFile = Path.Combine(testDirectory.DirectoryPath, blobName);
             int size = Constants.KB;
             bool skippedSeen = false;
             BlockBlobClient destinationClient = await CreateBlockBlob(
@@ -670,8 +674,9 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Create source local file for checking, and source blob
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string blobName = GetNewBlobName();
-            string originalSourceFile = Path.GetTempFileName();
+            string originalSourceFile = Path.Combine(testDirectory.DirectoryPath, blobName);
             int size = Constants.KB;
             BlockBlobClient destinationClient = await CreateBlockBlob(testContainer.Container, originalSourceFile, blobName, size);
 
@@ -682,11 +687,12 @@ namespace Azure.Storage.DataMovement.Tests
                 CreateMode = StorageResourceCreateMode.Fail,
             };
             // Create new source block blob.
-            string newSourceFile = Path.GetTempFileName();
+            string sourceBlobName = GetNewBlobName();
+            string newSourceFile = Path.Combine(testDirectory.DirectoryPath, sourceBlobName);
             BlockBlobClient blockBlobClient = await CreateBlockBlob(
                 testContainer.Container,
                 newSourceFile,
-                GetNewBlobName(),
+                sourceBlobName,
                 size);
             StorageResource sourceResource = new BlockBlobStorageResource(blockBlobClient);
             StorageResource destinationResource = new BlockBlobStorageResource(destinationClient,
@@ -760,6 +766,7 @@ namespace Azure.Storage.DataMovement.Tests
             List<string> destinationBlobNames = default,
             List<TransferOptions> options = default)
         {
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             // Populate blobNames list for number of blobs to be created
             if (sourceBlobNames == default || sourceBlobNames?.Count == 0)
             {
@@ -812,80 +819,60 @@ namespace Azure.Storage.DataMovement.Tests
             };
 
             List<VerifyPageCopyFromUriInfo> copyBlobInfo = new List<VerifyPageCopyFromUriInfo>(blobCount);
-            try
+
+            // Initialize BlobDataController
+            TransferManager transferManager = new TransferManager(transferManagerOptions);
+
+            // Upload set of VerifyCopyFromUriInfo blobs to Copy
+            for (int i = 0; i < blobCount; i++)
             {
-                // Initialize BlobDataController
-                TransferManager transferManager = new TransferManager(transferManagerOptions);
+                bool completed = false;
+                // Set up Blob to be Copyed
+                using Stream originalStream = await CreateLimitedMemoryStream(size);
+                string localSourceFile = Path.Combine(testDirectory.DirectoryPath, sourceBlobNames[i]);
+                PageBlobClient originalBlob = await CreatePageBlob(container, localSourceFile, sourceBlobNames[i], size);
 
-                // Upload set of VerifyCopyFromUriInfo blobs to Copy
-                for (int i = 0; i < blobCount; i++)
-                {
-                    bool completed = false;
-                    // Set up Blob to be Copyed
-                    using Stream originalStream = await CreateLimitedMemoryStream(size);
-                    string localSourceFile = Path.GetTempFileName();
-                    PageBlobClient originalBlob = await CreatePageBlob(container, localSourceFile, sourceBlobNames[i], size);
-
-                    // Set up event handler for the respective blob
-                    AutoResetEvent completedStatusWait = new AutoResetEvent(false);
-
-                    StorageResource sourceResource = new PageBlobStorageResource(originalBlob);
-                    // Set up destination client
-                    PageBlobClient destClient = InstrumentClient(container.GetPageBlobClient(string.Concat(destinationBlobNames[i])));
-                    StorageResource destinationResource = new PageBlobStorageResource(destClient,
-                        new PageBlobStorageResourceOptions()
-                        {
-                            CopyMethod = TransferCopyMethod.AsyncCopy,
-                        });
-                    copyBlobInfo.Add(new VerifyPageCopyFromUriInfo(
-                        localSourceFile,
-                        sourceResource,
-                        destinationResource,
-                        destClient,
-                        options[i],
-                        completed));
-                }
-
-                // Schedule all Copy blobs consecutively
-                for (int i = 0; i < copyBlobInfo.Count; i++)
-                {
-                    // Act
-                    DataTransfer transfer = await transferManager.StartTransferAsync(
-                        copyBlobInfo[i].SourceResource,
-                        copyBlobInfo[i].DestinationResource,
-                        options[i]).ConfigureAwait(false);
-                    copyBlobInfo[i].DataTransfer = transfer;
-                }
-
-                failureTransferHolder.AssertFailureCheck();
-                for (int i = 0; i < copyBlobInfo.Count; i++)
-                {
-                    // Assert
-                    Assert.NotNull(copyBlobInfo[i].DataTransfer);
-                    CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
-                    await copyBlobInfo[i].DataTransfer.AwaitCompletion(tokenSource.Token);
-                    Assert.IsTrue(copyBlobInfo[i].DataTransfer.HasCompleted);
-
-                    // Verify Copy - using original source File and Copying the destination
-                    using (FileStream fileStream = File.OpenRead(copyBlobInfo[i].SourceLocalPath))
+                StorageResource sourceResource = new PageBlobStorageResource(originalBlob);
+                // Set up destination client
+                PageBlobClient destClient = InstrumentClient(container.GetPageBlobClient(string.Concat(destinationBlobNames[i])));
+                StorageResource destinationResource = new PageBlobStorageResource(destClient,
+                    new PageBlobStorageResourceOptions()
                     {
-                        await DownloadAndAssertAsync(fileStream, copyBlobInfo[i].DestinationClient).ConfigureAwait(false);
-                    }
-                }
+                        CopyMethod = TransferCopyMethod.AsyncCopy,
+                    });
+                copyBlobInfo.Add(new VerifyPageCopyFromUriInfo(
+                    localSourceFile,
+                    sourceResource,
+                    destinationResource,
+                    destClient,
+                    options[i],
+                    completed));
             }
-            catch (Exception ex)
+
+            // Schedule all Copy blobs consecutively
+            for (int i = 0; i < copyBlobInfo.Count; i++)
             {
-                Assert.Fail(ex.Message);
+                // Act
+                DataTransfer transfer = await transferManager.StartTransferAsync(
+                    copyBlobInfo[i].SourceResource,
+                    copyBlobInfo[i].DestinationResource,
+                    options[i]).ConfigureAwait(false);
+                copyBlobInfo[i].DataTransfer = transfer;
             }
-            finally
+
+            failureTransferHolder.AssertFailureCheck();
+            for (int i = 0; i < copyBlobInfo.Count; i++)
             {
-                // Cleanup - temporary local files (blobs cleaned up by diposing container)
-                for (int i = 0; i < copyBlobInfo.Count; i++)
+                // Assert
+                Assert.NotNull(copyBlobInfo[i].DataTransfer);
+                CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
+                await copyBlobInfo[i].DataTransfer.AwaitCompletion(tokenSource.Token);
+                Assert.IsTrue(copyBlobInfo[i].DataTransfer.HasCompleted);
+
+                // Verify Copy - using original source File and Copying the destination
+                using (FileStream fileStream = File.OpenRead(copyBlobInfo[i].SourceLocalPath))
                 {
-                    if (File.Exists(copyBlobInfo[i].SourceLocalPath))
-                    {
-                        File.Delete(copyBlobInfo[i].SourceLocalPath);
-                    }
+                    await DownloadAndAssertAsync(fileStream, copyBlobInfo[i].DestinationClient).ConfigureAwait(false);
                 }
             }
         }
@@ -904,7 +891,7 @@ namespace Azure.Storage.DataMovement.Tests
             List<TransferOptions> optionsList = new List<TransferOptions>() { options };
 
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
 
             // No Option Copy bag or manager options bag, plain Copy
             await CopyPageBlobsAndVerify(
@@ -927,7 +914,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task PageBlobToPageBlob_EventHandler()
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
 
             int waitTimeInSec = 10;
             bool progressSeen = false;
@@ -959,7 +946,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task PageBlobToPageBlob_SmallSize(long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
 
             await CopyPageBlobsAndVerify(
                 testContainer.Container,
@@ -978,7 +965,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task PageBlobToPageBlob_LargeSize(long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
 
             await CopyPageBlobsAndVerify(
                 testContainer.Container,
@@ -998,7 +985,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task PageBlobToPageBlob_SmallMultiple(int blobCount, long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
 
             await CopyPageBlobsAndVerify(
                 testContainer.Container,
@@ -1018,7 +1005,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task PageBlobToPageBlob_LargeMultiple(int blobCount, long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
 
             await CopyPageBlobsAndVerify(
                 testContainer.Container,
@@ -1086,8 +1073,9 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             // Create source local file for checking, and source blob
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string blobName = GetNewBlobName();
-            string originalSourceFile = Path.GetTempFileName();
+            string originalSourceFile = Path.Combine(testDirectory.DirectoryPath, blobName);
             int size = Constants.KB;
             bool skippedSeen = false;
             PageBlobClient destinationClient = await CreatePageBlob(
@@ -1161,8 +1149,9 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Create source local file for checking, and source blob
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string blobName = GetNewBlobName();
-            string originalSourceFile = Path.GetTempFileName();
+            string originalSourceFile = Path.Combine(testDirectory.DirectoryPath, blobName);
             int size = Constants.KB;
             PageBlobClient destinationClient = await CreatePageBlob(testContainer.Container, originalSourceFile, blobName, size);
 
@@ -1251,6 +1240,7 @@ namespace Azure.Storage.DataMovement.Tests
             List<string> destinationBlobNames = default,
             List<TransferOptions> options = default)
         {
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             // Populate blobNames list for number of blobs to be created
             if (sourceBlobNames == default || sourceBlobNames?.Count == 0)
             {
@@ -1303,80 +1293,63 @@ namespace Azure.Storage.DataMovement.Tests
             };
 
             List<VerifyAppendCopyFromUriInfo> copyBlobInfo = new List<VerifyAppendCopyFromUriInfo>(blobCount);
-            try
+
+            // Initialize BlobDataController
+            TransferManager transferManager = new TransferManager(transferManagerOptions);
+
+            // Upload set of VerifyCopyFromUriInfo blobs to Copy
+            for (int i = 0; i < blobCount; i++)
             {
-                // Initialize BlobDataController
-                TransferManager transferManager = new TransferManager(transferManagerOptions);
+                bool completed = false;
+                // Set up Blob to be Copyed
+                using Stream originalStream = await CreateLimitedMemoryStream(size);
+                string localSourceFile = Path.Combine(testDirectory.DirectoryPath, sourceBlobNames[i]);
+                AppendBlobClient originalBlob = await CreateAppendBlob(container, localSourceFile, sourceBlobNames[i], size);
 
-                // Upload set of VerifyCopyFromUriInfo blobs to Copy
-                for (int i = 0; i < blobCount; i++)
-                {
-                    bool completed = false;
-                    // Set up Blob to be Copyed
-                    using Stream originalStream = await CreateLimitedMemoryStream(size);
-                    string localSourceFile = Path.GetTempFileName();
-                    AppendBlobClient originalBlob = await CreateAppendBlob(container, localSourceFile, sourceBlobNames[i], size);
+                // Set up event handler for the respective blob
+                AutoResetEvent completedStatusWait = new AutoResetEvent(false);
 
-                    // Set up event handler for the respective blob
-                    AutoResetEvent completedStatusWait = new AutoResetEvent(false);
-
-                    StorageResource sourceResource = new AppendBlobStorageResource(originalBlob);
-                    // Set up destination client
-                    AppendBlobClient destClient = InstrumentClient(container.GetAppendBlobClient(string.Concat(destinationBlobNames[i])));
-                    StorageResource destinationResource = new AppendBlobStorageResource(destClient,
-                        new AppendBlobStorageResourceOptions()
-                        {
-                            CopyMethod = TransferCopyMethod.AsyncCopy,
-                        });
-                    copyBlobInfo.Add(new VerifyAppendCopyFromUriInfo(
-                        localSourceFile,
-                        sourceResource,
-                        destinationResource,
-                        destClient,
-                        options[i],
-                        completed));
-                }
-
-                // Schedule all Copy blobs consecutively
-                for (int i = 0; i < copyBlobInfo.Count; i++)
-                {
-                    // Act
-                    DataTransfer transfer = await transferManager.StartTransferAsync(
-                        copyBlobInfo[i].SourceResource,
-                        copyBlobInfo[i].DestinationResource,
-                        options[i]).ConfigureAwait(false);
-                    copyBlobInfo[i].DataTransfer = transfer;
-                }
-
-                failureTransferHolder.AssertFailureCheck();
-                for (int i = 0; i < copyBlobInfo.Count; i++)
-                {
-                    // Assert
-                    Assert.NotNull(copyBlobInfo[i].DataTransfer);
-                    CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
-                    await copyBlobInfo[i].DataTransfer.AwaitCompletion(tokenSource.Token);
-                    Assert.IsTrue(copyBlobInfo[i].DataTransfer.HasCompleted);
-
-                    // Verify Copy - using original source File and Copying the destination
-                    using (FileStream fileStream = File.OpenRead(copyBlobInfo[i].SourceLocalPath))
+                StorageResource sourceResource = new AppendBlobStorageResource(originalBlob);
+                // Set up destination client
+                AppendBlobClient destClient = InstrumentClient(container.GetAppendBlobClient(string.Concat(destinationBlobNames[i])));
+                StorageResource destinationResource = new AppendBlobStorageResource(destClient,
+                    new AppendBlobStorageResourceOptions()
                     {
-                        await DownloadAndAssertAsync(fileStream, copyBlobInfo[i].DestinationClient).ConfigureAwait(false);
-                    }
-                }
+                        CopyMethod = TransferCopyMethod.AsyncCopy,
+                    });
+                copyBlobInfo.Add(new VerifyAppendCopyFromUriInfo(
+                    localSourceFile,
+                    sourceResource,
+                    destinationResource,
+                    destClient,
+                    options[i],
+                    completed));
             }
-            catch (Exception ex)
+
+            // Schedule all Copy blobs consecutively
+            for (int i = 0; i < copyBlobInfo.Count; i++)
             {
-                Assert.Fail(ex.Message);
+                // Act
+                DataTransfer transfer = await transferManager.StartTransferAsync(
+                    copyBlobInfo[i].SourceResource,
+                    copyBlobInfo[i].DestinationResource,
+                    options[i]).ConfigureAwait(false);
+                copyBlobInfo[i].DataTransfer = transfer;
             }
-            finally
+
+            failureTransferHolder.AssertFailureCheck();
+            for (int i = 0; i < copyBlobInfo.Count; i++)
             {
-                // Cleanup - temporary local files (blobs cleaned up by diposing container)
-                for (int i = 0; i < copyBlobInfo.Count; i++)
+                // Assert
+                Assert.NotNull(copyBlobInfo[i].DataTransfer);
+                CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
+                await copyBlobInfo[i].DataTransfer.AwaitCompletion(tokenSource.Token);
+                Assert.IsTrue(copyBlobInfo[i].DataTransfer.HasCompleted);
+
+                // Verify Copy - using original source File and Copying the destination
+                using (FileStream fileStream = File.OpenRead(copyBlobInfo[i].SourceLocalPath))
                 {
-                    if (File.Exists(copyBlobInfo[i].SourceLocalPath))
-                    {
-                        File.Delete(copyBlobInfo[i].SourceLocalPath);
-                    }
+                    await DownloadAndAssertAsync(fileStream, copyBlobInfo[i].DestinationClient).ConfigureAwait(false);
                 }
             }
         }
@@ -1395,7 +1368,7 @@ namespace Azure.Storage.DataMovement.Tests
             List<TransferOptions> optionsList = new List<TransferOptions>() { options };
 
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
 
             // No Option Copy bag or manager options bag, plain Copy
             await CopyAppendBlobsAndVerify(
@@ -1418,7 +1391,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task AppendBlobToAppendBlob_EventHandler()
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
 
             int waitTimeInSec = 10;
             bool progressSeen = false;
@@ -1452,7 +1425,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task AppendBlobToAppendBlob_SmallSize(long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
 
             await CopyAppendBlobsAndVerify(
                 testContainer.Container,
@@ -1471,7 +1444,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task AppendBlobToAppendBlob_LargeSize(long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
 
             await CopyAppendBlobsAndVerify(
                 testContainer.Container,
@@ -1491,7 +1464,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task AppendBlobToAppendBlob_SmallMultiple(int blobCount, long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
 
             await CopyAppendBlobsAndVerify(
                 testContainer.Container,
@@ -1511,7 +1484,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task AppendBlobToAppendBlob_LargeMultiple(int blobCount, long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
 
             await CopyAppendBlobsAndVerify(
                 testContainer.Container,
@@ -1579,8 +1552,9 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             // Create source local file for checking, and source blob
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string blobName = GetNewBlobName();
-            string originalSourceFile = Path.GetTempFileName();
+            string originalSourceFile = Path.Combine(testDirectory.DirectoryPath, blobName);
             int size = Constants.KB;
             bool skippedSeen = false;
             AppendBlobClient destinationClient = await CreateAppendBlob(
@@ -1649,8 +1623,9 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Create source local file for checking, and source blob
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string blobName = GetNewBlobName();
-            string originalSourceFile = Path.GetTempFileName();
+            string originalSourceFile = Path.Combine(testDirectory.DirectoryPath, blobName);
             int size = Constants.KB;
             AppendBlobClient destinationClient = await CreateAppendBlob(testContainer.Container, originalSourceFile, blobName, size);
 
@@ -1706,6 +1681,7 @@ namespace Azure.Storage.DataMovement.Tests
         #region Single Concurrency
         private async Task<DataTransfer> CreateStartTransfer(
             BlobContainerClient containerClient,
+            string localDirectoryPath,
             int concurrency,
             bool createFailedCondition = false,
             TransferOptions options = default,
@@ -1726,7 +1702,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
 
             // Create new source block blob.
-            string newSourceFile = Path.GetTempFileName();
+            string newSourceFile = Path.Combine(localDirectoryPath, sourceBlobName);
             BlockBlobClient blockBlobClient = await CreateBlockBlob(containerClient, newSourceFile, sourceBlobName, size);
             StorageResource sourceResource = new BlockBlobStorageResource(blockBlobClient);
             StorageResource destinationResource = new BlockBlobStorageResource(destinationClient, new BlockBlobStorageResourceOptions()
@@ -1752,13 +1728,18 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_AwaitCompletion()
         {
             // Arrange
-            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             // Create transfer to do a AwaitCompletion
             TransferOptions options = new TransferOptions();
             FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
-            DataTransfer transfer = await CreateStartTransfer(test.Container, 1, options: options);
+            DataTransfer transfer = await CreateStartTransfer(
+                containerClient: test.Container,
+                localDirectoryPath: testDirectory.DirectoryPath,
+                concurrency: 1,
+                options: options);
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
@@ -1775,7 +1756,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_AwaitCompletion_Failed()
         {
             // Arrange
-            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             TransferOptions options = new TransferOptions()
             {
@@ -1785,8 +1767,9 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Create transfer to do a AwaitCompletion
             DataTransfer transfer = await CreateStartTransfer(
-                test.Container,
-                1,
+                containerClient: test.Container,
+                localDirectoryPath: testDirectory.DirectoryPath,
+                concurrency: 1,
                 createFailedCondition: true,
                 options: options);
 
@@ -1806,7 +1789,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_AwaitCompletion_Skipped()
         {
             // Arrange
-            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             // Create transfer options with Skipping available
             TransferOptions options = new TransferOptions()
@@ -1817,8 +1801,9 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Create transfer to do a AwaitCompletion
             DataTransfer transfer = await CreateStartTransfer(
-                test.Container,
-                1,
+                containerClient: test.Container,
+                localDirectoryPath: testDirectory.DirectoryPath,
+                concurrency: 1,
                 createFailedCondition: true,
                 options: options);
 
@@ -1837,12 +1822,17 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_EnsureCompleted()
         {
             // Arrange
-            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             // Create transfer to do a EnsureCompleted
             TransferOptions options = new TransferOptions();
             FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
-            DataTransfer transfer = await CreateStartTransfer(test.Container, 1, options: options);
+            DataTransfer transfer = await CreateStartTransfer(
+                containerClient: test.Container,
+                localDirectoryPath: testDirectory.DirectoryPath,
+                concurrency: 1,
+                options: options);
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
@@ -1858,7 +1848,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_EnsureCompleted_Failed()
         {
             // Arrange
-            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             TransferOptions options = new TransferOptions()
             {
@@ -1868,8 +1859,9 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Create transfer to do a AwaitCompletion
             DataTransfer transfer = await CreateStartTransfer(
-                test.Container,
-                1,
+                containerClient: test.Container,
+                localDirectoryPath: testDirectory.DirectoryPath,
+                concurrency: 1,
                 createFailedCondition: true,
                 options: options);
 
@@ -1889,7 +1881,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_EnsureCompleted_Skipped()
         {
             // Arrange
-            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             // Create transfer options with Skipping available
             TransferOptions options = new TransferOptions()
@@ -1900,8 +1893,9 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Create transfer to do a EnsureCompleted
             DataTransfer transfer = await CreateStartTransfer(
-                test.Container,
-                1,
+                containerClient: test.Container,
+                localDirectoryPath: testDirectory.DirectoryPath,
+                concurrency: 1,
                 createFailedCondition: true,
                 options: options);
 

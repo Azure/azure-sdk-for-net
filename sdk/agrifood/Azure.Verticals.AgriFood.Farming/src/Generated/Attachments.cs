@@ -50,7 +50,7 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Gets a specified attachment resource under a particular party. </summary>
+        /// <summary> [Protocol Method] Gets a specified attachment resource under a particular party. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="attachmentId"> Id of the attachment. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -58,7 +58,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='GetAttachmentAsync(String,String,RequestContext)']/*" />
+        /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='GetAttachmentAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetAttachmentAsync(string partyId, string attachmentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -78,7 +78,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Gets a specified attachment resource under a particular party. </summary>
+        /// <summary> [Protocol Method] Gets a specified attachment resource under a particular party. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="attachmentId"> Id of the attachment. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -86,7 +86,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='GetAttachment(String,String,RequestContext)']/*" />
+        /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='GetAttachment(string,string,RequestContext)']/*" />
         public virtual Response GetAttachment(string partyId, string attachmentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -106,7 +106,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Creates or updates an attachment resource under a particular party. </summary>
+        /// <summary> [Protocol Method] Creates or updates an attachment resource under a particular party. </summary>
         /// <param name="partyId"> Id of the associated party resource. </param>
         /// <param name="attachmentId"> Id of the attachment resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -115,7 +115,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string partyId, string attachmentId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -135,7 +135,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Creates or updates an attachment resource under a particular party. </summary>
+        /// <summary> [Protocol Method] Creates or updates an attachment resource under a particular party. </summary>
         /// <param name="partyId"> Id of the associated party resource. </param>
         /// <param name="attachmentId"> Id of the attachment resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -144,7 +144,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string partyId, string attachmentId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -164,7 +164,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Deletes a specified attachment resource under a particular party. </summary>
+        /// <summary> [Protocol Method] Deletes a specified attachment resource under a particular party. </summary>
         /// <param name="partyId"> Id of the party. </param>
         /// <param name="attachmentId"> Id of the attachment. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -172,7 +172,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='DeleteAsync(String,String,RequestContext)']/*" />
+        /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='DeleteAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string partyId, string attachmentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -192,7 +192,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Deletes a specified attachment resource under a particular party. </summary>
+        /// <summary> [Protocol Method] Deletes a specified attachment resource under a particular party. </summary>
         /// <param name="partyId"> Id of the party. </param>
         /// <param name="attachmentId"> Id of the attachment. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -200,7 +200,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='Delete(String,String,RequestContext)']/*" />
+        /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='Delete(string,string,RequestContext)']/*" />
         public virtual Response Delete(string partyId, string attachmentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -220,7 +220,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Downloads and returns attachment as response for the given input filePath. </summary>
+        /// <summary> [Protocol Method] Downloads and returns attachment as response for the given input filePath. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="attachmentId"> Id of attachment to be downloaded. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -228,7 +228,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='DownloadAsync(String,String,RequestContext)']/*" />
+        /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='DownloadAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> DownloadAsync(string partyId, string attachmentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -248,7 +248,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Downloads and returns attachment as response for the given input filePath. </summary>
+        /// <summary> [Protocol Method] Downloads and returns attachment as response for the given input filePath. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="attachmentId"> Id of attachment to be downloaded. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -256,7 +256,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='Download(String,String,RequestContext)']/*" />
+        /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='Download(string,string,RequestContext)']/*" />
         public virtual Response Download(string partyId, string attachmentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -276,7 +276,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Returns a paginated list of attachment resources under a particular party. </summary>
+        /// <summary> [Protocol Method] Returns a paginated list of attachment resources under a particular party. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="resourceIds"> Resource Ids of the resource. </param>
         /// <param name="resourceTypes">
@@ -304,7 +304,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='GetAttachmentsByPartyIdAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='GetAttachmentsByPartyIdAsync(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAttachmentsByPartyIdAsync(string partyId, IEnumerable<string> resourceIds = null, IEnumerable<string> resourceTypes = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -314,7 +314,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Attachments.GetAttachmentsByPartyId", "value", "nextLink", context);
         }
 
-        /// <summary> Returns a paginated list of attachment resources under a particular party. </summary>
+        /// <summary> [Protocol Method] Returns a paginated list of attachment resources under a particular party. </summary>
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="resourceIds"> Resource Ids of the resource. </param>
         /// <param name="resourceTypes">
@@ -342,7 +342,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='GetAttachmentsByPartyId(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='GetAttachmentsByPartyId(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAttachmentsByPartyId(string partyId, IEnumerable<string> resourceIds = null, IEnumerable<string> resourceTypes = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
@@ -362,42 +362,42 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath("/parties/", false);
             uri.AppendPath(partyId, true);
             uri.AppendPath("/attachments", false);
-            if (resourceIds != null)
+            if (resourceIds != null && Optional.IsCollectionDefined(resourceIds))
             {
                 foreach (var param in resourceIds)
                 {
                     uri.AppendQuery("resourceIds", param, true);
                 }
             }
-            if (resourceTypes != null)
+            if (resourceTypes != null && Optional.IsCollectionDefined(resourceTypes))
             {
                 foreach (var param in resourceTypes)
                 {
                     uri.AppendQuery("resourceTypes", param, true);
                 }
             }
-            if (ids != null)
+            if (ids != null && Optional.IsCollectionDefined(ids))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null)
+            if (names != null && Optional.IsCollectionDefined(names))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null)
+            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null)
+            if (statuses != null && Optional.IsCollectionDefined(statuses))
             {
                 foreach (var param in statuses)
                 {

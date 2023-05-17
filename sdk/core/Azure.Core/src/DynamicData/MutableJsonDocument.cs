@@ -146,38 +146,32 @@ namespace Azure.Core.Json
             _originalDocument.Dispose();
         }
 
-        internal MutableJsonDocument(JsonDocument jsonDocument, ReadOnlyMemory<byte> utf8Json)
+        internal MutableJsonDocument(JsonDocument document) : this(document, GetBytesFromDocument(document))
+        {
+        }
+
+        internal MutableJsonDocument(JsonDocument document, ReadOnlyMemory<byte> utf8Json)
         {
             _original = utf8Json;
-            _originalDocument = jsonDocument;
+            _originalDocument = document;
         }
 
-        /// <summary>
-        /// Creates a new JsonData object which represents the given object.
-        /// </summary>
-        /// <param name="value">The value to convert.</param>
-        internal MutableJsonDocument(object? value) : this(value, DefaultJsonSerializerOptions)
+        private static ReadOnlyMemory<byte> GetBytesFromDocument(JsonDocument document)
         {
-        }
+            using MemoryStream stream = new();
+            using (Utf8JsonWriter writer = new(stream))
+            {
+                document.WriteTo(writer);
+            }
 
-        /// <summary>
-        /// Creates a new JsonData object which represents the given object.
-        /// </summary>
-        /// <param name="value">The value to convert.</param>
-        /// <param name="options">Options to control the conversion behavior.</param>
-        /// <param name="type">The type of the value to convert. </param>
-        internal MutableJsonDocument(object? value, JsonSerializerOptions options, Type? type = null)
-        {
-            Type inputType = type ?? (value == null ? typeof(object) : value.GetType());
-            _original = JsonSerializer.SerializeToUtf8Bytes(value, inputType, options);
-            _originalDocument = JsonDocument.Parse(_original);
+            return new ReadOnlyMemory<byte>(stream.GetBuffer(), 0, (int)stream.Position);
         }
 
         private class JsonConverter : JsonConverter<MutableJsonDocument>
         {
             public override MutableJsonDocument Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                JsonDocument document = JsonDocument.ParseValue(ref reader);
                 return new MutableJsonDocument(document);
             }
 
