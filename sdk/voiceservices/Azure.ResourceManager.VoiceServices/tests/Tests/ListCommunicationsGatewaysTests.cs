@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.VoiceServices.Tests.Tests
         {
             _rg = await CreateResourceGroup();
             var resourceName = Recording.GenerateAssetName("SDKTest");
-            var createOperation = await _rg.GetCommunicationsGateways().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, GetDefaultCommunicationsGatewayData());
+            var createOperation = await _rg.GetVoiceServicesCommunicationsGateways().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, GetDefaultCommunicationsGatewayData());
             await createOperation.WaitForCompletionAsync();
         }
 
         [TestCase, Order(1)]
         public async Task TestListCommunicationsGatewaysAtSubscriptionLevel()
         {
-            var communicationsGateways = Subscription.GetCommunicationsGatewaysAsync();
+            var communicationsGateways = Subscription.GetVoiceServicesCommunicationsGatewaysAsync();
             var comminicationsGatewaysResult = await communicationsGateways.ToEnumerableAsync();
 
             Assert.NotNull(comminicationsGatewaysResult);
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.VoiceServices.Tests.Tests
         [TestCase, Order(2)]
         public async Task TestListCommunicationsGatewaysAtResourceGroupLevel()
         {
-            var communicationsGateways = _rg.GetCommunicationsGateways().GetAllAsync();
+            var communicationsGateways = _rg.GetVoiceServicesCommunicationsGateways().GetAllAsync();
             var communicationsGatewaysResult = await communicationsGateways.ToEnumerableAsync();
 
             Assert.NotNull(communicationsGatewaysResult);
