@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Samples
 {
-    public class ResponseSamples
+    public class SerializationSamples
     {
         [Test]
         [Ignore("Only verifying that the sample builds")]
