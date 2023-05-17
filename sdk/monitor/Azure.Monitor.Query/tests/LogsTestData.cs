@@ -151,7 +151,7 @@ namespace Azure.Monitor.Query.Tests
             while (noData)
             {
                 var result = await client.QueryResourceAsync(new ResourceIdentifier(_testEnvironment.ResourceId), "search *", DataTimeRange).ConfigureAwait(false);
-                if (result.Value.Table.Rows.Count > 0 || result.Value.Table.Columns.Count > 0)
+                if (result.Value.Table.Rows.Count > 0 && result.Value.Table.Columns.Count > 0)
                 {
                     // Make sure StorageAccount set-up is complete and data is there before beginning testing
                     noData = false;
