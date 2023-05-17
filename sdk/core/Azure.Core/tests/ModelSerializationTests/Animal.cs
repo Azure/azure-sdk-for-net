@@ -122,13 +122,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             bytesConsumed = 0;
             try
             {
-                JsonDocument jsonDocument = JsonDocument.Parse(stream);
-                var model = DeserializeAnimal(jsonDocument.RootElement, options ?? new SerializableOptions());
-                this.LatinName = model.LatinName;
-                this.Weight = model.Weight;
-                this.IsHungry = model.IsHungry;
-                this.Name = model.Name;
-                this.RawData = model.RawData;
+                Deserialize(stream, options);
                 bytesConsumed = stream.Length;
                 return true;
             }
@@ -143,14 +137,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             bytesWritten = 0;
             try
             {
-                JsonWriterOptions jsonWriterOptions = new JsonWriterOptions();
-                if (options.PrettyPrint)
-                {
-                    jsonWriterOptions.Indented = true;
-                }
-                Utf8JsonWriter writer = new Utf8JsonWriter(stream, jsonWriterOptions);
-                ((IUtf8JsonSerializable)this).Write(writer, options ?? new SerializableOptions());
-                writer.Flush();
+                Serialize(stream, options);
                 bytesWritten = stream.Length;
                 return true;
             }
@@ -158,6 +145,29 @@ namespace Azure.Core.Tests.ModelSerializationTests
             {
                 return false;
             }
+        }
+
+        public void Deserialize(Stream stream, SerializableOptions options = default)
+        {
+            JsonDocument jsonDocument = JsonDocument.Parse(stream);
+            var model = DeserializeAnimal(jsonDocument.RootElement, options ?? new SerializableOptions());
+            this.LatinName = model.LatinName;
+            this.Weight = model.Weight;
+            this.IsHungry = model.IsHungry;
+            this.Name = model.Name;
+            this.RawData = model.RawData;
+        }
+
+        public void Serialize(Stream stream, SerializableOptions options = default)
+        {
+            JsonWriterOptions jsonWriterOptions = new JsonWriterOptions();
+            if (options.PrettyPrint)
+            {
+                jsonWriterOptions.Indented = true;
+            }
+            Utf8JsonWriter writer = new Utf8JsonWriter(stream, jsonWriterOptions);
+            ((IUtf8JsonSerializable)this).Write(writer, options ?? new SerializableOptions());
+            writer.Flush();
         }
         #endregion
     }

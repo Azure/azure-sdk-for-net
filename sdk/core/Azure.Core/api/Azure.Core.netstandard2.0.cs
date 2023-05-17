@@ -91,6 +91,8 @@ namespace Azure
     }
     public partial interface IJsonSerializable
     {
+        void Deserialize(System.IO.Stream stream, Azure.SerializableOptions? options = null);
+        void Serialize(System.IO.Stream stream, Azure.SerializableOptions? options = null);
         bool TryDeserialize(System.IO.Stream stream, out long bytesConsumed, Azure.SerializableOptions? options = null);
         bool TrySerialize(System.IO.Stream stream, out long bytesWritten, Azure.SerializableOptions? options = null);
     }

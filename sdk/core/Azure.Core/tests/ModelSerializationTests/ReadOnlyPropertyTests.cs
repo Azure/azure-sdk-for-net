@@ -52,7 +52,9 @@ namespace Azure.Core.Tests.ModelSerializationTests
             }
             Assert.That(model.Name, Is.EqualTo("Doggo"));
             Assert.IsFalse(model.IsHungry);
+#if NET6_0_OR_GREATER
             Assert.That(model.Weight, Is.EqualTo(5.5));
+#endif
 
             if (!ignoreUnknown)
             {
@@ -74,9 +76,68 @@ namespace Azure.Core.Tests.ModelSerializationTests
             VerifyModels.CheckAnimals(model, model2, options);
         }
 
+        [TestCase(true, true)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(false, false)]
+        public void CanRoundTripNoTry(bool ignoreReadOnly, bool ignoreUnknown)
+        {
+            Stream stream = new MemoryStream();
+            string serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\",\"numberOfLegs\":4}";
+
+            StringBuilder expectedSerialized = new StringBuilder("{");
+            if (!ignoreReadOnly)
+            {
+                expectedSerialized.Append("\"latinName\":\"Canis lupus familiaris\",");
+            }
+            expectedSerialized.Append("\"name\":\"Doggo\",");
+            expectedSerialized.Append("\"isHungry\":false,");
+            expectedSerialized.Append("\"weight\":5.5");
+            if (!ignoreUnknown)
+            {
+                expectedSerialized.Append(",\"numberOfLegs\":4");
+            }
+            expectedSerialized.Append("}");
+            var expectedSerializedString = expectedSerialized.ToString();
+
+            SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = ignoreReadOnly, IgnoreAdditionalProperties = ignoreUnknown };
+
+            var model = new Animal();
+            model.Deserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
+
+            if (!ignoreReadOnly)
+            {
+                Assert.That(model.LatinName, Is.EqualTo("Canis lupus familiaris"));
+            }
+            Assert.That(model.Name, Is.EqualTo("Doggo"));
+            Assert.IsFalse(model.IsHungry);
+#if NET6_0_OR_GREATER
+            Assert.That(model.Weight, Is.EqualTo(5.5));
+#endif
+
+            if (!ignoreUnknown)
+            {
+                var additionalProperties = typeof(Animal).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(model) as Dictionary<string, BinaryData>;
+                Assert.AreEqual(1, additionalProperties.Count);
+                Assert.IsTrue(additionalProperties.ContainsKey("numberOfLegs"));
+                Assert.IsTrue(additionalProperties["numberOfLegs"].ToString() == "4");
+            }
+
+            model.Serialize(stream, options: options);
+            stream.Position = 0;
+            string roundTrip = new StreamReader(stream).ReadToEnd();
+            Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
+
+            var model2 = new Animal();
+            model2.Deserialize(new MemoryStream(Encoding.UTF8.GetBytes(roundTrip)), options: options);
+
+            VerifyModels.CheckAnimals(model, model2, options);
+        }
+
         [Test]
         public void PrettyPrint()
         {
+#if NET6_0_OR_GREATER
             CatReadOnlyProperty model = new CatReadOnlyProperty(3.2, "Felis catus", "Catto", true, false);
 
             Stream stream = new MemoryStream();
@@ -95,6 +156,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
                 """;
 
             Assert.AreEqual(VerifyModels.NormalizeNewLines(expectedJson), VerifyModels.NormalizeNewLines(actualJson));
+#endif
         }
     }
 }

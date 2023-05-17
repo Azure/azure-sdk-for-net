@@ -28,5 +28,19 @@ namespace Azure
         /// <param name="options"></param>
         /// <returns></returns>
         bool TryDeserialize(Stream stream, out long bytesConsumed, SerializableOptions? options = default);
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="options"></param>
+        void Serialize(Stream stream, SerializableOptions? options = default);
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="options"></param>
+        void Deserialize(Stream stream, SerializableOptions? options = default);
     }
 }
