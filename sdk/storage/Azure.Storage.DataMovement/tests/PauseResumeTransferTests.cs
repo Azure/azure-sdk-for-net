@@ -225,7 +225,7 @@ namespace Azure.Storage.DataMovement.Tests
             return await manager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
@@ -274,7 +274,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(File.Exists(fileName.FullPath));
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
@@ -339,7 +339,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.CatchAsync(async () => await transferManager.PauseTransferIfRunningAsync("bad transfer Id"));
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
@@ -393,7 +393,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(File.Exists(fileName.FullPath));
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
@@ -447,7 +447,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 ResumeFromCheckpointId = transfer.Id
             };
-            TestEventsRaised resumeFailureHolder = new TestEventsRaised(resumeOptions);
+            TestEventsRaised testEventRaised2 = new TestEventsRaised(resumeOptions);
             DataTransfer resumeTransfer = await CreateSingleLongTransferAsync(
                 manager: transferManager,
                 sourceResource: sourceResource,
@@ -458,7 +458,7 @@ namespace Azure.Storage.DataMovement.Tests
             await resumeTransfer.AwaitCompletion(waitTransferCompletion.Token);
 
             // Assert
-            resumeFailureHolder.AssertPausedCheck();
+            testEventRaised2.AssertContainerCompletedCheck(1);
             Assert.AreEqual(StorageTransferStatus.Completed, resumeTransfer.TransferStatus);
             Assert.IsTrue(resumeTransfer.HasCompleted);
 
@@ -600,7 +600,7 @@ namespace Azure.Storage.DataMovement.Tests
             return await manager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
@@ -646,7 +646,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
@@ -692,7 +692,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
@@ -744,7 +744,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
@@ -801,18 +801,19 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 ResumeFromCheckpointId = transfer.Id
             };
-            TestEventsRaised resumeFailureHolder = new TestEventsRaised(resumeOptions);
+            TestEventsRaised testEventsRaised2 = new TestEventsRaised(resumeOptions);
             DataTransfer resumeTransfer = await CreateDirectoryLongTransferAsync(
                 manager: transferManager,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                transferOptions: resumeOptions);
+                transferOptions: resumeOptions,
+                transferCount: 100);
 
             CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(600));
             await resumeTransfer.AwaitCompletion(waitTransferCompletion.Token);
 
             // Assert
-            resumeFailureHolder.AssertPausedCheck();
+            testEventsRaised2.AssertContainerCompletedCheck(100);
             Assert.AreEqual(StorageTransferStatus.Completed, resumeTransfer.TransferStatus);
             Assert.IsTrue(resumeTransfer.HasCompleted);
 

@@ -133,6 +133,7 @@ namespace Azure.Storage.DataMovement
             {
                 if (_status != status)
                 {
+                    Console.WriteLine($"Set job status to {status}");
                     _status = status;
                     if (StorageTransferStatus.Paused == status ||
                         StorageTransferStatus.Completed == status ||

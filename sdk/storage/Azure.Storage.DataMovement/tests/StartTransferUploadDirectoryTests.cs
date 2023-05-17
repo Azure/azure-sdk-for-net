@@ -595,6 +595,58 @@ namespace Azure.Storage.DataMovement.Tests
                 .SequenceEqual(destinationFiles.OrderBy(f => f)));
         }
 
+        [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        public async Task DirectoryUpload_StopOnFailure()
+        {
+            // Arrange
+            using DisposingLocalDirectory source = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingBlobContainer destination = await GetTestContainerAsync();
+
+            string[] files = await PopulateLocalTestDirectory(source.DirectoryPath);
+
+            // Create conflict
+            await destination.Container.UploadBlobAsync(
+                files[0].Substring(source.DirectoryPath.Length + 1), BinaryData.FromString("Hello world"));
+
+            TransferManager transferManager = new TransferManager(new TransferManagerOptions()
+            {
+                ErrorHandling = ErrorHandlingOptions.StopOnAllFailures
+            });
+
+            StorageResourceContainer sourceResource =
+                new LocalDirectoryStorageResourceContainer(source.DirectoryPath);
+            StorageResourceContainer destinationResource =
+                new BlobStorageResourceContainer(destination.Container);
+
+            // Conflict should cause failure
+            TransferOptions options = new TransferOptions()
+            {
+                CreateMode = StorageResourceCreateMode.Fail
+            };
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+
+            // Act
+            DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
+
+            CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            await transfer.AwaitCompletion(tokenSource.Token);
+
+            // Assert
+            Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
+
+            IEnumerable<string> destinationFiles =
+                (await destination.Container.GetBlobsAsync().ToEnumerableAsync()).Select(b => b.Name);
+
+            Assert.AreEqual(1, testEventsRaised.FailedEvents.Count);
+
+            // Verify all files exist, meaning files without conflict were transferred
+            Assert.IsFalse(files
+                .Select(f => f.Substring(source.DirectoryPath.Length + 1).Replace("\\", "/"))
+                .OrderBy(f => f)
+                .SequenceEqual(destinationFiles.OrderBy(f => f)));
+        }
+
         #endregion
 
         #region Single Concurrency
@@ -681,7 +733,6 @@ namespace Azure.Storage.DataMovement.Tests
             testEventsRaised.AssertContainerCompletedCheck(4);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_AwaitCompletion_Failed()
@@ -716,7 +767,6 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains("BlobAlreadyExists"));
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_AwaitCompletion_Skipped()
@@ -780,7 +830,6 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_EnsureCompleted_Failed()
@@ -815,7 +864,6 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains("BlobAlreadyExists"));
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_EnsureCompleted_Skipped()
