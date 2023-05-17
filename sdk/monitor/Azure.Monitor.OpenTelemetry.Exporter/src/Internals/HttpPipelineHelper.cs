@@ -208,11 +208,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             if (result == ExportResult.Success)
             {
-                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmit", $"Error code is {statusCode}: Telemetry is stored offline for retry. Instrumentation Key: {connectionVars.InstrumentationKey}, Endpoint: {connectionVars.IngestionEndpoint}");
+                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmit", $"Error code is {statusCode}: Telemetry is stored offline for retry. Instrumentation Key: {connectionVars.InstrumentationKey}, Configured Endpoint: {connectionVars.IngestionEndpoint}, Actual Endpoint: {httpMessage.Request.Uri.Host}");
             }
             else
             {
-                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmit", $"Error code is {statusCode}: Telemetry is dropped. Instrumentation Key: {connectionVars.InstrumentationKey}, Endpoint: {connectionVars.IngestionEndpoint}");
+                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmit", $"Error code is {statusCode}: Telemetry is dropped. Instrumentation Key: {connectionVars.InstrumentationKey}, Configured Endpoint: {connectionVars.IngestionEndpoint}, Actual Endpoint: {httpMessage.Request.Uri.Host}");
             }
 
             return result;
@@ -260,11 +260,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             if (shouldRetry)
             {
-                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmitFromStorage", $"Error code is {statusCode}: Telemetry is stored offline for retry. Instrumentation Key: {connectionVars.InstrumentationKey}, Endpoint: {connectionVars.IngestionEndpoint}");
+                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmitFromStorage", $"Error code is {statusCode}: Telemetry is stored offline for retry. Instrumentation Key: {connectionVars.InstrumentationKey}, Configured Endpoint: {connectionVars.IngestionEndpoint}, Actual Endpoint: {httpMessage.Request.Uri.Host}");
             }
             else
             {
-                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmitFromStorage", $"Error code is {statusCode}: Telemetry is dropped. Instrumentation Key: {connectionVars.InstrumentationKey}, Endpoint: {connectionVars.IngestionEndpoint}");
+                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmitFromStorage", $"Error code is {statusCode}: Telemetry is dropped. Instrumentation Key: {connectionVars.InstrumentationKey}, Configured Endpoint: {connectionVars.IngestionEndpoint}, Actual Endpoint: {httpMessage.Request.Uri.Host}");
             }
         }
     }
