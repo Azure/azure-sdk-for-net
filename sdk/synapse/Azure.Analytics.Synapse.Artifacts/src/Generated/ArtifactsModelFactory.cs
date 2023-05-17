@@ -927,7 +927,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="principalId"> The principal id of the identity. </param>
         /// <param name="tenantId"> The client tenant id of the identity. </param>
         /// <returns> A new <see cref="Models.WorkspaceIdentity"/> instance for mocking. </returns>
-        public static WorkspaceIdentity WorkspaceIdentity(string type = null, string principalId = null, string tenantId = null)
+        public static WorkspaceIdentity WorkspaceIdentity(WorkspaceIdentityType type = default, string principalId = null, string tenantId = null)
         {
             return new WorkspaceIdentity(type, principalId, tenantId);
         }
@@ -1137,6 +1137,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties ??= new Dictionary<string, object>();
 
             return new ManagedIntegrationRuntime(type, description, additionalProperties, state, managedVirtualNetwork, computeProperties, ssisProperties);
+        }
+
+        /// <summary> Initializes a new instance of ManagedVirtualNetworkReference. </summary>
+        /// <param name="type"> Managed Virtual Network reference type. </param>
+        /// <param name="referenceName"> Reference ManagedVirtualNetwork name. </param>
+        /// <returns> A new <see cref="Models.ManagedVirtualNetworkReference"/> instance for mocking. </returns>
+        public static ManagedVirtualNetworkReference ManagedVirtualNetworkReference(ManagedVirtualNetworkReferenceType type = default, string referenceName = null)
+        {
+            return new ManagedVirtualNetworkReference(type, referenceName);
         }
     }
 }
