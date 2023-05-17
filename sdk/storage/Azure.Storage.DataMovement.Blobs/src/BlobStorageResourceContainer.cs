@@ -109,40 +109,6 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <summary>
-        /// Gets the parent container resource for this container resource. The parent container
-        /// can represent either a directory prefix or the blob container itself.
-        /// </summary>
-        /// <returns>
-        /// The parent resource container.
-        /// </returns>
-        /// <exception cref="NotSupportedException">
-        /// A container resource that represents the blob container itself has no parent.
-        /// </exception>
-        public override StorageResourceContainer GetParentStorageResourceContainer()
-        {
-            // TODO: should this throw? Perhaps we return null or refactor base class for a try pattern.
-            if (!IsDirectory)
-            {
-                throw new NotSupportedException();
-            }
-
-            // TODO: if there's no parent directory, that means we should return the BlobStorageResourceContainer instead
-            // Recreate the blobName using the existing parent directory path
-            int delimiter = _directoryPrefix.LastIndexOf('/');
-            if (delimiter > -1)
-            {
-                return new BlobStorageResourceContainer(_blobContainerClient, new BlobStorageResourceContainerOptions
-                {
-                    DirectoryPrefix = _directoryPrefix.Substring(0, delimiter)
-                });
-            }
-            else
-            {
-                return new BlobStorageResourceContainer(_blobContainerClient);
-            }
-        }
-
-        /// <summary>
         /// Lists the blob resources in the storage blob container.
         ///
         /// Because blobs is a flat namespace, virtual directories will not be returned.

@@ -57,15 +57,6 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Gets the parent directory path by one level.
-        /// </summary>
-        /// <returns></returns>
-        public override StorageResourceContainer GetParentStorageResourceContainer()
-        {
-            return new LocalDirectoryStorageResourceContainer(_path.Substring(0, _path.LastIndexOf('/')));
-        }
-
-        /// <summary>
         /// Lists storage resource in the filesystem.
         /// </summary>
         /// <param name="cancellationToken"></param>

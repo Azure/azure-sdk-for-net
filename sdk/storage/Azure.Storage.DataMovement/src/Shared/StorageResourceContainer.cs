@@ -34,11 +34,6 @@ namespace Azure.Storage.DataMovement
         public abstract StorageResource GetChildStorageResource(string path);
 
         /// <summary>
-        /// Returns storage resource container from the parent container
-        /// </summary>
-        public abstract StorageResourceContainer GetParentStorageResourceContainer();
-
-        /// <summary>
         /// Storage Resource is a container.
         /// </summary>
         public override bool IsContainer => true;
