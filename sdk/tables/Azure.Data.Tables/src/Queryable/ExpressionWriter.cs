@@ -18,12 +18,14 @@ namespace Azure.Data.Tables.Queryable
     {
         internal readonly StringBuilder _builder;
         private readonly Stack<Expression> _expressionStack;
+        private Dictionary<Type, PropertyInfo[]> _cachedTypeReflectionProperties;
         private bool _cantTranslateExpression;
 
         protected ExpressionWriter()
         {
             _builder = new StringBuilder();
             _expressionStack = new Stack<Expression>();
+            _cachedTypeReflectionProperties = new Dictionary<Type, PropertyInfo[]>();
             _expressionStack.Push(null);
         }
 
@@ -203,13 +205,17 @@ namespace Azure.Data.Tables.Queryable
 
         protected virtual string TranslateMemberName(MemberInfo memberName)
         {
-            PropertyInfo partitionKeyProperty = memberName.DeclaringType
-                .GetProperties()
+            if (!_cachedTypeReflectionProperties.ContainsKey(memberName.DeclaringType))
+            {
+                _cachedTypeReflectionProperties[memberName.DeclaringType] = memberName.DeclaringType.GetProperties();
+            }
+
+            PropertyInfo memberAttributeProperty = _cachedTypeReflectionProperties[memberName.DeclaringType]
                 .FirstOrDefault(p => p.Name == memberName.Name && Attribute.IsDefined(p, typeof(DataMemberAttribute)));
 
-            if (partitionKeyProperty != null)
+            if (memberAttributeProperty != null)
             {
-                return partitionKeyProperty.GetCustomAttribute<DataMemberAttribute>().Name;
+                return memberAttributeProperty.GetCustomAttribute<DataMemberAttribute>().Name;
             }
 
             return memberName.Name;

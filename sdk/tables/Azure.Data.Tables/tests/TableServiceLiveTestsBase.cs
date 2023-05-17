@@ -484,6 +484,9 @@ namespace Azure.Data.Tables.Tests
 
             private Guid? guidNull = null;
 
+            [DataMember(Name = "SomeNewName")]
+            public string RenamableStringProperty { get; set; }
+
             public Guid? GuidNull
             {
                 get { return guidNull; }
