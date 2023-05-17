@@ -773,7 +773,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     destinationResource: destinationResource);
 
                 // Pause from the Transfer Manager using the DataTransfer object
-                bool pauseResult = await transferManager.TryPauseTransferAsync(dataTransfer);
+                await transferManager.PauseTransferIfRunningAsync(dataTransfer);
                 #endregion Snippet:TransferManagerTryPause_Async
 
                 #region Snippet:TransferManagerResume_Async
@@ -785,11 +785,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 DataTransfer dataTransferResumed2 = await transferManager.ResumeTransferAsync(
                     transferId: dataTransfer.Id,
-                    sourceCredential: new StorageTransferCredentials(
-                        new StorageSharedKeyCredential("sourceaccount", "sourceaccountkey")),
-                    destinationCredential: new StorageTransferCredentials(new DefaultAzureCredential()));
-
-                await dataTransfer.ResumeAsync(
                     sourceCredential: new StorageTransferCredentials(
                         new StorageSharedKeyCredential("sourceaccount", "sourceaccountkey")),
                     destinationCredential: new StorageTransferCredentials(new DefaultAzureCredential()));
@@ -869,7 +864,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
         /// Test to show pause and resume tests
         /// </summary>
         [Test]
-        public async Task PauseAndResumeAsync_ManagerId()
+        public async Task PauseAndResumeAsync_ManagerId_RehydrateResume()
         {
             string connectionString = ConnectionString;
             string containerName = Randomize("sample-container");
@@ -900,7 +895,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 string transferId = dataTransfer.Id;
 
                 // Pause from the Transfer Manager using the Transfer Id
-                bool pauseResult = await transferManager.TryPauseTransferAsync(transferId);
+                await transferManager.PauseTransferIfRunningAsync(transferId);
                 #endregion Snippet:TransferManagerTryPauseId_Async
 
                 // Resume from checkpoint id
@@ -909,7 +904,14 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     ResumeFromCheckpointId = dataTransfer.Id
                 };
 
-                DataTransfer resumedTransfer = await transferManager.StartTransferAsync(
+                // Resuming when you don't have the original source resource
+                //StorageResource rehydratedSourceResource = BlockBlobStorageResource.
+
+                // Resuming when you want to add updated credentials (e.g. a new SAS or something)
+
+
+                DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(
+                    transferId: dataTransfer.Id,
                     sourceResource: sourceResource,
                     destinationResource: destinationResource,
                     transferOptions: optionsWithResumeTransferId);
