@@ -29,6 +29,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Tests
 
         [TestCase]
         [RecordedTest]
+        public async Task CreateUsingLinkWithOrg()
+        {
+            string monitorName = Recording.GenerateAssetName("testNR-LOP-");
+            NewRelicMonitorResource monitorResource = await CreateMonitorResourceLinkWithOrgWithPlanAsync(monitorName);
+            Assert.AreEqual(monitorName, monitorResource.Data.Name);
+        }
+
+        [TestCase]
+        [RecordedTest]
         public async Task GetNewRelicMonitorResources_MonitorsListBySubscription()
         {
             // invoke the operation and iterate over the result

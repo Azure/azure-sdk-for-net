@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Tests
     {
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
-        protected AzureLocation DefaultLocation => AzureLocation.EastUS;
+        protected AzureLocation DefaultLocation => "centraluseuap";
 
         private ResourceGroupResource _resourceGroup;
 
@@ -62,6 +62,24 @@ namespace Azure.ResourceManager.NewRelicObservability.Tests
             return lro.Value;
         }
 
+        protected async Task<NewRelicMonitorResource> CreateMonitorResourceLinkWithOrgWithPlanAsync(string monitorName)
+        {
+            var collection = await GetMonitorResourceCollectionAsync();
+            var input = GetMonitorLinkWithOrgWithPlanInput();
+
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, monitorName, input);
+            return lro.Value;
+        }
+
+        protected async Task<NewRelicMonitorResource> CreateMonitorResourceLinkWithOrgWithoutPlanAsync(string monitorName)
+        {
+            var collection = await GetMonitorResourceCollectionAsync();
+            var input = GetMonitorLinkWithOrgWithPlanInput();
+
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, monitorName, input);
+            return lro.Value;
+        }
+
         public NewRelicMonitorResourceData GetMonitorInput()
         {
             var aadDomains = new List<string>();
@@ -83,6 +101,63 @@ namespace Azure.ResourceManager.NewRelicObservability.Tests
                     BillingCycle = "MONTHLY",
                     PlanDetails = "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
                     EffectiveOn = new System.DateTimeOffset(2022, 9, 28, 8, 12, 30, new System.TimeSpan(1, 0, 0))
+                }
+            };
+        }
+
+        public NewRelicMonitorResourceData GetMonitorLinkWithOrgWithPlanInput()
+        {
+            var aadDomains = new List<string>();
+            aadDomains.Add("SDKTest");
+
+            return new NewRelicMonitorResourceData(DefaultLocation)
+            {
+                UserInfo = new UserInfo
+                {
+                    FirstName = "vipray",
+                    LastName = "jain",
+                    PhoneNumber = "1234567890",
+                    Country = "IN",
+                    EmailAddress = "viprayjain@microsoft.com"
+                },
+                PlanData = new PlanData
+                {
+                    UsageType = "PAYG",
+                    BillingCycle = "MONTHLY",
+                    PlanDetails = "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py",
+                    EffectiveOn = new System.DateTimeOffset(2022, 9, 28, 8, 12, 30, new System.TimeSpan(1, 0, 0))
+                },
+                NewRelicAccountProperties = new NewRelicAccountProperties
+                {
+                    OrganizationInfo = new OrganizationInfo
+                    {
+                        OrganizationId = "fe5759fb-092a-4353-906b-74df3b17f3d4"
+                    }
+                }
+            };
+        }
+
+        public NewRelicMonitorResourceData GetMonitorLinkWithOrgWithoutPlanInput()
+        {
+            var aadDomains = new List<string>();
+            aadDomains.Add("SDKTest");
+
+            return new NewRelicMonitorResourceData(DefaultLocation)
+            {
+                UserInfo = new UserInfo
+                {
+                    FirstName = "vipray",
+                    LastName = "jain",
+                    PhoneNumber = "1234567890",
+                    Country = "IN",
+                    EmailAddress = "viprayjain@microsoft.com"
+                },
+                NewRelicAccountProperties = new NewRelicAccountProperties
+                {
+                    OrganizationInfo = new OrganizationInfo
+                    {
+                        OrganizationId = "fe5759fb-092a-4353-906b-74df3b17f3d4"
+                    }
                 }
             };
         }
