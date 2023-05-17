@@ -378,7 +378,7 @@ directive:
   - from: v4/types.json
     where: $.definitions.Resource
     transform: $["x-ms-client-name"] = "CommonResourceV4"
-# reinforce ProvisioningState's readonly status
+  # reinforce ProvisioningState's readonly status
   - from: swagger-document
     where: $.definitions.PrivateEndpointConnectionProperties.properties.provisioningState
     transform: $["readOnly"] = true
