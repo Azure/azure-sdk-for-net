@@ -112,7 +112,11 @@ namespace Azure.Storage
                 }
             }
 
-            headers.Sort(static (x, y) => string.CompareOrdinal(x.Name, y.Name));
+            headers.Sort(static (x, y) =>
+            {
+                CultureInfo cultureInfo = new CultureInfo("en-US");
+                return string.Compare(x.Name, y.Name, ignoreCase: true, cultureInfo);
+            });
 
             foreach (var header in headers)
             {
