@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Batch
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            Core.ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> thumbprintAlgorithm = default;
             Optional<BinaryData> thumbprint = default;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Batch
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new ResourceType(property.Value.GetString());
+                    type = new Core.ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"u8))
