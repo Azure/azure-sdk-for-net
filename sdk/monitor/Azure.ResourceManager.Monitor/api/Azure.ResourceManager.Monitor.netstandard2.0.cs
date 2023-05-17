@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.Monitor
         public MonitorPrivateEndpointConnectionData() { }
         public Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
-        public Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class MonitorPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
     {

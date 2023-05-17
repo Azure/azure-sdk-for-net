@@ -378,6 +378,10 @@ directive:
   - from: v4/types.json
     where: $.definitions.Resource
     transform: $["x-ms-client-name"] = "CommonResourceV4"
+# reinforce ProvisioningState's readonly status
+  - from: swagger-document
+    where: $.definitions.PrivateEndpointConnectionProperties.properties.provisioningState
+    transform: $["readOnly"] = true
   # in order to let the ResponseError replace the ErrorResponseCommon in monitor, we need to add a target property to it
   - from: swagger-document
     where: $.definitions.ErrorResponseCommon.properties

@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         public MonitorPrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
-        public MonitorPrivateEndpointConnectionProvisioningState? ProvisioningState { get; set; }
+        public MonitorPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }
 }
