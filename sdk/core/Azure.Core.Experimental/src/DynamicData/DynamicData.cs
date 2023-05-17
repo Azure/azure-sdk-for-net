@@ -61,13 +61,15 @@ namespace Azure.Core.Dynamic
                 return new DynamicData(element, _nameMapping);
             }
 
-            //if (char.IsUpper(name[0]))
-            //{
-            //    if (_element.TryGetProperty(GetAsCamelCase(name), out element))
-            //    {
-            //        return new DynamicData(element);
-            //    }
-            //}
+            // If we're using the PascalToCamel mapping and the strict name lookup
+            // failed, do a second lookup with a camelCase name as well.
+            if (char.IsUpper(name[0]))
+            {
+                if (_element.TryGetProperty(GetAsCamelCase(name), out element))
+                {
+                    return new DynamicData(element, _nameMapping);
+                }
+            }
 
             return null;
         }
