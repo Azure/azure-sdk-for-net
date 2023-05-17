@@ -49,8 +49,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             var options = addTransferOptions ? new TransferOptions() : (TransferOptions)null;
 
-            var expDestinationResourceType = addBlobDirectoryPath ? typeof(BlobDirectoryStorageResourceContainer) : typeof(BlobStorageResourceContainer);
-
             var assertionComplete = false;
 
             ExtensionMockTransferManager.OnStartTransferContainerAsync = (sourceResource, destinationResource, transferOptions) =>
@@ -58,7 +56,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 Assert.AreEqual(directoryPath, sourceResource.Path);
                 Assert.AreEqual(blobUri, destinationResource.Uri);
                 Assert.AreEqual(options, transferOptions);
-                Assert.IsInstanceOf(expDestinationResourceType, destinationResource);
+                Assert.IsInstanceOf<BlobStorageResourceContainer>(destinationResource);
 
                 assertionComplete = true;
             };
@@ -67,7 +65,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             if (addTransferOptions)
             {
-                await client.StartUploadDirectoryAsync(directoryPath, new BlobContainerClientTransferOptions { BlobDirectoryPrefix = blobDirectoryPrefix, TransferOptions = options });
+                await client.StartUploadDirectoryAsync(directoryPath, new BlobContainerClientTransferOptions
+                {
+                    BlobContainerOptions = new() { DirectoryPrefix = blobDirectoryPrefix },
+                    TransferOptions = options
+                });
             }
             else
             {
@@ -92,7 +94,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             var options = addTransferOptions ? new TransferOptions() : (TransferOptions)null;
 
-            var expSourceResourceType = addBlobDirectoryPath ? typeof(BlobDirectoryStorageResourceContainer) : typeof(BlobStorageResourceContainer);
+            var expSourceResourceType = addBlobDirectoryPath ? typeof(BlobStorageResourceContainer) : typeof(BlobStorageResourceContainer);
 
             var assertionComplete = false;
 
@@ -110,7 +112,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             if (addTransferOptions)
             {
-                await client.StartDownloadToDirectoryAsync(directoryPath, new BlobContainerClientTransferOptions { BlobDirectoryPrefix = blobDirectoryPrefix, TransferOptions = options });
+                await client.StartDownloadToDirectoryAsync(directoryPath, new BlobContainerClientTransferOptions
+                {
+                    BlobContainerOptions = new() { DirectoryPrefix = blobDirectoryPrefix },
+                    TransferOptions = options
+                });
             }
             else
             {
