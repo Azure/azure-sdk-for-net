@@ -966,7 +966,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanExplicitCastToDateTime()
         {
-            DateTime dateTime = DateTime.Now;
+            DateTime dateTime = DateTime.UtcNow;
             string dateTimeString = FormatDateTime(dateTime);
             dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson();
 
