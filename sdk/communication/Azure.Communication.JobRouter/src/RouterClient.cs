@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Models;
@@ -128,6 +126,8 @@ using Azure.Core.Pipeline;
                     RequestedWorkerSelectors = options.RequestedWorkerSelectors,
                     Tags = options.Tags,
                     Notes = new SortedDictionary<DateTimeOffset, string>(options.Notes),
+                    ScheduledTimeUtc = options.ScheduledTimeUtc,
+                    UnavailableForMatching = options.UnavailableForMatching,
                 };
 
                 return await RestClient.UpsertJobAsync(
@@ -166,6 +166,8 @@ using Azure.Core.Pipeline;
                     RequestedWorkerSelectors = options.RequestedWorkerSelectors,
                     Tags = options.Tags,
                     Notes = new SortedDictionary<DateTimeOffset, string>(options.Notes),
+                    ScheduledTimeUtc = options.ScheduledTimeUtc,
+                    UnavailableForMatching = options.UnavailableForMatching,
                 };
 
                 return RestClient.UpsertJob(
@@ -206,6 +208,8 @@ using Azure.Core.Pipeline;
                     RequestedWorkerSelectors = options.RequestedWorkerSelectors,
                     Tags = options.Tags,
                     Notes = new SortedDictionary<DateTimeOffset, string>(options.Notes),
+                    ScheduledTimeUtc = options.ScheduledTimeUtc,
+                    UnavailableForMatching = options.UnavailableForMatching,
                 };
 
                 return await RestClient.UpsertJobAsync(
@@ -243,6 +247,8 @@ using Azure.Core.Pipeline;
                     RequestedWorkerSelectors = options.RequestedWorkerSelectors,
                     Tags = options.Tags,
                     Notes = new SortedDictionary<DateTimeOffset, string>(options.Notes),
+                    ScheduledTimeUtc = options.ScheduledTimeUtc,
+                    UnavailableForMatching = options.UnavailableForMatching,
                 };
 
                 return RestClient.UpsertJob(
@@ -283,6 +289,8 @@ using Azure.Core.Pipeline;
                     Tags = options.Tags,
                     Notes = new SortedDictionary<DateTimeOffset, string>(options.Notes),
                     DispositionCode = options.DispositionCode,
+                    ScheduledTimeUtc = options.ScheduledTimeUtc,
+                    UnavailableForMatching = options.UnavailableForMatching,
                 };
 
                 return await RestClient.UpsertJobAsync(
@@ -322,6 +330,8 @@ using Azure.Core.Pipeline;
                     Tags = options.Tags,
                     Notes = new SortedDictionary<DateTimeOffset, string>(options.Notes),
                     DispositionCode = options.DispositionCode,
+                    ScheduledTimeUtc = options.ScheduledTimeUtc,
+                    UnavailableForMatching = options.UnavailableForMatching,
                 };
 
                 return RestClient.UpsertJob(
@@ -620,7 +630,10 @@ using Azure.Core.Pipeline;
                             status: options?.Status,
                             queueId: options?.QueueId,
                             channelId: options?.ChannelId,
-                            maxpagesize: maxPageSize,
+                            classificationPolicyId: options?.ClassificationPolicyId,
+                            scheduledBefore: options?.ScheduledBefore,
+                            scheduledAfter: options?.ScheduledAfter,
+                            maxPageSize: maxPageSize,
                             cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
@@ -646,7 +659,10 @@ using Azure.Core.Pipeline;
                             status: options?.Status,
                             queueId: options?.QueueId,
                             channelId: options?.ChannelId,
-                            maxpagesize: maxPageSize,
+                            classificationPolicyId: options?.ClassificationPolicyId,
+                            scheduledBefore: options?.ScheduledBefore,
+                            scheduledAfter: options?.ScheduledAfter,
+                            maxPageSize: maxPageSize,
                             cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
@@ -680,7 +696,10 @@ using Azure.Core.Pipeline;
                         status: options?.Status,
                         queueId: options?.QueueId,
                         channelId: options?.ChannelId,
-                        maxpagesize: maxPageSize,
+                        classificationPolicyId: options?.ClassificationPolicyId,
+                        scheduledBefore: options?.ScheduledBefore,
+                        scheduledAfter: options?.ScheduledAfter,
+                        maxPageSize: maxPageSize,
                         cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -705,7 +724,10 @@ using Azure.Core.Pipeline;
                             status: options?.Status,
                             queueId: options?.QueueId,
                             channelId: options?.ChannelId,
-                            maxpagesize: maxPageSize,
+                            classificationPolicyId: options?.ClassificationPolicyId,
+                            scheduledBefore: options?.ScheduledBefore,
+                            scheduledAfter: options?.ScheduledAfter,
+                            maxPageSize: maxPageSize,
                             cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -1197,7 +1219,7 @@ using Azure.Core.Pipeline;
                         channelId: options?.ChannelId,
                         queueId: options?.QueueId,
                         hasCapacity: options?.HasCapacity,
-                        maxpagesize: maxPageSize,
+                        maxPageSize: maxPageSize,
                         cancellationToken:  cancellationToken)
                         .ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
@@ -1224,7 +1246,7 @@ using Azure.Core.Pipeline;
                             channelId: options?.ChannelId,
                             queueId: options?.QueueId,
                             hasCapacity: options?.HasCapacity,
-                            maxpagesize: maxPageSize,
+                            maxPageSize: maxPageSize,
                             cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
@@ -1259,7 +1281,7 @@ using Azure.Core.Pipeline;
                         channelId: options?.ChannelId,
                         queueId: options?.QueueId,
                         hasCapacity: options?.HasCapacity,
-                        maxpagesize: maxPageSize,
+                        maxPageSize: maxPageSize,
                         cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -1285,7 +1307,7 @@ using Azure.Core.Pipeline;
                             channelId: options?.ChannelId,
                             queueId: options?.QueueId,
                             hasCapacity: options?.HasCapacity,
-                            maxpagesize: maxPageSize,
+                            maxPageSize: maxPageSize,
                             cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }

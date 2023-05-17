@@ -19,8 +19,18 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStartObject();
             writer.WritePropertyName("dataSource"u8);
             writer.WriteStringValue(DataSource);
-            writer.WritePropertyName("topContributorCount"u8);
-            writer.WriteNumberValue(TopContributorCount);
+            if (Optional.IsDefined(TopContributorCount))
+            {
+                if (TopContributorCount != null)
+                {
+                    writer.WritePropertyName("topContributorCount"u8);
+                    writer.WriteNumberValue(TopContributorCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("topContributorCount");
+                }
+            }
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime, "O");
             writer.WritePropertyName("endTime"u8);
@@ -35,7 +45,7 @@ namespace Azure.AI.AnomalyDetector
                 return null;
             }
             string dataSource = default;
-            int topContributorCount = default;
+            Optional<int?> topContributorCount = default;
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
             foreach (var property in element.EnumerateObject())
@@ -47,6 +57,11 @@ namespace Azure.AI.AnomalyDetector
                 }
                 if (property.NameEquals("topContributorCount"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        topContributorCount = null;
+                        continue;
+                    }
                     topContributorCount = property.Value.GetInt32();
                     continue;
                 }
@@ -61,7 +76,7 @@ namespace Azure.AI.AnomalyDetector
                     continue;
                 }
             }
-            return new MultivariateBatchDetectionOptions(dataSource, topContributorCount, startTime, endTime);
+            return new MultivariateBatchDetectionOptions(dataSource, Optional.ToNullable(topContributorCount), startTime, endTime);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

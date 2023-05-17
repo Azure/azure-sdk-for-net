@@ -66,5 +66,8 @@ namespace Azure.AI.FormRecognizer.Tests
 
         /// <summary>A form with a table that has fixed rows and empty cells.</summary>
         public const string FormTableFixedRows = "label_table_fixed_rows1.pdf";
+
+        /// <summary>A set of IRS-1040 forms to test document classifiers.</summary>
+        public const string Irs1040 = "IRS-1040_2.pdf";
     }
 }

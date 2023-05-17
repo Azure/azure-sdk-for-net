@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> The language codes supported for input text by SentimentSkill. </summary>
+    /// <summary> Deprecated. The language codes supported for input text by SentimentSkill. </summary>
     public readonly partial struct SentimentSkillLanguage : IEquatable<SentimentSkillLanguage>
     {
         private readonly string _value;

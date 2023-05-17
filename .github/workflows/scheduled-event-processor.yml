@@ -26,8 +26,6 @@ jobs:
     name: Handle ${{ github.event.schedule }} ${{ github.event.action }} event
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
       # To run github-event-processor built from source, for testing purposes, uncomment everything
       # in between the Start/End-Build From Source comments and comment everything in between the
       # Start/End-Install comments
@@ -36,11 +34,10 @@ jobs:
         run: >
           dotnet tool install
           Azure.Sdk.Tools.GitHubEventProcessor
-          --version 1.0.0-dev.20230317.6
+          --version 1.0.0-dev.20230505.2
           --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json
           --global
         shell: bash
-        working-directory: .github/workflows
       # End-Install
 
       # Testing checkout of sources from the Azure/azure-sdk-tools repository

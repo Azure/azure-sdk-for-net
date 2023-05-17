@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public ManagedHsmProperties()
         {
             InitialAdminObjectIds = new ChangeTrackingList<string>();
+            Regions = new ChangeTrackingList<ManagedHsmGeoReplicatedRegion>();
             PrivateEndpointConnections = new ChangeTrackingList<ManagedHsmPrivateEndpointConnectionItemData>();
         }
 
@@ -25,17 +26,19 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the managed HSM pool. </param>
         /// <param name="initialAdminObjectIds"> Array of initial administrators object ids for this managed hsm pool. </param>
         /// <param name="hsmUri"> The URI of the managed hsm pool for performing operations on keys. </param>
-        /// <param name="enableSoftDelete"> Property to specify whether the &apos;soft delete&apos; functionality is enabled for this managed HSM pool. If it&apos;s not set to any value(true or false) when creating new managed HSM pool, it will be set to true by default. Once set to true, it cannot be reverted to false. </param>
-        /// <param name="softDeleteRetentionInDays"> softDelete data retention days. It accepts &gt;=7 and &lt;=90. </param>
-        /// <param name="enablePurgeProtection"> Property specifying whether protection against purge is enabled for this managed HSM pool. Setting this property to true activates protection against purge for this managed HSM pool and its content - only the Managed HSM service may initiate a hard, irrecoverable deletion. The setting is effective only if soft delete is also enabled. Enabling this functionality is irreversible. </param>
+        /// <param name="enableSoftDelete"> Property to specify whether the &apos;soft delete&apos; functionality is enabled for this managed HSM pool. Soft delete is enabled by default for all managed HSMs and is immutable. </param>
+        /// <param name="softDeleteRetentionInDays"> Soft deleted data retention days. When you delete an HSM or a key, it will remain recoverable for the configured retention period or for a default period of 90 days. It accepts values between 7 and 90. </param>
+        /// <param name="enablePurgeProtection"> Property specifying whether protection against purge is enabled for this managed HSM pool. Setting this property to true activates protection against purge for this managed HSM pool and its content - only the Managed HSM service may initiate a hard, irrecoverable deletion. Enabling this functionality is irreversible. </param>
         /// <param name="createMode"> The create mode to indicate whether the resource is being created or is being recovered from a deleted resource. </param>
         /// <param name="statusMessage"> Resource Status Message. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="networkRuleSet"> Rules governing the accessibility of the key vault from specific network locations. </param>
+        /// <param name="regions"> List of all regions associated with the managed hsm pool. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the managed hsm pool. </param>
-        /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
+        /// <param name="publicNetworkAccess"> Control permission to the managed HSM from public networks. </param>
         /// <param name="scheduledPurgeOn"> The scheduled purge date in UTC. </param>
-        internal ManagedHsmProperties(Guid? tenantId, IList<string> initialAdminObjectIds, Uri hsmUri, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enablePurgeProtection, ManagedHsmCreateMode? createMode, string statusMessage, ManagedHsmProvisioningState? provisioningState, ManagedHsmNetworkRuleSet networkRuleSet, IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData> privateEndpointConnections, ManagedHsmPublicNetworkAccess? publicNetworkAccess, DateTimeOffset? scheduledPurgeOn)
+        /// <param name="securityDomainProperties"> Managed HSM security domain properties. </param>
+        internal ManagedHsmProperties(Guid? tenantId, IList<string> initialAdminObjectIds, Uri hsmUri, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enablePurgeProtection, ManagedHsmCreateMode? createMode, string statusMessage, ManagedHsmProvisioningState? provisioningState, ManagedHsmNetworkRuleSet networkRuleSet, IList<ManagedHsmGeoReplicatedRegion> regions, IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData> privateEndpointConnections, ManagedHsmPublicNetworkAccess? publicNetworkAccess, DateTimeOffset? scheduledPurgeOn, ManagedHSMSecurityDomainProperties securityDomainProperties)
         {
             TenantId = tenantId;
             InitialAdminObjectIds = initialAdminObjectIds;
@@ -47,9 +50,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             StatusMessage = statusMessage;
             ProvisioningState = provisioningState;
             NetworkRuleSet = networkRuleSet;
+            Regions = regions;
             PrivateEndpointConnections = privateEndpointConnections;
             PublicNetworkAccess = publicNetworkAccess;
             ScheduledPurgeOn = scheduledPurgeOn;
+            SecurityDomainProperties = securityDomainProperties;
         }
 
         /// <summary> The Azure Active Directory tenant ID that should be used for authenticating requests to the managed HSM pool. </summary>
@@ -58,11 +63,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         public IList<string> InitialAdminObjectIds { get; }
         /// <summary> The URI of the managed hsm pool for performing operations on keys. </summary>
         public Uri HsmUri { get; }
-        /// <summary> Property to specify whether the &apos;soft delete&apos; functionality is enabled for this managed HSM pool. If it&apos;s not set to any value(true or false) when creating new managed HSM pool, it will be set to true by default. Once set to true, it cannot be reverted to false. </summary>
+        /// <summary> Property to specify whether the &apos;soft delete&apos; functionality is enabled for this managed HSM pool. Soft delete is enabled by default for all managed HSMs and is immutable. </summary>
         public bool? EnableSoftDelete { get; set; }
-        /// <summary> softDelete data retention days. It accepts &gt;=7 and &lt;=90. </summary>
+        /// <summary> Soft deleted data retention days. When you delete an HSM or a key, it will remain recoverable for the configured retention period or for a default period of 90 days. It accepts values between 7 and 90. </summary>
         public int? SoftDeleteRetentionInDays { get; set; }
-        /// <summary> Property specifying whether protection against purge is enabled for this managed HSM pool. Setting this property to true activates protection against purge for this managed HSM pool and its content - only the Managed HSM service may initiate a hard, irrecoverable deletion. The setting is effective only if soft delete is also enabled. Enabling this functionality is irreversible. </summary>
+        /// <summary> Property specifying whether protection against purge is enabled for this managed HSM pool. Setting this property to true activates protection against purge for this managed HSM pool and its content - only the Managed HSM service may initiate a hard, irrecoverable deletion. Enabling this functionality is irreversible. </summary>
         public bool? EnablePurgeProtection { get; set; }
         /// <summary> The create mode to indicate whether the resource is being created or is being recovered from a deleted resource. </summary>
         public ManagedHsmCreateMode? CreateMode { get; set; }
@@ -72,11 +77,15 @@ namespace Azure.ResourceManager.KeyVault.Models
         public ManagedHsmProvisioningState? ProvisioningState { get; }
         /// <summary> Rules governing the accessibility of the key vault from specific network locations. </summary>
         public ManagedHsmNetworkRuleSet NetworkRuleSet { get; set; }
+        /// <summary> List of all regions associated with the managed hsm pool. </summary>
+        public IList<ManagedHsmGeoReplicatedRegion> Regions { get; }
         /// <summary> List of private endpoint connections associated with the managed hsm pool. </summary>
         public IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData> PrivateEndpointConnections { get; }
-        /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
+        /// <summary> Control permission to the managed HSM from public networks. </summary>
         public ManagedHsmPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The scheduled purge date in UTC. </summary>
         public DateTimeOffset? ScheduledPurgeOn { get; }
+        /// <summary> Managed HSM security domain properties. </summary>
+        public ManagedHSMSecurityDomainProperties SecurityDomainProperties { get; }
     }
 }

@@ -68,7 +68,6 @@ namespace Azure.IoT.TimeSeriesInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     interpolation = TimeSeriesInterpolation.DeserializeTimeSeriesInterpolation(property.Value);
@@ -78,7 +77,6 @@ namespace Azure.IoT.TimeSeriesInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TimeSeriesAggregateCategory> array = new List<TimeSeriesAggregateCategory>();
@@ -103,7 +101,6 @@ namespace Azure.IoT.TimeSeriesInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     filter = TimeSeriesExpression.DeserializeTimeSeriesExpression(property.Value);

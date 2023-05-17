@@ -27,6 +27,29 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        [TestCase(StorageTransferStatus.None)]
+        [TestCase(StorageTransferStatus.Queued)]
+        [TestCase(StorageTransferStatus.InProgress)]
+        [TestCase(StorageTransferStatus.PauseInProgress)]
+        [TestCase(StorageTransferStatus.CancellationInProgress)]
+        [TestCase(StorageTransferStatus.Paused)]
+        public void HasCompleted_False(StorageTransferStatus status)
+        {
+            DataTransfer transfer = new DataTransfer(status);
+            Assert.IsFalse(transfer.HasCompleted);
+        }
+
+        [Test]
+        [TestCase(StorageTransferStatus.Completed)]
+        [TestCase(StorageTransferStatus.CompletedWithSkippedTransfers)]
+        [TestCase(StorageTransferStatus.CompletedWithFailedTransfers)]
+        public void HasCompleted_True(StorageTransferStatus status)
+        {
+            DataTransfer transfer = new DataTransfer(status);
+            Assert.IsTrue(transfer.HasCompleted);
+        }
+
+        [Test]
         public void EnsureCompleted()
         {
             DataTransfer transfer = new DataTransfer(StorageTransferStatus.Completed);
@@ -41,7 +64,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TestHelper.AssertExpectedException(
                 () => transfer.EnsureCompleted(cancellationTokenSource.Token),
-                new TaskCanceledException("A task was canceled."));
+                new OperationCanceledException("The operation was canceled."));
         }
 
         [Test]
@@ -61,10 +84,62 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 await transfer.AwaitCompletion(cancellationTokenSource.Token);
             }
-            catch (TaskCanceledException exception)
+            catch (OperationCanceledException exception)
             {
-                Assert.AreEqual(exception.Message, "A task was canceled.");
+                Assert.AreEqual(exception.Message, "The operation was canceled.");
             }
+        }
+
+        [Test]
+        public async Task TryPauseAsync()
+        {
+            DataTransfer transfer = new DataTransfer(StorageTransferStatus.InProgress);
+
+            Task pauseTask = transfer.PauseIfRunningAsync();
+
+            Assert.AreEqual(StorageTransferStatus.PauseInProgress, transfer.TransferStatus);
+
+            if (!transfer._state.TrySetTransferStatus(StorageTransferStatus.Paused))
+            {
+                Assert.Fail("Unable to set the transfer status internally to the DataTransfer.");
+            }
+
+            await pauseTask;
+
+            Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
+            Assert.IsFalse(transfer.HasCompleted);
+        }
+
+        [Test]
+        [TestCase(StorageTransferStatus.Paused)]
+        [TestCase(StorageTransferStatus.Completed)]
+        [TestCase(StorageTransferStatus.CompletedWithSkippedTransfers)]
+        [TestCase(StorageTransferStatus.CompletedWithFailedTransfers)]
+        public async Task TryPauseAsync_AlreadyPaused(StorageTransferStatus status)
+        {
+            DataTransfer transfer = new DataTransfer(status);
+
+            Assert.AreEqual(status, transfer.TransferStatus);
+            await transfer.PauseIfRunningAsync();
+            Assert.AreEqual(status, transfer.TransferStatus);
+        }
+
+        [Test]
+        public async Task TryPauseAsync_CancellationToken()
+        {
+            DataTransfer transfer = new DataTransfer(StorageTransferStatus.InProgress);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(1));
+
+            try
+            {
+                await transfer.PauseIfRunningAsync(cancellationTokenSource.Token);
+            }
+            catch (OperationCanceledException exception)
+            {
+                Assert.AreEqual(exception.Message, "The operation was canceled.");
+            }
+            Assert.AreEqual(StorageTransferStatus.PauseInProgress, transfer.TransferStatus);
+            Assert.IsFalse(transfer.HasCompleted);
         }
     }
 }

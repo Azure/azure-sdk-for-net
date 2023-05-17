@@ -17,7 +17,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     ///     <item><description><see cref="DocumentModelCopyToOperationDetails"/></description></item>
     /// </list>
     /// </summary>
-    [CodeGenModel("OperationDetails")]
     public partial class OperationDetails
     {
         /// <summary>

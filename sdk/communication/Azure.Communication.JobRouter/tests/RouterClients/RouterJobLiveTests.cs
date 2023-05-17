@@ -41,19 +41,33 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var createJob1 = createJob1Response.Value;
             AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
 
+            RouterJob? updatedJob1Response = null;
             // update job with notes
             DateTimeOffset updateNoteTimeStamp = new DateTimeOffset(2022, 9, 01, 3, 0, 0, new TimeSpan(0, 0, 0));
-            var updatedJob1Response = await routerClient.UpdateJobAsync(new UpdateJobOptions(jobId1)
-            {
-                Notes = new Dictionary<DateTimeOffset, string>()
-                {
-                    [updateNoteTimeStamp] = "Fake notes attached to job with update"
-                }
-            });
-            var updatedJob1 = updatedJob1Response.Value;
 
-            Assert.IsNotEmpty(updatedJob1.Notes);
-            Assert.IsTrue(updatedJob1.Notes.Count == 1);
+            try
+            {
+                updatedJob1Response = await routerClient.UpdateJobAsync(new UpdateJobOptions(jobId1)
+                {
+                    Notes = new Dictionary<DateTimeOffset, string>()
+                    {
+                        [updateNoteTimeStamp] = "Fake notes attached to job with update"
+                    }
+                });
+            }
+            catch (Exception)
+            {
+                updatedJob1Response = await routerClient.UpdateJobAsync(new UpdateJobOptions(jobId1)
+                {
+                    Notes = new Dictionary<DateTimeOffset, string>()
+                    {
+                        [updateNoteTimeStamp] = "Fake notes attached to job with update"
+                    }
+                });
+            }
+
+            Assert.IsNotEmpty(updatedJob1Response.Notes);
+            Assert.IsTrue(updatedJob1Response.Notes.Count == 1);
         }
 
         [Test]
@@ -74,6 +88,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 {
                     Priority = 1,
                 });
+
+            AddForCleanup(new Task(async () => await routerClient.CancelJobAsync(new CancelJobOptions(jobId1))));
+            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(jobId1)));
             var createJob1 = createJob1Response.Value;
 
             // wait for job1 to be in queued state
@@ -93,6 +110,8 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 {
                     Priority = 1
                 });
+            AddForCleanup(new Task(async () => await routerClient.CancelJobAsync(new CancelJobOptions(jobId2))));
+            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(jobId2)));
             var createJob2 = createJob2Response.Value;
 
             var job2Result = await Poll(async () => await routerClient.GetJobAsync(createJob2.Id),
@@ -119,11 +138,51 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             Assert.IsTrue(allJobs.Contains(createJob1.Id));
             Assert.IsTrue(allJobs.Contains(createJob2.Id));
+        }
 
-            AddForCleanup(new Task(async () => await routerClient.CancelJobAsync(new CancelJobOptions(createJob1.Id))));
-            AddForCleanup(new Task(async () => await routerClient.CancelJobAsync(new CancelJobOptions(createJob2.Id))));
-            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
-            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob2.Id)));
+        [Test]
+        public async Task GetJobsWithSchedulingFiltersTest()
+        {
+            RouterClient routerClient = CreateRouterClientWithConnectionString();
+
+            var channelId = GenerateUniqueId($"{nameof(GetJobsWithSchedulingFiltersTest)}-Channel");
+
+            // Setup queue
+            var createQueueResponse = await CreateQueueAsync(nameof(GetJobsWithSchedulingFiltersTest));
+            var createQueue = createQueueResponse.Value;
+
+            // Create 2 jobs - Both should be in Queued state
+            var jobId1 = GenerateUniqueId($"{IdPrefix}{nameof(GetJobsWithSchedulingFiltersTest)}1");
+            var timeToEnqueueJob = GetOrSetScheduledTimeUtc(DateTimeOffset.UtcNow.AddMinutes(1));
+            var createJob1Response = await routerClient.CreateJobAsync(
+                new CreateJobOptions(jobId1, channelId, createQueue.Id)
+                {
+                    Priority = 1,
+                    ScheduledTimeUtc = timeToEnqueueJob,
+                    UnavailableForMatching = true,
+                });
+
+            AddForCleanup(new Task(async () => await routerClient.CancelJobAsync(new CancelJobOptions(jobId1))));
+            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(jobId1)));
+            var createJob1 = createJob1Response.Value;
+            // test get jobs
+            var getJobsResponse = routerClient.GetJobsAsync(new GetJobsOptions()
+            {
+                ChannelId = channelId,
+                QueueId = createQueue.Id,
+                ScheduledAfter = timeToEnqueueJob,
+            });
+            var allJobs = new List<string>();
+
+            await foreach (var jobPage in getJobsResponse.AsPages(pageSizeHint: 1))
+            {
+                foreach (var job in jobPage.Values)
+                {
+                    allJobs.Add(job.RouterJob.Id);
+                }
+            }
+
+            Assert.IsTrue(allJobs.Contains(createJob1.Id));
         }
 
         [Test]

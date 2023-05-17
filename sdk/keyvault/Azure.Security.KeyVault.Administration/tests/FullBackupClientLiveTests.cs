@@ -52,6 +52,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
         [RecordedTest]
         [LiveOnly]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35614")]
         public async Task BackupAndRestoreMultiPartFolderName()
         {
             var source = new CancellationTokenSource(Timeout);

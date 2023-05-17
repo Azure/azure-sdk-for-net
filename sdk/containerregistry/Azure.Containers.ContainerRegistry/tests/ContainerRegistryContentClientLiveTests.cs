@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
+using Azure.Test.Perf;
 using NUnit.Framework;
 
 namespace Azure.Containers.ContainerRegistry.Tests
@@ -233,17 +234,19 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // We have imported the library/hello-world image in test set-up,
             // so config and blob files pointed to by the manifest are already in the registry.
 
-            var client = CreateBlobClient("library/hello-world");
+            ContainerRegistryContentClient client = CreateBlobClient("library/hello-world");
+
+            await SetDockerManifestPrerequisites(client);
 
             // Act
-            string path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "docker", "hello-world", "manifest.json");
+            string path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "docker", "manifest.json");
             using FileStream fs = File.OpenRead(path);
             BinaryData manifest = BinaryData.FromStream(fs);
 
             SetManifestResult result = await client.SetManifestAsync(manifest, mediaType: ManifestMediaType.DockerManifest);
 
             // Assert
-            Assert.AreEqual("sha256:e6c1c9dcc9c45a3dbfa654f8c8fad5c91529c137c1e2f6eb0995931c0aa74d99", result.Digest);
+            Assert.AreEqual("sha256:721089ae5c4d90e58e3d7f7e6c652a351621fbf37c26eceae23622173ec5a44d", result.Digest);
 
             // The following fails because the manifest media type is set to OciImageManifest by default
             fs.Position = 0;
@@ -274,6 +277,25 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var layer = "654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed";
             var config = "config.json";
             var basePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact");
+
+            // Upload config
+            using (var fs = File.OpenRead(Path.Combine(basePath, config)))
+            {
+                var uploadResult = await client.UploadBlobAsync(fs);
+            }
+
+            // Upload layer
+            using (var fs = File.OpenRead(Path.Combine(basePath, layer)))
+            {
+                var uploadResult = await client.UploadBlobAsync(fs);
+            }
+        }
+
+        private async Task SetDockerManifestPrerequisites(ContainerRegistryContentClient client)
+        {
+            var layer = "ec0488e025553d34358768c43e24b1954e0056ec4700883252c74f3eec273016";
+            var config = "config.json";
+            var basePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "docker");
 
             // Upload config
             using (var fs = File.OpenRead(Path.Combine(basePath, config)))
@@ -522,7 +544,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Act
             Response<DownloadRegistryBlobStreamingResult> downloadResult = await client.DownloadBlobStreamingAsync(digest);
-            Stream downloadedStream = downloadResult.Value.Content;
+            using Stream downloadedStream = downloadResult.Value.Content;
             BinaryData content = BinaryData.FromStream(downloadedStream);
 
             // Assert
@@ -531,7 +553,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.AreEqual(data, content.ToArray());
 
             // Clean up
-            downloadedStream.Dispose();
             await client.DeleteBlobAsync(digest);
         }
 
@@ -553,6 +574,35 @@ namespace Azure.Containers.ContainerRegistry.Tests
             using var downloadStream = new MemoryStream();
             await client.DownloadBlobToAsync(digest, downloadStream);
             var digestOfDownload = BlobHelper.ComputeDigest(downloadStream);
+
+            Assert.AreEqual(digest, digestOfDownload);
+            Assert.AreEqual(blobSize, downloadStream.Length);
+
+            // Clean up
+            await client.DeleteBlobAsync(digest);
+        }
+
+        [LiveOnly]
+        [IgnoreServiceError(404, "BLOB_UPLOAD_INVALID", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/35322")]
+        public async Task CanDownloadBlobToStream_MultipleChunks()
+        {
+            // Download a blob that is larger than the max chunk size.
+            int blobSize = 6 * 1024 * 1024;
+
+            // Arrange
+            string repositoryId = Recording.Random.NewGuid().ToString();
+            ContainerRegistryContentClient client = CreateBlobClient(repositoryId);
+
+            byte[] data = GetRandomBuffer(blobSize);
+
+            using MemoryStream uploadStream = new(data);
+            UploadRegistryBlobResult uploadResult = await client.UploadBlobAsync(uploadStream);
+            string digest = uploadResult.Digest;
+
+            // Act
+            using var downloadStream = new MemoryStream();
+            await client.DownloadBlobToAsync(digest, downloadStream);
+            string digestOfDownload = BlobHelper.ComputeDigest(downloadStream);
 
             Assert.AreEqual(digest, digestOfDownload);
             Assert.AreEqual(blobSize, downloadStream.Length);
@@ -629,6 +679,34 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await client.DeleteBlobAsync(digest);
         }
 
+        [RecordedTest]
+        public async Task CanCatchDownloadFailure()
+        {
+            // Arrange
+            string repositoryId = Recording.Random.NewGuid().ToString();
+            ContainerRegistryContentClient client = CreateBlobClient(repositoryId);
+
+            // Act
+
+            // We don't upload a blob, so we expect 404.
+            bool caught = false;
+
+            try
+            {
+                using var downloadStream = new MemoryStream();
+                await client.DownloadBlobToAsync("BadDigest", downloadStream);
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+                Console.WriteLine($"Service error: {ex.Message}");
+                caught = true;
+                Assert.IsTrue(ex.Message.Contains("Content:"), "Download failed exception did not contain \"Content:\".");
+                Assert.IsTrue(ex.Message.Contains("404 page not found"), "Download failed exception did not contain error content \"404 page not found\".");
+            }
+
+            Assert.IsTrue(caught, "Did not catch download failed exception.");
+        }
+
         #endregion
 
         [RecordedTest]
@@ -655,58 +733,41 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         [Test]
         [LiveOnly]
+        [IgnoreServiceError(404, "BLOB_UPLOAD_INVALID", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/35322")]
         public async Task CanUploadAndDownloadLargeBlob()
         {
-            long sizeInGiB = 2;
+            long sizeInMiB = 512;
             var uneven = 20;
-            long size = (1024 * 1024 * 1024 * sizeInGiB) + uneven;
+            long size = (1024 * 1024 * sizeInMiB) + uneven;
 
-            var repositoryId = Recording.Random.NewGuid().ToString();
-            var client = CreateBlobClient(repositoryId);
+            string repositoryId = Recording.Random.NewGuid().ToString();
+            ContainerRegistryContentClient client = CreateBlobClient(repositoryId);
 
-            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "LargeFile");
-            string uploadFileName = "blob.bin";
+            // Upload the large blob
+            Stream uploadStream = RandomStream.Create(size);
+            UploadRegistryBlobResult uploadResult = await client.UploadBlobAsync(uploadStream);
 
-            if (!File.Exists(Path.Combine(path, uploadFileName)))
+            // Download to a file stream
+            string path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "LargeFile");
+            string downloadFileName = "blob_downloaded.bin";
+            string filePath = Path.Combine(path, downloadFileName);
+
+            if (!Directory.Exists(path))
             {
-                WriteLargeFile(path, uploadFileName, size);
+                Directory.CreateDirectory(path);
             }
-
-            // Upload the large file
-            using var fs = File.OpenRead(Path.Combine(path, uploadFileName));
-            var uploadResult = await client.UploadBlobAsync(fs);
-
-            // Download the large file
-            var downloadFileName = "blob_downloaded.bin";
-            var filePath = Path.Combine(path, downloadFileName);
 
             if (File.Exists(filePath))
             {
                 File.Delete(filePath);
             }
 
-            using var downloadFs = File.OpenWrite(filePath);
-            await client.DownloadBlobToAsync(uploadResult.Value.Digest, downloadFs);
+            using FileStream downloadFs = File.OpenWrite(filePath);
+            await client.DownloadBlobToAsync(uploadResult.Digest, downloadFs);
 
+            // Content is validated by the client, so we only need to check length.
             Assert.IsTrue(File.Exists(filePath));
             Assert.AreEqual(size, new FileInfo(filePath).Length);
-        }
-
-        private void WriteLargeFile(string path, string fileName, long size)
-        {
-            Directory.CreateDirectory(path);
-            using var fs = File.OpenWrite(Path.Combine(path, fileName));
-
-            int writeBufferSize = 1024 * 1024 * 64; // 64MB
-
-            long bytesWritten = 0;
-            while (bytesWritten < size)
-            {
-                var length = Math.Min(writeBufferSize, size - bytesWritten);
-                var buffer = GetRandomBuffer(length);
-                fs.Write(buffer, 0, buffer.Length);
-                bytesWritten += buffer.Length;
-            };
         }
 
         [RecordedTest]

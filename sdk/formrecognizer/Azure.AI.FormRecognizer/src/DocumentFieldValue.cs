@@ -30,7 +30,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="valueObject"> Dictionary of named field values. </param>
         /// <param name="valueCurrency"> Currency value. </param>
         /// <param name="valueAddress"> Address value. </param>
-        internal DocumentFieldValue(DocumentFieldType expectedFieldType, string valueString = null, DateTimeOffset? valueDate = null, TimeSpan? valueTime = null, string valuePhoneNumber = null, double? valueNumber = null, long? valueInteger = null, V3SelectionMarkState? valueSelectionMark = null, DocumentSignatureType? valueSignature = null, string valueCountryRegion = null, IReadOnlyList<DocumentField> valueArray = null, IReadOnlyDictionary<string, DocumentField> valueObject = null, CurrencyValue? valueCurrency = null, AddressValue valueAddress = null)
+        /// <param name="valueBoolean"> Boolean value. </param>
+        internal DocumentFieldValue(DocumentFieldType expectedFieldType, string valueString = null, DateTimeOffset? valueDate = null, TimeSpan? valueTime = null, string valuePhoneNumber = null, double? valueNumber = null, long? valueInteger = null, V3SelectionMarkState? valueSelectionMark = null, DocumentSignatureType? valueSignature = null, string valueCountryRegion = null, IReadOnlyList<DocumentField> valueArray = null, IReadOnlyDictionary<string, DocumentField> valueObject = null, CurrencyValue? valueCurrency = null, AddressValue valueAddress = null, bool? valueBoolean = null)
         {
             ExpectedFieldType = expectedFieldType;
             ValueString = valueString;
@@ -46,6 +47,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             ValueObject = valueObject;
             ValueCurrency = valueCurrency;
             ValueAddress = valueAddress;
+            ValueBoolean = valueBoolean;
         }
 
         /// <summary>
@@ -90,6 +92,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         private AddressValue ValueAddress { get; }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private bool? ValueBoolean { get; }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private V3SelectionMarkState? ValueSelectionMark { get; }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -111,6 +116,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         private object InternalValue => ExpectedFieldType switch
         {
             DocumentFieldType.Address => ValueAddress,
+            DocumentFieldType.Boolean => ValueBoolean,
             DocumentFieldType.CountryRegion => ValueCountryRegion,
             DocumentFieldType.Currency => ValueCurrency,
             DocumentFieldType.Date => ValueDate,
@@ -237,6 +243,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <returns>The value of the field converted to an <see cref="AddressValue"/>.</returns>
         /// <exception cref="InvalidOperationException">Thrown when <see cref="FieldType"/> is not <see cref="DocumentFieldType.Address"/>.</exception>
         public AddressValue AsAddress() => AssertFieldTypeAndGetValue(DocumentFieldType.Address, ValueAddress);
+
+        /// <summary>
+        /// Gets the value of the field as a <see cref="bool"/>.
+        /// </summary>
+        /// <returns>The value of the field converted to a <see cref="bool"/>.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="FieldType"/> is not <see cref="DocumentFieldType.Boolean"/>.</exception>
+        public bool AsBoolean() => AssertFieldTypeAndGetValue(DocumentFieldType.Boolean, ValueBoolean);
         #endregion Conversion Methods
 
         /// <summary>
@@ -248,6 +261,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             string conversionMethod = ExpectedFieldType switch
             {
                 DocumentFieldType.Address => nameof(AsAddress),
+                DocumentFieldType.Boolean => nameof(AsBoolean),
                 DocumentFieldType.CountryRegion => nameof(AsCountryRegion),
                 DocumentFieldType.Currency => nameof(AsCurrency),
                 DocumentFieldType.Date => nameof(AsDate),

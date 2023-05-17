@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     userName = ContainerRegistrySecretObject.DeserializeContainerRegistrySecretObject(property.Value);
@@ -58,7 +57,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     password = ContainerRegistrySecretObject.DeserializeContainerRegistrySecretObject(property.Value);

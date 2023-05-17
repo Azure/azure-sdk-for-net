@@ -57,7 +57,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceDatabase = LinkConnectionSourceDatabase.DeserializeLinkConnectionSourceDatabase(property.Value);
@@ -67,7 +66,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetDatabase = LinkConnectionTargetDatabase.DeserializeLinkConnectionTargetDatabase(property.Value);
@@ -77,7 +75,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     landingZone = LinkConnectionLandingZone.DeserializeLinkConnectionLandingZone(property.Value);
@@ -87,7 +84,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     compute = LinkConnectionCompute.DeserializeLinkConnectionCompute(property.Value);

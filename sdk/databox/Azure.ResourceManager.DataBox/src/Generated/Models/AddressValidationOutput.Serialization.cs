@@ -39,7 +39,6 @@ namespace Azure.ResourceManager.DataBox.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             validationType = property0.Value.GetString().ToDataBoxValidationInputDiscriminator();
@@ -49,7 +48,6 @@ namespace Azure.ResourceManager.DataBox.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             error = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
@@ -59,7 +57,6 @@ namespace Azure.ResourceManager.DataBox.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             validationStatus = property0.Value.GetString().ToAddressValidationStatus();
@@ -69,7 +66,6 @@ namespace Azure.ResourceManager.DataBox.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataBoxShippingAddress> array = new List<DataBoxShippingAddress>();

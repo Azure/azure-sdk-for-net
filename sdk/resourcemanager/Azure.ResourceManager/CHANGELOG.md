@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,9 +8,29 @@
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 1.6.0 (2023-05-16)
+
+### Features Added
+
+- Add more model factory entries in class `Azure.ResourceManager.Models.ResourceManagerModelFactory` to support more generated models.
+
+### Bugs Fixed
+
+- Fixed [the issue](https://github.com/Azure/azure-sdk-for-net/issues/34796) that tag operations are not properly working.
+
+## 1.5.0 (2023-04-27)
+
+### Bugs Fixed
+
 - Fixed `ManagedServiceIdentity` deserialization when services return empty string for `principalId` or `tenantId`.
 
 ### Other Changes
+
+- Bump api-version of `PolicyAssignments` to `2022-06-01`.
+- Bump api-version of `PolicyDefinitions` and `PolicySetDefinitions` to `2021-06-01`.
+- Introduced new property `TargetResourceGroupId` on `Azure.ResourceManager.Resources.Models.ResourcesMoveContent` to supersede `TargetResourceGroup` to emphasize this is accepting a `ResourceIdentifier` of the target resource group.
 
 ## 1.4.0 (2023-02-10)
 

@@ -5,7 +5,6 @@ using System;
 using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 
@@ -15,7 +14,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     {
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;
-        private readonly AzureMonitorPersistentStorage? _persistentStorage;
         private AzureMonitorResource? _resource;
         private bool _disposed;
 
@@ -27,20 +25,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
             _transmitter = transmitter;
             _instrumentationKey = transmitter.InstrumentationKey;
-
-            if (transmitter is AzureMonitorTransmitter azureMonitorTransmitter && azureMonitorTransmitter._fileBlobProvider != null)
-            {
-                _persistentStorage = new AzureMonitorPersistentStorage(transmitter);
-            }
         }
 
-        internal AzureMonitorResource? MetricResource => _resource ??= ParentProvider?.GetResource().UpdateRoleNameAndInstance();
+        internal AzureMonitorResource? MetricResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource(_instrumentationKey);
 
         /// <inheritdoc/>
         public override ExportResult Export(in Batch<Metric> batch)
         {
-            _persistentStorage?.StartExporterTimer();
-
             // Prevent Azure Monitor's HTTP operations from being instrumented.
             using var scope = SuppressInstrumentationScope.Begin();
 
@@ -55,6 +46,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     var telemetryItems = MetricHelper.OtelToAzureMonitorMetrics(batch, MetricResource, _instrumentationKey);
                     if (telemetryItems.Count > 0)
                     {
+                        if (MetricResource?.MetricTelemetry != null)
+                        {
+                            telemetryItems.Add(MetricResource.MetricTelemetry);
+                        }
                         exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
                     }
                 }
@@ -62,8 +57,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 {
                     exportResult = ExportResult.Success;
                 }
-
-                _persistentStorage?.StopExporterTimerAndTransmitFromStorage();
             }
             catch (Exception ex)
             {

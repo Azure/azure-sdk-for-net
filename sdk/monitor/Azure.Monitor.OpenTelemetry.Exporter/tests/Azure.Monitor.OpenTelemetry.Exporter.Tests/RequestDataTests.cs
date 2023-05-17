@@ -52,9 +52,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl); // only adding test via http.url. all possible combinations are covered in AzMonListExtensionsTests.
             activity.SetTag(SemanticConventions.AttributeHttpStatusCode, null);
 
-            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref monitorTags);
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
 
             Assert.Equal("GET /search", requestData.Name);
             Assert.Equal(activity.Context.SpanId.ToHexString(), requestData.Id);
@@ -84,9 +84,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/search");
             activity.SetTag(SemanticConventions.AttributeHttpStatusCode, httpStatusCode);
 
-            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref monitorTags);
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
 
             Assert.Equal(httpResponseCode, requestData.ResponseCode);
         }
@@ -110,12 +110,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/search");
             activity.SetTag(SemanticConventions.AttributeHttpStatusCode, httpStatusCode);
 
-            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref monitorTags);
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
 
             Assert.Equal(httpResponseCode, requestData.ResponseCode);
             Assert.Equal(isSuccess, requestData.Success);
+        }
+
+        [Fact]
+        public void RequestDataContainsAzureNamespace()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity("Activity", ActivityKind.Server);
+            activity?.AddTag("az.namespace", "DemoAzureResource");
+
+            Assert.NotNull(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
+
+            Assert.True(activityTagsProcessor.HasAzureNamespace);
+            Assert.Equal("DemoAzureResource", requestData.Properties["az.namespace"]);
         }
     }
 }

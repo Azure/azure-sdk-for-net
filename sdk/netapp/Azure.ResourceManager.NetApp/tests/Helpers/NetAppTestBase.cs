@@ -17,6 +17,8 @@ using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using Polly.Contrib.WaitAndRetry;
 using Polly;
+using NUnit.Framework.Constraints;
+using System.Collections;
 
 namespace Azure.ResourceManager.NetApp.Tests.Helpers
 {
@@ -42,7 +44,6 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
         internal CapacityPoolCollection _capacityPoolCollection { get => _netAppAccount.GetCapacityPools(); }
         internal CapacityPoolResource _capacityPool;
         internal NetAppVolumeCollection _volumeCollection;
-        public VirtualNetworkResource DefaultVirtualNetwork { get; set; }
         public static ResourceIdentifier DefaultSubnetId { get; set; }
 
         public static NetAppVolumeExportPolicyRule _defaultExportPolicyRule = new()
@@ -90,6 +91,11 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
         {
         }
 
+        protected NetAppTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = null)
+            : base(isAsync, resourceType, apiVersion, mode)
+        {
+        }
+
         public static NetAppAccountData GetDefaultNetAppAccountParameters(string location = "", NetAppAccountActiveDirectory activeDirectory = null)
         {
             if (string.IsNullOrWhiteSpace(location))
@@ -127,10 +133,7 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
         [TearDown]
         public async Task waitForDeletion()
         {
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(5000);
-            }
+            await LiveDelay(5000);
         }
 
         public async Task<string> CreateValidAccountNameAsync(string prefix, ResourceGroupResource resourceGroup, string location = "")
@@ -172,9 +175,11 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
                 Assert.AreEqual(location, account.Data.Location.ToString());
 
                 Assert.NotNull(account.Data.Tags);
-                Assert.AreEqual(3, account.Data.Tags.Count);
-                Assert.AreEqual("value1", account.Data.Tags["key1"]);
-                Assert.AreEqual("value2", account.Data.Tags["key2"]);
+                Assert.AreEqual(DefaultTags.Count, account.Data.Tags.Count);
+                foreach (var tag in account.Data.Tags)
+                {
+                    Assert.AreEqual(DefaultTags[tag.Key], tag.Value);
+                }
             }
         }
 
@@ -191,9 +196,12 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
                 Assert.AreEqual(DefaultLocation, volume.Data.Location);
 
                 Assert.NotNull(volume.Data.Tags);
-                Assert.AreEqual(3, volume.Data.Tags.Count);
-                Assert.AreEqual("value1", volume.Data.Tags["key1"]);
-                Assert.AreEqual("value2", volume.Data.Tags["key2"]);
+                //we cannot assert on count as a policy might add addional tags
+                //Assert.AreEqual(DefaultTags.Count, volume.Data.Tags.Count);
+                foreach (KeyValuePair<string, string> tag in DefaultTags)
+                {
+                    Assert.That(volume.Data.Tags, new DictionaryContainsKeyValuePairConstraint(tag.Key, tag.Value));
+                }
                 Assert.AreEqual(_defaultUsageThreshold, volume.Data.UsageThreshold);
                 Assert.AreEqual(DefaultSubnetId, volume.Data.SubnetId);
             }
@@ -219,9 +227,11 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
                 Assert.AreEqual(DefaultLocation, pool.Data.Location);
 
                 Assert.NotNull(pool.Data.Tags);
-                Assert.AreEqual(3, pool.Data.Tags.Count);
-                Assert.AreEqual("value1", pool.Data.Tags["key1"]);
-                Assert.AreEqual("value2", pool.Data.Tags["key2"]);
+                Assert.AreEqual(DefaultTags.Count, pool.Data.Tags.Count);
+                foreach (var tag in pool.Data.Tags)
+                {
+                    Assert.AreEqual(DefaultTags[tag.Key], tag.Value);
+                }
                 Assert.AreEqual(NetAppFileServiceLevel.Premium, pool.Data.ServiceLevel);
                 Assert.AreEqual(_poolSize, pool.Data.Size);
             }
@@ -230,7 +240,15 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
         public async Task<ResourceGroupResource> CreateResourceGroupAsync(string name = "testNetAppDotNetSDKRG-", string location = "")
         {
             location = string.IsNullOrEmpty(location) ? DefaultLocationString : location;
-            string resourceGroupName = Recording.GenerateAssetName(name);
+            string resourceGroupName;
+            if (name == "testNetAppDotNetSDKRG-")
+            {
+                resourceGroupName = Recording.GenerateAssetName(name);
+            }
+            else
+            {
+                resourceGroupName = name;
+            }
             ArmOperation<ResourceGroupResource> operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 resourceGroupName,
@@ -263,13 +281,9 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             return capactiyPoolResource1;
         }
 
-        public async Task<NetAppVolumeResource> CreateVolume(string location, NetAppFileServiceLevel serviceLevel, long? usageThreshold, string volumeName = "", ResourceIdentifier subnetId = null, List<string> protocolTypes = null, NetAppVolumeExportPolicyRule exportPolicyRule = null, NetAppVolumeCollection volumeCollection = null, NetAppVolumeDataProtection dataProtection = null, string snapshotId = "", string backupId = "")
+        public async Task<NetAppVolumeResource> CreateVolume(string location, NetAppFileServiceLevel serviceLevel, long? usageThreshold, string volumeName, ResourceIdentifier subnetId = null, List<string> protocolTypes = null, NetAppVolumeExportPolicyRule exportPolicyRule = null, NetAppVolumeCollection volumeCollection = null, NetAppVolumeDataProtection dataProtection = null, string snapshotId = "", string backupId = "")
         {
             location = string.IsNullOrEmpty(location) ? DefaultLocationString : location;
-            if (string.IsNullOrWhiteSpace(volumeName))
-            {
-                volumeName = Recording.GenerateAssetName("volumeName-");
-            }
             if (volumeCollection == null)
             {
                 volumeCollection = _volumeCollection;
@@ -306,18 +320,21 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             return volumeResource;
         }
 
-        public async Task<VirtualNetworkResource> CreateVirtualNetwork(string location = null, ResourceGroupResource resourceGroup = null)
+        public async Task CreateVirtualNetwork(string location = null, ResourceGroupResource resourceGroup = null, string vnetName = null)
         {
-            if (string.IsNullOrWhiteSpace(location))
-            {
-                location = DefaultLocationString;
-            }
             if (resourceGroup == null)
             {
                 resourceGroup = _resourceGroup;
             }
+            if (vnetName == null)
+            {
+                vnetName = Recording.GenerateAssetName("vnet-");
+            };
+            if (string.IsNullOrWhiteSpace(location))
+            {
+                location = DefaultLocationString;
+            }
             location ??= DefaultLocationString;
-            var vnetName = Recording.GenerateAssetName("vnet-");
             ServiceDelegation delegation =  new() { Name = "netAppVolumes", ServiceName = "Microsoft.Netapp/volumes" } ;
             var vnet = new VirtualNetworkData()
             {
@@ -331,22 +348,19 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             vnet.Subnets[0].Delegations.Add(delegation);
             VirtualNetworkCollection vnetColletion = resourceGroup.GetVirtualNetworks();
             VirtualNetworkResource virtualNetwork = (await vnetColletion.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet)).Value;
-            SubnetData subnetResource = virtualNetwork.Data.Subnets[0];
-            DefaultSubnetId = subnetResource.Id;
+            var vnetResource = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
+            var subnetCollection = vnetResource.Value.GetSubnets();
+            DefaultSubnetId = vnetResource.Value.Data.Subnets[0].Id;
             //wait a bit this may take a while
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(30000);
-            }
+            await LiveDelay(30000);
             await WaitForVnetSucceeded(vnetColletion, virtualNetwork);
-            return virtualNetwork;
         }
 
         private async Task WaitForVnetSucceeded(VirtualNetworkCollection vNetCollection, VirtualNetworkResource virtualNetworkResource = null)
         {
             var maxDelay = TimeSpan.FromSeconds(120);
             int count = 0;
-            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Playback")
+            if (Mode != RecordedTestMode.Playback)
             {
                 maxDelay = TimeSpan.FromMilliseconds(500);
             }
