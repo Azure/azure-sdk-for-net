@@ -313,4 +313,7 @@ directive:
   - from: swagger-document
     where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/restoreBlobRanges"].post
     transform: $["x-ms-long-running-operation-options"]["enable-interim-state"] = true
+  - from: swagger-document
+    where: $.definitions.StorageAccountCheckNameAvailabilityParameters.properties.type
+    transform: $["x-ms-constant"] = true;
 ```
