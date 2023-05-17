@@ -7,11 +7,9 @@ namespace Azure.Core.Dynamic
     /// </summary>
     public class DynamicDataOptions
     {
-        /// <summary>
-        /// </summary>
-        public static DynamicDataOptions Default = new()
+        internal static readonly DynamicDataOptions Default = new()
         {
-            DateTimeHandling = DynamicDateTimeHandling.Rfc3339
+            DateTimeHandling = DynamicDateTimeHandling.Rfc3339Utc
         };
 
         /// <summary>

@@ -1057,7 +1057,7 @@ namespace Azure.Core.Tests
         {
             DynamicDataOptions options = new DynamicDataOptions()
             {
-                DateTimeHandling = DynamicDateTimeHandling.UnixTime
+                DateTimeHandling = DynamicDateTimeHandling.UnixTimeUtc
             };
 
             dynamic value = BinaryData.FromString("""{ "foo": 0 }""").ToDynamicFromJson(options);
@@ -1089,12 +1089,7 @@ namespace Azure.Core.Tests
         [Test]
         public void ThrowsOnNonUtcDateTimeAssignment()
         {
-            DynamicDataOptions options = new DynamicDataOptions()
-            {
-                DateTimeHandling = DynamicDateTimeHandling.UnixTime
-            };
-
-            dynamic value = BinaryData.FromString("""{ "foo": 0 }""").ToDynamicFromJson(options);
+            dynamic value = BinaryData.FromString("""{ "foo": 0 }""").ToDynamicFromJson();
 
             Assert.Throws<NotSupportedException>(() => value.Foo = DateTime.Now);
         }

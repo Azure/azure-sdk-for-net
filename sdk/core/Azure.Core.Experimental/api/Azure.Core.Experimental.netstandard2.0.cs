@@ -145,13 +145,12 @@ namespace Azure.Core.Dynamic
     }
     public partial class DynamicDataOptions
     {
-        public static Azure.Core.Dynamic.DynamicDataOptions Default;
         public DynamicDataOptions() { }
         public Azure.Core.Dynamic.DynamicDateTimeHandling DateTimeHandling { get { throw null; } set { } }
     }
     public enum DynamicDateTimeHandling
     {
-        Rfc3339 = 0,
-        UnixTime = 1,
+        Rfc3339Utc = 0,
+        UnixTimeUtc = 1,
     }
 }

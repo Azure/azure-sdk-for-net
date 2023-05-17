@@ -128,7 +128,8 @@ namespace Azure.Core.Dynamic
                 JsonSerializerOptions options)
             {
                 // From: https://github.com/Azure/autorest.csharp/blob/bcc52a3d5788d03bb61c802619b1e3902214d304/src/assets/Generator.Shared/JsonElementExtensions.cs#L76
-                return DateTimeOffset.FromUnixTimeSeconds(reader.GetInt64());
+                long value = reader.GetInt64();
+                return DateTimeOffset.FromUnixTimeSeconds(value).ToUniversalTime();
             }
 
             public override void Write(
@@ -137,7 +138,7 @@ namespace Azure.Core.Dynamic
                 JsonSerializerOptions options)
             {
                 // From: https://github.com/Azure/autorest.csharp/blob/bcc52a3d5788d03bb61c802619b1e3902214d304/src/assets/Generator.Shared/Utf8JsonWriterExtensions.cs#L64
-                long value = dateTimeValue.ToUnixTimeSeconds();
+                long value = dateTimeValue.ToUniversalTime().ToUnixTimeSeconds();
                 writer.WriteNumberValue(value);
             }
         }

@@ -19,15 +19,22 @@ namespace Azure.Core.Dynamic
     public enum DynamicDateTimeHandling
     {
         /// <summary>
+        /// DateTime and DateTimeOffset values assigned to <see cref="DynamicData"/> will be
+        /// serialized, and conversions to DateTime and DateTimeOffset will be deserialized,
+        /// as JSON strings, according to the Azure API Guidelines:
+        /// https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#json-date-time-is-rfc3339
+        ///
+        /// DateTime values must have DateTimeKind.Utc, and DateTimeOffset are converted to UTC.
         /// </summary>
-        Rfc3339,
-
-        ///// <summary>
-        ///// </summary>
-        //Rfc1123,
+        Rfc3339Utc,
 
         /// <summary>
+        /// DateTime and DateTimeOffset values assigned to <see cref="DynamicData"/> will be
+        /// serialized, and conversions to DateTime and DateTimeOffset will be deserialized,
+        /// as JSON numbers.
+        ///
+        /// DateTime values must have DateTimeKind.Utc, and DateTimeOffset are converted to UTC.
         /// </summary>
-        UnixTime,
+        UnixTimeUtc,
     }
 }
