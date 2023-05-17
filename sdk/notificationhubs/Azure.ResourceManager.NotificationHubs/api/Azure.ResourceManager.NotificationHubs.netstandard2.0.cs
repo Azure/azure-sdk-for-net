@@ -286,6 +286,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public NotificationHubMpnsCredential() { }
         public string CertificateKey { get { throw null; } set { } }
         public string MpnsCertificate { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.BinaryData Thumbprint { get { throw null; } set { } }
         public string ThumbprintString { get { throw null; } set { } }
     }

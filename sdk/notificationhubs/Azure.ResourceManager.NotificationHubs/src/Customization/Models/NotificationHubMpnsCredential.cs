@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// </list>
         /// </para>
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public BinaryData Thumbprint { get; set; }
     }
 }
