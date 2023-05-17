@@ -53,7 +53,9 @@ namespace Azure.ResourceManager.AppService
         public Azure.Core.ResourceIdentifier ServerFarmId { get { throw null; } set { } }
         public string SiteName { get { throw null; } }
         public string SubjectName { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.BinaryData Thumbprint { get { throw null; } }
+        public string ThumbprintString { get { throw null; } }
     }
     public partial class AppCertificateResource : Azure.ResourceManager.ArmResource
     {
@@ -778,7 +780,9 @@ namespace Azure.ResourceManager.AppService
     {
         public AppServiceVirtualNetworkData() { }
         public string CertBlob { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.BinaryData CertThumbprint { get { throw null; } }
+        public string CertThumbprintString { get { throw null; } }
         public string DnsServers { get { throw null; } set { } }
         public bool? IsResyncRequired { get { throw null; } }
         public bool? IsSwift { get { throw null; } set { } }
@@ -1116,7 +1120,9 @@ namespace Azure.ResourceManager.AppService
         public string Kind { get { throw null; } set { } }
         public string SiteName { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.HostNameBindingSslState? SslState { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.BinaryData Thumbprint { get { throw null; } set { } }
+        public string ThumbprintString { get { throw null; } set { } }
         public string VirtualIP { get { throw null; } }
     }
     public partial class HybridConnectionData : Azure.ResourceManager.Models.ResourceData
@@ -1354,7 +1360,9 @@ namespace Azure.ResourceManager.AppService
         public byte[] Blob { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.PublicCertificateLocation? PublicCertificateLocation { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.BinaryData Thumbprint { get { throw null; } }
+        public string ThumbprintString { get { throw null; } }
     }
     public partial class PublishingUserData : Azure.ResourceManager.Models.ResourceData
     {
@@ -4370,7 +4378,9 @@ namespace Azure.ResourceManager.AppService.Models
         public Azure.Core.ResourceIdentifier ServerFarmId { get { throw null; } set { } }
         public string SiteName { get { throw null; } }
         public string SubjectName { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.BinaryData Thumbprint { get { throw null; } }
+        public string ThumbprintString { get { throw null; } }
     }
     public partial class AppInsightsWebAppStackSettings
     {
@@ -4445,7 +4455,9 @@ namespace Azure.ResourceManager.AppService.Models
         public string ClientId { get { throw null; } set { } }
         public string ClientSecretCertificateIssuer { get { throw null; } set { } }
         public string ClientSecretCertificateSubjectAlternativeName { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.BinaryData ClientSecretCertificateThumbprint { get { throw null; } set { } }
+        public string ClientSecretCertificateThumbprintString { get { throw null; } set { } }
         public string ClientSecretSettingName { get { throw null; } set { } }
         public string OpenIdIssuer { get { throw null; } set { } }
     }
@@ -4513,7 +4525,9 @@ namespace Azure.ResourceManager.AppService.Models
         public string SerialNumber { get { throw null; } }
         public string SignatureAlgorithm { get { throw null; } }
         public string Subject { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.BinaryData Thumbprint { get { throw null; } }
+        public string ThumbprintString { get { throw null; } }
         public int? Version { get { throw null; } }
     }
     public partial class AppServiceCertificateEmail : Azure.ResourceManager.Models.ResourceData
@@ -5207,7 +5221,9 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal AppServiceVirtualNetworkProperties() { }
         public string CertBlob { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.BinaryData CertThumbprint { get { throw null; } }
+        public string CertThumbprintString { get { throw null; } }
         public string DnsServers { get { throw null; } }
         public bool? IsResyncRequired { get { throw null; } }
         public bool? IsSwift { get { throw null; } }
@@ -6123,7 +6139,9 @@ namespace Azure.ResourceManager.AppService.Models
         public Azure.ResourceManager.AppService.Models.AppServiceHostType? HostType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.HostNameBindingSslState? SslState { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.BinaryData Thumbprint { get { throw null; } set { } }
+        public string ThumbprintString { get { throw null; } set { } }
         public bool? ToUpdate { get { throw null; } set { } }
         public string VirtualIP { get { throw null; } set { } }
     }
@@ -6791,7 +6809,9 @@ namespace Azure.ResourceManager.AppService.Models
         public string AuthFilePath { get { throw null; } set { } }
         public string ClientId { get { throw null; } set { } }
         public string ClientSecret { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.BinaryData ClientSecretCertificateThumbprint { get { throw null; } set { } }
+        public string ClientSecretCertificateThumbprintString { get { throw null; } set { } }
         public string ClientSecretSettingName { get { throw null; } set { } }
         public string ConfigVersion { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.BuiltInAuthenticationProvider? DefaultProvider { get { throw null; } set { } }
