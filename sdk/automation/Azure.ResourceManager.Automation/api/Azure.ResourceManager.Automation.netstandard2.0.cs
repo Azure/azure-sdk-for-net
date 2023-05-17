@@ -250,7 +250,9 @@ namespace Azure.ResourceManager.Automation
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public bool? IsExportable { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.BinaryData Thumbprint { get { throw null; } }
+        public string ThumbprintString { get { throw null; } }
     }
     public partial class AutomationCertificateResource : Azure.ResourceManager.ArmResource
     {
@@ -1356,7 +1358,9 @@ namespace Azure.ResourceManager.Automation.Models
         public string Description { get { throw null; } set { } }
         public bool? IsExportable { get { throw null; } set { } }
         public string Name { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.BinaryData Thumbprint { get { throw null; } set { } }
+        public string ThumbprintString { get { throw null; } set { } }
     }
     public partial class AutomationCertificatePatch
     {
