@@ -294,6 +294,7 @@ namespace Azure.Data.Tables.Tests
                             Int64 = (long)int.MaxValue + n,
                             LongPrimitive = (long)int.MaxValue + n,
                             LongPrimitiveN = (long)int.MaxValue + n,
+                            RenamableStringProperty = ""
                         };
                     })
                 .ToList();
