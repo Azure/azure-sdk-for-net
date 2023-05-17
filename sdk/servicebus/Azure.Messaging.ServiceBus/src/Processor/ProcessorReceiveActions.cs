@@ -113,11 +113,17 @@ namespace Azure.Messaging.ServiceBus
        }
 
         /// <summary>
-        ///
+        /// Returns the lock expiry <see cref="System.Threading.CancellationToken"/> for a given
+        /// <paramref name="receivedMessage"/> or <see cref="CancellationToken.None"/> if the message was not received
+        /// on the current receive action. The <see cref="System.Threading.CancellationToken"/> instance is cancelled
+        /// when the lock renewal failed to renew the lock or the <see cref="ServiceBusProcessorOptions.MaxAutoLockRenewalDuration"/> has elapsed.
         /// </summary>
-        /// <param name="receivedMessage"></param>
-        /// <returns></returns>
-        public virtual CancellationToken GetLockLostToken(ServiceBusReceivedMessage receivedMessage)
+        /// <param name="receivedMessage">The received message to retrieve the lock expiry token for.</param>
+        /// <returns>A <see cref="System.Threading.CancellationToken"/> or <see cref="CancellationToken.None"/> if the message was not received
+        /// on the current receive action.</returns>
+        /// <remarks>The cancellation token is triggered by comparing <see cref="ServiceBusReceivedMessage.LockedUntil"/>
+        /// against <see cref="DateTimeOffset.UtcNow"/> and might be subjected to clock drift.</remarks>
+        public virtual CancellationToken GetLockExpiryCancellationToken(ServiceBusReceivedMessage receivedMessage)
         {
             return Messages.TryGetValue(receivedMessage, out var cancellationTokenSource) ? cancellationTokenSource.Token : default;
         }

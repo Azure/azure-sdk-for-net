@@ -33,7 +33,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <remarks>The cancellation token is triggered by comparing <see cref="ServiceBusReceivedMessage.LockedUntil"/>
         /// against <see cref="DateTimeOffset.UtcNow"/> and might be subjected to clock drift.</remarks>
-        public CancellationToken LockLostCancellationToken { get; }
+        public CancellationToken LockExpiryCancellationToken { get; }
 
         /// <summary>
         /// The path of the Service Bus entity that the message was received from.
@@ -110,7 +110,7 @@ namespace Azure.Messaging.ServiceBus
 
             bool autoRenew = manager?.ShouldAutoRenewMessageLock() == true;
             _receiveActions = new ProcessorReceiveActions(message, manager, autoRenew);
-            LockLostCancellationToken = _receiveActions.GetLockLostToken(message);
+            LockExpiryCancellationToken = _receiveActions.GetLockExpiryCancellationToken(message);
         }
 
         /// <summary>
