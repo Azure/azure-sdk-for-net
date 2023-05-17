@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Added `AutomationCertificateData.ThumbprintString`, `AutomationCertificateCreateOrUpdateContent.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `AutomationCertificateData.Thumbprint`, `AutomationCertificateCreateOrUpdateContent.Thumbprint` have been hidden but is still available.
+
 ### Breaking Changes
 
 ### Bugs Fixed
