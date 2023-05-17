@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ResourceType);
+            writer.WriteStringValue(ResourceType.ToString());
             writer.WriteEndObject();
         }
     }
