@@ -9,13 +9,14 @@ namespace Azure.Core.Dynamic
     public enum DynamicCaseMapping
     {
         /// <summary>
-        /// Properties are read from and written to the data buffer with the same casing as the DynamicData property.
+        /// Properties are read from and written to the data content with the same casing as the DynamicData property name.
         /// </summary>
         None = 0,
 
         /// <summary>
-        /// A "PascalCase" DynamicData property can be used to read and set "camelCase" properties that exist in the data buffer.
-        /// New properties are written to the data buffer using "camelCase" property names.
+        /// A "PascalCase" DynamicData property name can be used to get "camelCase" members in the data content.
+        /// Values assigned to DynamicData properties are written to the data content with a "camelCase" name mapping
+        /// applied to the property name.  This mapping is not applied when using indexer syntax.
         /// </summary>
         PascalToCamel = 1
     }

@@ -42,7 +42,7 @@ namespace Azure.Core.Dynamic
 
         internal static JsonSerializerOptions GetSerializerOptions(DynamicDataOptions options)
         {
-            JsonSerializerOptions serializer = new()
+            JsonSerializerOptions serializerOptions = new()
             {
                 Converters =
                 {
@@ -53,8 +53,7 @@ namespace Azure.Core.Dynamic
             switch (options.CaseMapping)
             {
                 case DynamicCaseMapping.PascalToCamel:
-                    serializer.PropertyNameCaseInsensitive = true;
-                    serializer.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                    serializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                     break;
                 case DynamicCaseMapping.None:
                 default:
@@ -64,17 +63,17 @@ namespace Azure.Core.Dynamic
             switch (options.DateTimeHandling)
             {
                 case DynamicDateTimeHandling.UnixTime:
-                    serializer.Converters.Add(new UnixTimeDateTimeConverter());
-                    serializer.Converters.Add(new UnixTimeDateTimeOffsetConverter());
+                    serializerOptions.Converters.Add(new UnixTimeDateTimeConverter());
+                    serializerOptions.Converters.Add(new UnixTimeDateTimeOffsetConverter());
                     break;
                 case DynamicDateTimeHandling.Rfc3339:
                 default:
-                    serializer.Converters.Add(new Rfc3339DateTimeConverter());
-                    serializer.Converters.Add(new Rfc3339DateTimeOffsetConverter());
+                    serializerOptions.Converters.Add(new Rfc3339DateTimeConverter());
+                    serializerOptions.Converters.Add(new Rfc3339DateTimeOffsetConverter());
                     break;
             }
 
-            return serializer;
+            return serializerOptions;
         }
 
         internal void WriteTo(Stream stream)
