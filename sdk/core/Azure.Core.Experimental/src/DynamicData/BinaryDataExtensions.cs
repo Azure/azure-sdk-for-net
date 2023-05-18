@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.Json;
+using System.Text.Json;
 using Azure.Core.Dynamic;
+using Azure.Core.Json;
 
 namespace Azure
 {
@@ -16,18 +17,18 @@ namespace Azure
         /// </summary>
         public static dynamic ToDynamicFromJson(this BinaryData utf8Json)
         {
-            MutableJsonDocument mdoc = MutableJsonDocument.Parse(utf8Json, DynamicData.DefaultSerializerOptions);
-            return new DynamicData(mdoc.RootElement, DynamicCaseMapping.None);
+            return utf8Json.ToDynamicFromJson(DynamicCaseMapping.None);
         }
 
         /// <summary>
         /// Return the content of the BinaryData as a dynamic type.
-        /// <paramref name="nameHandling">The name mapping to use for reading and writing data.</paramref>
+        /// <paramref name="caseMapping">The case mapping to use for reading and writing data members.</paramref>
         /// </summary>
-        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, DynamicCaseMapping nameHandling)
+        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, DynamicCaseMapping caseMapping)
         {
-            MutableJsonDocument mdoc = MutableJsonDocument.Parse(utf8Json, DynamicData.DefaultSerializerOptions);
-            return new DynamicData(mdoc.RootElement, nameHandling);
+            JsonSerializerOptions options = DynamicData.GetSerializerOptions(caseMapping);
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(utf8Json, options);
+            return new DynamicData(mdoc.RootElement, caseMapping);
         }
     }
 }

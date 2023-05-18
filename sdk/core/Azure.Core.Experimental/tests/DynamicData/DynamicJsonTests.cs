@@ -47,7 +47,7 @@ namespace Azure.Core.Tests
         {
             dynamic jsonData = GetDynamicJson("""
                 {
-                  "Foo" : 1
+                  "foo" : 1
                 }
                 """);
 
@@ -61,8 +61,8 @@ namespace Azure.Core.Tests
         {
             dynamic jsonData = GetDynamicJson("""
                 {
-                  "Foo" : {
-                    "Bar" : 1
+                  "foo" : {
+                    "bar" : 1
                   }
                 }
                 """);
@@ -276,11 +276,11 @@ namespace Azure.Core.Tests
         [Test]
         public void CanMakeChangesAndAddNewProperty()
         {
-            dynamic jsonData = GetDynamicJson("""
+            dynamic jsonData = BinaryData.FromString("""
                 {
-                  "Foo" : 1
+                  "foo" : 1
                 }
-                """);
+                """).ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 
             Assert.AreEqual(1, (int)jsonData.Foo);
 
@@ -325,7 +325,7 @@ namespace Azure.Core.Tests
             stream.Position = 0;
 
             BinaryData data = BinaryData.FromStream(stream);
-            dynamic roundTripValue = data.ToDynamicFromJson();
+            dynamic roundTripValue = data.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 
             Assert.IsTrue(roundTripValue.foo == value.Foo);
             Assert.IsTrue(roundTripValue.model.message == value.Model.Message);
@@ -375,7 +375,7 @@ namespace Azure.Core.Tests
 
             // Test deserialization
             BinaryData bd = BinaryData.FromString(value.ToString());
-            dynamic roundTripValue = bd.ToDynamicFromJson();
+            dynamic roundTripValue = bd.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
             Assert.AreEqual(model.Value, (ChildModel)roundTripValue.Model.Value);
             Assert.AreEqual(model, (ParentModel)roundTripValue.Model);
         }
@@ -416,7 +416,7 @@ namespace Azure.Core.Tests
 
             // Test deserialization
             BinaryData bd = BinaryData.FromString(value.ToString());
-            dynamic roundTripValue = bd.ToDynamicFromJson();
+            dynamic roundTripValue = bd.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
             Assert.AreEqual(model.Value, (ChildModel)roundTripValue.Foo.Value);
             Assert.AreEqual(model, (ParentModel)roundTripValue.Foo);
         }
@@ -448,14 +448,14 @@ namespace Azure.Core.Tests
         [Test]
         public void CanCheckOptionalPropertyWithChanges()
         {
-            dynamic json = GetDynamicJson("""
+            dynamic json = BinaryData.FromString("""
                 {
-                  "Foo" : "foo",
-                  "Bar" : {
-                    "A" : "a"
+                  "foo" : "foo",
+                  "bar" : {
+                    "a" : "a"
                   }
                 }
-            """);
+            """).ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 
             // Add property Baz
             json.Baz = "baz";
