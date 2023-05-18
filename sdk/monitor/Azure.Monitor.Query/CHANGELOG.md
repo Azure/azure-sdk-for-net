@@ -1,9 +1,9 @@
 # Release History
 
-## 1.2.0 (2023-05-10)
+## 1.2.0 (2023-05-22)
 
-Features Generally Available from v1.2.0-beta.1
-
+### Bugs Fixed
+- `QueryResource` method was not returning the correct value.
 
 ## 1.2.0-beta.1 (2023-05-09)
 ### Features Added
