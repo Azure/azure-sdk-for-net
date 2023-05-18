@@ -26,7 +26,7 @@ namespace Azure.Security.ConfidentialLedger.Certificate.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConfidentialLedgerCertificateClient(endpoint);
 
-            Response response = client.GetLedgerIdentity("<ledgerId>");
+            Response response = client.GetLedgerIdentity("<ledgerId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
@@ -53,7 +53,7 @@ namespace Azure.Security.ConfidentialLedger.Certificate.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConfidentialLedgerCertificateClient(endpoint);
 
-            Response response = await client.GetLedgerIdentityAsync("<ledgerId>");
+            Response response = await client.GetLedgerIdentityAsync("<ledgerId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
