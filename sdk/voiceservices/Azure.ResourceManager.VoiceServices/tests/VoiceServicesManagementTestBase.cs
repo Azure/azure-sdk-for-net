@@ -53,25 +53,25 @@ namespace Azure.ResourceManager.VoiceServices.Tests
             return lro.Value;
         }
 
-        protected static CommunicationsGatewayData GetDefaultCommunicationsGatewayData()
+        protected static VoiceServicesCommunicationsGatewayData GetDefaultCommunicationsGatewayData()
         {
-            var gateway = new CommunicationsGatewayData(Location)
+            var gateway = new VoiceServicesCommunicationsGatewayData(Location)
             {
-                Connectivity = Connectivity.PublicAddress,
-                E911Type = E911Type.Standard,
+                Connectivity = VoiceServicesCommunicationsGatewayConnectivity.PublicAddress,
+                E911Type = VoiceServicesEmergencyCallType.Standard,
             };
-            gateway.ServiceLocations.Add(new ServiceRegionProperties("eastus", new PrimaryRegionProperties(new List<string> { "1.1.1.1" })));
-            gateway.ServiceLocations.Add(new ServiceRegionProperties("westus", new PrimaryRegionProperties(new List<string> { "1.1.1.2" })));
-            gateway.Codecs.Add(TeamsCodec.Pcma);
-            gateway.Platforms.Add(CommunicationsPlatform.OperatorConnect);
+            gateway.ServiceLocations.Add(new VoiceServicesServiceRegionProperties("eastus", new VoiceServicesPrimaryRegionProperties(new List<string> { "1.1.1.1" })));
+            gateway.ServiceLocations.Add(new VoiceServicesServiceRegionProperties("westus", new VoiceServicesPrimaryRegionProperties(new List<string> { "1.1.1.2" })));
+            gateway.Codecs.Add(VoiceServicesTeamsCodec.Pcma);
+            gateway.Platforms.Add(VoiceServicesCommunicationsPlatform.OperatorConnect);
             return gateway;
         }
 
-        protected async Task<CommunicationsGatewayResource> CreateDefaultCommunicationsGateway()
+        protected async Task<VoiceServicesCommunicationsGatewayResource> CreateDefaultCommunicationsGateway()
         {
             var rg = await CreateResourceGroup();
             var resourceName = Recording.GenerateAssetName("SDKTest");
-            var createOp = await rg.GetCommunicationsGateways().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, GetDefaultCommunicationsGatewayData());
+            var createOp = await rg.GetVoiceServicesCommunicationsGateways().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, GetDefaultCommunicationsGatewayData());
             return createOp.Value;
         }
     }

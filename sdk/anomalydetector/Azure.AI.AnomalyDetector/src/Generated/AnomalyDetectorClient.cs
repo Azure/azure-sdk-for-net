@@ -67,57 +67,12 @@ namespace Azure.AI.AnomalyDetector
             _apiVersion = options.Version;
         }
 
-        /// <summary> Detect anomalies for the entire series in batch. </summary>
-        /// <param name="options"> Method of univariate anomaly detection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <remarks>
-        /// This operation generates a model with an entire series. Each point is detected
-        /// with the same model. With this method, points before and after a certain point
-        /// are used to determine whether it&apos;s an anomaly. The entire detection can give the
-        /// user an overall status of the time series.
-        /// </remarks>
-        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='DetectUnivariateEntireSeriesAsync(UnivariateDetectionOptions,CancellationToken)']/*" />
-        public virtual async Task<Response<UnivariateEntireDetectionResult>> DetectUnivariateEntireSeriesAsync(UnivariateDetectionOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await DetectUnivariateEntireSeriesAsync(options.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(UnivariateEntireDetectionResult.FromResponse(response), response);
-        }
-
-        /// <summary> Detect anomalies for the entire series in batch. </summary>
-        /// <param name="options"> Method of univariate anomaly detection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <remarks>
-        /// This operation generates a model with an entire series. Each point is detected
-        /// with the same model. With this method, points before and after a certain point
-        /// are used to determine whether it&apos;s an anomaly. The entire detection can give the
-        /// user an overall status of the time series.
-        /// </remarks>
-        /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='DetectUnivariateEntireSeries(UnivariateDetectionOptions,CancellationToken)']/*" />
-        public virtual Response<UnivariateEntireDetectionResult> DetectUnivariateEntireSeries(UnivariateDetectionOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = DetectUnivariateEntireSeries(options.ToRequestContent(), context);
-            return Response.FromValue(UnivariateEntireDetectionResult.FromResponse(response), response);
-        }
-
         /// <summary>
         /// [Protocol Method] Detect anomalies for the entire series in batch.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="DetectUnivariateEntireSeriesAsync(UnivariateDetectionOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -152,11 +107,6 @@ namespace Azure.AI.AnomalyDetector
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="DetectUnivariateEntireSeries(UnivariateDetectionOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -536,6 +486,10 @@ namespace Azure.AI.AnomalyDetector
         /// Storage folder that contains multiple CSV files, where each CSV file has
         /// two columns, time stamp and variable. Or the Blob Storage URI can point to a single blob that contains a CSV file that has all the variables and a
         /// time stamp column.
+        /// The model object will be created and returned in the response, but the
+        /// training process happens asynchronously. To check the training status, call
+        /// GetMultivariateModel with the modelId value and check the status field in the
+        /// modelInfo object.
         /// </remarks>
         /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='TrainMultivariateModelAsync(ModelInfo,CancellationToken)']/*" />
         public virtual async Task<Response<AnomalyDetectionModel>> TrainMultivariateModelAsync(ModelInfo modelInfo, CancellationToken cancellationToken = default)
@@ -558,6 +512,10 @@ namespace Azure.AI.AnomalyDetector
         /// Storage folder that contains multiple CSV files, where each CSV file has
         /// two columns, time stamp and variable. Or the Blob Storage URI can point to a single blob that contains a CSV file that has all the variables and a
         /// time stamp column.
+        /// The model object will be created and returned in the response, but the
+        /// training process happens asynchronously. To check the training status, call
+        /// GetMultivariateModel with the modelId value and check the status field in the
+        /// modelInfo object.
         /// </remarks>
         /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='TrainMultivariateModel(ModelInfo,CancellationToken)']/*" />
         public virtual Response<AnomalyDetectionModel> TrainMultivariateModel(ModelInfo modelInfo, CancellationToken cancellationToken = default)

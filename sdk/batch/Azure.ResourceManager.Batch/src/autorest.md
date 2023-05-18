@@ -172,7 +172,7 @@ rename-mapping:
   NodePlacementPolicyType: BatchNodePlacementPolicyType
   PackageState: BatchApplicationPackageState
   PrivateLinkServiceConnectionStatus: BatchPrivateLinkServiceConnectionStatus
-  PrivateLinkServiceConnectionState.actionsRequired: actionRequired 
+  PrivateLinkServiceConnectionState.actionsRequired: actionRequired
   PublicIPAddressConfiguration: BatchPublicIPAddressConfiguration
   SkuCapability: BatchSkuCapability
   UserIdentity: BatchUserIdentity
@@ -245,4 +245,7 @@ directive:
           "type": "string",
           "description": "The error target."
         };
+  - from: swagger-document
+    where: $.definitions.CheckNameAvailabilityParameters.properties.type
+    transform: $["x-ms-constant"] = true;
 ```

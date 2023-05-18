@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_DesktopGet()
         {
-            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2021-07-12/examples/Desktop_Get.json
+            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2022-09-09/examples/Desktop_Get.json
             // this example is just showing the usage of "Desktops_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_DesktopGet()
         {
-            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2021-07-12/examples/Desktop_Get.json
+            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2022-09-09/examples/Desktop_Get.json
             // this example is just showing the usage of "Desktops_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_DesktopList()
         {
-            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2021-07-12/examples/Desktop_List.json
+            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2022-09-09/examples/Desktop_List.json
             // this example is just showing the usage of "Desktops_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -107,7 +107,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
             VirtualDesktopCollection collection = virtualApplicationGroup.GetVirtualDesktops();
 
             // invoke the operation and iterate over the result
-            await foreach (VirtualDesktopResource item in collection.GetAllAsync())
+            int? pageSize = 10;
+            bool? isDescending = true;
+            int? initialSkip = 0;
+            await foreach (VirtualDesktopResource item in collection.GetAllAsync(pageSize: pageSize, isDescending: isDescending, initialSkip: initialSkip))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

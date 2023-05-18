@@ -73,5 +73,13 @@ namespace Azure.Communication.JobRouter
         public IDictionary<string, LabelValue> Labels { get; set; } = new Dictionary<string, LabelValue>();
 
 #pragma warning restore CA2227 // Collection properties should be read only
+
+        /// <summary>
+        /// A flag indicating this job is ready for being matched with workers.
+        /// When set to true, job matching will not be started. If set to false, job matching will start automatically
+        /// </summary>
+        public bool? UnavailableForMatching { get; set; }
+        /// <summary> If set, job will be scheduled to be enqueued at a given time. </summary>
+        public DateTimeOffset? ScheduledTimeUtc { get; set; }
     }
 }

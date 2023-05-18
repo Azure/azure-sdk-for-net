@@ -17,7 +17,6 @@ namespace Azure
     }
     public static partial class AzureCoreExtensions
     {
-        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json) { throw null; }
         public static System.Threading.Tasks.ValueTask<T?> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static object? ToObjectFromJson(this System.BinaryData data) { throw null; }
         public static T? ToObject<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -536,7 +535,6 @@ namespace Azure.Core
     public abstract partial class RequestContent : System.IDisposable
     {
         protected RequestContent() { }
-        public static Azure.Core.RequestContent Create(Azure.Core.Dynamic.DynamicData content) { throw null; }
         public static Azure.Core.RequestContent Create(System.BinaryData content) { throw null; }
         public static Azure.Core.RequestContent Create(System.Buffers.ReadOnlySequence<byte> bytes) { throw null; }
         public static Azure.Core.RequestContent Create(byte[] bytes) { throw null; }
@@ -546,7 +544,6 @@ namespace Azure.Core
         public static Azure.Core.RequestContent Create(System.ReadOnlyMemory<byte> bytes) { throw null; }
         public static Azure.Core.RequestContent Create(string content) { throw null; }
         public abstract void Dispose();
-        public static implicit operator Azure.Core.RequestContent (Azure.Core.Dynamic.DynamicData content) { throw null; }
         public static implicit operator Azure.Core.RequestContent (System.BinaryData content) { throw null; }
         public static implicit operator Azure.Core.RequestContent (string content) { throw null; }
         public abstract bool TryComputeLength(out long length);
@@ -774,39 +771,6 @@ namespace Azure.Core.Diagnostics
         public static Azure.Core.Diagnostics.AzureEventSourceListener CreateTraceLogger(System.Diagnostics.Tracing.EventLevel level = System.Diagnostics.Tracing.EventLevel.Informational) { throw null; }
         protected sealed override void OnEventSourceCreated(System.Diagnostics.Tracing.EventSource eventSource) { }
         protected sealed override void OnEventWritten(System.Diagnostics.Tracing.EventWrittenEventArgs eventData) { }
-    }
-}
-namespace Azure.Core.Dynamic
-{
-    [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
-    public sealed partial class DynamicData : System.Dynamic.IDynamicMetaObjectProvider, System.IDisposable
-    {
-        internal DynamicData() { }
-        public void Dispose() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Core.Dynamic.DynamicData? left, object? right) { throw null; }
-        public static explicit operator System.DateTime (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static explicit operator System.DateTimeOffset (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static explicit operator System.Guid (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator bool (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator byte (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator decimal (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator double (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator short (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator int (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator long (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator sbyte (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator float (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator string (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator ushort (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator uint (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator ulong (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static bool operator !=(Azure.Core.Dynamic.DynamicData? left, object? right) { throw null; }
-        System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
-        public override string ToString() { throw null; }
     }
 }
 namespace Azure.Core.Extensions

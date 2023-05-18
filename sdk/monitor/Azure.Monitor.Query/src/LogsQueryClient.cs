@@ -322,25 +322,19 @@ namespace Azure.Monitor.Query
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
         /// <example snippet="Snippet:QueryResource">
         /// <code language="csharp">
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
-        /// var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
-        ///     &quot;search *&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(5)));
+        /// Response&lt;LogsQueryResult&gt; result = await client.QueryResourceAsync(
+        ///     new ResourceIdentifier(resourceId),
+        ///     &quot;AzureActivity | top 10 by TimeGenerated&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
         ///
-        /// var resultTable = results.Value.Table;
+        /// LogsTable table = result.Value.Table;
         ///
-        /// foreach (LogsTableRow rows in resultTable.Rows)
+        /// foreach (LogsTableRow row in table.Rows)
         /// {
-        ///     foreach (var row in rows)
-        ///     {
-        ///         Console.WriteLine(row);
-        ///     }
-        /// }
-        ///
-        /// foreach (LogsTableColumn columns in resultTable.Columns)
-        /// {
-        ///     Console.WriteLine(&quot;Name: &quot; + columns.Name + &quot; Type: &quot; + columns.Type);
+        ///     Console.WriteLine($&quot;{row[&quot;OperationName&quot;]} {row[&quot;ResourceGroup&quot;]}&quot;);
         /// }
         /// </code>
         /// </example>
@@ -362,25 +356,19 @@ namespace Azure.Monitor.Query
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
         /// <example snippet="Snippet:QueryResource">
         /// <code language="csharp">
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
-        /// var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
-        ///     &quot;search *&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(5)));
+        /// Response&lt;LogsQueryResult&gt; result = await client.QueryResourceAsync(
+        ///     new ResourceIdentifier(resourceId),
+        ///     &quot;AzureActivity | top 10 by TimeGenerated&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
         ///
-        /// var resultTable = results.Value.Table;
+        /// LogsTable table = result.Value.Table;
         ///
-        /// foreach (LogsTableRow rows in resultTable.Rows)
+        /// foreach (LogsTableRow row in table.Rows)
         /// {
-        ///     foreach (var row in rows)
-        ///     {
-        ///         Console.WriteLine(row);
-        ///     }
-        /// }
-        ///
-        /// foreach (LogsTableColumn columns in resultTable.Columns)
-        /// {
-        ///     Console.WriteLine(&quot;Name: &quot; + columns.Name + &quot; Type: &quot; + columns.Type);
+        ///     Console.WriteLine($&quot;{row[&quot;OperationName&quot;]} {row[&quot;ResourceGroup&quot;]}&quot;);
         /// }
         /// </code>
         /// </example>
@@ -402,25 +390,19 @@ namespace Azure.Monitor.Query
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
         /// <example snippet="Snippet:QueryResource">
         /// <code language="csharp">
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
-        /// var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
-        ///     &quot;search *&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(5)));
+        /// Response&lt;LogsQueryResult&gt; result = await client.QueryResourceAsync(
+        ///     new ResourceIdentifier(resourceId),
+        ///     &quot;AzureActivity | top 10 by TimeGenerated&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
         ///
-        /// var resultTable = results.Value.Table;
+        /// LogsTable table = result.Value.Table;
         ///
-        /// foreach (LogsTableRow rows in resultTable.Rows)
+        /// foreach (LogsTableRow row in table.Rows)
         /// {
-        ///     foreach (var row in rows)
-        ///     {
-        ///         Console.WriteLine(row);
-        ///     }
-        /// }
-        ///
-        /// foreach (LogsTableColumn columns in resultTable.Columns)
-        /// {
-        ///     Console.WriteLine(&quot;Name: &quot; + columns.Name + &quot; Type: &quot; + columns.Type);
+        ///     Console.WriteLine($&quot;{row[&quot;OperationName&quot;]} {row[&quot;ResourceGroup&quot;]}&quot;);
         /// }
         /// </code>
         /// </example>
@@ -452,25 +434,19 @@ namespace Azure.Monitor.Query
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
         /// <example snippet="Snippet:QueryResource">
         /// <code language="csharp">
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
-        /// var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
-        ///     &quot;search *&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(5)));
+        /// Response&lt;LogsQueryResult&gt; result = await client.QueryResourceAsync(
+        ///     new ResourceIdentifier(resourceId),
+        ///     &quot;AzureActivity | top 10 by TimeGenerated&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
         ///
-        /// var resultTable = results.Value.Table;
+        /// LogsTable table = result.Value.Table;
         ///
-        /// foreach (LogsTableRow rows in resultTable.Rows)
+        /// foreach (LogsTableRow row in table.Rows)
         /// {
-        ///     foreach (var row in rows)
-        ///     {
-        ///         Console.WriteLine(row);
-        ///     }
-        /// }
-        ///
-        /// foreach (LogsTableColumn columns in resultTable.Columns)
-        /// {
-        ///     Console.WriteLine(&quot;Name: &quot; + columns.Name + &quot; Type: &quot; + columns.Type);
+        ///     Console.WriteLine($&quot;{row[&quot;OperationName&quot;]} {row[&quot;ResourceGroup&quot;]}&quot;);
         /// }
         /// </code>
         /// </example>
