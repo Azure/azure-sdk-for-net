@@ -18,14 +18,12 @@ namespace Azure.Data.Tables.Queryable
     {
         internal readonly StringBuilder _builder;
         private readonly Stack<Expression> _expressionStack;
-        private Dictionary<Type, PropertyInfo[]> _cachedTypeReflectionProperties;
         private bool _cantTranslateExpression;
 
         protected ExpressionWriter()
         {
             _builder = new StringBuilder();
             _expressionStack = new Stack<Expression>();
-            _cachedTypeReflectionProperties = new Dictionary<Type, PropertyInfo[]>();
             _expressionStack.Push(null);
         }
 
@@ -205,17 +203,16 @@ namespace Azure.Data.Tables.Queryable
 
         protected virtual string TranslateMemberName(MemberInfo memberName)
         {
-            if (!_cachedTypeReflectionProperties.ContainsKey(memberName.DeclaringType))
+            if (!ReflectionUtil.s_dictionaryTypePropertyInfo.TryGetValue(memberName.DeclaringType, out PropertyInfo[] memberAttributeProperties))
             {
-                _cachedTypeReflectionProperties[memberName.DeclaringType] = memberName.DeclaringType.GetProperties();
+                ReflectionUtil.s_dictionaryTypePropertyInfo[memberName.DeclaringType] = memberAttributeProperties = memberName.DeclaringType.GetProperties();
             }
 
-            PropertyInfo memberAttributeProperty = _cachedTypeReflectionProperties[memberName.DeclaringType]
-                .FirstOrDefault(p => p.Name == memberName.Name && Attribute.IsDefined(p, typeof(DataMemberAttribute)));
+            PropertyInfo dataMemberProperty = memberAttributeProperties.FirstOrDefault(p => p.Name == memberName.Name && Attribute.IsDefined(p, typeof(DataMemberAttribute)));
 
-            if (memberAttributeProperty != null)
+            if (dataMemberProperty != null)
             {
-                return memberAttributeProperty.GetCustomAttribute<DataMemberAttribute>().Name;
+                return dataMemberProperty.GetCustomAttribute<DataMemberAttribute>().Name;
             }
 
             return memberName.Name;

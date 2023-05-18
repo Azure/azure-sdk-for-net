@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -21,6 +22,8 @@ namespace Azure.Data.Tables.Queryable
         private static MethodInfo DynamicDictionaryGetString64MethodInfo { get; }
 
         internal static HashSet<MethodInfo> s_dictionaryMethodInfosHash = new HashSet<MethodInfo>();
+
+        internal static Dictionary<Type, PropertyInfo[]> s_dictionaryTypePropertyInfo;
 
         static ReflectionUtil()
         {
@@ -47,6 +50,8 @@ namespace Azure.Data.Tables.Queryable
             s_dictionaryMethodInfosHash.Add(DynamicDictionaryGetInt32MethodInfo);
             s_dictionaryMethodInfosHash.Add(DynamicDictionaryGetInt64MethodInfo);
             s_dictionaryMethodInfosHash.Add(DynamicDictionaryGetString64MethodInfo);
+
+            s_dictionaryTypePropertyInfo = new Dictionary<Type, PropertyInfo[]>();
         }
     }
 }
