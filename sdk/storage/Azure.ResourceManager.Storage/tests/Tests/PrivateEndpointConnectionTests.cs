@@ -8,12 +8,11 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Storage.Tests.Helpers;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Tests
 {
-    public class PrivateEndpointConnectionTests : StorageTestBase
+    public class PrivateEndpointConnectionTests : StorageManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private StorageAccountResource _storageAccount;
