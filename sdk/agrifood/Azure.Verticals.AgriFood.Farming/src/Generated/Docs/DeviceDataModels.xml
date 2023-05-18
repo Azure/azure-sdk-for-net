@@ -208,17 +208,6 @@ This sample shows how to call GetDeviceDataModelsAsync with required parameters 
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
 
-await foreach (var item in client.GetDeviceDataModelsAsync("<sensorPartnerId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetDeviceDataModelsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
-
 await foreach (var item in client.GetDeviceDataModelsAsync("<sensorPartnerId>", new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -245,17 +234,6 @@ await foreach (var item in client.GetDeviceDataModelsAsync("<sensorPartnerId>", 
     <member name="GetDeviceDataModels(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetDeviceDataModels with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
-
-foreach (var item in client.GetDeviceDataModels("<sensorPartnerId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetDeviceDataModels with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");

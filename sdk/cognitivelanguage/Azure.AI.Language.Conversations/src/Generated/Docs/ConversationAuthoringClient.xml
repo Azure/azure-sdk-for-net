@@ -1037,7 +1037,7 @@ https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis
     </member>
     <member name="GetProjectsAsync(RequestContext)">
 <example>
-This sample shows how to call GetProjectsAsync and parse the result.
+This sample shows how to call GetProjectsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -1068,7 +1068,7 @@ https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis
     </member>
     <member name="GetProjects(RequestContext)">
 <example>
-This sample shows how to call GetProjects and parse the result.
+This sample shows how to call GetProjects with required parameters and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -1215,28 +1215,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-await foreach (var item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("text").ToString());
-    Console.WriteLine(result.GetProperty("language").ToString());
-    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("category").ToString());
-    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("offset").ToString());
-    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("length").ToString());
-    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("category").ToString());
-    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("offset").ToString());
-    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("length").ToString());
-    Console.WriteLine(result.GetProperty("intentsResult").GetProperty("expectedIntent").ToString());
-    Console.WriteLine(result.GetProperty("intentsResult").GetProperty("predictedIntent").ToString());
-}
-]]></code>
-This sample shows how to call GetModelEvaluationResultsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-await foreach (var item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", "Utf16CodeUnit", new RequestContext()))
+await foreach (var item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", "<stringIndexType>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("text").ToString());
@@ -1267,28 +1246,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-foreach (var item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("text").ToString());
-    Console.WriteLine(result.GetProperty("language").ToString());
-    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("category").ToString());
-    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("offset").ToString());
-    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("length").ToString());
-    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("category").ToString());
-    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("offset").ToString());
-    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("length").ToString());
-    Console.WriteLine(result.GetProperty("intentsResult").GetProperty("expectedIntent").ToString());
-    Console.WriteLine(result.GetProperty("intentsResult").GetProperty("predictedIntent").ToString());
-}
-]]></code>
-This sample shows how to call GetModelEvaluationResults with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-foreach (var item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", "Utf16CodeUnit", new RequestContext()))
+foreach (var item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", "<stringIndexType>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("text").ToString());
@@ -1467,21 +1425,7 @@ https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis
     </member>
     <member name="GetSupportedPrebuiltEntitiesAsync(string,bool?,RequestContext)">
 <example>
-This sample shows how to call GetSupportedPrebuiltEntitiesAsync and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-await foreach (var item in client.GetSupportedPrebuiltEntitiesAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("category").ToString());
-    Console.WriteLine(result.GetProperty("description").ToString());
-    Console.WriteLine(result.GetProperty("examples").ToString());
-}
-]]></code>
-This sample shows how to call GetSupportedPrebuiltEntitiesAsync with all parameters, and how to parse the result.
+This sample shows how to call GetSupportedPrebuiltEntitiesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -1505,21 +1449,7 @@ https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis
     </member>
     <member name="GetSupportedPrebuiltEntities(string,bool?,RequestContext)">
 <example>
-This sample shows how to call GetSupportedPrebuiltEntities and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-foreach (var item in client.GetSupportedPrebuiltEntities())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("category").ToString());
-    Console.WriteLine(result.GetProperty("description").ToString());
-    Console.WriteLine(result.GetProperty("examples").ToString());
-}
-]]></code>
-This sample shows how to call GetSupportedPrebuiltEntities with all parameters, and how to parse the result.
+This sample shows how to call GetSupportedPrebuiltEntities with required parameters and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -1679,19 +1609,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-var operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>");
-
-BinaryData responseData = operation.Value;
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call ExportProjectAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-var operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>", "<exportedProjectFormat>", "<assetKind>", "Utf16CodeUnit", "<trainedModelLabel>", new RequestContext());
+var operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>", "<exportedProjectFormat>", "<assetKind>", "<stringIndexType>", "<trainedModelLabel>", new RequestContext());
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1734,19 +1652,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAuthoringClient(endpoint, credential);
 
-var operation = client.ExportProject(WaitUntil.Completed, "<projectName>");
-
-BinaryData responseData = operation.Value;
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call ExportProject with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-var operation = client.ExportProject(WaitUntil.Completed, "<projectName>", "<exportedProjectFormat>", "<assetKind>", "Utf16CodeUnit", "<trainedModelLabel>", new RequestContext());
+var operation = client.ExportProject(WaitUntil.Completed, "<projectName>", "<exportedProjectFormat>", "<assetKind>", "<stringIndexType>", "<trainedModelLabel>", new RequestContext());
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

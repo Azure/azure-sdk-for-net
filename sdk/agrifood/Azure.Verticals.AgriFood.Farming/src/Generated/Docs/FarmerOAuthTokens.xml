@@ -127,19 +127,7 @@ Console.WriteLine(result.GetProperty("endTime").ToString());
     </member>
     <member name="GetAuthenticatedFarmersDetailsAsync(IEnumerable{string},IEnumerable{string},bool?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
-This sample shows how to call GetAuthenticatedFarmersDetailsAsync and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient("2022-11-01-preview");
-
-await foreach (var item in client.GetAuthenticatedFarmersDetailsAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("partyId").ToString());
-    Console.WriteLine(result.GetProperty("authProviderId").ToString());
-}
-]]></code>
-This sample shows how to call GetAuthenticatedFarmersDetailsAsync with all parameters, and how to parse the result.
+This sample shows how to call GetAuthenticatedFarmersDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient("2022-11-01-preview");
@@ -159,19 +147,7 @@ await foreach (var item in client.GetAuthenticatedFarmersDetailsAsync(new String
     </member>
     <member name="GetAuthenticatedFarmersDetails(IEnumerable{string},IEnumerable{string},bool?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
-This sample shows how to call GetAuthenticatedFarmersDetails and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient("2022-11-01-preview");
-
-foreach (var item in client.GetAuthenticatedFarmersDetails())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("partyId").ToString());
-    Console.WriteLine(result.GetProperty("authProviderId").ToString());
-}
-]]></code>
-This sample shows how to call GetAuthenticatedFarmersDetails with all parameters, and how to parse the result.
+This sample shows how to call GetAuthenticatedFarmersDetails with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient("2022-11-01-preview");

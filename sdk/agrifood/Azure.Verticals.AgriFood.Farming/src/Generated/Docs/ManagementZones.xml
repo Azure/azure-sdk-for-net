@@ -245,18 +245,7 @@ Console.WriteLine(response.Status);
     </member>
     <member name="GetManagementZonesAsync(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
-This sample shows how to call GetManagementZonesAsync and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetManagementZonesClient("2022-11-01-preview");
-
-await foreach (var item in client.GetManagementZonesAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetManagementZonesAsync with all parameters, and how to parse the result.
+This sample shows how to call GetManagementZonesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetManagementZonesClient("2022-11-01-preview");
@@ -286,18 +275,7 @@ await foreach (var item in client.GetManagementZonesAsync(new String[]{"<types>"
     </member>
     <member name="GetManagementZones(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
-This sample shows how to call GetManagementZones and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetManagementZonesClient("2022-11-01-preview");
-
-foreach (var item in client.GetManagementZones())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetManagementZones with all parameters, and how to parse the result.
+This sample shows how to call GetManagementZones with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetManagementZonesClient("2022-11-01-preview");
@@ -332,17 +310,6 @@ This sample shows how to call GetManagementZonesByPartyIdAsync with required par
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetManagementZonesClient("2022-11-01-preview");
 
-await foreach (var item in client.GetManagementZonesByPartyIdAsync("<partyId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetManagementZonesByPartyIdAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetManagementZonesClient("2022-11-01-preview");
-
 await foreach (var item in client.GetManagementZonesByPartyIdAsync("<partyId>", new String[]{"<types>"}, new String[]{"<cropIds>"}, new String[]{"<seasonIds>"}, new String[]{"<fieldIds>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -369,17 +336,6 @@ await foreach (var item in client.GetManagementZonesByPartyIdAsync("<partyId>", 
     <member name="GetManagementZonesByPartyId(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetManagementZonesByPartyId with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetManagementZonesClient("2022-11-01-preview");
-
-foreach (var item in client.GetManagementZonesByPartyId("<partyId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetManagementZonesByPartyId with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetManagementZonesClient("2022-11-01-preview");
