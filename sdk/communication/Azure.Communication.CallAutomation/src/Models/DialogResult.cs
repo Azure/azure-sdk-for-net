@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary>AddParticipantsResult Result.</summary>
+    /// <summary>DialogResult</summary>
     public class DialogResult
     {
         private CallAutomationEventProcessor _evHandler;
