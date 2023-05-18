@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("extendedLocationReplicaCount"u8);
                 writer.WriteNumberValue(ExtendedLocationReplicaCount.Value);
             }
-            if (Optional.IsDefined(StorageAccountType))
+            if (Optional.IsDefined(GalleryStorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
-                writer.WriteStringValue(StorageAccountType.Value.ToString());
+                writer.WriteStringValue(GalleryStorageAccountType.Value.ToString());
             }
             if (Optional.IsDefined(Encryption))
             {
