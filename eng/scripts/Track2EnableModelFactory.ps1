@@ -12,12 +12,13 @@ function Update-AutorestMd([string]$file) {
 }
 
 function Update-ChangeLog([string]$file, [string]$releasedate) {
-    $flag = $true
+    $flag = $false
     $fileContent = Get-Content $file
     $store = @()
     foreach ($item in $fileContent) {
-        if ($item.Contains("(Unreleased)") -and $flag) {
+        if ($item.Contains("(Unreleased)")) {
             $store += $item.Replace("Unreleased", $releasedate)
+            $flag = $true
             continue
         }
         if ($item.Contains("### Breaking Changes") -and $flag) {
@@ -57,12 +58,16 @@ function  Enable-ModelFactory {
                 & dotnet build /t:GenerateCode
 
                 # If generate succeeds then update the changelog file
-                $changelogFile = $file.Replace("src\autorest.md", "CHANGELOG.md")
                 if ($?) {
+                    $changelogFile = $file.Replace("src\autorest.md", "CHANGELOG.md")
                     Update-ChangeLog -file $changelogFile -releasedate $releasedate
                 }
             }
         }
+
+        # update all api files
+        $ExportAPIPath = Resolve-Path "$PSScriptRoot/Export-API.ps1"
+        & $ExportAPIPath
     }
 }
 
