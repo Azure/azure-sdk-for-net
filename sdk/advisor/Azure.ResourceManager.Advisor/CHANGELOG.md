@@ -1,17 +1,12 @@
 # Release History
 
-## 1.0.0-beta.3 (2023-05-17)
+## 1.0.0-beta.3 (Unreleased)
 
 ### Features Added
-
-- Add model factory
 
 ### Breaking Changes
 
 ### Bugs Fixed
-
-- Upgraded dependent Azure.Core to 1.32.0.
-- Upgraded dependent Azure.ResourceManager to 1.6.0.
 
 ### Other Changes
 
