@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary> An Application Insights component linked storage accounts patch. </summary>
+    /// <summary>
+    /// An Application Insights component linked storage accounts patch
+    /// Serialized Name: ComponentLinkedStorageAccountsPatch
+    /// </summary>
     public partial class ComponentLinkedStorageAccountPatch
     {
         /// <summary> Initializes a new instance of ComponentLinkedStorageAccountPatch. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         {
         }
 
-        /// <summary> Linked storage account resource ID. </summary>
+        /// <summary>
+        /// Linked storage account resource ID
+        /// Serialized Name: ComponentLinkedStorageAccountsPatch.properties.linkedStorageAccount
+        /// </summary>
         public string LinkedStorageAccount { get; set; }
     }
 }

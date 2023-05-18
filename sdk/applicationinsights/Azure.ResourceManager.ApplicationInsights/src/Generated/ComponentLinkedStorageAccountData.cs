@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// <summary>
     /// A class representing the ComponentLinkedStorageAccount data model.
     /// An Application Insights component linked storage accounts
+    /// Serialized Name: ComponentLinkedStorageAccounts
     /// </summary>
     public partial class ComponentLinkedStorageAccountData : ResourceData
     {
@@ -26,13 +27,19 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="linkedStorageAccount"> Linked storage account resource ID. </param>
+        /// <param name="linkedStorageAccount">
+        /// Linked storage account resource ID
+        /// Serialized Name: ComponentLinkedStorageAccounts.properties.linkedStorageAccount
+        /// </param>
         internal ComponentLinkedStorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string linkedStorageAccount) : base(id, name, resourceType, systemData)
         {
             LinkedStorageAccount = linkedStorageAccount;
         }
 
-        /// <summary> Linked storage account resource ID. </summary>
+        /// <summary>
+        /// Linked storage account resource ID
+        /// Serialized Name: ComponentLinkedStorageAccounts.properties.linkedStorageAccount
+        /// </summary>
         public string LinkedStorageAccount { get; set; }
     }
 }
