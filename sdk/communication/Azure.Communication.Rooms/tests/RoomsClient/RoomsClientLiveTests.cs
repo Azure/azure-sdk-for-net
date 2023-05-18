@@ -49,9 +49,6 @@ namespace Azure.Communication.Rooms.Tests
                 // Assert:
                 Assert.AreEqual(createdRoomId, getCommunicationRoom.Id);
 
-                // List Rooms
-                // TODO: add list rooms test
-
                 // Act: Update Room
                 Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom.AddDays(1), validUntil.AddDays(2));
                 CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
@@ -117,9 +114,6 @@ namespace Azure.Communication.Rooms.Tests
 
                 // Assert
                 Assert.AreEqual(createdRoomId, getCommunicationRoom.Id);
-
-                // List Rooms
-                // TODO: add list rooms test
 
                 // Act Update Room
                 validFrom = validFrom.AddDays(30);

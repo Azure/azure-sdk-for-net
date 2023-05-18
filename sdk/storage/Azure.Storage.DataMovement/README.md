@@ -86,7 +86,7 @@ DataTransfer dataTransfer = await transferManager.StartTransferAsync(
     destinationResource: destinationResource);
 
 // Pause from the Transfer Manager using the DataTransfer object
-bool pauseResult = await transferManager.TryPauseTransferAsync(dataTransfer);
+await transferManager.PauseTransferIfRunningAsync(dataTransfer);
 ```
 
 Pause a transfer using the TransferManager using the respective transfer ID
@@ -97,7 +97,7 @@ DataTransfer dataTransfer = await transferManager.StartTransferAsync(
 string transferId = dataTransfer.Id;
 
 // Pause from the Transfer Manager using the Transfer Id
-bool pauseResult = await transferManager.TryPauseTransferAsync(transferId);
+await transferManager.PauseTransferIfRunningAsync(transferId);
 ```
 
 Pause a transfer using the respective DataTransfer
@@ -107,7 +107,7 @@ DataTransfer dataTransfer = await transferManager.StartTransferAsync(
     destinationResource: destinationResource);
 
 // Pause from the DataTransfer object
-bool pauseResult = await dataTransfer.TryPauseAsync();
+await dataTransfer.PauseIfRunningAsync();
 ```
 
 Resume a transfer
