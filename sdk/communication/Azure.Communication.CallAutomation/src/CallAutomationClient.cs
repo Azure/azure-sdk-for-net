@@ -249,8 +249,8 @@ namespace Azure.Communication.CallAutomation
                 request.AzureCognitiveServicesEndpointUrl = options.AzureCognitiveServicesEndpointUrl.AbsoluteUri;
             }
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
-            request.AnsweredByIdentifier = SourceIdentity == null ? null : CommunicationIdentifierSerializer.Serialize(SourceIdentity);
-
+            request.AnsweredByIdentifier = SourceIdentity == null ? null : new CommunicationUserIdentifierModel(SourceIdentity.Id);
+            request.OperationContext = options.OperationContext;
             return request;
         }
 
@@ -284,6 +284,10 @@ namespace Azure.Communication.CallAutomation
 
                 RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target));
                 var repeatabilityHeaders = new RepeatabilityHeaders();
+
+                request.CustomContext = new CustomContextInternal(
+                   options.CallInvite.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.SipHeaders,
+                   options.CallInvite.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.VoipHeaders);
 
                 return await AzureCommunicationServicesRestClient.RedirectCallAsync(
                     request,
@@ -329,6 +333,10 @@ namespace Azure.Communication.CallAutomation
 
                 RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target));
                 var repeatabilityHeaders = new RepeatabilityHeaders();
+
+                request.CustomContext = new CustomContextInternal(
+                   options.CallInvite.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.SipHeaders,
+                   options.CallInvite.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.VoipHeaders);
 
                 return AzureCommunicationServicesRestClient.RedirectCall(
                     request,
@@ -651,8 +659,13 @@ namespace Azure.Communication.CallAutomation
                     ? null
                     : new PhoneNumberIdentifierModel(options?.CallInvite?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.CallInvite?.SourceDisplayName,
-                SourceIdentity = SourceIdentity == null ? null : CommunicationIdentifierSerializer.Serialize(SourceIdentity),
+                SourceIdentity = SourceIdentity == null ? null : new CommunicationUserIdentifierModel(SourceIdentity.Id),
             };
+
+            request.CustomContext = new CustomContextInternal(
+               options.CallInvite.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.SipHeaders,
+               options.CallInvite.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.VoipHeaders);
+
             // Add custom cognitive service domain name
             if (options.AzureCognitiveServicesEndpointUrl != null)
             {
@@ -678,8 +691,13 @@ namespace Azure.Communication.CallAutomation
                     ? null
                     : new PhoneNumberIdentifierModel(options?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.SourceDisplayName,
-                SourceIdentity = SourceIdentity == null ? null : CommunicationIdentifierSerializer.Serialize(SourceIdentity),
+                SourceIdentity = SourceIdentity == null ? null : new CommunicationUserIdentifierModel(SourceIdentity.Id),
             };
+
+            request.CustomContext = new CustomContextInternal(
+               options.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.SipHeaders,
+               options.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.VoipHeaders);
+
             // Add custom cognitive service domain name
             if (options.AzureCognitiveServicesEndpointUrl != null)
             {

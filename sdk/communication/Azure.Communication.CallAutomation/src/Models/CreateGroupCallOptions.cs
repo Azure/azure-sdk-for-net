@@ -55,5 +55,15 @@ namespace Azure.Communication.CallAutomation
         /// The endpoint URL of the Azure Cognitive Services resource attached
         /// </summary>
         public Uri AzureCognitiveServicesEndpointUrl { get; set; }
+
+        /// <summary>
+        /// Custom Context for PSTN targets.
+        /// </summary>
+        public IDictionary<string, string> SipHeaders { get; set; }
+
+        /// <summary>
+        /// Custom Context for Voip targets.
+        /// </summary>
+        public IDictionary<string, string> VoipHeaders { get; set; }
     }
 }

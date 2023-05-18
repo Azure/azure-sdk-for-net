@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-10-01-preview",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2023-04-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "243",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-b9959aa3d12c130ac9d569f3cab6c387-19199b0a31aec861-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "34872f12a8cc9f0e92cfad4a9c36816e",
+        "traceparent": "00-d5271de36b986bfa4d025c1c12c78420-07d02f555c6f7950-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20230508.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "47c12128c7877a6a5157eae20f2c445b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -29,17 +29,18 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "cd83bac0-8f30-4fdf-872b-98b262d62bd9",
+        "apim-request-id": "f6d63356-201b-4bc2-a44a-9fea369501ad",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.OrchestrationWorkflow.Prediction=1",
-        "Date": "Thu, 20 Oct 2022 17:18:20 GMT",
+        "Date": "Mon, 08 May 2023 23:12:05 GMT",
         "Pragma": "no-cache",
-        "request-id": "cd83bac0-8f30-4fdf-872b-98b262d62bd9",
+        "request-id": "f6d63356-201b-4bc2-a44a-9fea369501ad",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "244"
+        "x-envoy-upstream-service-time": "3260",
+        "x-ms-region": "UK South"
       },
       "ResponseBody": {
         "kind": "ConversationResult",
@@ -60,39 +61,39 @@
                     "intents": [
                       {
                         "category": "Send",
-                        "confidenceScore": 0.9053172
+                        "confidenceScore": 0.9052755
                       },
                       {
                         "category": "Read",
-                        "confidenceScore": 0.44011447
+                        "confidenceScore": 0.44003114
                       },
                       {
                         "category": "Setup",
-                        "confidenceScore": 0.41303915
+                        "confidenceScore": 0.41299748
                       },
                       {
                         "category": "Set",
-                        "confidenceScore": 0.21186642
+                        "confidenceScore": 0.21182476
                       },
                       {
                         "category": "None",
-                        "confidenceScore": 0.20198277
+                        "confidenceScore": 0.19785939
                       },
                       {
                         "category": "Find",
-                        "confidenceScore": 0.19216746
+                        "confidenceScore": 0.19204247
                       },
                       {
                         "category": "Call",
-                        "confidenceScore": 0.16446844
+                        "confidenceScore": 0.16442677
                       },
                       {
                         "category": "Play",
-                        "confidenceScore": 0.15655291
+                        "confidenceScore": 0.15646957
                       },
                       {
                         "category": "Open",
-                        "confidenceScore": 0.08699014
+                        "confidenceScore": 0.08694848
                       }
                     ],
                     "entities": [
@@ -119,8 +120,8 @@
                           {
                             "resolutionKind": "DateTimeResolution",
                             "dateTimeSubKind": "Date",
-                            "timex": "2022-10-21",
-                            "value": "2022-10-21"
+                            "timex": "2023-05-09",
+                            "value": "2023-05-09"
                           }
                         ],
                         "extraInformation": [
@@ -153,6 +154,6 @@
     "CONVERSATIONS_KEY": "Sanitized",
     "CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "production",
     "CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchestrationScriptDeployed",
-    "RandomSeed": "1817633576"
+    "RandomSeed": "1202914734"
   }
 }

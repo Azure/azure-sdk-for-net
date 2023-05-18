@@ -71,6 +71,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             binding.BindToCollector<TableEntity>(CreateTableWriter);
 
             binding.Bind(new TableAttributeBindingProvider(_nameResolver, _accountProvider, _converterManager));
+            binding.BindToInput<ParameterBindingData>(CreateParameterBindingData);
+
             binding.BindToInput<JArray>(CreateJArray);
         }
 
@@ -118,6 +120,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             await table.CreateIfNotExistsAsync(cancellationToken).ConfigureAwait(false);
 
             return table;
+        }
+
+        internal ParameterBindingData CreateParameterBindingData(TableAttribute attribute)
+        {
+            var tableDetails = new TablesParameterBindingDataContent(attribute);
+            var tableDetailsBinaryData = new BinaryData(tableDetails);
+            var parameterBindingData = new ParameterBindingData("1.0", Constants.ExtensionName, tableDetailsBinaryData, "application/json");
+
+            return parameterBindingData;
         }
 
         // Used as an alternative to binding to IQueryable.
@@ -226,6 +237,29 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             }
 
             return tableEntity;
+        }
+
+        // Cannot use `new BinaryData(tableAttribute)` because this "may only be called on a Type for
+        // which Type.IsGenericParameter is true"; therefore we use our own reference type.
+        // Has the same properties as TableAttribute
+        private class TablesParameterBindingDataContent
+        {
+            public TablesParameterBindingDataContent(TableAttribute attribute)
+            {
+                TableName = attribute.TableName;
+                Take = attribute.Take;
+                Filter = attribute.Filter;
+                Connection = attribute.Connection;
+                PartitionKey = attribute.PartitionKey;
+                RowKey = attribute.RowKey;
+            }
+
+            public string TableName { get; set; }
+            public int Take { get; set; }
+            public string Filter { get; set; }
+            public string Connection { get; set; }
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
         }
     }
 }

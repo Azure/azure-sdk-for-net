@@ -72,16 +72,12 @@ namespace Azure.ResourceManager.NetApp.Tests
                     await snapshotPolicy.DeleteAsync(WaitUntil.Completed);
                 }
                 //remove account
-                if (Mode != RecordedTestMode.Playback)
-                {
-                    await Task.Delay(40000);
-                }
+                await LiveDelay(40000);
                 await _netAppAccount.DeleteAsync(WaitUntil.Completed);
             }
             _resourceGroup = null;
         }
 
-        [Test]
         [RecordedTest]
         public async Task CreateDeleteSnapshotPolicy()
         {
@@ -113,7 +109,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
-        [Test]
         [RecordedTest]
         public async Task ListSnapshotPolicies()
         {
@@ -150,7 +145,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsFalse(await _snapshotPolicyCollection.ExistsAsync(snapshotPolicyName + "1"));
         }
 
-        [Test]
         [RecordedTest]
         public async Task UpdateSnapshotPolicy()
         {
@@ -176,7 +170,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             snapshotPolicyPatchedResource2.Data.MonthlySchedule.Should().BeEquivalentTo(_monthlySchedule);
         }
 
-        [Test]
         [RecordedTest]
         public async Task CreateVolumeWithSnapshotPolicy()
         {
@@ -189,13 +182,11 @@ namespace Azure.ResourceManager.NetApp.Tests
             _capacityPool = await CreateCapacityPool(DefaultLocationString, NetAppFileServiceLevel.Premium, _poolSize);
             _volumeCollection = _capacityPool.GetNetAppVolumes();
             //Create volume
-            if (DefaultVirtualNetwork == null)
-            {
-                DefaultVirtualNetwork = await CreateVirtualNetwork();
-            }
+            var volumeName = Recording.GenerateAssetName("volumeName-");
             VolumeSnapshotProperties snapshotPolicyProperties = new(snapshotPolicyResource1.Id);
             NetAppVolumeDataProtection dataProtectionProperties = new() {Snapshot = snapshotPolicyProperties };
-            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocationString, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, subnetId:DefaultSubnetId, dataProtection: dataProtectionProperties);
+            await CreateVirtualNetwork();
+            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocationString, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId, dataProtection: dataProtectionProperties);
 
             //Validate if created properly
             NetAppVolumeResource snapshotVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
@@ -205,14 +196,10 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(snapshotPolicyProperties.SnapshotPolicyId, snapshotVolumeResource.Data.DataProtection.Snapshot.SnapshotPolicyId);
 
             await volumeResource1.DeleteAsync(WaitUntil.Completed);
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(40000);
-            }
+            await LiveDelay(40000);
             await _capacityPool.DeleteAsync(WaitUntil.Completed);
         }
 
-        [Test]
         [RecordedTest]
         public async Task ListVolumesWithSnapshotPolicy()
         {
@@ -225,11 +212,11 @@ namespace Azure.ResourceManager.NetApp.Tests
             _capacityPool = await CreateCapacityPool(DefaultLocationString, NetAppFileServiceLevel.Premium, _poolSize);
             _volumeCollection = _capacityPool.GetNetAppVolumes();
             //Create volume
-            DefaultVirtualNetwork = await CreateVirtualNetwork(DefaultLocationString);
+            var volumeName = Recording.GenerateAssetName("volumeName-");
             VolumeSnapshotProperties snapshotPolicyProperties = new(snapshotPolicyResource1.Id);
             NetAppVolumeDataProtection dataProtectionProperties = new() { Snapshot = snapshotPolicyProperties };
-
-            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocationString, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, subnetId: DefaultSubnetId, dataProtection: dataProtectionProperties);
+            await CreateVirtualNetwork(DefaultLocationString);
+            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocationString, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId, dataProtection: dataProtectionProperties);
 
             //Validate if created properly
             NetAppVolumeResource snapshotVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
@@ -245,15 +232,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             volumesList.Should().HaveCount(1);
             volumesList[0].Id.Should().BeEquivalentTo(snapshotVolumeResource.Id);
             await volumeResource1.DeleteAsync(WaitUntil.Completed);
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(40000);
-            }
+            await LiveDelay(40000);
             await _capacityPool.DeleteAsync(WaitUntil.Completed);
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(30000);
-            }
+            await LiveDelay(30000);
         }
 
         protected async Task<SnapshotPolicyResource> CreateSnapshotPolicy(string location, string name = "")

@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
-using Azure.Core.Buffers;
-using System.Threading.Tasks;
-using System.Threading;
 using System.Buffers;
-using Azure.Core.Serialization;
+using System.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core.Buffers;
+using Azure.Core.Serialization;
 
 namespace Azure.Core
 {
@@ -144,7 +144,8 @@ namespace Azure.Core
                     {
                         CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
                         var read = _stream.Read(buffer, 0, buffer.Length);
-                        if (read == 0) { break; }
+                        if (read == 0)
+                        { break; }
                         CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
                         stream.Write(buffer, 0, read);
                     }
