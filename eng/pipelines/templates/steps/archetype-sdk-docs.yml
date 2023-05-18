@@ -1,7 +1,7 @@
 steps:
   - pwsh: |
       Write-Host ("Before SecurityProtocl = " + [Net.ServicePointManager]::SecurityProtocol.ToString())
-      [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 -bor [Net.SecurityProtocolType]::Tls13
+      [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls13
       Write-Host ("After SecurityProtocl = " + [Net.ServicePointManager]::SecurityProtocol.ToString())
       # Download and Extract or restore Packages required for Doc Generation
       Write-Host "Download and Extract mdoc to Build.BinariesDirectory/mdoc"
