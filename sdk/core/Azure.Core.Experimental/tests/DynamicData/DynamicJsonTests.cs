@@ -641,7 +641,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual(1, (int)dynamicJson.Foo);
             Assert.AreEqual(3, (int)dynamicJson.bar);
             Assert.AreEqual(3, (int)dynamicJson.Bar);
-            Assert.AreEqual(null, dynamicJson["Bar"]);
+            Assert.Throws<KeyNotFoundException>(() => _ = dynamicJson["Bar"]);
 
             // This updates the PascalCase property and not the camelCase one.
             dynamicJson.Foo = 4;
@@ -1046,6 +1046,28 @@ namespace Azure.Core.Tests
             Assert.Throws<InvalidCastException>(() => { DateTimeOffset d = (DateTimeOffset)json.Foo; });
         }
 
+        [Test]
+        public void CanDifferentiateBetweenNullAndAbsent()
+        {
+            dynamic json = BinaryData.FromString("""{ "foo": null }""").ToDynamicFromJson();
+
+            // GetMember binding mirrors Azure SDK models, so we allow a null check for an optional
+            // property through the C#-style dynamic interface.
+            Assert.IsTrue(json.foo == null);
+            Assert.IsTrue(json.bar == null);
+
+            // Indexer lookup mimics JsonNode behavior and so throws if a property is absent.
+            Assert.IsTrue(json["foo"] == null);
+            Assert.Throws<KeyNotFoundException>(() => _ = json["bar"]);
+            Assert.Throws<KeyNotFoundException>(() => { if (json["bar"] == null) { ; } });
+        }
+
+        #region Helpers
+        internal static dynamic GetDynamicJson(string json)
+        {
+            return new BinaryData(json).ToDynamicFromJson();
+        }
+
         public static IEnumerable<object[]> NumberValues()
         {
             // Valid ranges:
@@ -1061,12 +1083,6 @@ namespace Azure.Core.Tests
             yield return new object[] { "42.1", 42.1f, 43.1f, 44.1f, false /* don't test range */ };
             yield return new object[] { "42.1", 42.1d, 43.1d, 44.1d, false /* don't test range */ };
             yield return new object[] { "42.1", 42.1m, 43.1m, 44.1m, false /* don't test range */ };
-        }
-
-        #region Helpers
-        internal static dynamic GetDynamicJson(string json)
-        {
-            return new BinaryData(json).ToDynamicFromJson();
         }
 
         internal class CustomType
