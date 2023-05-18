@@ -252,3 +252,5 @@ output INGESTION_DATA_COLLECTION_RULE_IMMUTABLE_ID string = dataCollectionRule.p
 output STORAGE_ACCOUNT_NAME string = storageAccountName
 output STORAGE_ID string = storageAccount.id
 output RESOURCE_ID string = resourceGroup().id
+output WORKSPACE_PRIMARY_RESOURCE_ID string = primaryWorkspace.id
+output WORKSPACE_SECONDARY_RESOURCE_ID string = secondaryWorkspace.id

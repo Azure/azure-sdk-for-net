@@ -393,7 +393,7 @@ namespace Azure.Monitor.Query
         /// <returns>The logs matching the query.</returns>
         public virtual async Task<Response<IReadOnlyList<T>>> QueryResourceAsync<T>(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
-            Response<LogsQueryResult> response = await QueryWorkspaceAsync(resourceId, query, timeRange, options, cancellationToken).ConfigureAwait(false);
+            Response<LogsQueryResult> response = await QueryResourceAsync(resourceId, query, timeRange, options, cancellationToken).ConfigureAwait(false);
 
             return Response.FromValue(RowBinder.Shared.BindResults<T>(response.Value.AllTables), response.GetRawResponse());
         }

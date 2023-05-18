@@ -20,7 +20,7 @@ namespace Azure.Monitor.Query.Tests
     {
         private LogsTestData _logsTestData;
 
-        public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Live)
+        public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -682,128 +682,105 @@ namespace Azure.Monitor.Query.Tests
 
         [LiveOnly]
         [Test]
-        public async Task CanQueryResource()
+        public async Task CanQueryResourcePrimaryWorkspace()
         {
-            TestContext.Progress.WriteLine("Test start");
+            var timespan = TimeSpan.FromSeconds(5);
+
             var client = CreateClient();
-            TestContext.Progress.WriteLine(TestEnvironment.ResourceId);
-            var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.ResourceId), "search *", _logsTestData.DataTimeRange).ConfigureAwait(false);
+            // Empty check
+            var results = await client.QueryResourceAsync<DateTimeOffset>(
+                new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                timespan);
 
-            Assert.AreEqual(LogsQueryResultStatus.Success, results.Value.Status);
-            var resultTable = results.Value.Table;
-            CollectionAssert.IsNotEmpty(resultTable.Rows);
-            CollectionAssert.IsNotEmpty(resultTable.Columns);
+            Assert.AreEqual(0, results.Value.Count);
 
-            bool verifyRow = false;
-            bool verifyColumn1 = false;
-            bool verifyColumn2 = false;
-            foreach (LogsTableRow rows in resultTable.Rows)
-            {
-                foreach (var row in rows)
-                {
-                    if ((row != null) && row.ToString().Contains("Create/Update Storage Account"))
-                    {
-                        verifyRow = true;
-                    }
-                }
-            }
+            // Check if all rows in table were uploaded
+            // Get the time of the third event and add a bit of buffer to it (events are 2d apart)
+            var maxOffset = (DateTimeOffset)_logsTestData.TableA[2][LogsTestData.TimeGeneratedColumnNameSent];
+            timespan = Recording.UtcNow - maxOffset;
+            timespan = timespan.Add(TimeSpan.FromDays(7));
 
-            foreach (LogsTableColumn columns in resultTable.Columns)
-            {
-                if (columns.Name == "SubscriptionId" && columns.Type == LogsColumnType.StringTypeValue)
-                    verifyColumn1 = true;
+            // Make sure there is some data in the range specified
+            results = await client.QueryResourceAsync<DateTimeOffset>(
+                new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                timespan);
 
-                if (columns.Name == "TimeGenerated" && columns.Type == LogsColumnType.DatetimeTypeValue)
-                    verifyColumn2 = true;
-            }
-
-            Assert.IsTrue(verifyRow);
-            Assert.IsTrue(verifyColumn1 && verifyColumn2);
+            Assert.GreaterOrEqual(results.Value.Count, 3);
         }
 
-        //[LiveOnly]
-        //[Test]
-        //public void VerifyInvalidQueryResourceCheckNoBackslash()
-        //{
-        //    var client = CreateClient();
-        //    var exception = Assert.ThrowsAsync<FormatException>(() => client.QueryResourceAsync(
-        //        new ResourceIdentifier(TestEnvironment.StorageAccountId.Substring(1)),
-        //        "search *",
-        //        _logsTestData.DataTimeRange));
+        [LiveOnly]
+        [Test]
+        public void VerifyInvalidQueryResourceCheckNoBackslash()
+        {
+            var client = CreateClient();
+            var exception = Assert.ThrowsAsync<FormatException>(() => client.QueryResourceAsync(
+                new ResourceIdentifier(TestEnvironment.StorageAccountId.Substring(1)),
+                "search *",
+                _logsTestData.DataTimeRange));
 
-        //    StringAssert.StartsWith("The ResourceIdentifier must start with /subscriptions/ or /providers/.", exception.Message);
-        //}
+            StringAssert.StartsWith("The ResourceIdentifier must start with /subscriptions/ or /providers/.", exception.Message);
+        }
 
-        //[LiveOnly]
-        //[Test]
-        //public async Task CanQueryResourceValidId()
-        //{
-        //    var client = CreateClient();
+        [LiveOnly]
+        [Test]
+        public async Task CanQueryResourceSecondaryWorkspace()
+        {
+            var timespan = TimeSpan.FromSeconds(5);
 
-        //    var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.ResourceId),
-        //        "search *",
-        //        _logsTestData.DataTimeRange);
+            var client = CreateClient();
+            // Empty check
+            var results = await client.QueryResourceAsync<DateTimeOffset>(
+                new ResourceIdentifier(TestEnvironment.WorkspaceSecondaryResourceId),
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                timespan);
 
-        //    Assert.AreEqual(LogsQueryResultStatus.Success, results.Value.Status);
-        //    var resultTable = results.Value.Table;
-        //    CollectionAssert.IsNotEmpty(resultTable.Rows);
-        //    CollectionAssert.IsNotEmpty(resultTable.Columns);
+            Assert.AreEqual(0, results.Value.Count);
 
-        //    bool verifyRow = false;
-        //    bool verifyColumn1 = false;
-        //    bool verifyColumn2 = false;
-        //    foreach (LogsTableRow rows in resultTable.Rows)
-        //    {
-        //        foreach (var row in rows)
-        //        {
-        //            if ((row != null) && row.ToString().Contains("Create/Update Storage Account"))
-        //            {
-        //                verifyRow = true;
-        //            }
-        //        }
-        //    }
+            // Check if all rows in table were uploaded
+            // Get the time of the third event and add a bit of buffer to it (events are 2d apart)
+            var maxOffset = (DateTimeOffset)_logsTestData.TableA[2][LogsTestData.TimeGeneratedColumnNameSent];
+            timespan = Recording.UtcNow - maxOffset;
+            timespan = timespan.Add(TimeSpan.FromDays(7));
 
-        //    foreach (LogsTableColumn columns in resultTable.Columns)
-        //    {
-        //        if (columns.Name == "SubscriptionId" && columns.Type == LogsColumnType.StringTypeValue)
-        //            verifyColumn1 = true;
+            // Make sure there is some data in the range specified
+            results = await client.QueryResourceAsync<DateTimeOffset>(
+                new ResourceIdentifier(TestEnvironment.WorkspaceSecondaryResourceId),
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                timespan);
 
-        //        if (columns.Name == "TimeGenerated" && columns.Type == LogsColumnType.DatetimeTypeValue)
-        //            verifyColumn2 = true;
-        //    }
+            Assert.GreaterOrEqual(results.Value.Count, 3);
+        }
 
-        //    Assert.IsTrue(verifyRow);
-        //    Assert.IsTrue(verifyColumn1 && verifyColumn2);
-        //}
+        [LiveOnly]
+        [Test]
+        public void VerifyInvalidQueryResourceCheckMultipleBackslash()
+        {
+            var client = CreateClient();
+            LogsQueryOptions options = new LogsQueryOptions();
+            options.IncludeStatistics = true;
+            var resourceId = new ResourceIdentifier("///" + TestEnvironment.StorageAccountId);
+            var exception = Assert.ThrowsAsync<FormatException>(() => client.QueryResourceAsync(
+                resourceId,
+                "search *",
+                _logsTestData.DataTimeRange,
+                options));
 
-        //[LiveOnly]
-        //[Test]
-        //public void VerifyInvalidQueryResourceCheckMultipleBackslash()
-        //{
-        //    var client = CreateClient();
-        //    LogsQueryOptions options = new LogsQueryOptions();
-        //    options.IncludeStatistics = true;
-        //    var resourceId = new ResourceIdentifier("///" + TestEnvironment.StorageAccountId);
-        //    var exception = Assert.ThrowsAsync<FormatException>(() => client.QueryResourceAsync(
-        //        resourceId,
-        //        "search *",
-        //        _logsTestData.DataTimeRange,
-        //        options));
+            StringAssert.StartsWith("The ResourceIdentifier must start with /subscriptions/ or /providers/.", exception.Message);
+        }
 
-        //    StringAssert.StartsWith("The ResourceIdentifier must start with /subscriptions/ or /providers/.", exception.Message);
-        //}
+        [LiveOnly]
+        [Test]
+        public void VerifyQueryResourceInvalidId()
+        {
+            var client = CreateClient();
+            var exception = Assert.ThrowsAsync<FormatException>(() => client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId.Remove(15, 36)),
+                "search *",
+                _logsTestData.DataTimeRange));
 
-        //[LiveOnly]
-        //[Test]
-        //public void VerifyQueryResourceInvalidId()
-        //{
-        //    var client = CreateClient();
-        //    var exception = Assert.ThrowsAsync<FormatException>(() => client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId.Remove(15, 36)),
-        //        "search *",
-        //        _logsTestData.DataTimeRange));
-
-        //    StringAssert.StartsWith("The ResourceIdentifier is missing the key for subscriptions.", exception.Message);
-        //}
+            StringAssert.StartsWith("The ResourceIdentifier is missing the key for subscriptions.", exception.Message);
+        }
 
         public static IEnumerable<FormattableStringWrapper> Queries
         {

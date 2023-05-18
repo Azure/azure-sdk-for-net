@@ -23,5 +23,7 @@ namespace Azure.Monitor.Query.Tests
         public string ResourceId => GetRecordedVariable("RESOURCE_ID");
         public string StorageAccountName => GetRecordedVariable("STORAGE_ACCOUNT_NAME");
         public string StorageAccountId => GetRecordedVariable("STORAGE_ID");
+        public string WorkspacePrimaryResourceId => GetRecordedVariable("WORKSPACE_PRIMARY_RESOURCE_ID");
+        public string WorkspaceSecondaryResourceId => GetRecordedVariable("WORKSPACE_SECONDARY_RESOURCE_ID");
     }
 }

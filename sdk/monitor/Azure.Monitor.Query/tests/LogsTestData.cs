@@ -97,8 +97,7 @@ namespace Azure.Monitor.Query.Tests
                 TestContext.Progress.WriteLine("Initialize lock");
                 _initialization ??= Task.WhenAll(
                     InitializeData(_testEnvironment.WorkspaceId, _testEnvironment.WorkspaceKey),
-                    InitializeData(_testEnvironment.SecondaryWorkspaceId, _testEnvironment.SecondaryWorkspaceKey),
-                    InitializeStorageAccount());
+                    InitializeData(_testEnvironment.SecondaryWorkspaceId, _testEnvironment.SecondaryWorkspaceKey));
             }
 
             await _initialization;
@@ -140,25 +139,6 @@ namespace Azure.Monitor.Query.Tests
             catch
             {
                 return 0;
-            }
-        }
-
-        private async Task InitializeStorageAccount()
-        {
-            var client = new LogsQueryClient(_testEnvironment.Credential);
-
-            while (true)
-            {
-                var result = await client.QueryResourceAsync(new ResourceIdentifier(_testEnvironment.ResourceId), "search *", DataTimeRange).ConfigureAwait(false);
-                if (result.Value.Table.Rows.Count > 0 && result.Value.Table.Columns.Count > 0)
-                {
-                    // Make sure StorageAccount set-up is complete and data is there before beginning testing
-                    break;
-                }
-                else
-                {
-                    await Task.Delay(TimeSpan.FromSeconds(30));
-                }
             }
         }
     }
