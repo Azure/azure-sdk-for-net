@@ -16,7 +16,7 @@ namespace Azure.Core.Samples
     {
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task TrySerialize()
+        public void TrySerialize()
         {
             #region Snippet:Try_Serialize
             //TODO
@@ -25,7 +25,7 @@ namespace Azure.Core.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task TryDeserialize()
+        public void TryDeserialize()
         {
             #region Snippet:Try_Deserialize
             //TODO
@@ -34,7 +34,7 @@ namespace Azure.Core.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task NonTrySerialize()
+        public void NonTrySerialize()
         {
             #region Snippet:NonTry_Serialize
             //TODO
@@ -43,7 +43,7 @@ namespace Azure.Core.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task NonTryDeserialize()
+        public void NonTryDeserialize()
         {
             #region Snippet:NonTry_Deserialize
             //TODO
@@ -52,7 +52,7 @@ namespace Azure.Core.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task ExplicitCastSerialize()
+        public void ExplicitCastSerialize()
         {
             #region Snippet:ExplicitCast_Serialize
             //TODO
@@ -61,7 +61,7 @@ namespace Azure.Core.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task ExplicitCastDeserialize()
+        public void ExplicitCastDeserialize()
         {
             #region Snippet:ExplicitCast_Deserialize
             //TODO
@@ -70,7 +70,7 @@ namespace Azure.Core.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task StjSerialize()
+        public void StjSerialize()
         {
             #region Snippet:Stj_Serialize
             //TODO
@@ -79,7 +79,7 @@ namespace Azure.Core.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task StjDeserialize()
+        public void StjDeserialize()
         {
             #region Snippet:Stj_Deserialize
             //TODO
@@ -88,7 +88,7 @@ namespace Azure.Core.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task StaticSerialize()
+        public void StaticSerialize()
         {
             #region Snippet:Static_Serialize
             //TODO
@@ -97,7 +97,7 @@ namespace Azure.Core.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task StaticDeserialize()
+        public void StaticDeserialize()
         {
             #region Snippet:Static_Deserialize
             //TODO
