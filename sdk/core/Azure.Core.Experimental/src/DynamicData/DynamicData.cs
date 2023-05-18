@@ -23,12 +23,6 @@ namespace Azure.Core.Dynamic
     [JsonConverter(typeof(JsonConverter))]
     public sealed partial class DynamicData : IDisposable
     {
-        internal static JsonSerializerOptions DefaultSerializerOptions = new JsonSerializerOptions()
-        {
-            PropertyNameCaseInsensitive = true,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-        };
-
         private static readonly MethodInfo GetPropertyMethod = typeof(DynamicData).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
         private static readonly MethodInfo SetPropertyMethod = typeof(DynamicData).GetMethod(nameof(SetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
         private static readonly MethodInfo GetEnumerableMethod = typeof(DynamicData).GetMethod(nameof(GetEnumerable), BindingFlags.NonPublic | BindingFlags.Instance)!;
@@ -36,12 +30,42 @@ namespace Azure.Core.Dynamic
         private static readonly MethodInfo SetViaIndexerMethod = typeof(DynamicData).GetMethod(nameof(SetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
         private MutableJsonElement _element;
+        private readonly DynamicDataOptions _options;
         private readonly JsonSerializerOptions _serializerOptions;
 
-        internal DynamicData(MutableJsonElement element)
+        internal DynamicData(MutableJsonElement element, DynamicDataOptions options)
         {
             _element = element;
-            _serializerOptions = DefaultSerializerOptions;
+            _options = options;
+            _serializerOptions = GetSerializerOptions(options);
+        }
+
+        internal static JsonSerializerOptions GetSerializerOptions(DynamicDataOptions options)
+        {
+            JsonSerializerOptions serializer = new()
+            {
+                PropertyNameCaseInsensitive = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                Converters =
+                {
+                    new DefaultTimeSpanConverter()
+                }
+            };
+
+            switch (options.DateTimeHandling)
+            {
+                case DynamicDateTimeHandling.UnixTime:
+                    serializer.Converters.Add(new UnixTimeDateTimeConverter());
+                    serializer.Converters.Add(new UnixTimeDateTimeOffsetConverter());
+                    break;
+                case DynamicDateTimeHandling.Rfc3339:
+                default:
+                    serializer.Converters.Add(new Rfc3339DateTimeConverter());
+                    serializer.Converters.Add(new Rfc3339DateTimeOffsetConverter());
+                    break;
+            }
+
+            return serializer;
         }
 
         internal void WriteTo(Stream stream)
@@ -61,14 +85,14 @@ namespace Azure.Core.Dynamic
 
             if (_element.TryGetProperty(name, out MutableJsonElement element))
             {
-                return new DynamicData(element);
+                return new DynamicData(element, _options);
             }
 
             if (char.IsUpper(name[0]))
             {
                 if (_element.TryGetProperty(GetAsCamelCase(name), out element))
                 {
-                    return new DynamicData(element);
+                    return new DynamicData(element, _options);
                 }
             }
 
@@ -92,13 +116,13 @@ namespace Azure.Core.Dynamic
                 case string propertyName:
                     if (_element.TryGetProperty(propertyName, out MutableJsonElement element))
                     {
-                        return new DynamicData(element);
+                        return new DynamicData(element, _options);
                     }
 
                     throw new KeyNotFoundException($"Could not find JSON member with name '{propertyName}'.");
 
                 case int arrayIndex:
-                    return new DynamicData(_element.GetIndexElement(arrayIndex));
+                    return new DynamicData(_element.GetIndexElement(arrayIndex), _options);
             }
 
             throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
@@ -108,8 +132,8 @@ namespace Azure.Core.Dynamic
         {
             return _element.ValueKind switch
             {
-                JsonValueKind.Array => new ArrayEnumerator(_element.EnumerateArray()),
-                JsonValueKind.Object => new ObjectEnumerator(_element.EnumerateObject()),
+                JsonValueKind.Array => new ArrayEnumerator(_element.EnumerateArray(), _options),
+                JsonValueKind.Object => new ObjectEnumerator(_element.EnumerateObject(), _options),
                 _ => throw new InvalidCastException($"Unable to enumerate JSON element of kind '{_element.ValueKind}'.  Cannot cast value to IEnumerable."),
             };
         }
@@ -117,6 +141,11 @@ namespace Azure.Core.Dynamic
         private object? SetProperty(string name, object value)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            if (HasTypeConverter(value))
+            {
+                value = ConvertType(value);
+            }
 
             if (!char.IsUpper(name[0]))
             {
@@ -145,6 +174,20 @@ namespace Azure.Core.Dynamic
             return null;
         }
 
+        private static bool HasTypeConverter(object value) => value switch
+        {
+            DateTime => true,
+            DateTimeOffset => true,
+            TimeSpan => true,
+            _ => false
+        };
+
+        private object ConvertType(object value)
+        {
+            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(value, _serializerOptions);
+            return JsonDocument.Parse(bytes);
+        }
+
         private object? SetViaIndexer(object index, object value)
         {
             switch (index)
@@ -155,7 +198,7 @@ namespace Azure.Core.Dynamic
                 case int arrayIndex:
                     MutableJsonElement element = _element.GetIndexElement(arrayIndex);
                     element.Set(value);
-                    return new DynamicData(element);
+                    return new DynamicData(element, _options);
             }
 
             throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
@@ -320,7 +363,7 @@ namespace Azure.Core.Dynamic
             public override DynamicData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return new DynamicData(new MutableJsonDocument(document, options).RootElement);
+                return new DynamicData(new MutableJsonDocument(document, options).RootElement, DynamicDataOptions.Default);
             }
 
             public override void Write(Utf8JsonWriter writer, DynamicData value, JsonSerializerOptions options)
