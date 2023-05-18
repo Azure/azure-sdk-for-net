@@ -25,19 +25,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var traceTelemetryItems = new ConcurrentBag<TelemetryItem>();
             var metricTelemetryItems = new ConcurrentBag<TelemetryItem>();
 
-            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor();
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
 
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .SetSampler(new AlwaysOnSampler())
                 .AddSource(nameof(StandardMetricTests.ValidateRequestDurationMetric))
                 .AddProcessor(standardMetricCustomProcessor)
                 .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new MockTransmitter(traceTelemetryItems))))
-                .Build();
-
-            using var meterProvider = Sdk.CreateMeterProviderBuilder()
-                 .AddMeter(StandardMetricConstants.StandardMetricMeterName)
-                .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)))
-                { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                 .Build();
 
             using (var activity = activitySource.StartActivity("Test", ActivityKind.Server))
@@ -49,7 +43,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             WaitForActivityExport(traceTelemetryItems);
 
-            meterProvider?.ForceFlush();
+            standardMetricCustomProcessor._meterProvider?.ForceFlush();
 
             Assert.Single(metricTelemetryItems);
 
@@ -75,19 +69,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var traceTelemetryItems = new ConcurrentBag<TelemetryItem>();
             var metricTelemetryItems = new ConcurrentBag<TelemetryItem>();
 
-            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor();
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
 
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .SetSampler(new AlwaysOnSampler())
                 .AddSource(nameof(StandardMetricTests.ValidateDependencyDurationMetric))
                 .AddProcessor(standardMetricCustomProcessor)
                 .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new MockTransmitter(traceTelemetryItems))))
-                .Build();
-
-            using var meterProvider = Sdk.CreateMeterProviderBuilder()
-                 .AddMeter(StandardMetricConstants.StandardMetricMeterName)
-                .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)))
-                { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                 .Build();
 
             using (var activity = activitySource.StartActivity("Test", ActivityKind.Client))
@@ -101,7 +89,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             WaitForActivityExport(traceTelemetryItems);
 
-            meterProvider?.ForceFlush();
+            standardMetricCustomProcessor._meterProvider?.ForceFlush();
 
             Assert.Single(metricTelemetryItems);
 
