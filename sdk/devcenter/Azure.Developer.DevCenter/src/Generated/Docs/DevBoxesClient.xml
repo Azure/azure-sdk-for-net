@@ -103,18 +103,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, "<projectName>", credential);
 
-Response response = await client.GetDevBoxByUserAsync("<devBoxName>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("poolName").ToString());
-]]></code>
-This sample shows how to call GetDevBoxByUserAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DevBoxesClient(endpoint, "<projectName>", credential);
-
-Response response = await client.GetDevBoxByUserAsync("<devBoxName>", "me", new RequestContext());
+Response response = await client.GetDevBoxByUserAsync("<devBoxName>", "<userId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -152,18 +141,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, "<projectName>", credential);
 
-Response response = client.GetDevBoxByUser("<devBoxName>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("poolName").ToString());
-]]></code>
-This sample shows how to call GetDevBoxByUser with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DevBoxesClient(endpoint, "<projectName>", credential);
-
-Response response = client.GetDevBoxByUser("<devBoxName>", "me", new RequestContext());
+Response response = client.GetDevBoxByUser("<devBoxName>", "<userId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -201,18 +179,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, "<projectName>", credential);
 
-Response response = await client.GetRemoteConnectionAsync("<devBoxName>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetRemoteConnectionAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DevBoxesClient(endpoint, "<projectName>", credential);
-
-Response response = await client.GetRemoteConnectionAsync("<devBoxName>", "me", new RequestContext());
+Response response = await client.GetRemoteConnectionAsync("<devBoxName>", "<userId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("webUrl").ToString());
@@ -228,18 +195,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, "<projectName>", credential);
 
-Response response = client.GetRemoteConnection("<devBoxName>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetRemoteConnection with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DevBoxesClient(endpoint, "<projectName>", credential);
-
-Response response = client.GetRemoteConnection("<devBoxName>", "me", new RequestContext());
+Response response = client.GetRemoteConnection("<devBoxName>", "<userId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("webUrl").ToString());
@@ -255,18 +211,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, "<projectName>", credential);
 
-Response response = await client.GetUpcomingActionAsync("<devBoxName>", "<upcomingActionId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetUpcomingActionAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DevBoxesClient(endpoint, "<projectName>", credential);
-
-Response response = await client.GetUpcomingActionAsync("<devBoxName>", "<upcomingActionId>", "me", new RequestContext());
+Response response = await client.GetUpcomingActionAsync("<devBoxName>", "<upcomingActionId>", "<userId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -286,18 +231,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, "<projectName>", credential);
 
-Response response = client.GetUpcomingAction("<devBoxName>", "<upcomingActionId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetUpcomingAction with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DevBoxesClient(endpoint, "<projectName>", credential);
-
-Response response = client.GetUpcomingAction("<devBoxName>", "<upcomingActionId>", "me", new RequestContext());
+Response response = client.GetUpcomingAction("<devBoxName>", "<upcomingActionId>", "<userId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -361,18 +295,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, "<projectName>", credential);
 
-Response response = await client.DelayUpcomingActionAsync("<devBoxName>", "<upcomingActionId>", DateTimeOffset.UtcNow);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call DelayUpcomingActionAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DevBoxesClient(endpoint, "<projectName>", credential);
-
-Response response = await client.DelayUpcomingActionAsync("<devBoxName>", "<upcomingActionId>", DateTimeOffset.UtcNow, "me", new RequestContext());
+Response response = await client.DelayUpcomingActionAsync("<devBoxName>", "<upcomingActionId>", DateTimeOffset.UtcNow, "<userId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -392,18 +315,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, "<projectName>", credential);
 
-Response response = client.DelayUpcomingAction("<devBoxName>", "<upcomingActionId>", DateTimeOffset.UtcNow);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call DelayUpcomingAction with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DevBoxesClient(endpoint, "<projectName>", credential);
-
-Response response = client.DelayUpcomingAction("<devBoxName>", "<upcomingActionId>", DateTimeOffset.UtcNow, "me", new RequestContext());
+Response response = client.DelayUpcomingAction("<devBoxName>", "<upcomingActionId>", DateTimeOffset.UtcNow, "<userId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -417,19 +329,7 @@ Console.WriteLine(result.GetProperty("sourceId").ToString());
     </member>
     <member name="GetPoolsAsync(int?,string,RequestContext)">
 <example>
-This sample shows how to call GetPoolsAsync and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DevBoxesClient(endpoint, "<projectName>", credential);
-
-await foreach (var item in client.GetPoolsAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetPoolsAsync with all parameters, and how to parse the result.
+This sample shows how to call GetPoolsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -458,19 +358,7 @@ await foreach (var item in client.GetPoolsAsync(1234, "<filter>", new RequestCon
     </member>
     <member name="GetPools(int?,string,RequestContext)">
 <example>
-This sample shows how to call GetPools and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DevBoxesClient(endpoint, "<projectName>", credential);
-
-foreach (var item in client.GetPools())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetPools with all parameters, and how to parse the result.
+This sample shows how to call GetPools with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -505,18 +393,6 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, "<projectName>", credential);
 
-await foreach (var item in client.GetSchedulesByPoolAsync("<poolName>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetSchedulesByPoolAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DevBoxesClient(endpoint, "<projectName>", credential);
-
 await foreach (var item in client.GetSchedulesByPoolAsync("<poolName>", 1234, "<filter>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -537,18 +413,6 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, "<projectName>", credential);
 
-foreach (var item in client.GetSchedulesByPool("<poolName>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetSchedulesByPool with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DevBoxesClient(endpoint, "<projectName>", credential);
-
 foreach (var item in client.GetSchedulesByPool("<poolName>", 1234, "<filter>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -563,25 +427,13 @@ foreach (var item in client.GetSchedulesByPool("<poolName>", 1234, "<filter>", n
     </member>
     <member name="GetDevBoxesByUserAsync(string,string,int?,RequestContext)">
 <example>
-This sample shows how to call GetDevBoxesByUserAsync and parse the result.
+This sample shows how to call GetDevBoxesByUserAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, "<projectName>", credential);
 
-await foreach (var item in client.GetDevBoxesByUserAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("poolName").ToString());
-}
-]]></code>
-This sample shows how to call GetDevBoxesByUserAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DevBoxesClient(endpoint, "<projectName>", credential);
-
-await foreach (var item in client.GetDevBoxesByUserAsync("me", "<filter>", 1234, new RequestContext()))
+await foreach (var item in client.GetDevBoxesByUserAsync("<userId>", "<filter>", 1234, new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -614,25 +466,13 @@ await foreach (var item in client.GetDevBoxesByUserAsync("me", "<filter>", 1234,
     </member>
     <member name="GetDevBoxesByUser(string,string,int?,RequestContext)">
 <example>
-This sample shows how to call GetDevBoxesByUser and parse the result.
+This sample shows how to call GetDevBoxesByUser with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, "<projectName>", credential);
 
-foreach (var item in client.GetDevBoxesByUser())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("poolName").ToString());
-}
-]]></code>
-This sample shows how to call GetDevBoxesByUser with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DevBoxesClient(endpoint, "<projectName>", credential);
-
-foreach (var item in client.GetDevBoxesByUser("me", "<filter>", 1234, new RequestContext()))
+foreach (var item in client.GetDevBoxesByUser("<userId>", "<filter>", 1234, new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -671,19 +511,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, "<projectName>", credential);
 
-await foreach (var item in client.GetUpcomingActionsAsync("<devBoxName>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetUpcomingActionsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DevBoxesClient(endpoint, "<projectName>", credential);
-
-await foreach (var item in client.GetUpcomingActionsAsync("<devBoxName>", "me", new RequestContext()))
+await foreach (var item in client.GetUpcomingActionsAsync("<devBoxName>", "<userId>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -704,19 +532,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevBoxesClient(endpoint, "<projectName>", credential);
 
-foreach (var item in client.GetUpcomingActions("<devBoxName>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetUpcomingActions with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DevBoxesClient(endpoint, "<projectName>", credential);
-
-foreach (var item in client.GetUpcomingActions("<devBoxName>", "me", new RequestContext()))
+foreach (var item in client.GetUpcomingActions("<devBoxName>", "<userId>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());

@@ -9,23 +9,6 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-Response response = await client.GetUpdateAsync("<provider>", "<name>", "<version>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
-Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
-Console.WriteLine(result.GetProperty("compatibility")[0].GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("manifestVersion").ToString());
-Console.WriteLine(result.GetProperty("importedDateTime").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-]]></code>
-This sample shows how to call GetUpdateAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
-
 Response response = await client.GetUpdateAsync("<provider>", "<name>", "<version>", null, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -60,23 +43,6 @@ Console.WriteLine(result.GetProperty("etag").ToString());
     <member name="GetUpdate(string,string,string,ETag?,RequestContext)">
 <example>
 This sample shows how to call GetUpdate with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
-
-Response response = client.GetUpdate("<provider>", "<name>", "<version>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
-Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
-Console.WriteLine(result.GetProperty("compatibility")[0].GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("manifestVersion").ToString());
-Console.WriteLine(result.GetProperty("importedDateTime").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-]]></code>
-This sample shows how to call GetUpdate with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -121,20 +87,6 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-Response response = await client.GetFileAsync("<provider>", "<name>", "<version>", "<fileId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("fileId").ToString());
-Console.WriteLine(result.GetProperty("fileName").ToString());
-Console.WriteLine(result.GetProperty("sizeInBytes").ToString());
-Console.WriteLine(result.GetProperty("hashes").GetProperty("<test>").ToString());
-]]></code>
-This sample shows how to call GetFileAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
-
 Response response = await client.GetFileAsync("<provider>", "<name>", "<version>", "<fileId>", null, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -166,20 +118,6 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-Response response = client.GetFile("<provider>", "<name>", "<version>", "<fileId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("fileId").ToString());
-Console.WriteLine(result.GetProperty("fileName").ToString());
-Console.WriteLine(result.GetProperty("sizeInBytes").ToString());
-Console.WriteLine(result.GetProperty("hashes").GetProperty("<test>").ToString());
-]]></code>
-This sample shows how to call GetFile with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
-
 Response response = client.GetFile("<provider>", "<name>", "<version>", "<fileId>", null, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -206,20 +144,6 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToStrin
     <member name="GetOperationStatusAsync(string,ETag?,RequestContext)">
 <example>
 This sample shows how to call GetOperationStatusAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
-
-Response response = await client.GetOperationStatusAsync("<operationId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("operationId").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-]]></code>
-This sample shows how to call GetOperationStatusAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -258,20 +182,6 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-Response response = client.GetOperationStatus("<operationId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("operationId").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-]]></code>
-This sample shows how to call GetOperationStatus with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
-
 Response response = client.GetOperationStatus("<operationId>", null, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -299,25 +209,7 @@ Console.WriteLine(result.GetProperty("etag").ToString());
     </member>
     <member name="GetUpdatesAsync(string,string,RequestContext)">
 <example>
-This sample shows how to call GetUpdatesAsync and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
-
-await foreach (var item in client.GetUpdatesAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
-    Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
-    Console.WriteLine(result.GetProperty("compatibility")[0].GetProperty("<test>").ToString());
-    Console.WriteLine(result.GetProperty("manifestVersion").ToString());
-    Console.WriteLine(result.GetProperty("importedDateTime").ToString());
-    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-}
-]]></code>
-This sample shows how to call GetUpdatesAsync with all parameters, and how to parse the result.
+This sample shows how to call GetUpdatesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -357,25 +249,7 @@ await foreach (var item in client.GetUpdatesAsync("<search>", "<filter>", new Re
     </member>
     <member name="GetUpdates(string,string,RequestContext)">
 <example>
-This sample shows how to call GetUpdates and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
-
-foreach (var item in client.GetUpdates())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
-    Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
-    Console.WriteLine(result.GetProperty("compatibility")[0].GetProperty("<test>").ToString());
-    Console.WriteLine(result.GetProperty("manifestVersion").ToString());
-    Console.WriteLine(result.GetProperty("importedDateTime").ToString());
-    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-}
-]]></code>
-This sample shows how to call GetUpdates with all parameters, and how to parse the result.
+This sample shows how to call GetUpdates with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -415,7 +289,7 @@ foreach (var item in client.GetUpdates("<search>", "<filter>", new RequestContex
     </member>
     <member name="GetProvidersAsync(RequestContext)">
 <example>
-This sample shows how to call GetProvidersAsync and parse the result.
+This sample shows how to call GetProvidersAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -431,7 +305,7 @@ await foreach (var item in client.GetProvidersAsync(new RequestContext()))
     </member>
     <member name="GetProviders(RequestContext)">
 <example>
-This sample shows how to call GetProviders and parse the result.
+This sample shows how to call GetProviders with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -485,18 +359,6 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-await foreach (var item in client.GetVersionsAsync("<provider>", "<name>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetVersionsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
-
 await foreach (var item in client.GetVersionsAsync("<provider>", "<name>", "<filter>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -508,18 +370,6 @@ await foreach (var item in client.GetVersionsAsync("<provider>", "<name>", "<fil
     <member name="GetVersions(string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetVersions with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
-
-foreach (var item in client.GetVersions("<provider>", "<name>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetVersions with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -567,22 +417,7 @@ foreach (var item in client.GetFiles("<provider>", "<name>", "<version>", new Re
     </member>
     <member name="GetOperationStatusesAsync(string,int?,RequestContext)">
 <example>
-This sample shows how to call GetOperationStatusesAsync and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
-
-await foreach (var item in client.GetOperationStatusesAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("operationId").ToString());
-    Console.WriteLine(result.GetProperty("status").ToString());
-    Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
-    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-}
-]]></code>
-This sample shows how to call GetOperationStatusesAsync with all parameters, and how to parse the result.
+This sample shows how to call GetOperationStatusesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -616,22 +451,7 @@ await foreach (var item in client.GetOperationStatusesAsync("<filter>", 1234, ne
     </member>
     <member name="GetOperationStatuses(string,int?,RequestContext)">
 <example>
-This sample shows how to call GetOperationStatuses and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
-
-foreach (var item in client.GetOperationStatuses())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("operationId").ToString());
-    Console.WriteLine(result.GetProperty("status").ToString());
-    Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
-    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-}
-]]></code>
-This sample shows how to call GetOperationStatuses with all parameters, and how to parse the result.
+This sample shows how to call GetOperationStatuses with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");

@@ -9,19 +9,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-Response response = await client.GetEnvironmentByUserAsync("<environmentName>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("environmentType").ToString());
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetEnvironmentByUserAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
-
-Response response = await client.GetEnvironmentByUserAsync("<environmentName>", "me", new RequestContext());
+Response response = await client.GetEnvironmentByUserAsync("<environmentName>", "<userId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -48,19 +36,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-Response response = client.GetEnvironmentByUser("<environmentName>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("environmentType").ToString());
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetEnvironmentByUser with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
-
-Response response = client.GetEnvironmentByUser("<environmentName>", "me", new RequestContext());
+Response response = client.GetEnvironmentByUser("<environmentName>", "<userId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -335,20 +311,7 @@ Console.WriteLine(result.GetProperty("eligibleForLatestVersion").ToString());
     </member>
     <member name="GetEnvironmentsAsync(int?,RequestContext)">
 <example>
-This sample shows how to call GetEnvironmentsAsync and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
-
-await foreach (var item in client.GetEnvironmentsAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("environmentType").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetEnvironmentsAsync with all parameters, and how to parse the result.
+This sample shows how to call GetEnvironmentsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -376,20 +339,7 @@ await foreach (var item in client.GetEnvironmentsAsync(1234, new RequestContext(
     </member>
     <member name="GetEnvironments(int?,RequestContext)">
 <example>
-This sample shows how to call GetEnvironments and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
-
-foreach (var item in client.GetEnvironments())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("environmentType").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetEnvironments with all parameters, and how to parse the result.
+This sample shows how to call GetEnvironments with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -417,26 +367,13 @@ foreach (var item in client.GetEnvironments(1234, new RequestContext()))
     </member>
     <member name="GetEnvironmentsByUserAsync(string,int?,RequestContext)">
 <example>
-This sample shows how to call GetEnvironmentsByUserAsync and parse the result.
+This sample shows how to call GetEnvironmentsByUserAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-await foreach (var item in client.GetEnvironmentsByUserAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("environmentType").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetEnvironmentsByUserAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
-
-await foreach (var item in client.GetEnvironmentsByUserAsync("me", 1234, new RequestContext()))
+await foreach (var item in client.GetEnvironmentsByUserAsync("<userId>", 1234, new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -458,26 +395,13 @@ await foreach (var item in client.GetEnvironmentsByUserAsync("me", 1234, new Req
     </member>
     <member name="GetEnvironmentsByUser(string,int?,RequestContext)">
 <example>
-This sample shows how to call GetEnvironmentsByUser and parse the result.
+This sample shows how to call GetEnvironmentsByUser with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-foreach (var item in client.GetEnvironmentsByUser())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("environmentType").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetEnvironmentsByUser with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
-
-foreach (var item in client.GetEnvironmentsByUser("me", 1234, new RequestContext()))
+foreach (var item in client.GetEnvironmentsByUser("<userId>", 1234, new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -499,19 +423,7 @@ foreach (var item in client.GetEnvironmentsByUser("me", 1234, new RequestContext
     </member>
     <member name="GetCatalogItemsAsync(int?,RequestContext)">
 <example>
-This sample shows how to call GetCatalogItemsAsync and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
-
-await foreach (var item in client.GetCatalogItemsAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetCatalogItemsAsync with all parameters, and how to parse the result.
+This sample shows how to call GetCatalogItemsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -529,19 +441,7 @@ await foreach (var item in client.GetCatalogItemsAsync(1234, new RequestContext(
     </member>
     <member name="GetCatalogItems(int?,RequestContext)">
 <example>
-This sample shows how to call GetCatalogItems and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
-
-foreach (var item in client.GetCatalogItems())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetCatalogItems with all parameters, and how to parse the result.
+This sample shows how to call GetCatalogItems with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -560,18 +460,6 @@ foreach (var item in client.GetCatalogItems(1234, new RequestContext()))
     <member name="GetCatalogItemVersionsAsync(string,int?,RequestContext)">
 <example>
 This sample shows how to call GetCatalogItemVersionsAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
-
-await foreach (var item in client.GetCatalogItemVersionsAsync("<catalogItemId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetCatalogItemVersionsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -626,18 +514,6 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-foreach (var item in client.GetCatalogItemVersions("<catalogItemId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetCatalogItemVersions with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
-
 foreach (var item in client.GetCatalogItemVersions("<catalogItemId>", 1234, new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -681,19 +557,7 @@ foreach (var item in client.GetCatalogItemVersions("<catalogItemId>", 1234, new 
     </member>
     <member name="GetEnvironmentTypesAsync(int?,RequestContext)">
 <example>
-This sample shows how to call GetEnvironmentTypesAsync and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
-
-await foreach (var item in client.GetEnvironmentTypesAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetEnvironmentTypesAsync with all parameters, and how to parse the result.
+This sample shows how to call GetEnvironmentTypesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -711,19 +575,7 @@ await foreach (var item in client.GetEnvironmentTypesAsync(1234, new RequestCont
     </member>
     <member name="GetEnvironmentTypes(int?,RequestContext)">
 <example>
-This sample shows how to call GetEnvironmentTypes and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
-
-foreach (var item in client.GetEnvironmentTypes())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetEnvironmentTypes with all parameters, and how to parse the result.
+This sample shows how to call GetEnvironmentTypes with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");

@@ -27,7 +27,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-            Response response = client.GetUpdate("<provider>", "<name>", "<version>");
+            Response response = client.GetUpdate("<provider>", "<name>", "<version>", null, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
@@ -85,7 +85,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-            Response response = await client.GetUpdateAsync("<provider>", "<name>", "<version>");
+            Response response = await client.GetUpdateAsync("<provider>", "<name>", "<version>", null, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
@@ -143,7 +143,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-            Response response = client.GetFile("<provider>", "<name>", "<version>", "<fileId>");
+            Response response = client.GetFile("<provider>", "<name>", "<version>", "<fileId>", null, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("fileId").ToString());
@@ -190,7 +190,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-            Response response = await client.GetFileAsync("<provider>", "<name>", "<version>", "<fileId>");
+            Response response = await client.GetFileAsync("<provider>", "<name>", "<version>", "<fileId>", null, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("fileId").ToString());
@@ -237,7 +237,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-            Response response = client.GetOperationStatus("<operationId>");
+            Response response = client.GetOperationStatus("<operationId>", null, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -286,7 +286,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-            Response response = await client.GetOperationStatusAsync("<operationId>");
+            Response response = await client.GetOperationStatusAsync("<operationId>", null, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -335,7 +335,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-            foreach (var item in client.GetUpdates())
+            foreach (var item in client.GetUpdates("<search>", "<filter>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
@@ -395,7 +395,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-            await foreach (var item in client.GetUpdatesAsync())
+            await foreach (var item in client.GetUpdatesAsync("<search>", "<filter>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
@@ -455,7 +455,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-            foreach (var item in client.GetProviders())
+            foreach (var item in client.GetProviders(new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -485,7 +485,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-            await foreach (var item in client.GetProvidersAsync())
+            await foreach (var item in client.GetProvidersAsync(new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -515,7 +515,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-            foreach (var item in client.GetNames("<provider>"))
+            foreach (var item in client.GetNames("<provider>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -545,7 +545,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-            await foreach (var item in client.GetNamesAsync("<provider>"))
+            await foreach (var item in client.GetNamesAsync("<provider>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -575,7 +575,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-            foreach (var item in client.GetVersions("<provider>", "<name>"))
+            foreach (var item in client.GetVersions("<provider>", "<name>", "<filter>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -605,7 +605,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-            await foreach (var item in client.GetVersionsAsync("<provider>", "<name>"))
+            await foreach (var item in client.GetVersionsAsync("<provider>", "<name>", "<filter>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -635,7 +635,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-            foreach (var item in client.GetFiles("<provider>", "<name>", "<version>"))
+            foreach (var item in client.GetFiles("<provider>", "<name>", "<version>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -665,7 +665,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-            await foreach (var item in client.GetFilesAsync("<provider>", "<name>", "<version>"))
+            await foreach (var item in client.GetFilesAsync("<provider>", "<name>", "<version>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -695,7 +695,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-            foreach (var item in client.GetOperationStatuses())
+            foreach (var item in client.GetOperationStatuses("<filter>", 1234, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -746,7 +746,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
-            await foreach (var item in client.GetOperationStatusesAsync())
+            await foreach (var item in client.GetOperationStatusesAsync("<filter>", 1234, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("operationId").ToString());
