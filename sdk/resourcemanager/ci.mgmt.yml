@@ -74,6 +74,7 @@ trigger:
     - sdk/eventgrid/Azure.ResourceManager.EventGrid
     - sdk/eventhub/Azure.ResourceManager.EventHubs
     - sdk/extendedlocation/Azure.ResourceManager.ExtendedLocations
+    - sdk/fist/Azure.ResourceManager.IoTFirmwareDefense
     - sdk/fluidrelay/Azure.ResourceManager.FluidRelay
     - sdk/frontdoor/Azure.ResourceManager.FrontDoor
     - sdk/grafana/Azure.ResourceManager.Grafana
@@ -245,6 +246,7 @@ pr:
     - sdk/eventgrid/Azure.ResourceManager.EventGrid
     - sdk/eventhub/Azure.ResourceManager.EventHubs
     - sdk/extendedlocation/Azure.ResourceManager.ExtendedLocations
+    - sdk/fist/Azure.ResourceManager.IoTFirmwareDefense
     - sdk/fluidrelay/Azure.ResourceManager.FluidRelay
     - sdk/frontdoor/Azure.ResourceManager.FrontDoor
     - sdk/grafana/Azure.ResourceManager.Grafana
