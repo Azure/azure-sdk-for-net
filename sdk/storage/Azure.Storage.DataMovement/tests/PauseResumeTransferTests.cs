@@ -225,7 +225,7 @@ namespace Azure.Storage.DataMovement.Tests
             return await manager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
         }
 
-        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
@@ -274,7 +274,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(File.Exists(fileName.FullPath));
         }
 
-        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
@@ -339,7 +339,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.CatchAsync(async () => await transferManager.PauseTransferIfRunningAsync("bad transfer Id"));
         }
 
-        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
@@ -393,7 +393,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(File.Exists(fileName.FullPath));
         }
 
-        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
@@ -608,7 +608,7 @@ namespace Azure.Storage.DataMovement.Tests
             return await manager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
         }
 
-        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
@@ -654,7 +654,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
         }
 
-        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
@@ -700,7 +700,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
         }
 
-        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
@@ -752,7 +752,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
         }
 
-        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
