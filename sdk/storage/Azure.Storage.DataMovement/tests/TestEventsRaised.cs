@@ -192,6 +192,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// <summary>
         /// This asserts that the expected events occurred during a container transfer that is expected
         /// to have a <see cref="StorageTransferStatus.CompletedWithFailure"/> at the end without any skips.
+        /// Assuming <see cref="ErrorHandlingOptions.StopOnAllFailures"/> was set.
         /// </summary>
         /// <param name="expectedFailureCount">
         /// Expected amount of failure single transfers to occur within the container transfers.
@@ -204,6 +205,23 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(StorageTransferStatus.InProgress, StatusEvents.First().StorageTransferStatus);
             Assert.AreEqual(StorageTransferStatus.CancellationInProgress, StatusEvents.ElementAt(1).StorageTransferStatus);
             Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, StatusEvents.ElementAt(2).StorageTransferStatus);
+        }
+
+        /// <summary>
+        /// This asserts that the expected events occurred during a container transfer that is expected
+        /// to have a <see cref="StorageTransferStatus.CompletedWithFailure"/> at the end without any skips.
+        /// Assuming <see cref="ErrorHandlingOptions.ContinueOnFailure"/> was set.
+        /// </summary>
+        /// <param name="expectedFailureCount">
+        /// Expected amount of failure single transfers to occur within the container transfers.
+        /// </param>
+        public void AssertContainerCompletedWithFailedCheckContinue(int expectedFailureCount)
+        {
+            Assert.AreEqual(expectedFailureCount, FailedEvents.Count);
+            Assert.IsEmpty(SkippedEvents);
+            Assert.AreEqual(2, StatusEvents.Count);
+            Assert.AreEqual(StorageTransferStatus.InProgress, StatusEvents.First().StorageTransferStatus);
+            Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, StatusEvents.ElementAt(1).StorageTransferStatus);
         }
 
         /// <summary>
