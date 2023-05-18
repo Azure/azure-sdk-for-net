@@ -27,7 +27,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetGlossaries();
+            Response response = client.GetGlossaries(1234, 1234, "<sort>", true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -86,7 +86,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetGlossariesAsync();
+            Response response = await client.GetGlossariesAsync(1234, 1234, "<sort>", true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -1215,7 +1215,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetGlossaryCategory("<categoryGuid>");
+            Response response = client.GetGlossaryCategory("<categoryGuid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1280,7 +1280,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetGlossaryCategoryAsync("<categoryGuid>");
+            Response response = await client.GetGlossaryCategoryAsync("<categoryGuid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1813,7 +1813,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetRelatedCategories("<categoryGuid>");
+            Response response = client.GetRelatedCategories("<categoryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("<test>")[0].ToString());
@@ -1845,7 +1845,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetRelatedCategoriesAsync("<categoryGuid>");
+            Response response = await client.GetRelatedCategoriesAsync("<categoryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("<test>")[0].ToString());
@@ -1877,7 +1877,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetCategoryTerms("<categoryGuid>");
+            Response response = client.GetCategoryTerms("<categoryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -1912,7 +1912,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetCategoryTermsAsync("<categoryGuid>");
+            Response response = await client.GetCategoryTermsAsync("<categoryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -2847,7 +2847,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetGlossaryTerm("<termGuid>");
+            Response response = client.GetGlossaryTerm("<termGuid>", true, new string[] { "<excludeRelationshipTypeList>" }, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -3028,7 +3028,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetGlossaryTermAsync("<termGuid>");
+            Response response = await client.GetGlossaryTermAsync("<termGuid>", true, new string[] { "<excludeRelationshipTypeList>" }, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -5437,7 +5437,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetEntitiesAssignedWithTerm("<termGuid>");
+            Response response = client.GetEntitiesAssignedWithTerm("<termGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -5475,7 +5475,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetEntitiesAssignedWithTermAsync("<termGuid>");
+            Response response = await client.GetEntitiesAssignedWithTermAsync("<termGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -5897,7 +5897,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetRelatedTerms("<termGuid>");
+            Response response = client.GetRelatedTerms("<termGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("<test>")[0].ToString());
@@ -5932,7 +5932,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetRelatedTermsAsync("<termGuid>");
+            Response response = await client.GetRelatedTermsAsync("<termGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("<test>")[0].ToString());
@@ -5967,7 +5967,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetGlossary("<glossaryGuid>");
+            Response response = client.GetGlossary("<glossaryGuid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -6026,7 +6026,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetGlossaryAsync("<glossaryGuid>");
+            Response response = await client.GetGlossaryAsync("<glossaryGuid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -6661,7 +6661,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetGlossaryCategories("<glossaryGuid>");
+            Response response = client.GetGlossaryCategories("<glossaryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -6726,7 +6726,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetGlossaryCategoriesAsync("<glossaryGuid>");
+            Response response = await client.GetGlossaryCategoriesAsync("<glossaryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -6791,7 +6791,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetGlossaryCategoriesHeaders("<glossaryGuid>");
+            Response response = client.GetGlossaryCategoriesHeaders("<glossaryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -6823,7 +6823,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetGlossaryCategoriesHeadersAsync("<glossaryGuid>");
+            Response response = await client.GetGlossaryCategoriesHeadersAsync("<glossaryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -6855,7 +6855,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetDetailedGlossary("<glossaryGuid>");
+            Response response = client.GetDetailedGlossary("<glossaryGuid>", true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -7106,7 +7106,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetDetailedGlossaryAsync("<glossaryGuid>");
+            Response response = await client.GetDetailedGlossaryAsync("<glossaryGuid>", true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -7495,7 +7495,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetGlossaryTerms("<glossaryGuid>");
+            Response response = client.GetGlossaryTerms("<glossaryGuid>", true, 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -7676,7 +7676,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetGlossaryTermsAsync("<glossaryGuid>");
+            Response response = await client.GetGlossaryTermsAsync("<glossaryGuid>", true, 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -7857,7 +7857,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetGlossaryTermHeaders("<glossaryGuid>");
+            Response response = client.GetGlossaryTermHeaders("<glossaryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -7892,7 +7892,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetGlossaryTermHeadersAsync("<glossaryGuid>");
+            Response response = await client.GetGlossaryTermHeadersAsync("<glossaryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -7927,7 +7927,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetImportCsvOperationStatus("<operationGuid>");
+            Response response = client.GetImportCsvOperationStatus("<operationGuid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -7962,7 +7962,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetImportCsvOperationStatusAsync("<operationGuid>");
+            Response response = await client.GetImportCsvOperationStatusAsync("<operationGuid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -8069,7 +8069,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetTermsByGlossaryName("<glossaryName>");
+            Response response = client.GetTermsByGlossaryName("<glossaryName>", 1234, 1234, true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -8250,7 +8250,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetTermsByGlossaryNameAsync("<glossaryName>");
+            Response response = await client.GetTermsByGlossaryNameAsync("<glossaryName>", 1234, 1234, true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());

@@ -29,7 +29,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
 
             var data = new { };
 
-            Response response = client.UpdateMetadataPolicy("<policyId>", RequestContent.Create(data));
+            Response response = client.UpdateMetadataPolicy("<policyId>", RequestContent.Create(data), new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -137,7 +137,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
 
             var data = new { };
 
-            Response response = await client.UpdateMetadataPolicyAsync("<policyId>", RequestContent.Create(data));
+            Response response = await client.UpdateMetadataPolicyAsync("<policyId>", RequestContent.Create(data), new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -243,7 +243,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
 
-            Response response = client.GetMetadataPolicy("<policyId>");
+            Response response = client.GetMetadataPolicy("<policyId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -292,7 +292,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
 
-            Response response = await client.GetMetadataPolicyAsync("<policyId>");
+            Response response = await client.GetMetadataPolicyAsync("<policyId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -341,7 +341,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
 
-            foreach (var item in client.GetMetadataPolicies())
+            foreach (var item in client.GetMetadataPolicies(new RequestContext()))
             {
             }
         }
@@ -367,7 +367,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
 
-            await foreach (var item in client.GetMetadataPoliciesAsync())
+            await foreach (var item in client.GetMetadataPoliciesAsync(new RequestContext()))
             {
             }
         }

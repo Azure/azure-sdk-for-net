@@ -3,7 +3,7 @@
   <members>
     <member name="GetMetadataRolesAsync(RequestContext)">
 <example>
-This sample shows how to call GetMetadataRolesAsync and parse the result.
+This sample shows how to call GetMetadataRolesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -17,7 +17,7 @@ await foreach (var item in client.GetMetadataRolesAsync(new RequestContext()))
     </member>
     <member name="GetMetadataRoles(RequestContext)">
 <example>
-This sample shows how to call GetMetadataRoles and parse the result.
+This sample shows how to call GetMetadataRoles with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");

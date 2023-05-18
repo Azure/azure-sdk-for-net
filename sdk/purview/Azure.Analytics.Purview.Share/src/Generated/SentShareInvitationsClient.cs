@@ -78,7 +78,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='GetSentShareInvitationAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetSentShareInvitationAsync(string sentShareName, string sentShareInvitationName, RequestContext context = null)
+        public virtual async Task<Response> GetSentShareInvitationAsync(string sentShareName, string sentShareInvitationName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
             Argument.AssertNotNullOrEmpty(sentShareInvitationName, nameof(sentShareInvitationName));
@@ -115,7 +115,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='GetSentShareInvitation(string,string,RequestContext)']/*" />
-        public virtual Response GetSentShareInvitation(string sentShareName, string sentShareInvitationName, RequestContext context = null)
+        public virtual Response GetSentShareInvitation(string sentShareName, string sentShareInvitationName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
             Argument.AssertNotNullOrEmpty(sentShareInvitationName, nameof(sentShareInvitationName));
@@ -306,7 +306,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='GetSentShareInvitationsAsync(string,string,string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetSentShareInvitationsAsync(string sentShareName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetSentShareInvitationsAsync(string sentShareName, string skipToken, string filter, string orderby, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
 
@@ -335,7 +335,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='GetSentShareInvitations(string,string,string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetSentShareInvitations(string sentShareName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetSentShareInvitations(string sentShareName, string skipToken, string filter, string orderby, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
 

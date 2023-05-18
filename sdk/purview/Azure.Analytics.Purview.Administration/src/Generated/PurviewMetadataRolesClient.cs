@@ -46,7 +46,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewMetadataRolesClient.xml" path="doc/members/member[@name='GetMetadataRolesAsync(RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetMetadataRolesAsync(RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetMetadataRolesAsync(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetadataRolesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetadataRolesNextPageRequest(nextLink, context);
@@ -67,7 +67,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewMetadataRolesClient.xml" path="doc/members/member[@name='GetMetadataRoles(RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetMetadataRoles(RequestContext context = null)
+        public virtual Pageable<BinaryData> GetMetadataRoles(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetadataRolesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetadataRolesNextPageRequest(nextLink, context);

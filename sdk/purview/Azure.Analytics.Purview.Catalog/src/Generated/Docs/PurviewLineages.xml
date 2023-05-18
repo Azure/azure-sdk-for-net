@@ -9,17 +9,6 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-Response response = await client.GetLineageGraphAsync("<guid>", "<direction>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetLineageGraphAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
-
 Response response = await client.GetLineageGraphAsync("<guid>", "<direction>", 1234, 1234, true, true, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -73,17 +62,6 @@ Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").T
     <member name="GetLineageGraph(string,string,int?,int?,bool?,bool?,RequestContext)">
 <example>
 This sample shows how to call GetLineageGraph with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
-
-Response response = client.GetLineageGraph("<guid>", "<direction>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetLineageGraph with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -147,17 +125,6 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-Response response = await client.NextPageLineageAsync("<guid>", "<direction>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call NextPageLineageAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
-
 Response response = await client.NextPageLineageAsync("<guid>", "<direction>", true, 1234, 1234, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -211,17 +178,6 @@ Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").T
     <member name="NextPageLineage(string,string,bool?,int?,int?,RequestContext)">
 <example>
 This sample shows how to call NextPageLineage with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
-
-Response response = client.NextPageLineage("<guid>", "<direction>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call NextPageLineage with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -285,17 +241,6 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-Response response = await client.GetLineageByUniqueAttributeAsync("<typeName>", "<direction>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetLineageByUniqueAttributeAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
-
 Response response = await client.GetLineageByUniqueAttributeAsync("<typeName>", "<direction>", 1234, 1234, true, true, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -349,17 +294,6 @@ Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").T
     <member name="GetLineageByUniqueAttribute(string,string,int?,int?,bool?,bool?,RequestContext)">
 <example>
 This sample shows how to call GetLineageByUniqueAttribute with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
-
-Response response = client.GetLineageByUniqueAttribute("<typeName>", "<direction>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetLineageByUniqueAttribute with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");

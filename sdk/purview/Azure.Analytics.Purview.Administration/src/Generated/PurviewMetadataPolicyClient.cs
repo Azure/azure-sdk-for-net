@@ -52,7 +52,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewMetadataPolicyClient.xml" path="doc/members/member[@name='UpdateMetadataPolicyAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> UpdateMetadataPolicyAsync(string policyId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> UpdateMetadataPolicyAsync(string policyId, RequestContent content, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
 
@@ -88,7 +88,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewMetadataPolicyClient.xml" path="doc/members/member[@name='UpdateMetadataPolicy(string,RequestContent,RequestContext)']/*" />
-        public virtual Response UpdateMetadataPolicy(string policyId, RequestContent content, RequestContext context = null)
+        public virtual Response UpdateMetadataPolicy(string policyId, RequestContent content, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
 
@@ -123,7 +123,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewMetadataPolicyClient.xml" path="doc/members/member[@name='GetMetadataPolicyAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetMetadataPolicyAsync(string policyId, RequestContext context = null)
+        public virtual async Task<Response> GetMetadataPolicyAsync(string policyId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
 
@@ -158,7 +158,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewMetadataPolicyClient.xml" path="doc/members/member[@name='GetMetadataPolicy(string,RequestContext)']/*" />
-        public virtual Response GetMetadataPolicy(string policyId, RequestContext context = null)
+        public virtual Response GetMetadataPolicy(string policyId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
 
@@ -190,7 +190,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewMetadataPolicyClient.xml" path="doc/members/member[@name='GetMetadataPoliciesAsync(RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetMetadataPoliciesAsync(RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetMetadataPoliciesAsync(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetadataPoliciesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetadataPoliciesNextPageRequest(nextLink, context);
@@ -211,7 +211,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewMetadataPolicyClient.xml" path="doc/members/member[@name='GetMetadataPolicies(RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetMetadataPolicies(RequestContext context = null)
+        public virtual Pageable<BinaryData> GetMetadataPolicies(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetadataPoliciesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetadataPoliciesNextPageRequest(nextLink, context);

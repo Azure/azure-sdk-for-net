@@ -42,18 +42,6 @@ This sample shows how to call GetAssetMappingsAsync with required parameters and
 var credential = new DefaultAzureCredential();
 var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
 
-await foreach (var item in client.GetAssetMappingsAsync("<receivedShareName>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("kind").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetAssetMappingsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
-
 await foreach (var item in client.GetAssetMappingsAsync("<receivedShareName>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -68,18 +56,6 @@ await foreach (var item in client.GetAssetMappingsAsync("<receivedShareName>", "
     <member name="GetAssetMappings(string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetAssetMappings with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
-
-foreach (var item in client.GetAssetMappings("<receivedShareName>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("kind").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetAssetMappings with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);

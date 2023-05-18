@@ -66,7 +66,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetBusinessMetadataDefByGuidAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetBusinessMetadataDefByGuidAsync(string guid, RequestContext context = null)
+        public virtual async Task<Response> GetBusinessMetadataDefByGuidAsync(string guid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -101,7 +101,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetBusinessMetadataDefByGuid(string,RequestContext)']/*" />
-        public virtual Response GetBusinessMetadataDefByGuid(string guid, RequestContext context = null)
+        public virtual Response GetBusinessMetadataDefByGuid(string guid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -136,7 +136,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetBusinessMetadataDefByNameAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetBusinessMetadataDefByNameAsync(string name, RequestContext context = null)
+        public virtual async Task<Response> GetBusinessMetadataDefByNameAsync(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -171,7 +171,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetBusinessMetadataDefByName(string,RequestContext)']/*" />
-        public virtual Response GetBusinessMetadataDefByName(string name, RequestContext context = null)
+        public virtual Response GetBusinessMetadataDefByName(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -206,7 +206,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetClassificationDefByGuidAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetClassificationDefByGuidAsync(string guid, RequestContext context = null)
+        public virtual async Task<Response> GetClassificationDefByGuidAsync(string guid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -241,7 +241,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetClassificationDefByGuid(string,RequestContext)']/*" />
-        public virtual Response GetClassificationDefByGuid(string guid, RequestContext context = null)
+        public virtual Response GetClassificationDefByGuid(string guid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -276,7 +276,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetClassificationDefByNameAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetClassificationDefByNameAsync(string name, RequestContext context = null)
+        public virtual async Task<Response> GetClassificationDefByNameAsync(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -311,7 +311,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetClassificationDefByName(string,RequestContext)']/*" />
-        public virtual Response GetClassificationDefByName(string name, RequestContext context = null)
+        public virtual Response GetClassificationDefByName(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -346,7 +346,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetEntityDefinitionByGuidAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetEntityDefinitionByGuidAsync(string guid, RequestContext context = null)
+        public virtual async Task<Response> GetEntityDefinitionByGuidAsync(string guid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -381,7 +381,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetEntityDefinitionByGuid(string,RequestContext)']/*" />
-        public virtual Response GetEntityDefinitionByGuid(string guid, RequestContext context = null)
+        public virtual Response GetEntityDefinitionByGuid(string guid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -416,7 +416,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetEntityDefinitionByNameAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetEntityDefinitionByNameAsync(string name, RequestContext context = null)
+        public virtual async Task<Response> GetEntityDefinitionByNameAsync(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -451,7 +451,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetEntityDefinitionByName(string,RequestContext)']/*" />
-        public virtual Response GetEntityDefinitionByName(string name, RequestContext context = null)
+        public virtual Response GetEntityDefinitionByName(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -486,7 +486,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetEnumDefByGuidAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetEnumDefByGuidAsync(string guid, RequestContext context = null)
+        public virtual async Task<Response> GetEnumDefByGuidAsync(string guid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -521,7 +521,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetEnumDefByGuid(string,RequestContext)']/*" />
-        public virtual Response GetEnumDefByGuid(string guid, RequestContext context = null)
+        public virtual Response GetEnumDefByGuid(string guid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -556,7 +556,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetEnumDefByNameAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetEnumDefByNameAsync(string name, RequestContext context = null)
+        public virtual async Task<Response> GetEnumDefByNameAsync(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -591,7 +591,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetEnumDefByName(string,RequestContext)']/*" />
-        public virtual Response GetEnumDefByName(string name, RequestContext context = null)
+        public virtual Response GetEnumDefByName(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -626,7 +626,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetRelationshipDefByGuidAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetRelationshipDefByGuidAsync(string guid, RequestContext context = null)
+        public virtual async Task<Response> GetRelationshipDefByGuidAsync(string guid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -661,7 +661,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetRelationshipDefByGuid(string,RequestContext)']/*" />
-        public virtual Response GetRelationshipDefByGuid(string guid, RequestContext context = null)
+        public virtual Response GetRelationshipDefByGuid(string guid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -696,7 +696,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetRelationshipDefByNameAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetRelationshipDefByNameAsync(string name, RequestContext context = null)
+        public virtual async Task<Response> GetRelationshipDefByNameAsync(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -731,7 +731,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetRelationshipDefByName(string,RequestContext)']/*" />
-        public virtual Response GetRelationshipDefByName(string name, RequestContext context = null)
+        public virtual Response GetRelationshipDefByName(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -766,7 +766,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetStructDefByGuidAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetStructDefByGuidAsync(string guid, RequestContext context = null)
+        public virtual async Task<Response> GetStructDefByGuidAsync(string guid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -801,7 +801,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetStructDefByGuid(string,RequestContext)']/*" />
-        public virtual Response GetStructDefByGuid(string guid, RequestContext context = null)
+        public virtual Response GetStructDefByGuid(string guid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -836,7 +836,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetStructDefByNameAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetStructDefByNameAsync(string name, RequestContext context = null)
+        public virtual async Task<Response> GetStructDefByNameAsync(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -871,7 +871,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetStructDefByName(string,RequestContext)']/*" />
-        public virtual Response GetStructDefByName(string name, RequestContext context = null)
+        public virtual Response GetStructDefByName(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -906,7 +906,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTypeDefinitionByGuidAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTypeDefinitionByGuidAsync(string guid, RequestContext context = null)
+        public virtual async Task<Response> GetTypeDefinitionByGuidAsync(string guid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -941,7 +941,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTypeDefinitionByGuid(string,RequestContext)']/*" />
-        public virtual Response GetTypeDefinitionByGuid(string guid, RequestContext context = null)
+        public virtual Response GetTypeDefinitionByGuid(string guid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -976,7 +976,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTypeDefinitionByNameAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTypeDefinitionByNameAsync(string name, RequestContext context = null)
+        public virtual async Task<Response> GetTypeDefinitionByNameAsync(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -1011,7 +1011,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTypeDefinitionByName(string,RequestContext)']/*" />
-        public virtual Response GetTypeDefinitionByName(string name, RequestContext context = null)
+        public virtual Response GetTypeDefinitionByName(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -1118,7 +1118,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetAllTypeDefinitionsAsync(bool?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetAllTypeDefinitionsAsync(bool? includeTermTemplate = null, string type = null, RequestContext context = null)
+        public virtual async Task<Response> GetAllTypeDefinitionsAsync(bool? includeTermTemplate, string type, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetAllTypeDefinitions");
             scope.Start();
@@ -1153,7 +1153,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetAllTypeDefinitions(bool?,string,RequestContext)']/*" />
-        public virtual Response GetAllTypeDefinitions(bool? includeTermTemplate = null, string type = null, RequestContext context = null)
+        public virtual Response GetAllTypeDefinitions(bool? includeTermTemplate, string type, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetAllTypeDefinitions");
             scope.Start();
@@ -1394,7 +1394,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTypeDefinitionHeadersAsync(bool?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTypeDefinitionHeadersAsync(bool? includeTermTemplate = null, string type = null, RequestContext context = null)
+        public virtual async Task<Response> GetTypeDefinitionHeadersAsync(bool? includeTermTemplate, string type, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionHeaders");
             scope.Start();
@@ -1429,7 +1429,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTypeDefinitionHeaders(bool?,string,RequestContext)']/*" />
-        public virtual Response GetTypeDefinitionHeaders(bool? includeTermTemplate = null, string type = null, RequestContext context = null)
+        public virtual Response GetTypeDefinitionHeaders(bool? includeTermTemplate, string type, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionHeaders");
             scope.Start();
@@ -1462,7 +1462,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTermTemplateDefByGuidAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTermTemplateDefByGuidAsync(string guid, RequestContext context = null)
+        public virtual async Task<Response> GetTermTemplateDefByGuidAsync(string guid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -1497,7 +1497,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTermTemplateDefByGuid(string,RequestContext)']/*" />
-        public virtual Response GetTermTemplateDefByGuid(string guid, RequestContext context = null)
+        public virtual Response GetTermTemplateDefByGuid(string guid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -1532,7 +1532,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTermTemplateDefByNameAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTermTemplateDefByNameAsync(string name, RequestContext context = null)
+        public virtual async Task<Response> GetTermTemplateDefByNameAsync(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -1567,7 +1567,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTermTemplateDefByName(string,RequestContext)']/*" />
-        public virtual Response GetTermTemplateDefByName(string name, RequestContext context = null)
+        public virtual Response GetTermTemplateDefByName(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 

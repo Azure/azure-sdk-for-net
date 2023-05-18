@@ -113,17 +113,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
     </member>
     <member name="RegisterTenantEmailRegistrationAsync(string,RequestContext)">
 <example>
-This sample shows how to call RegisterTenantEmailRegistrationAsync and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
-
-Response response = await client.RegisterTenantEmailRegistrationAsync();
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call RegisterTenantEmailRegistrationAsync with all parameters, and how to parse the result.
+This sample shows how to call RegisterTenantEmailRegistrationAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
@@ -144,17 +134,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
     </member>
     <member name="RegisterTenantEmailRegistration(string,RequestContext)">
 <example>
-This sample shows how to call RegisterTenantEmailRegistration and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
-
-Response response = client.RegisterTenantEmailRegistration();
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call RegisterTenantEmailRegistration with all parameters, and how to parse the result.
+This sample shows how to call RegisterTenantEmailRegistration with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
@@ -180,18 +160,6 @@ This sample shows how to call GetAllAttachedReceivedSharesAsync with required pa
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-await foreach (var item in client.GetAllAttachedReceivedSharesAsync("<referenceName>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("shareKind").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetAllAttachedReceivedSharesAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
-
 await foreach (var item in client.GetAllAttachedReceivedSharesAsync("<referenceName>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -209,18 +177,6 @@ This sample shows how to call GetAllAttachedReceivedShares with required paramet
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-foreach (var item in client.GetAllAttachedReceivedShares("<referenceName>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("shareKind").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetAllAttachedReceivedShares with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
-
 foreach (var item in client.GetAllAttachedReceivedShares("<referenceName>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -233,19 +189,7 @@ foreach (var item in client.GetAllAttachedReceivedShares("<referenceName>", "<sk
     </member>
     <member name="GetAllDetachedReceivedSharesAsync(string,string,string,RequestContext)">
 <example>
-This sample shows how to call GetAllDetachedReceivedSharesAsync and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
-
-await foreach (var item in client.GetAllDetachedReceivedSharesAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("shareKind").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetAllDetachedReceivedSharesAsync with all parameters, and how to parse the result.
+This sample shows how to call GetAllDetachedReceivedSharesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
@@ -262,19 +206,7 @@ await foreach (var item in client.GetAllDetachedReceivedSharesAsync("<skipToken>
     </member>
     <member name="GetAllDetachedReceivedShares(string,string,string,RequestContext)">
 <example>
-This sample shows how to call GetAllDetachedReceivedShares and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
-
-foreach (var item in client.GetAllDetachedReceivedShares())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("shareKind").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetAllDetachedReceivedShares with all parameters, and how to parse the result.
+This sample shows how to call GetAllDetachedReceivedShares with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);

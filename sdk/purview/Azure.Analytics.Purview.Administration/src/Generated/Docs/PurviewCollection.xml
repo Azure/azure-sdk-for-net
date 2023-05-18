@@ -3,7 +3,7 @@
   <members>
     <member name="GetCollectionAsync(RequestContext)">
 <example>
-This sample shows how to call GetCollectionAsync and parse the result.
+This sample shows how to call GetCollectionAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -29,7 +29,7 @@ Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByTy
     </member>
     <member name="GetCollection(RequestContext)">
 <example>
-This sample shows how to call GetCollection and parse the result.
+This sample shows how to call GetCollection with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -175,7 +175,7 @@ Console.WriteLine(response.Status);
     </member>
     <member name="GetCollectionPathAsync(RequestContext)">
 <example>
-This sample shows how to call GetCollectionPathAsync and parse the result.
+This sample shows how to call GetCollectionPathAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -191,7 +191,7 @@ Console.WriteLine(result.GetProperty("parentNameChain")[0].ToString());
     </member>
     <member name="GetCollectionPath(RequestContext)">
 <example>
-This sample shows how to call GetCollectionPath and parse the result.
+This sample shows how to call GetCollectionPath with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -207,19 +207,7 @@ Console.WriteLine(result.GetProperty("parentNameChain")[0].ToString());
     </member>
     <member name="GetChildCollectionNamesAsync(string,RequestContext)">
 <example>
-This sample shows how to call GetChildCollectionNamesAsync and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
-
-await foreach (var item in client.GetChildCollectionNamesAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetChildCollectionNamesAsync with all parameters, and how to parse the result.
+This sample shows how to call GetChildCollectionNamesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -236,19 +224,7 @@ await foreach (var item in client.GetChildCollectionNamesAsync("<skipToken>", ne
     </member>
     <member name="GetChildCollectionNames(string,RequestContext)">
 <example>
-This sample shows how to call GetChildCollectionNames and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
-
-foreach (var item in client.GetChildCollectionNames())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetChildCollectionNames with all parameters, and how to parse the result.
+This sample shows how to call GetChildCollectionNames with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
