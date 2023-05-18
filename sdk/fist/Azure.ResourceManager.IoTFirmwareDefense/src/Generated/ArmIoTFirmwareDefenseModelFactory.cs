@@ -17,189 +17,265 @@ namespace Azure.ResourceManager.IoTFirmwareDefense.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmIoTFirmwareDefenseModelFactory
     {
-        /// <summary> Initializes a new instance of DryrunResourceData. </summary>
+        /// <summary> Initializes a new instance of FirmwareData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="parameters">
-        /// The parameters of the dryrun
-        /// Please note <see cref="DryrunParameters"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CreateOrUpdateDryrunParameters"/>.
-        /// </param>
-        /// <param name="prerequisiteResults">
-        /// the result of the dryrun
-        /// Please note <see cref="DryrunPrerequisiteResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BasicErrorDryrunPrerequisiteResult"/> and <see cref="PermissionsMissingDryrunPrerequisiteResult"/>.
-        /// </param>
-        /// <param name="operationPreviews"> the preview of the operations for creation. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <returns> A new <see cref="IoTFirmwareDefense.DryrunResourceData"/> instance for mocking. </returns>
-        public static DryrunResourceData DryrunResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DryrunParameters parameters = null, IEnumerable<DryrunPrerequisiteResult> prerequisiteResults = null, IEnumerable<DryrunOperationPreview> operationPreviews = null, string provisioningState = null)
+        /// <param name="fileName"> File name for a firmware that user uploaded. </param>
+        /// <param name="vendor"> Firmware vendor. </param>
+        /// <param name="model"> Firmware model. </param>
+        /// <param name="version"> Firmware version. </param>
+        /// <param name="description"> User-specified description of the firmware. </param>
+        /// <param name="fileSize"> File size of the uploaded firmware image. </param>
+        /// <param name="status"> The status of firmware scan. </param>
+        /// <param name="statusMessages"> A list of errors or other messages generated during firmware analysis. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="IoTFirmwareDefense.FirmwareData"/> instance for mocking. </returns>
+        public static FirmwareData FirmwareData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string fileName = null, string vendor = null, string model = null, string version = null, string description = null, long? fileSize = null, Status? status = null, IEnumerable<BinaryData> statusMessages = null, ProvisioningState? provisioningState = null)
         {
-            prerequisiteResults ??= new List<DryrunPrerequisiteResult>();
-            operationPreviews ??= new List<DryrunOperationPreview>();
+            statusMessages ??= new List<BinaryData>();
 
-            return new DryrunResourceData(id, name, resourceType, systemData, parameters, prerequisiteResults?.ToList(), operationPreviews?.ToList(), provisioningState);
+            return new FirmwareData(id, name, resourceType, systemData, fileName, vendor, model, version, description, fileSize, status, statusMessages?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of DryrunOperationPreview. </summary>
-        /// <param name="name"> The operation name. </param>
-        /// <param name="operationType"> The operation type. </param>
-        /// <param name="description"> The description of the operation. </param>
-        /// <param name="action"> The action defined by RBAC, refer https://docs.microsoft.com/azure/role-based-access-control/role-definitions#actions-format. </param>
-        /// <param name="scope"> The scope of the operation, refer https://docs.microsoft.com/azure/role-based-access-control/scope-overview. </param>
-        /// <returns> A new <see cref="Models.DryrunOperationPreview"/> instance for mocking. </returns>
-        public static DryrunOperationPreview DryrunOperationPreview(string name = null, DryrunPreviewOperationType? operationType = null, string description = null, string action = null, string scope = null)
+        /// <summary> Initializes a new instance of UrlToken. </summary>
+        /// <param name="uri"> SAS URL for creating or accessing a blob file. </param>
+        /// <param name="uploadUri"> SAS URL for file uploading. Kept for backwards compatibility. </param>
+        /// <returns> A new <see cref="Models.UrlToken"/> instance for mocking. </returns>
+        public static UrlToken UrlToken(Uri uri = null, Uri uploadUri = null)
         {
-            return new DryrunOperationPreview(name, operationType, description, action, scope);
+            return new UrlToken(uri, uploadUri);
         }
 
-        /// <summary> Initializes a new instance of LinkerResourceData. </summary>
+        /// <summary> Initializes a new instance of FirmwareSummary. </summary>
+        /// <param name="extractedSize"> Total extracted size of the firmware in bytes. </param>
+        /// <param name="fileSize"> Firmware file size in bytes. </param>
+        /// <param name="extractedFileCount"> Extracted file count. </param>
+        /// <param name="componentCount"> Components count. </param>
+        /// <param name="binaryCount"> Binary count. </param>
+        /// <param name="analysisTimeSeconds"> Time used for analysis. </param>
+        /// <param name="rootFileSystems"> The number of root file systems found. </param>
+        /// <returns> A new <see cref="Models.FirmwareSummary"/> instance for mocking. </returns>
+        public static FirmwareSummary FirmwareSummary(long? extractedSize = null, long? fileSize = null, long? extractedFileCount = null, long? componentCount = null, long? binaryCount = null, long? analysisTimeSeconds = null, long? rootFileSystems = null)
+        {
+            return new FirmwareSummary(extractedSize, fileSize, extractedFileCount, componentCount, binaryCount, analysisTimeSeconds, rootFileSystems);
+        }
+
+        /// <summary> Initializes a new instance of Component. </summary>
+        /// <param name="componentId"> ID for the component. </param>
+        /// <param name="componentName"> Name for the component. </param>
+        /// <param name="version"> Version for the component. </param>
+        /// <param name="license"> License for the component. </param>
+        /// <param name="releaseOn"> Release date for the component. </param>
+        /// <param name="paths"> Paths of the component. </param>
+        /// <param name="isUpdateAvailable"> Flag if new update is available for the component. </param>
+        /// <returns> A new <see cref="Models.Component"/> instance for mocking. </returns>
+        public static Component Component(string componentId = null, string componentName = null, string version = null, string license = null, DateTimeOffset? releaseOn = null, IEnumerable<string> paths = null, IsUpdateAvailable? isUpdateAvailable = null)
+        {
+            paths ??= new List<string>();
+
+            return new Component(componentId, componentName, version, license, releaseOn, paths?.ToList(), isUpdateAvailable);
+        }
+
+        /// <summary> Initializes a new instance of BinaryHardening. </summary>
+        /// <param name="binaryHardeningId"> ID for the binary hardening result. </param>
+        /// <param name="architecture"> The architecture of the uploaded firmware. </param>
+        /// <param name="path"> path for binary hardening. </param>
+        /// <param name="class"> class for binary hardening. </param>
+        /// <param name="runpath"> The runpath of the uploaded firmware. </param>
+        /// <param name="rpath"> The rpath of the uploaded firmware. </param>
+        /// <param name="nx"> NX flag. </param>
+        /// <param name="pie"> PIE flag. </param>
+        /// <param name="relro"> RELRO flag. </param>
+        /// <param name="canary"> Canary flag. </param>
+        /// <param name="stripped"> Stripped flag. </param>
+        /// <returns> A new <see cref="Models.BinaryHardening"/> instance for mocking. </returns>
+        public static BinaryHardening BinaryHardening(string binaryHardeningId = null, string architecture = null, string path = null, string @class = null, string runpath = null, string rpath = null, NxFlag? nx = null, PieFlag? pie = null, RelroFlag? relro = null, CanaryFlag? canary = null, StrippedFlag? stripped = null)
+        {
+            return new BinaryHardening(binaryHardeningId, architecture, path, @class, runpath, rpath, nx, pie, relro, canary, stripped);
+        }
+
+        /// <summary> Initializes a new instance of BinaryHardeningSummary. </summary>
+        /// <param name="totalFiles"> Total number of binaries that were analyzed. </param>
+        /// <param name="nx"> NX summary percentage. </param>
+        /// <param name="pie"> PIE summary percentage. </param>
+        /// <param name="relro"> RELRO summary percentage. </param>
+        /// <param name="canary"> Canary summary percentage. </param>
+        /// <param name="stripped"> Stripped summary percentage. </param>
+        /// <returns> A new <see cref="Models.BinaryHardeningSummary"/> instance for mocking. </returns>
+        public static BinaryHardeningSummary BinaryHardeningSummary(long? totalFiles = null, int? nx = null, int? pie = null, int? relro = null, int? canary = null, int? stripped = null)
+        {
+            return new BinaryHardeningSummary(totalFiles, nx, pie, relro, canary, stripped);
+        }
+
+        /// <summary> Initializes a new instance of PasswordHash. </summary>
+        /// <param name="passwordHashId"> ID for password hash. </param>
+        /// <param name="filePath"> File path of the password hash. </param>
+        /// <param name="salt"> Salt of the password hash. </param>
+        /// <param name="hash"> Hash of the password. </param>
+        /// <param name="context"> Context of password hash. </param>
+        /// <param name="username"> User name of password hash. </param>
+        /// <param name="algorithm"> Algorithm of the password hash. </param>
+        /// <returns> A new <see cref="Models.PasswordHash"/> instance for mocking. </returns>
+        public static PasswordHash PasswordHash(string passwordHashId = null, string filePath = null, string salt = null, string hash = null, string context = null, string username = null, string algorithm = null)
+        {
+            return new PasswordHash(passwordHashId, filePath, salt, hash, context, username, algorithm);
+        }
+
+        /// <summary> Initializes a new instance of Cve. </summary>
+        /// <param name="cveId"> ID of CVE. </param>
+        /// <param name="component"> Component of CVE. </param>
+        /// <param name="severity"> Severity of CVE. </param>
+        /// <param name="name"> Name of CVE. </param>
+        /// <param name="cvssScore"> A single CVSS score to represent the CVE. If a V3 score is specified, then it will use the V3 score. Otherwise if the V2 score is specified it will be the V2 score. </param>
+        /// <param name="cvssVersion"> Cvss version of CVE. </param>
+        /// <param name="cvssV2Score"> Cvss V2 score of CVE. </param>
+        /// <param name="cvssV3Score"> Cvss V3 score of CVE. </param>
+        /// <param name="publishOn"> Publish date of CVE. </param>
+        /// <param name="updatedOn"> Updated date of CVE. </param>
+        /// <param name="links"> The list of CVE links. </param>
+        /// <param name="description"> Description of CVE. </param>
+        /// <returns> A new <see cref="Models.Cve"/> instance for mocking. </returns>
+        public static Cve Cve(string cveId = null, BinaryData component = null, string severity = null, string name = null, string cvssScore = null, string cvssVersion = null, string cvssV2Score = null, string cvssV3Score = null, DateTimeOffset? publishOn = null, DateTimeOffset? updatedOn = null, IEnumerable<CveLink> links = null, string description = null)
+        {
+            links ??= new List<CveLink>();
+
+            return new Cve(cveId, component, severity, name, cvssScore, cvssVersion, cvssV2Score, cvssV3Score, publishOn, updatedOn, links?.ToList(), description);
+        }
+
+        /// <summary> Initializes a new instance of CveLink. </summary>
+        /// <param name="href"> Href of CVE link. </param>
+        /// <param name="label"> Label of CVE link. </param>
+        /// <returns> A new <see cref="Models.CveLink"/> instance for mocking. </returns>
+        public static CveLink CveLink(string href = null, string label = null)
+        {
+            return new CveLink(href, label);
+        }
+
+        /// <summary> Initializes a new instance of CveSummary. </summary>
+        /// <param name="critical"> The total number of critical severity CVEs detected. </param>
+        /// <param name="high"> The total number of high severity CVEs detected. </param>
+        /// <param name="medium"> The total number of medium severity CVEs detected. </param>
+        /// <param name="low"> The total number of low severity CVEs detected. </param>
+        /// <param name="unknown"> The total number of unknown severity CVEs detected. </param>
+        /// <param name="undefined"> The total number of undefined severity CVEs detected. </param>
+        /// <returns> A new <see cref="Models.CveSummary"/> instance for mocking. </returns>
+        public static CveSummary CveSummary(long? critical = null, long? high = null, long? medium = null, long? low = null, long? unknown = null, long? undefined = null)
+        {
+            return new CveSummary(critical, high, medium, low, unknown, undefined);
+        }
+
+        /// <summary> Initializes a new instance of CryptoCertificateSummary. </summary>
+        /// <param name="totalCertificates"> Total number of certificates found. </param>
+        /// <param name="pairedKeys"> Total number of paired private keys found for the certificates. </param>
+        /// <param name="expired"> Total number of expired certificates found. </param>
+        /// <param name="expiringSoon"> Total number of nearly expired certificates found. </param>
+        /// <param name="weakSignature"> Total number of certificates found using a weak signature algorithm. </param>
+        /// <param name="selfSigned"> Total number of certificates found that are self-signed. </param>
+        /// <param name="shortKeySize"> Total number of certificates found that have an insecure key size for the key algorithm. </param>
+        /// <returns> A new <see cref="Models.CryptoCertificateSummary"/> instance for mocking. </returns>
+        public static CryptoCertificateSummary CryptoCertificateSummary(long? totalCertificates = null, long? pairedKeys = null, long? expired = null, long? expiringSoon = null, long? weakSignature = null, long? selfSigned = null, long? shortKeySize = null)
+        {
+            return new CryptoCertificateSummary(totalCertificates, pairedKeys, expired, expiringSoon, weakSignature, selfSigned, shortKeySize);
+        }
+
+        /// <summary> Initializes a new instance of CryptoKeySummary. </summary>
+        /// <param name="totalKeys"> Total number of cryptographic keys found. </param>
+        /// <param name="publicKeys"> Total number of (non-certificate) public keys found. </param>
+        /// <param name="privateKeys"> Total number of private keys found. </param>
+        /// <param name="pairedKeys"> Total number of keys found that have a matching paired key or certificate. </param>
+        /// <param name="shortKeySize"> Total number of keys found that have an insecure key size for the algorithm. </param>
+        /// <returns> A new <see cref="Models.CryptoKeySummary"/> instance for mocking. </returns>
+        public static CryptoKeySummary CryptoKeySummary(long? totalKeys = null, long? publicKeys = null, long? privateKeys = null, long? pairedKeys = null, long? shortKeySize = null)
+        {
+            return new CryptoKeySummary(totalKeys, publicKeys, privateKeys, pairedKeys, shortKeySize);
+        }
+
+        /// <summary> Initializes a new instance of CryptoCertificate. </summary>
+        /// <param name="cryptoCertId"> ID for the certificate. </param>
+        /// <param name="name"> Name of the certificate. </param>
+        /// <param name="subject"> Subject information of the certificate. </param>
+        /// <param name="issuer"> Issuer information of the certificate. </param>
+        /// <param name="issuedOn"> Issue date for the certificate. </param>
+        /// <param name="expireOn"> Expiration date for the certificate. </param>
+        /// <param name="role"> Role of the certificate (Root CA, etc). </param>
+        /// <param name="signatureAlgorithm"> The signature algorithm used in the certificate. </param>
+        /// <param name="keySize"> Size of the certificate&apos;s key in bits. </param>
+        /// <param name="keyAlgorithm"> Key algorithm used in the certificate. </param>
+        /// <param name="encoding"> Encoding used for the certificate. </param>
+        /// <param name="serialNumber"> Serial number of the certificate. </param>
+        /// <param name="fingerprint"> Fingerprint of the certificate. </param>
+        /// <param name="usage"> List of functions the certificate can fulfill. </param>
+        /// <param name="filePaths"> List of files paths for this certificate. </param>
+        /// <param name="pairedKey"> A matching paired private key. </param>
+        /// <param name="isExpired"> Indicates if the certificate is expired. </param>
+        /// <param name="isSelfSigned"> Indicates if the certificate was self-signed. </param>
+        /// <param name="isWeakSignature"> Indicates the signature algorithm used is insecure. </param>
+        /// <param name="isShortKeySize"> Indicates the certificate&apos;s key size is considered too small to be secure for the key algorithm. </param>
+        /// <returns> A new <see cref="Models.CryptoCertificate"/> instance for mocking. </returns>
+        public static CryptoCertificate CryptoCertificate(string cryptoCertId = null, string name = null, CryptoCertificateEntity subject = null, CryptoCertificateEntity issuer = null, DateTimeOffset? issuedOn = null, DateTimeOffset? expireOn = null, string role = null, string signatureAlgorithm = null, long? keySize = null, string keyAlgorithm = null, string encoding = null, string serialNumber = null, string fingerprint = null, IEnumerable<string> usage = null, IEnumerable<string> filePaths = null, PairedKey pairedKey = null, IsExpired? isExpired = null, IsSelfSigned? isSelfSigned = null, IsWeakSignature? isWeakSignature = null, IsShortKeySize? isShortKeySize = null)
+        {
+            usage ??= new List<string>();
+            filePaths ??= new List<string>();
+
+            return new CryptoCertificate(cryptoCertId, name, subject, issuer, issuedOn, expireOn, role, signatureAlgorithm, keySize, keyAlgorithm, encoding, serialNumber, fingerprint, usage?.ToList(), filePaths?.ToList(), pairedKey, isExpired, isSelfSigned, isWeakSignature, isShortKeySize);
+        }
+
+        /// <summary> Initializes a new instance of CryptoCertificateEntity. </summary>
+        /// <param name="commonName"> Common name of the certificate entity. </param>
+        /// <param name="organization"> Organization of the certificate entity. </param>
+        /// <param name="organizationalUnit"> The organizational unit of the certificate entity. </param>
+        /// <param name="state"> Geographical state or province of the certificate entity. </param>
+        /// <param name="country"> Country code of the certificate entity. </param>
+        /// <returns> A new <see cref="Models.CryptoCertificateEntity"/> instance for mocking. </returns>
+        public static CryptoCertificateEntity CryptoCertificateEntity(string commonName = null, string organization = null, string organizationalUnit = null, string state = null, string country = null)
+        {
+            return new CryptoCertificateEntity(commonName, organization, organizationalUnit, state, country);
+        }
+
+        /// <summary> Initializes a new instance of PairedKey. </summary>
+        /// <param name="id"> ID of the paired key or certificate. </param>
+        /// <param name="pairedKeyType"> The type indicating whether the paired object is a key or certificate. </param>
+        /// <param name="additionalProperties"> Additional paired key properties. </param>
+        /// <returns> A new <see cref="Models.PairedKey"/> instance for mocking. </returns>
+        public static PairedKey PairedKey(string id = null, string pairedKeyType = null, BinaryData additionalProperties = null)
+        {
+            return new PairedKey(id, pairedKeyType, additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of CryptoKey. </summary>
+        /// <param name="cryptoKeyId"> ID for the key. </param>
+        /// <param name="keyType"> Type of the key (public or private). </param>
+        /// <param name="keySize"> Size of the key in bits. </param>
+        /// <param name="keyAlgorithm"> Key algorithm name. </param>
+        /// <param name="usage"> Functions the key can fulfill. </param>
+        /// <param name="filePaths"> List of files paths for this key. </param>
+        /// <param name="pairedKey"> A matching paired key or certificate. </param>
+        /// <param name="isShortKeySize"> Indicates the key size is considered too small to be secure for the algorithm. </param>
+        /// <returns> A new <see cref="Models.CryptoKey"/> instance for mocking. </returns>
+        public static CryptoKey CryptoKey(string cryptoKeyId = null, string keyType = null, long? keySize = null, string keyAlgorithm = null, IEnumerable<string> usage = null, IEnumerable<string> filePaths = null, PairedKey pairedKey = null, IsShortKeySize? isShortKeySize = null)
+        {
+            usage ??= new List<string>();
+            filePaths ??= new List<string>();
+
+            return new CryptoKey(cryptoKeyId, keyType, keySize, keyAlgorithm, usage?.ToList(), filePaths?.ToList(), pairedKey, isShortKeySize);
+        }
+
+        /// <summary> Initializes a new instance of WorkspaceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="targetService">
-        /// The target service properties
-        /// Please note <see cref="TargetServiceBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureResource"/>, <see cref="ConfluentBootstrapServer"/>, <see cref="ConfluentSchemaRegistry"/> and <see cref="SelfHostedServer"/>.
-        /// </param>
-        /// <param name="authInfo">
-        /// The authentication type.
-        /// Please note <see cref="AuthInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AccessKeyInfoBase"/>, <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/>, <see cref="UserAccountAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
-        /// </param>
-        /// <param name="clientType"> The application client type. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="vNetSolution"> The VNet solution. </param>
-        /// <param name="secretStore"> An option to store secret value in secure place. </param>
-        /// <param name="scope"> connection scope in source service. </param>
-        /// <param name="publicNetworkSolution"> The network solution. </param>
-        /// <param name="configurationInfo"> The connection information consumed by applications, including secrets, connection strings. </param>
-        /// <returns> A new <see cref="IoTFirmwareDefense.LinkerResourceData"/> instance for mocking. </returns>
-        public static LinkerResourceData LinkerResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TargetServiceBase targetService = null, AuthInfoBase authInfo = null, ClientType? clientType = null, string provisioningState = null, VNetSolution vNetSolution = null, SecretStore secretStore = null, string scope = null, PublicNetworkSolution publicNetworkSolution = null, ConfigurationInfo configurationInfo = null)
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="IoTFirmwareDefense.WorkspaceData"/> instance for mocking. </returns>
+        public static WorkspaceData WorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ProvisioningState? provisioningState = null)
         {
-            return new LinkerResourceData(id, name, resourceType, systemData, targetService, authInfo, clientType, provisioningState, vNetSolution, secretStore, scope, publicNetworkSolution, configurationInfo);
-        }
+            tags ??= new Dictionary<string, string>();
 
-        /// <summary> Initializes a new instance of ValidateOperationResult. </summary>
-        /// <param name="resourceId"> Validated Linker id. </param>
-        /// <param name="status"> Validation operation status. </param>
-        /// <param name="linkerName"> The linker name. </param>
-        /// <param name="isConnectionAvailable"> A boolean value indicating whether the connection is available or not. </param>
-        /// <param name="reportStartTimeUtc"> The start time of the validation report. </param>
-        /// <param name="reportEndTimeUtc"> The end time of the validation report. </param>
-        /// <param name="sourceId"> The resource id of the Linker source application. </param>
-        /// <param name="targetId"> The resource Id of target service. </param>
-        /// <param name="authType"> The authentication type. </param>
-        /// <param name="validationDetail"> The detail of validation result. </param>
-        /// <returns> A new <see cref="Models.ValidateOperationResult"/> instance for mocking. </returns>
-        public static ValidateOperationResult ValidateOperationResult(string resourceId = null, string status = null, string linkerName = null, bool? isConnectionAvailable = null, DateTimeOffset? reportStartTimeUtc = null, DateTimeOffset? reportEndTimeUtc = null, string sourceId = null, string targetId = null, AuthType? authType = null, IEnumerable<ValidationResultItem> validationDetail = null)
-        {
-            validationDetail ??= new List<ValidationResultItem>();
-
-            return new ValidateOperationResult(resourceId, status, linkerName, isConnectionAvailable, reportStartTimeUtc, reportEndTimeUtc, sourceId, targetId, authType, validationDetail?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ValidationResultItem. </summary>
-        /// <param name="name"> The validation item name. </param>
-        /// <param name="description"> The display name of validation item. </param>
-        /// <param name="result"> The result of validation. </param>
-        /// <param name="errorMessage"> The error message of validation result. </param>
-        /// <param name="errorCode"> The error code of validation result. </param>
-        /// <returns> A new <see cref="Models.ValidationResultItem"/> instance for mocking. </returns>
-        public static ValidationResultItem ValidationResultItem(string name = null, string description = null, ValidationResultStatus? result = null, string errorMessage = null, string errorCode = null)
-        {
-            return new ValidationResultItem(name, description, result, errorMessage, errorCode);
-        }
-
-        /// <summary> Initializes a new instance of ConfigurationResult. </summary>
-        /// <param name="configurations"> The configuration properties for source resource. </param>
-        /// <returns> A new <see cref="Models.ConfigurationResult"/> instance for mocking. </returns>
-        public static ConfigurationResult ConfigurationResult(IEnumerable<SourceConfiguration> configurations = null)
-        {
-            configurations ??= new List<SourceConfiguration>();
-
-            return new ConfigurationResult(configurations?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of SourceConfiguration. </summary>
-        /// <param name="name"> The name of setting. </param>
-        /// <param name="value"> The value of setting. </param>
-        /// <returns> A new <see cref="Models.SourceConfiguration"/> instance for mocking. </returns>
-        public static SourceConfiguration SourceConfiguration(string name = null, string value = null)
-        {
-            return new SourceConfiguration(name, value);
-        }
-
-        /// <summary> Initializes a new instance of ConfigurationNameItem. </summary>
-        /// <param name="targetService"> The target service provider name and resource name. </param>
-        /// <param name="clientType"> The client type for configuration names. </param>
-        /// <param name="authType"> The auth type. </param>
-        /// <param name="daprProperties"> Indicates some additional properties for dapr client type. </param>
-        /// <param name="names"> The configuration names to be set in compute service environment. </param>
-        /// <returns> A new <see cref="Models.ConfigurationNameItem"/> instance for mocking. </returns>
-        public static ConfigurationNameItem ConfigurationNameItem(string targetService = null, ClientType? clientType = null, AuthType? authType = null, DaprProperties daprProperties = null, IEnumerable<ConfigurationName> names = null)
-        {
-            names ??= new List<ConfigurationName>();
-
-            return new ConfigurationNameItem(targetService, clientType, authType, daprProperties, names?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ConfigurationName. </summary>
-        /// <param name="value"></param>
-        /// <param name="description"> Description for the configuration name. </param>
-        /// <param name="required"> Represent the configuration is required or not. </param>
-        /// <returns> A new <see cref="Models.ConfigurationName"/> instance for mocking. </returns>
-        public static ConfigurationName ConfigurationName(string value = null, string description = null, bool? required = null)
-        {
-            return new ConfigurationName(value, description, required);
-        }
-
-        /// <summary> Initializes a new instance of CreateOrUpdateDryrunParameters. </summary>
-        /// <param name="targetService">
-        /// The target service properties
-        /// Please note <see cref="TargetServiceBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureResource"/>, <see cref="ConfluentBootstrapServer"/>, <see cref="ConfluentSchemaRegistry"/> and <see cref="SelfHostedServer"/>.
-        /// </param>
-        /// <param name="authInfo">
-        /// The authentication type.
-        /// Please note <see cref="AuthInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AccessKeyInfoBase"/>, <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/>, <see cref="UserAccountAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
-        /// </param>
-        /// <param name="clientType"> The application client type. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="vNetSolution"> The VNet solution. </param>
-        /// <param name="secretStore"> An option to store secret value in secure place. </param>
-        /// <param name="scope"> connection scope in source service. </param>
-        /// <param name="publicNetworkSolution"> The network solution. </param>
-        /// <param name="configurationInfo"> The connection information consumed by applications, including secrets, connection strings. </param>
-        /// <returns> A new <see cref="Models.CreateOrUpdateDryrunParameters"/> instance for mocking. </returns>
-        public static CreateOrUpdateDryrunParameters CreateOrUpdateDryrunParameters(TargetServiceBase targetService = null, AuthInfoBase authInfo = null, ClientType? clientType = null, string provisioningState = null, VNetSolution vNetSolution = null, SecretStore secretStore = null, string scope = null, PublicNetworkSolution publicNetworkSolution = null, ConfigurationInfo configurationInfo = null)
-        {
-            return new CreateOrUpdateDryrunParameters(DryrunActionName.CreateOrUpdate, targetService, authInfo, clientType, provisioningState, vNetSolution, secretStore, scope, publicNetworkSolution, configurationInfo);
-        }
-
-        /// <summary> Initializes a new instance of BasicErrorDryrunPrerequisiteResult. </summary>
-        /// <param name="code"> The error code. </param>
-        /// <param name="message"> The error message. </param>
-        /// <returns> A new <see cref="Models.BasicErrorDryrunPrerequisiteResult"/> instance for mocking. </returns>
-        public static BasicErrorDryrunPrerequisiteResult BasicErrorDryrunPrerequisiteResult(string code = null, string message = null)
-        {
-            return new BasicErrorDryrunPrerequisiteResult(DryrunPrerequisiteResultType.BasicError, code, message);
-        }
-
-        /// <summary> Initializes a new instance of PermissionsMissingDryrunPrerequisiteResult. </summary>
-        /// <param name="scope"> The permission scope. </param>
-        /// <param name="permissions"> The permission list. </param>
-        /// <param name="recommendedRole"> The recommended role to resolve permissions missing. </param>
-        /// <returns> A new <see cref="Models.PermissionsMissingDryrunPrerequisiteResult"/> instance for mocking. </returns>
-        public static PermissionsMissingDryrunPrerequisiteResult PermissionsMissingDryrunPrerequisiteResult(string scope = null, IEnumerable<string> permissions = null, string recommendedRole = null)
-        {
-            permissions ??= new List<string>();
-
-            return new PermissionsMissingDryrunPrerequisiteResult(DryrunPrerequisiteResultType.PermissionsMissing, scope, permissions?.ToList(), recommendedRole);
+            return new WorkspaceData(id, name, resourceType, systemData, tags, location, provisioningState);
         }
     }
 }

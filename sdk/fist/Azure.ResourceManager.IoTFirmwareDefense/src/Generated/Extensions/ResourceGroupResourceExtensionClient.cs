@@ -31,20 +31,11 @@ namespace Azure.ResourceManager.IoTFirmwareDefense
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of LocationDryrunResources in the ResourceGroupResource. </summary>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <returns> An object representing collection of LocationDryrunResources and their operations over a LocationDryrunResource. </returns>
-        public virtual LocationDryrunCollection GetLocationDryruns(AzureLocation location)
+        /// <summary> Gets a collection of WorkspaceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of WorkspaceResources and their operations over a WorkspaceResource. </returns>
+        public virtual WorkspaceCollection GetWorkspaces()
         {
-            return new LocationDryrunCollection(Client, Id, location);
-        }
-
-        /// <summary> Gets a collection of LocationConnectorResources in the ResourceGroupResource. </summary>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <returns> An object representing collection of LocationConnectorResources and their operations over a LocationConnectorResource. </returns>
-        public virtual LocationConnectorCollection GetLocationConnectors(AzureLocation location)
-        {
-            return new LocationConnectorCollection(Client, Id, location);
+            return GetCachedClient(Client => new WorkspaceCollection(Client, Id));
         }
     }
 }

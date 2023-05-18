@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.IoTFirmwareDefense.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.IoTFirmwareDefense
@@ -19,22 +18,6 @@ namespace Azure.ResourceManager.IoTFirmwareDefense
     /// <summary> A class to add extension methods to Azure.ResourceManager.IoTFirmwareDefense. </summary>
     public static partial class IoTFirmwareDefenseExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
-        {
-            return resource.GetCachedClient(client =>
-            {
-                return new ArmResourceExtensionClient(client, resource.Id);
-            });
-        }
-
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ArmResourceExtensionClient(client, scope);
-            });
-        }
-
         private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
@@ -51,377 +34,155 @@ namespace Azure.ResourceManager.IoTFirmwareDefense
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new SubscriptionResourceExtensionClient(client, scope);
             });
         }
-        #region LocationDryrunResource
+        #region FirmwareResource
         /// <summary>
-        /// Gets an object representing a <see cref="LocationDryrunResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LocationDryrunResource.CreateResourceIdentifier" /> to create a <see cref="LocationDryrunResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FirmwareResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FirmwareResource.CreateResourceIdentifier" /> to create a <see cref="FirmwareResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LocationDryrunResource" /> object. </returns>
-        public static LocationDryrunResource GetLocationDryrunResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FirmwareResource" /> object. </returns>
+        public static FirmwareResource GetFirmwareResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LocationDryrunResource.ValidateResourceId(id);
-                return new LocationDryrunResource(client, id);
+                FirmwareResource.ValidateResourceId(id);
+                return new FirmwareResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DryrunResource
+        #region WorkspaceResource
         /// <summary>
-        /// Gets an object representing a <see cref="DryrunResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DryrunResource.CreateResourceIdentifier" /> to create a <see cref="DryrunResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DryrunResource" /> object. </returns>
-        public static DryrunResource GetDryrunResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WorkspaceResource" /> object. </returns>
+        public static WorkspaceResource GetWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DryrunResource.ValidateResourceId(id);
-                return new DryrunResource(client, id);
+                WorkspaceResource.ValidateResourceId(id);
+                return new WorkspaceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LocationConnectorResource
-        /// <summary>
-        /// Gets an object representing a <see cref="LocationConnectorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LocationConnectorResource.CreateResourceIdentifier" /> to create a <see cref="LocationConnectorResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LocationConnectorResource" /> object. </returns>
-        public static LocationConnectorResource GetLocationConnectorResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                LocationConnectorResource.ValidateResourceId(id);
-                return new LocationConnectorResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region LinkerResource
-        /// <summary>
-        /// Gets an object representing a <see cref="LinkerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LinkerResource.CreateResourceIdentifier" /> to create a <see cref="LinkerResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LinkerResource" /> object. </returns>
-        public static LinkerResource GetLinkerResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                LinkerResource.ValidateResourceId(id);
-                return new LinkerResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        /// <summary> Gets a collection of DryrunResources in the ArmResource. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of DryrunResources and their operations over a DryrunResource. </returns>
-        public static DryrunCollection GetDryruns(this ArmClient client, ResourceIdentifier scope)
-        {
-            return GetArmResourceExtensionClient(client, scope).GetDryruns();
-        }
-
-        /// <summary>
-        /// get a dryrun job
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/dryruns/{dryrunName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Linkers_GetDryrun</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="dryrunName"> The name of dryrun. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DryrunResource>> GetDryrunAsync(this ArmClient client, ResourceIdentifier scope, string dryrunName, CancellationToken cancellationToken = default)
-        {
-            return await client.GetDryruns(scope).GetAsync(dryrunName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// get a dryrun job
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/dryruns/{dryrunName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Linkers_GetDryrun</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="dryrunName"> The name of dryrun. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DryrunResource> GetDryrun(this ArmClient client, ResourceIdentifier scope, string dryrunName, CancellationToken cancellationToken = default)
-        {
-            return client.GetDryruns(scope).Get(dryrunName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of LinkerResources in the ArmResource. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of LinkerResources and their operations over a LinkerResource. </returns>
-        public static LinkerCollection GetLinkers(this ArmClient client, ResourceIdentifier scope)
-        {
-            return GetArmResourceExtensionClient(client, scope).GetLinkers();
-        }
-
-        /// <summary>
-        /// Returns Linker resource for a given name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Linker_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="linkerName"> The name Linker resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<LinkerResource>> GetLinkerAsync(this ArmClient client, ResourceIdentifier scope, string linkerName, CancellationToken cancellationToken = default)
-        {
-            return await client.GetLinkers(scope).GetAsync(linkerName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns Linker resource for a given name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Linker_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="linkerName"> The name Linker resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<LinkerResource> GetLinker(this ArmClient client, ResourceIdentifier scope, string linkerName, CancellationToken cancellationToken = default)
-        {
-            return client.GetLinkers(scope).Get(linkerName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of LocationDryrunResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of WorkspaceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <returns> An object representing collection of LocationDryrunResources and their operations over a LocationDryrunResource. </returns>
-        public static LocationDryrunCollection GetLocationDryruns(this ResourceGroupResource resourceGroupResource, AzureLocation location)
+        /// <returns> An object representing collection of WorkspaceResources and their operations over a WorkspaceResource. </returns>
+        public static WorkspaceCollection GetWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLocationDryruns(location);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetWorkspaces();
         }
 
         /// <summary>
-        /// get a dryrun job
+        /// Get firmware analysis workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns/{dryrunName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Connector_GetDryrun</description>
+        /// <description>Workspaces_Get</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="dryrunName"> The name of dryrun. </param>
+        /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<LocationDryrunResource>> GetLocationDryrunAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, string dryrunName, CancellationToken cancellationToken = default)
+        public static async Task<Response<WorkspaceResource>> GetWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetLocationDryruns(location).GetAsync(dryrunName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// get a dryrun job
+        /// Get firmware analysis workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns/{dryrunName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Connector_GetDryrun</description>
+        /// <description>Workspaces_Get</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="dryrunName"> The name of dryrun. </param>
+        /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<LocationDryrunResource> GetLocationDryrun(this ResourceGroupResource resourceGroupResource, AzureLocation location, string dryrunName, CancellationToken cancellationToken = default)
+        public static Response<WorkspaceResource> GetWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetLocationDryruns(location).Get(dryrunName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of LocationConnectorResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <returns> An object representing collection of LocationConnectorResources and their operations over a LocationConnectorResource. </returns>
-        public static LocationConnectorCollection GetLocationConnectors(this ResourceGroupResource resourceGroupResource, AzureLocation location)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLocationConnectors(location);
+            return resourceGroupResource.GetWorkspaces().Get(workspaceName, cancellationToken);
         }
 
         /// <summary>
-        /// Returns Connector resource for a given name.
+        /// Lists all of the firmware analysis workspaces in the specified subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.IoTFirmwareDefense/workspaces</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Connector_Get</description>
+        /// <description>Workspaces_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="connectorName"> The name of resource. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<LocationConnectorResource>> GetLocationConnectorAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, string connectorName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<WorkspaceResource> GetWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetLocationConnectors(location).GetAsync(connectorName, cancellationToken).ConfigureAwait(false);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Returns Connector resource for a given name.
+        /// Lists all of the firmware analysis workspaces in the specified subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.IoTFirmwareDefense/workspaces</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Connector_Get</description>
+        /// <description>Workspaces_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="connectorName"> The name of resource. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<LocationConnectorResource> GetLocationConnector(this ResourceGroupResource resourceGroupResource, AzureLocation location, string connectorName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<WorkspaceResource> GetWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetLocationConnectors(location).Get(connectorName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the configuration names generated by Service Connector for all target, client types, auth types.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ServiceLinker/configurationNames</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationNames_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="skipToken"> OData skipToken option for pagination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfigurationNameItem" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ConfigurationNameItem> GetConfigurationNamesAsync(this TenantResource tenantResource, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            return GetTenantResourceExtensionClient(tenantResource).GetConfigurationNamesAsync(filter, skipToken, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the configuration names generated by Service Connector for all target, client types, auth types.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.ServiceLinker/configurationNames</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationNames_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="skipToken"> OData skipToken option for pagination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigurationNameItem" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ConfigurationNameItem> GetConfigurationNames(this TenantResource tenantResource, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            return GetTenantResourceExtensionClient(tenantResource).GetConfigurationNames(filter, skipToken, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetWorkspaces(cancellationToken);
         }
     }
 }
