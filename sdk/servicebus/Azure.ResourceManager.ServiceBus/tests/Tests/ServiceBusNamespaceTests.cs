@@ -11,16 +11,16 @@ using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceBus.Models;
-using Azure.ResourceManager.ServiceBus.Tests.Helpers;
 using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.ManagedServiceIdentities;
 using Azure.ResourceManager.ManagedServiceIdentities.Models;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+
 namespace Azure.ResourceManager.ServiceBus.Tests
 {
-    public class ServiceBusNamespaceTests : ServiceBusTestBase
+    public class ServiceBusNamespaceTests : ServiceBusManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private string namespacePrefix = "testnamespacemgmt";
