@@ -125,18 +125,7 @@ Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssi
     </member>
     <member name="GetRoleAssignmentsAsync(string,string,string,string,RequestContext)">
 <example>
-This sample shows how to call GetRoleAssignmentsAsync and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new RoleAssignmentsClient(endpoint, credential);
-
-Response response = await client.GetRoleAssignmentsAsync();
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetRoleAssignmentsAsync with all parameters, and how to parse the result.
+This sample shows how to call GetRoleAssignmentsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -156,18 +145,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("principalType").To
     </member>
     <member name="GetRoleAssignments(string,string,string,string,RequestContext)">
 <example>
-This sample shows how to call GetRoleAssignments and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new RoleAssignmentsClient(endpoint, credential);
-
-Response response = client.GetRoleAssignments();
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetRoleAssignments with all parameters, and how to parse the result.
+This sample shows how to call GetRoleAssignments with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
