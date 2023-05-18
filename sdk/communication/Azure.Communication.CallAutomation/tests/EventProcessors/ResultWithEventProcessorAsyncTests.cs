@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(
                 responseCode: successCode,
                 responseContent: CreateOrAnswerCallOrGetCallConnectionPayload,
-                options: new CallAutomationClientOptions() { Source = new CommunicationUserIdentifier("12345") }
+                options: new CallAutomationClientOptions() { SourceIdentity = new CommunicationUserIdentifier("12345") }
                 );
             CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
 
@@ -52,7 +52,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(
                 responseCode: successCode,
                 responseContent: CreateOrAnswerCallOrGetCallConnectionPayload,
-                options: new CallAutomationClientOptions() { Source = new CommunicationUserIdentifier("12345") });
+                options: new CallAutomationClientOptions() { SourceIdentity = new CommunicationUserIdentifier("12345") });
             CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
 
             var response = callAutomationClient.CreateCall(new CreateCallOptions(CreateMockInvite(), new Uri(CallBackUri)));
@@ -82,7 +82,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(
                 responseCode: successCode,
                 responseContent: CreateOrAnswerCallOrGetCallConnectionPayload,
-                options: new CallAutomationClientOptions() { Source = new CommunicationUserIdentifier("12345") });
+                options: new CallAutomationClientOptions() { SourceIdentity = new CommunicationUserIdentifier("12345") });
             CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
 
             var response = callAutomationClient.AnswerCall("incomingCallContext", new Uri(CallBackUri));
@@ -110,7 +110,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(
                 responseCode: successCode,
                 responseContent: CreateOrAnswerCallOrGetCallConnectionPayload,
-                options: new CallAutomationClientOptions() { Source = new CommunicationUserIdentifier("12345") });
+                options: new CallAutomationClientOptions() { SourceIdentity = new CommunicationUserIdentifier("12345") });
             CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
 
             var response = callAutomationClient.AnswerCall("incomingCallContext", new Uri(CallBackUri));

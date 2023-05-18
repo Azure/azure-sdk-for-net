@@ -75,7 +75,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
             var callAutomationClientOptions = new CallAutomationClientOptions()
             {
-                Source = new CommunicationUserIdentifier("12345"),
+                SourceIdentity = new CommunicationUserIdentifier("12345"),
                 Transport = new MockTransport(mockResponse)
             };
 
@@ -106,9 +106,10 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                 }
             }
 
-            var callAutomationClientOptions = new CallAutomationClientOptions(source: new CommunicationUserIdentifier("12345"))
+            var callAutomationClientOptions = new CallAutomationClientOptions()
             {
-                Transport = new MockTransport(mockResponse)
+                Transport = new MockTransport(mockResponse),
+                SourceIdentity = new CommunicationUserIdentifier("12345"),
             };
 
             return new CallAutomationClient(AcsEndpoint, KeyCredential, callAutomationClientOptions);

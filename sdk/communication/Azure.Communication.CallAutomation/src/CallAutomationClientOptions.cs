@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The caller source of the call automation client.
         /// </summary>
-        public CommunicationUserIdentifier Source { get; set; }
+        public CommunicationUserIdentifier SourceIdentity { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CallAutomationClientOptions"/>.
