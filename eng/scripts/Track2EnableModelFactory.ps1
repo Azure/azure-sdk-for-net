@@ -21,13 +21,26 @@ function Update-ChangeLog([string]$file, [string]$releasedate) {
             $flag = $true
             continue
         }
+        if ($item.Contains("### Features Added") -and $flag) {
+            $store += $item
+            $store += "`n- Add model factory`n"
+            continue
+        }
         if ($item.Contains("### Breaking Changes") -and $flag) {
-            $store += "- Add model factory`n"
+            continue
+        }
+        if ($item.Equals("")-and $flag) {
+            continue
+        }
+        if ($item.Contains("### Bugs Fixed") -and $flag) {
+            continue
         }
         if ($item.Contains("### Other Changes") -and $flag) {
-            $store += "- Upgraded dependent `Azure.Core` to `1.32.0`."
-            $store += "- Upgraded dependent `Azure.ResourceManager` to `1.6.0`.`n"
+            $store += $item
+            $store += "`n- Upgraded dependent `Azure.Core` to `1.32.0`."
+            $store += "- Upgraded dependent `Azure.ResourceManager` to `1.6.0`."
             $flag = $false
+            continue
         }
         $store += $item
     }
@@ -71,4 +84,4 @@ function  Enable-ModelFactory {
     }
 }
 
-Enable-ModelFactory -releasedate "2023-05-17"
+Enable-ModelFactory -releasedate "2023-05-19"
