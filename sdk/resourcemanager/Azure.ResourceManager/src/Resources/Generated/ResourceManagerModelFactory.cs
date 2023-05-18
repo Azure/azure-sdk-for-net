@@ -451,22 +451,25 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of LocationExpanded. </summary>
-        /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/00000000-0000-0000-0000-000000000000/locations/westus. </param>
+        /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="name"> The location name. </param>
         /// <param name="locationType"> The location type. </param>
         /// <param name="displayName"> The display name of the location. </param>
         /// <param name="regionalDisplayName"> The display name of the location and its region. </param>
         /// <param name="metadata"> Metadata of the location, such as lat/long, paired region, and others. </param>
+        /// <param name="availabilityZoneMappings"> The availability zone mappings for this region. </param>
         /// <returns> A new <see cref="Resources.Models.LocationExpanded"/> instance for mocking. </returns>
-        public static LocationExpanded LocationExpanded(string id = null, string subscriptionId = null, string name = null, LocationType? locationType = null, string displayName = null, string regionalDisplayName = null, LocationMetadata metadata = null)
+        public static LocationExpanded LocationExpanded(string id = null, string subscriptionId = null, string name = null, LocationType? locationType = null, string displayName = null, string regionalDisplayName = null, LocationMetadata metadata = null, IEnumerable<AvailabilityZoneMappings> availabilityZoneMappings = null)
         {
-            return new LocationExpanded(id, subscriptionId, name, locationType, displayName, regionalDisplayName, metadata);
+            availabilityZoneMappings ??= new List<AvailabilityZoneMappings>();
+
+            return new LocationExpanded(id, subscriptionId, name, locationType, displayName, regionalDisplayName, metadata, availabilityZoneMappings?.ToList());
         }
 
         /// <summary> Initializes a new instance of PairedRegion. </summary>
         /// <param name="name"> The name of the paired region. </param>
-        /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/00000000-0000-0000-0000-000000000000/locations/westus. </param>
+        /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <returns> A new <see cref="Resources.Models.PairedRegion"/> instance for mocking. </returns>
         public static PairedRegion PairedRegion(string name = null, string id = null, string subscriptionId = null)
@@ -474,8 +477,17 @@ namespace Azure.ResourceManager.Models
             return new PairedRegion(name, id, subscriptionId);
         }
 
+        /// <summary> Initializes a new instance of AvailabilityZoneMappings. </summary>
+        /// <param name="logicalZone"> The logical zone id for the availability zone. </param>
+        /// <param name="physicalZone"> The fully qualified physical zone id of availability zone to which logical zone id is mapped to. </param>
+        /// <returns> A new <see cref="Resources.Models.AvailabilityZoneMappings"/> instance for mocking. </returns>
+        public static AvailabilityZoneMappings AvailabilityZoneMappings(string logicalZone = null, string physicalZone = null)
+        {
+            return new AvailabilityZoneMappings(logicalZone, physicalZone);
+        }
+
         /// <summary> Initializes a new instance of SubscriptionData. </summary>
-        /// <param name="id"> The fully qualified ID for the subscription. For example, /subscriptions/00000000-0000-0000-0000-000000000000. </param>
+        /// <param name="id"> The fully qualified ID for the subscription. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="displayName"> The subscription display name. </param>
         /// <param name="tenantId"> The subscription tenant ID. </param>
@@ -512,8 +524,8 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of TenantData. </summary>
-        /// <param name="id"> The fully qualified ID of the tenant. For example, /tenants/00000000-0000-0000-0000-000000000000. </param>
-        /// <param name="tenantId"> The tenant ID. For example, 00000000-0000-0000-0000-000000000000. </param>
+        /// <param name="id"> The fully qualified ID of the tenant. For example, /tenants/8d65815f-a5b6-402f-9298-045155da7d74. </param>
+        /// <param name="tenantId"> The tenant ID. For example, 8d65815f-a5b6-402f-9298-045155da7d74. </param>
         /// <param name="tenantCategory"> Category of the tenant. </param>
         /// <param name="country"> Country/region name of the address for the tenant. </param>
         /// <param name="countryCode"> Country/region abbreviation for the tenant. </param>
