@@ -150,7 +150,7 @@ namespace Azure.Core.Dynamic
     }
     public enum DynamicDateTimeHandling
     {
-        Rfc3339Utc = 0,
-        UnixTimeUtc = 1,
+        Rfc3339 = 0,
+        UnixTime = 1,
     }
 }

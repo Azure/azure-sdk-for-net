@@ -16,9 +16,7 @@ namespace Azure
         /// </summary>
         public static dynamic ToDynamicFromJson(this BinaryData utf8Json)
         {
-            DynamicDataOptions options = DynamicDataOptions.Default;
-            MutableJsonDocument mdoc = MutableJsonDocument.Parse(utf8Json, DynamicData.GetSerializerOptions(options));
-            return new DynamicData(mdoc.RootElement, options);
+            return utf8Json.ToDynamicFromJson(DynamicDataOptions.Default);
         }
 
         /// <summary>

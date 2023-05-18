@@ -279,8 +279,8 @@ namespace Azure.Core.Dynamic
             {
                 return value._options.DateTimeHandling switch
                 {
-                    DynamicDateTimeHandling.UnixTimeUtc => value.ConvertTo<DateTime>(),
-                    DynamicDateTimeHandling.Rfc3339Utc => value._element.GetDateTime(),
+                    DynamicDateTimeHandling.UnixTime => value.ConvertTo<DateTime>(),
+                    DynamicDateTimeHandling.Rfc3339 => value._element.GetDateTime(),
                     _ => value._element.GetDateTime(),
                 };
             }
@@ -304,8 +304,8 @@ namespace Azure.Core.Dynamic
             {
                 return value._options.DateTimeHandling switch
                 {
-                    DynamicDateTimeHandling.UnixTimeUtc => value.ConvertTo<DateTimeOffset>(),
-                    DynamicDateTimeHandling.Rfc3339Utc => value._element.GetDateTimeOffset(),
+                    DynamicDateTimeHandling.UnixTime => value.ConvertTo<DateTimeOffset>(),
+                    DynamicDateTimeHandling.Rfc3339 => value._element.GetDateTimeOffset(),
                     _ => value._element.GetDateTimeOffset(),
                 };
             }

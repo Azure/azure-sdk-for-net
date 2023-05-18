@@ -54,11 +54,11 @@ namespace Azure.Core.Dynamic
 
             switch (options.DateTimeHandling)
             {
-                case DynamicDateTimeHandling.UnixTimeUtc:
+                case DynamicDateTimeHandling.UnixTime:
                     serializer.Converters.Add(new UnixTimeDateTimeConverter());
                     serializer.Converters.Add(new UnixTimeDateTimeOffsetConverter());
                     break;
-                case DynamicDateTimeHandling.Rfc3339Utc:
+                case DynamicDateTimeHandling.Rfc3339:
                 default:
                     serializer.Converters.Add(new Rfc3339DateTimeConverter());
                     serializer.Converters.Add(new Rfc3339DateTimeOffsetConverter());
@@ -142,9 +142,9 @@ namespace Azure.Core.Dynamic
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            if (HasTypeMapping(value))
+            if (HasTypeConverter(value))
             {
-                value = MapType(value);
+                value = ConvertType(value);
             }
 
             if (!char.IsUpper(name[0]))
@@ -174,7 +174,7 @@ namespace Azure.Core.Dynamic
             return null;
         }
 
-        private static bool HasTypeMapping(object value) => value switch
+        private static bool HasTypeConverter(object value) => value switch
         {
             DateTime => true,
             DateTimeOffset => true,
@@ -182,7 +182,7 @@ namespace Azure.Core.Dynamic
             _ => false
         };
 
-        private object MapType(object value)
+        private object ConvertType(object value)
         {
             byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(value, _serializerOptions);
             return JsonDocument.Parse(bytes);

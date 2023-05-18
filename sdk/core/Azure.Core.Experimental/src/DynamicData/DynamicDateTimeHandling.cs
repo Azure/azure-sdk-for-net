@@ -15,6 +15,7 @@ using Azure.Core.Json;
 namespace Azure.Core.Dynamic
 {
     /// <summary>
+    /// Determines how DynamicData handles DateTime and DateTimeOffset when serializing and deserializing.
     /// </summary>
     public enum DynamicDateTimeHandling
     {
@@ -26,7 +27,7 @@ namespace Azure.Core.Dynamic
         ///
         /// DateTime values must have DateTimeKind.Utc, and DateTimeOffset are converted to UTC.
         /// </summary>
-        Rfc3339Utc,
+        Rfc3339,
 
         /// <summary>
         /// DateTime and DateTimeOffset values assigned to <see cref="DynamicData"/> will be
@@ -35,6 +36,6 @@ namespace Azure.Core.Dynamic
         ///
         /// DateTime values must have DateTimeKind.Utc, and DateTimeOffset are converted to UTC.
         /// </summary>
-        UnixTimeUtc,
+        UnixTime,
     }
 }
