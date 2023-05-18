@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Sql.Tests
 {
     [ClientTestFixture]
     [NonParallelizable]
-    public abstract class SqlManagementClientBase : ManagementRecordedTestBase<SqlManagementTestEnvironment>
+    public abstract class SqlManagementTestBase : ManagementRecordedTestBase<SqlManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
         protected AzureLocation DefaultLocation => AzureLocation.WestUS2;
 
-        protected SqlManagementClientBase(bool isAsync)
+        protected SqlManagementTestBase(bool isAsync)
             : base(isAsync)
         {
             IgnoreNetworkDependencyVersions();
         }
-        public SqlManagementClientBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        public SqlManagementTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
             IgnoreNetworkDependencyVersions();
         }
