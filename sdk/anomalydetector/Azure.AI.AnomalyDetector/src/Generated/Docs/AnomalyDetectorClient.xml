@@ -1,62 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="DetectUnivariateEntireSeriesAsync(UnivariateDetectionOptions,CancellationToken)">
-<example>
-This sample shows how to call DetectUnivariateEntireSeriesAsync with required parameters.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, credential);
-
-var options = new UnivariateDetectionOptions(new TimeSeriesPoint[] 
-{
-    new TimeSeriesPoint(3.14f)
-{
-        Timestamp = DateTimeOffset.UtcNow,
-    }
-})
-{
-    Granularity = TimeGranularity.Yearly,
-    CustomInterval = 1234,
-    Period = 1234,
-    MaxAnomalyRatio = 3.14f,
-    Sensitivity = 1234,
-    ImputeMode = ImputeMode.Auto,
-    ImputeFixedValue = 3.14f,
-};
-var result = await client.DetectUnivariateEntireSeriesAsync(options);
-]]></code>
-</example>
-    </member>
-    <member name="DetectUnivariateEntireSeries(UnivariateDetectionOptions,CancellationToken)">
-<example>
-This sample shows how to call DetectUnivariateEntireSeries with required parameters.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, credential);
-
-var options = new UnivariateDetectionOptions(new TimeSeriesPoint[] 
-{
-    new TimeSeriesPoint(3.14f)
-{
-        Timestamp = DateTimeOffset.UtcNow,
-    }
-})
-{
-    Granularity = TimeGranularity.Yearly,
-    CustomInterval = 1234,
-    Period = 1234,
-    MaxAnomalyRatio = 3.14f,
-    Sensitivity = 1234,
-    ImputeMode = ImputeMode.Auto,
-    ImputeFixedValue = 3.14f,
-};
-var result = client.DetectUnivariateEntireSeries(options);
-]]></code>
-</example>
-    </member>
     <member name="DetectUnivariateEntireSeriesAsync(RequestContent,RequestContext)">
 <example>
 This sample shows how to call DetectUnivariateEntireSeriesAsync with required request content, and how to parse the result.
@@ -941,7 +885,10 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new AnomalyDetectorClient(endpoint, credential);
 
-var options = new MultivariateBatchDetectionOptions("<dataSource>", 1234, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow);
+var options = new MultivariateBatchDetectionOptions("<dataSource>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow)
+{
+    TopContributorCount = 1234,
+};
 var result = await client.DetectMultivariateBatchAnomalyAsync("<modelId>", options);
 ]]></code>
 </example>
@@ -954,14 +901,39 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new AnomalyDetectorClient(endpoint, credential);
 
-var options = new MultivariateBatchDetectionOptions("<dataSource>", 1234, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow);
+var options = new MultivariateBatchDetectionOptions("<dataSource>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow)
+{
+    TopContributorCount = 1234,
+};
 var result = client.DetectMultivariateBatchAnomaly("<modelId>", options);
 ]]></code>
 </example>
     </member>
     <member name="DetectMultivariateBatchAnomalyAsync(string,RequestContent,RequestContext)">
 <example>
-This sample shows how to call DetectMultivariateBatchAnomalyAsync with required parameters and request content and parse the result.
+This sample shows how to call DetectMultivariateBatchAnomalyAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    dataSource = "<dataSource>",
+    startTime = "2022-05-10T14:57:31.2311892-04:00",
+    endTime = "2022-05-10T14:57:31.2311892-04:00",
+};
+
+Response response = await client.DetectMultivariateBatchAnomalyAsync("<modelId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("resultId").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("dataSource").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("timestamp").ToString());
+]]></code>
+This sample shows how to call DetectMultivariateBatchAnomalyAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -1004,7 +976,29 @@ Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetP
     </member>
     <member name="DetectMultivariateBatchAnomaly(string,RequestContent,RequestContext)">
 <example>
-This sample shows how to call DetectMultivariateBatchAnomaly with required parameters and request content and parse the result.
+This sample shows how to call DetectMultivariateBatchAnomaly with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    dataSource = "<dataSource>",
+    startTime = "2022-05-10T14:57:31.2311892-04:00",
+    endTime = "2022-05-10T14:57:31.2311892-04:00",
+};
+
+Response response = client.DetectMultivariateBatchAnomaly("<modelId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("resultId").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("dataSource").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("timestamp").ToString());
+]]></code>
+This sample shows how to call DetectMultivariateBatchAnomaly with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");

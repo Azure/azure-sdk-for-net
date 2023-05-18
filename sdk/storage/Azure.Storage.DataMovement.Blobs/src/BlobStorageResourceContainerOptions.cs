@@ -7,20 +7,19 @@ using Azure.Storage.DataMovement.Models;
 namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
-    /// Options bag for <see cref="BlobDirectoryStorageResourceContainer"/> and
-    /// <see cref="BlobStorageResourceContainer"/>.
+    /// Options bag for <see cref="BlobStorageResourceContainer"/>.
     /// </summary>
     public class BlobStorageResourceContainerOptions
     {
         /// <summary>
         /// Optional. The <see cref="BlobTraits"/> for when calling the
-        /// <see cref="BlobDirectoryStorageResourceContainer.GetStorageResourcesAsync(System.Threading.CancellationToken)"/>.
+        /// <see cref="BlobStorageResourceContainer.GetStorageResourcesAsync(System.Threading.CancellationToken)"/>.
         /// </summary>
         public BlobTraits Traits { get; set; }
 
         /// <summary>
         /// Optional. The <see cref="BlobStates"/> for when calling the
-        /// <see cref="BlobDirectoryStorageResourceContainer.GetStorageResourcesAsync(System.Threading.CancellationToken)"/>.
+        /// <see cref="BlobStorageResourceContainer.GetStorageResourcesAsync(System.Threading.CancellationToken)"/>.
         /// </summary>
         public BlobStates States { get; set; }
 
@@ -38,5 +37,10 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Defaults to <see cref="BlobType.Block"/>.
         /// </summary>
         public BlobType BlobType { get; set; } = BlobType.Block;
+
+        /// <summary>
+        /// Optional. The directory prefix within the Blob Storage Container to use in the transfer.
+        /// </summary>
+        public string DirectoryPrefix { get; set; }
     }
 }

@@ -151,6 +151,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                             // Try to acquire the semaphore. This protects the cached events.
                             if (!_cachedEventsGuard.Wait(0, linkedCts.Token))
                             {
+                                // This will throw if the cancellation token is canceled.
                                 await _cachedEventsGuard.WaitAsync(linkedCts.Token).ConfigureAwait(false);
                             }
                             acquiredSemaphore = true;
@@ -201,7 +202,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     else
                     {
                         UpdateCheckpointContext(events, context);
-                        await TriggerExecute(events, context, _cts.Token).ConfigureAwait(false);
+                        await TriggerExecute(events, context, linkedCts.Token).ConfigureAwait(false);
                         _firstFunctionExecute = false;
                         eventToCheckpoint = events.LastOrDefault();
                     }

@@ -35,7 +35,6 @@ var data = new {
     settings = new {
         confidenceThreshold = 123.45f,
     },
-    storageInputContainerName = "<storageInputContainerName>",
     projectName = "<projectName>",
     multilingual = true,
     description = "<description>",
@@ -51,7 +50,6 @@ Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 Console.WriteLine(result.GetProperty("projectKind").ToString());
 Console.WriteLine(result.GetProperty("settings").GetProperty("confidenceThreshold").ToString());
-Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
 Console.WriteLine(result.GetProperty("projectName").ToString());
 Console.WriteLine(result.GetProperty("multilingual").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
@@ -61,7 +59,7 @@ Console.WriteLine(result.GetProperty("language").ToString());
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/create-project
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/create-project
 
 </remarks>
     </member>
@@ -99,7 +97,6 @@ var data = new {
     settings = new {
         confidenceThreshold = 123.45f,
     },
-    storageInputContainerName = "<storageInputContainerName>",
     projectName = "<projectName>",
     multilingual = true,
     description = "<description>",
@@ -115,7 +112,6 @@ Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 Console.WriteLine(result.GetProperty("projectKind").ToString());
 Console.WriteLine(result.GetProperty("settings").GetProperty("confidenceThreshold").ToString());
-Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
 Console.WriteLine(result.GetProperty("projectName").ToString());
 Console.WriteLine(result.GetProperty("multilingual").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
@@ -125,7 +121,7 @@ Console.WriteLine(result.GetProperty("language").ToString());
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/create-project
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/create-project
 
 </remarks>
     </member>
@@ -146,7 +142,6 @@ Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 Console.WriteLine(result.GetProperty("projectKind").ToString());
 Console.WriteLine(result.GetProperty("settings").GetProperty("confidenceThreshold").ToString());
-Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
 Console.WriteLine(result.GetProperty("projectName").ToString());
 Console.WriteLine(result.GetProperty("multilingual").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
@@ -156,7 +151,7 @@ Console.WriteLine(result.GetProperty("language").ToString());
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-project
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-project
 
 </remarks>
     </member>
@@ -177,7 +172,6 @@ Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 Console.WriteLine(result.GetProperty("projectKind").ToString());
 Console.WriteLine(result.GetProperty("settings").GetProperty("confidenceThreshold").ToString());
-Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
 Console.WriteLine(result.GetProperty("projectName").ToString());
 Console.WriteLine(result.GetProperty("multilingual").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
@@ -187,7 +181,7 @@ Console.WriteLine(result.GetProperty("language").ToString());
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-project
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-project
 
 </remarks>
     </member>
@@ -208,14 +202,12 @@ Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
 Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
-Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("resourceId").ToString());
-Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("region").ToString());
 ]]></code>
 </example>
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-deployment
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-deployment
 
 </remarks>
     </member>
@@ -236,96 +228,12 @@ Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
 Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
-Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("resourceId").ToString());
-Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("region").ToString());
 ]]></code>
 </example>
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-deployment
-
-</remarks>
-    </member>
-    <member name="GetDeploymentDeleteFromResourcesStatusAsync(string,string,string,RequestContext)">
-<example>
-This sample shows how to call GetDeploymentDeleteFromResourcesStatusAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-Response response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>", new RequestContext());
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-deployment-delete-from-resources-status
-
-</remarks>
-    </member>
-    <member name="GetDeploymentDeleteFromResourcesStatus(string,string,string,RequestContext)">
-<example>
-This sample shows how to call GetDeploymentDeleteFromResourcesStatus with required parameters and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-Response response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>", new RequestContext());
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-deployment-delete-from-resources-status
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-deployment
 
 </remarks>
     </member>
@@ -366,7 +274,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-deployment-status
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-deployment-status
 
 </remarks>
     </member>
@@ -407,7 +315,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-deployment-status
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-deployment-status
 
 </remarks>
     </member>
@@ -448,7 +356,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-swap-deployments-status
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-swap-deployments-status
 
 </remarks>
     </member>
@@ -489,7 +397,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-swap-deployments-status
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-swap-deployments-status
 
 </remarks>
     </member>
@@ -531,7 +439,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-export-status
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-export-status
 
 </remarks>
     </member>
@@ -573,7 +481,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-export-status
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-export-status
 
 </remarks>
     </member>
@@ -614,7 +522,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-import-status
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-import-status
 
 </remarks>
     </member>
@@ -655,7 +563,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-import-status
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-import-status
 
 </remarks>
     </member>
@@ -682,7 +590,7 @@ Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-trained-model
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-trained-model
 
 </remarks>
     </member>
@@ -709,7 +617,7 @@ Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-trained-model
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-trained-model
 
 </remarks>
     </member>
@@ -728,7 +636,7 @@ Console.WriteLine(response.Status);
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/delete-trained-model
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/delete-trained-model
 
 </remarks>
     </member>
@@ -747,7 +655,7 @@ Console.WriteLine(response.Status);
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/delete-trained-model
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/delete-trained-model
 
 </remarks>
     </member>
@@ -800,7 +708,7 @@ Console.WriteLine(result.GetProperty("evaluationOptions").GetProperty("testingSp
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-model-evaluation-summary
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-model-evaluation-summary
 
 </remarks>
     </member>
@@ -853,7 +761,7 @@ Console.WriteLine(result.GetProperty("evaluationOptions").GetProperty("testingSp
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-model-evaluation-summary
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-model-evaluation-summary
 
 </remarks>
     </member>
@@ -894,7 +802,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-load-snapshot-status
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-load-snapshot-status
 
 </remarks>
     </member>
@@ -935,171 +843,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-load-snapshot-status
-
-</remarks>
-    </member>
-    <member name="GetAssignDeploymentResourcesStatusAsync(string,string,RequestContext)">
-<example>
-This sample shows how to call GetAssignDeploymentResourcesStatusAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-Response response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", new RequestContext());
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-assign-deployment-resources-status
-
-</remarks>
-    </member>
-    <member name="GetAssignDeploymentResourcesStatus(string,string,RequestContext)">
-<example>
-This sample shows how to call GetAssignDeploymentResourcesStatus with required parameters and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-Response response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>", new RequestContext());
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-assign-deployment-resources-status
-
-</remarks>
-    </member>
-    <member name="GetUnassignDeploymentResourcesStatusAsync(string,string,RequestContext)">
-<example>
-This sample shows how to call GetUnassignDeploymentResourcesStatusAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-Response response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", new RequestContext());
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-unassign-deployment-resources-status
-
-</remarks>
-    </member>
-    <member name="GetUnassignDeploymentResourcesStatus(string,string,RequestContext)">
-<example>
-This sample shows how to call GetUnassignDeploymentResourcesStatus with required parameters and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-Response response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>", new RequestContext());
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-unassign-deployment-resources-status
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-load-snapshot-status
 
 </remarks>
     </member>
@@ -1152,7 +896,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-training-status
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-training-status
 
 </remarks>
     </member>
@@ -1205,7 +949,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-training-status
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-training-status
 
 </remarks>
     </member>
@@ -1246,7 +990,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-project-deletion-status
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-project-deletion-status
 
 </remarks>
     </member>
@@ -1287,7 +1031,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-project-deletion-status
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-project-deletion-status
 
 </remarks>
     </member>
@@ -1308,7 +1052,6 @@ await foreach (var item in client.GetProjectsAsync(new RequestContext()))
     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
     Console.WriteLine(result.GetProperty("projectKind").ToString());
     Console.WriteLine(result.GetProperty("settings").GetProperty("confidenceThreshold").ToString());
-    Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
     Console.WriteLine(result.GetProperty("projectName").ToString());
     Console.WriteLine(result.GetProperty("multilingual").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
@@ -1319,7 +1062,7 @@ await foreach (var item in client.GetProjectsAsync(new RequestContext()))
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-projects
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/list-projects
 
 </remarks>
     </member>
@@ -1340,7 +1083,6 @@ foreach (var item in client.GetProjects(new RequestContext()))
     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
     Console.WriteLine(result.GetProperty("projectKind").ToString());
     Console.WriteLine(result.GetProperty("settings").GetProperty("confidenceThreshold").ToString());
-    Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
     Console.WriteLine(result.GetProperty("projectName").ToString());
     Console.WriteLine(result.GetProperty("multilingual").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
@@ -1351,7 +1093,7 @@ foreach (var item in client.GetProjects(new RequestContext()))
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-projects
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/list-projects
 
 </remarks>
     </member>
@@ -1372,15 +1114,13 @@ await foreach (var item in client.GetDeploymentsAsync("<projectName>", new Reque
     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
     Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
     Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
-    Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("resourceId").ToString());
-    Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("region").ToString());
 }
 ]]></code>
 </example>
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-deployments
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/list-deployments
 
 </remarks>
     </member>
@@ -1401,15 +1141,13 @@ foreach (var item in client.GetDeployments("<projectName>", new RequestContext()
     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
     Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
     Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
-    Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("resourceId").ToString());
-    Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("region").ToString());
 }
 ]]></code>
 </example>
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-deployments
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/list-deployments
 
 </remarks>
     </member>
@@ -1437,7 +1175,7 @@ await foreach (var item in client.GetTrainedModelsAsync("<projectName>", new Req
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-trained-models
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/list-trained-models
 
 </remarks>
     </member>
@@ -1465,7 +1203,7 @@ foreach (var item in client.GetTrainedModels("<projectName>", new RequestContext
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-trained-models
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/list-trained-models
 
 </remarks>
     </member>
@@ -1517,7 +1255,7 @@ await foreach (var item in client.GetModelEvaluationResultsAsync("<projectName>"
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-model-evaluation-results
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-model-evaluation-results
 
 </remarks>
     </member>
@@ -1569,79 +1307,7 @@ foreach (var item in client.GetModelEvaluationResults("<projectName>", "<trained
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-model-evaluation-results
-
-</remarks>
-    </member>
-    <member name="GetDeploymentResourcesAsync(string,int?,int?,int?,RequestContext)">
-<example>
-This sample shows how to call GetDeploymentResourcesAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-await foreach (var item in client.GetDeploymentResourcesAsync("<projectName>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("azureResourceId").ToString());
-    Console.WriteLine(result.GetProperty("region").ToString());
-}
-]]></code>
-This sample shows how to call GetDeploymentResourcesAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-await foreach (var item in client.GetDeploymentResourcesAsync("<projectName>", 1234, 1234, 1234, new RequestContext()))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("azureResourceId").ToString());
-    Console.WriteLine(result.GetProperty("region").ToString());
-}
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-deployment-resources
-
-</remarks>
-    </member>
-    <member name="GetDeploymentResources(string,int?,int?,int?,RequestContext)">
-<example>
-This sample shows how to call GetDeploymentResources with required parameters and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-foreach (var item in client.GetDeploymentResources("<projectName>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("azureResourceId").ToString());
-    Console.WriteLine(result.GetProperty("region").ToString());
-}
-]]></code>
-This sample shows how to call GetDeploymentResources with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-foreach (var item in client.GetDeploymentResources("<projectName>", 1234, 1234, 1234, new RequestContext()))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("azureResourceId").ToString());
-    Console.WriteLine(result.GetProperty("region").ToString());
-}
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-deployment-resources
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-model-evaluation-results
 
 </remarks>
     </member>
@@ -1695,7 +1361,7 @@ await foreach (var item in client.GetTrainingJobsAsync("<projectName>", new Requ
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-training-jobs
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/list-training-jobs
 
 </remarks>
     </member>
@@ -1749,87 +1415,7 @@ foreach (var item in client.GetTrainingJobs("<projectName>", new RequestContext(
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-training-jobs
-
-</remarks>
-    </member>
-    <member name="GetAssignedResourceDeploymentsAsync(int?,int?,int?,RequestContext)">
-<example>
-This sample shows how to call GetAssignedResourceDeploymentsAsync and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-await foreach (var item in client.GetAssignedResourceDeploymentsAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("projectName").ToString());
-    Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("deploymentName").ToString());
-    Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("lastDeployedDateTime").ToString());
-    Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("deploymentExpirationDate").ToString());
-}
-]]></code>
-This sample shows how to call GetAssignedResourceDeploymentsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-await foreach (var item in client.GetAssignedResourceDeploymentsAsync(1234, 1234, 1234, new RequestContext()))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("projectName").ToString());
-    Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("deploymentName").ToString());
-    Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("lastDeployedDateTime").ToString());
-    Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("deploymentExpirationDate").ToString());
-}
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-assigned-resource-deployments
-
-</remarks>
-    </member>
-    <member name="GetAssignedResourceDeployments(int?,int?,int?,RequestContext)">
-<example>
-This sample shows how to call GetAssignedResourceDeployments and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-foreach (var item in client.GetAssignedResourceDeployments())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("projectName").ToString());
-    Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("deploymentName").ToString());
-    Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("lastDeployedDateTime").ToString());
-    Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("deploymentExpirationDate").ToString());
-}
-]]></code>
-This sample shows how to call GetAssignedResourceDeployments with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-foreach (var item in client.GetAssignedResourceDeployments(1234, 1234, 1234, new RequestContext()))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("projectName").ToString());
-    Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("deploymentName").ToString());
-    Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("lastDeployedDateTime").ToString());
-    Console.WriteLine(result.GetProperty("deploymentsMetadata")[0].GetProperty("deploymentExpirationDate").ToString());
-}
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-assigned-resource-deployments
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/list-training-jobs
 
 </remarks>
     </member>
@@ -1852,7 +1438,7 @@ await foreach (var item in client.GetSupportedLanguagesAsync("<projectKind>", ne
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-supported-languages
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-supported-languages
 
 </remarks>
     </member>
@@ -1875,7 +1461,7 @@ foreach (var item in client.GetSupportedLanguages("<projectKind>", new RequestCo
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-supported-languages
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-supported-languages
 
 </remarks>
     </member>
@@ -1913,7 +1499,7 @@ await foreach (var item in client.GetSupportedPrebuiltEntitiesAsync("<language>"
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-supported-prebuilt-entities
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-supported-prebuilt-entities
 
 </remarks>
     </member>
@@ -1951,7 +1537,7 @@ foreach (var item in client.GetSupportedPrebuiltEntities("<language>", true, new
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/get-supported-prebuilt-entities
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/get-supported-prebuilt-entities
 
 </remarks>
     </member>
@@ -1974,7 +1560,7 @@ await foreach (var item in client.GetTrainingConfigVersionsAsync("<projectKind>"
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-training-config-versions
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/list-training-config-versions
 
 </remarks>
     </member>
@@ -1997,7 +1583,7 @@ foreach (var item in client.GetTrainingConfigVersions("<projectKind>", new Reque
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/list-training-config-versions
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/list-training-config-versions
 
 </remarks>
     </member>
@@ -2039,7 +1625,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/delete-project
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/delete-project
 
 </remarks>
     </member>
@@ -2081,7 +1667,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/delete-project
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/delete-project
 
 </remarks>
     </member>
@@ -2136,7 +1722,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/export
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/export
 
 </remarks>
     </member>
@@ -2191,7 +1777,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/export
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/export
 
 </remarks>
     </member>
@@ -2236,7 +1822,6 @@ var data = new {
         settings = new {
             confidenceThreshold = 123.45f,
         },
-        storageInputContainerName = "<storageInputContainerName>",
         projectName = "<projectName>",
         multilingual = true,
         description = "<description>",
@@ -2335,7 +1920,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/import
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/import
 
 </remarks>
     </member>
@@ -2380,7 +1965,6 @@ var data = new {
         settings = new {
             confidenceThreshold = 123.45f,
         },
-        storageInputContainerName = "<storageInputContainerName>",
         projectName = "<projectName>",
         multilingual = true,
         description = "<description>",
@@ -2479,7 +2063,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/import
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/import
 
 </remarks>
     </member>
@@ -2568,7 +2152,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/train
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/train
 
 </remarks>
     </member>
@@ -2657,7 +2241,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/train
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/train
 
 </remarks>
     </member>
@@ -2704,7 +2288,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/swap-deployments
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/swap-deployments
 
 </remarks>
     </member>
@@ -2751,13 +2335,13 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/swap-deployments
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/swap-deployments
 
 </remarks>
     </member>
     <member name="DeployProjectAsync(WaitUntil,string,string,RequestContent,RequestContext)">
 <example>
-This sample shows how to call DeployProjectAsync with required parameters and request content, and how to parse the result.
+This sample shows how to call DeployProjectAsync with required parameters and request content and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -2765,30 +2349,6 @@ var client = new ConversationAuthoringClient(endpoint, credential);
 
 var data = new {
     trainedModelLabel = "<trainedModelLabel>",
-};
-
-var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
-
-BinaryData responseData = operation.Value;
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("deploymentName").ToString());
-Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
-Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
-]]></code>
-This sample shows how to call DeployProjectAsync with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-var data = new {
-    trainedModelLabel = "<trainedModelLabel>",
-    assignedResourceIds = new[] {
-        "<String>"
-    },
 };
 
 var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data), new RequestContext());
@@ -2801,20 +2361,18 @@ Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
 Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
-Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("resourceId").ToString());
-Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("region").ToString());
 ]]></code>
 </example>
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/deploy-project
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/deploy-project
 
 </remarks>
     </member>
     <member name="DeployProject(WaitUntil,string,string,RequestContent,RequestContext)">
 <example>
-This sample shows how to call DeployProject with required parameters and request content, and how to parse the result.
+This sample shows how to call DeployProject with required parameters and request content and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -2822,30 +2380,6 @@ var client = new ConversationAuthoringClient(endpoint, credential);
 
 var data = new {
     trainedModelLabel = "<trainedModelLabel>",
-};
-
-var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
-
-BinaryData responseData = operation.Value;
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("deploymentName").ToString());
-Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
-Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
-]]></code>
-This sample shows how to call DeployProject with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-var data = new {
-    trainedModelLabel = "<trainedModelLabel>",
-    assignedResourceIds = new[] {
-        "<String>"
-    },
 };
 
 var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data), new RequestContext());
@@ -2858,14 +2392,12 @@ Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
 Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
-Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("resourceId").ToString());
-Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("region").ToString());
 ]]></code>
 </example>
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/deploy-project
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/deploy-project
 
 </remarks>
     </member>
@@ -2907,7 +2439,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/delete-deployment
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/delete-deployment
 
 </remarks>
     </member>
@@ -2949,83 +2481,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/delete-deployment
-
-</remarks>
-    </member>
-    <member name="DeleteDeploymentFromResourcesAsync(WaitUntil,string,string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call DeleteDeploymentFromResourcesAsync with required parameters.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-var data = new {};
-
-var operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
-
-Console.WriteLine(operation.GetRawResponse().Status);
-]]></code>
-This sample shows how to call DeleteDeploymentFromResourcesAsync with all parameters and request content.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-var data = new {
-    assignedResourceIds = new[] {
-        "<String>"
-    },
-};
-
-var operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data), new RequestContext());
-
-Console.WriteLine(operation.GetRawResponse().Status);
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/delete-deployment-from-resources
-
-</remarks>
-    </member>
-    <member name="DeleteDeploymentFromResources(WaitUntil,string,string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call DeleteDeploymentFromResources with required parameters.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-var data = new {};
-
-var operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
-
-Console.WriteLine(operation.GetRawResponse().Status);
-]]></code>
-This sample shows how to call DeleteDeploymentFromResources with all parameters and request content.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-var data = new {
-    assignedResourceIds = new[] {
-        "<String>"
-    },
-};
-
-var operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data), new RequestContext());
-
-Console.WriteLine(operation.GetRawResponse().Status);
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/delete-deployment-from-resources
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/delete-deployment
 
 </remarks>
     </member>
@@ -3045,7 +2501,7 @@ Console.WriteLine(operation.GetRawResponse().Status);
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/load-snapshot
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/load-snapshot
 
 </remarks>
     </member>
@@ -3065,119 +2521,7 @@ Console.WriteLine(operation.GetRawResponse().Status);
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/load-snapshot
-
-</remarks>
-    </member>
-    <member name="AssignDeploymentResourcesAsync(WaitUntil,string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call AssignDeploymentResourcesAsync with required parameters and request content.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-var data = new {
-    resourcesMetadata = new[] {
-        new {
-            azureResourceId = "<azureResourceId>",
-            customDomain = "<customDomain>",
-            region = "<region>",
-        }
-    },
-};
-
-var operation = await client.AssignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), new RequestContext());
-
-Console.WriteLine(operation.GetRawResponse().Status);
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/assign-deployment-resources
-
-</remarks>
-    </member>
-    <member name="AssignDeploymentResources(WaitUntil,string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call AssignDeploymentResources with required parameters and request content.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-var data = new {
-    resourcesMetadata = new[] {
-        new {
-            azureResourceId = "<azureResourceId>",
-            customDomain = "<customDomain>",
-            region = "<region>",
-        }
-    },
-};
-
-var operation = client.AssignDeploymentResources(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), new RequestContext());
-
-Console.WriteLine(operation.GetRawResponse().Status);
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/assign-deployment-resources
-
-</remarks>
-    </member>
-    <member name="UnassignDeploymentResourcesAsync(WaitUntil,string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call UnassignDeploymentResourcesAsync with required parameters and request content.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-var data = new {
-    assignedResourceIds = new[] {
-        "<String>"
-    },
-};
-
-var operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), new RequestContext());
-
-Console.WriteLine(operation.GetRawResponse().Status);
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/unassign-deployment-resources
-
-</remarks>
-    </member>
-    <member name="UnassignDeploymentResources(WaitUntil,string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call UnassignDeploymentResources with required parameters and request content.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConversationAuthoringClient(endpoint, credential);
-
-var data = new {
-    assignedResourceIds = new[] {
-        "<String>"
-    },
-};
-
-var operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), new RequestContext());
-
-Console.WriteLine(operation.GetRawResponse().Status);
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/unassign-deployment-resources
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/load-snapshot
 
 </remarks>
     </member>
@@ -3231,7 +2575,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/cancel-training-job
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/cancel-training-job
 
 </remarks>
     </member>
@@ -3285,7 +2629,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2022-10-01-preview/conversational-analysis-authoring/cancel-training-job
+https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/cancel-training-job
 
 </remarks>
     </member>
