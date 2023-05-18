@@ -276,11 +276,12 @@ namespace Azure.Core.Tests
         [Test]
         public void CanMakeChangesAndAddNewProperty()
         {
+            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
             dynamic jsonData = BinaryData.FromString("""
                 {
                   "foo" : 1
                 }
-                """).ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+                """).ToDynamicFromJson(options);
 
             Assert.AreEqual(1, (int)jsonData.Foo);
 
@@ -297,11 +298,12 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAddPocoProperty()
         {
+            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
             dynamic value = BinaryData.FromBytes("""
                 {
                     "foo": 1
                 }
-                """u8.ToArray()).ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+                """u8.ToArray()).ToDynamicFromJson(options);
 
             JsonDataTests.SampleModel model = new()
             {
@@ -325,7 +327,7 @@ namespace Azure.Core.Tests
             stream.Position = 0;
 
             BinaryData data = BinaryData.FromStream(stream);
-            dynamic roundTripValue = data.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic roundTripValue = data.ToDynamicFromJson(options);
 
             Assert.IsTrue(roundTripValue.foo == value.Foo);
             Assert.IsTrue(roundTripValue.model.message == value.Model.Message);
@@ -340,11 +342,12 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAddNestedPocoProperty()
         {
+            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
             dynamic value = BinaryData.FromBytes("""
                 {
                     "foo": 1
                 }
-                """u8.ToArray()).ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+                """u8.ToArray()).ToDynamicFromJson(options);
 
             ParentModel model = new ParentModel()
             {
@@ -375,7 +378,7 @@ namespace Azure.Core.Tests
 
             // Test deserialization
             BinaryData bd = BinaryData.FromString(value.ToString());
-            dynamic roundTripValue = bd.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic roundTripValue = bd.ToDynamicFromJson(options);
             Assert.AreEqual(model.Value, (ChildModel)roundTripValue.Model.Value);
             Assert.AreEqual(model, (ParentModel)roundTripValue.Model);
         }
@@ -383,11 +386,12 @@ namespace Azure.Core.Tests
         [Test]
         public void CanSetNestedPocoProperty()
         {
+            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
             dynamic value = BinaryData.FromBytes("""
                 {
                     "foo": 1
                 }
-                """u8.ToArray()).ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+                """u8.ToArray()).ToDynamicFromJson(options);
 
             ParentModel model = new ParentModel()
             {
@@ -416,7 +420,7 @@ namespace Azure.Core.Tests
 
             // Test deserialization
             BinaryData bd = BinaryData.FromString(value.ToString());
-            dynamic roundTripValue = bd.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic roundTripValue = bd.ToDynamicFromJson(options);
             Assert.AreEqual(model.Value, (ChildModel)roundTripValue.Foo.Value);
             Assert.AreEqual(model, (ParentModel)roundTripValue.Foo);
         }
@@ -448,6 +452,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanCheckOptionalPropertyWithChanges()
         {
+            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
             dynamic json = BinaryData.FromString("""
                 {
                   "foo" : "foo",
@@ -455,7 +460,7 @@ namespace Azure.Core.Tests
                     "a" : "a"
                   }
                 }
-            """).ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            """).ToDynamicFromJson(options);
 
             // Add property Baz
             json.Baz = "baz";
@@ -546,13 +551,14 @@ namespace Azure.Core.Tests
         [Test]
         public void ThrowsInvalidCastForOriginalJsonValue()
         {
+            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
             dynamic json = BinaryData.FromString(
                 """
                 {
                     "foo": 1
                 }
                 """
-                ).ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+                ).ToDynamicFromJson(options);
 
             Exception e = Assert.Throws<InvalidCastException>(() => { var value = (bool)json.Foo; });
             Assert.That(e.Message.Contains(JsonValueKind.Number.ToString()));
@@ -578,11 +584,12 @@ namespace Azure.Core.Tests
         [Test]
         public void CanCastToByte()
         {
+            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
             dynamic json = BinaryData.FromString("""
                 {
                   "foo" : 42
                 }
-                """).ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+                """).ToDynamicFromJson(options);
 
             // Get from parsed JSON
             Assert.AreEqual((byte)42, (byte)json.Foo);
@@ -610,7 +617,8 @@ namespace Azure.Core.Tests
         [TestCaseSource(nameof(NumberValues))]
         public void CanCastToNumber<T, U>(string serializedX, T x, T y, T z, U invalid)
         {
-            dynamic json = BinaryData.FromString($"{{\"foo\" : {serializedX}}}").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            dynamic json = BinaryData.FromString($"{{\"foo\" : {serializedX}}}").ToDynamicFromJson(options);
 
             // Get from parsed JSON
             Assert.AreEqual(x, (T)json.Foo);
@@ -645,8 +653,9 @@ namespace Azure.Core.Tests
         [Test]
         public void CanExplicitCastToGuid()
         {
+            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
             Guid guid = Guid.NewGuid();
-            dynamic json = BinaryData.FromString($"{{\"foo\" : \"{guid}\"}}").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic json = BinaryData.FromString($"{{\"foo\" : \"{guid}\"}}").ToDynamicFromJson(options);
 
             // Get from parsed JSON
             Assert.AreEqual(guid, (Guid)json.Foo);
@@ -684,9 +693,10 @@ namespace Azure.Core.Tests
         [Test]
         public void CanExplicitCastToDateTime()
         {
+            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
             DateTime dateTime = DateTime.UtcNow;
             string dateTimeString = FormatDateTime(dateTime);
-            dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson(options);
 
             // Get from parsed JSON
             Assert.AreEqual(dateTime, (DateTime)json.Foo);
@@ -726,9 +736,10 @@ namespace Azure.Core.Tests
         [Test]
         public void CanExplicitCastToDateTimeOffset()
         {
+            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
             DateTimeOffset dateTime = DateTimeOffset.UtcNow;
             string dateTimeString = FormatDateTimeOffset(dateTime);
-            dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson(options);
 
             // Get from parsed JSON
             Assert.AreEqual(dateTime, (DateTimeOffset)json.Foo);
@@ -830,13 +841,14 @@ namespace Azure.Core.Tests
             // Indexer lookup mimics JsonNode behavior and so throws if a property is absent.
             Assert.IsTrue(json["foo"] == null);
             Assert.Throws<KeyNotFoundException>(() => _ = json["bar"]);
-            Assert.Throws<KeyNotFoundException>(() => { if (json["bar"] == null) { ; } });
+            Assert.Throws<KeyNotFoundException>(() => { if (json["bar"] == null) {; } });
         }
 
         #region Helpers
         internal static dynamic GetDynamicJson(string json)
         {
-            return new BinaryData(json).ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            return new BinaryData(json).ToDynamicFromJson(options);
         }
 
         public static IEnumerable<object[]> NumberValues()

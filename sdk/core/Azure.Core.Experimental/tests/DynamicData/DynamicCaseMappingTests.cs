@@ -59,7 +59,8 @@ namespace Azure.Core.Tests
         [Test]
         public void CanGetPropertiesWithPascalToCamelMapping()
         {
-            dynamic value = new BinaryData(testJson).ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
 
             Assert.AreEqual(1, (int)value.camel);
             Assert.AreEqual(1, (int)value.Camel);
@@ -75,7 +76,8 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotGetPropertiesWithUnmatchedCasingWithPascalToCamelMapping()
         {
-            dynamic value = new BinaryData(testJson).ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
 
             Assert.IsNull(value.pascal);
             Assert.IsNull(value.parentCamel.nestedPascal);
@@ -133,7 +135,8 @@ namespace Azure.Core.Tests
         [Test]
         public void CanSetExistingPropertiesWithPascalToCamelMapping()
         {
-            dynamic value = new BinaryData(testJson).ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
 
             value.camel = 2;
             value.parentCamel.nestedCamel = false;
@@ -155,7 +158,8 @@ namespace Azure.Core.Tests
         [Test]
         public void SettingExistingPropertiesWithUnmatchedCasingAddsNewPropertyWhenPascalToCamelMapping()
         {
-            dynamic value = new BinaryData(testJson).ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
 
             value.Pascal = "new";
             value.parentCamel.NestedPascal = true;
@@ -195,7 +199,8 @@ namespace Azure.Core.Tests
         [Test]
         public void CanSetNewPropertiesWithPascalToCamelMapping()
         {
-            dynamic value = new BinaryData("""{}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            dynamic value = new BinaryData("""{}""").ToDynamicFromJson(options);
 
             value.camel = 1;
             value.Pascal = "hi";
@@ -237,7 +242,8 @@ namespace Azure.Core.Tests
                 }
                 """;
 
-            dynamic dynamicJson = BinaryData.FromString(json).ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            dynamic dynamicJson = BinaryData.FromString(json).ToDynamicFromJson(options);
             Assert.IsTrue(dynamicJson.root.child[0].item.leaf);
             Assert.IsTrue(dynamicJson.Root.Child[0].Item.Leaf);
         }
@@ -279,6 +285,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanEnumeratePropertiesPascalGettersWithPascalToCamelMapping()
         {
+            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
             dynamic jsonData = BinaryData.FromString("""
                 {
                     "a": {
@@ -290,7 +297,7 @@ namespace Azure.Core.Tests
                         "index": 2
                     }
                 }
-                """).ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+                """).ToDynamicFromJson(options);
 
             IEnumerable ary = (IEnumerable)jsonData;
             IEnumerator e = ary.GetEnumerator();
@@ -343,6 +350,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanEnumerateArrayPascalGettersWithPascalToCamelMapping()
         {
+            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
             dynamic jsonData = BinaryData.FromString("""
                 {
                     "array": [
@@ -354,7 +362,7 @@ namespace Azure.Core.Tests
                         }
                     ]
                 }
-                """).ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+                """).ToDynamicFromJson(options);
 
             IEnumerable ary = (IEnumerable)jsonData.Array;
             IEnumerator e = ary.GetEnumerator();
@@ -373,7 +381,8 @@ namespace Azure.Core.Tests
         [Test]
         public void CanBypassNameMappingWithIndexers()
         {
-            dynamic value = new BinaryData(testJson).ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            dynamic value = new BinaryData(testJson).ToDynamicFromJson(options);
 
             // Set PascalCase values without converting to camelCase
             value["Pascal"] = "new";
@@ -392,7 +401,8 @@ namespace Azure.Core.Tests
         [Test]
         public void CamelCaseMappingWorksForConcerningCases()
         {
-            dynamic value = new BinaryData("""{}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            dynamic value = new BinaryData("""{}""").ToDynamicFromJson(options);
 
             value.PIICategories = "categories";
             value.IPAddress = "127.0.0.1";

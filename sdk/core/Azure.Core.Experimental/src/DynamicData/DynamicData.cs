@@ -23,7 +23,6 @@ namespace Azure.Core.Dynamic
     [JsonConverter(typeof(JsonConverter))]
     public sealed partial class DynamicData : IDisposable
     {
-        internal static JsonSerializerOptions DefaultSerializerOptions = new JsonSerializerOptions()
         private static readonly MethodInfo GetPropertyMethod = typeof(DynamicData).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
         private static readonly MethodInfo SetPropertyMethod = typeof(DynamicData).GetMethod(nameof(SetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
         private static readonly MethodInfo GetEnumerableMethod = typeof(DynamicData).GetMethod(nameof(GetEnumerable), BindingFlags.NonPublic | BindingFlags.Instance)!;
@@ -37,20 +36,30 @@ namespace Azure.Core.Dynamic
         internal DynamicData(MutableJsonElement element, DynamicDataOptions options)
         {
             _element = element;
-            _serializerOptions = DefaultSerializerOptions;
+            _options = options;
+            _serializerOptions = GetSerializerOptions(options);
         }
 
         internal static JsonSerializerOptions GetSerializerOptions(DynamicDataOptions options)
         {
             JsonSerializerOptions serializer = new()
             {
-                PropertyNameCaseInsensitive = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 Converters =
                 {
                     new DefaultTimeSpanConverter()
                 }
             };
+
+            switch (options.CaseMapping)
+            {
+                case DynamicCaseMapping.PascalToCamel:
+                    serializer.PropertyNameCaseInsensitive = true;
+                    serializer.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                    break;
+                case DynamicCaseMapping.None:
+                default:
+                    break;
+            }
 
             switch (options.DateTimeHandling)
             {
@@ -67,13 +76,6 @@ namespace Azure.Core.Dynamic
 
             return serializer;
         }
-
-        internal static JsonSerializerOptions GetSerializerOptions(DynamicCaseMapping nameMapping) => nameMapping switch
-        {
-            DynamicCaseMapping.None => DefaultSerializerOptions,
-            DynamicCaseMapping.PascalToCamel => new() { PropertyNameCaseInsensitive = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase },
-            _ => throw new NotImplementedException()
-        };
 
         internal void WriteTo(Stream stream)
         {
@@ -97,11 +99,11 @@ namespace Azure.Core.Dynamic
 
             // If we're using the PascalToCamel mapping and the strict name lookup
             // failed, do a second lookup with a camelCase name as well.
-            if (_nameMapping == DynamicCaseMapping.PascalToCamel && char.IsUpper(name[0]))
+            if (_options.CaseMapping == DynamicCaseMapping.PascalToCamel && char.IsUpper(name[0]))
             {
                 if (_element.TryGetProperty(ConvertToCamelCase(name), out element))
                 {
-                    return new DynamicData(element);
+                    return new DynamicData(element, _options);
                 }
             }
 
@@ -149,7 +151,7 @@ namespace Azure.Core.Dynamic
                 value = ConvertType(value);
             }
 
-            if (_nameMapping == DynamicCaseMapping.PascalToCamel)
+            if (_options.CaseMapping == DynamicCaseMapping.PascalToCamel)
             {
                 name = ConvertToCamelCase(name);
             }

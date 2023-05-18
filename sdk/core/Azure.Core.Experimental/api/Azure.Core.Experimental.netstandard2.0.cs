@@ -113,6 +113,11 @@ namespace Azure
 }
 namespace Azure.Core.Dynamic
 {
+    public enum DynamicCaseMapping
+    {
+        None = 0,
+        PascalToCamel = 1,
+    }
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public sealed partial class DynamicData : System.Dynamic.IDynamicMetaObjectProvider, System.IDisposable
     {
@@ -146,6 +151,7 @@ namespace Azure.Core.Dynamic
     public partial class DynamicDataOptions
     {
         public DynamicDataOptions() { }
+        public Azure.Core.Dynamic.DynamicCaseMapping CaseMapping { get { throw null; } set { } }
         public Azure.Core.Dynamic.DynamicDateTimeHandling DateTimeHandling { get { throw null; } set { } }
     }
     public enum DynamicDateTimeHandling
