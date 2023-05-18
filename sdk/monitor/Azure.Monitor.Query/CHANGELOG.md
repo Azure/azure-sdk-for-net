@@ -3,7 +3,7 @@
 ## 1.2.0 (2023-05-22)
 
 ### Bugs Fixed
-- `QueryResource` method was not returning the correct value.
+- `QueryResourceAsync<T>` method was not returning the correct value.
 
 ## 1.2.0-beta.1 (2023-05-09)
 ### Features Added

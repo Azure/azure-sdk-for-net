@@ -325,7 +325,7 @@ namespace Azure.Monitor.Query
         /// string tableName = &quot;&lt;table_name&gt;&quot;;
         /// var results = await client.QueryResourceAsync(
         ///     new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
-        ///     $&quot;{tableName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}&quot;,
+        ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
         ///     new QueryTimeRange(TimeSpan.FromDays(7)));
         ///
         /// var resultTable = results.Value.Table;
@@ -363,7 +363,7 @@ namespace Azure.Monitor.Query
         /// string tableName = &quot;&lt;table_name&gt;&quot;;
         /// var results = await client.QueryResourceAsync(
         ///     new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
-        ///     $&quot;{tableName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}&quot;,
+        ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
         ///     new QueryTimeRange(TimeSpan.FromDays(7)));
         ///
         /// var resultTable = results.Value.Table;
@@ -401,7 +401,7 @@ namespace Azure.Monitor.Query
         /// string tableName = &quot;&lt;table_name&gt;&quot;;
         /// var results = await client.QueryResourceAsync(
         ///     new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
-        ///     $&quot;{tableName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}&quot;,
+        ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
         ///     new QueryTimeRange(TimeSpan.FromDays(7)));
         ///
         /// var resultTable = results.Value.Table;
@@ -449,7 +449,7 @@ namespace Azure.Monitor.Query
         /// string tableName = &quot;&lt;table_name&gt;&quot;;
         /// var results = await client.QueryResourceAsync(
         ///     new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
-        ///     $&quot;{tableName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}&quot;,
+        ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
         ///     new QueryTimeRange(TimeSpan.FromDays(7)));
         ///
         /// var resultTable = results.Value.Table;

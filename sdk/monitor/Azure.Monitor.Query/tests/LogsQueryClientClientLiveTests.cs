@@ -9,9 +9,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.Monitor.Query.Models;
-using Azure.Storage.Blobs;
 using NUnit.Framework;
 
 namespace Azure.Monitor.Query.Tests
@@ -27,14 +25,12 @@ namespace Azure.Monitor.Query.Tests
         [SetUp]
         public async Task SetUp()
         {
-            TestContext.Progress.WriteLine("setup");
             _logsTestData = new LogsTestData(this);
             await _logsTestData.InitializeAsync();
         }
 
         private LogsQueryClient CreateClient()
         {
-            TestContext.Progress.WriteLine("create client start");
             return InstrumentClient(new LogsQueryClient(
                 TestEnvironment.LogsEndpoint,
                 TestEnvironment.Credential,
@@ -776,7 +772,7 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
             var exception = Assert.ThrowsAsync<FormatException>(() => client.QueryResourceAsync(
-                new ResourceIdentifier(TestEnvironment.StorageAccountId.Substring(1)),
+                new ResourceIdentifier(TestEnvironment.SecondaryWorkspaceId.Substring(1)),
                 "search *",
                 _logsTestData.DataTimeRange));
 
@@ -820,7 +816,7 @@ namespace Azure.Monitor.Query.Tests
             var client = CreateClient();
             LogsQueryOptions options = new LogsQueryOptions();
             options.IncludeStatistics = true;
-            var resourceId = new ResourceIdentifier("///" + TestEnvironment.StorageAccountId);
+            var resourceId = new ResourceIdentifier("///" + TestEnvironment.WorkspacePrimaryResourceId);
             var exception = Assert.ThrowsAsync<FormatException>(() => client.QueryResourceAsync(
                 resourceId,
                 "search *",

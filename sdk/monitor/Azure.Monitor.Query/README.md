@@ -143,7 +143,7 @@ To find the resource ID:
 string tableName = "<table_name>";
 var results = await client.QueryResourceAsync(
     new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
-    $"{tableName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+    $"{tableName} | distinct * | project TimeGenerated",
     new QueryTimeRange(TimeSpan.FromDays(7)));
 
 var resultTable = results.Value.Table;
