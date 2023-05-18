@@ -387,9 +387,17 @@ namespace Azure.Monitor.Query.Tests
             #region Snippet:QueryResource
             var client = new LogsQueryClient(new DefaultAzureCredential());
 
-            var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
-                "search *",
-                new QueryTimeRange(TimeSpan.FromDays(5)));
+            #region Snippet:QueryLogsWithStatistics
+#if SNIPPET
+            string tableName = "<table_name>";
+#else
+            string tableName = "MyTable_CL";
+#endif
+
+            var results = await client.QueryResourceAsync(
+                new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
+                $"{tableName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                new QueryTimeRange(TimeSpan.FromDays(7)));
 
             var resultTable = results.Value.Table;
 
