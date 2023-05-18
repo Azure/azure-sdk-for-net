@@ -140,19 +140,23 @@ To find the resource ID:
 1. In the resulting JSON, copy the value of the `id` property.
 
 ```C# Snippet:QueryResource
-string resourceId = "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/<resource_provider>/<resource>";
-var client = new LogsQueryClient(new DefaultAzureCredential());
+string tableName = "<table_name>";
+var results = await client.QueryResourceAsync(
+    new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
+    $"{tableName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+    new QueryTimeRange(TimeSpan.FromDays(7)));
 
-Response<LogsQueryResult> result = await client.QueryResourceAsync(
-    new ResourceIdentifier(resourceId),
-    "AzureActivity | top 10 by TimeGenerated",
-    new QueryTimeRange(TimeSpan.FromDays(1)));
-
-LogsTable table = result.Value.Table;
-
-foreach (LogsTableRow row in table.Rows)
+var resultTable = results.Value.Table;
+foreach (LogsTableRow rows in resultTable.Rows)
 {
-    Console.WriteLine($"{row["OperationName"]} {row["ResourceGroup"]}");
+    foreach (var row in rows)
+    {
+        Console.WriteLine(row);
+    }
+}
+foreach (LogsTableColumn columns in resultTable.Columns)
+{
+    Console.WriteLine("Name: " + columns.Name + " Type: " + columns.Type);
 }
 ```
 

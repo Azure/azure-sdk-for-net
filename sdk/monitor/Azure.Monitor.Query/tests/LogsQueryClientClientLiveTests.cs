@@ -20,7 +20,7 @@ namespace Azure.Monitor.Query.Tests
     {
         private LogsTestData _logsTestData;
 
-        public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -680,7 +680,7 @@ namespace Azure.Monitor.Query.Tests
             Assert.True(response.Value.Single());
         }
 
-        //[LiveOnly]
+        [LiveOnly]
         [Test]
         public async Task CanQueryResourceGenericPrimaryWorkspace()
         {
@@ -710,7 +710,7 @@ namespace Azure.Monitor.Query.Tests
             Assert.GreaterOrEqual(results.Value.Count, 3);
         }
 
-        //[LiveOnly]
+        [LiveOnly]
         [Test]
         public async Task CanQueryResourcePrimaryWorkspace()
         {
