@@ -17,16 +17,16 @@ modelerfour:
 #   show-serialized-names: true
 
 batch:
-  - tag: package-common-type-2022-04
-  - tag: package-resources-2022-09
-  - tag: package-management-2022-04
+  - tag: package-common-type
+  - tag: package-resources
+  - tag: package-management
 ```
 
-### Tag: package-common-type-2022-04
+### Tag: package-common-type
 
-These settings apply only when `--tag=package-common-type-2022-04` is specified on the command line.
+These settings apply only when `--tag=package-common-type` is specified on the command line.
 
-``` yaml $(tag) == 'package-common-type-2022-04'
+``` yaml $(tag) == 'package-common-type'
 output-folder: $(this-folder)/Common/Generated
 namespace: Azure.ResourceManager
 input-file:
@@ -161,11 +161,11 @@ directive:
       $["x-csharp-usage"] = "model,input,output";
 ```
 
-### Tag: package-resources-2022-09
+### Tag: package-resources
 
-These settings apply only when `--tag=package-resources-2022-09` is specified on the command line.
+These settings apply only when `--tag=package-resources` is specified on the command line.
 
-``` yaml $(tag) == 'package-resources-2022-09'
+``` yaml $(tag) == 'package-resources'
 output-folder: $(this-folder)/Resources/Generated
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
@@ -682,11 +682,11 @@ directive:
       $["x-ms-format"] = "azure-location"
 ```
 
-### Tag: package-management-2022-04
+### Tag: package-management
 
-These settings apply only when `--tag=package-management-2022-04` is specified on the command line.
+These settings apply only when `--tag=package-management` is specified on the command line.
 
-``` yaml $(tag) == 'package-management-2022-04'
+``` yaml $(tag) == 'package-management'
 output-folder: $(this-folder)/ManagementGroup/Generated
 namespace: Azure.ResourceManager.ManagementGroups
 title: ManagementClient
