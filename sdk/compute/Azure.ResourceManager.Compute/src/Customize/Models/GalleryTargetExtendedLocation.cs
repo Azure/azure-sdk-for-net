@@ -11,6 +11,23 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Specifies the storage account type to be used to store the image. This property is not updatable. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ImageStorageAccountType? StorageAccountType { get; set; }
+        public ImageStorageAccountType? StorageAccountType
+        {
+            get
+            {
+                return GalleryStorageAccountType.HasValue ? new ImageStorageAccountType(GalleryStorageAccountType.ToString()) : null;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    GalleryStorageAccountType = null;
+                }
+                else
+                {
+                    GalleryStorageAccountType = new EdgeZoneStorageAccountType(value.ToString());
+                }
+            }
+        }
     }
 }
