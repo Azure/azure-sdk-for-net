@@ -127,11 +127,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             var rowCount = table?.Rows.Count;
             if (rowCount == null || rowCount == 0)
             {
-                Assert.Inconclusive($"No telemetry records were found: {description}");
+                Assert.Fail($"No telemetry records were found: {description}");
             }
             else
             {
-                Assert.True(true);
+                Assert.Pass();
             }
         }
     }
