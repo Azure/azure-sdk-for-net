@@ -33,7 +33,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal StandardMetricsExtractionProcessor(AzureMonitorMetricExporter metricExporter)
         {
             _meterProvider = Sdk.CreateMeterProviderBuilder()
-                .SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(ParentProvider?.GetResource().Attributes!))
                 .AddMeter(StandardMetricConstants.StandardMetricMeterName)
                 .AddReader(new PeriodicExportingMetricReader(metricExporter)
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
