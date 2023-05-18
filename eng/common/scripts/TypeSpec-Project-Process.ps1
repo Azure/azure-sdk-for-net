@@ -110,3 +110,6 @@ if ($TypeSpecProjectDirectory -match '^https://github.com/.*/tspconfig.yaml$') {
 $tspConfigYaml = ConvertFrom-Yaml $tspConfigContent
 # call CreateUpdate-TspLocation function
 CreateUpdate-TspLocation
+
+# TODO call TypeSpec-Project-Sync.ps1
+# TODO call TypeSpec-Project-Generate.ps1
