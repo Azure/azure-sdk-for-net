@@ -140,9 +140,10 @@ To find the resource ID:
 1. In the resulting JSON, copy the value of the `id` property.
 
 ```C# Snippet:QueryResource
+string resourceId = "<resourceId>";
 string tableName = "<table_name>";
 var results = await client.QueryResourceAsync(
-    new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
+    new ResourceIdentifier(resourceId),
     $"{tableName} | distinct * | project TimeGenerated",
     new QueryTimeRange(TimeSpan.FromDays(7)));
 

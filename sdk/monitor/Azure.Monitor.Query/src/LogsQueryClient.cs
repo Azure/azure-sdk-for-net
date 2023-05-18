@@ -322,9 +322,10 @@ namespace Azure.Monitor.Query
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
         /// <example snippet="Snippet:QueryResource">
         /// <code language="csharp">
+        /// string resourceId = &quot;&lt;resourceId&gt;&quot;;
         /// string tableName = &quot;&lt;table_name&gt;&quot;;
         /// var results = await client.QueryResourceAsync(
-        ///     new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
+        ///     new ResourceIdentifier(resourceId),
         ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
         ///     new QueryTimeRange(TimeSpan.FromDays(7)));
         ///
@@ -360,9 +361,10 @@ namespace Azure.Monitor.Query
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
         /// <example snippet="Snippet:QueryResource">
         /// <code language="csharp">
+        /// string resourceId = &quot;&lt;resourceId&gt;&quot;;
         /// string tableName = &quot;&lt;table_name&gt;&quot;;
         /// var results = await client.QueryResourceAsync(
-        ///     new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
+        ///     new ResourceIdentifier(resourceId),
         ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
         ///     new QueryTimeRange(TimeSpan.FromDays(7)));
         ///
@@ -398,9 +400,10 @@ namespace Azure.Monitor.Query
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
         /// <example snippet="Snippet:QueryResource">
         /// <code language="csharp">
+        /// string resourceId = &quot;&lt;resourceId&gt;&quot;;
         /// string tableName = &quot;&lt;table_name&gt;&quot;;
         /// var results = await client.QueryResourceAsync(
-        ///     new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
+        ///     new ResourceIdentifier(resourceId),
         ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
         ///     new QueryTimeRange(TimeSpan.FromDays(7)));
         ///
@@ -446,9 +449,10 @@ namespace Azure.Monitor.Query
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
         /// <example snippet="Snippet:QueryResource">
         /// <code language="csharp">
+        /// string resourceId = &quot;&lt;resourceId&gt;&quot;;
         /// string tableName = &quot;&lt;table_name&gt;&quot;;
         /// var results = await client.QueryResourceAsync(
-        ///     new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
+        ///     new ResourceIdentifier(resourceId),
         ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
         ///     new QueryTimeRange(TimeSpan.FromDays(7)));
         ///

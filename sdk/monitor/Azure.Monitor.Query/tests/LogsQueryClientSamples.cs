@@ -388,12 +388,14 @@ namespace Azure.Monitor.Query.Tests
 
             #region Snippet:QueryResource
 #if SNIPPET
+            string resourceId = "<resourceId>";
             string tableName = "<table_name>";
 #else
             string tableName = "MyTable_CL";
+            string resourceId = TestEnvironment.WorkspacePrimaryResourceId;
 #endif
             var results = await client.QueryResourceAsync(
-                new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
+                new ResourceIdentifier(resourceId),
                 $"{tableName} | distinct * | project TimeGenerated",
                 new QueryTimeRange(TimeSpan.FromDays(7)));
 
