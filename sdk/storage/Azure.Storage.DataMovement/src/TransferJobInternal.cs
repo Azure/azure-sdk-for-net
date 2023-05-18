@@ -234,7 +234,6 @@ namespace Azure.Storage.DataMovement
 
         public void DisposeHandlers()
         {
-            Console.WriteLine("Disposing handlers...");
             if (JobPartStatusEvents != default)
             {
                 JobPartStatusEvents -= JobPartEvent;
@@ -311,8 +310,6 @@ namespace Azure.Storage.DataMovement
         {
             StorageTransferStatus jobPartStatus = args.StorageTransferStatus;
             StorageTransferStatus jobStatus = _dataTransfer._state.GetTransferStatus();
-
-            Console.WriteLine($"JobPartEvent: Part status = {jobPartStatus}, Job status = {jobStatus}");
 
             // Cancel the entire job if one job part fails and StopOnFailure is set
             if (_errorHandling == ErrorHandlingOptions.StopOnAllFailures &&

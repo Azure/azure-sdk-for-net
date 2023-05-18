@@ -377,7 +377,6 @@ namespace Azure.Storage.DataMovement
         /// <returns></returns>
         public async virtual Task CleanupAbortedJobPartAsync()
         {
-            Console.WriteLine("Cleaning up job part...");
             // If the failure occurred due to the file already existing or authentication,
             // and overwrite wasn't enabled, don't delete the existing file. We can remove
             // the unfinished file for other error types.
