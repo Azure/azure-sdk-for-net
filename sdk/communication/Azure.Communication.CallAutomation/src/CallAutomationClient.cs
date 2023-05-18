@@ -78,7 +78,7 @@ namespace Azure.Communication.CallAutomation
         : this(
               pmaEndpoint,
               acsEndpoint,
-              options,
+              options ?? new CallAutomationClientOptions(),
               credential
               )
         { }

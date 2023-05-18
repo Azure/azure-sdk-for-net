@@ -21,7 +21,6 @@ namespace Azure.Communication.Pipeline
         {
             string stringSign = acsEndpoint.Host;
 
-            // TODO HERE
             var authPolicy = new CustomBearerTokenAuthenticationPolicy(tokenCredential, "https://communication.azure.com//.default", stringSign);
             return HttpPipelineBuilder.Build(options, authPolicy);
         }
