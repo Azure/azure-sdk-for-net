@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.AI.Language.Conversations.Authoring;
+using Azure.Core.Dynamic;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -59,7 +60,8 @@ namespace Azure.AI.Language.Conversations.Tests
 
             Response response = await client.GetProjectAsync(TestEnvironment.ProjectName);
 
-            dynamic project = response.Content.ToDynamicFromJson();
+            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            dynamic project = response.Content.ToDynamicFromJson(options);
             Assert.That((string)project.ProjectKind, Is.EqualTo("Conversation"));
         }
     }
