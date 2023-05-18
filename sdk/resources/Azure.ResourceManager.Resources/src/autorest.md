@@ -8,7 +8,7 @@ generate-model-factory: false
 library-name: Resources
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
-tag: package-resources-2022-04
+tag: package-subscriptions-2022-12
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -338,4 +338,13 @@ input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/639376b2bf9f0f36debfd7fce7debdf7b72578af/specification/resources/resource-manager/Microsoft.Solutions/stable/2019-07-01/managedapplications.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/639376b2bf9f0f36debfd7fce7debdf7b72578af/specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/deploymentScripts.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/639376b2bf9f0f36debfd7fce7debdf7b72578af/specification/resources/resource-manager/Microsoft.Resources/stable/2021-05-01/templateSpecs.json
+```
+
+### Tag: package-subscriptions-2022-12
+
+These settings apply only when `--tag=package-subscriptions-2022-12` is specified on the command line.
+
+```yaml $(tag) == 'package-subscriptions-2022-12'
+input-file:
+    - https://github.com/Azure/azure-rest-api-specs/blob/b74978708bb95475562412d4654c00fbcedd9f89/specification/resources/resource-manager/Microsoft.Resources/stable/2022-12-01/subscriptions.json
 ```
