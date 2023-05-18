@@ -17,7 +17,7 @@ function Update-ChangeLog([string]$file, [string]$releasedate) {
     $store = @()
     foreach ($item in $fileContent) {
         if ($item.Contains("(Unreleased)")) {
-            $store += $item.Replace("Unreleased", $releasedate)
+            $store += $item.Replace("Unreleased", $releasedate) + "`n"
             $flag = $true
             continue
         }
