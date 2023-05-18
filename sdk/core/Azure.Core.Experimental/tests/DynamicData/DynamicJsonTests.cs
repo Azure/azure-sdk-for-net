@@ -17,7 +17,7 @@ namespace Azure.Core.Tests
         {
             dynamic jsonData = GetDynamicJson("""
                 {
-                  "Foo" : 1
+                  "foo" : 1
                 }
             """);
 
@@ -31,8 +31,8 @@ namespace Azure.Core.Tests
         {
             dynamic jsonData = GetDynamicJson("""
                 {
-                  "Foo" : {
-                    "Bar" : 1
+                  "foo" : {
+                    "bar" : 1
                   }
                 }
                 """);
@@ -87,7 +87,7 @@ namespace Azure.Core.Tests
         {
             dynamic jsonData = GetDynamicJson("""
                 {
-                  "Foo": [0, 1, 2]
+                  "foo": [0, 1, 2]
                 }
                 """);
 
@@ -101,11 +101,11 @@ namespace Azure.Core.Tests
         {
             dynamic jsonData = GetDynamicJson("""
                 {
-                  "Foo" : 1
+                  "foo" : 1
                 }
                 """);
 
-            Assert.AreEqual(1, (int)jsonData["Foo"]);
+            Assert.AreEqual(1, (int)jsonData["foo"]);
         }
 
         [Test]
@@ -113,13 +113,13 @@ namespace Azure.Core.Tests
         {
             dynamic jsonData = GetDynamicJson("""
                 {
-                  "Foo" : {
-                    "Bar" : 1
+                  "foo" : {
+                    "bar" : 1
                   }
                 }
                 """);
 
-            Assert.AreEqual(1, (int)jsonData.Foo["Bar"]);
+            Assert.AreEqual(1, (int)jsonData.Foo["bar"]);
         }
 
         [Test]
@@ -141,7 +141,7 @@ namespace Azure.Core.Tests
         {
             dynamic jsonData = GetDynamicJson("""
                 {
-                  "Foo": [0, 1, 2]
+                  "foo": [0, 1, 2]
                 }
                 """);
 
@@ -174,7 +174,7 @@ namespace Azure.Core.Tests
         {
             dynamic jsonData = GetDynamicJson("""
                 {
-                  "Foo": [0, 1, 2, 3]
+                  "foo": [0, 1, 2, 3]
                 }
                 """);
 
@@ -191,7 +191,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanGetNullPropertyValue()
         {
-            dynamic jsonData = GetDynamicJson("""{ "Foo" : null }""");
+            dynamic jsonData = GetDynamicJson("""{ "foo" : null }""");
 
             Assert.IsNull((CustomType)jsonData.Foo);
             Assert.IsNull((int?)jsonData.Foo);
@@ -209,7 +209,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanSetPropertyValueToNull()
         {
-            dynamic jsonData = GetDynamicJson("""{ "Foo" : null }""");
+            dynamic jsonData = GetDynamicJson("""{ "foo" : null }""");
 
             jsonData.Foo = null;
 
@@ -233,7 +233,7 @@ namespace Azure.Core.Tests
         {
             dynamic jsonData = GetDynamicJson("""
                 {
-                  "Foo" : 1
+                  "foo" : 1
                 }
                 """);
 
@@ -247,15 +247,15 @@ namespace Azure.Core.Tests
         {
             dynamic jsonData = GetDynamicJson("""
                 {
-                  "Foo" : {
-                    "Bar" : 1
+                  "foo" : {
+                    "bar" : 1
                   }
                 }
                 """);
 
-            jsonData["Foo"]["Bar"] = 4;
+            jsonData["foo"]["bar"] = 4;
 
-            Assert.AreEqual(4, (int)jsonData.Foo["Bar"]);
+            Assert.AreEqual(4, (int)jsonData.Foo["bar"]);
         }
 
         [Test]
@@ -263,7 +263,7 @@ namespace Azure.Core.Tests
         {
             dynamic jsonData = GetDynamicJson("""
                 {
-                  "Foo" : 1
+                  "foo" : 1
                 }
                 """);
 
@@ -434,7 +434,7 @@ namespace Azure.Core.Tests
         {
             dynamic json = GetDynamicJson("""
                 {
-                  "Foo" : "foo"
+                  "foo" : "foo"
                 }
                 """);
 
@@ -477,7 +477,7 @@ namespace Azure.Core.Tests
         {
             dynamic json = GetDynamicJson("""
                 {
-                  "Foo" : "foo"
+                  "foo" : "foo"
                 }
                 """);
 
@@ -496,7 +496,7 @@ namespace Azure.Core.Tests
         {
             dynamic json = GetDynamicJson("""
                 {
-                  "Foo" : "Hello"
+                  "foo" : "Hello"
                 }
                 """);
 
@@ -510,7 +510,7 @@ namespace Azure.Core.Tests
         {
             string json = """
                 {
-                  "Foo" : "Hello"
+                  "foo" : "Hello"
                 }
                 """;
 
@@ -531,8 +531,8 @@ namespace Azure.Core.Tests
         {
             dynamic json = GetDynamicJson("""
                 {
-                  "Foo" : {
-                    "A": "Hello"
+                  "foo" : {
+                    "a": "Hello"
                   }
                 }
                 """);
