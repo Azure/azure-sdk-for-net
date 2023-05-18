@@ -61,7 +61,7 @@ namespace Azure.Core.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task ExplicitCastSerialize()
+        public async Task ExplicitCastDeserialize()
         {
             #region Snippet:ExplicitCast_Deserialize
             //TODO
