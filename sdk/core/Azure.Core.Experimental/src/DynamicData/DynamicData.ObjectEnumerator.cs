@@ -17,12 +17,12 @@ namespace Azure.Core.Dynamic
         internal struct ObjectEnumerator : IEnumerable<DynamicDataProperty>, IEnumerator<DynamicDataProperty>
         {
             private MutableJsonElement.ObjectEnumerator _enumerator;
-            private DynamicCaseMapping _nameMapping;
+            private readonly DynamicDataOptions _options;
 
-            internal ObjectEnumerator(MutableJsonElement.ObjectEnumerator enumerator, DynamicCaseMapping nameMapping)
+            internal ObjectEnumerator(MutableJsonElement.ObjectEnumerator enumerator, DynamicDataOptions options)
             {
                 _enumerator = enumerator;
-                _nameMapping = nameMapping;
+                _options = options;
             }
 
             /// <summary>
@@ -38,10 +38,10 @@ namespace Azure.Core.Dynamic
             ///   property they will all individually be returned (each in the order
             ///   they appear in the content).
             /// </remarks>
-            public ObjectEnumerator GetEnumerator() => new(_enumerator.GetEnumerator(), _nameMapping);
+            public ObjectEnumerator GetEnumerator() => new(_enumerator.GetEnumerator(), _options);
 
             /// <inheritdoc />
-            public DynamicDataProperty Current => new(_enumerator.Current.Name, new(_enumerator.Current.Value, _nameMapping));
+            public DynamicDataProperty Current => new(_enumerator.Current.Name, new(_enumerator.Current.Value, _options));
 
             /// <inheritdoc />
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

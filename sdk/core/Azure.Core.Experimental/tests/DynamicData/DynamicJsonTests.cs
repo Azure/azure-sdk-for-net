@@ -684,8 +684,8 @@ namespace Azure.Core.Tests
         [Test]
         public void CanExplicitCastToDateTime()
         {
-            DateTime dateTime = DateTime.Now;
-            string dateTimeString = MutableJsonElementTests.FormatDateTime(dateTime);
+            DateTime dateTime = DateTime.UtcNow;
+            string dateTimeString = FormatDateTime(dateTime);
             dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 
             // Get from parsed JSON
@@ -694,26 +694,26 @@ namespace Azure.Core.Tests
             Assert.IsTrue((DateTime)json.Foo == dateTime);
 
             // Get from assigned existing value
-            DateTime fooValue = DateTime.Now.AddDays(1);
+            DateTime fooValue = DateTime.UtcNow.AddDays(1);
             json.Foo = fooValue;
             Assert.AreEqual(fooValue, (DateTime)json.Foo);
             Assert.IsTrue(fooValue == (DateTime)json.Foo);
             Assert.IsTrue((DateTime)json.Foo == fooValue);
 
             // Get from added value
-            DateTime barValue = DateTime.Now.AddDays(2);
+            DateTime barValue = DateTime.UtcNow.AddDays(2);
             json.Bar = barValue;
             Assert.AreEqual(barValue, (DateTime)json.Bar);
             Assert.IsTrue(barValue == (DateTime)json.Bar);
             Assert.IsTrue((DateTime)json.Bar == barValue);
 
             // Also works as a string
-            string fooValueString = MutableJsonElementTests.FormatDateTime(fooValue);
+            string fooValueString = FormatDateTime(fooValue);
             Assert.AreEqual(fooValueString, (string)json.Foo);
             Assert.IsTrue(fooValueString == json.Foo);
             Assert.IsTrue(json.Foo == fooValueString);
 
-            string barValueString = MutableJsonElementTests.FormatDateTime(barValue);
+            string barValueString = FormatDateTime(barValue);
             Assert.AreEqual(barValueString, (string)json.Bar);
             Assert.IsTrue(barValueString == json.Bar);
             Assert.IsTrue(json.Bar == barValueString);
@@ -726,8 +726,8 @@ namespace Azure.Core.Tests
         [Test]
         public void CanExplicitCastToDateTimeOffset()
         {
-            DateTimeOffset dateTime = DateTimeOffset.Now;
-            string dateTimeString = MutableJsonElementTests.FormatDateTimeOffset(dateTime);
+            DateTimeOffset dateTime = DateTimeOffset.UtcNow;
+            string dateTimeString = FormatDateTimeOffset(dateTime);
             dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 
             // Get from parsed JSON
@@ -736,26 +736,26 @@ namespace Azure.Core.Tests
             Assert.IsTrue((DateTimeOffset)json.Foo == dateTime);
 
             // Get from assigned existing value
-            DateTimeOffset fooValue = DateTimeOffset.Now.AddDays(1);
+            DateTimeOffset fooValue = DateTimeOffset.UtcNow.AddDays(1);
             json.Foo = fooValue;
             Assert.AreEqual(fooValue, (DateTimeOffset)json.Foo);
             Assert.IsTrue(fooValue == (DateTimeOffset)json.Foo);
             Assert.IsTrue((DateTimeOffset)json.Foo == fooValue);
 
             // Get from added value
-            DateTimeOffset barValue = DateTimeOffset.Now.AddDays(2);
+            DateTimeOffset barValue = DateTimeOffset.UtcNow.AddDays(2);
             json.Bar = barValue;
             Assert.AreEqual(barValue, (DateTimeOffset)json.Bar);
             Assert.IsTrue(barValue == (DateTimeOffset)json.Bar);
             Assert.IsTrue((DateTimeOffset)json.Bar == barValue);
 
             // Also works as a string
-            string fooValueString = MutableJsonElementTests.FormatDateTimeOffset(fooValue);
+            string fooValueString = FormatDateTimeOffset(fooValue);
             Assert.AreEqual(fooValueString, (string)json.Foo);
             Assert.IsTrue(fooValueString == json.Foo);
             Assert.IsTrue(json.Foo == fooValueString);
 
-            string barValueString = MutableJsonElementTests.FormatDateTimeOffset(barValue);
+            string barValueString = FormatDateTimeOffset(barValue);
             Assert.AreEqual(barValueString, (string)json.Bar);
             Assert.IsTrue(barValueString == json.Bar);
             Assert.IsTrue(json.Bar == barValueString);
@@ -763,6 +763,58 @@ namespace Azure.Core.Tests
             // Doesn't work for non-string change
             json.Foo = "false";
             Assert.Throws<InvalidCastException>(() => { DateTimeOffset d = (DateTimeOffset)json.Foo; });
+        }
+
+        internal static string FormatDateTime(DateTime d)
+        {
+            return d.ToUniversalTime().ToString("o");
+        }
+
+        internal static string FormatDateTimeOffset(DateTimeOffset d)
+        {
+            return d.ToUniversalTime().UtcDateTime.ToString("o");
+        }
+
+        [Test]
+        public void CanRoundTripUnixDateTime()
+        {
+            DynamicDataOptions options = new DynamicDataOptions()
+            {
+                DateTimeHandling = DynamicDateTimeHandling.UnixTime
+            };
+
+            dynamic value = BinaryData.FromString("""{ "foo": 0 }""").ToDynamicFromJson(options);
+
+            // Existing value
+            value.Foo = DateTimeOffset.UtcNow;
+
+            // New Value
+            value.Bar = DateTimeOffset.UtcNow.AddDays(1);
+
+            void validate(dynamic a, dynamic b)
+            {
+                Assert.AreEqual((long)a, (long)b);
+                Assert.AreEqual((DateTime)a, (DateTime)b);
+                Assert.AreEqual((DateTimeOffset)a, (DateTimeOffset)b);
+            }
+
+            string json = value.ToString();
+            dynamic fromString = BinaryData.FromString(json).ToDynamicFromJson(options);
+            validate(value.Foo, fromString.Foo);
+            validate(value.Bar, fromString.Bar);
+
+            BinaryData data = GetWriteToBuffer(value);
+            dynamic fromWriteTo = data.ToDynamicFromJson(options);
+            validate(value.Foo, fromWriteTo.Foo);
+            validate(value.Bar, fromWriteTo.Bar);
+        }
+
+        [Test]
+        public void ThrowsOnNonUtcDateTimeAssignment()
+        {
+            dynamic value = BinaryData.FromString("""{ "foo": 0 }""").ToDynamicFromJson();
+
+            Assert.Throws<NotSupportedException>(() => value.Foo = DateTime.Now);
         }
 
         [Test]
