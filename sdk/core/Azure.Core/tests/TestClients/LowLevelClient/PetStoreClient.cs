@@ -137,7 +137,6 @@ namespace Azure.Core.Experimental.Tests
             }
         }
 
-
         /// <summary> Create Request for <see cref="GetPet"/> and <see cref="GetPetAsync"/> operations. </summary>
         /// <param name="id"> Id of pet to return. </param>
         /// <param name="context"> The request context. </param>
