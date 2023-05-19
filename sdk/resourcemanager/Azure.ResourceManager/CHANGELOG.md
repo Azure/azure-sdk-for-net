@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Bump api-version of `Subscriptions` to `2022-12-01`
+
 ### Breaking Changes
 
 ### Bugs Fixed
