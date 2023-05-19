@@ -7,25 +7,13 @@ The following example demonstrates using two Try methods for serialization and d
 Serialization
 
 ```C# Snippet:Try_Serialize
-    SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = true, IgnoreAdditionalProperties = true };
-    using Stream stream = new MemoryStream();
-    Animal model = new Animal();
-    model.TrySerialize(stream, out long bytesWritten, options: options);
-    stream.Position = 0;
-    string json = new StreamReader(stream).ReadToEnd();
+//TODO
 ```
 
 Deserialization
 
 ```C# Snippet:Try_Deserialize
-    using Stream stream = new MemoryStream();
-    bool ignoreReadOnly = false;
-    bool ignoreUnknown = false;
-    string serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\",\"numberOfLegs\":4}";
-    SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = ignoreReadOnly, IgnoreAdditionalProperties = ignoreUnknown };
-
-    Animal model = new Animal();
-    model.TryDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), out long bytesConsumed, options: options);
+//TODO
 ```
 
 ## Using IJsonSerialization Non-Try methods
@@ -34,25 +22,13 @@ The following example demonstrates the NonTry methods for serialization and dese
 Serialization
 
 ```C# Snippet:NonTry_Serialize
-    SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = true, IgnoreAdditionalProperties = true };
-    using Stream stream = new MemoryStream();
-    Animal model = new Animal();
-    model.Serialize(stream, options: options);
-    stream.Position = 0;
-    string roundTrip = new StreamReader(stream).ReadToEnd();
+//TODO
 ```
 
 Deserialization
 
 ```C# Snippet:NonTry_Deserialize
-    using Stream stream = new MemoryStream();
-    bool ignoreReadOnly = false;
-    bool ignoreUnknown = false;
-    string serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\",\"numberOfLegs\":4}";
-    SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = ignoreReadOnly, IgnoreAdditionalProperties = ignoreUnknown };
-
-    Animal model = new Animal();
-    model.Deserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
+//TODO
 ```
 
 ## Using explicit cast
@@ -95,17 +71,16 @@ Deserialization
 ```
 
 ## Using static deserializer
-
-Serialization
-
-```C# Snippet:Static_Serialize
-//TODO
-```
-
-Deserialization
+Serialize would use the Try/Do examples from above. We would use Interface form the Serializable but potentially have static method for Deserialize. 
+When using Static Deserialize, an empty Model does not have to be created first as we can deserialize directly into a new instance.
 
 ```C# Snippet:Static_Deserialize
-//TODO
+using Stream stream = new MemoryStream();
+SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = false, IgnoreAdditionalProperties = false };
+string serviceResponse =
+    "{\"latinName\":\"Animalia\",\"weight\":2.3,\"name\":\"Rabbit\",\"isHungry\":false,\"numberOfLegs\":4}";
+
+Animal model = Animal.StaticDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
 ```
 
 

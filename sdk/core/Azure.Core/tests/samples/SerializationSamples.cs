@@ -96,19 +96,15 @@ namespace Azure.Core.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public void StaticSerialize()
-        {
-            #region Snippet:Static_Serialize
-            //TODO
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
         public void StaticDeserialize()
         {
             #region Snippet:Static_Deserialize
-            //TODO
+            using Stream stream = new MemoryStream();
+            SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = false, IgnoreAdditionalProperties = false };
+            string serviceResponse =
+                "{\"latinName\":\"Animalia\",\"weight\":2.3,\"name\":\"Rabbit\",\"isHungry\":false,\"numberOfLegs\":4}";
+
+            Animal model = Animal.StaticDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
             #endregion
         }
     }
