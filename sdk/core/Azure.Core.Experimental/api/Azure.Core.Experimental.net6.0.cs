@@ -3,6 +3,7 @@ namespace Azure
     public static partial class BinaryDataExtensions
     {
         public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json) { throw null; }
+        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Dynamic.DynamicCaseMapping caseMapping, Azure.Core.Dynamic.DynamicDateTimeHandling dateTimeHandling = Azure.Core.Dynamic.DynamicDateTimeHandling.Rfc3339) { throw null; }
         public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Dynamic.DynamicDataOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -113,6 +114,11 @@ namespace Azure
 }
 namespace Azure.Core.Dynamic
 {
+    public enum DynamicCaseMapping
+    {
+        None = 0,
+        PascalToCamel = 1,
+    }
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public sealed partial class DynamicData : System.Dynamic.IDynamicMetaObjectProvider, System.IDisposable
     {
@@ -146,6 +152,7 @@ namespace Azure.Core.Dynamic
     public partial class DynamicDataOptions
     {
         public DynamicDataOptions() { }
+        public Azure.Core.Dynamic.DynamicCaseMapping CaseMapping { get { throw null; } set { } }
         public Azure.Core.Dynamic.DynamicDateTimeHandling DateTimeHandling { get { throw null; } set { } }
     }
     public enum DynamicDateTimeHandling
