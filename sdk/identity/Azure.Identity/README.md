@@ -264,7 +264,7 @@ client secret and certificate are both present, the client secret will be used.
 
 Token caching is a feature provided by the Azure Identity library that allows apps to:
 
-* Cache tokens.
+* Cache tokens in memory (default) or on disk (opt-in).
 * Improve resilience and performance.
 * Reduce the number of requests made to Azure Active Directory (Azure AD) to obtain access tokens.
 
