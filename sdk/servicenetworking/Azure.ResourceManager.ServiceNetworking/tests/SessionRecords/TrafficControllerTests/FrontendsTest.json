@@ -130,7 +130,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourceGroups/tc-sdk-test-rg18362977/providers/Microsoft.ServiceNetworking/trafficControllers/tc-frontend-test8868?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourceGroups/tc-sdk-test-rg18362977/providers/Microsoft.ServiceNetworking/trafficControllers/tc-frontend-test8868?api-version=2023-05-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -149,7 +149,7 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2022-10-01-preview",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2023-05-01-preview",
         "Cache-Control": "no-cache",
         "Content-Length": "484",
         "Content-Type": "application/json; charset=utf-8",
@@ -184,7 +184,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -220,7 +220,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -256,7 +256,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -292,7 +292,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -328,7 +328,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -364,7 +364,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -400,7 +400,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -436,7 +436,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -472,7 +472,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -508,7 +508,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -544,7 +544,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -580,7 +580,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c0b2d8d6-3d92-4e8f-a3df-49f501c6b7a7?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -615,7 +615,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourceGroups/tc-sdk-test-rg18362977/providers/Microsoft.ServiceNetworking/trafficControllers/tc-frontend-test8868?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourceGroups/tc-sdk-test-rg18362977/providers/Microsoft.ServiceNetworking/trafficControllers/tc-frontend-test8868?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -660,7 +660,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourceGroups/tc-sdk-test-rg18362977/providers/Microsoft.ServiceNetworking/trafficControllers/tc-frontend-test8868/frontends/tc-frontend7432?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourceGroups/tc-sdk-test-rg18362977/providers/Microsoft.ServiceNetworking/trafficControllers/tc-frontend-test8868/frontends/tc-frontend7432?api-version=2023-05-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -676,15 +676,11 @@
         "tags": {},
         "location": "northeurope",
         "properties": {
-          "mode": "public",
-          "publicIPAddress": {
-            "id": "/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourceGroups/tc-sdk-test-rg18362977/providers/Microsoft.Network/publicIPAddresses/tc-pip2920"
-          }
         }
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/529f9742-b28a-4edd-9889-6833fd1b9e0d?api-version=2022-10-01-preview",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/529f9742-b28a-4edd-9889-6833fd1b9e0d?api-version=2023-05-01-preview",
         "Cache-Control": "no-cache",
         "Content-Length": "713",
         "Content-Type": "application/json; charset=utf-8",
@@ -706,12 +702,8 @@
       },
       "ResponseBody": {
         "properties": {
-          "mode": "Public",
-          "ipVersion": "IPv4",
-          "publicIPAddress": {
-            "id": "/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourceGroups/tc-sdk-test-rg18362977/providers/Microsoft.Network/publicIPAddresses/tc-pip2920"
-          },
-          "provisioningState": "Updating"
+            "fqdn": "www.contoso.com",
+            "provisioningState": "Updating"
         },
         "id": "/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourceGroups/tc-sdk-test-rg18362977/providers/Microsoft.ServiceNetworking/trafficControllers/tc-frontend-test8868/frontends/tc-frontend7432",
         "name": "tc-frontend7432",
@@ -722,7 +714,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/529f9742-b28a-4edd-9889-6833fd1b9e0d?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/529f9742-b28a-4edd-9889-6833fd1b9e0d?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -758,7 +750,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/529f9742-b28a-4edd-9889-6833fd1b9e0d?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/529f9742-b28a-4edd-9889-6833fd1b9e0d?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -794,7 +786,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/529f9742-b28a-4edd-9889-6833fd1b9e0d?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/529f9742-b28a-4edd-9889-6833fd1b9e0d?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -830,7 +822,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/529f9742-b28a-4edd-9889-6833fd1b9e0d?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/529f9742-b28a-4edd-9889-6833fd1b9e0d?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -866,7 +858,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/529f9742-b28a-4edd-9889-6833fd1b9e0d?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/529f9742-b28a-4edd-9889-6833fd1b9e0d?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -901,7 +893,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourceGroups/tc-sdk-test-rg18362977/providers/Microsoft.ServiceNetworking/trafficControllers/tc-frontend-test8868/frontends/tc-frontend7432?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourceGroups/tc-sdk-test-rg18362977/providers/Microsoft.ServiceNetworking/trafficControllers/tc-frontend-test8868/frontends/tc-frontend7432?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -930,12 +922,8 @@
       },
       "ResponseBody": {
         "properties": {
-          "mode": "Public",
-          "ipVersion": "IPv4",
-          "publicIPAddress": {
-            "id": "/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourceGroups/tc-sdk-test-rg18362977/providers/Microsoft.Network/publicIPAddresses/tc-pip2920"
-          },
-          "provisioningState": "Succeeded"
+            "fqdn": "www.contoso.com",
+            "provisioningState": "Succeeded"
         },
         "id": "/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourceGroups/tc-sdk-test-rg18362977/providers/Microsoft.ServiceNetworking/trafficControllers/tc-frontend-test8868/frontends/tc-frontend7432",
         "name": "tc-frontend7432",
@@ -946,7 +934,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourceGroups/tc-sdk-test-rg18362977/providers/Microsoft.ServiceNetworking/trafficControllers/tc-frontend-test8868/frontends/tc-frontend7432?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourceGroups/tc-sdk-test-rg18362977/providers/Microsoft.ServiceNetworking/trafficControllers/tc-frontend-test8868/frontends/tc-frontend7432?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -976,12 +964,8 @@
       },
       "ResponseBody": {
         "properties": {
-          "mode": "Public",
-          "ipVersion": "IPv4",
-          "publicIPAddress": {
-            "id": "/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourceGroups/tc-sdk-test-rg18362977/providers/Microsoft.Network/publicIPAddresses/tc-pip2920"
-          },
-          "provisioningState": "Succeeded"
+            "fqdn": "www.contoso.com",
+            "provisioningState": "Succeeded"
         },
         "id": "/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourceGroups/tc-sdk-test-rg18362977/providers/Microsoft.ServiceNetworking/trafficControllers/tc-frontend-test8868/frontends/tc-frontend7432",
         "name": "tc-frontend7432",
@@ -992,7 +976,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourceGroups/tc-sdk-test-rg18362977/providers/Microsoft.ServiceNetworking/trafficControllers/tc-frontend-test8868/frontends/tc-frontend7432?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourceGroups/tc-sdk-test-rg18362977/providers/Microsoft.ServiceNetworking/trafficControllers/tc-frontend-test8868/frontends/tc-frontend7432?api-version=2023-05-01-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1005,13 +989,13 @@
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c5ac5908-6c15-49bd-845d-e295d6c02610?api-version=2022-10-01-preview",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c5ac5908-6c15-49bd-845d-e295d6c02610?api-version=2023-05-01-preview",
         "Cache-Control": "no-cache",
         "Content-Length": "4",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 25 Jan 2023 03:13:38 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operationResults/c5ac5908-6c15-49bd-845d-e295d6c02610?api-version=2022-10-01-preview",
+        "Location": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operationResults/c5ac5908-6c15-49bd-845d-e295d6c02610?api-version=2023-05-01-preview",
         "Pragma": "no-cache",
         "Retry-After": "10",
         "Server": "Microsoft-HTTPAPI/2.0",
@@ -1029,7 +1013,7 @@
       "ResponseBody": "null"
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c5ac5908-6c15-49bd-845d-e295d6c02610?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c5ac5908-6c15-49bd-845d-e295d6c02610?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1065,7 +1049,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c5ac5908-6c15-49bd-845d-e295d6c02610?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c5ac5908-6c15-49bd-845d-e295d6c02610?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1101,7 +1085,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c5ac5908-6c15-49bd-845d-e295d6c02610?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/c5ac5908-6c15-49bd-845d-e295d6c02610?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1136,7 +1120,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourceGroups/tc-sdk-test-rg18362977/providers/Microsoft.ServiceNetworking/trafficControllers/tc-frontend-test8868?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/resourceGroups/tc-sdk-test-rg18362977/providers/Microsoft.ServiceNetworking/trafficControllers/tc-frontend-test8868?api-version=2023-05-01-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1149,13 +1133,13 @@
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/fd48bbc7-4e3d-4391-9deb-3432957e7f5d?api-version=2022-10-01-preview",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operations/fd48bbc7-4e3d-4391-9deb-3432957e7f5d?api-version=2023-05-01-preview",
         "Cache-Control": "no-cache",
         "Content-Length": "4",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 25 Jan 2023 03:14:02 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operationResults/fd48bbc7-4e3d-4391-9deb-3432957e7f5d?api-version=2022-10-01-preview",
+        "Location": "https://management.azure.com/subscriptions/668f1741-ef48-4132-bf98-28b3a3d3f257/providers/Microsoft.ServiceNetworking/locations/northeurope/operationResults/fd48bbc7-4e3d-4391-9deb-3432957e7f5d?api-version=2023-05-01-preview",
         "Pragma": "no-cache",
         "Retry-After": "10",
         "Server": "Microsoft-HTTPAPI/2.0",

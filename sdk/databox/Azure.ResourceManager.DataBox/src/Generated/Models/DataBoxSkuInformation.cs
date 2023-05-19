@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.DataBox.Models
             DataLocationToServiceLocationMap = new ChangeTrackingList<DataLocationToServiceLocationMap>();
             Costs = new ChangeTrackingList<DataBoxSkuCost>();
             ApiVersions = new ChangeTrackingList<string>();
+            CountriesWithinCommerceBoundary = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DataBoxSkuInformation. </summary>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="disabledReason"> Reason why the Sku is disabled. </param>
         /// <param name="disabledReasonMessage"> Message for why the Sku is disabled. </param>
         /// <param name="requiredFeature"> Required feature to access the sku. </param>
-        internal DataBoxSkuInformation(DataBoxSku sku, bool? isEnabled, IReadOnlyList<DataLocationToServiceLocationMap> dataLocationToServiceLocationMap, DataBoxSkuCapacity capacity, IReadOnlyList<DataBoxSkuCost> costs, IReadOnlyList<string> apiVersions, SkuDisabledReason? disabledReason, string disabledReasonMessage, string requiredFeature)
+        /// <param name="countriesWithinCommerceBoundary"> List of all the Countries in the SKU specific commerce boundary. </param>
+        internal DataBoxSkuInformation(DataBoxSku sku, bool? isEnabled, IReadOnlyList<DataLocationToServiceLocationMap> dataLocationToServiceLocationMap, DataBoxSkuCapacity capacity, IReadOnlyList<DataBoxSkuCost> costs, IReadOnlyList<string> apiVersions, SkuDisabledReason? disabledReason, string disabledReasonMessage, string requiredFeature, IReadOnlyList<string> countriesWithinCommerceBoundary)
         {
             Sku = sku;
             IsEnabled = isEnabled;
@@ -42,6 +44,7 @@ namespace Azure.ResourceManager.DataBox.Models
             DisabledReason = disabledReason;
             DisabledReasonMessage = disabledReasonMessage;
             RequiredFeature = requiredFeature;
+            CountriesWithinCommerceBoundary = countriesWithinCommerceBoundary;
         }
 
         /// <summary> The Sku. </summary>
@@ -62,5 +65,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public string DisabledReasonMessage { get; }
         /// <summary> Required feature to access the sku. </summary>
         public string RequiredFeature { get; }
+        /// <summary> List of all the Countries in the SKU specific commerce boundary. </summary>
+        public IReadOnlyList<string> CountriesWithinCommerceBoundary { get; }
     }
 }

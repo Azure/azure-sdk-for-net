@@ -86,6 +86,22 @@ namespace Azure.ResourceManager.Consumption
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.ConsumptionBudgetResource>> GetConsumptionBudgetAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string budgetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Consumption.ConsumptionBudgetResource GetConsumptionBudgetResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Consumption.ConsumptionBudgetCollection GetConsumptionBudgets(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionChargeSummary> GetConsumptionCharges(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string apply = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionChargeSummary> GetConsumptionChargesAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string apply = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionMarketplace> GetConsumptionMarketPlaces(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionMarketplace> GetConsumptionMarketPlacesAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationDetails> GetConsumptionReservationRecommendationDetails(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationScope reservationScope, string region, Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationTerm term, Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationDetails>> GetConsumptionReservationRecommendationDetailsAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationScope reservationScope, string region, Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationTerm term, Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendation> GetConsumptionReservationRecommendations(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendation> GetConsumptionReservationRecommendationsAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationDetail> GetConsumptionReservationsDetails(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationDetail> GetConsumptionReservationsDetailsAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationSummary> GetConsumptionReservationsSummaries(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.Consumption.Models.ArmResourceGetConsumptionReservationsSummariesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationSummary> GetConsumptionReservationsSummariesAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.Consumption.Models.ArmResourceGetConsumptionReservationsSummariesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionTagsResult> GetConsumptionTags(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionTagsResult>> GetConsumptionTagsAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionUsageDetail> GetConsumptionUsageDetails(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string expand = null, string filter = null, string skipToken = null, int? top = default(int?), Azure.ResourceManager.Consumption.Models.ConsumptionMetricType? metric = default(Azure.ResourceManager.Consumption.Models.ConsumptionMetricType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionUsageDetail> GetConsumptionUsageDetailsAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string expand = null, string filter = null, string skipToken = null, int? top = default(int?), Azure.ResourceManager.Consumption.Models.ConsumptionMetricType? metric = default(Azure.ResourceManager.Consumption.Models.ConsumptionMetricType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Consumption.ManagementGroupBillingPeriodConsumptionResource GetManagementGroupBillingPeriodConsumptionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Consumption.Models.PriceSheetResult> GetPriceSheet(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string expand = null, string skipToken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.PriceSheetResult>> GetPriceSheetAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string expand = null, string skipToken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -136,6 +152,16 @@ namespace Azure.ResourceManager.Consumption
 }
 namespace Azure.ResourceManager.Consumption.Models
 {
+    public partial class ArmResourceGetConsumptionReservationsSummariesOptions
+    {
+        public ArmResourceGetConsumptionReservationsSummariesOptions(Azure.ResourceManager.Consumption.Models.ReservationSummaryDataGrain grain) { }
+        public string EndDate { get { throw null; } set { } }
+        public string Filter { get { throw null; } set { } }
+        public Azure.ResourceManager.Consumption.Models.ReservationSummaryDataGrain Grain { get { throw null; } }
+        public string ReservationId { get { throw null; } set { } }
+        public string ReservationOrderId { get { throw null; } set { } }
+        public string StartDate { get { throw null; } set { } }
+    }
     public partial class BudgetAssociatedNotification
     {
         public BudgetAssociatedNotification(bool isEnabled, Azure.ResourceManager.Consumption.Models.NotificationAlertTriggerType @operator, decimal threshold, System.Collections.Generic.IEnumerable<string> contactEmails) { }
@@ -322,6 +348,22 @@ namespace Azure.ResourceManager.Consumption.Models
         public Azure.ResourceManager.Consumption.Models.BudgetComparisonExpression Dimensions { get { throw null; } set { } }
         public Azure.ResourceManager.Consumption.Models.BudgetComparisonExpression Tags { get { throw null; } set { } }
     }
+    public partial class ConsumptionCalculatedSavingsProperties
+    {
+        internal ConsumptionCalculatedSavingsProperties() { }
+        public float? OnDemandCost { get { throw null; } }
+        public float? OverageCost { get { throw null; } }
+        public float? Quantity { get { throw null; } }
+        public float? ReservationCost { get { throw null; } }
+        public float? ReservedUnitCount { get { throw null; } }
+        public float? Savings { get { throw null; } }
+        public float? TotalReservationCost { get { throw null; } }
+    }
+    public partial class ConsumptionChargeSummary : Azure.ResourceManager.Models.ResourceData
+    {
+        public ConsumptionChargeSummary() { }
+        public Azure.ETag? ETag { get { throw null; } set { } }
+    }
     public partial class ConsumptionCreditSummary : Azure.ResourceManager.Models.ResourceData
     {
         public ConsumptionCreditSummary() { }
@@ -385,6 +427,84 @@ namespace Azure.ResourceManager.Consumption.Models
         public static bool operator !=(Azure.ResourceManager.Consumption.Models.ConsumptionEventType left, Azure.ResourceManager.Consumption.Models.ConsumptionEventType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ConsumptionLegacyChargeSummary : Azure.ResourceManager.Consumption.Models.ConsumptionChargeSummary
+    {
+        public ConsumptionLegacyChargeSummary() { }
+        public decimal? AzureCharges { get { throw null; } }
+        public string BillingPeriodId { get { throw null; } }
+        public decimal? ChargesBilledSeparately { get { throw null; } }
+        public string Currency { get { throw null; } }
+        public decimal? MarketplaceCharges { get { throw null; } }
+        public string UsageEnd { get { throw null; } }
+        public string UsageStart { get { throw null; } }
+    }
+    public partial class ConsumptionLegacyReservationRecommendation : Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendation
+    {
+        internal ConsumptionLegacyReservationRecommendation() { }
+        public decimal? CostWithNoReservedInstances { get { throw null; } }
+        public System.DateTimeOffset? FirstUsageOn { get { throw null; } }
+        public string InstanceFlexibilityGroup { get { throw null; } }
+        public float? InstanceFlexibilityRatio { get { throw null; } }
+        public string LookBackPeriod { get { throw null; } }
+        public System.Guid? MeterId { get { throw null; } }
+        public decimal? NetSavings { get { throw null; } }
+        public string NormalizedSize { get { throw null; } }
+        public decimal? RecommendedQuantity { get { throw null; } }
+        public float? RecommendedQuantityNormalized { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Consumption.Models.ConsumptionSkuProperty> SkuProperties { get { throw null; } }
+        public string Term { get { throw null; } }
+        public decimal? TotalCostWithReservedInstances { get { throw null; } }
+    }
+    public partial class ConsumptionLegacyUsageDetail : Azure.ResourceManager.Consumption.Models.ConsumptionUsageDetail
+    {
+        internal ConsumptionLegacyUsageDetail() { }
+        public string AccountName { get { throw null; } }
+        public string AccountOwnerId { get { throw null; } }
+        public string AdditionalInfo { get { throw null; } }
+        public string BenefitId { get { throw null; } }
+        public string BenefitName { get { throw null; } }
+        public string BillingAccountId { get { throw null; } }
+        public string BillingAccountName { get { throw null; } }
+        public string BillingCurrency { get { throw null; } }
+        public System.DateTimeOffset? BillingPeriodEndOn { get { throw null; } }
+        public System.DateTimeOffset? BillingPeriodStartOn { get { throw null; } }
+        public string BillingProfileId { get { throw null; } }
+        public string BillingProfileName { get { throw null; } }
+        public string ChargeType { get { throw null; } }
+        public string ConsumedService { get { throw null; } }
+        public decimal? Cost { get { throw null; } }
+        public string CostCenter { get { throw null; } }
+        public decimal? EffectivePrice { get { throw null; } }
+        public string Frequency { get { throw null; } }
+        public string InvoiceSection { get { throw null; } }
+        public bool? IsAzureCreditEligible { get { throw null; } }
+        public Azure.ResourceManager.Consumption.Models.ConsumptionMeterDetailsInfo MeterDetails { get { throw null; } }
+        public System.Guid? MeterId { get { throw null; } }
+        public string OfferId { get { throw null; } }
+        public System.DateTimeOffset? On { get { throw null; } }
+        public string PartNumber { get { throw null; } }
+        public decimal? PayGPrice { get { throw null; } }
+        public string PlanName { get { throw null; } }
+        public Azure.ResourceManager.Consumption.Models.ConsumptionPricingModelType? PricingModel { get { throw null; } }
+        public string Product { get { throw null; } }
+        public string ProductOrderId { get { throw null; } }
+        public string ProductOrderName { get { throw null; } }
+        public string PublisherName { get { throw null; } }
+        public string PublisherType { get { throw null; } }
+        public decimal? Quantity { get { throw null; } }
+        public string ReservationId { get { throw null; } }
+        public string ReservationName { get { throw null; } }
+        public string ResourceGroup { get { throw null; } }
+        public string ResourceId { get { throw null; } }
+        public string ResourceLocation { get { throw null; } }
+        public string ResourceName { get { throw null; } }
+        public string ServiceInfo1 { get { throw null; } }
+        public string ServiceInfo2 { get { throw null; } }
+        public string SubscriptionId { get { throw null; } }
+        public string SubscriptionName { get { throw null; } }
+        public string Term { get { throw null; } }
+        public decimal? UnitPrice { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConsumptionLotSource : System.IEquatable<Azure.ResourceManager.Consumption.Models.ConsumptionLotSource>
     {
@@ -444,6 +564,38 @@ namespace Azure.ResourceManager.Consumption.Models
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Consumption.Models.ConsumptionLotStatus? Status { get { throw null; } }
     }
+    public partial class ConsumptionMarketplace : Azure.ResourceManager.Models.ResourceData
+    {
+        internal ConsumptionMarketplace() { }
+        public string AccountName { get { throw null; } }
+        public string AdditionalInfo { get { throw null; } }
+        public string AdditionalProperties { get { throw null; } }
+        public string BillingPeriodId { get { throw null; } }
+        public decimal? ConsumedQuantity { get { throw null; } }
+        public string ConsumedService { get { throw null; } }
+        public string CostCenter { get { throw null; } }
+        public string Currency { get { throw null; } }
+        public string DepartmentName { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
+        public string InstanceId { get { throw null; } }
+        public string InstanceName { get { throw null; } }
+        public bool? IsEstimated { get { throw null; } }
+        public bool? IsRecurringCharge { get { throw null; } }
+        public System.Guid? MeterId { get { throw null; } }
+        public string OfferName { get { throw null; } }
+        public string OrderNumber { get { throw null; } }
+        public string PlanName { get { throw null; } }
+        public decimal? PretaxCost { get { throw null; } }
+        public string PublisherName { get { throw null; } }
+        public string ResourceGroup { get { throw null; } }
+        public decimal? ResourceRate { get { throw null; } }
+        public System.Guid? SubscriptionGuid { get { throw null; } }
+        public string SubscriptionName { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        public string UnitOfMeasure { get { throw null; } }
+        public System.DateTimeOffset? UsageEndOn { get { throw null; } }
+        public System.DateTimeOffset? UsageStartOn { get { throw null; } }
+    }
     public partial class ConsumptionMeterDetails
     {
         internal ConsumptionMeterDetails() { }
@@ -456,6 +608,69 @@ namespace Azure.ResourceManager.Consumption.Models
         public string ServiceTier { get { throw null; } }
         public decimal? TotalIncludedQuantity { get { throw null; } }
         public string Unit { get { throw null; } }
+    }
+    public partial class ConsumptionMeterDetailsInfo
+    {
+        internal ConsumptionMeterDetailsInfo() { }
+        public string MeterCategory { get { throw null; } }
+        public string MeterName { get { throw null; } }
+        public string MeterSubCategory { get { throw null; } }
+        public string ServiceFamily { get { throw null; } }
+        public string UnitOfMeasure { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ConsumptionMetricType : System.IEquatable<Azure.ResourceManager.Consumption.Models.ConsumptionMetricType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ConsumptionMetricType(string value) { throw null; }
+        public static Azure.ResourceManager.Consumption.Models.ConsumptionMetricType ActualCostMetricType { get { throw null; } }
+        public static Azure.ResourceManager.Consumption.Models.ConsumptionMetricType AmortizedCostMetricType { get { throw null; } }
+        public static Azure.ResourceManager.Consumption.Models.ConsumptionMetricType UsageMetricType { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Consumption.Models.ConsumptionMetricType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Consumption.Models.ConsumptionMetricType left, Azure.ResourceManager.Consumption.Models.ConsumptionMetricType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Consumption.Models.ConsumptionMetricType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Consumption.Models.ConsumptionMetricType left, Azure.ResourceManager.Consumption.Models.ConsumptionMetricType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ConsumptionModernChargeSummary : Azure.ResourceManager.Consumption.Models.ConsumptionChargeSummary
+    {
+        public ConsumptionModernChargeSummary() { }
+        public Azure.ResourceManager.Consumption.Models.ConsumptionAmount AzureCharges { get { throw null; } }
+        public string BillingAccountId { get { throw null; } }
+        public string BillingPeriodId { get { throw null; } }
+        public string BillingProfileId { get { throw null; } }
+        public Azure.ResourceManager.Consumption.Models.ConsumptionAmount ChargesBilledSeparately { get { throw null; } }
+        public string CustomerId { get { throw null; } }
+        public string InvoiceSectionId { get { throw null; } }
+        public bool? IsInvoiced { get { throw null; } }
+        public Azure.ResourceManager.Consumption.Models.ConsumptionAmount MarketplaceCharges { get { throw null; } }
+        public string UsageEnd { get { throw null; } }
+        public string UsageStart { get { throw null; } }
+    }
+    public partial class ConsumptionModernReservationRecommendation : Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendation
+    {
+        internal ConsumptionModernReservationRecommendation() { }
+        public Azure.ResourceManager.Consumption.Models.ConsumptionAmount CostWithNoReservedInstances { get { throw null; } }
+        public System.DateTimeOffset? FirstUsageOn { get { throw null; } }
+        public string InstanceFlexibilityGroup { get { throw null; } }
+        public float? InstanceFlexibilityRatio { get { throw null; } }
+        public string LocationPropertiesLocation { get { throw null; } }
+        public int? LookBackPeriod { get { throw null; } }
+        public System.Guid? MeterId { get { throw null; } }
+        public Azure.ResourceManager.Consumption.Models.ConsumptionAmount NetSavings { get { throw null; } }
+        public string NormalizedSize { get { throw null; } }
+        public decimal? RecommendedQuantity { get { throw null; } }
+        public float? RecommendedQuantityNormalized { get { throw null; } }
+        public string Scope { get { throw null; } }
+        public string SkuName { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Consumption.Models.ConsumptionSkuProperty> SkuProperties { get { throw null; } }
+        public string Term { get { throw null; } }
+        public Azure.ResourceManager.Consumption.Models.ConsumptionAmount TotalCostWithReservedInstances { get { throw null; } }
     }
     public partial class ConsumptionModernReservationTransaction : Azure.ResourceManager.Models.ResourceData
     {
@@ -482,6 +697,101 @@ namespace Azure.ResourceManager.Consumption.Models
         public string Term { get { throw null; } }
         public System.DateTimeOffset? TransactOn { get { throw null; } }
     }
+    public partial class ConsumptionModernUsageDetail : Azure.ResourceManager.Consumption.Models.ConsumptionUsageDetail
+    {
+        internal ConsumptionModernUsageDetail() { }
+        public string AdditionalInfo { get { throw null; } }
+        public string BenefitId { get { throw null; } }
+        public string BenefitName { get { throw null; } }
+        public string BillingAccountId { get { throw null; } }
+        public string BillingAccountName { get { throw null; } }
+        public string BillingCurrencyCode { get { throw null; } }
+        public System.DateTimeOffset? BillingPeriodEndOn { get { throw null; } }
+        public System.DateTimeOffset? BillingPeriodStartOn { get { throw null; } }
+        public string BillingProfileId { get { throw null; } }
+        public string BillingProfileName { get { throw null; } }
+        public string ChargeType { get { throw null; } }
+        public string ConsumedService { get { throw null; } }
+        public string CostAllocationRuleName { get { throw null; } }
+        public string CostCenter { get { throw null; } }
+        public decimal? CostInBillingCurrency { get { throw null; } }
+        public decimal? CostInPricingCurrency { get { throw null; } }
+        public decimal? CostInUSD { get { throw null; } }
+        public string CustomerName { get { throw null; } }
+        public string CustomerTenantId { get { throw null; } }
+        public decimal? EffectivePrice { get { throw null; } }
+        public string ExchangeRate { get { throw null; } }
+        public System.DateTimeOffset? ExchangeRateOn { get { throw null; } }
+        public decimal? ExchangeRatePricingToBilling { get { throw null; } }
+        public string Frequency { get { throw null; } }
+        public string InstanceName { get { throw null; } }
+        public string InvoiceId { get { throw null; } }
+        public string InvoiceSectionId { get { throw null; } }
+        public string InvoiceSectionName { get { throw null; } }
+        public bool? IsAzureCreditEligible { get { throw null; } }
+        public decimal? MarketPrice { get { throw null; } }
+        public string MeterCategory { get { throw null; } }
+        public System.Guid? MeterId { get { throw null; } }
+        public string MeterName { get { throw null; } }
+        public string MeterRegion { get { throw null; } }
+        public string MeterSubCategory { get { throw null; } }
+        public System.DateTimeOffset? On { get { throw null; } }
+        public string PartnerEarnedCreditApplied { get { throw null; } }
+        public decimal? PartnerEarnedCreditRate { get { throw null; } }
+        public string PartnerName { get { throw null; } }
+        public string PartnerTenantId { get { throw null; } }
+        public decimal? PaygCostInBillingCurrency { get { throw null; } }
+        public decimal? PaygCostInUSD { get { throw null; } }
+        public decimal? PayGPrice { get { throw null; } }
+        public string PreviousInvoiceId { get { throw null; } }
+        public string PricingCurrencyCode { get { throw null; } }
+        public Azure.ResourceManager.Consumption.Models.ConsumptionPricingModelType? PricingModel { get { throw null; } }
+        public string Product { get { throw null; } }
+        public string ProductIdentifier { get { throw null; } }
+        public string ProductOrderId { get { throw null; } }
+        public string ProductOrderName { get { throw null; } }
+        public string Provider { get { throw null; } }
+        public string PublisherId { get { throw null; } }
+        public string PublisherName { get { throw null; } }
+        public string PublisherType { get { throw null; } }
+        public decimal? Quantity { get { throw null; } }
+        public string ResellerMpnId { get { throw null; } }
+        public string ResellerName { get { throw null; } }
+        public string ReservationId { get { throw null; } }
+        public string ReservationName { get { throw null; } }
+        public string ResourceGroup { get { throw null; } }
+        public string ResourceLocation { get { throw null; } }
+        public string ResourceLocationNormalized { get { throw null; } }
+        public string ServiceFamily { get { throw null; } }
+        public string ServiceInfo1 { get { throw null; } }
+        public string ServiceInfo2 { get { throw null; } }
+        public System.DateTimeOffset? ServicePeriodEndOn { get { throw null; } }
+        public System.DateTimeOffset? ServicePeriodStartOn { get { throw null; } }
+        public string SubscriptionGuid { get { throw null; } }
+        public string SubscriptionName { get { throw null; } }
+        public string Term { get { throw null; } }
+        public string UnitOfMeasure { get { throw null; } }
+        public decimal? UnitPrice { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ConsumptionPricingModelType : System.IEquatable<Azure.ResourceManager.Consumption.Models.ConsumptionPricingModelType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ConsumptionPricingModelType(string value) { throw null; }
+        public static Azure.ResourceManager.Consumption.Models.ConsumptionPricingModelType OnDemand { get { throw null; } }
+        public static Azure.ResourceManager.Consumption.Models.ConsumptionPricingModelType Reservation { get { throw null; } }
+        public static Azure.ResourceManager.Consumption.Models.ConsumptionPricingModelType Spot { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Consumption.Models.ConsumptionPricingModelType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Consumption.Models.ConsumptionPricingModelType left, Azure.ResourceManager.Consumption.Models.ConsumptionPricingModelType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Consumption.Models.ConsumptionPricingModelType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Consumption.Models.ConsumptionPricingModelType left, Azure.ResourceManager.Consumption.Models.ConsumptionPricingModelType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ConsumptionReseller
     {
         internal ConsumptionReseller() { }
@@ -504,6 +814,83 @@ namespace Azure.ResourceManager.Consumption.Models
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public decimal? TotalReservedQuantity { get { throw null; } }
         public decimal? UsedHours { get { throw null; } }
+    }
+    public partial class ConsumptionReservationRecommendation : Azure.ResourceManager.Models.ResourceData
+    {
+        internal ConsumptionReservationRecommendation() { }
+        public Azure.ETag? ETag { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+        public string Sku { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class ConsumptionReservationRecommendationDetails : Azure.ResourceManager.Models.ResourceData
+    {
+        internal ConsumptionReservationRecommendationDetails() { }
+        public string Currency { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+        public Azure.ResourceManager.Consumption.Models.ConsumptionResourceProperties Properties { get { throw null; } }
+        public string ResourceGroup { get { throw null; } }
+        public Azure.ResourceManager.Consumption.Models.ConsumptionSavingsProperties Savings { get { throw null; } }
+        public string Scope { get { throw null; } }
+        public string Sku { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        public Azure.ResourceManager.Consumption.Models.ConsumptionUsageProperties Usage { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ConsumptionReservationRecommendationLookBackPeriod : System.IEquatable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationLookBackPeriod>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ConsumptionReservationRecommendationLookBackPeriod(string value) { throw null; }
+        public static Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationLookBackPeriod Last07Days { get { throw null; } }
+        public static Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationLookBackPeriod Last30Days { get { throw null; } }
+        public static Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationLookBackPeriod Last60Days { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationLookBackPeriod other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationLookBackPeriod left, Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationLookBackPeriod right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationLookBackPeriod (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationLookBackPeriod left, Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationLookBackPeriod right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ConsumptionReservationRecommendationScope : System.IEquatable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationScope>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ConsumptionReservationRecommendationScope(string value) { throw null; }
+        public static Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationScope Shared { get { throw null; } }
+        public static Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationScope Single { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationScope other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationScope left, Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationScope right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationScope (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationScope left, Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationScope right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ConsumptionReservationRecommendationTerm : System.IEquatable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationTerm>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ConsumptionReservationRecommendationTerm(string value) { throw null; }
+        public static Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationTerm P1Y { get { throw null; } }
+        public static Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationTerm P3Y { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationTerm other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationTerm left, Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationTerm right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationTerm (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationTerm left, Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationTerm right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ConsumptionReservationSummary : Azure.ResourceManager.Models.ResourceData
     {
@@ -553,6 +940,61 @@ namespace Azure.ResourceManager.Consumption.Models
         public System.Collections.Generic.IReadOnlyList<string> Tags { get { throw null; } }
         public string Term { get { throw null; } }
         public System.DateTimeOffset? TransactOn { get { throw null; } }
+    }
+    public partial class ConsumptionResourceProperties
+    {
+        internal ConsumptionResourceProperties() { }
+        public System.Collections.Generic.IReadOnlyList<string> AppliedScopes { get { throw null; } }
+        public float? OnDemandRate { get { throw null; } }
+        public string Product { get { throw null; } }
+        public string Region { get { throw null; } }
+        public float? ReservationRate { get { throw null; } }
+        public string ResourceType { get { throw null; } }
+    }
+    public partial class ConsumptionSavingsProperties
+    {
+        internal ConsumptionSavingsProperties() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Consumption.Models.ConsumptionCalculatedSavingsProperties> CalculatedSavings { get { throw null; } }
+        public int? LookBackPeriod { get { throw null; } }
+        public float? RecommendedQuantity { get { throw null; } }
+        public string ReservationOrderTerm { get { throw null; } }
+        public string SavingsType { get { throw null; } }
+        public string UnitOfMeasure { get { throw null; } }
+    }
+    public partial class ConsumptionSkuProperty
+    {
+        internal ConsumptionSkuProperty() { }
+        public string Name { get { throw null; } }
+        public string Value { get { throw null; } }
+    }
+    public partial class ConsumptionTag
+    {
+        public ConsumptionTag() { }
+        public string Key { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Value { get { throw null; } }
+    }
+    public partial class ConsumptionTagsResult : Azure.ResourceManager.Models.ResourceData
+    {
+        public ConsumptionTagsResult() { }
+        public Azure.ETag? ETag { get { throw null; } set { } }
+        public string NextLink { get { throw null; } }
+        public string PreviousLink { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Consumption.Models.ConsumptionTag> Tags { get { throw null; } }
+    }
+    public partial class ConsumptionUsageDetail : Azure.ResourceManager.Models.ResourceData
+    {
+        internal ConsumptionUsageDetail() { }
+        public Azure.ETag? ETag { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class ConsumptionUsageProperties
+    {
+        internal ConsumptionUsageProperties() { }
+        public string FirstConsumptionDate { get { throw null; } }
+        public string LastConsumptionDate { get { throw null; } }
+        public string LookBackUnitType { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<float> UsageData { get { throw null; } }
+        public string UsageGrain { get { throw null; } }
     }
     public partial class CreditBalanceSummary
     {

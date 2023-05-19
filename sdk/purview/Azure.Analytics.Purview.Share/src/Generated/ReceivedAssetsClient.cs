@@ -59,7 +59,16 @@ namespace Azure.Analytics.Purview.Share
             _apiVersion = options.Version;
         }
 
-        /// <summary> List source asset of a received share. </summary>
+        /// <summary>
+        /// [Protocol Method] List source asset of a received share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -67,7 +76,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedAssetsClient.xml" path="doc/members/member[@name='GetReceivedAssetsAsync(String,String,RequestContext)']/*" />
+        /// <include file="Docs/ReceivedAssetsClient.xml" path="doc/members/member[@name='GetReceivedAssetsAsync(string,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetReceivedAssetsAsync(string receivedShareName, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));
@@ -77,7 +86,16 @@ namespace Azure.Analytics.Purview.Share
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedAssetsClient.GetReceivedAssets", "value", "nextLink", context);
         }
 
-        /// <summary> List source asset of a received share. </summary>
+        /// <summary>
+        /// [Protocol Method] List source asset of a received share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="receivedShareName"> The name of the received share. </param>
         /// <param name="skipToken"> The continuation token to list the next page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -85,7 +103,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedAssetsClient.xml" path="doc/members/member[@name='GetReceivedAssets(String,String,RequestContext)']/*" />
+        /// <include file="Docs/ReceivedAssetsClient.xml" path="doc/members/member[@name='GetReceivedAssets(string,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetReceivedAssets(string receivedShareName, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));

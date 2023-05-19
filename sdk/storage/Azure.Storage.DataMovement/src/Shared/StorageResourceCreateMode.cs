@@ -13,9 +13,14 @@ namespace Azure.Storage.DataMovement
     public enum StorageResourceCreateMode
     {
         /// <summary>
-        /// Default. Overwrites the file if it already exists. No error will be thrown.
+        /// Default. If specified to this value, it will default to <see cref="StorageResourceCreateMode.Fail"/>.
         /// </summary>
-        Overwrite = default,
+        None = default,
+
+        /// <summary>
+        /// Overwrites the file if it already exists. No error will be thrown.
+        /// </summary>
+        Overwrite = 1,
 
         /// <summary>
         /// If the file/blob already exists in the destination path, a failure will be thrown.
@@ -25,7 +30,7 @@ namespace Azure.Storage.DataMovement
         /// If ErrorHandlingOptions.ContinueOnFailure is enabled, then this will get overrided
         /// and the transfer will complete regardless of failure.
         /// </summary>
-        Fail = 1,
+        Fail = 2,
 
         /// <summary>
         /// If the file/blob already exists in the destination path, no failure will be thrown.
@@ -34,6 +39,6 @@ namespace Azure.Storage.DataMovement
         ///
         /// If ErrorHandlingOptions.StopOnAllFailures is set, the download will still be skipped.
         /// </summary>
-        Skip = 2,
+        Skip = 3,
     }
 }

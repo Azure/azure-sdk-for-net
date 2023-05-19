@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.DataMovement.Models;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -43,11 +44,24 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        public void Ctor_Error()
+        {
+            Assert.Catch<ArgumentException>( () =>
+                new LocalDirectoryStorageResourceContainer(""));
+
+            Assert.Catch<ArgumentException>(() =>
+                new LocalDirectoryStorageResourceContainer("   "));
+
+            Assert.Catch<ArgumentException>(() =>
+                new LocalDirectoryStorageResourceContainer(default));
+        }
+
+        [Test]
         public async Task GetStorageResourcesAsync()
         {
             // Arrange
             List<string> paths = new List<string>();
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             string folderPath = test.DirectoryPath;
 
             for (int i = 0; i < 3; i++)
@@ -74,7 +88,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             List<string> paths = new List<string>();
             List<string> fileNames = new List<string>();
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             string folderPath = test.DirectoryPath;
 
             for (int i = 0; i < 3; i++)
@@ -98,7 +112,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             List<string> paths = new List<string>();
             List<string> fileNames = new List<string>();
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             string folderPath = test.DirectoryPath;
 
             for (int i = 0; i < 3; i++)

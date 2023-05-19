@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
@@ -120,7 +121,7 @@ namespace Azure.Identity
 
             if (baseMessage != null)
             {
-                string message = await Pipeline.Diagnostics.CreateRequestFailedMessageAsync(response, new ResponseError(null, baseMessage), null, async).ConfigureAwait(false);
+                string message = new RequestFailedException(response, null, new ImdsRequestFailedDetailsParser(baseMessage)).Message;
 
                 var errorContentMessage = await GetMessageFromResponse(response, async, cancellationToken).ConfigureAwait(false);
 
@@ -133,6 +134,23 @@ namespace Azure.Identity
             }
 
             return await base.HandleResponseAsync(async, context, response, cancellationToken).ConfigureAwait(false);
+        }
+
+        private class ImdsRequestFailedDetailsParser : RequestFailedDetailsParser
+        {
+            private readonly string _baseMessage;
+
+            public ImdsRequestFailedDetailsParser(string baseMessage)
+            {
+                _baseMessage = baseMessage;
+            }
+
+            public override bool TryParse(Response response, out ResponseError error, out IDictionary<string, string> data)
+            {
+                error = new ResponseError(null, _baseMessage);
+                data = null;
+                return true;
+            }
         }
     }
 }

@@ -2,6 +2,16 @@
 
 ## 1.1.0-beta.1 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.2 (2023-04-27)
+
 ### Bugs Fixed
 
 - Fixed issue #34745. Introduced new property `RelayArmId` in `HybridConnectionData` class to replace the property `RelayArmUri` with a wrong type `Uri`.
