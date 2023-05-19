@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             if (Optional.IsDefined(AppSourceUri))
             {
                 writer.WritePropertyName("appSourceUri"u8);
-                writer.WriteStringValue(AppSourceUri.AbsoluteUri);
+                writer.WriteStringValue(AppSourceUri);
             }
             writer.WriteEndObject();
         }
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 return null;
             }
             Optional<LanguageRuntime> languageRuntime = default;
-            Optional<Uri> appSourceUri = default;
+            Optional<string> appSourceUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("languageRuntime"u8))
@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     {
                         continue;
                     }
-                    appSourceUri = new Uri(property.Value.GetString());
+                    appSourceUri = property.Value.GetString();
                     continue;
                 }
             }
-            return new DeploymentType(Optional.ToNullable(languageRuntime), appSourceUri.Value);
+            return new DeploymentType(Optional.ToNullable(languageRuntime), appSourceUri);
         }
     }
 }

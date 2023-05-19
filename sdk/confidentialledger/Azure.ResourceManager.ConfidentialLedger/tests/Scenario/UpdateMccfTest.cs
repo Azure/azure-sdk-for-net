@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
                     DeploymentType = new DeploymentType()
                     {
                         LanguageRuntime = LanguageRuntime.CPP,
-                        AppSourceUri = new Uri("https://myaccount.blob.core.windows.net/storage/mccfsource?sv=2022-02-11%st=2022-03-11"),
+                        AppSourceUri = "https://myaccount.blob.core.windows.net/storage/mccfsource?sv=2022-02-11%st=2022-03-11",
                     },
                 },
                 Tags =

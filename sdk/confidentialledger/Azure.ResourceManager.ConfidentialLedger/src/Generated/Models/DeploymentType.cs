@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <summary> Initializes a new instance of DeploymentType. </summary>
         /// <param name="languageRuntime"> Unique name for the Managed CCF. </param>
         /// <param name="appSourceUri"> Source Uri containing ManagedCCF code. </param>
-        internal DeploymentType(LanguageRuntime? languageRuntime, Uri appSourceUri)
+        internal DeploymentType(LanguageRuntime? languageRuntime, string appSourceUri)
         {
             LanguageRuntime = languageRuntime;
             AppSourceUri = appSourceUri;
@@ -29,6 +29,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <summary> Unique name for the Managed CCF. </summary>
         public LanguageRuntime? LanguageRuntime { get; set; }
         /// <summary> Source Uri containing ManagedCCF code. </summary>
-        public Uri AppSourceUri { get; set; }
+        public string AppSourceUri { get; set; }
     }
 }
