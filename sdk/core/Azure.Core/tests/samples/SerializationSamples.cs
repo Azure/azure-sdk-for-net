@@ -133,7 +133,6 @@ namespace Azure.Core.Samples
         public void StaticDeserialize()
         {
             #region Snippet:Static_Deserialize
-            using Stream stream = new MemoryStream();
             SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = false, IgnoreAdditionalProperties = false };
             string serviceResponse =
                 "{\"latinName\":\"Animalia\",\"weight\":2.3,\"name\":\"Rabbit\",\"isHungry\":false,\"numberOfLegs\":4}";

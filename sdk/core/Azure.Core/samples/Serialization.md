@@ -113,7 +113,6 @@ Serialize would use the Try/Do examples from above. We would use Interface form 
 When using Static Deserialize, an empty Model does not have to be created first as we can deserialize directly into a new instance.
 
 ```C# Snippet:Static_Deserialize
-using Stream stream = new MemoryStream();
 SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = false, IgnoreAdditionalProperties = false };
 string serviceResponse =
     "{\"latinName\":\"Animalia\",\"weight\":2.3,\"name\":\"Rabbit\",\"isHungry\":false,\"numberOfLegs\":4}";
