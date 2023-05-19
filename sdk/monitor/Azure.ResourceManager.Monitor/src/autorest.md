@@ -368,13 +368,13 @@ directive:
     transform: $["x-ms-client-name"] = "CommonTrackedResourceV3"
   - from: v4/privatelinks.json
     where: $.definitions.PrivateEndpoint
-    transform: $["x-ms-client-name"] = "CommonPrivateEndpointV4"
+    transform: $["x-ms-client-name"] = "MonitorWorkspacePrivateEndpoint"
   - from: v4/privatelinks.json
     where: $.definitions.PrivateEndpointConnection
     transform: $["x-ms-client-name"] = "MonitorWorkspacePrivateEndpointConnection"
   - from: v4/privatelinks.json
     where: $.definitions.PrivateEndpointConnectionProperties
-    transform: $["x-ms-client-name"] = "CommonPrivateEndpointConnectionPropertiesV4"
+    transform: $["x-ms-client-name"] = "MonitorWorkspacePrivateEndpointConnectionProperties"
   - from: v4/types.json
     where: $.definitions.Resource
     transform: $["x-ms-client-name"] = "CommonResourceV4"
