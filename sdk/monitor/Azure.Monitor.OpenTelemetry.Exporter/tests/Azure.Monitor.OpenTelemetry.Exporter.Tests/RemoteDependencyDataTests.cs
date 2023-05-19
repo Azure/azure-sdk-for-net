@@ -152,7 +152,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), remoteDependencyData.Duration);
             Assert.Equal(activity.GetStatus() != Status.Error, remoteDependencyData.Success);
             Assert.True(remoteDependencyData.Properties.Count == 1);
-            Assert.True(remoteDependencyData.Properties.Contains(new KeyValuePair<string, string>(SemanticConventions.AttributeDbName, "msqlserver" )));
+            Assert.True(remoteDependencyData.Properties.Contains(new KeyValuePair<string, string>(SemanticConventions.AttributeDbName, "mysqlserver" )));
             Assert.True(remoteDependencyData.Measurements.Count == 0);
         }
 
