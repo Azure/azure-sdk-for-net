@@ -206,11 +206,7 @@ namespace Azure.Search.Documents
                     StringBuilder queryAnswerStringValue = new($"{QueryAnswer.Value}");
 
                     int tokens = 0;
-                    char NextToken() => tokens switch
-                    {
-                        0 => '|',
-                        _ => ',',
-                    };
+                    char NextToken() => tokens++ == 0 ? '|' : ',';
 
                     if (QueryAnswerCount.HasValue)
                     {
