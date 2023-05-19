@@ -53,16 +53,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 case OperationType.Db:
                     var depDataAndType = AzMonList.GetTagValues(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeDbStatement, SemanticConventions.AttributeDbSystem);
                     Data = depDataAndType[0]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Data_MaxLength);
-                    activityTagsProcessor.MappedTags.GetDbDependencyTargetAndName(out var dbTarget, out var dbName);
-                    Target = dbTarget.Truncate(SchemaConstants.RemoteDependencyData_Target_MaxLength);
-                    Type = s_sqlDbs.Contains(depDataAndType[1]?.ToString()) ? "SQL" : depDataAndType[1]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
+                    var dbNameAndTarget = activityTagsProcessor.MappedTags.GetDbDependencyTargetAndName();
+                    Target = dbNameAndTarget.DbTarget.Truncate(SchemaConstants.RemoteDependencyData_Target_MaxLength);
 
                     // special case for db.name
-                    var sanitizedDbName = dbName.Truncate(SchemaConstants.KVP_MaxValueLength);
-                    if (dbName != null)
+                    var sanitizedDbName = dbNameAndTarget.DbName.Truncate(SchemaConstants.KVP_MaxValueLength);
+                    if (sanitizedDbName != null)
                     {
-                        Properties.Add(SemanticConventions.AttributeDbName, dbName);
+                        Properties.Add(SemanticConventions.AttributeDbName, sanitizedDbName);
                     }
+                    Type = s_sqlDbs.Contains(depDataAndType[1]?.ToString()) ? "SQL" : depDataAndType[1]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
                     break;
                 case OperationType.Rpc:
                     var depInfo = AzMonList.GetTagValues(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeRpcService, SemanticConventions.AttributeRpcSystem, SemanticConventions.AttributeRpcStatus);

@@ -289,7 +289,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         ///<summary>
         /// Gets Database dependency target and name from activity tag objects.
         ///</summary>
-        internal static void GetDbDependencyTargetAndName(this AzMonList tagObjects, out string? dbTarget, out string? dbName)
+        internal static (string? DbName, string? DbTarget) GetDbDependencyTargetAndName(this AzMonList tagObjects)
         {
             string? target = null;
             string defaultPort = GetDefaultDbPort(AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbSystem)?.ToString());
@@ -303,7 +303,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 target = tagObjects.GetTargetUsingNetPeerAttributes(defaultPort);
             }
 
-            dbName = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbName)?.ToString();
+            var dbName = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbName)?.ToString();
             bool isTargetEmpty = string.IsNullOrWhiteSpace(target);
             bool isDbNameEmpty = string.IsNullOrWhiteSpace(dbName);
             if (!isTargetEmpty && !isDbNameEmpty)
@@ -319,7 +319,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 target = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbSystem)?.ToString();
             }
 
-            dbTarget = target;
+            return (DbName: dbName, DbTarget: target);
         }
 
         ///<summary>
@@ -332,8 +332,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 case OperationType.Http:
                     return tagObjects.GetHttpDependencyTarget();
                 case OperationType.Db:
-                    tagObjects.GetDbDependencyTargetAndName(out var target, out _);
-                    return target;
+                    return tagObjects.GetDbDependencyTargetAndName().DbTarget;
                 default:
                     return null;
             }
