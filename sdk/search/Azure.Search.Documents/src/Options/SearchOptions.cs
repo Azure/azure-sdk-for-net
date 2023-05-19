@@ -203,7 +203,7 @@ namespace Azure.Search.Documents
             {
                 if (QueryAnswer.HasValue)
                 {
-                    StringBuilder queryAnswerStringValue = new($"{QueryAnswer.Value}");
+                    StringBuilder queryAnswerStringValue = new(QueryAnswer.Value.ToString());
 
                     int tokens = 0;
                     char NextToken() => tokens++ == 0 ? '|' : ',';

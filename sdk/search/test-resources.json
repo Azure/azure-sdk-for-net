@@ -95,6 +95,7 @@
                 "name": "[parameters('searchSku')]"
             },
             "properties": {
+                "semanticSearch": "free",
                 "replicaCount": 1,
                 "partitionCount": 1,
                 "hostingMode": "Default",
