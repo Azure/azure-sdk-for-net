@@ -2,7 +2,7 @@ namespace Azure.Storage.DataMovement
 {
     public partial class DataTransfer
     {
-        protected DataTransfer() { }
+        internal DataTransfer() { }
         public bool HasCompleted { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.Storage.DataMovement.StorageTransferStatus TransferStatus { get { throw null; } }

@@ -636,7 +636,6 @@ namespace Azure.Storage.DataMovement
                 {
                     // Download to local operation
                     // Service to Local job (Download Job)
-                    _dataTransfers.Add(dataTransfer.Id, dataTransfer);
                     UriToStreamTransferJob uriToStreamJob = new UriToStreamTransferJob(
                         dataTransfer: dataTransfer,
                         sourceResource: sourceResource,

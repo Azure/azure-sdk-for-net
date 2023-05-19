@@ -40,7 +40,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// For mocking.
         /// </summary>
-        protected DataTransfer()
+        internal DataTransfer()
         {
         }
 
