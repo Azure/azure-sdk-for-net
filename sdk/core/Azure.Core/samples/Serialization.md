@@ -2,54 +2,41 @@
 
 ## Using IJsonSerialization Try methods
 
+The following example demonstrates using two Try methods for serialization and deserialization in an Interface called IJsonSerializable. When serializing, the stream position has to be set to 0 to return the json. When deserializing, an empty Model must first be constructed and then deserialized into that instance.
+
 Serialization
 
 ```C# Snippet:Try_Serialize
     SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = true, IgnoreAdditionalProperties = true };
-    Stream stream = new MemoryStream();
-    var model = new Animal();
-    model.TrySerialize(stream, out var bytesWritten, options: options);
+    using Stream stream = new MemoryStream();
+    Animal model = new Animal();
+    model.TrySerialize(stream, out long bytesWritten, options: options);
     stream.Position = 0;
-    string roundTrip = new StreamReader(stream).ReadToEnd();
+    string json = new StreamReader(stream).ReadToEnd();
 ```
 
 Deserialization
 
 ```C# Snippet:Try_Deserialize
-    Stream stream = new MemoryStream();
+    using Stream stream = new MemoryStream();
     bool ignoreReadOnly = false;
     bool ignoreUnknown = false;
     string serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\",\"numberOfLegs\":4}";
-
-    StringBuilder expectedSerialized = new StringBuilder("{");
-    if (!ignoreReadOnly)
-    {
-    expectedSerialized.Append("\"latinName\":\"Canis lupus familiaris\",");
-    }
-    expectedSerialized.Append("\"name\":\"Doggo\",");
-    expectedSerialized.Append("\"isHungry\":false,");
-    expectedSerialized.Append("\"weight\":5.5");
-    if (!ignoreUnknown)
-    {
-    expectedSerialized.Append(",\"numberOfLegs\":4");
-    }
-    expectedSerialized.Append("}");
-    var expectedSerializedString = expectedSerialized.ToString();
-
     SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = ignoreReadOnly, IgnoreAdditionalProperties = ignoreUnknown };
 
-    var model = new Animal();
+    Animal model = new Animal();
     model.TryDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), out long bytesConsumed, options: options);
 ```
 
 ## Using IJsonSerialization Non-Try methods
+The following example demonstrates the NonTry methods for serialization and deserialization. If serialization or deserialization fails, an Exception is bubbled up. When serializing, the stream position has to be set to 0 to return the json. When deserializing, an empty Model must first be constructed and then deserialized into that instance.
 
 Serialization
 
 ```C# Snippet:NonTry_Serialize
     SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = true, IgnoreAdditionalProperties = true };
-    Stream stream = new MemoryStream();
-    var model = new Animal();
+    using Stream stream = new MemoryStream();
+    Animal model = new Animal();
     model.Serialize(stream, options: options);
     stream.Position = 0;
     string roundTrip = new StreamReader(stream).ReadToEnd();
@@ -58,29 +45,13 @@ Serialization
 Deserialization
 
 ```C# Snippet:NonTry_Deserialize
-    Stream stream = new MemoryStream();
+    using Stream stream = new MemoryStream();
     bool ignoreReadOnly = false;
     bool ignoreUnknown = false;
     string serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\",\"numberOfLegs\":4}";
-
-    StringBuilder expectedSerialized = new StringBuilder("{");
-    if (!ignoreReadOnly)
-    {
-    expectedSerialized.Append("\"latinName\":\"Canis lupus familiaris\",");
-    }
-    expectedSerialized.Append("\"name\":\"Doggo\",");
-    expectedSerialized.Append("\"isHungry\":false,");
-    expectedSerialized.Append("\"weight\":5.5");
-    if (!ignoreUnknown)
-    {
-    expectedSerialized.Append(",\"numberOfLegs\":4");
-    }
-    expectedSerialized.Append("}");
-    var expectedSerializedString = expectedSerialized.ToString();
-
     SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = ignoreReadOnly, IgnoreAdditionalProperties = ignoreUnknown };
 
-    var model = new Animal();
+    Animal model = new Animal();
     model.Deserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
 ```
 
