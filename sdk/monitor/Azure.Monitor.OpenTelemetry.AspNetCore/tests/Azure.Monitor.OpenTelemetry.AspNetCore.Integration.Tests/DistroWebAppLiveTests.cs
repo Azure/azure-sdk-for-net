@@ -37,6 +37,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         [RecordedTest]
         public async Task VerifyDistro()
         {
+            if (IsAsync)
+            {
+                Assert.Inconclusive("testing skipping the Async test.");
+            }
+
             // SETUP TELEMETRY CLIENT (FOR QUERIYNG LOG ANALYTICS)
             _logsQueryClient = InstrumentClient(new LogsQueryClient(
                 TestEnvironment.LogsEndpoint,
