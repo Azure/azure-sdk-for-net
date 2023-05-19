@@ -82,7 +82,7 @@ Given that explicit cast does not allow for serialization options we might also 
 
 ## Using System.Text.Json
 
-In order to be integrate with the rest of the .NET ecosystem, Azure.Core supports System.Text.Json serialization. The following example demonstrates using System.Text.Json for serialization and deserialization
+In order to better integrate with the rest of the .NET ecosystem, Azure.Core supports System.Text.Json serialization. The following example demonstrates using System.Text.Json for serialization and deserialization
 If we go this route the IJsonSerializable interface will only be needed for compile time constraints and can most likely be methodless and renamed to IRehydratable.
 
 Serialization
