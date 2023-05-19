@@ -6,6 +6,8 @@ This package is the first stable release of the Dev Center Management client lib
 
 ### Features Added
 
+- Upgraded API version to 2023-04-01
+
 ### Breaking Changes
 
 Polishing since last public beta release:
