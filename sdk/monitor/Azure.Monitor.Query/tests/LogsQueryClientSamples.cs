@@ -384,11 +384,11 @@ namespace Azure.Monitor.Query.Tests
         [Explicit]
         public async Task QueryLogsByResourceAsTable()
         {
+            #region Snippet:QueryResource
             var client = new LogsQueryClient(new DefaultAzureCredential());
 
-            #region Snippet:QueryResource
 #if SNIPPET
-            string resourceId = "<resourceId>";
+            string resourceId = "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/<resource_provider>/<resource>";;
             string tableName = "<table_name>";
 #else
             string tableName = "MyTable_CL";

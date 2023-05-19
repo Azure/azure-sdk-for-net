@@ -676,7 +676,6 @@ namespace Azure.Monitor.Query.Tests
             Assert.True(response.Value.Single());
         }
 
-        [LiveOnly]
         [Test]
         public async Task CanQueryResourceGenericPrimaryWorkspace()
         {
@@ -706,7 +705,6 @@ namespace Azure.Monitor.Query.Tests
             Assert.GreaterOrEqual(results.Value.Count, 3);
         }
 
-        [LiveOnly]
         [Test]
         public async Task CanQueryResourcePrimaryWorkspace()
         {
@@ -736,7 +734,6 @@ namespace Azure.Monitor.Query.Tests
             Assert.GreaterOrEqual(results.Value.Table.Rows.Count, 3);
         }
 
-        [LiveOnly]
         [Test]
         public async Task CanQueryResourceSecondaryWorkspace()
         {
@@ -766,7 +763,6 @@ namespace Azure.Monitor.Query.Tests
             Assert.GreaterOrEqual(results.Value.Table.Rows.Count, 3);
         }
 
-        [LiveOnly]
         [Test]
         public void VerifyInvalidQueryResourceCheckNoBackslash()
         {
@@ -779,7 +775,6 @@ namespace Azure.Monitor.Query.Tests
             StringAssert.StartsWith("The ResourceIdentifier must start with /subscriptions/ or /providers/.", exception.Message);
         }
 
-        [LiveOnly]
         [Test]
         public async Task CanQueryResourceGenericSecondaryWorkspace()
         {
@@ -809,7 +804,6 @@ namespace Azure.Monitor.Query.Tests
             Assert.GreaterOrEqual(results.Value.Count, 3);
         }
 
-        [LiveOnly]
         [Test]
         public void VerifyInvalidQueryResourceCheckMultipleBackslash()
         {
@@ -826,7 +820,6 @@ namespace Azure.Monitor.Query.Tests
             StringAssert.StartsWith("The ResourceIdentifier must start with /subscriptions/ or /providers/.", exception.Message);
         }
 
-        [LiveOnly]
         [Test]
         public void VerifyQueryResourceInvalidId()
         {

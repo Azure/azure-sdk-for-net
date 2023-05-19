@@ -322,7 +322,9 @@ namespace Azure.Monitor.Query
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
         /// <example snippet="Snippet:QueryResource">
         /// <code language="csharp">
-        /// string resourceId = &quot;&lt;resourceId&gt;&quot;;
+        /// var client = new LogsQueryClient(new DefaultAzureCredential());
+        ///
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;;
         /// string tableName = &quot;&lt;table_name&gt;&quot;;
         /// var results = await client.QueryResourceAsync(
         ///     new ResourceIdentifier(resourceId),
@@ -361,7 +363,9 @@ namespace Azure.Monitor.Query
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
         /// <example snippet="Snippet:QueryResource">
         /// <code language="csharp">
-        /// string resourceId = &quot;&lt;resourceId&gt;&quot;;
+        /// var client = new LogsQueryClient(new DefaultAzureCredential());
+        ///
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;;
         /// string tableName = &quot;&lt;table_name&gt;&quot;;
         /// var results = await client.QueryResourceAsync(
         ///     new ResourceIdentifier(resourceId),
@@ -400,7 +404,9 @@ namespace Azure.Monitor.Query
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
         /// <example snippet="Snippet:QueryResource">
         /// <code language="csharp">
-        /// string resourceId = &quot;&lt;resourceId&gt;&quot;;
+        /// var client = new LogsQueryClient(new DefaultAzureCredential());
+        ///
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;;
         /// string tableName = &quot;&lt;table_name&gt;&quot;;
         /// var results = await client.QueryResourceAsync(
         ///     new ResourceIdentifier(resourceId),
@@ -449,7 +455,9 @@ namespace Azure.Monitor.Query
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
         /// <example snippet="Snippet:QueryResource">
         /// <code language="csharp">
-        /// string resourceId = &quot;&lt;resourceId&gt;&quot;;
+        /// var client = new LogsQueryClient(new DefaultAzureCredential());
+        ///
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;;
         /// string tableName = &quot;&lt;table_name&gt;&quot;;
         /// var results = await client.QueryResourceAsync(
         ///     new ResourceIdentifier(resourceId),
