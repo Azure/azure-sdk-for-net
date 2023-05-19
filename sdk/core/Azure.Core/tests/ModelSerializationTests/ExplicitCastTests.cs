@@ -30,7 +30,21 @@ namespace Azure.Core.Tests.ModelSerializationTests
 
             var additionalProperties = typeof(Animal).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(dog) as Dictionary<string, BinaryData>;
             Assert.IsNotNull(additionalProperties);
-            Assert.IsFalse(additionalProperties.ContainsKey("numberOfLegs")); //default cast doesn't include additional properties
+            Assert.IsTrue(additionalProperties.ContainsKey("numberOfLegs"));
+            Assert.AreEqual("4", additionalProperties["numberOfLegs"].ToString());
+
+#if NETFRAMEWORK
+            string requestContent = "{\"latinName\":\"Animalia\",\"name\":\"Doggo\",\"isHungry\":false,\"weight\":1.1000000000000001,\"foodConsumed\":[\"kibble\",\"egg\",\"peanut butter\"],\"numberOfLegs\":4}";
+#else
+            string requestContent = "{\"latinName\":\"Animalia\",\"name\":\"Doggo\",\"isHungry\":false,\"weight\":1.1,\"foodConsumed\":[\"kibble\",\"egg\",\"peanut butter\"],\"numberOfLegs\":4}";
+#endif
+
+            RequestContent content = (RequestContent)dog;
+            var requestStream = new MemoryStream();
+            content.WriteTo(requestStream, default);
+            requestStream.Position = 0;
+            string contentString = new StreamReader(requestStream).ReadToEnd();
+            Assert.AreEqual(requestContent, contentString);
         }
 
         [Test]
@@ -46,7 +60,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
                 Name = "Doggo",
                 IsHungry = false,
                 Weight = 1.1,
-                FoodConsumed = new List<string> { "kibble", "egg", "peanut butter" },
+                FoodConsumed = { "kibble", "egg", "peanut butter" },
             };
             RequestContent content = (RequestContent)dog;
             var stream = new MemoryStream();

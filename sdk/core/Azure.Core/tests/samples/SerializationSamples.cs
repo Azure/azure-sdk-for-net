@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.Experimental.Tests;
 using Azure.Core.TestFramework;
@@ -105,7 +107,14 @@ namespace Azure.Core.Samples
         public void StjSerialize()
         {
             #region Snippet:Stj_Serialize
-            //TODO
+            DogListProperty dog = new DogListProperty
+            {
+                Name = "Doggo",
+                IsHungry = false,
+                Weight = 1.1,
+                FoodConsumed = { "kibble", "egg", "peanut butter" },
+            };
+            string json = JsonSerializer.Serialize(dog);
             #endregion
         }
 
@@ -114,7 +123,8 @@ namespace Azure.Core.Samples
         public void StjDeserialize()
         {
             #region Snippet:Stj_Deserialize
-            //TODO
+            string json = "{\"latinName\":\"Animalia\",\"weight\":1.1,\"name\":\"Doggo\",\"isHungry\":false,\"foodConsumed\":[\"kibble\",\"egg\",\"peanut butter\"],\"numberOfLegs\":4}";
+            DogListProperty dog = JsonSerializer.Deserialize<DogListProperty>(json);
             #endregion
         }
 
