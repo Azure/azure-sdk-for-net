@@ -171,23 +171,11 @@ namespace Azure.Core.Tests.ModelSerializationTests
         }
         #endregion
 
-        #region PublicStaticSerializerDeserializer
+        #region PublicStaticDeserializer
         public static Animal StaticDeserialize(Stream stream, SerializableOptions options = default)
         {
             JsonDocument jsonDocument = JsonDocument.Parse(stream);
             return DeserializeAnimal(jsonDocument.RootElement, options ?? new SerializableOptions());
-        }
-
-        public static void StaticSerialize(Stream stream, SerializableOptions options = default)
-        {
-            JsonWriterOptions jsonWriterOptions = new JsonWriterOptions();
-            if (options.PrettyPrint)
-            {
-                jsonWriterOptions.Indented = true;
-            }
-            Utf8JsonWriter writer = new Utf8JsonWriter(stream, jsonWriterOptions);
-            ((IUtf8JsonSerializable)this).Write(writer, options ?? new SerializableOptions());
-            writer.Flush();
         }
         #endregion
     }
