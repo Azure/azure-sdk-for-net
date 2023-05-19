@@ -95,6 +95,49 @@ namespace Azure.Core.Experimental.Tests
             }
         }
 
+        /// <summary> Get a pet by its Id. </summary>
+        /// <param name="id"> Id of pet to return. </param>
+        /// <param name="context"> The request context. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreatePetAsync(string id, RequestContent content, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("PetStoreClient.GetPet");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetPetRequest(id, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a pet by its Id. </summary>
+        /// <param name="id"> Id of pet to return. </param>
+        /// <param name="context"> The request context. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreatePet(string id, RequestContent content, RequestContext context = null)
+#pragma warning restore AZC0002
+        {
+            using var scope = _clientDiagnostics.CreateScope("PetStoreClient.GetPet");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetPetRequest(id, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+
         /// <summary> Create Request for <see cref="GetPet"/> and <see cref="GetPetAsync"/> operations. </summary>
         /// <param name="id"> Id of pet to return. </param>
         /// <param name="context"> The request context. </param>

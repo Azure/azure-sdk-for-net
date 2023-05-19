@@ -21,7 +21,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             Assert.That(x.Name, Is.EqualTo(y.Name));
             Assert.That(x.Weight, Is.EqualTo(y.Weight));
 
-            if (!options.IgnoreReadOnlyProperties)
+            if (!options.IgnoreAdditionalProperties)
             {
                 var additionalPropertiesX = typeof(Animal).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(x) as Dictionary<string, BinaryData>;
                 var additionalPropertiesY = typeof(Animal).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(y) as Dictionary<string, BinaryData>;

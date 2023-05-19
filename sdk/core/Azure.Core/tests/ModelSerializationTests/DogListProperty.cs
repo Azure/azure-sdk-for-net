@@ -28,6 +28,26 @@ namespace Azure.Core.Tests.ModelSerializationTests
         {
         }
 
+        public static explicit operator DogListProperty(Response response)
+        {
+            using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
+            var serializationOptions = new SerializableOptions()
+            {
+                IgnoreReadOnlyProperties = true,
+                IgnoreAdditionalProperties = true
+            };
+            return DeserializeDogListProperty(jsonDocument.RootElement, serializationOptions);
+        }
+
+        public static explicit operator RequestContent(DogListProperty dog)
+        {
+            var content = new Utf8JsonRequestContent();
+            //content.JsonWriter.WriteObjectValue(dog);
+            //temp implementation due to IUtf8JsonSerializable signature mismatch since we added an options parameter
+            ((IUtf8JsonSerializable)dog).Write(content.JsonWriter, new SerializableOptions());
+            return content;
+        }
+
         #region Serialization
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
