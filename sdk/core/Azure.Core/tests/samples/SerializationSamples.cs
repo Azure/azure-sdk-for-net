@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.Experimental.Tests;
+using Azure.Core.TestFramework;
+using Azure.Core.Tests.ModelSerializationTests;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
@@ -55,7 +58,9 @@ namespace Azure.Core.Samples
         public void ExplicitCastSerialize()
         {
             #region Snippet:ExplicitCast_Serialize
-            //TODO
+            PetStoreClient client = new PetStoreClient(new Uri("http://somewhere.com"), new MockCredential());
+            DogListProperty dog = new DogListProperty("myPet");
+            Response response = client.CreatePet("myPet", (RequestContent)dog);
             #endregion
         }
 
@@ -64,7 +69,10 @@ namespace Azure.Core.Samples
         public void ExplicitCastDeserialize()
         {
             #region Snippet:ExplicitCast_Deserialize
-            //TODO
+            PetStoreClient client = new PetStoreClient(new Uri("http://somewhere.com"), new MockCredential());
+            Response response = client.GetPet("myPet");
+            DogListProperty dog = (DogListProperty)response;
+            Console.WriteLine(dog.IsHungry);
             #endregion
         }
 

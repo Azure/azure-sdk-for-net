@@ -45,6 +45,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{13A0
 		samples\README.md = samples\README.md
 		samples\RequestContext.md = samples\RequestContext.md
 		samples\Response.md = samples\Response.md
+		samples\Serialization.md = samples\Serialization.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Expressions.DataFactory", "..\Azure.Core.Expressions.DataFactory\src\Azure.Core.Expressions.DataFactory.csproj", "{7723BA5F-0017-45B4-B584-7D11AA069735}"
