@@ -18,9 +18,7 @@ namespace Azure.Search.Documents
     [CodeGenModel("SearchRequest")]
     public partial class SearchOptions
     {
-        private const string QueryAnswerCountRawSplitter = "|count-";
         private const string QueryAnswerCountRaw = "count-";
-        private const string QueryAnswerThresholdRawSplitter = "|threshold-";
         private const string QueryAnswerThresholdRaw = "threshold-";
         private const string QueryCaptionRawSplitter = "|highlight-";
 
@@ -197,7 +195,7 @@ namespace Azure.Search.Documents
         /// <summary> A value that specifies the threshold of <see cref="SearchResults{T}.Answers"/> that should be returned as part of the search response. </summary>
         public double? QueryAnswerThreshold { get; set; }
 
-        /// <summary> Constructed from <see cref="QueryAnswer"/>, <see cref="QueryAnswerCount"/> and <see cref="QueryAnswerThreshold"/>.</summary>
+        /// <summary> Constructed from <see cref="QueryAnswer"/>, <see cref="QueryAnswerCount"/> and <see cref="QueryAnswerThreshold"/>. For example: "extractive|count-1,threshold-0.7"</summary>
         [CodeGenMember("Answers")]
         internal string QueryAnswerRaw
         {
@@ -207,61 +205,58 @@ namespace Azure.Search.Documents
 
                 if (QueryAnswer.HasValue)
                 {
-                    queryAnswerStringValue = $"{QueryAnswer.Value}{QueryAnswerCountRawSplitter}{QueryAnswerCount.GetValueOrDefault(1)}{QueryAnswerThresholdRawSplitter}{QueryAnswerThreshold.GetValueOrDefault(0.7)}";
+                    var queryAnswerValues = new List<string>();
+
+                    if (QueryAnswerCount.HasValue)
+                    {
+                        queryAnswerValues.Add($"{QueryAnswerCountRaw}{QueryAnswerCount}");
+                    }
+
+                    if (QueryAnswerThreshold.HasValue)
+                    {
+                        queryAnswerValues.Add($"{QueryAnswerThresholdRaw}{QueryAnswerThreshold}");
+                    }
+
+                    queryAnswerStringValue = $"{QueryAnswer.Value}" + (queryAnswerValues.Count > 0 ? $"|{string.Join(",", queryAnswerValues)}" : "");
                 }
 
                 return queryAnswerStringValue;
             }
-
             set
             {
-                if (string.IsNullOrEmpty(value))
+                if (!string.IsNullOrEmpty(value)) // If the value is - "extractive" or "extractive|count-1" or "extractive|threshold-0.7" or "extractive|count-5,threshold-0.9" or "extractive|threshold-0.8,count-4"
                 {
-                    QueryAnswer = null;
-                    QueryAnswerCount = null;
-                    QueryAnswerThreshold = null;
-                }
-                else
-                {
-                    if (value.Contains(QueryAnswerCountRawSplitter) || value.Contains(QueryAnswerThresholdRawSplitter))
+                    string[] queryAnswerValues = value.Split('|');
+                    if (!string.IsNullOrEmpty(queryAnswerValues[0]))
                     {
-                        string[] queryAnswerValues = value.Split('|');
-
-                        var queryAnswerPart = queryAnswerValues[0];
-                        if (string.IsNullOrEmpty(queryAnswerPart))
-                        {
-                            QueryAnswer = null;
-                        }
-                        else
-                        {
-                            QueryAnswer = new QueryAnswerType(queryAnswerPart);
-                        }
-
-                        foreach (var queryAnswerValue in queryAnswerValues)
-                        {
-                            if (queryAnswerValue.Contains(QueryAnswerCountRaw))
-                            {
-                                var countPart = queryAnswerValue.Substring(queryAnswerValue.IndexOf(QueryAnswerCountRaw, StringComparison.OrdinalIgnoreCase) + QueryAnswerCountRaw.Length);
-                                if (int.TryParse(countPart, out int countValue))
-                                {
-                                    QueryAnswerCount = countValue;
-                                }
-                            }
-                            else if (queryAnswerValue.Contains(QueryAnswerThresholdRaw))
-                            {
-                                var thresholdPart = queryAnswerValue.Substring(queryAnswerValue.IndexOf(QueryAnswerThresholdRaw, StringComparison.OrdinalIgnoreCase) + QueryAnswerThresholdRaw.Length);
-                                if (double.TryParse(thresholdPart, out double thresholdValue))
-                                {
-                                    QueryAnswerThreshold = thresholdValue;
-                                }
-                            }
-                        }
+                        QueryAnswer = new QueryAnswerType(queryAnswerValues[0]);
                     }
-                    else
+
+                    if (queryAnswerValues.Length == 2)
                     {
-                        QueryAnswer = new QueryAnswerType(value);
-                        QueryAnswerCount = null;
-                        QueryAnswerThreshold = null;
+                        var queryAnswerParams = queryAnswerValues[1].Split(',');
+                        if (queryAnswerParams.Length <= 2)
+                        {
+                            foreach (var param in queryAnswerParams)
+                            {
+                                if (param.Contains(QueryAnswerCountRaw))
+                                {
+                                    var countPart = param.Substring(param.IndexOf(QueryAnswerCountRaw, StringComparison.OrdinalIgnoreCase) + QueryAnswerCountRaw.Length);
+                                    if (int.TryParse(countPart, out int countValue))
+                                    {
+                                        QueryAnswerCount = countValue;
+                                    }
+                                }
+                                else if (param.Contains(QueryAnswerThresholdRaw))
+                                {
+                                    var thresholdPart = param.Substring(param.IndexOf(QueryAnswerThresholdRaw, StringComparison.OrdinalIgnoreCase) + QueryAnswerThresholdRaw.Length);
+                                    if (double.TryParse(thresholdPart, out double thresholdValue))
+                                    {
+                                        QueryAnswerThreshold = thresholdValue;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
