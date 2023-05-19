@@ -287,9 +287,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         }
 
         ///<summary>
-        /// Gets Database dependency target from activity tag objects.
+        /// Gets Database dependency target and name from activity tag objects.
         ///</summary>
-        internal static string? GetDbDependencyTarget(this AzMonList tagObjects)
+        internal static void GetDbDependencyTargetAndName(this AzMonList tagObjects, out string? dbTarget, out string? dbName)
         {
             string? target = null;
             string defaultPort = GetDefaultDbPort(AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbSystem)?.ToString());
@@ -303,7 +303,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 target = tagObjects.GetTargetUsingNetPeerAttributes(defaultPort);
             }
 
-            string? dbName = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbName)?.ToString();
+            dbName = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbName)?.ToString();
             bool isTargetEmpty = string.IsNullOrWhiteSpace(target);
             bool isDbNameEmpty = string.IsNullOrWhiteSpace(dbName);
             if (!isTargetEmpty && !isDbNameEmpty)
@@ -319,7 +319,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 target = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbSystem)?.ToString();
             }
 
-            return target;
+            dbTarget = target;
         }
 
         ///<summary>
@@ -332,7 +332,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 case OperationType.Http:
                     return tagObjects.GetHttpDependencyTarget();
                 case OperationType.Db:
-                    return tagObjects.GetDbDependencyTarget();
+                    tagObjects.GetDbDependencyTargetAndName(out var target, out _);
+                    return target;
                 default:
                     return null;
             }
