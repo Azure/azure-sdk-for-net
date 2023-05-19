@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Text;
 using Azure.Core;
 using Azure.Search.Documents.Models;
 
@@ -201,26 +201,32 @@ namespace Azure.Search.Documents
         {
             get
             {
-                string queryAnswerStringValue = null;
-
                 if (QueryAnswer.HasValue)
                 {
-                    var queryAnswerValues = new List<string>();
+                    StringBuilder queryAnswerStringValue = new($"{QueryAnswer.Value}");
+
+                    int tokens = 0;
+                    char NextToken() => tokens switch
+                    {
+                        0 => '|',
+                        _ => ',',
+                    };
 
                     if (QueryAnswerCount.HasValue)
                     {
-                        queryAnswerValues.Add($"{QueryAnswerCountRaw}{QueryAnswerCount}");
+                        queryAnswerStringValue.Append(NextToken()).Append($"{QueryAnswerCountRaw}{QueryAnswerCount.Value}");
+                        tokens = 1;
                     }
 
                     if (QueryAnswerThreshold.HasValue)
                     {
-                        queryAnswerValues.Add($"{QueryAnswerThresholdRaw}{QueryAnswerThreshold}");
+                        queryAnswerStringValue.Append(NextToken()).Append($"{QueryAnswerThresholdRaw}{QueryAnswerThreshold.Value}");
                     }
 
-                    queryAnswerStringValue = $"{QueryAnswer.Value}" + (queryAnswerValues.Count > 0 ? $"|{string.Join(",", queryAnswerValues)}" : "");
+                    return queryAnswerStringValue.ToString();
                 }
 
-                return queryAnswerStringValue;
+                return null;
             }
             set
             {
