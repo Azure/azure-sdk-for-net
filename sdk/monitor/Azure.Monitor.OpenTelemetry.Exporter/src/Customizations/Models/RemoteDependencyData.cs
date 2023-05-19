@@ -17,6 +17,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         public RemoteDependencyData(int version, Activity activity, ref ActivityTagsProcessor activityTagsProcessor) : base(version)
         {
+            Properties = new ChangeTrackingDictionary<string, string>();
+            Measurements = new ChangeTrackingDictionary<string, double>();
+
             string? httpUrl = null;
             string dependencyName;
 
@@ -90,9 +93,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             {
                 Type = "InProc";
             }
-
-            Properties = new ChangeTrackingDictionary<string, string>();
-            Measurements = new ChangeTrackingDictionary<string, double>();
 
             TraceHelper.AddActivityLinksToProperties(activity, ref activityTagsProcessor.UnMappedTags);
             TraceHelper.AddPropertiesToTelemetry(Properties, ref activityTagsProcessor.UnMappedTags);
