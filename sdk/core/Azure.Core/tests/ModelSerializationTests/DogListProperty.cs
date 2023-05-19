@@ -4,21 +4,25 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Azure.Core.Tests.ModelSerializationTests
 {
+    [JsonConverter(typeof(DogListPropertyConverter))]
     public class DogListProperty : Animal, IJsonSerializable, IUtf8JsonSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
-        public List<string> FoodConsumed { get; set; } = new List<string> {"kibble", "egg", "peanut butter"};
+        public IList<string> FoodConsumed { get; private set; }
 
         public DogListProperty(string name) : base(name)
         {
             Name = name;
+            FoodConsumed = new ChangeTrackingList<string>();
         }
 
-        internal DogListProperty(double weight, string latinName, string name, bool isHungry, List<string> foodConsumed, Dictionary<string, BinaryData> rawData) : base(weight, latinName, name, isHungry, rawData)
+        internal DogListProperty(double weight, string latinName, string name, bool isHungry, IList<string> foodConsumed, Dictionary<string, BinaryData> rawData) : base(weight, latinName, name, isHungry, rawData)
         {
             RawData = rawData;
             FoodConsumed = foodConsumed;
@@ -26,6 +30,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
 
         public DogListProperty()
         {
+            FoodConsumed = new ChangeTrackingList<string>();
         }
 
         public static explicit operator DogListProperty(Response response)
@@ -33,8 +38,8 @@ namespace Azure.Core.Tests.ModelSerializationTests
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
             var serializationOptions = new SerializableOptions()
             {
-                IgnoreReadOnlyProperties = true,
-                IgnoreAdditionalProperties = true
+                IgnoreReadOnlyProperties = false,
+                IgnoreAdditionalProperties = false
             };
             return DeserializeDogListProperty(jsonDocument.RootElement, serializationOptions);
         }
@@ -64,13 +69,16 @@ namespace Azure.Core.Tests.ModelSerializationTests
             writer.WritePropertyName("weight"u8);
             writer.WriteNumberValue(Weight);
 
-            writer.WritePropertyName("foodConsumed"u8);
-            writer.WriteStartArray();
-            foreach (var item in FoodConsumed)
+            if (Optional.IsCollectionDefined(FoodConsumed))
             {
-                writer.WriteStringValue($"{item}");
+                writer.WritePropertyName("foodConsumed"u8);
+                writer.WriteStartArray();
+                foreach (var item in FoodConsumed)
+                {
+                    writer.WriteStringValue($"{item}");
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
 
             if (!options.IgnoreAdditionalProperties)
             {
@@ -191,5 +199,36 @@ namespace Azure.Core.Tests.ModelSerializationTests
             writer.Flush();
         }
         #endregion
+
+        internal class DogListPropertyConverter : JsonConverter<DogListProperty>
+        {
+            public DogListPropertyConverter()
+            {
+                //I would like to have a custom property in the JsonSerializerOptions class but this doesn't seem to be there
+                //we also can't have a parameterless ctor without making this converter class public
+                //IgnoreAdditionalProperties = ignoreAdditionalProperties;
+            }
+
+            //public bool IgnoreAdditionalProperties { get; }
+
+            public override DogListProperty Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                return DeserializeDogListProperty(JsonDocument.ParseValue(ref reader).RootElement, ConvertOptions(options));
+            }
+
+            public override void Write(Utf8JsonWriter writer, DogListProperty value, JsonSerializerOptions options)
+            {
+                ((IUtf8JsonSerializable)value).Write(writer, ConvertOptions(options));
+            }
+
+            private SerializableOptions ConvertOptions(JsonSerializerOptions options)
+            {
+                return new SerializableOptions()
+                {
+                    //IgnoreAdditionalProperties = IgnoreAdditionalProperties,
+                    IgnoreReadOnlyProperties = options.IgnoreReadOnlyProperties
+                };
+            }
+        }
     }
 }

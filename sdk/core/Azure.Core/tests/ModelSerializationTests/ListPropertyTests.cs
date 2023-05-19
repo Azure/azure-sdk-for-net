@@ -148,7 +148,10 @@ namespace Azure.Core.Tests.ModelSerializationTests
         public void PrettyPrint()
         {
 #if NET6_0_OR_GREATER
-            DogListProperty model = new DogListProperty("Doggo");
+            DogListProperty model = new DogListProperty("Doggo")
+            {
+                FoodConsumed = { "kibble", "egg", "peanut butter" }
+            };
 
             Stream stream = new MemoryStream();
             model.TrySerialize(stream, out long bytesWritten, options: new SerializableOptions() { IgnoreReadOnlyProperties = true, PrettyPrint = true });

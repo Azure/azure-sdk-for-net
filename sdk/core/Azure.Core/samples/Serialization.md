@@ -7,25 +7,25 @@ The following example demonstrates using two Try methods for serialization and d
 Serialization
 
 ```C# Snippet:Try_Serialize
-    SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = true, IgnoreAdditionalProperties = true };
-    using Stream stream = new MemoryStream();
-    Animal model = new Animal();
-    model.TrySerialize(stream, out long bytesWritten, options: options);
-    stream.Position = 0;
-    string json = new StreamReader(stream).ReadToEnd();
+SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = true, IgnoreAdditionalProperties = true };
+using Stream stream = new MemoryStream();
+Animal model = new Animal();
+model.TrySerialize(stream, out long bytesWritten, options: options);
+stream.Position = 0;
+string json = new StreamReader(stream).ReadToEnd();
 ```
 
 Deserialization
 
 ```C# Snippet:Try_Deserialize
-    using Stream stream = new MemoryStream();
-    bool ignoreReadOnly = false;
-    bool ignoreUnknown = false;
-    string serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\",\"numberOfLegs\":4}";
-    SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = ignoreReadOnly, IgnoreAdditionalProperties = ignoreUnknown };
+using Stream stream = new MemoryStream();
+bool ignoreReadOnly = false;
+bool ignoreUnknown = false;
+string serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\",\"numberOfLegs\":4}";
+SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = ignoreReadOnly, IgnoreAdditionalProperties = ignoreUnknown };
 
-    Animal model = new Animal();
-    model.TryDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), out long bytesConsumed, options: options);
+Animal model = new Animal();
+model.TryDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), out long bytesConsumed, options: options);
 ```
 
 ## Using IJsonSerialization Non-Try methods
@@ -34,25 +34,25 @@ The following example demonstrates the NonTry methods for serialization and dese
 Serialization
 
 ```C# Snippet:NonTry_Serialize
-    SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = true, IgnoreAdditionalProperties = true };
-    using Stream stream = new MemoryStream();
-    Animal model = new Animal();
-    model.Serialize(stream, options: options);
-    stream.Position = 0;
-    string roundTrip = new StreamReader(stream).ReadToEnd();
+SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = true, IgnoreAdditionalProperties = true };
+using Stream stream = new MemoryStream();
+Animal model = new Animal();
+model.Serialize(stream, options: options);
+stream.Position = 0;
+string roundTrip = new StreamReader(stream).ReadToEnd();
 ```
 
 Deserialization
 
 ```C# Snippet:NonTry_Deserialize
-    using Stream stream = new MemoryStream();
-    bool ignoreReadOnly = false;
-    bool ignoreUnknown = false;
-    string serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\",\"numberOfLegs\":4}";
-    SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = ignoreReadOnly, IgnoreAdditionalProperties = ignoreUnknown };
+using Stream stream = new MemoryStream();
+bool ignoreReadOnly = false;
+bool ignoreUnknown = false;
+string serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\",\"numberOfLegs\":4}";
+SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = ignoreReadOnly, IgnoreAdditionalProperties = ignoreUnknown };
 
-    Animal model = new Animal();
-    model.Deserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
+Animal model = new Animal();
+model.Deserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
 ```
 
 ## Using explicit cast
@@ -82,16 +82,27 @@ Given that explicit cast does not allow for serialization options we might also 
 
 ## Using System.Text.Json
 
+In order to be integrate with the rest of the .NET ecosystem, Azure.Core supports System.Text.Json serialization. The following example demonstrates using System.Text.Json for serialization and deserialization
+If we go this route the IJsonSerializable interface will only be needed for compile time constraints and can most likely be methodless and renamed to IRehydratable.
+
 Serialization
 
 ```C# Snippet:Stj_Serialize
-//TODO
+DogListProperty dog = new DogListProperty
+{
+    Name = "Doggo",
+    IsHungry = false,
+    Weight = 1.1,
+    FoodConsumed = { "kibble", "egg", "peanut butter" },
+};
+string json = JsonSerializer.Serialize(dog);
 ```
 
 Deserialization
 
 ```C# Snippet:Stj_Deserialize
-//TODO
+string json = "{\"latinName\":\"Animalia\",\"weight\":1.1,\"name\":\"Doggo\",\"isHungry\":false,\"foodConsumed\":[\"kibble\",\"egg\",\"peanut butter\"],\"numberOfLegs\":4}";
+DogListProperty dog = JsonSerializer.Deserialize<DogListProperty>(json);
 ```
 
 ## Using static deserializer

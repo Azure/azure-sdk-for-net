@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.Experimental.Tests;
 using Azure.Core.TestFramework;
@@ -22,7 +24,12 @@ namespace Azure.Core.Samples
         public void TrySerialize()
         {
             #region Snippet:Try_Serialize
-            //TODO
+            SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = true, IgnoreAdditionalProperties = true };
+            using Stream stream = new MemoryStream();
+            Animal model = new Animal();
+            model.TrySerialize(stream, out long bytesWritten, options: options);
+            stream.Position = 0;
+            string json = new StreamReader(stream).ReadToEnd();
             #endregion
         }
 
@@ -31,7 +38,14 @@ namespace Azure.Core.Samples
         public void TryDeserialize()
         {
             #region Snippet:Try_Deserialize
-            //TODO
+            using Stream stream = new MemoryStream();
+            bool ignoreReadOnly = false;
+            bool ignoreUnknown = false;
+            string serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\",\"numberOfLegs\":4}";
+            SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = ignoreReadOnly, IgnoreAdditionalProperties = ignoreUnknown };
+
+            Animal model = new Animal();
+            model.TryDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), out long bytesConsumed, options: options);
             #endregion
         }
 
@@ -40,7 +54,12 @@ namespace Azure.Core.Samples
         public void NonTrySerialize()
         {
             #region Snippet:NonTry_Serialize
-            //TODO
+            SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = true, IgnoreAdditionalProperties = true };
+            using Stream stream = new MemoryStream();
+            Animal model = new Animal();
+            model.Serialize(stream, options: options);
+            stream.Position = 0;
+            string roundTrip = new StreamReader(stream).ReadToEnd();
             #endregion
         }
 
@@ -49,7 +68,14 @@ namespace Azure.Core.Samples
         public void NonTryDeserialize()
         {
             #region Snippet:NonTry_Deserialize
-            //TODO
+            using Stream stream = new MemoryStream();
+            bool ignoreReadOnly = false;
+            bool ignoreUnknown = false;
+            string serviceResponse = "{\"latinName\":\"Canis lupus familiaris\",\"weight\":5.5,\"name\":\"Doggo\",\"numberOfLegs\":4}";
+            SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = ignoreReadOnly, IgnoreAdditionalProperties = ignoreUnknown };
+
+            Animal model = new Animal();
+            model.Deserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
             #endregion
         }
 
@@ -81,7 +107,14 @@ namespace Azure.Core.Samples
         public void StjSerialize()
         {
             #region Snippet:Stj_Serialize
-            //TODO
+            DogListProperty dog = new DogListProperty
+            {
+                Name = "Doggo",
+                IsHungry = false,
+                Weight = 1.1,
+                FoodConsumed = { "kibble", "egg", "peanut butter" },
+            };
+            string json = JsonSerializer.Serialize(dog);
             #endregion
         }
 
@@ -90,7 +123,8 @@ namespace Azure.Core.Samples
         public void StjDeserialize()
         {
             #region Snippet:Stj_Deserialize
-            //TODO
+            string json = "{\"latinName\":\"Animalia\",\"weight\":1.1,\"name\":\"Doggo\",\"isHungry\":false,\"foodConsumed\":[\"kibble\",\"egg\",\"peanut butter\"],\"numberOfLegs\":4}";
+            DogListProperty dog = JsonSerializer.Deserialize<DogListProperty>(json);
             #endregion
         }
 
