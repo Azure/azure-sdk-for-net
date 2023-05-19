@@ -52,6 +52,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     Data = depDataAndType[0]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Data_MaxLength);
                     Target = activityTagsProcessor.MappedTags.GetDbDependencyTarget().Truncate(SchemaConstants.RemoteDependencyData_Target_MaxLength);
                     Type = s_sqlDbs.Contains(depDataAndType[1]?.ToString()) ? "SQL" : depDataAndType[1]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
+
+                    // special case for db.name
+                    Properties.Add(SemanticConventions.AttributeDbName, AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeDbName)?.ToString().Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
                     break;
                 case OperationType.Rpc:
                     var depInfo = AzMonList.GetTagValues(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeRpcService, SemanticConventions.AttributeRpcSystem, SemanticConventions.AttributeRpcStatus);

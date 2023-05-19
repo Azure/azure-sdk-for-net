@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -134,6 +135,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.Stop();
 
             activity.SetStatus(Status.Ok);
+            activity.SetTag(SemanticConventions.AttributeDbName, "mysqlserver");
             activity.SetTag(SemanticConventions.AttributeDbSystem, "mssql");
             activity.SetTag(SemanticConventions.AttributePeerService, "localhost"); // only adding test via peer.service. all possible combinations are covered in AzMonListExtensionsTests.
             activity.SetTag(SemanticConventions.AttributeDbStatement, "Select * from table");
@@ -145,10 +147,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(ActivityName, remoteDependencyData.Name);
             Assert.Equal(activity.Context.SpanId.ToHexString(), remoteDependencyData.Id);
             Assert.Equal("Select * from table", remoteDependencyData.Data);
+            Assert.Equal("localhost | mysqlserver", remoteDependencyData.Target);
             Assert.Null(remoteDependencyData.ResultCode);
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), remoteDependencyData.Duration);
             Assert.Equal(activity.GetStatus() != Status.Error, remoteDependencyData.Success);
-            Assert.True(remoteDependencyData.Properties.Count == 0);
+            Assert.True(remoteDependencyData.Properties.Count == 1);
+            Assert.True(remoteDependencyData.Properties.Contains(new KeyValuePair<string, string>(SemanticConventions.AttributeDbName, "msqlserver" )));
             Assert.True(remoteDependencyData.Measurements.Count == 0);
         }
 
