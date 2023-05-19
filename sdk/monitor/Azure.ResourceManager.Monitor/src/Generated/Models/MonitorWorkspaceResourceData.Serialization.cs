@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<MonitorProvisioningState> provisioningState = default;
             Optional<MonitorWorkspaceDefaultIngestionSettings> defaultIngestionSettings = default;
             Optional<IReadOnlyList<MonitorWorkspacePrivateEndpointConnection>> privateEndpointConnections = default;
-            Optional<ScheduledQueryRulePublicNetworkAccess> publicNetworkAccess = default;
+            Optional<MonitorWorkspacePublicNetworkAccess> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            publicNetworkAccess = new ScheduledQueryRulePublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new MonitorWorkspacePublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                     }

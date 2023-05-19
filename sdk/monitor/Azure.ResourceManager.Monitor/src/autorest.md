@@ -248,7 +248,7 @@ rename-mapping:
   ConditionOperator: MonitorConditionOperator
   RuleResolveConfiguration: ScheduledQueryRuleResolveConfiguration
   RuleResolveConfiguration.autoResolved: IsAutoResolved
-  PublicNetworkAccess: ScheduledQueryRulePublicNetworkAccess
+  PublicNetworkAccess: MonitorWorkspacePublicNetworkAccess
   MetadataValue: MonitorMetadataValue
   MetricValue: MonitorMetricValue
   MetricResultType: MonitorMetricResultType
