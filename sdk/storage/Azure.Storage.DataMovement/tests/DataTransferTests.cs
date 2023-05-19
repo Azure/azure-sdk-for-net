@@ -148,7 +148,7 @@ namespace Azure.Storage.DataMovement.Tests
                 status: StorageTransferStatus.InProgress);
 
             // Act
-            Task<bool> pauseTask = transfer.TryPauseAsync();
+            Task pauseTask = transfer.PauseIfRunningAsync();
 
             Assert.AreEqual(StorageTransferStatus.PauseInProgress, transfer.TransferStatus);
 
@@ -158,9 +158,9 @@ namespace Azure.Storage.DataMovement.Tests
                 Assert.Fail("Unable to set the transfer status internally to the DataTransfer.");
             }
 
-            bool pauseResult = await pauseTask;
+            await pauseTask;
 
-            Assert.IsTrue(pauseResult);
+            Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
             Assert.IsFalse(transfer.HasCompleted);
         }
 
@@ -178,9 +178,9 @@ namespace Azure.Storage.DataMovement.Tests
                 id: transferId,
                 status: status);
 
-            bool pauseResult = await transfer.TryPauseAsync();
-
-            Assert.IsFalse(pauseResult);
+            Assert.AreEqual(status, transfer.TransferStatus);
+            await transfer.PauseIfRunningAsync();
+            Assert.AreEqual(status, transfer.TransferStatus);
         }
 
         [Test]
@@ -196,7 +196,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             try
             {
-                await transfer.TryPauseAsync(cancellationTokenSource.Token);
+                await transfer.PauseIfRunningAsync(cancellationTokenSource.Token);
             }
             catch (OperationCanceledException exception)
             {

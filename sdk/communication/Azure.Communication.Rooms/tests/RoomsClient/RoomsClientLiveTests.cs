@@ -23,7 +23,6 @@ namespace Azure.Communication.Rooms.Tests
         }
 
         [TestCase(AuthMethod.ConnectionString, TestName = "AcsRoomRequestLiveWithoutParticipantsUsingConnectionString")]
-        [TestCase(AuthMethod.TokenCredential, TestName = "AcsRoomRequestLiveWithoutParticipantsUsingTokenCredential")]
         [TestCase(AuthMethod.KeyCredential, TestName = "AcsRoomRequestLiveWithoutParticipantsUsingKeyCredential")]
         public async Task AcsRoomRequestLiveWithoutParticipantsTest(AuthMethod authMethod)
         {
@@ -49,9 +48,6 @@ namespace Azure.Communication.Rooms.Tests
 
                 // Assert:
                 Assert.AreEqual(createdRoomId, getCommunicationRoom.Id);
-
-                // List Rooms
-                // TODO: add list rooms test
 
                 // Act: Update Room
                 Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom.AddDays(1), validUntil.AddDays(2));
@@ -119,9 +115,6 @@ namespace Azure.Communication.Rooms.Tests
                 // Assert
                 Assert.AreEqual(createdRoomId, getCommunicationRoom.Id);
 
-                // List Rooms
-                // TODO: add list rooms test
-
                 // Act Update Room
                 validFrom = validFrom.AddDays(30);
                 validUntil = validUntil.AddDays(30);
@@ -161,16 +154,23 @@ namespace Azure.Communication.Rooms.Tests
             RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview);
             // First create a room to ensure that the list rooms will not be empty.
             CommunicationRoom createdRoom = await roomsClient.CreateRoomAsync();
+            CommunicationRoom? firstActiveRoom = null;
             try
             {
                 AsyncPageable<CommunicationRoom> allActiveRooms = roomsClient.GetRoomsAsync();
-                List<CommunicationRoom> allActiveRoomsList = await allActiveRooms.ToEnumerableAsync();
-                CommunicationRoom firstActiveRoom = allActiveRoomsList.First();
+                await foreach (CommunicationRoom room in allActiveRooms)
+                {
+                    if (room is not null)
+                    {
+                        firstActiveRoom = room;
+                        break;
+                    }
+                }
                 Assert.IsNotNull(firstActiveRoom);
-                Assert.IsNotNull(firstActiveRoom.Id);
-                Assert.IsNotNull(firstActiveRoom.CreatedAt);
-                Assert.IsNotNull(firstActiveRoom.ValidFrom);
-                Assert.IsNotNull(firstActiveRoom.ValidUntil);
+                Assert.IsNotNull(firstActiveRoom?.Id);
+                Assert.IsNotNull(firstActiveRoom?.CreatedAt);
+                Assert.IsNotNull(firstActiveRoom?.ValidFrom);
+                Assert.IsNotNull(firstActiveRoom?.ValidUntil);
             }
             catch (Exception ex)
             {

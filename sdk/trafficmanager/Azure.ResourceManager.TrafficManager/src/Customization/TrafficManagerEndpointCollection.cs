@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// /// <param name="profileData">The parent profile data. </param>
         internal TrafficManagerEndpointCollection(ArmClient client, ResourceIdentifier id, TrafficManagerProfileData profileData) : this(client, id)
         {
-            Argument.AssertNull(profileData, nameof(profileData));
+            Argument.AssertNotNull(profileData, nameof(profileData));
 
             this._profileData = profileData;
         }

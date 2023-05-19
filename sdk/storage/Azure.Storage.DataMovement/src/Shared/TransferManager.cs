@@ -234,8 +234,8 @@ namespace Azure.Storage.DataMovement
         /// Return true once the transfer has been successfully paused or false if the transfer
         /// was already completed.
         /// </returns>
-        public virtual Task<bool> TryPauseTransferAsync(DataTransfer transfer, CancellationToken cancellationToken = default)
-            => TryPauseTransferAsync(transfer.Id, cancellationToken);
+        public virtual Task PauseTransferIfRunningAsync(DataTransfer transfer, CancellationToken cancellationToken = default)
+            => PauseTransferIfRunningAsync(transfer.Id, cancellationToken);
 
         /// <summary>
         /// Attempts to pause the transfer of the respective id.
@@ -249,17 +249,14 @@ namespace Azure.Storage.DataMovement
         /// Return true once the transfer has been successfully paused or false if the transfer
         /// was already completed.
         /// </returns>
-        public virtual Task<bool> TryPauseTransferAsync(string transferId, CancellationToken cancellationToken = default)
+        public virtual async Task PauseTransferIfRunningAsync(string transferId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
-            if (_dataTransfers.TryGetValue(transferId, out DataTransfer transfer))
+            if (!_dataTransfers.TryGetValue(transferId, out DataTransfer transfer))
             {
-                return transfer.TryPauseAsync(cancellationToken: cancellationToken);
+                throw Errors.InvalidTransferId(nameof(PauseTransferIfRunningAsync), transferId);
             }
-            else
-            {
-                throw Errors.InvalidTransferId(nameof(TryPauseTransferAsync), transferId);
-            }
+            await transfer.PauseIfRunningAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -299,9 +296,12 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        internal virtual Task<bool> TryPauseAllTransfersAsync()
+        internal virtual async Task PauseAllRunningTransfersAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            await Task.WhenAll(_dataTransfers.Values
+                .Where(transfer => transfer.CanPause())
+                .Select(transfer => transfer.PauseIfRunningAsync(cancellationToken)))
+                .ConfigureAwait(false);
         }
 
         /// <summary>
