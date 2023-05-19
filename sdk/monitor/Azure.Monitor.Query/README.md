@@ -142,14 +142,14 @@ To find the resource ID:
 ```C# Snippet:QueryResource
 var client = new LogsQueryClient(new DefaultAzureCredential());
 
-string resourceId = "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/<resource_provider>/<resource>";;
+string resourceId = "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/<resource_provider>/<resource>";
 string tableName = "<table_name>";
-var results = await client.QueryResourceAsync(
+Response<LogsQueryResult> results = await client.QueryResourceAsync(
     new ResourceIdentifier(resourceId),
     $"{tableName} | distinct * | project TimeGenerated",
     new QueryTimeRange(TimeSpan.FromDays(7)));
 
-var resultTable = results.Value.Table;
+LogsTable resultTable = results.Value.Table;
 foreach (LogsTableRow rows in resultTable.Rows)
 {
     foreach (var row in rows)

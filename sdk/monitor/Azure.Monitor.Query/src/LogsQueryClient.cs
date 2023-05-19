@@ -324,14 +324,14 @@ namespace Azure.Monitor.Query
         /// <code language="csharp">
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
-        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;;
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
         /// string tableName = &quot;&lt;table_name&gt;&quot;;
-        /// var results = await client.QueryResourceAsync(
+        /// Response&lt;LogsQueryResult&gt; results = await client.QueryResourceAsync(
         ///     new ResourceIdentifier(resourceId),
         ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
         ///     new QueryTimeRange(TimeSpan.FromDays(7)));
         ///
-        /// var resultTable = results.Value.Table;
+        /// LogsTable resultTable = results.Value.Table;
         /// foreach (LogsTableRow rows in resultTable.Rows)
         /// {
         ///     foreach (var row in rows)
@@ -365,14 +365,14 @@ namespace Azure.Monitor.Query
         /// <code language="csharp">
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
-        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;;
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
         /// string tableName = &quot;&lt;table_name&gt;&quot;;
-        /// var results = await client.QueryResourceAsync(
+        /// Response&lt;LogsQueryResult&gt; results = await client.QueryResourceAsync(
         ///     new ResourceIdentifier(resourceId),
         ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
         ///     new QueryTimeRange(TimeSpan.FromDays(7)));
         ///
-        /// var resultTable = results.Value.Table;
+        /// LogsTable resultTable = results.Value.Table;
         /// foreach (LogsTableRow rows in resultTable.Rows)
         /// {
         ///     foreach (var row in rows)
@@ -406,14 +406,14 @@ namespace Azure.Monitor.Query
         /// <code language="csharp">
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
-        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;;
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
         /// string tableName = &quot;&lt;table_name&gt;&quot;;
-        /// var results = await client.QueryResourceAsync(
+        /// Response&lt;LogsQueryResult&gt; results = await client.QueryResourceAsync(
         ///     new ResourceIdentifier(resourceId),
         ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
         ///     new QueryTimeRange(TimeSpan.FromDays(7)));
         ///
-        /// var resultTable = results.Value.Table;
+        /// LogsTable resultTable = results.Value.Table;
         /// foreach (LogsTableRow rows in resultTable.Rows)
         /// {
         ///     foreach (var row in rows)
@@ -457,14 +457,14 @@ namespace Azure.Monitor.Query
         /// <code language="csharp">
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
-        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;;
+        /// string resourceId = &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
         /// string tableName = &quot;&lt;table_name&gt;&quot;;
-        /// var results = await client.QueryResourceAsync(
+        /// Response&lt;LogsQueryResult&gt; results = await client.QueryResourceAsync(
         ///     new ResourceIdentifier(resourceId),
         ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
         ///     new QueryTimeRange(TimeSpan.FromDays(7)));
         ///
-        /// var resultTable = results.Value.Table;
+        /// LogsTable resultTable = results.Value.Table;
         /// foreach (LogsTableRow rows in resultTable.Rows)
         /// {
         ///     foreach (var row in rows)
