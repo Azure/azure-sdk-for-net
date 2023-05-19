@@ -7,10 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Storage;
-using Azure.Storage.Blobs;
 using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests;
@@ -26,7 +23,7 @@ using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
 {
-    internal class QueueScaleHostEndToEndTests : LiveTestBase<WebJobsTestEnvironment>
+    public class QueueScaleHostEndToEndTests : LiveTestBase<WebJobsTestEnvironment>
     {
         private const string TestArtifactsPrefix = "e2etest";
         private static AzureStorageEndToEndTests.TestFixture _fixture;
@@ -102,7 +99,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
             var container = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>() { { QueueConnection1, TestEnvironment.PrimaryStorageAccountConnectionString } })
                 .Build();
-            AzureComponentFactoryWrapper factoryWrapper = new AzureComponentFactoryWrapper(defaultAzureComponentFactory, defaultAzureComponentFactory.CreateTokenCredential(container.GetSection(QueueConnection1)));
+            TestComponentFactory factoryWrapper = new TestComponentFactory(defaultAzureComponentFactory, defaultAzureComponentFactory.CreateTokenCredential(container.GetSection(QueueConnection1)));
 
             string hostId = "test-host";
             var loggerProvider = new TestLoggerProvider();

@@ -46,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             return _scaleMonitor;
         }
 
-        public class ZeroToOneScaleMonitor : IScaleMonitor
+        private class ZeroToOneScaleMonitor : IScaleMonitor<ScaleMetrics>
         {
             private readonly ScaleMonitorDescriptor _scaleMonitorDescriptor;
             private readonly Lazy<Task<BlobLogListener>> _blobLogListener;
@@ -64,6 +64,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             public async Task<ScaleMetrics> GetMetricsAsync()
             {
+                // if new blob were detected we want to GetScaleStatus return scale out vote at least once
+                if (Interlocked.Equals(_threadSafeWritesDetectedValue, 1))
+                {
+                    _logger.LogInformation($"New writes were detectd but GetScaleStatus was not called. Waiting GetScaleStatus to call.");
+                    return new ScaleMetrics();
+                }
+
                 var blobLogListener = await _blobLogListener.Value.ConfigureAwait(false);
                 BlobWithContainer<BlobBaseClient>[] recentWrites = (await blobLogListener.GetRecentBlobWritesAsync(CancellationToken.None).ConfigureAwait(false)).ToArray();
                 if (recentWrites.Length > 0)
@@ -78,43 +85,50 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                             break;
                         }
                     }
-
                     _logger.LogInformation($"'{recentWrites.Length}' recent writes were detected for '{_scaleMonitorDescriptor.FunctionId}': {stringBuilder}");
-                    // Set to 1 if there were writes
-                    int originalValue = Interlocked.CompareExchange(ref _threadSafeWritesDetectedValue, 1, 0);
-
-                    if (originalValue != _threadSafeWritesDetectedValue)
-                    {
-                        _logger.LogInformation($"Current vote was changed to ScaleOut due recentWrites for '{_scaleMonitorDescriptor.FunctionId}'");
-                    }
+                    Interlocked.CompareExchange(ref _threadSafeWritesDetectedValue, 1, 0);
                 }
-
+                else
+                {
+                    _logger.LogInformation($"No recent writes were detected for '{_scaleMonitorDescriptor.FunctionId}'");
+                    Interlocked.CompareExchange(ref _threadSafeWritesDetectedValue, 0, 1);
+                }
                 return new ScaleMetrics();
             }
 
             public ScaleStatus GetScaleStatus(ScaleStatusContext context)
             {
+                return GetScaleStatusCore(context.WorkerCount);
+            }
+
+            public ScaleStatus GetScaleStatus(ScaleStatusContext<ScaleMetrics> context)
+            {
+                return GetScaleStatusCore(context.WorkerCount);
+            }
+
+            private ScaleStatus GetScaleStatusCore(int workerCount)
+            {
                 // if there is at least one worker we assume all the blobs are added to internal queue and we need to ScaleIn
-                if (context.WorkerCount > 0)
+                if (workerCount > 0)
                 {
                     // Set to 0 if there is an active worker
                     Interlocked.CompareExchange(ref _threadSafeWritesDetectedValue, 0, 1);
-                    _logger.LogInformation($"Current vote was changed to ScaleIn as there is '{context.WorkerCount}' active workers for '_scaleMonitorDescriptor.FunctionId'");
                 }
 
                 ScaleVote vote = ScaleVote.None;
-                if (context.WorkerCount == 0 && _threadSafeWritesDetectedValue == 1)
+                if (workerCount == 0 && _threadSafeWritesDetectedValue == 1)
                 {
                     vote = ScaleVote.ScaleOut;
                 }
-                else if (context.WorkerCount > 0 && _threadSafeWritesDetectedValue == 0)
+                else if (workerCount > 0 && _threadSafeWritesDetectedValue == 0)
                 {
                     vote = ScaleVote.ScaleIn;
                 }
-                else if (context.WorkerCount == 0 && _threadSafeWritesDetectedValue == 0)
+                else if (workerCount == 0 && _threadSafeWritesDetectedValue == 0)
                 {
                     vote = ScaleVote.None;
                 }
+                _logger.LogInformation($"Current vote is '{vote}', active workers is '{workerCount}' for '{_scaleMonitorDescriptor.FunctionId}'");
 
                 return new ScaleStatus()
                 {

@@ -8,12 +8,12 @@ using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Azure.WebJobs.Host.TestCommon
 {
-    public class AzureComponentFactoryWrapper : AzureComponentFactory
+    public class TestComponentFactory : AzureComponentFactory
     {
         private readonly AzureComponentFactory _factory;
         private readonly TokenCredential _tokenCredential;
 
-        public AzureComponentFactoryWrapper(AzureComponentFactory factory, TokenCredential tokenCredential)
+        public TestComponentFactory(AzureComponentFactory factory, TokenCredential tokenCredential)
         {
             _factory = factory;
             _tokenCredential = tokenCredential;

@@ -22,7 +22,7 @@ using static Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests.QueueScal
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
 {
-    internal class BlobScaleHostEndToEndTests : LiveTestBase<WebJobsTestEnvironment>
+    public class BlobScaleHostEndToEndTests : LiveTestBase<WebJobsTestEnvironment>
     {
         private const string TestArtifactsPrefix = "e2etest";
         private static AzureStorageEndToEndTests.TestFixture _fixture;
@@ -126,32 +126,36 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
             IHost scaleHost = hostBuilder.Build();
             await scaleHost.StartAsync();
 
+            // Add new blobs
             await client1.UploadBlobAsync("test1.txt", new BinaryData("test1"));
             await client1.UploadBlobAsync("test2.txt", new BinaryData("test2"));
 
+            // Wait until logs are populated and there is the "scale out" vote
             await TestHelpers.Await(async () =>
             {
                 IScaleStatusProvider scaleStatusProvider = scaleHost.Services.GetService<IScaleStatusProvider>();
 
                 var scaleStatus = await scaleStatusProvider.GetScaleStatusAsync(new ScaleStatusContext() { WorkerCount = 0 });
                 return scaleStatus.Vote == ScaleVote.ScaleOut && scaleStatus.FunctionScaleStatuses[Function1Name].Vote == ScaleVote.ScaleOut;
-            });
+            }, 600 * 10000);
 
+            // Emulate adding a worker, after adding the worker
             await TestHelpers.Await(async () =>
             {
                 IScaleStatusProvider scaleStatusProvider = scaleHost.Services.GetService<IScaleStatusProvider>();
 
                 var scaleStatus = await scaleStatusProvider.GetScaleStatusAsync(new ScaleStatusContext() { WorkerCount = 1 });
                 return scaleStatus.Vote == ScaleVote.ScaleIn && scaleStatus.FunctionScaleStatuses[Function1Name].Vote == ScaleVote.ScaleIn;
-            });
+            }, 600 * 1000);
 
+            // Emulate removing the worker
             await TestHelpers.Await(async () =>
             {
                 IScaleStatusProvider scaleStatusProvider = scaleHost.Services.GetService<IScaleStatusProvider>();
 
                 var scaleStatus = await scaleStatusProvider.GetScaleStatusAsync(new ScaleStatusContext() { WorkerCount = 0 });
                 return scaleStatus.Vote == ScaleVote.None && scaleStatus.FunctionScaleStatuses[Function1Name].Vote == ScaleVote.None;
-            });
+            }, 600 * 10000);
         }
     }
 }

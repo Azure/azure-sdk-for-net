@@ -20,7 +20,7 @@
     <Compile Include="$(AzureStorageWebjobsExtensionSharedTestSources)\**\*.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedTestSources)\AzuriteNUnitFixture.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedTestSources)\AzuriteFixture.cs" LinkBase="Shared" />
-		<Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\tests\shared\AzureComponentFactoryWrapper.cs" LinkBase="Shared"/>
+		<Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\tests\shared\TestComponentFactory.cs" LinkBase="Shared"/>
     <None Include="$(AzureStorageSharedTestSources)\azurite_cert.pem" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
