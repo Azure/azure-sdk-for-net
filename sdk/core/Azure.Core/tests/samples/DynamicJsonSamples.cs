@@ -17,10 +17,10 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreGetDynamicJson
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic widget = response.Content.ToDynamicFromJson();
             #endregion
 
-            Assert.IsTrue(widget.Name == "Widget");
+            Assert.IsTrue(widget.name == "Widget");
         }
 
         [Test]
@@ -29,6 +29,20 @@ namespace Azure.Core.Samples
             WidgetsClient client = GetMockClient();
 
             #region Snippet:AzureCoreGetDynamicJsonProperty
+            Response response = client.GetWidget();
+            dynamic widget = response.Content.ToDynamicFromJson();
+            string name = widget.name;
+            #endregion
+
+            Assert.IsTrue(name == "Widget");
+        }
+
+        [Test]
+        public void GetDynamicJsonPropertyPascalCase()
+        {
+            WidgetsClient client = GetMockClient();
+
+            #region Snippet:AzureCoreGetDynamicJsonPropertyPascalCase
             Response response = client.GetWidget();
             dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
             string name = widget.Name;

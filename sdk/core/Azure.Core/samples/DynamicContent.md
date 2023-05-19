@@ -4,13 +4,13 @@ Some Azure SDK APIs return values that hold raw JSON, for example [protocol meth
 
 ## Accessing Response Content
 
-### Get `dynamic` from `Response`
+### Get dynamic from Response
 
 Dynamic content is obtained from the `Response` return value.
 
 ```C# Snippet:AzureCoreGetDynamicJson
 Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+dynamic widget = response.Content.ToDynamicFromJson();
 ```
 
 ### Get a JSON property
@@ -18,6 +18,16 @@ dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToC
 JSON members are read using dynamic property access.
 
 ```C# Snippet:AzureCoreGetDynamicJsonProperty
+Response response = client.GetWidget();
+dynamic widget = response.Content.ToDynamicFromJson();
+string name = widget.name;
+```
+
+### Get a JSON property idiomatically
+
+To treat the dynamic content like a standard .NET type, it is recommended to pass `DynamicCaseMapping.PascalToCamel` when calling `ToDynamicFromJson()`.  This enables getting JSON members with PascalCase property names, and will write any JSON members with camelCase names.
+
+```C# Snippet:AzureCoreGetDynamicJsonPropertyPascalCase
 Response response = client.GetWidget();
 dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 string name = widget.Name;
@@ -117,7 +127,7 @@ public class Widget
 
 When working with JSON from Azure services, you can learn what properties are available in the JSON response content from the REST API documentation for the service, examples in the protocol method documentation, or by expanding the [Dynamic View](https://learn.microsoft.com/visualstudio/debugger/watch-and-quickwatch-windows) in Visual Studio.
 
-To behave as much as possible like Azure SDK model types, `DynamicData` allows JSON members to be accessed using PascalCase property names, and will write any added properties with camelCase names.  If there is a need to bypass these name mappings, JSON members can be accessed with exact strings using property indexers.
+If you are using `DynamicData` with the `DynamicCaseMapping.PascalToProperty` setting and there is a need to bypass these name mappings, JSON members can be accessed with exact strings using property indexers.
 
 ```C# Snippet:AzureCoreSetPropertyWithoutCaseMapping
 Response response = client.GetWidget();
