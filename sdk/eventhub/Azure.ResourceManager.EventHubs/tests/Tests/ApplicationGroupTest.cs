@@ -12,7 +12,6 @@ using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.EventHubs.Tests.Helpers;
 using Azure.ResourceManager.Resources.Models;
 using Azure.Core;
 using System.Reflection.Metadata;

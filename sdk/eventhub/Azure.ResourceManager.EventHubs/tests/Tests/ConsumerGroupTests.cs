@@ -8,7 +8,6 @@ using Azure.ResourceManager.Resources;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.EventHubs;
-using Azure.ResourceManager.EventHubs.Tests.Helpers;
 
 namespace Azure.ResourceManager.EventHubs.Tests
 {

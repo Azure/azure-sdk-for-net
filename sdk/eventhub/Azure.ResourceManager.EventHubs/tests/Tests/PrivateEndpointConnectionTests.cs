@@ -11,7 +11,6 @@ using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.EventHubs.Tests.Helpers;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Tests
