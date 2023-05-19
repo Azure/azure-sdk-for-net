@@ -36,7 +36,11 @@ namespace Azure.Core.Tests.ModelSerializationTests
         [Test]
         public void CastToRequestContent()
         {
+#if NETFRAMEWORK
+            string requestContent = "{\"latinName\":\"Animalia\",\"name\":\"Doggo\",\"isHungry\":false,\"weight\":1.1000000000000001,\"foodConsumed\":[\"kibble\",\"egg\",\"peanut butter\"]}";
+#else
             string requestContent = "{\"latinName\":\"Animalia\",\"name\":\"Doggo\",\"isHungry\":false,\"weight\":1.1,\"foodConsumed\":[\"kibble\",\"egg\",\"peanut butter\"]}";
+#endif
             var dog = new DogListProperty
             {
                 Name = "Doggo",
