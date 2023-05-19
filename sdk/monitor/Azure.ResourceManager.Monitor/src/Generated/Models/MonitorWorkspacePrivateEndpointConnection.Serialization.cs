@@ -13,9 +13,9 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class CommonPrivateEndpointConnectionV4
+    public partial class MonitorWorkspacePrivateEndpointConnection
     {
-        internal static CommonPrivateEndpointConnectionV4 DeserializeCommonPrivateEndpointConnectionV4(JsonElement element)
+        internal static MonitorWorkspacePrivateEndpointConnection DeserializeMonitorWorkspacePrivateEndpointConnection(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new CommonPrivateEndpointConnectionV4(id, name, type, systemData.Value, Optional.ToList(groupIds), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new MonitorWorkspacePrivateEndpointConnection(id, name, type, systemData.Value, Optional.ToList(groupIds), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

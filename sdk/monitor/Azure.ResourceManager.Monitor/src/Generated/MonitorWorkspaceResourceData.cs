@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> The location. </param>
         public MonitorWorkspaceResourceData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<CommonPrivateEndpointConnectionV4>();
+            PrivateEndpointConnections = new ChangeTrackingList<MonitorWorkspacePrivateEndpointConnection>();
         }
 
         /// <summary> Initializes a new instance of MonitorWorkspaceResourceData. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="defaultIngestionSettings"> The Data Collection Rule and Endpoint used for ingestion by default. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to workspace. </param>
-        internal MonitorWorkspaceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string accountId, MonitorWorkspaceMetrics metrics, MonitorProvisioningState? provisioningState, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings, IReadOnlyList<CommonPrivateEndpointConnectionV4> privateEndpointConnections, ScheduledQueryRulePublicNetworkAccess? publicNetworkAccess) : base(id, name, resourceType, systemData, tags, location)
+        internal MonitorWorkspaceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string accountId, MonitorWorkspaceMetrics metrics, MonitorProvisioningState? provisioningState, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings, IReadOnlyList<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections, ScheduledQueryRulePublicNetworkAccess? publicNetworkAccess) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             AccountId = accountId;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> The Data Collection Rule and Endpoint used for ingestion by default. </summary>
         public MonitorWorkspaceDefaultIngestionSettings DefaultIngestionSettings { get; }
         /// <summary> List of private endpoint connections. </summary>
-        public IReadOnlyList<CommonPrivateEndpointConnectionV4> PrivateEndpointConnections { get; }
+        public IReadOnlyList<MonitorWorkspacePrivateEndpointConnection> PrivateEndpointConnections { get; }
         /// <summary> Gets or sets allow or disallow public network access to workspace. </summary>
         public ScheduledQueryRulePublicNetworkAccess? PublicNetworkAccess { get; }
     }

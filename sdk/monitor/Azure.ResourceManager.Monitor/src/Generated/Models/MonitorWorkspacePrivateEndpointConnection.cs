@@ -13,15 +13,15 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The private endpoint connection resource. </summary>
-    public partial class CommonPrivateEndpointConnectionV4 : ResourceData
+    public partial class MonitorWorkspacePrivateEndpointConnection : ResourceData
     {
-        /// <summary> Initializes a new instance of CommonPrivateEndpointConnectionV4. </summary>
-        internal CommonPrivateEndpointConnectionV4()
+        /// <summary> Initializes a new instance of MonitorWorkspacePrivateEndpointConnection. </summary>
+        internal MonitorWorkspacePrivateEndpointConnection()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CommonPrivateEndpointConnectionV4. </summary>
+        /// <summary> Initializes a new instance of MonitorWorkspacePrivateEndpointConnection. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="privateEndpoint"> The private endpoint resource. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        internal CommonPrivateEndpointConnectionV4(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> groupIds, SubResource privateEndpoint, MonitorPrivateLinkServiceConnectionState connectionState, MonitorPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal MonitorWorkspacePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> groupIds, SubResource privateEndpoint, MonitorPrivateLinkServiceConnectionState connectionState, MonitorPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             GroupIds = groupIds;
             PrivateEndpoint = privateEndpoint;

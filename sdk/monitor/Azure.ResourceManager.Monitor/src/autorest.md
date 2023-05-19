@@ -371,7 +371,7 @@ directive:
     transform: $["x-ms-client-name"] = "CommonPrivateEndpointV4"
   - from: v4/privatelinks.json
     where: $.definitions.PrivateEndpointConnection
-    transform: $["x-ms-client-name"] = "CommonPrivateEndpointConnectionV4"
+    transform: $["x-ms-client-name"] = "MonitorWorkspacePrivateEndpointConnection"
   - from: v4/privatelinks.json
     where: $.definitions.PrivateEndpointConnectionProperties
     transform: $["x-ms-client-name"] = "CommonPrivateEndpointConnectionPropertiesV4"

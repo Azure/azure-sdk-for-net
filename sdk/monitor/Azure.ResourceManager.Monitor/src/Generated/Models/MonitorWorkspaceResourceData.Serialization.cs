@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<MonitorWorkspaceMetrics> metrics = default;
             Optional<MonitorProvisioningState> provisioningState = default;
             Optional<MonitorWorkspaceDefaultIngestionSettings> defaultIngestionSettings = default;
-            Optional<IReadOnlyList<CommonPrivateEndpointConnectionV4>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<MonitorWorkspacePrivateEndpointConnection>> privateEndpointConnections = default;
             Optional<ScheduledQueryRulePublicNetworkAccess> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            List<CommonPrivateEndpointConnectionV4> array = new List<CommonPrivateEndpointConnectionV4>();
+                            List<MonitorWorkspacePrivateEndpointConnection> array = new List<MonitorWorkspacePrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CommonPrivateEndpointConnectionV4.DeserializeCommonPrivateEndpointConnectionV4(item));
+                                array.Add(MonitorWorkspacePrivateEndpointConnection.DeserializeMonitorWorkspacePrivateEndpointConnection(item));
                             }
                             privateEndpointConnections = array;
                             continue;
