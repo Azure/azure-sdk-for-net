@@ -11,6 +11,7 @@
 ### Bugs Fixed
 - Fix to prevent empty strings or null to be passed as paths for `LocalFileStorageResource` and `LocalDirectoryStorageResourceContainer`.
 - Fixed `ErrorHandlingOptions.ContinueOnFailure` not be respected.
+- Fixed bug where resuming a transfer where the source and destination is a `StorageResourceContainer` would throw a null reference exception. 
 - Fixed bug when downloading zero length `StorageResource`s in a `StorageResourceContainer` will throw an exception.
 
 ### Other Changes
