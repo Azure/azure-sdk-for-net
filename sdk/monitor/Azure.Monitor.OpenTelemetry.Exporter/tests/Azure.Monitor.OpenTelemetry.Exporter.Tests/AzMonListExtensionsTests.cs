@@ -574,7 +574,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 hostName = $"{netPeerIp}:{netPeerPort}";
             }
             string expectedTarget = $"{hostName} | DbName";
-            string? target = mappedTags.GetDbDependencyTarget();
+            mappedTags.GetDbDependencyTargetAndName(out var target, out _);
             Assert.Equal(expectedTarget, target);
         }
 
@@ -583,7 +583,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var mappedTags = AzMonList.Initialize();
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeDbName, "DbName"));
-            string? target = mappedTags.GetDbDependencyTarget();
+            mappedTags.GetDbDependencyTargetAndName(out var target, out _);
             Assert.Equal("DbName", target);
         }
 
@@ -592,7 +592,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var mappedTags = AzMonList.Initialize();
             AzMonList.Add(ref mappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeDbSystem, "DbSystem"));
-            string? target = mappedTags.GetDbDependencyTarget();
+            mappedTags.GetDbDependencyTargetAndName(out var target, out _);
             Assert.Equal("DbSystem", target);
         }
 
@@ -600,7 +600,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void DbDependencyTargetIsSetToNullByDefault()
         {
             var mappedTags = AzMonList.Initialize();
-            string? target = mappedTags.GetDbDependencyTarget();
+            mappedTags.GetDbDependencyTargetAndName(out var target, out _);
             Assert.Null(target);
         }
     }
