@@ -85,6 +85,9 @@ Given that explicit cast does not allow for serialization options we might also 
 In order to better integrate with the rest of the .NET ecosystem, Azure.Core supports System.Text.Json serialization. The following example demonstrates using System.Text.Json for serialization and deserialization
 If we go this route the IJsonSerializable interface will only be needed for compile time constraints and can most likely be methodless and renamed to IRehydratable.
 
+One limitation if we go this route is there isn't a clear place to pass in a flag to include additional properties during serialization and deserialization.
+One solution here is to always have this on by default for public usage and internally turn it off for communication with Azure services.
+
 Serialization
 
 ```C# Snippet:Stj_Serialize
