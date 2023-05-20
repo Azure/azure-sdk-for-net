@@ -32,7 +32,7 @@ namespace Azure.Identity.BrokeredAuthentication
 
         private void AddBroker(PublicClientApplicationBuilder builder)
         {
-            builder.WithBroker();
+            builder.WithBroker(new BrokerOptions(BrokerOptions.OperatingSystems.Windows));
         }
     }
 }
