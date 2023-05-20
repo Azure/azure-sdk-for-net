@@ -37,7 +37,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             expectedSerialized.Append("\"weight\":2.3,");
             if (!ignoreUnknown)
             {
-                expectedSerialized.Append(",\"numberOfLegs\":4");
+                expectedSerialized.Append("\"numberOfLegs\":4");
             }
             expectedSerialized.Append("}");
             var expectedSerializedString = expectedSerialized.ToString();
