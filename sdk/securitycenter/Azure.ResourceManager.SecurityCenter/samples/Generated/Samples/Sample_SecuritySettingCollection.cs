@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SecuritySettingCollection collection = subscriptionResource.GetSecuritySettings();
 
             // invoke the operation
-            SecuritySettingName settingName = SecuritySettingName.Mcas;
+            SecuritySettingName settingName = SecuritySettingName.Wdatp;
             SecuritySettingResource result = await collection.GetAsync(settingName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SecuritySettingCollection collection = subscriptionResource.GetSecuritySettings();
 
             // invoke the operation
-            SecuritySettingName settingName = SecuritySettingName.Mcas;
+            SecuritySettingName settingName = SecuritySettingName.Wdatp;
             bool result = await collection.ExistsAsync(settingName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SecuritySettingCollection collection = subscriptionResource.GetSecuritySettings();
 
             // invoke the operation
-            SecuritySettingName settingName = SecuritySettingName.Mcas;
+            SecuritySettingName settingName = SecuritySettingName.Wdatp;
             SecuritySettingData data = new DataExportSettings()
             {
                 IsEnabled = true,

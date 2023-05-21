@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -40,6 +41,15 @@ namespace Azure.ResourceManager.SecurityCenter
             _securityComplianceCompliancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityComplianceResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SecurityComplianceResource.ResourceType, out string securityComplianceCompliancesApiVersion);
             _securityComplianceCompliancesRestClient = new CompliancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityComplianceCompliancesApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
+        }
+
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != SecurityCenterPricingResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SecurityCenterPricingResource.ResourceType), nameof(id));
         }
 
         /// <summary>

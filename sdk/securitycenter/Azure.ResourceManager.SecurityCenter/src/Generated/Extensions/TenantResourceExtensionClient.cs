@@ -48,6 +48,14 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetCachedClient(Client => new TenantAssessmentMetadataCollection(Client, Id));
         }
 
+        /// <summary> Gets a collection of GovernanceRuleResources in the TenantResource. </summary>
+        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: &apos;providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
+        /// <returns> An object representing collection of GovernanceRuleResources and their operations over a GovernanceRuleResource. </returns>
+        public virtual GovernanceRuleCollection GetGovernanceRules(string scope)
+        {
+            return new GovernanceRuleCollection(Client, Id, scope);
+        }
+
         /// <summary>
         /// List the available security controls, their assessments, and the max score
         /// <list type="bullet">

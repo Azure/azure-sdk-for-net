@@ -11,7 +11,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Page of a security governanceRules list. </summary>
+    /// <summary> Page of a governance rules list. </summary>
     internal partial class GovernanceRuleList
     {
         /// <summary> Initializes a new instance of GovernanceRuleList. </summary>
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of GovernanceRuleList. </summary>
-        /// <param name="value"> Collection of governanceRules in this page. </param>
+        /// <param name="value"> Collection of governance rules in this page. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         internal GovernanceRuleList(IReadOnlyList<GovernanceRuleData> value, string nextLink)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             NextLink = nextLink;
         }
 
-        /// <summary> Collection of governanceRules in this page. </summary>
+        /// <summary> Collection of governance rules in this page. </summary>
         public IReadOnlyList<GovernanceRuleData> Value { get; }
         /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
