@@ -21,7 +21,9 @@ The Azure Monitor Query client library is used to execute read-only queries agai
 
 - An [Azure subscription][azure_subscription]
 - A [TokenCredential](https://learn.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) implementation, such as an [Azure Identity library credential type](https://learn.microsoft.com/dotnet/api/overview/azure/Identity-readme#credential-classes).
-- To query Logs, you need an [Azure Log Analytics workspace][azure_monitor_create_using_portal].
+- To query Logs, you need one of the following things:
+  - An [Azure Log Analytics workspace][azure_monitor_create_using_portal]
+  - An Azure resource of any kind (Storage Account, Key Vault, Cosmos DB, etc.)
 - To query Metrics, you need an Azure resource of any kind (Storage Account, Key Vault, Cosmos DB, etc.).
 
 ### Install the package
@@ -104,21 +106,58 @@ All client instance methods are thread-safe and independent of each other ([guid
 
 ### Logs query
 
-You can query logs using the `LogsQueryClient.QueryWorkspaceAsync` method. The result is returned as a table with a collection of rows:
+You can query logs by workspace ID or resource ID. The result is returned as a table with a collection of rows.
+
+**Workspace-centric logs query**
+
+To query by workspace ID, use the [LogsQueryClient.QueryWorkspaceAsync](https://learn.microsoft.com/dotnet/api/azure.monitor.query.logsqueryclient.queryworkspaceasync) method:
 
 ```C# Snippet:QueryLogsAsTable
 string workspaceId = "<workspace_id>";
 var client = new LogsQueryClient(new DefaultAzureCredential());
-Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
+
+Response<LogsQueryResult> result = await client.QueryWorkspaceAsync(
     workspaceId,
     "AzureActivity | top 10 by TimeGenerated",
     new QueryTimeRange(TimeSpan.FromDays(1)));
 
-LogsTable table = response.Value.Table;
+LogsTable table = result.Value.Table;
 
 foreach (var row in table.Rows)
 {
-    Console.WriteLine(row["OperationName"] + " " + row["ResourceGroup"]);
+    Console.WriteLine($"{row["OperationName"]} {row["ResourceGroup"]}");
+}
+```
+
+**Resource-centric logs query**
+
+To query by resource ID, use the [LogsQueryClient.QueryResourceAsync](https://learn.microsoft.com/dotnet/api/azure.monitor.query.logsqueryclient.queryresourceasync) method.
+
+To find the resource ID:
+
+1. Navigate to your resource's page in the Azure portal.
+1. From the **Overview** blade, select the **JSON View** link.
+1. In the resulting JSON, copy the value of the `id` property.
+
+```C# Snippet:QueryResource
+var client = new LogsQueryClient(new DefaultAzureCredential());
+
+string resourceId = "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/<resource_provider>/<resource>";
+string tableName = "<table_name>";
+Response<LogsQueryResult> results = await client.QueryResourceAsync(
+    new ResourceIdentifier(resourceId),
+    $"{tableName} | distinct * | project TimeGenerated",
+    new QueryTimeRange(TimeSpan.FromDays(7)));
+
+LogsTable resultTable = results.Value.Table;
+foreach (LogsTableRow row in resultTable.Rows)
+{
+    Console.WriteLine($"{row["OperationName"]} {row["ResourceGroup"]}");
+}
+
+foreach (LogsTableColumn columns in resultTable.Columns)
+{
+    Console.WriteLine("Name: " + columns.Name + " Type: " + columns.Type);
 }
 ```
 

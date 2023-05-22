@@ -264,21 +264,14 @@ namespace Azure.Storage.DataMovement
         /// <returns>The task to wait until the cancellation has been triggered.</returns>
         public async Task TriggerJobCancellationAsync()
         {
-            DisposeHandlers();
             if (!_dataTransfer._state.CancellationTokenSource.IsCancellationRequested)
             {
                 _dataTransfer._state.TriggerCancellation();
             }
-            // Set the status to Pause/CancellationInProgress
-            if (StorageTransferStatus.PauseInProgress == _dataTransfer.TransferStatus)
+
+            // Set CancellationInProgress if we are not already pausing
+            if (StorageTransferStatus.PauseInProgress != _dataTransfer.TransferStatus)
             {
-                // It's possible that the status hasn't propagated down to the job part
-                // status yet here since we pause from the data transfer object.
-                await OnJobStatusChangedAsync(StorageTransferStatus.PauseInProgress).ConfigureAwait(false);
-            }
-            else
-            {
-                // It's a cancellation if a pause wasn't called.
                 await OnJobStatusChangedAsync(StorageTransferStatus.CancellationInProgress).ConfigureAwait(false);
             }
         }
@@ -323,29 +316,32 @@ namespace Azure.Storage.DataMovement
             // NOTE: There is a chance this event can be triggered after the transfer has
             // completed if more job parts complete before the next instance of this event is handled.
 
-            StorageTransferStatus status = _dataTransfer._state.GetTransferStatus();
-            if ((args.StorageTransferStatus == StorageTransferStatus.Paused ||
-                 args.StorageTransferStatus == StorageTransferStatus.Completed ||
-                 args.StorageTransferStatus == StorageTransferStatus.CompletedWithSkippedTransfers ||
-                 args.StorageTransferStatus == StorageTransferStatus.CompletedWithFailedTransfers)
-                && (status == StorageTransferStatus.Queued ||
-                    status == StorageTransferStatus.InProgress ||
-                    status == StorageTransferStatus.PauseInProgress ||
-                    status == StorageTransferStatus.CancellationInProgress))
+            StorageTransferStatus jobPartStatus = args.StorageTransferStatus;
+            StorageTransferStatus jobStatus = _dataTransfer._state.GetTransferStatus();
+
+            // Cancel the entire job if one job part fails and StopOnFailure is set
+            if (_errorHandling == ErrorHandlingOptions.StopOnAllFailures &&
+                jobPartStatus == StorageTransferStatus.CompletedWithFailedTransfers &&
+                jobStatus != StorageTransferStatus.CompletedWithFailedTransfers &&
+                jobStatus != StorageTransferStatus.CompletedWithSkippedTransfers &&
+                jobStatus != StorageTransferStatus.Completed)
+            {
+                await TriggerJobCancellationAsync().ConfigureAwait(false);
+            }
+
+            if ((jobPartStatus == StorageTransferStatus.Paused ||
+                 jobPartStatus == StorageTransferStatus.Completed ||
+                 jobPartStatus == StorageTransferStatus.CompletedWithSkippedTransfers ||
+                 jobPartStatus == StorageTransferStatus.CompletedWithFailedTransfers)
+                && (jobStatus == StorageTransferStatus.Queued ||
+                    jobStatus == StorageTransferStatus.InProgress ||
+                    jobStatus == StorageTransferStatus.PauseInProgress ||
+                    jobStatus == StorageTransferStatus.CancellationInProgress))
             {
                 if (_enumerationComplete)
                 {
                     await CheckAndUpdateStatusAsync().ConfigureAwait(false);
                 }
-            }
-            else if (args.StorageTransferStatus == StorageTransferStatus.Paused &&
-                    status == StorageTransferStatus.Paused)
-            {
-                await OnJobStatusChangedAsync(StorageTransferStatus.Paused).ConfigureAwait(false);
-            }
-            else if (args.StorageTransferStatus > status)
-            {
-                await OnJobStatusChangedAsync(args.StorageTransferStatus).ConfigureAwait(false);
             }
         }
 
@@ -358,6 +354,15 @@ namespace Azure.Storage.DataMovement
             }
             if (statusChanged)
             {
+                // If we are in a final state, dispose the JobPartEvent handlers
+                if (status == StorageTransferStatus.Completed ||
+                    status == StorageTransferStatus.CompletedWithSkippedTransfers ||
+                    status == StorageTransferStatus.CompletedWithFailedTransfers ||
+                    status == StorageTransferStatus.Paused)
+                {
+                    DisposeHandlers();
+                }
+
                 if (TransferStatusEventHandler != null)
                 {
                     await TransferStatusEventHandler.Invoke(

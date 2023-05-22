@@ -20,11 +20,11 @@ namespace Azure.Search.Documents.Tests
         }
 
         private async Task AssertKeysEqual<T>(
-            Response<SearchResults<T>> response,
+            SearchResults<T> response,
             Func<SearchResult<T>, string> keyAccessor,
             params string[] expectedKeys)
         {
-            List<SearchResult<T>> docs = await response.Value.GetResultsAsync().ToListAsync();
+            List<SearchResult<T>> docs = await response.GetResultsAsync().ToListAsync();
             CollectionAssert.AreEquivalent(expectedKeys, docs.Select(keyAccessor));
         }
 
@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Tests
             var vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
             await Task.Delay(TimeSpan.FromSeconds(1));
 
-            Response<SearchResults<Hotel>> response = await resources.GetSearchClient().SearchAsync<Hotel>(
+            SearchResults<Hotel> response = await resources.GetSearchClient().SearchAsync<Hotel>(
                    null,
                    new SearchOptions
                    {
@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Tests
 
             var vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
 
-            Response<SearchResults<Hotel>> response = await resources.GetSearchClient().SearchAsync<Hotel>(
+            SearchResults<Hotel> response = await resources.GetSearchClient().SearchAsync<Hotel>(
                     null,
                     new SearchOptions
                     {
@@ -79,7 +79,7 @@ namespace Azure.Search.Documents.Tests
 
             var vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
 
-            Response<SearchResults<Hotel>> response = await resources.GetSearchClient().SearchAsync<Hotel>(
+            SearchResults<Hotel> response = await resources.GetSearchClient().SearchAsync<Hotel>(
                     "Top hotels in town",
                     new SearchOptions
                     {
@@ -91,6 +91,49 @@ namespace Azure.Search.Documents.Tests
                 response,
                 h => h.Document.HotelId,
                 "3", "1", "2", "10", "4", "5", "9");
+        }
+
+        [Test]
+        public async Task SemanticHybridSearch()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
+
+            var vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
+
+            SearchResults<Hotel> response = await resources.GetSearchClient().SearchAsync<Hotel>(
+                    "Is there any hotel located on the main commercial artery of the city in the heart of New York?",
+                    new SearchOptions
+                    {
+                        Vector = new SearchQueryVector { Value = vectorizedResult, K = 3, Fields = "descriptionVector" },
+                        Select = { "hotelId", "hotelName", "description", "category" },
+                        QueryType = SearchQueryType.Semantic,
+                        QueryLanguage = QueryLanguage.EnUs,
+                        SemanticConfigurationName = "my-semantic-config",
+                        QueryCaption = QueryCaptionType.Extractive,
+                        QueryAnswer = QueryAnswerType.Extractive,
+                    });
+
+            Assert.NotNull(response.Answers);
+            Assert.AreEqual(1, response.Answers.Count);
+            Assert.AreEqual("9", response.Answers[0].Key);
+            Assert.NotNull(response.Answers[0].Highlights);
+            Assert.NotNull(response.Answers[0].Text);
+
+            await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
+            {
+                Hotel doc = result.Document;
+
+                Assert.NotNull(result.Captions);
+
+                var caption = result.Captions.FirstOrDefault();
+                Assert.NotNull(caption.Highlights, "Caption highlight is null");
+                Assert.NotNull(caption.Text, "Caption text is null");
+            }
+
+            await AssertKeysEqual(
+                response,
+                h => h.Document.HotelId,
+                "9", "3", "2", "5", "10", "1", "4");
         }
     }
 }

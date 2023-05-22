@@ -235,6 +235,7 @@ namespace Azure.Communication.CallAutomation
             }
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
             request.AnsweredByIdentifier = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id);
+            request.OperationContext = options.OperationContext;
 
             return request;
         }

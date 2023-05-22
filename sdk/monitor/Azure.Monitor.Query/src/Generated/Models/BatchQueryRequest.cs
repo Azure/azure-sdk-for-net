@@ -39,10 +39,10 @@ namespace Azure.Monitor.Query.Models
         public IDictionary<string, string> Headers { get; }
         /// <summary> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </summary>
         public QueryBody Body { get; }
-        /// <summary> Gets or sets the path. </summary>
-        public string Path { get; set; }
-        /// <summary> Gets or sets the method. </summary>
-        public string Method { get; set; }
+        /// <summary> Gets the path. </summary>
+        public string Path { get; }
+        /// <summary> Gets the method. </summary>
+        public string Method { get; }
         /// <summary> Workspace Id to be included in the query. </summary>
         public string Workspace { get; }
     }
