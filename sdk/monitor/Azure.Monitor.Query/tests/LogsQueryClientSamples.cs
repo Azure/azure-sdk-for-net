@@ -400,13 +400,11 @@ namespace Azure.Monitor.Query.Tests
                 new QueryTimeRange(TimeSpan.FromDays(7)));
 
             LogsTable resultTable = results.Value.Table;
-            foreach (LogsTableRow rows in resultTable.Rows)
+            foreach (LogsTableRow row in resultTable.Rows)
             {
-                foreach (var row in rows)
-                {
-                    Console.WriteLine(row);
-                }
+                Console.WriteLine($"{row["OperationName"]} {row["ResourceGroup"]}");
             }
+
             foreach (LogsTableColumn columns in resultTable.Columns)
             {
                 Console.WriteLine("Name: " + columns.Name + " Type: " + columns.Type);
