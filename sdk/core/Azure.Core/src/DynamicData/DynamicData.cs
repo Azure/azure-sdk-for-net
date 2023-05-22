@@ -42,30 +42,38 @@ namespace Azure.Core.Dynamic
 
         internal static JsonSerializerOptions GetSerializerOptions(DynamicDataOptions options)
         {
-            JsonSerializerOptions serializer = new()
+            JsonSerializerOptions serializerOptions = new()
             {
-                PropertyNameCaseInsensitive = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 Converters =
                 {
                     new DefaultTimeSpanConverter()
                 }
             };
 
-            switch (options.DateTimeHandling)
+            switch (options.CaseMapping)
             {
-                case DynamicDateTimeHandling.UnixTime:
-                    serializer.Converters.Add(new UnixTimeDateTimeConverter());
-                    serializer.Converters.Add(new UnixTimeDateTimeOffsetConverter());
+                case DynamicCaseMapping.PascalToCamel:
+                    serializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                     break;
-                case DynamicDateTimeHandling.Rfc3339:
+                case DynamicCaseMapping.None:
                 default:
-                    serializer.Converters.Add(new Rfc3339DateTimeConverter());
-                    serializer.Converters.Add(new Rfc3339DateTimeOffsetConverter());
                     break;
             }
 
-            return serializer;
+            switch (options.DateTimeHandling)
+            {
+                case DynamicDateTimeHandling.UnixTime:
+                    serializerOptions.Converters.Add(new UnixTimeDateTimeConverter());
+                    serializerOptions.Converters.Add(new UnixTimeDateTimeOffsetConverter());
+                    break;
+                case DynamicDateTimeHandling.Rfc3339:
+                default:
+                    serializerOptions.Converters.Add(new Rfc3339DateTimeConverter());
+                    serializerOptions.Converters.Add(new Rfc3339DateTimeOffsetConverter());
+                    break;
+            }
+
+            return serializerOptions;
         }
 
         internal void WriteTo(Stream stream)
@@ -88,26 +96,21 @@ namespace Azure.Core.Dynamic
                 return new DynamicData(element, _options);
             }
 
-            if (char.IsUpper(name[0]))
+            // If we're using the PascalToCamel mapping and the strict name lookup
+            // failed, do a second lookup with a camelCase name as well.
+            if (_options.CaseMapping == DynamicCaseMapping.PascalToCamel && char.IsUpper(name[0]))
             {
-                if (_element.TryGetProperty(GetAsCamelCase(name), out element))
+                if (_element.TryGetProperty(ConvertToCamelCase(name), out element))
                 {
                     return new DynamicData(element, _options);
                 }
             }
 
+            // Mimic Azure SDK model behavior for optional properties.
             return null;
         }
 
-        private static string GetAsCamelCase(string value)
-        {
-            if (value.Length < 2)
-            {
-                return value.ToLowerInvariant();
-            }
-
-            return $"{char.ToLowerInvariant(value[0])}{value.Substring(1)}";
-        }
+        private static string ConvertToCamelCase(string value) => JsonNamingPolicy.CamelCase.ConvertName(value);
 
         private object? GetViaIndexer(object index)
         {
@@ -147,28 +150,12 @@ namespace Azure.Core.Dynamic
                 value = ConvertType(value);
             }
 
-            if (!char.IsUpper(name[0]))
+            if (_options.CaseMapping == DynamicCaseMapping.PascalToCamel)
             {
-                // Lookup name is camelCase, so set unchanged.
-                _element = _element.SetProperty(name, value);
-                return null;
+                name = ConvertToCamelCase(name);
             }
 
-            // Lookup name is PascalCase, so check for the property as PascalCase then camelCase.
-            if (_element.TryGetProperty(name, out MutableJsonElement element))
-            {
-                element.Set(value);
-                return null;
-            }
-
-            if (_element.TryGetProperty(GetAsCamelCase(name), out element))
-            {
-                element.Set(value);
-                return null;
-            }
-
-            // It's a new property, so set with a camelCase member name.
-            _element = _element.SetProperty(GetAsCamelCase(name), value);
+            _element = _element.SetProperty(name, value);
 
             // Binding machinery expects the call site signature to return an object
             return null;

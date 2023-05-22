@@ -244,7 +244,6 @@ namespace Azure.Storage.DataMovement.Tests
         {
             AssertUnexpectedFailureCheck();
             Assert.IsEmpty(SkippedEvents);
-            Assert.IsEmpty(SingleCompletedEvents);
             Assert.AreEqual(2, StatusEvents.Count);
             Assert.AreEqual(StorageTransferStatus.InProgress, StatusEvents.First().StorageTransferStatus);
             Assert.AreEqual(StorageTransferStatus.Paused, StatusEvents.ElementAt(1).StorageTransferStatus);

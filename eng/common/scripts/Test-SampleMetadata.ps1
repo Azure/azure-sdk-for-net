@@ -247,6 +247,7 @@ begin {
         "azure-network-watcher",
         "azure-notebooks",
         "azure-notification-hubs",
+        "azure-openai",
         "azure-open-datasets",
         "azure-personalizer",
         "azure-pipelines",

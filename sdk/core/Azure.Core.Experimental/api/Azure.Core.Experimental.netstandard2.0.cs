@@ -1,10 +1,5 @@
 namespace Azure
 {
-    public static partial class BinaryDataExtensions
-    {
-        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json) { throw null; }
-        public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Dynamic.DynamicDataOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Value
     {
@@ -109,48 +104,5 @@ namespace Azure
         public static implicit operator Azure.Value (uint value) { throw null; }
         public static implicit operator Azure.Value (ulong value) { throw null; }
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public bool TryGetValue<T>(out T value) { throw null; }
-    }
-}
-namespace Azure.Core.Dynamic
-{
-    [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
-    public sealed partial class DynamicData : System.Dynamic.IDynamicMetaObjectProvider, System.IDisposable
-    {
-        internal DynamicData() { }
-        public void Dispose() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Core.Dynamic.DynamicData? left, object? right) { throw null; }
-        public static explicit operator System.DateTime (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static explicit operator System.DateTimeOffset (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static explicit operator System.Guid (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator bool (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator byte (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator decimal (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator double (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator short (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator int (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator long (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator sbyte (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator float (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator string (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator ushort (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator uint (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static implicit operator ulong (Azure.Core.Dynamic.DynamicData value) { throw null; }
-        public static bool operator !=(Azure.Core.Dynamic.DynamicData? left, object? right) { throw null; }
-        System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class DynamicDataOptions
-    {
-        public DynamicDataOptions() { }
-        public Azure.Core.Dynamic.DynamicDateTimeHandling DateTimeHandling { get { throw null; } set { } }
-    }
-    public enum DynamicDateTimeHandling
-    {
-        Rfc3339 = 0,
-        UnixTime = 1,
     }
 }
