@@ -15,8 +15,8 @@ One key difference is that the `EventGrid` schema is not supported for publishin
 Publish a single CloudEvent:
 
 ```C# Snippet:PublishSingleEvent
-var @ev = new CloudEvent("employee_source", "type", new TestModel { Name = "Bob", Age = 18 });
-await client.PublishCloudEventAsync(topicName, new CloudEvent("employee_source", "type", new TestModel { Name = "Bob", Age = 18 }));
+var evt = new CloudEvent("employee_source", "type", new TestModel { Name = "Bob", Age = 18 });
+await client.PublishCloudEventAsync(topicName, evt);
 ```
 
 Publish a batch of CloudEvents:
@@ -26,7 +26,8 @@ await client.PublishCloudEventsAsync(
     topicName,
     new[] {
         new CloudEvent("employee_source", "type", new TestModel { Name = "Tom", Age = 55 }),
-        new CloudEvent("employee_source", "type", new TestModel { Name = "Alice", Age = 25 })});
+        new CloudEvent("employee_source", "type", new TestModel { Name = "Alice", Age = 25 })
+    });
 ```
 
 Now that are events have been published, we can use our configured [namespace topic event subscription](https://learn.microsoft.
