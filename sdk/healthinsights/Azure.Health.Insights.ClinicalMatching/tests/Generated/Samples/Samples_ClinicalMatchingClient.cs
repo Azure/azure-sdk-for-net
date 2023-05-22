@@ -78,7 +78,7 @@ namespace Azure.Health.Insights.ClinicalMatching.Samples
                     clinicalType = "consultation",
                     id = "<id>",
                     language = "<language>",
-                    createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+                    createdDateTime = "2022-05-10T18:57:31.2311892Z",
                     content = new {
                         sourceType = "inline",
                         value = "<value>",
@@ -308,7 +308,7 @@ namespace Azure.Health.Insights.ClinicalMatching.Samples
                     clinicalType = "consultation",
                     id = "<id>",
                     language = "<language>",
-                    createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+                    createdDateTime = "2022-05-10T18:57:31.2311892Z",
                     content = new {
                         sourceType = "inline",
                         value = "<value>",
