@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Azure;
+using Azure.Core.Serialization;
 using Azure.Core.Tests;
 using Azure.Core.Tests.ModelSerializationTests;
 using NUnit.Framework;

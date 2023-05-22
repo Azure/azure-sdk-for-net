@@ -4,7 +4,7 @@
 using System;
 using System.IO;
 
-namespace Azure
+namespace Azure.Core.Serialization
 {
     /// <summary>
     /// TODO

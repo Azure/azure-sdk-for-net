@@ -3,7 +3,7 @@
 
 using System.IO;
 
-namespace Azure
+namespace Azure.Core.Serialization
 {
     /// <summary>
     /// Serializer class for Azure models.

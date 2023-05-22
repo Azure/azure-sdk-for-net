@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.Experimental.Tests;
+using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.ModelSerializationTests;
 using Azure.Identity;

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure
+namespace Azure.Core.Serialization
 {
     /// <summary>
     /// Provides the client options for serializing models.
