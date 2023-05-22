@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.4 (2023-05-09)
+
+### Features Added
+
+* Added ability to configure sampling percentage using `ApplicationInsightsSamplerOptions`.
+([#36111](https://github.com/Azure/azure-sdk-for-net/pull/3611))
 
 ## 1.0.0-beta.3 (2023-04-11)
 

@@ -31,17 +31,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the mode of VM Guest Patch Assessment for the IaaS virtual machine.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; **ImageDefault** - You control the timing of patch assessments on a virtual machine. &lt;br /&gt;&lt;br /&gt; **AutomaticByPlatform** - The platform will trigger periodic patch assessments. The property provisionVMAgent must be true. </summary>
         public LinuxPatchAssessmentMode? AssessmentMode { get; set; }
         /// <summary> Specifies additional settings for patch mode AutomaticByPlatform in VM Guest Patching on Linux. </summary>
-        internal LinuxVmGuestPatchAutomaticByPlatformSettings AutomaticByPlatformSettings { get; set; }
-        /// <summary> Specifies the reboot setting for all AutomaticByPlatform patch installation operations. </summary>
-        public LinuxVmGuestPatchAutomaticByPlatformRebootSetting? AutomaticByPlatformRebootSetting
-        {
-            get => AutomaticByPlatformSettings is null ? default : AutomaticByPlatformSettings.RebootSetting;
-            set
-            {
-                if (AutomaticByPlatformSettings is null)
-                    AutomaticByPlatformSettings = new LinuxVmGuestPatchAutomaticByPlatformSettings();
-                AutomaticByPlatformSettings.RebootSetting = value;
-            }
-        }
+        public LinuxVmGuestPatchAutomaticByPlatformSettings AutomaticByPlatformSettings { get; set; }
     }
 }

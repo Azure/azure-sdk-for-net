@@ -5,7 +5,6 @@
 
   <ItemGroup>
     <Folder Include="Properties\" />
-    <Folder Include="Samples\Plugins" />
   </ItemGroup>
 
   <ItemGroup>

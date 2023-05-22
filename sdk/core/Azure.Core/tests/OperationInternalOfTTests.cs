@@ -25,7 +25,7 @@ namespace Azure.Core.Tests
         [Test]
         public void DefaultPropertyInitialization()
         {
-            var operationInternal = new OperationInternal<int>(ClientDiagnostics, TestOperation.Succeeded(42), InitialResponse);
+            var operationInternal = new OperationInternal<int>(TestOperation.Succeeded(42), ClientDiagnostics, InitialResponse);
             Assert.IsNotNull(operationInternal.RawResponse);
             Assert.False(operationInternal.HasCompleted);
             Assert.False(operationInternal.HasValue);
@@ -35,7 +35,7 @@ namespace Azure.Core.Tests
         [Test]
         public void RawResponseInitialization()
         {
-            var operationInternal = new OperationInternal<int>(ClientDiagnostics, TestOperation.Succeeded(42), InitialResponse);
+            var operationInternal = new OperationInternal<int>(TestOperation.Succeeded(42), ClientDiagnostics, InitialResponse);
 
             Assert.AreEqual(InitialResponse, operationInternal.RawResponse);
             Assert.False(operationInternal.HasCompleted);
@@ -66,7 +66,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task UpdateStatusWhenOperationIsPending([Values(true, false)] bool async)
         {
-            var operationInternal = new OperationInternal<int>(ClientDiagnostics, TestOperation.SucceededAfter(1, 42), InitialResponse);
+            var operationInternal = new OperationInternal<int>(TestOperation.SucceededAfter(1, 42), ClientDiagnostics, InitialResponse);
 
             var operationResponse = async
                 ? await operationInternal.UpdateStatusAsync(CancellationToken.None)
@@ -81,7 +81,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task UpdateStatusWhenOperationSucceeds([Values(true, false)] bool async)
         {
-            var operationInternal = new OperationInternal<int>(ClientDiagnostics, TestOperation.Succeeded(42), InitialResponse);
+            var operationInternal = new OperationInternal<int>(TestOperation.Succeeded(42), ClientDiagnostics, InitialResponse);
 
             var operationResponse = async
                 ? await operationInternal.UpdateStatusAsync(CancellationToken.None)
@@ -97,8 +97,8 @@ namespace Azure.Core.Tests
         public void UpdateStatusWhenOperationFails([Values(true, false)] bool async, [Values(true, false)] bool useDefaultException)
         {
             var operationInternal = useDefaultException
-                ? new OperationInternal<int>(ClientDiagnostics, TestOperation.Failed(418), InitialResponse)
-                : new OperationInternal<int>(ClientDiagnostics, TestOperation.Failed(418, OriginalException), InitialResponse);
+                ? new OperationInternal<int>(TestOperation.Failed(418), ClientDiagnostics, InitialResponse)
+                : new OperationInternal<int>(TestOperation.Failed(418, OriginalException), ClientDiagnostics, InitialResponse);
 
             RequestFailedException thrownException = async
                 ? Assert.ThrowsAsync<RequestFailedException>(async () => await operationInternal.UpdateStatusAsync(CancellationToken.None))
@@ -120,7 +120,7 @@ namespace Azure.Core.Tests
         public void UpdateStatusWhenOperationThrows([Values(true, false)] bool async)
         {
             var operation = new TestOperation((_, _) => new ValueTask<OperationState<int>>(Task.FromException<OperationState<int>>(CustomException)));
-            var operationInternal = new OperationInternal<int>(ClientDiagnostics, operation, InitialResponse);
+            var operationInternal = new OperationInternal<int>(operation, ClientDiagnostics, InitialResponse);
             StackOverflowException thrownException = async
                 ? Assert.ThrowsAsync<StackOverflowException>(async () => await operationInternal.UpdateStatusAsync(CancellationToken.None))
                 : Assert.Throws<StackOverflowException>(() => operationInternal.UpdateStatus(CancellationToken.None));
@@ -139,7 +139,7 @@ namespace Azure.Core.Tests
 
             string expectedTypeName = operationTypeName ?? nameof(TestOperation);
             KeyValuePair<string, string>[] expectedAttributes = { new("key1", "value1"), new("key2", "value2") };
-            var operationInternal = new OperationInternal<int>(ClientDiagnostics, TestOperation.SucceededAfter(1, 42), InitialResponse, operationTypeName, expectedAttributes);
+            var operationInternal = new OperationInternal<int>(TestOperation.SucceededAfter(1, 42), ClientDiagnostics, InitialResponse, operationTypeName, expectedAttributes);
 
             _ = async
                 ? await operationInternal.UpdateStatusAsync(CancellationToken.None)
@@ -166,7 +166,7 @@ namespace Azure.Core.Tests
         {
             using ClientDiagnosticListener testListener = new(DiagnosticNamespace);
 
-            var operationInternal = new OperationInternal<int>(ClientDiagnostics, TestOperation.Failed(418, OriginalException), InitialResponse);
+            var operationInternal = new OperationInternal<int>(TestOperation.Failed(418, OriginalException), ClientDiagnostics, InitialResponse);
             try
             {
                 _ = async
@@ -184,7 +184,7 @@ namespace Azure.Core.Tests
         {
             using ClientDiagnosticListener testListener = new(DiagnosticNamespace);
             var operation = new TestOperation((_, _) => new ValueTask<OperationState<int>>(Task.FromException<OperationState<int>>(CustomException)));
-            var operationInternal = new OperationInternal<int>(ClientDiagnostics, operation, InitialResponse);
+            var operationInternal = new OperationInternal<int>(operation, ClientDiagnostics, InitialResponse);
             try
             {
                 _ = async
@@ -210,7 +210,7 @@ namespace Azure.Core.Tests
                 return new ValueTask<OperationState<int>>(OperationState<int>.Success(new MockResponse(200), 42));
             });
 
-            var operationInternal = new OperationInternal<int>(ClientDiagnostics, operation, InitialResponse);
+            var operationInternal = new OperationInternal<int>(operation, ClientDiagnostics, InitialResponse);
             _ = async
                 ? await operationInternal.UpdateStatusAsync(originalToken)
                 : operationInternal.UpdateStatus(originalToken);
@@ -225,7 +225,7 @@ namespace Azure.Core.Tests
 
             string expectedTypeName = operationTypeName ?? nameof(TestOperation);
             KeyValuePair<string, string>[] expectedAttributes = { new("key1", "value1"), new("key2", "value2") };
-            var operationInternal = new OperationInternal<int>(new(new TestClientOptions(), suppressNestedClientActivities), TestOperation.Succeeded(1), InitialResponse, operationTypeName, expectedAttributes);
+            var operationInternal = new OperationInternal<int>(TestOperation.Succeeded(1), new(new TestClientOptions(), suppressNestedClientActivities), InitialResponse, operationTypeName, expectedAttributes);
 
             _ = async
                 ? await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None)
@@ -248,7 +248,7 @@ namespace Azure.Core.Tests
 
             string expectedTypeName = operationTypeName ?? nameof(TestOperation);
             KeyValuePair<string, string>[] expectedAttributes = { new("key1", "value1"), new("key2", "value2") };
-            var operationInternal = new OperationInternal<int>(new(new TestClientOptions(), suppressNestedClientActivities), TestOperation.Succeeded(1), InitialResponse, operationTypeName, expectedAttributes);
+            var operationInternal = new OperationInternal<int>(TestOperation.Succeeded(1), new(new TestClientOptions(), suppressNestedClientActivities), InitialResponse, operationTypeName, expectedAttributes);
 
             _ = async
                 ? await operationInternal.WaitForCompletionAsync(CancellationToken.None)

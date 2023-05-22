@@ -16,8 +16,8 @@ namespace Azure.Core.TestFramework
             Func<MockResponse> responseFactory,
             string operationTypeName,
             IEnumerable<KeyValuePair<string, string>> scopeAttributes,
-            DelayStrategyInternal pollingStrategy)
-            : base(clientDiagnostics, operation, responseFactory(), operationTypeName, scopeAttributes, pollingStrategy)
+            DelayStrategy pollingStrategy)
+            : base(operation, clientDiagnostics, responseFactory(), operationTypeName, scopeAttributes, pollingStrategy)
         { }
 
         public List<TimeSpan> DelaysPassedToWait { get; set; } = new();

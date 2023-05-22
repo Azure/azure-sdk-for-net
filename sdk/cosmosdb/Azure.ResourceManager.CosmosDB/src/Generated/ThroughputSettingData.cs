@@ -32,12 +32,16 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
-        internal ThroughputSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedThroughputSettingsResourceInfo resource) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="identity"> Identity for the resource. </param>
+        internal ThroughputSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedThroughputSettingsResourceInfo resource, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
+            Identity = identity;
         }
 
         /// <summary> Gets or sets the resource. </summary>
         public ExtendedThroughputSettingsResourceInfo Resource { get; set; }
+        /// <summary> Identity for the resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

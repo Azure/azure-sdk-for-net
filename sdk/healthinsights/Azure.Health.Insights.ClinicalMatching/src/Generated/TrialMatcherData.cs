@@ -25,6 +25,15 @@ namespace Azure.Health.Insights.ClinicalMatching
             Patients = patients.ToList();
         }
 
+        /// <summary> Initializes a new instance of TrialMatcherData. </summary>
+        /// <param name="patients"> The list of patients, including their clinical information and data. </param>
+        /// <param name="configuration"> Configuration affecting the Trial Matcher model's inference. </param>
+        internal TrialMatcherData(IList<PatientRecord> patients, TrialMatcherModelConfiguration configuration)
+        {
+            Patients = patients;
+            Configuration = configuration;
+        }
+
         /// <summary> The list of patients, including their clinical information and data. </summary>
         public IList<PatientRecord> Patients { get; }
         /// <summary> Configuration affecting the Trial Matcher model's inference. </summary>

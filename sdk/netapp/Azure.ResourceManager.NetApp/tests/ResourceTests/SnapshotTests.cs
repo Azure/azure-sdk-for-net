@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             _capacityPool = (await _capacityPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, _pool1Name, capactiyPoolData)).Value;
             _volumeCollection = _capacityPool.GetNetAppVolumes();
 
-            DefaultVirtualNetwork = await CreateVirtualNetwork();
+            await CreateVirtualNetwork();
             _volumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, subnetId: DefaultSubnetId, volumeName: volumeName);
             _snapshotCollection = _volumeResource.GetNetAppVolumeSnapshots();
         }
@@ -61,34 +61,22 @@ namespace Azure.ResourceManager.NetApp.Tests
                         {
                             await snapshot.DeleteAsync(WaitUntil.Completed);
                         }
-                        if (Mode != RecordedTestMode.Playback)
-                        {
-                            await Task.Delay(10000);
-                        }
+                        await LiveDelay(10000);
                         await volume.DeleteAsync(WaitUntil.Completed);
                     }
-                    if (Mode != RecordedTestMode.Playback)
-                    {
-                        await Task.Delay(30000);
-                    }
+                    await LiveDelay(30000);
                     await pool.DeleteAsync(WaitUntil.Completed);
                 }
-                if (Mode != RecordedTestMode.Playback)
-                {
-                    await Task.Delay(40000);
-                }
+                await LiveDelay(40000);
                 //remove
                 //await _capacityPool.DeleteAsync(WaitUntil.Completed);
-                if (Mode != RecordedTestMode.Playback)
-                {
-                    await Task.Delay(40000);
-                }
+                //await LiveDelay(40000);
                 await _netAppAccount.DeleteAsync(WaitUntil.Completed);
             }
             _resourceGroup = null;
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateDeleteSnapshot()
         {
             //create snapshot
@@ -118,7 +106,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ListSnapshots()
         {
             //create snapshot
@@ -154,16 +142,13 @@ namespace Azure.ResourceManager.NetApp.Tests
 
             //Check deletion
             await snapshotResource2.DeleteAsync(WaitUntil.Completed);
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(20000);
-            }
+            await LiveDelay(20000);
             Assert.IsFalse(await _snapshotCollection.ExistsAsync(snapshotName2));
             snapshotList = await _snapshotCollection.GetAllAsync().ToEnumerableAsync();
             snapshotList.Should().HaveCount(1);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateVolumeFromSnapshot()
         {
             //create snapshot
@@ -182,10 +167,7 @@ namespace Azure.ResourceManager.NetApp.Tests
 
             //create new volume from snapshot, we do this by calling create volume with a snapshotId
             NetAppVolumeResource newVolumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: newVolumeName, snapshotId: snapshotResource2.Id);
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(20000);
-            }
+            await LiveDelay(20000);
             //Validate
             NetAppVolumeResource newVolumeResource2 = await _volumeCollection.GetAsync(newVolumeName);
             Assert.IsNotNull(newVolumeResource2);
@@ -197,7 +179,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsFalse(await _snapshotCollection.ExistsAsync(snapshotName + "1"));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RevertVolumeToSnapshot()
         {
             //create snapshot
@@ -213,10 +195,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsNotNull(snapshotResource1);
             Assert.AreEqual(snapshotName, snapshotResource1.Id.Name);
 
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(20000);
-            }
+            await LiveDelay(20000);
             //Revert the volume to the snapshot
             NetAppVolumeRevertContent body = new()
             {
@@ -226,7 +205,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsTrue(revertOperation.HasCompleted);
         }
 
-        [Test]
+        [RecordedTest]
         [Ignore("The specified filePath /dir1/file1 does not exist in the snapshot")]
         public async Task RestoreFilesFromSnapshotFileDoesNotExist()
         {
@@ -243,10 +222,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsNotNull(snapshotResource1);
             Assert.AreEqual(snapshotName, snapshotResource1.Id.Name);
 
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(20000);
-            }
+            await LiveDelay(20000);
             //Revert the volume to the snapshot
             List<string> fileList = new() { "/dir1/file1" };
             NetAppVolumeSnapshotRestoreFilesContent body = new(fileList)

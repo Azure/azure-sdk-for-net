@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ResourceHealth
 {
     /// <summary>
     /// A class representing a collection of <see cref="TenantResourceHealthEventImpactedResource" /> and their operations.
-    /// Each <see cref="TenantResourceHealthEventImpactedResource" /> in the collection will belong to the same instance of <see cref="TenantEventResource" />.
-    /// To get a <see cref="TenantResourceHealthEventImpactedResourceCollection" /> instance call the GetTenantResourceHealthEventImpactedResources method from an instance of <see cref="TenantEventResource" />.
+    /// Each <see cref="TenantResourceHealthEventImpactedResource" /> in the collection will belong to the same instance of <see cref="TenantResourceHealthEventResource" />.
+    /// To get a <see cref="TenantResourceHealthEventImpactedResourceCollection" /> instance call the GetTenantResourceHealthEventImpactedResources method from an instance of <see cref="TenantResourceHealthEventResource" />.
     /// </summary>
     public partial class TenantResourceHealthEventImpactedResourceCollection : ArmCollection, IEnumerable<TenantResourceHealthEventImpactedResource>, IAsyncEnumerable<TenantResourceHealthEventImpactedResource>
     {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantResourceHealthEventImpactedResourceImpactedResourcesRestClient.CreateListByTenantIdAndEventIdRequest(Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantResourceHealthEventImpactedResourceImpactedResourcesRestClient.CreateListByTenantIdAndEventIdNextPageRequest(nextLink, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TenantResourceHealthEventImpactedResource(Client, EventImpactedResourceData.DeserializeEventImpactedResourceData(e)), _tenantResourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics, Pipeline, "TenantResourceHealthEventImpactedResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TenantResourceHealthEventImpactedResource(Client, ResourceHealthEventImpactedResourceData.DeserializeResourceHealthEventImpactedResourceData(e)), _tenantResourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics, Pipeline, "TenantResourceHealthEventImpactedResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantResourceHealthEventImpactedResourceImpactedResourcesRestClient.CreateListByTenantIdAndEventIdRequest(Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantResourceHealthEventImpactedResourceImpactedResourcesRestClient.CreateListByTenantIdAndEventIdNextPageRequest(nextLink, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TenantResourceHealthEventImpactedResource(Client, EventImpactedResourceData.DeserializeEventImpactedResourceData(e)), _tenantResourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics, Pipeline, "TenantResourceHealthEventImpactedResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TenantResourceHealthEventImpactedResource(Client, ResourceHealthEventImpactedResourceData.DeserializeResourceHealthEventImpactedResourceData(e)), _tenantResourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics, Pipeline, "TenantResourceHealthEventImpactedResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

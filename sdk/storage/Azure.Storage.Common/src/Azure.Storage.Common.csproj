@@ -43,6 +43,8 @@
     <Compile Include="Shared\StorageResponseClassifier.cs" />
     <Compile Include="Shared\StorageSharedKeyCredentialInternals.cs" />
     <Compile Include="Shared\StorageSharedKeyPipelinePolicy.cs" />
+    <Compile Include="Shared\StorageCrc64Calculator.cs" />
+    <Compile Include="Shared\StorageCrc64Composer.cs" />
     <Compile Include="Shared\UriExtensions.cs" />
     <Compile Include="Shared\UriQueryParamsCollection.cs" />
     <Compile Include="Shared\StorageBearerTokenChallengeAuthorizationPolicy.cs" />

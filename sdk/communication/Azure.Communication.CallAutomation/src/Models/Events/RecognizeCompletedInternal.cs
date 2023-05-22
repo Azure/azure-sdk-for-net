@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Reason code.
         /// </summary>
-        public ReasonCode ReasonCode { get; internal set; }
+        public MediaEventReasonCode ReasonCode { get; internal set; }
 
         /// <summary> Initializes a new instance of RecognizeCompleted. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>

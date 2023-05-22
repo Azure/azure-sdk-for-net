@@ -29,8 +29,6 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
 
         public async Task Prepare()
         {
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-            {
                 Initialize();
                 string groupName = Recording.GenerateAssetName(ResourceGroupPrefix);
                 string VnetName = Recording.GenerateAssetName("vnetname");
@@ -64,10 +62,9 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                             RequestMessage = "Please approve my connection",
                         }
                         },
-                    Subnet = new SubnetData() { Id = subnetID}
+                    Subnet = new SubnetData() { Id = subnetID }
                 };
                 PrivateEndpointResource = (await ResGroup.GetPrivateEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, EndpointName, privateEndpointData)).Value;
-            }
         }
 
         [Test]

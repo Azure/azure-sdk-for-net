@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -172,14 +173,14 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        public async Task<bool> TryPauseAsync(CancellationToken cancellationToken)
+        internal bool CanPause()
+            => _status == StorageTransferStatus.InProgress;
+
+        public async Task PauseIfRunningAsync(CancellationToken cancellationToken)
         {
-            if (StorageTransferStatus.Paused == _status ||
-                StorageTransferStatus.Completed == _status ||
-                StorageTransferStatus.CompletedWithSkippedTransfers == _status ||
-                StorageTransferStatus.CompletedWithFailedTransfers == _status)
+            if (!CanPause())
             {
-                return false;
+                return;
             }
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             // Call the inner cancellation token to stop the transfer job
@@ -188,9 +189,7 @@ namespace Azure.Storage.DataMovement
             {
                 // Wait until full pause has completed.
                 await CompletionSource.Task.AwaitWithCancellation(cancellationToken);
-                return true;
             }
-            return false;
         }
 
         internal bool TriggerCancellation()

@@ -3,12 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Castle.Core.Internal;
 using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
@@ -17,7 +15,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
     {
         [SyncOnly]
         [RecordedTest]
-        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2022_05_15_Preview)]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2023_04_01)]
         public void AnalyzeConversation_ConversationSummarization()
         {
             ConversationAnalysisClient client = Client;
@@ -122,7 +120,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
         [AsyncOnly]
         [RecordedTest]
-        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2022_05_15_Preview)]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2023_04_01)]
         public async Task AnalyzeConversationAsync_ConversationSummarization()
         {
             ConversationAnalysisClient client = Client;

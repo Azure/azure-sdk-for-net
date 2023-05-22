@@ -74,6 +74,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("readinessProbe"u8);
                 writer.WriteObjectValue(ReadinessProbe);
             }
+            if (Optional.IsDefined(SecurityContext))
+            {
+                writer.WritePropertyName("securityContext"u8);
+                writer.WriteObjectValue(SecurityContext);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -94,6 +99,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<IList<ContainerVolumeMount>> volumeMounts = default;
             Optional<ContainerProbe> livenessProbe = default;
             Optional<ContainerProbe> readinessProbe = default;
+            Optional<ContainerSecurityContextDefinition> securityContext = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -203,11 +209,20 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             readinessProbe = ContainerProbe.DeserializeContainerProbe(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("securityContext"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            securityContext = ContainerSecurityContextDefinition.DeserializeContainerSecurityContextDefinition(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ContainerInstanceContainer(name, image, Optional.ToList(command), Optional.ToList(ports), Optional.ToList(environmentVariables), instanceView.Value, resources, Optional.ToList(volumeMounts), livenessProbe.Value, readinessProbe.Value);
+            return new ContainerInstanceContainer(name, image, Optional.ToList(command), Optional.ToList(ports), Optional.ToList(environmentVariables), instanceView.Value, resources, Optional.ToList(volumeMounts), livenessProbe.Value, readinessProbe.Value, securityContext.Value);
         }
     }
 }
