@@ -1,7 +1,7 @@
 # Using Namespace Topics
 
-Namespace topics are a new feature currently in public preview that allow you to receive events from directly from Azure Event Grid 
-without the need for integrating with another service such as Storage Queues or Service Bus for event delivery. Namespace topics can be 
+Namespace topics are a new feature currently in public preview that allow you to publish and receive events directly from Azure Event Grid 
+without the need to integrate with another service such as Storage Queues or Service Bus for event delivery. Namespace topics can be 
 interacted with using the `EventGridClient`.
 
 ```C# Snippet:CreateNamespaceClient
@@ -30,8 +30,7 @@ await client.PublishCloudEventsAsync(
     });
 ```
 
-Now that are events have been published, we can use our configured [namespace topic event subscription](https://learn.microsoft.
-com/en-us/azure/templates/microsoft.eventgrid/namespaces/topics/eventsubscriptions?pivots=deployment-language-arm-template), to receive 
+Now that our events have been published, we can use our configured [namespace topic event subscription](https://learn.microsoft.com/azure/templates/microsoft.eventgrid/namespaces/topics/eventsubscriptions?pivots=deployment-language-arm-template), to receive 
 and process the events.
 There are three different actions you can take on a received event:
  - Acknowledge - this deletes the event from the subscription
