@@ -212,10 +212,8 @@ namespace Azure.Storage.DataMovement
                             // Throw an error here that we were unable to idenity the
                             // the range that has come back to us. We should never see this error
                             // since we were the ones who calculated the range.
-                            await InvokeFailedEvent(
-                                new ArgumentException($"Cannot find offset returned by Successful Download Range" +
-                                    $"in the expected Ranges: \"{args.Offset}\""))
-                            .ConfigureAwait(false);
+                            throw new ArgumentException($"Cannot find offset returned by Successful Download Range" +
+                                    $"in the expected Ranges: \"{args.Offset}\"");
                         }
                     }
                     else if (currentRangeOffset == args.Offset)
@@ -246,17 +244,21 @@ namespace Azure.Storage.DataMovement
                         // We should never reach this point because that means
                         // the range that came back was less than the next range that is supposed
                         // to be copied to the file
-                        await InvokeFailedEvent(
-                            new ArgumentException($"Offset returned by Successful Download Range" +
-                                $"was not in the expected Ranges: \"{args.Offset}\""))
-                        .ConfigureAwait(false);
+                        throw new ArgumentException($"Offset returned by Successful Download Range" +
+                                $"was not in the expected Ranges: \"{args.Offset}\"");
                     }
                     _currentBytesSemaphore.Release();
                 }
             }
             catch (Exception ex)
             {
-                await _invokeFailedEventHandler(ex).ConfigureAwait(false);
+                if (_currentBytesSemaphore.CurrentCount == 0)
+                {
+                    _currentBytesSemaphore.Release();
+                }
+                // Invoke the failed event argument here after we've released the semaphore
+                // or else we risk disposing the semaphore and releasing it after.
+                await InvokeFailedEvent(ex).ConfigureAwait(false);
             }
         }
 
@@ -293,28 +295,25 @@ namespace Azure.Storage.DataMovement
                         }
                         else
                         {
-                            await InvokeFailedEvent(new FileNotFoundException(
-                                $"Could not append chunk to destination file at Offset: " +
+                            throw new FileNotFoundException($"Could not append chunk to destination file at Offset: " +
                                 $"\"{currentRange.Offset}\" and Length: \"{currentRange.Length}\"," +
-                                $"due to the chunk file missing: \"{chunkFilePath}\"")).ConfigureAwait(false);
+                                $"due to the chunk file missing: \"{chunkFilePath}\"");
                         }
                     }
                     catch
                     {
-                        await InvokeFailedEvent(new Exception(
+                        throw new Exception(
                             $"Could not append chunk to destination file at Offset: " +
-                            $"\"{currentRange.Offset}\" and Length: \"{currentRange.Length}\""))
-                            .ConfigureAwait(false);
+                            $"\"{currentRange.Offset}\" and Length: \"{currentRange.Length}\"");
                     }
                 }
                 else
                 {
-                    await InvokeFailedEvent(new ArgumentOutOfRangeException(
+                    throw new ArgumentOutOfRangeException(
                         "Offset",
                         currentRange,
                         $"Cannot find offset returned by Successful Download Range at Offset: " +
-                        $"\"{currentRange.Offset}\" and Length: \"{currentRange.Length}\""))
-                        .ConfigureAwait(false);
+                        $"\"{currentRange.Offset}\" and Length: \"{currentRange.Length}\"");
                 }
 
                 // Increment the current range we are expect, if it's null then

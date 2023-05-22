@@ -102,6 +102,22 @@ namespace Azure.Storage.DataMovement.Tests
             return mock;
         }
 
+        private Mock<DownloadChunkHandler.CopyToChunkFileInternal> GetExceptionCopyToChunkFileTask()
+        {
+            var mock = new Mock<DownloadChunkHandler.CopyToChunkFileInternal>(MockBehavior.Strict);
+            mock.Setup(del => del(It.IsNotNull<string>(), It.IsNotNull<Stream>()))
+                .Throws(new UnauthorizedAccessException());
+            return mock;
+        }
+
+        private Mock<DownloadChunkHandler.CopyToDestinationFileInternal> GetExceptionCopyToDestinationFileTask()
+        {
+            var mock = new Mock<DownloadChunkHandler.CopyToDestinationFileInternal>(MockBehavior.Strict);
+            mock.Setup(del => del(It.IsNotNull<long>(), It.IsNotNull<long>(), It.IsNotNull<Stream>(), It.IsNotNull<long>()))
+                .Throws(new UnauthorizedAccessException());
+            return mock;
+        }
+
         private Mock<DownloadChunkHandler.ReportProgressInBytes> GetReportProgressInBytesTask()
         {
             var mock = new Mock<DownloadChunkHandler.ReportProgressInBytes>(MockBehavior.Strict);
@@ -114,6 +130,14 @@ namespace Azure.Storage.DataMovement.Tests
             var mock = new Mock<DownloadChunkHandler.QueueCompleteFileDownloadInternal>(MockBehavior.Strict);
             mock.Setup(del => del())
                 .Returns(Task.CompletedTask);
+            return mock;
+        }
+
+        private Mock<DownloadChunkHandler.QueueCompleteFileDownloadInternal> GetExceptionQueueCompleteFileDownloadTask()
+        {
+            var mock = new Mock<DownloadChunkHandler.QueueCompleteFileDownloadInternal>(MockBehavior.Strict);
+            mock.Setup(del => del())
+                .Throws(new UnauthorizedAccessException());
             return mock;
         }
 
@@ -142,6 +166,13 @@ namespace Azure.Storage.DataMovement.Tests
                 ReportProgressInBytesTask = GetReportProgressInBytesTask(),
                 QueueCompleteFileDownloadTask = GetQueueCompleteFileDownloadTask(),
                 InvokeFailedEventHandlerTask = GetInvokeFailedEventHandlerTask()
+            };
+
+        private List<HttpRange> GetRanges(long blockSize)
+            => new List<HttpRange>()
+            {
+                new HttpRange(0, blockSize),
+                new HttpRange(blockSize, blockSize),
             };
 
         [Test]
@@ -200,11 +231,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Set up tasks
             MockDownloadChunkBehaviors mockBehaviors = GetMockDownloadChunkBehaviors();
-            List<HttpRange> ranges = new List<HttpRange>()
-            {
-                new HttpRange(0, blockSize),
-                new HttpRange(blockSize, blockSize),
-            };
+            List<HttpRange> ranges = GetRanges(blockSize);
             var downloadChunkHandler = new DownloadChunkHandler(
                 currentTransferred: 0,
                 expectedLength: blockSize * 2,
@@ -268,11 +295,8 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Set up tasks
             MockDownloadChunkBehaviors mockBehaviors = GetMockDownloadChunkBehaviors();
-            List<HttpRange> ranges = new List<HttpRange>()
-            {
-                new HttpRange(0, blockSize),
-                new HttpRange(blockSize, blockSize),
-            };
+            List<HttpRange> ranges = GetRanges(blockSize);
+
             var downloadChunkHandler = new DownloadChunkHandler(
                 currentTransferred: 0,
                 expectedLength: blockSize * 2,
@@ -325,11 +349,8 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Set up tasks
             MockDownloadChunkBehaviors mockBehaviors = GetMockDownloadChunkBehaviors();
-            List<HttpRange> ranges = new List<HttpRange>()
-            {
-                new HttpRange(0, blockSize),
-                new HttpRange(blockSize, blockSize),
-            };
+            List<HttpRange> ranges = GetRanges(blockSize);
+
             var downloadChunkHandler = new DownloadChunkHandler(
                 currentTransferred: 0,
                 expectedLength: blockSize * 2,
@@ -437,6 +458,132 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCopyDestinationCount: taskSize,
                 expectedCopyChunkCount: 0,
                 expectedReportProgressCount: taskSize,
+                expectedCompleteFileCount: 1);
+        }
+
+        [Test]
+        public async Task GetCopyToChunkFileTask_ExpectedFailure()
+        {
+            MockDownloadChunkBehaviors mockBehaviors = GetMockDownloadChunkBehaviors();
+            mockBehaviors.CopyToChunkFileTask = GetExceptionCopyToChunkFileTask();
+            int blockSize = 512;
+            List<HttpRange> ranges = GetRanges(blockSize);
+
+            var downloadChunkHandler = new DownloadChunkHandler(
+                currentTransferred: 0,
+                expectedLength: blockSize * 2,
+                ranges: ranges,
+                new DownloadChunkHandler.Behaviors
+                {
+                    CopyToDestinationFile = mockBehaviors.CopyToDestinationFileTask.Object,
+                    CopyToChunkFile = mockBehaviors.CopyToChunkFileTask.Object,
+                    QueueCompleteFileDownload = mockBehaviors.QueueCompleteFileDownloadTask.Object,
+                    ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
+                    InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
+                });
+
+            PredictableStream content = new PredictableStream(blockSize);
+
+            await downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
+                transferId: "fake-id",
+                success: true,
+                offset: blockSize,
+                bytesTransferred: blockSize,
+                result: content,
+                isRunningSynchronously: false,
+                cancellationToken: CancellationToken.None));
+
+            VerifyDelegateInvocations(
+                behaviors: mockBehaviors,
+                expectedFailureCount: 1,
+                expectedCopyDestinationCount: 0,
+                expectedCopyChunkCount: 1,
+                expectedReportProgressCount: 0,
+                expectedCompleteFileCount: 0);
+        }
+
+        [Test]
+        public async Task GetCopyToDestinationFileTask_ExpectedFailure()
+        {
+            MockDownloadChunkBehaviors mockBehaviors = GetMockDownloadChunkBehaviors();
+            mockBehaviors.CopyToDestinationFileTask = GetExceptionCopyToDestinationFileTask();
+            int blockSize = 512;
+            List<HttpRange> ranges = GetRanges(blockSize);
+
+            var downloadChunkHandler = new DownloadChunkHandler(
+                currentTransferred: 0,
+                expectedLength: blockSize * 2,
+                ranges: ranges,
+                new DownloadChunkHandler.Behaviors
+                {
+                    CopyToDestinationFile = mockBehaviors.CopyToDestinationFileTask.Object,
+                    CopyToChunkFile = mockBehaviors.CopyToChunkFileTask.Object,
+                    QueueCompleteFileDownload = mockBehaviors.QueueCompleteFileDownloadTask.Object,
+                    ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
+                    InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
+                });
+
+            PredictableStream content = new PredictableStream(blockSize);
+
+            await downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
+                transferId: "fake-id",
+                success: true,
+                offset: 0,
+                bytesTransferred: blockSize,
+                result: content,
+                isRunningSynchronously: false,
+                cancellationToken: CancellationToken.None));
+
+            VerifyDelegateInvocations(
+                behaviors: mockBehaviors,
+                expectedFailureCount: 1,
+                expectedCopyDestinationCount: 1,
+                expectedCopyChunkCount: 0,
+                expectedReportProgressCount: 0,
+                expectedCompleteFileCount: 0);
+        }
+
+        [Test]
+        public async Task QueueCompleteFileDownloadTask_ExpectedFailure()
+        {
+            MockDownloadChunkBehaviors mockBehaviors = GetMockDownloadChunkBehaviors();
+            mockBehaviors.QueueCompleteFileDownloadTask = GetExceptionQueueCompleteFileDownloadTask();
+            int blockSize = 512;
+            List<HttpRange> ranges = new List<HttpRange>()
+            {
+                new HttpRange(0, blockSize)
+            };
+
+            var downloadChunkHandler = new DownloadChunkHandler(
+                currentTransferred: 0,
+                expectedLength: blockSize,
+                ranges: ranges,
+                new DownloadChunkHandler.Behaviors
+                {
+                    CopyToDestinationFile = mockBehaviors.CopyToDestinationFileTask.Object,
+                    CopyToChunkFile = mockBehaviors.CopyToChunkFileTask.Object,
+                    QueueCompleteFileDownload = mockBehaviors.QueueCompleteFileDownloadTask.Object,
+                    ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
+                    InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
+                });
+
+            PredictableStream content = new PredictableStream(blockSize);
+
+            await downloadChunkHandler.InvokeEvent(new DownloadRangeEventArgs(
+                transferId: "fake-id",
+                success: true,
+                offset: 0,
+                bytesTransferred: blockSize,
+                result: content,
+                isRunningSynchronously: false,
+                cancellationToken: CancellationToken.None));
+
+            VerifyDelegateInvocations(
+                behaviors: mockBehaviors,
+                expectedFailureCount: 1,
+                expectedCopyDestinationCount: 1,
+                expectedCopyChunkCount: 0,
+                expectedReportProgressCount: 1,
                 expectedCompleteFileCount: 1);
         }
     }
