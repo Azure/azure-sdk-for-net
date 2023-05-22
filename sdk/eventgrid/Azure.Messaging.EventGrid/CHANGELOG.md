@@ -1,14 +1,10 @@
 # Release History
 
-## 4.17.0-beta.1 (Unreleased)
+## 4.17.0-beta.1 (2023-05-22)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `EventGridClient` for interacting with topic and subscription namespaces.
 
 ## 4.16.0 (2023-05-09)
 

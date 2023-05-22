@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -14,6 +15,8 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public async Task RespectsPortFromUriSendingCustomEvents()
         {
+            var ri = new ResourceIdentifier("////subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.EventGrid/topics/topic1");
+            var s = ri.ToString();
             var mockTransport = new MockTransport((request) =>
             {
                 Assert.AreEqual(100, request.Uri.Port);
