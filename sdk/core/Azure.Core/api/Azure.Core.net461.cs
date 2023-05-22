@@ -542,7 +542,9 @@ namespace Azure.Core
         public static Azure.Core.RequestContent Create(byte[] bytes) { throw null; }
         public static Azure.Core.RequestContent Create(byte[] bytes, int index, int length) { throw null; }
         public static Azure.Core.RequestContent Create(System.IO.Stream stream) { throw null; }
-        public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.ObjectSerializer? serializer = null) { throw null; }
+        public static Azure.Core.RequestContent Create(object serializable) { throw null; }
+        public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.ObjectSerializer? serializer) { throw null; }
+        public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.PropertyNameHandling propertyNameHandling, Azure.Core.Serialization.DateTimeHandling dateTimeHandling = Azure.Core.Serialization.DateTimeHandling.Rfc3339) { throw null; }
         public static Azure.Core.RequestContent Create(System.ReadOnlyMemory<byte> bytes) { throw null; }
         public static Azure.Core.RequestContent Create(string content) { throw null; }
         public abstract void Dispose();
@@ -1101,8 +1103,9 @@ namespace Azure.Core.Serialization
 {
     public enum DateTimeHandling
     {
-        Rfc3339 = 0,
-        UnixTime = 1,
+        None = 0,
+        Rfc3339 = 1,
+        UnixTime = 2,
     }
     public partial interface IMemberNameConverter
     {

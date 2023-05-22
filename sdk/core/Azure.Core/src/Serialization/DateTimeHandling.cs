@@ -1,17 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using Azure.Core.Json;
-
 namespace Azure.Core.Serialization
 {
     /// <summary>
@@ -19,6 +8,12 @@ namespace Azure.Core.Serialization
     /// </summary>
     public enum DateTimeHandling
     {
+        /// <summary>
+        /// DateTime and DateTimeOffset values will be serialized and deserialized using
+        /// System.Text.Json defaults.
+        /// </summary>
+        None,
+
         /// <summary>
         /// DateTime and DateTimeOffset values will be
         /// serialized, and conversions to DateTime and DateTimeOffset will be deserialized,
