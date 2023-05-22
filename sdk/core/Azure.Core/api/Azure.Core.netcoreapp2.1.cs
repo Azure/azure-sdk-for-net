@@ -120,6 +120,12 @@ namespace Azure
         public Azure.ETag? IfMatch { get { throw null; } set { } }
         public Azure.ETag? IfNoneMatch { get { throw null; } set { } }
     }
+    public static partial class ModelSerializer
+    {
+        public static T Deserialize<T>(System.IO.Stream stream, Azure.SerializableOptions? options = null) where T : Azure.IJsonSerializable, new() { throw null; }
+        public static T Deserialize<T>(string json, Azure.SerializableOptions? options = null) where T : Azure.IJsonSerializable, new() { throw null; }
+        public static System.IO.Stream Serialize<T>(T model, Azure.SerializableOptions? options = null) where T : Azure.IJsonSerializable, new() { throw null; }
+    }
     public abstract partial class NullableResponse<T>
     {
         protected NullableResponse() { }

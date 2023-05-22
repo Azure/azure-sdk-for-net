@@ -98,14 +98,24 @@ DogListProperty dog = new DogListProperty
     Weight = 1.1,
     FoodConsumed = { "kibble", "egg", "peanut butter" },
 };
+
+//stj example
 string json = JsonSerializer.Serialize(dog);
+
+//modelSerializer example
+Stream stream = ModelSerializer.Serialize(dog);
 ```
 
 Deserialization
 
 ```C# Snippet:Stj_Deserialize
 string json = "{\"latinName\":\"Animalia\",\"weight\":1.1,\"name\":\"Doggo\",\"isHungry\":false,\"foodConsumed\":[\"kibble\",\"egg\",\"peanut butter\"],\"numberOfLegs\":4}";
+
+//stj example
 DogListProperty dog = JsonSerializer.Deserialize<DogListProperty>(json);
+
+//modelSerializer example
+DogListProperty dog2 = ModelSerializer.Deserialize<DogListProperty>(json);
 ```
 
 ## Using static deserializer

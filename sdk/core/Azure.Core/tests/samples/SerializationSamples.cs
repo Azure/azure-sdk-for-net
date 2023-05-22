@@ -114,7 +114,12 @@ namespace Azure.Core.Samples
                 Weight = 1.1,
                 FoodConsumed = { "kibble", "egg", "peanut butter" },
             };
+
+            //stj example
             string json = JsonSerializer.Serialize(dog);
+
+            //modelSerializer example
+            Stream stream = ModelSerializer.Serialize(dog);
             #endregion
         }
 
@@ -124,7 +129,12 @@ namespace Azure.Core.Samples
         {
             #region Snippet:Stj_Deserialize
             string json = "{\"latinName\":\"Animalia\",\"weight\":1.1,\"name\":\"Doggo\",\"isHungry\":false,\"foodConsumed\":[\"kibble\",\"egg\",\"peanut butter\"],\"numberOfLegs\":4}";
+
+            //stj example
             DogListProperty dog = JsonSerializer.Deserialize<DogListProperty>(json);
+
+            //modelSerializer example
+            DogListProperty dog2 = ModelSerializer.Deserialize<DogListProperty>(json);
             #endregion
         }
 
