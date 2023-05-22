@@ -109,17 +109,15 @@ DogListProperty dog = JsonSerializer.Deserialize<DogListProperty>(json);
 ```
 
 ## Using static deserializer
-
-Serialization
-
-```C# Snippet:Static_Serialize
-//TODO
-```
-
-Deserialization
+Serialize would use the Try/Do examples from above. We would use Interface form the Serializable but potentially have static method for Deserialize. 
+When using Static Deserialize, an empty Model does not have to be created first as we can deserialize directly into a new instance.
 
 ```C# Snippet:Static_Deserialize
-//TODO
+SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = false, IgnoreAdditionalProperties = false };
+string serviceResponse =
+    "{\"latinName\":\"Animalia\",\"weight\":2.3,\"name\":\"Rabbit\",\"isHungry\":false,\"numberOfLegs\":4}";
+
+Animal model = Animal.StaticDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
 ```
 
 
