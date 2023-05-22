@@ -18,7 +18,7 @@ namespace Azure.AI.AnomalyDetector
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataSource"u8);
-            writer.WriteStringValue(DataSource);
+            writer.WriteStringValue(DataSource.AbsoluteUri);
             if (Optional.IsDefined(TopContributorCount))
             {
                 if (TopContributorCount != null)
@@ -44,7 +44,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 return null;
             }
-            string dataSource = default;
+            Uri dataSource = default;
             Optional<int?> topContributorCount = default;
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
@@ -52,7 +52,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (property.NameEquals("dataSource"u8))
                 {
-                    dataSource = property.Value.GetString();
+                    dataSource = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("topContributorCount"u8))

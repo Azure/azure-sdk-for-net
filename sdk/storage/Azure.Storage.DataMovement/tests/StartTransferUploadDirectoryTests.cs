@@ -61,7 +61,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer sourceResource =
                 new LocalDirectoryStorageResourceContainer(localDirectoryPath);
             StorageResourceContainer destinationResource =
-                new BlobDirectoryStorageResourceContainer(destinationContainer, destinationPrefix);
+                new BlobStorageResourceContainer(destinationContainer, new() { DirectoryPrefix = destinationPrefix });
 
             // Set up blob to upload
             DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
@@ -202,7 +202,7 @@ namespace Azure.Storage.DataMovement.Tests
             string localDirectory = CreateRandomDirectory(testDirectory.DirectoryPath);
 
             // Set up destination client
-            StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(test.Container, dirName);
+            StorageResourceContainer destinationResource = new BlobStorageResourceContainer(test.Container, new() { DirectoryPrefix = dirName });
             StorageResourceContainer sourceResource = new LocalDirectoryStorageResourceContainer(localDirectory);
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
@@ -235,7 +235,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
-            StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(test.Container, dirName);
+            StorageResourceContainer destinationResource = new BlobStorageResourceContainer(test.Container, new() { DirectoryPrefix = dirName });
 
             List<string> files = new List<string>();
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
@@ -472,11 +472,11 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer sourceResource = new LocalDirectoryStorageResourceContainer(localDirectory);
             BlobStorageResourceContainerOptions options = new BlobStorageResourceContainerOptions()
             {
-                BlobType = blobType
+                BlobType = blobType,
+                DirectoryPrefix = destinationPrefix,
             };
-            StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(
+            StorageResourceContainer destinationResource = new BlobStorageResourceContainer(
                 test.Container,
-                destinationPrefix,
                 options);
 
             TransferOptions containerOptions = new TransferOptions();
@@ -626,7 +626,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create storage resources
             StorageResourceContainer sourceResource = new LocalDirectoryStorageResourceContainer(sourceDirectoryPath);
             // Create destination folder
-            StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(containerClient, destinationFolderName);
+            StorageResourceContainer destinationResource = new BlobStorageResourceContainer(containerClient, new() { DirectoryPrefix = destinationFolderName });
 
             // Create Transfer Manager with single threaded operation
             TransferManagerOptions managerOptions = new TransferManagerOptions()

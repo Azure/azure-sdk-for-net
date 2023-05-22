@@ -20,7 +20,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             //read endpoint and apiKey
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            string dataSource = TestEnvironment.DataSource;
+            Uri dataSource = new Uri(TestEnvironment.DataSource);
 
             Uri endpointUri = new Uri(endpoint);
             AzureKeyCredential credential = new AzureKeyCredential(apiKey);
@@ -76,7 +76,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
         }
 
         #region Snippet:TrainMultivariateModel
-        private string TrainModel(AnomalyDetectorClient client, string dataSource, DateTimeOffset startTime, DateTimeOffset endTime, int maxTryout = 500)
+        private string TrainModel(AnomalyDetectorClient client, Uri dataSource, DateTimeOffset startTime, DateTimeOffset endTime, int maxTryout = 500)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
                 Console.WriteLine("Training new model...(it may take a few minutes)");
                 AnomalyDetectionModel response = client.TrainMultivariateModel(modelInfo);
-                string trainedModelId = response.ModelId;
+                string trainedModelId = response.ModelId.ToString();
                 Console.WriteLine($"Training model id is {trainedModelId}");
 
                 // Wait until the model is ready. It usually takes several minutes
@@ -139,7 +139,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
         #endregion
 
         #region Snippet:DetectMultivariateAnomaly
-        private MultivariateDetectionResult BatchDetect(AnomalyDetectorClient client, string datasource, string modelId, DateTimeOffset startTime, DateTimeOffset endTime, int maxTryout = 500)
+        private MultivariateDetectionResult BatchDetect(AnomalyDetectorClient client, Uri datasource, string modelId, DateTimeOffset startTime, DateTimeOffset endTime, int maxTryout = 500)
         {
             try
             {
@@ -148,8 +148,8 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
                 Console.WriteLine("Start batch detection, this might take a few minutes...");
                 MultivariateDetectionResult response = client.DetectMultivariateBatchAnomaly(modelId, request);
-                string resultId = response.ResultId;
-                Console.WriteLine($"result id is: {resultId}");
+                Guid resultId = response.ResultId;
+                Console.WriteLine($"result id is: {resultId.ToString()}");
 
                 // get detection result
                 MultivariateDetectionResult resultResponse = client.GetMultivariateBatchDetectionResult(resultId);
