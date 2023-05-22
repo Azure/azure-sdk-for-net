@@ -152,7 +152,11 @@ namespace Azure.Core.Samples
         public void StaticDeserialize()
         {
             #region Snippet:Static_Deserialize
-            //TODO
+            SerializableOptions options = new SerializableOptions() { IgnoreReadOnlyProperties = false, IgnoreAdditionalProperties = false };
+            string serviceResponse =
+                "{\"latinName\":\"Animalia\",\"weight\":2.3,\"name\":\"Rabbit\",\"isHungry\":false,\"numberOfLegs\":4}";
+
+            Animal model = Animal.StaticDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
             #endregion
         }
     }

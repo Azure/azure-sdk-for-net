@@ -170,5 +170,13 @@ namespace Azure.Core.Tests.ModelSerializationTests
             writer.Flush();
         }
         #endregion
+
+        #region PublicStaticDeserializer
+        public static Animal StaticDeserialize(Stream stream, SerializableOptions options = default)
+        {
+            JsonDocument jsonDocument = JsonDocument.Parse(stream);
+            return DeserializeAnimal(jsonDocument.RootElement, options ?? new SerializableOptions());
+        }
+        #endregion
     }
 }
