@@ -153,6 +153,23 @@ namespace Azure.Communication.JobRouter
         public System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.ExceptionAction?> Actions { get { throw null; } }
         public Azure.Communication.JobRouter.JobExceptionTrigger Trigger { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ExpressionLanguage : System.IEquatable<Azure.Communication.JobRouter.ExpressionLanguage>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ExpressionLanguage(string value) { throw null; }
+        public static Azure.Communication.JobRouter.ExpressionLanguage PowerFx { get { throw null; } }
+        public bool Equals(Azure.Communication.JobRouter.ExpressionLanguage other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.JobRouter.ExpressionLanguage left, Azure.Communication.JobRouter.ExpressionLanguage right) { throw null; }
+        public static implicit operator Azure.Communication.JobRouter.ExpressionLanguage (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.JobRouter.ExpressionLanguage left, Azure.Communication.JobRouter.ExpressionLanguage right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ExpressionRule : Azure.Communication.JobRouter.RouterRule
     {
         public ExpressionRule(string expression) { }
@@ -248,6 +265,7 @@ namespace Azure.Communication.JobRouter
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.JobRouter.LabelValue left, Azure.Communication.JobRouter.LabelValue right) { throw null; }
         public static bool operator !=(Azure.Communication.JobRouter.LabelValue left, Azure.Communication.JobRouter.LabelValue right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class LongestIdleMode : Azure.Communication.JobRouter.DistributionMode
     {
@@ -779,6 +797,7 @@ namespace Azure.Communication.JobRouter.Models
         public static Azure.Communication.JobRouter.Models.DistributionPolicyItem DistributionPolicyItem(Azure.Communication.JobRouter.Models.DistributionPolicy distributionPolicy = null, string etag = null) { throw null; }
         public static Azure.Communication.JobRouter.Models.ExceptionPolicy ExceptionPolicy(string id = null, string name = null, System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.ExceptionRule> exceptionRules = null) { throw null; }
         public static Azure.Communication.JobRouter.Models.ExceptionPolicyItem ExceptionPolicyItem(Azure.Communication.JobRouter.Models.ExceptionPolicy exceptionPolicy = null, string etag = null) { throw null; }
+        public static Azure.Communication.JobRouter.ExpressionRule ExpressionRule(string language = null, string expression = null) { throw null; }
         public static Azure.Communication.JobRouter.Models.JobAssignment JobAssignment(string id = null, string workerId = null, System.DateTimeOffset assignTime = default(System.DateTimeOffset), System.DateTimeOffset? completeTime = default(System.DateTimeOffset?), System.DateTimeOffset? closeTime = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Communication.JobRouter.Models.JobOffer JobOffer(string id = null, string jobId = null, int capacityCost = 0, System.DateTimeOffset? offerTimeUtc = default(System.DateTimeOffset?), System.DateTimeOffset? expiryTimeUtc = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Communication.JobRouter.Models.JobPositionDetails JobPositionDetails(string jobId = null, int position = 0, string queueId = null, int queueLength = 0, double estimatedWaitTimeMinutes = 0) { throw null; }

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetContainerApps_ListContainerAppsBySubscription()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2022-10-01/examples/ContainerApps_ListBySubscription.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/ContainerApps_ListBySubscription.json
             // this example is just showing the usage of "ContainerApps_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetContainerApp()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2022-10-01/examples/ContainerApps_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/ContainerApps_Get.json
             // this example is just showing the usage of "ContainerApps_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteContainerApp()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2022-10-01/examples/ContainerApps_Delete.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/ContainerApps_Delete.json
             // this example is just showing the usage of "ContainerApps_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_PatchContainerApp()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2022-10-01/examples/ContainerApps_Patch.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/ContainerApps_Patch.json
             // this example is just showing the usage of "ContainerApps_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -150,12 +150,14 @@ Label = "production",
 },
                         CustomDomains =
 {
-new ContainerAppCustomDomain("www.my-name.com",new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/rg/providers/Microsoft.App/managedEnvironments/demokube/certificates/my-certificate-for-my-name-dot-com"))
+new ContainerAppCustomDomain("www.my-name.com")
 {
 BindingType = ContainerAppCustomDomainBindingType.SniEnabled,
-},new ContainerAppCustomDomain("www.my-other-name.com",new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/rg/providers/Microsoft.App/managedEnvironments/demokube/certificates/my-certificate-for-my-other-name-dot-com"))
+CertificateId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/rg/providers/Microsoft.App/managedEnvironments/demokube/certificates/my-certificate-for-my-name-dot-com"),
+},new ContainerAppCustomDomain("www.my-other-name.com")
 {
 BindingType = ContainerAppCustomDomainBindingType.SniEnabled,
+CertificateId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/rg/providers/Microsoft.App/managedEnvironments/demokube/certificates/my-certificate-for-my-other-name-dot-com"),
 }
 },
                         IPSecurityRestrictions =
@@ -168,6 +170,7 @@ Description = "Allowing all IP's within the subnet below to access containerapp"
 Description = "Allowing all IP's within the subnet below to access containerapp",
 }
 },
+                        StickySessionsAffinity = Affinity.Sticky,
                     },
                     Dapr = new ContainerAppDaprConfiguration()
                     {
@@ -263,7 +266,7 @@ Metadata =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetCustomHostNameAnalysis_AnalyzeCustomHostname()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2022-10-01/examples/ContainerApps_ListCustomHostNameAnalysis.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/ContainerApps_ListCustomHostNameAnalysis.json
             // this example is just showing the usage of "ContainerApps_ListCustomHostNameAnalysis" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -291,7 +294,7 @@ Metadata =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetSecrets_ListContainerAppsSecrets()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2022-10-01/examples/ContainerApps_ListSecrets.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/ContainerApps_ListSecrets.json
             // this example is just showing the usage of "ContainerApps_ListSecrets" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -321,7 +324,7 @@ Metadata =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAuthToken_GetContainerAppAuthToken()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2022-10-01/examples/ContainerApps_GetAuthToken.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/ContainerApps_GetAuthToken.json
             // this example is just showing the usage of "ContainerApps_GetAuthToken" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

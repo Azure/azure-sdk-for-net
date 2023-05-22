@@ -5,6 +5,7 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -262,9 +263,12 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        internal virtual Task<bool> TryPauseAllTransfersAsync()
+        internal virtual async Task PauseAllRunningTransfersAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            await Task.WhenAll(_dataTransfers.Values
+                .Where(transfer => transfer.CanPause())
+                .Select(transfer => transfer.PauseIfRunningAsync(cancellationToken)))
+                .ConfigureAwait(false);
         }
 
         /// <summary>
