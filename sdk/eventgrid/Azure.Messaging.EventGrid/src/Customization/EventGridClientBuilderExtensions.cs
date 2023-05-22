@@ -13,7 +13,7 @@ using Azure.Messaging.EventGrid.Namespaces;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="EventGridClient"/> to client builder. </summary>
-    public static partial class AzureMessagingEventGridClientBuilderExtensions
+    public static partial class EventGridClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="EventGridClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>

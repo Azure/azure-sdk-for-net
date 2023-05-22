@@ -2831,7 +2831,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 }
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class AzureMessagingEventGridClientBuilderExtensions
+    public static partial class EventGridClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.EventGrid.Namespaces.EventGridClient, Azure.Messaging.EventGrid.Namespaces.EventGridClientOptions> AddEventGridClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.EventGrid.Namespaces.EventGridClient, Azure.Messaging.EventGrid.Namespaces.EventGridClientOptions> AddEventGridClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
