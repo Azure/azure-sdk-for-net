@@ -86,6 +86,24 @@ namespace Azure.Search.Documents.Tests
                         new VectorSearchAlgorithmConfiguration( "my-vector-config", "hnsw")
                     }
                 },
+                SemanticSettings = new()
+                {
+                    Configurations =
+                    {
+                       new SemanticConfiguration("my-semantic-config", new()
+                       {
+                           TitleField = new(){ FieldName = "hotelName" },
+                           ContentFields =
+                           {
+                               new() { FieldName = "description" }
+                           },
+                           KeywordFields =
+                           {
+                               new() { FieldName = "category" }
+                           }
+                       })
+                    }
+                },
                 Suggesters =
                 {
                     new SearchSuggester("sg", "description", "hotelName"),

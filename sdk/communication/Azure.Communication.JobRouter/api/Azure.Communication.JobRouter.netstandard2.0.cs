@@ -265,6 +265,7 @@ namespace Azure.Communication.JobRouter
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.JobRouter.LabelValue left, Azure.Communication.JobRouter.LabelValue right) { throw null; }
         public static bool operator !=(Azure.Communication.JobRouter.LabelValue left, Azure.Communication.JobRouter.LabelValue right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class LongestIdleMode : Azure.Communication.JobRouter.DistributionMode
     {

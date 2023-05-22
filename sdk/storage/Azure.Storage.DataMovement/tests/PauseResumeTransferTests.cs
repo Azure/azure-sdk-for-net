@@ -471,7 +471,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationContainer: destinationContainer.Container);
         }
 
-        private async Task<BlobDirectoryStorageResourceContainer> CreateBlobDirectorySourceResourceAsync(
+        private async Task<BlobStorageResourceContainer> CreateBlobDirectorySourceResourceAsync(
             long size,
             int blobCount,
             string directoryPath,
@@ -490,7 +490,9 @@ namespace Azure.Storage.DataMovement.Tests
                     await blobClient.UploadAsync(originalStream);
                 }
             }
-            return new BlobDirectoryStorageResourceContainer(container, directoryPath, options);
+            options ??= new();
+            options.DirectoryPrefix = directoryPath;
+            return new BlobStorageResourceContainer(container, options);
         }
 
         private async Task<LocalDirectoryStorageResourceContainer> CreateLocalDirectorySourceResourceAsync(
@@ -533,14 +535,15 @@ namespace Azure.Storage.DataMovement.Tests
                 Argument.AssertNotNull(destinationContainer, nameof(destinationContainer));
                 BlobStorageResourceContainerOptions options = new BlobStorageResourceContainerOptions()
                 {
-                    CopyMethod = transferType == TransferType.SyncCopy ? TransferCopyMethod.SyncCopy : TransferCopyMethod.AsyncCopy
+                    CopyMethod = transferType == TransferType.SyncCopy ? TransferCopyMethod.SyncCopy : TransferCopyMethod.AsyncCopy,
+                    DirectoryPrefix = GetNewBlobDirectoryName()
                 };
                 SourceResource ??= await CreateBlobDirectorySourceResourceAsync(
                     size: size,
                     blobCount: transferCount,
                     directoryPath: GetNewBlobDirectoryName(),
                     container: sourceContainer);
-                DestinationResource ??= new BlobDirectoryStorageResourceContainer(destinationContainer, GetNewBlobDirectoryName(), options);
+                DestinationResource ??= new BlobStorageResourceContainer(destinationContainer, options);
             }
             else
             {
@@ -551,7 +554,12 @@ namespace Azure.Storage.DataMovement.Tests
                     size: size,
                     fileCount: transferCount,
                     directoryPath: sourceDirectoryPath);
-                DestinationResource ??= new BlobDirectoryStorageResourceContainer(destinationContainer, GetNewBlobDirectoryName());
+
+                BlobStorageResourceContainerOptions options = new()
+                {
+                    DirectoryPrefix = GetNewBlobDirectoryName()
+                };
+                DestinationResource ??= new BlobStorageResourceContainer(destinationContainer, options);
             }
             return (SourceResource, DestinationResource);
         }
