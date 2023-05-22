@@ -141,15 +141,6 @@ namespace Azure.Core.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public void StaticSerialize()
-        {
-            #region Snippet:Static_Serialize
-            //TODO
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
         public void StaticDeserialize()
         {
             #region Snippet:Static_Deserialize
