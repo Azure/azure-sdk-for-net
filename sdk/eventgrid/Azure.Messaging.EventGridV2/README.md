@@ -62,10 +62,6 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 
 You can create a client and call the client's `<operation>` method.
 
-```C# Snippet:Azure_Messaging_EventGridV2_Scenario
-Console.WriteLine("Hello, world!");
-```
-
 ## Troubleshooting
 
 Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
