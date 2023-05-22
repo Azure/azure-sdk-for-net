@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.Dynamic
 {
@@ -52,21 +53,21 @@ namespace Azure.Core.Dynamic
 
             switch (options.CaseMapping)
             {
-                case DynamicCaseMapping.PascalToCamel:
+                case CaseMapping.PascalToCamel:
                     serializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                     break;
-                case DynamicCaseMapping.None:
+                case CaseMapping.None:
                 default:
                     break;
             }
 
             switch (options.DateTimeHandling)
             {
-                case DynamicDateTimeHandling.UnixTime:
+                case DateTimeHandling.UnixTime:
                     serializerOptions.Converters.Add(new UnixTimeDateTimeConverter());
                     serializerOptions.Converters.Add(new UnixTimeDateTimeOffsetConverter());
                     break;
-                case DynamicDateTimeHandling.Rfc3339:
+                case DateTimeHandling.Rfc3339:
                 default:
                     serializerOptions.Converters.Add(new Rfc3339DateTimeConverter());
                     serializerOptions.Converters.Add(new Rfc3339DateTimeOffsetConverter());
@@ -98,7 +99,7 @@ namespace Azure.Core.Dynamic
 
             // If we're using the PascalToCamel mapping and the strict name lookup
             // failed, do a second lookup with a camelCase name as well.
-            if (_options.CaseMapping == DynamicCaseMapping.PascalToCamel && char.IsUpper(name[0]))
+            if (_options.CaseMapping == CaseMapping.PascalToCamel && char.IsUpper(name[0]))
             {
                 if (_element.TryGetProperty(ConvertToCamelCase(name), out element))
                 {
@@ -150,7 +151,7 @@ namespace Azure.Core.Dynamic
                 value = ConvertType(value);
             }
 
-            if (_options.CaseMapping == DynamicCaseMapping.PascalToCamel)
+            if (_options.CaseMapping == CaseMapping.PascalToCamel)
             {
                 name = ConvertToCamelCase(name);
             }

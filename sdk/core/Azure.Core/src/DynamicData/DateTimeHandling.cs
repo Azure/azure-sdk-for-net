@@ -12,15 +12,15 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core.Json;
 
-namespace Azure.Core.Dynamic
+namespace Azure.Core.Serialization
 {
     /// <summary>
     /// Determines how DynamicData handles DateTime and DateTimeOffset when serializing and deserializing.
     /// </summary>
-    public enum DynamicDateTimeHandling
+    public enum DateTimeHandling
     {
         /// <summary>
-        /// DateTime and DateTimeOffset values assigned to <see cref="DynamicData"/> will be
+        /// DateTime and DateTimeOffset values will be
         /// serialized, and conversions to DateTime and DateTimeOffset will be deserialized,
         /// as JSON strings, according to the Azure API Guidelines:
         /// https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#json-date-time-is-rfc3339
@@ -30,7 +30,7 @@ namespace Azure.Core.Dynamic
         Rfc3339,
 
         /// <summary>
-        /// DateTime and DateTimeOffset values assigned to <see cref="DynamicData"/> will be
+        /// DateTime and DateTimeOffset values will be
         /// serialized, and conversions to DateTime and DateTimeOffset will be deserialized,
         /// as JSON numbers.
         ///
