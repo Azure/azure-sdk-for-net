@@ -60,7 +60,7 @@ namespace Azure.AI.AnomalyDetector.Samples
             {
                 series = new[] {
         new {
-            timestamp = "2022-05-10T14:57:31.2311892-04:00",
+            timestamp = "2022-05-10T18:57:31.2311892Z",
             value = 123.45f,
         }
     },
@@ -127,7 +127,7 @@ namespace Azure.AI.AnomalyDetector.Samples
             {
                 series = new[] {
         new {
-            timestamp = "2022-05-10T14:57:31.2311892-04:00",
+            timestamp = "2022-05-10T18:57:31.2311892Z",
             value = 123.45f,
         }
     },
@@ -195,7 +195,7 @@ namespace Azure.AI.AnomalyDetector.Samples
             {
                 series = new[] {
         new {
-            timestamp = "2022-05-10T14:57:31.2311892-04:00",
+            timestamp = "2022-05-10T18:57:31.2311892Z",
             value = 123.45f,
         }
     },
@@ -264,7 +264,7 @@ namespace Azure.AI.AnomalyDetector.Samples
             {
                 series = new[] {
         new {
-            timestamp = "2022-05-10T14:57:31.2311892-04:00",
+            timestamp = "2022-05-10T18:57:31.2311892Z",
             value = 123.45f,
         }
     },
@@ -354,7 +354,7 @@ namespace Azure.AI.AnomalyDetector.Samples
             {
                 series = new[] {
         new {
-            timestamp = "2022-05-10T14:57:31.2311892-04:00",
+            timestamp = "2022-05-10T18:57:31.2311892Z",
             value = 123.45f,
         }
     },
@@ -409,7 +409,7 @@ namespace Azure.AI.AnomalyDetector.Samples
             {
                 series = new[] {
         new {
-            timestamp = "2022-05-10T14:57:31.2311892-04:00",
+            timestamp = "2022-05-10T18:57:31.2311892Z",
             value = 123.45f,
         }
     },
@@ -582,8 +582,8 @@ namespace Azure.AI.AnomalyDetector.Samples
             var data = new
             {
                 dataSource = "http://localhost:3000",
-                startTime = "2022-05-10T14:57:31.2311892-04:00",
-                endTime = "2022-05-10T14:57:31.2311892-04:00",
+                startTime = "2022-05-10T18:57:31.2311892Z",
+                endTime = "2022-05-10T18:57:31.2311892Z",
             };
 
             Response response = client.TrainMultivariateModel(RequestContent.Create(data));
@@ -606,8 +606,8 @@ namespace Azure.AI.AnomalyDetector.Samples
             {
                 dataSource = "http://localhost:3000",
                 dataSchema = "OneTable",
-                startTime = "2022-05-10T14:57:31.2311892-04:00",
-                endTime = "2022-05-10T14:57:31.2311892-04:00",
+                startTime = "2022-05-10T18:57:31.2311892Z",
+                endTime = "2022-05-10T18:57:31.2311892Z",
                 displayName = "<displayName>",
                 slidingWindow = 1234,
                 alignPolicy = new
@@ -658,8 +658,8 @@ namespace Azure.AI.AnomalyDetector.Samples
             var data = new
             {
                 dataSource = "http://localhost:3000",
-                startTime = "2022-05-10T14:57:31.2311892-04:00",
-                endTime = "2022-05-10T14:57:31.2311892-04:00",
+                startTime = "2022-05-10T18:57:31.2311892Z",
+                endTime = "2022-05-10T18:57:31.2311892Z",
             };
 
             Response response = await client.TrainMultivariateModelAsync(RequestContent.Create(data));
@@ -682,8 +682,8 @@ namespace Azure.AI.AnomalyDetector.Samples
             {
                 dataSource = "http://localhost:3000",
                 dataSchema = "OneTable",
-                startTime = "2022-05-10T14:57:31.2311892-04:00",
-                endTime = "2022-05-10T14:57:31.2311892-04:00",
+                startTime = "2022-05-10T18:57:31.2311892Z",
+                endTime = "2022-05-10T18:57:31.2311892Z",
                 displayName = "<displayName>",
                 slidingWindow = 1234,
                 alignPolicy = new
@@ -922,8 +922,8 @@ namespace Azure.AI.AnomalyDetector.Samples
             var data = new
             {
                 dataSource = "http://localhost:3000",
-                startTime = "2022-05-10T14:57:31.2311892-04:00",
-                endTime = "2022-05-10T14:57:31.2311892-04:00",
+                startTime = "2022-05-10T18:57:31.2311892Z",
+                endTime = "2022-05-10T18:57:31.2311892Z",
             };
 
             Response response = client.DetectMultivariateBatchAnomaly("<modelId>", RequestContent.Create(data));
@@ -949,8 +949,8 @@ namespace Azure.AI.AnomalyDetector.Samples
             {
                 dataSource = "http://localhost:3000",
                 topContributorCount = 1234,
-                startTime = "2022-05-10T14:57:31.2311892-04:00",
-                endTime = "2022-05-10T14:57:31.2311892-04:00",
+                startTime = "2022-05-10T18:57:31.2311892Z",
+                endTime = "2022-05-10T18:57:31.2311892Z",
             };
 
             Response response = client.DetectMultivariateBatchAnomaly("<modelId>", RequestContent.Create(data), new RequestContext());
@@ -991,8 +991,8 @@ namespace Azure.AI.AnomalyDetector.Samples
             var data = new
             {
                 dataSource = "http://localhost:3000",
-                startTime = "2022-05-10T14:57:31.2311892-04:00",
-                endTime = "2022-05-10T14:57:31.2311892-04:00",
+                startTime = "2022-05-10T18:57:31.2311892Z",
+                endTime = "2022-05-10T18:57:31.2311892Z",
             };
 
             Response response = await client.DetectMultivariateBatchAnomalyAsync("<modelId>", RequestContent.Create(data));
@@ -1018,8 +1018,8 @@ namespace Azure.AI.AnomalyDetector.Samples
             {
                 dataSource = "http://localhost:3000",
                 topContributorCount = 1234,
-                startTime = "2022-05-10T14:57:31.2311892-04:00",
-                endTime = "2022-05-10T14:57:31.2311892-04:00",
+                startTime = "2022-05-10T18:57:31.2311892Z",
+                endTime = "2022-05-10T18:57:31.2311892Z",
             };
 
             Response response = await client.DetectMultivariateBatchAnomalyAsync("<modelId>", RequestContent.Create(data), new RequestContext());
