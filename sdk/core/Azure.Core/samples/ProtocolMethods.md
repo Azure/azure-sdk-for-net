@@ -90,11 +90,12 @@ Protocol methods need a JSON object of the shape required by the schema of the s
 
 See the specific service documentation for details, but as an example:
 
-```csharp
+```C# Snippet:AzureCoreSetWithAnonymousType
 // anonymous class is serialized by System.Text.Json using runtime reflection
-var data = new {
-    name = "snoopy",
-    species = "beagle"
+var data = new
+{
+    Name = "snoopy",
+    Species = "beagle"
 };
 /*
 {
@@ -102,7 +103,7 @@ var data = new {
     "species": "beagle"
 }
 */
-client.SetPet(RequestContent.Create(data));
+client.SetPet(RequestContent.Create(data, PropertyNameHandling.ToCamelCase));
 ```
 
 ### 3. Handle the Response
