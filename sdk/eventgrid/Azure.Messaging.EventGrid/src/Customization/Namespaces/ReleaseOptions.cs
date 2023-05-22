@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.Namespaces
 {
     /// <summary> Array of lock token strings for the corresponding received Cloud Events to be released. </summary>
-    public partial class ReleaseOptions
+    internal partial class ReleaseOptions
     {
         /// <summary> Initializes a new instance of ReleaseOptions. </summary>
         /// <param name="lockTokens"> String array of lock tokens. </param>

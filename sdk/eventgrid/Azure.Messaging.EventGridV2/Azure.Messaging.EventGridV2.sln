@@ -9,7 +9,7 @@ Project("{A7B52BFE-02D4-412D-8F11-239E1C3A3C38}") = "Azure.Messaging.EventGridV2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Messaging.EventGridV2", "src\Azure.Messaging.EventGridV2.csproj", "{EC65C274-AA4B-40A3-81A8-09C8F9D33999}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Messaging.EventGridV2.Tests", "tests\Azure.Messaging.EventGridV2.Tests.csproj", "{F562E2A8-6716-463D-B412-DEBFFAC97E18}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{8F5A9C63-431F-4B45-AC25-0709EB3F6EB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +53,10 @@ Global
 		{F562E2A8-6716-463D-B412-DEBFFAC97E18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F562E2A8-6716-463D-B412-DEBFFAC97E18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F562E2A8-6716-463D-B412-DEBFFAC97E18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F5A9C63-431F-4B45-AC25-0709EB3F6EB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F5A9C63-431F-4B45-AC25-0709EB3F6EB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F5A9C63-431F-4B45-AC25-0709EB3F6EB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F5A9C63-431F-4B45-AC25-0709EB3F6EB1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

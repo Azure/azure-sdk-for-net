@@ -12,10 +12,10 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(HealthcareDicomImageDeletedEventDataConverter))]
-    public partial class HealthcareDicomImageDeletedEventData
+    [JsonConverter(typeof(HealthcareDicomImageUpdatedEventDataConverter))]
+    public partial class HealthcareDicomImageUpdatedEventData
     {
-        internal static HealthcareDicomImageDeletedEventData DeserializeHealthcareDicomImageDeletedEventData(JsonElement element)
+        internal static HealthcareDicomImageUpdatedEventData DeserializeHealthcareDicomImageUpdatedEventData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -64,19 +64,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new HealthcareDicomImageDeletedEventData(partitionName.Value, imageStudyInstanceUid.Value, imageSeriesInstanceUid.Value, imageSopInstanceUid.Value, serviceHostName.Value, Optional.ToNullable(sequenceNumber));
+            return new HealthcareDicomImageUpdatedEventData(partitionName.Value, imageStudyInstanceUid.Value, imageSeriesInstanceUid.Value, imageSopInstanceUid.Value, serviceHostName.Value, Optional.ToNullable(sequenceNumber));
         }
 
-        internal partial class HealthcareDicomImageDeletedEventDataConverter : JsonConverter<HealthcareDicomImageDeletedEventData>
+        internal partial class HealthcareDicomImageUpdatedEventDataConverter : JsonConverter<HealthcareDicomImageUpdatedEventData>
         {
-            public override void Write(Utf8JsonWriter writer, HealthcareDicomImageDeletedEventData model, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, HealthcareDicomImageUpdatedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
-            public override HealthcareDicomImageDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override HealthcareDicomImageUpdatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeHealthcareDicomImageDeletedEventData(document.RootElement);
+                return DeserializeHealthcareDicomImageUpdatedEventData(document.RootElement);
             }
         }
     }

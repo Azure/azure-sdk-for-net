@@ -56,8 +56,13 @@ namespace Azure.Messaging.EventGrid
         public static Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadPropertiesUpdatedEventData AcsChatThreadPropertiesUpdatedEventData(string transactionId = null, string threadId = null, System.DateTimeOffset? createTime = default(System.DateTimeOffset?), long? version = default(long?), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel editedByCommunicationIdentifier = null, System.DateTimeOffset? editTime = default(System.DateTimeOffset?), System.Collections.Generic.IReadOnlyDictionary<string, object> properties = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadPropertiesUpdatedPerUserEventData AcsChatThreadPropertiesUpdatedPerUserEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, System.DateTimeOffset? createTime = default(System.DateTimeOffset?), long? version = default(long?), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel editedByCommunicationIdentifier = null, System.DateTimeOffset? editTime = default(System.DateTimeOffset?), System.Collections.Generic.IReadOnlyDictionary<string, object> properties = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsChatThreadWithUserDeletedEventData AcsChatThreadWithUserDeletedEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, System.DateTimeOffset? createTime = default(System.DateTimeOffset?), long? version = default(long?), Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel deletedByCommunicationIdentifier = null, System.DateTimeOffset? deleteTime = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportReceivedEventData AcsEmailDeliveryReportReceivedEventData(string sender = null, string recipient = null, string messageId = null, Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus? status = default(Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus?), Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatusDetails deliveryStatusDetails = null, System.DateTimeOffset? deliveryAttemptTimestamp = default(System.DateTimeOffset?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportReceivedEventData AcsEmailDeliveryReportReceivedEventData(string sender = null, string recipient = null, string messageId = null, Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus? status = default(Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus?), System.DateTimeOffset? deliveryAttemptTimestamp = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatusDetails AcsEmailDeliveryReportStatusDetails(string statusMessage = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailEngagementTrackingReportReceivedEventData AcsEmailEngagementTrackingReportReceivedEventData(string sender = null, string messageId = null, System.DateTimeOffset? userActionTimestamp = default(System.DateTimeOffset?), string engagementContext = null, string userAgent = null, Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement? engagement = default(Azure.Messaging.EventGrid.SystemEvents.AcsUserEngagement?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsIncomingCallCustomContext AcsIncomingCallCustomContext(System.Collections.Generic.IReadOnlyDictionary<string, string> sipHeaders = null, System.Collections.Generic.IReadOnlyDictionary<string, string> voipHeaders = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsIncomingCallEventData AcsIncomingCallEventData(Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel toCommunicationIdentifier = null, Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel fromCommunicationIdentifier = null, string serverCallId = null, string callerDisplayName = null, Azure.Messaging.EventGrid.SystemEvents.AcsIncomingCallCustomContext customContext = null, string incomingCallContext = null, string correlationId = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChunkInfoProperties AcsRecordingChunkInfoProperties(string documentId, long? index, string endReason, string metadataLocation, string contentLocation) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChunkInfoProperties AcsRecordingChunkInfoProperties(string documentId = null, long? index = default(long?), string endReason = null, string metadataLocation = null, string contentLocation = null, string deleteLocation = null) { throw null; }
@@ -140,8 +145,13 @@ namespace Azure.Messaging.EventGrid
         public static Azure.Messaging.EventGrid.SystemEvents.DeviceTwinMetadata DeviceTwinMetadata(string lastUpdated = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.DeviceTwinProperties DeviceTwinProperties(Azure.Messaging.EventGrid.SystemEvents.DeviceTwinMetadata metadata = null, float? version = default(float?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.EventHubCaptureFileCreatedEventData EventHubCaptureFileCreatedEventData(string fileurl = null, string fileType = null, string partitionId = null, int? sizeInBytes = default(int?), int? eventCount = default(int?), int? firstSequenceNumber = default(int?), int? lastSequenceNumber = default(int?), System.DateTimeOffset? firstEnqueueTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastEnqueueTime = default(System.DateTimeOffset?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Messaging.EventGrid.SystemEvents.HealthcareDicomImageCreatedEventData HealthcareDicomImageCreatedEventData(string imageStudyInstanceUid = null, string imageSeriesInstanceUid = null, string imageSopInstanceUid = null, string serviceHostName = null, long? sequenceNumber = default(long?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareDicomImageCreatedEventData HealthcareDicomImageCreatedEventData(string partitionName = null, string imageStudyInstanceUid = null, string imageSeriesInstanceUid = null, string imageSopInstanceUid = null, string serviceHostName = null, long? sequenceNumber = default(long?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Messaging.EventGrid.SystemEvents.HealthcareDicomImageDeletedEventData HealthcareDicomImageDeletedEventData(string imageStudyInstanceUid = null, string imageSeriesInstanceUid = null, string imageSopInstanceUid = null, string serviceHostName = null, long? sequenceNumber = default(long?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareDicomImageDeletedEventData HealthcareDicomImageDeletedEventData(string partitionName = null, string imageStudyInstanceUid = null, string imageSeriesInstanceUid = null, string imageSopInstanceUid = null, string serviceHostName = null, long? sequenceNumber = default(long?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareDicomImageUpdatedEventData HealthcareDicomImageUpdatedEventData(string partitionName = null, string imageStudyInstanceUid = null, string imageSeriesInstanceUid = null, string imageSopInstanceUid = null, string serviceHostName = null, long? sequenceNumber = default(long?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceCreatedEventData HealthcareFhirResourceCreatedEventData(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType? fhirResourceType = default(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType?), string fhirServiceHostName = null, string fhirResourceId = null, long? fhirResourceVersionId = default(long?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceDeletedEventData HealthcareFhirResourceDeletedEventData(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType? fhirResourceType = default(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType?), string fhirServiceHostName = null, string fhirResourceId = null, long? fhirResourceVersionId = default(long?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceUpdatedEventData HealthcareFhirResourceUpdatedEventData(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType? fhirResourceType = default(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType?), string fhirServiceHostName = null, string fhirResourceId = null, long? fhirResourceVersionId = default(long?)) { throw null; }
@@ -333,6 +343,7 @@ namespace Azure.Messaging.EventGrid
         public const string AcsChatThreadWithUserDeleted = "Microsoft.Communication.ChatThreadWithUserDeleted";
         public const string AcsEmailDeliveryReportReceived = "Microsoft.Communication.EmailDeliveryReportReceived";
         public const string AcsEmailEngagementTrackingReportReceived = "Microsoft.Communication.EmailEngagementTrackingReportReceived";
+        public const string AcsIncomingCall = "Microsoft.Communication.IncomingCall";
         public const string AcsRecordingFileStatusUpdated = "Microsoft.Communication.RecordingFileStatusUpdated";
         public const string AcsSmsDeliveryReportReceived = "Microsoft.Communication.SMSDeliveryReportReceived";
         public const string AcsSmsReceived = "Microsoft.Communication.SMSReceived";
@@ -378,6 +389,7 @@ namespace Azure.Messaging.EventGrid
         public const string EventHubCaptureFileCreated = "Microsoft.EventHub.CaptureFileCreated";
         public const string HealthcareDicomImageCreated = "Microsoft.HealthcareApis.DicomImageCreated";
         public const string HealthcareDicomImageDeleted = "Microsoft.HealthcareApis.DicomImageDeleted";
+        public const string HealthcareDicomImageUpdated = "Microsoft.HealthcareApis.DicomImageUpdated";
         public const string HealthcareFhirResourceCreated = "Microsoft.HealthcareApis.FhirResourceCreated";
         public const string HealthcareFhirResourceDeleted = "Microsoft.HealthcareApis.FhirResourceDeleted";
         public const string HealthcareFhirResourceUpdated = "Microsoft.HealthcareApis.FhirResourceUpdated";
@@ -805,6 +817,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal AcsEmailDeliveryReportReceivedEventData() { }
         public System.DateTimeOffset? DeliveryAttemptTimestamp { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatusDetails DeliveryStatusDetails { get { throw null; } }
         public string MessageId { get { throw null; } }
         public string Recipient { get { throw null; } }
         public string Sender { get { throw null; } }
@@ -816,10 +829,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public AcsEmailDeliveryReportStatus(string value) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus Bounced { get { throw null; } }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus Delivered { get { throw null; } }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus Failed { get { throw null; } }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus FilteredSpam { get { throw null; } }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus Quarantined { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus Suppressed { get { throw null; } }
         public bool Equals(Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -830,6 +845,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus left, Azure.Messaging.EventGrid.SystemEvents.AcsEmailDeliveryReportStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class AcsEmailDeliveryReportStatusDetails
+    {
+        internal AcsEmailDeliveryReportStatusDetails() { }
+        public string StatusMessage { get { throw null; } }
+    }
     public partial class AcsEmailEngagementTrackingReportReceivedEventData
     {
         internal AcsEmailEngagementTrackingReportReceivedEventData() { }
@@ -839,6 +859,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string Sender { get { throw null; } }
         public System.DateTimeOffset? UserActionTimestamp { get { throw null; } }
         public string UserAgent { get { throw null; } }
+    }
+    public partial class AcsIncomingCallCustomContext
+    {
+        internal AcsIncomingCallCustomContext() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> SipHeaders { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> VoipHeaders { get { throw null; } }
+    }
+    public partial class AcsIncomingCallEventData
+    {
+        internal AcsIncomingCallEventData() { }
+        public string CallerDisplayName { get { throw null; } }
+        public string CorrelationId { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AcsIncomingCallCustomContext CustomContext { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel FromCommunicationIdentifier { get { throw null; } }
+        public string IncomingCallContext { get { throw null; } }
+        public string ServerCallId { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel ToCommunicationIdentifier { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AcsRecordingChannelType : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType>
@@ -1445,6 +1482,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string ImageSeriesInstanceUid { get { throw null; } }
         public string ImageSopInstanceUid { get { throw null; } }
         public string ImageStudyInstanceUid { get { throw null; } }
+        public string PartitionName { get { throw null; } }
         public long? SequenceNumber { get { throw null; } }
         public string ServiceHostName { get { throw null; } }
     }
@@ -1454,6 +1492,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string ImageSeriesInstanceUid { get { throw null; } }
         public string ImageSopInstanceUid { get { throw null; } }
         public string ImageStudyInstanceUid { get { throw null; } }
+        public string PartitionName { get { throw null; } }
+        public long? SequenceNumber { get { throw null; } }
+        public string ServiceHostName { get { throw null; } }
+    }
+    public partial class HealthcareDicomImageUpdatedEventData
+    {
+        internal HealthcareDicomImageUpdatedEventData() { }
+        public string ImageSeriesInstanceUid { get { throw null; } }
+        public string ImageSopInstanceUid { get { throw null; } }
+        public string ImageStudyInstanceUid { get { throw null; } }
+        public string PartitionName { get { throw null; } }
         public long? SequenceNumber { get { throw null; } }
         public string ServiceHostName { get { throw null; } }
     }

@@ -531,6 +531,45 @@ namespace Azure.Messaging.EventGrid
         {
             return new StorageDirectoryDeletedEventData(api, clientRequestId, requestId, url, recursive?.ToString(), sequencer, identity, storageDiagnostics);
         }
+
+        /// <summary> Initializes a new instance of AcsEmailDeliveryReportReceivedEventData. </summary>
+        /// <param name="sender"> The Sender Email Address. </param>
+        /// <param name="recipient"> The recipient Email Address. </param>
+        /// <param name="messageId"> The Id of the email been sent. </param>
+        /// <param name="status"> The status of the email. </param>
+        /// <param name="deliveryAttemptTimestamp"> The time at which the email delivery report received timestamp. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsEmailDeliveryReportReceivedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsEmailDeliveryReportReceivedEventData AcsEmailDeliveryReportReceivedEventData(string sender = null, string recipient = null, string messageId = null, AcsEmailDeliveryReportStatus? status = null, DateTimeOffset? deliveryAttemptTimestamp = null)
+        {
+            return new AcsEmailDeliveryReportReceivedEventData(sender, recipient, messageId, status, default, deliveryAttemptTimestamp);
+        }
+
+        /// <summary> Initializes a new instance of HealthcareDicomImageCreatedEventData. </summary>
+        /// <param name="imageStudyInstanceUid"> Unique identifier for the Study. </param>
+        /// <param name="imageSeriesInstanceUid"> Unique identifier for the Series. </param>
+        /// <param name="imageSopInstanceUid"> Unique identifier for the DICOM Image. </param>
+        /// <param name="serviceHostName"> Domain name of the DICOM account for this image. </param>
+        /// <param name="sequenceNumber"> Sequence number of the DICOM Service within Azure Health Data Services. It is unique for every image creation and deletion within the service. </param>
+        /// <returns> A new <see cref="SystemEvents.HealthcareDicomImageCreatedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HealthcareDicomImageCreatedEventData HealthcareDicomImageCreatedEventData(string imageStudyInstanceUid = null, string imageSeriesInstanceUid = null, string imageSopInstanceUid = null, string serviceHostName = null, long? sequenceNumber = null)
+        {
+            return new HealthcareDicomImageCreatedEventData(default, imageStudyInstanceUid, imageSeriesInstanceUid, imageSopInstanceUid, serviceHostName, sequenceNumber);
+        }
+
+        /// <summary> Initializes a new instance of HealthcareDicomImageDeletedEventData. </summary>
+        /// <param name="imageStudyInstanceUid"> Unique identifier for the Study. </param>
+        /// <param name="imageSeriesInstanceUid"> Unique identifier for the Series. </param>
+        /// <param name="imageSopInstanceUid"> Unique identifier for the DICOM Image. </param>
+        /// <param name="serviceHostName"> Host name of the DICOM account for this image. </param>
+        /// <param name="sequenceNumber"> Sequence number of the DICOM Service within Azure Health Data Services. It is unique for every image creation and deletion within the service. </param>
+        /// <returns> A new <see cref="SystemEvents.HealthcareDicomImageDeletedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HealthcareDicomImageDeletedEventData HealthcareDicomImageDeletedEventData(string imageStudyInstanceUid = null, string imageSeriesInstanceUid = null, string imageSopInstanceUid = null, string serviceHostName = null, long? sequenceNumber = null)
+        {
+            return new HealthcareDicomImageDeletedEventData(default, imageStudyInstanceUid, imageSeriesInstanceUid, imageSopInstanceUid, serviceHostName, sequenceNumber);
+        }
     }
 #pragma warning restore CA1054 // URI-like parameters should not be strings
 }

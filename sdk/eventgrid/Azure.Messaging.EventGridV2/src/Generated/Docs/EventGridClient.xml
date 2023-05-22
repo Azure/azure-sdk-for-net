@@ -1,411 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="PublishCloudEventAsync(String,RequestContent,RequestContext)">
-<example>
-This sample shows how to call PublishCloudEventAsync with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EventGridClient(endpoint, credential);
-
-var data = new {
-    id = "<id>",
-    source = "<source>",
-    type = "<type>",
-    specversion = "<specversion>",
-};
-
-Response response = await client.PublishCloudEventAsync("<topicName>", RequestContent.Create(data));
-
-Console.WriteLine(response.ToString());
-]]></code>
-This sample shows how to call PublishCloudEventAsync with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EventGridClient(endpoint, credential);
-
-var data = new {
-    id = "<id>",
-    source = "<source>",
-    data = new {},
-    data_base64 = new {},
-    type = "<type>",
-    time = "2022-05-10T14:57:31.2311892-04:00",
-    specversion = "<specversion>",
-    dataschema = "<dataschema>",
-    datacontenttype = "<datacontenttype>",
-    subject = "<subject>",
-};
-
-Response response = await client.PublishCloudEventAsync("<topicName>", RequestContent.Create(data));
-
-Console.WriteLine(response.ToString());
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>CloudEvent</c>:
-<code>{
-  id: string, # Required. An identifier for the event. The combination of id and source must be unique for each distinct event.
-  source: string, # Required. Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event.
-  data: any, # Optional. Event data specific to the event type.
-  data_base64: BinaryData, # Optional. Event data specific to the event type, encoded as a base64 string.
-  type: string, # Required. Type of event related to the originating occurrence.
-  time: string (date &amp; time), # Optional. The time (in UTC) the event was generated, in RFC3339 format.
-  specversion: string, # Required. The version of the CloudEvents specification which the event uses.
-  dataschema: string, # Optional. Identifies the schema that data adheres to.
-  datacontenttype: string, # Optional. Content type of data value.
-  subject: string, # Optional. This describes the subject of the event in the context of the event producer (identified by source).
-}
-</code>
-
-Response Body:
-
-Schema for <c>PublishResult</c>:
-<code>{
-}
-</code>
-
-</remarks>
+    <member name="PublishCloudEventAsync(string,RequestContent,RequestContext)">
     </member>
-    <member name="PublishCloudEvent(String,RequestContent,RequestContext)">
-<example>
-This sample shows how to call PublishCloudEvent with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EventGridClient(endpoint, credential);
-
-var data = new {
-    id = "<id>",
-    source = "<source>",
-    type = "<type>",
-    specversion = "<specversion>",
-};
-
-Response response = client.PublishCloudEvent("<topicName>", RequestContent.Create(data));
-
-Console.WriteLine(response.ToString());
-]]></code>
-This sample shows how to call PublishCloudEvent with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EventGridClient(endpoint, credential);
-
-var data = new {
-    id = "<id>",
-    source = "<source>",
-    data = new {},
-    data_base64 = new {},
-    type = "<type>",
-    time = "2022-05-10T14:57:31.2311892-04:00",
-    specversion = "<specversion>",
-    dataschema = "<dataschema>",
-    datacontenttype = "<datacontenttype>",
-    subject = "<subject>",
-};
-
-Response response = client.PublishCloudEvent("<topicName>", RequestContent.Create(data));
-
-Console.WriteLine(response.ToString());
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>CloudEvent</c>:
-<code>{
-  id: string, # Required. An identifier for the event. The combination of id and source must be unique for each distinct event.
-  source: string, # Required. Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event.
-  data: any, # Optional. Event data specific to the event type.
-  data_base64: BinaryData, # Optional. Event data specific to the event type, encoded as a base64 string.
-  type: string, # Required. Type of event related to the originating occurrence.
-  time: string (date &amp; time), # Optional. The time (in UTC) the event was generated, in RFC3339 format.
-  specversion: string, # Required. The version of the CloudEvents specification which the event uses.
-  dataschema: string, # Optional. Identifies the schema that data adheres to.
-  datacontenttype: string, # Optional. Content type of data value.
-  subject: string, # Optional. This describes the subject of the event in the context of the event producer (identified by source).
-}
-</code>
-
-Response Body:
-
-Schema for <c>PublishResult</c>:
-<code>{
-}
-</code>
-
-</remarks>
+    <member name="PublishCloudEvent(string,RequestContent,RequestContext)">
     </member>
-    <member name="PublishCloudEventsAsync(String,RequestContent,RequestContext)">
-<example>
-This sample shows how to call PublishCloudEventsAsync with required parameters and request content and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EventGridClient(endpoint, credential);
-
-var data = new[] {
-    new {
-        id = "<id>",
-        source = "<source>",
-        data = new {},
-        data_base64 = new {},
-        type = "<type>",
-        time = "2022-05-10T14:57:31.2311892-04:00",
-        specversion = "<specversion>",
-        dataschema = "<dataschema>",
-        datacontenttype = "<datacontenttype>",
-        subject = "<subject>",
-    }
-};
-
-Response response = await client.PublishCloudEventsAsync("<topicName>", RequestContent.Create(data));
-
-Console.WriteLine(response.ToString());
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>CloudEvent</c>:
-<code>{
-  id: string, # Required. An identifier for the event. The combination of id and source must be unique for each distinct event.
-  source: string, # Required. Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event.
-  data: any, # Optional. Event data specific to the event type.
-  data_base64: BinaryData, # Optional. Event data specific to the event type, encoded as a base64 string.
-  type: string, # Required. Type of event related to the originating occurrence.
-  time: string (date &amp; time), # Optional. The time (in UTC) the event was generated, in RFC3339 format.
-  specversion: string, # Required. The version of the CloudEvents specification which the event uses.
-  dataschema: string, # Optional. Identifies the schema that data adheres to.
-  datacontenttype: string, # Optional. Content type of data value.
-  subject: string, # Optional. This describes the subject of the event in the context of the event producer (identified by source).
-}
-</code>
-
-Response Body:
-
-Schema for <c>PublishResult</c>:
-<code>{
-}
-</code>
-
-</remarks>
+    <member name="PublishCloudEventsAsync(string,RequestContent,RequestContext)">
     </member>
-    <member name="PublishCloudEvents(String,RequestContent,RequestContext)">
-<example>
-This sample shows how to call PublishCloudEvents with required parameters and request content and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EventGridClient(endpoint, credential);
-
-var data = new[] {
-    new {
-        id = "<id>",
-        source = "<source>",
-        data = new {},
-        data_base64 = new {},
-        type = "<type>",
-        time = "2022-05-10T14:57:31.2311892-04:00",
-        specversion = "<specversion>",
-        dataschema = "<dataschema>",
-        datacontenttype = "<datacontenttype>",
-        subject = "<subject>",
-    }
-};
-
-Response response = client.PublishCloudEvents("<topicName>", RequestContent.Create(data));
-
-Console.WriteLine(response.ToString());
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>CloudEvent</c>:
-<code>{
-  id: string, # Required. An identifier for the event. The combination of id and source must be unique for each distinct event.
-  source: string, # Required. Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event.
-  data: any, # Optional. Event data specific to the event type.
-  data_base64: BinaryData, # Optional. Event data specific to the event type, encoded as a base64 string.
-  type: string, # Required. Type of event related to the originating occurrence.
-  time: string (date &amp; time), # Optional. The time (in UTC) the event was generated, in RFC3339 format.
-  specversion: string, # Required. The version of the CloudEvents specification which the event uses.
-  dataschema: string, # Optional. Identifies the schema that data adheres to.
-  datacontenttype: string, # Optional. Content type of data value.
-  subject: string, # Optional. This describes the subject of the event in the context of the event producer (identified by source).
-}
-</code>
-
-Response Body:
-
-Schema for <c>PublishResult</c>:
-<code>{
-}
-</code>
-
-</remarks>
+    <member name="PublishCloudEvents(string,RequestContent,RequestContext)">
     </member>
-    <member name="ReceiveCloudEventsAsync(String,String,Int32,Int32,RequestContext)">
-<example>
-This sample shows how to call ReceiveCloudEventsAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EventGridClient(endpoint, credential);
-
-Response response = await client.ReceiveCloudEventsAsync("<topicName>", "<eventSubscriptionName>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("brokerProperties").GetProperty("lockToken").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("brokerProperties").GetProperty("deliveryAttemptCount").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("source").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("specversion").ToString());
-]]></code>
-This sample shows how to call ReceiveCloudEventsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EventGridClient(endpoint, credential);
-
-Response response = await client.ReceiveCloudEventsAsync("<topicName>", "<eventSubscriptionName>", 1234, 1234);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("brokerProperties").GetProperty("lockToken").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("brokerProperties").GetProperty("deliveryAttemptCount").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("source").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("data").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("data_base64").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("time").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("specversion").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("dataschema").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("datacontenttype").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("subject").ToString());
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>ReceiveResult</c>:
-<code>{
-  value: [
-    {
-      brokerProperties: {
-        lockToken: string, # Required. The token used to lock the event.
-        deliveryAttemptCount: number, # Required. The attempt count for deliverying the event.
-      }, # Required. The Event Broker details.
-      event: {
-        id: string, # Required. An identifier for the event. The combination of id and source must be unique for each distinct event.
-        source: string, # Required. Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event.
-        data: any, # Optional. Event data specific to the event type.
-        data_base64: BinaryData, # Optional. Event data specific to the event type, encoded as a base64 string.
-        type: string, # Required. Type of event related to the originating occurrence.
-        time: string (date &amp; time), # Optional. The time (in UTC) the event was generated, in RFC3339 format.
-        specversion: string, # Required. The version of the CloudEvents specification which the event uses.
-        dataschema: string, # Optional. Identifies the schema that data adheres to.
-        datacontenttype: string, # Optional. Content type of data value.
-        subject: string, # Optional. This describes the subject of the event in the context of the event producer (identified by source).
-      }, # Required. Cloud Event details.
-    }
-  ], # Required. Array of receive responses, one per cloud event.
-}
-</code>
-
-</remarks>
+    <member name="ReceiveCloudEventsAsync(string,string,int?,int?,RequestContext)">
     </member>
-    <member name="ReceiveCloudEvents(String,String,Int32,Int32,RequestContext)">
-<example>
-This sample shows how to call ReceiveCloudEvents with required parameters and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EventGridClient(endpoint, credential);
-
-Response response = client.ReceiveCloudEvents("<topicName>", "<eventSubscriptionName>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("brokerProperties").GetProperty("lockToken").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("brokerProperties").GetProperty("deliveryAttemptCount").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("source").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("specversion").ToString());
-]]></code>
-This sample shows how to call ReceiveCloudEvents with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EventGridClient(endpoint, credential);
-
-Response response = client.ReceiveCloudEvents("<topicName>", "<eventSubscriptionName>", 1234, 1234);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("brokerProperties").GetProperty("lockToken").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("brokerProperties").GetProperty("deliveryAttemptCount").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("source").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("data").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("data_base64").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("time").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("specversion").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("dataschema").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("datacontenttype").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("subject").ToString());
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>ReceiveResult</c>:
-<code>{
-  value: [
-    {
-      brokerProperties: {
-        lockToken: string, # Required. The token used to lock the event.
-        deliveryAttemptCount: number, # Required. The attempt count for deliverying the event.
-      }, # Required. The Event Broker details.
-      event: {
-        id: string, # Required. An identifier for the event. The combination of id and source must be unique for each distinct event.
-        source: string, # Required. Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event.
-        data: any, # Optional. Event data specific to the event type.
-        data_base64: BinaryData, # Optional. Event data specific to the event type, encoded as a base64 string.
-        type: string, # Required. Type of event related to the originating occurrence.
-        time: string (date &amp; time), # Optional. The time (in UTC) the event was generated, in RFC3339 format.
-        specversion: string, # Required. The version of the CloudEvents specification which the event uses.
-        dataschema: string, # Optional. Identifies the schema that data adheres to.
-        datacontenttype: string, # Optional. Content type of data value.
-        subject: string, # Optional. This describes the subject of the event in the context of the event producer (identified by source).
-      }, # Required. Cloud Event details.
-    }
-  ], # Required. Array of receive responses, one per cloud event.
-}
-</code>
-
-</remarks>
+    <member name="ReceiveCloudEvents(string,string,int?,int?,RequestContext)">
     </member>
-    <member name="AcknowledgeCloudEventsAsync(String,String,RequestContent,RequestContext)">
+    <member name="AcknowledgeCloudEventsAsync(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call AcknowledgeCloudEventsAsync with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -419,7 +27,7 @@ var data = new {
     },
 };
 
-Response response = await client.AcknowledgeCloudEventsAsync("<topicName>", "<eventSubscriptionName>", RequestContent.Create(data));
+Response response = await client.AcknowledgeCloudEventsAsync("<topicName>", "<eventSubscriptionName>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
@@ -428,35 +36,8 @@ Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("errorDe
 Console.WriteLine(result.GetProperty("succeededLockTokens")[0].ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>AcknowledgeOptions</c>:
-<code>{
-  lockTokens: [string], # Required. String array of lock tokens.
-}
-</code>
-
-Response Body:
-
-Schema for <c>AcknowledgeResult</c>:
-<code>{
-  failedLockTokens: [
-    {
-      lockToken: string, # Required. LockToken value
-      errorCode: string, # Required. Error code related to the token. Example of such error codes are BadToken: which indicates the Token is not formatted correctly, TokenLost: which indicates that token is not found, and InternalServerError: For any internal server errors.
-      errorDescription: string, # Required. Description of the token error.
-    }
-  ], # Required. Array of LockToken values for failed cloud events. Each LockToken includes the lock token value along with the related error information (namely, the error code and description).
-  succeededLockTokens: [string], # Required. Array of lock tokens values for the successfully acknowledged cloud events.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="AcknowledgeCloudEvents(String,String,RequestContent,RequestContext)">
+    <member name="AcknowledgeCloudEvents(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call AcknowledgeCloudEvents with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -470,7 +51,7 @@ var data = new {
     },
 };
 
-Response response = client.AcknowledgeCloudEvents("<topicName>", "<eventSubscriptionName>", RequestContent.Create(data));
+Response response = client.AcknowledgeCloudEvents("<topicName>", "<eventSubscriptionName>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
@@ -479,37 +60,10 @@ Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("errorDe
 Console.WriteLine(result.GetProperty("succeededLockTokens")[0].ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>AcknowledgeOptions</c>:
-<code>{
-  lockTokens: [string], # Required. String array of lock tokens.
-}
-</code>
-
-Response Body:
-
-Schema for <c>AcknowledgeResult</c>:
-<code>{
-  failedLockTokens: [
-    {
-      lockToken: string, # Required. LockToken value
-      errorCode: string, # Required. Error code related to the token. Example of such error codes are BadToken: which indicates the Token is not formatted correctly, TokenLost: which indicates that token is not found, and InternalServerError: For any internal server errors.
-      errorDescription: string, # Required. Description of the token error.
-    }
-  ], # Required. Array of LockToken values for failed cloud events. Each LockToken includes the lock token value along with the related error information (namely, the error code and description).
-  succeededLockTokens: [string], # Required. Array of lock tokens values for the successfully acknowledged cloud events.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="ReleaseCloudEventsAsync(String,String,RequestContent,Int32,RequestContext)">
+    <member name="ReleaseCloudEventsAsync(string,string,RequestContent,RequestContext)">
 <example>
-This sample shows how to call ReleaseCloudEventsAsync with required parameters and request content, and how to parse the result.
+This sample shows how to call ReleaseCloudEventsAsync with required parameters and request content and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -521,27 +75,7 @@ var data = new {
     },
 };
 
-Response response = await client.ReleaseCloudEventsAsync("<topicName>", "<eventSubscriptionName>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
-Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("errorCode").ToString());
-Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("errorDescription").ToString());
-Console.WriteLine(result.GetProperty("succeededLockTokens")[0].ToString());
-]]></code>
-This sample shows how to call ReleaseCloudEventsAsync with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EventGridClient(endpoint, credential);
-
-var data = new {
-    lockTokens = new[] {
-        "<String>"
-    },
-};
-
-Response response = await client.ReleaseCloudEventsAsync("<topicName>", "<eventSubscriptionName>", RequestContent.Create(data), 1234);
+Response response = await client.ReleaseCloudEventsAsync("<topicName>", "<eventSubscriptionName>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
@@ -550,37 +84,10 @@ Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("errorDe
 Console.WriteLine(result.GetProperty("succeededLockTokens")[0].ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>ReleaseOptions</c>:
-<code>{
-  lockTokens: [string], # Required. String array of lock tokens.
-}
-</code>
-
-Response Body:
-
-Schema for <c>ReleaseResult</c>:
-<code>{
-  failedLockTokens: [
-    {
-      lockToken: string, # Required. LockToken value
-      errorCode: string, # Required. Error code related to the token. Example of such error codes are BadToken: which indicates the Token is not formatted correctly, TokenLost: which indicates that token is not found, and InternalServerError: For any internal server errors.
-      errorDescription: string, # Required. Description of the token error.
-    }
-  ], # Required. Array of LockToken values for failed cloud events. Each LockToken includes the lock token value along with the related error information (namely, the error code and description).
-  succeededLockTokens: [string], # Required. Array of lock tokens values for the successfully released cloud events.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="ReleaseCloudEvents(String,String,RequestContent,Int32,RequestContext)">
+    <member name="ReleaseCloudEvents(string,string,RequestContent,RequestContext)">
 <example>
-This sample shows how to call ReleaseCloudEvents with required parameters and request content, and how to parse the result.
+This sample shows how to call ReleaseCloudEvents with required parameters and request content and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -592,27 +99,7 @@ var data = new {
     },
 };
 
-Response response = client.ReleaseCloudEvents("<topicName>", "<eventSubscriptionName>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
-Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("errorCode").ToString());
-Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("errorDescription").ToString());
-Console.WriteLine(result.GetProperty("succeededLockTokens")[0].ToString());
-]]></code>
-This sample shows how to call ReleaseCloudEvents with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EventGridClient(endpoint, credential);
-
-var data = new {
-    lockTokens = new[] {
-        "<String>"
-    },
-};
-
-Response response = client.ReleaseCloudEvents("<topicName>", "<eventSubscriptionName>", RequestContent.Create(data), 1234);
+Response response = client.ReleaseCloudEvents("<topicName>", "<eventSubscriptionName>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
@@ -621,35 +108,8 @@ Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("errorDe
 Console.WriteLine(result.GetProperty("succeededLockTokens")[0].ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>ReleaseOptions</c>:
-<code>{
-  lockTokens: [string], # Required. String array of lock tokens.
-}
-</code>
-
-Response Body:
-
-Schema for <c>ReleaseResult</c>:
-<code>{
-  failedLockTokens: [
-    {
-      lockToken: string, # Required. LockToken value
-      errorCode: string, # Required. Error code related to the token. Example of such error codes are BadToken: which indicates the Token is not formatted correctly, TokenLost: which indicates that token is not found, and InternalServerError: For any internal server errors.
-      errorDescription: string, # Required. Description of the token error.
-    }
-  ], # Required. Array of LockToken values for failed cloud events. Each LockToken includes the lock token value along with the related error information (namely, the error code and description).
-  succeededLockTokens: [string], # Required. Array of lock tokens values for the successfully released cloud events.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="RejectCloudEventsAsync(String,String,RequestContent,RequestContext)">
+    <member name="RejectCloudEventsAsync(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call RejectCloudEventsAsync with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -663,7 +123,7 @@ var data = new {
     },
 };
 
-Response response = await client.RejectCloudEventsAsync("<topicName>", "<eventSubscriptionName>", RequestContent.Create(data));
+Response response = await client.RejectCloudEventsAsync("<topicName>", "<eventSubscriptionName>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
@@ -672,35 +132,8 @@ Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("errorDe
 Console.WriteLine(result.GetProperty("succeededLockTokens")[0].ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>RejectOptions</c>:
-<code>{
-  lockTokens: [string], # Required. String array of lock tokens.
-}
-</code>
-
-Response Body:
-
-Schema for <c>RejectResult</c>:
-<code>{
-  failedLockTokens: [
-    {
-      lockToken: string, # Required. LockToken value
-      errorCode: string, # Required. Error code related to the token. Example of such error codes are BadToken: which indicates the Token is not formatted correctly, TokenLost: which indicates that token is not found, and InternalServerError: For any internal server errors.
-      errorDescription: string, # Required. Description of the token error.
-    }
-  ], # Required. Array of LockToken values for failed cloud events. Each LockToken includes the lock token value along with the related error information (namely, the error code and description).
-  succeededLockTokens: [string], # Required. Array of lock tokens values for the successfully rejected cloud events.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="RejectCloudEvents(String,String,RequestContent,RequestContext)">
+    <member name="RejectCloudEvents(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call RejectCloudEvents with required parameters and request content and parse the result.
 <code><![CDATA[
@@ -714,7 +147,7 @@ var data = new {
     },
 };
 
-Response response = client.RejectCloudEvents("<topicName>", "<eventSubscriptionName>", RequestContent.Create(data));
+Response response = client.RejectCloudEvents("<topicName>", "<eventSubscriptionName>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
@@ -723,33 +156,6 @@ Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("errorDe
 Console.WriteLine(result.GetProperty("succeededLockTokens")[0].ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>RejectOptions</c>:
-<code>{
-  lockTokens: [string], # Required. String array of lock tokens.
-}
-</code>
-
-Response Body:
-
-Schema for <c>RejectResult</c>:
-<code>{
-  failedLockTokens: [
-    {
-      lockToken: string, # Required. LockToken value
-      errorCode: string, # Required. Error code related to the token. Example of such error codes are BadToken: which indicates the Token is not formatted correctly, TokenLost: which indicates that token is not found, and InternalServerError: For any internal server errors.
-      errorDescription: string, # Required. Description of the token error.
-    }
-  ], # Required. Array of LockToken values for failed cloud events. Each LockToken includes the lock token value along with the related error information (namely, the error code and description).
-  succeededLockTokens: [string], # Required. Array of lock tokens values for the successfully rejected cloud events.
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>

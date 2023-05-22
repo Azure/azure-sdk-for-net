@@ -1,14 +1,19 @@
 # Release History
 
-## 4.16.0-beta.1 (Unreleased)
+## 4.17.0-beta.1 (2023-05-22)
 
 ### Features Added
 
-### Breaking Changes
+- Added `EventGridClient` for interacting with topic and subscription namespaces.
 
-### Bugs Fixed
+## 4.16.0 (2023-05-09)
 
-### Other Changes
+### Features Added
+
+- Added `AcsIncomingCallEventData` event.
+- Added `DeliveryStatusDetails` property to `AcsEmailDeliveryReportReceivedEventData` event.
+- Added `HealthCareDicomImageUpdatedEventData` event.
+- Added `PartionName` property to Dicom events.
 
 ## 4.15.0 (2023-04-13)
 
