@@ -51,12 +51,12 @@ namespace Azure.Core.Dynamic
                 }
             };
 
-            switch (options.CaseMapping)
+            switch (options.PropertyNameHandling)
             {
-                case CaseMapping.PascalToCamel:
+                case PropertyNameHandling.ToCamelCase:
                     serializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                     break;
-                case CaseMapping.None:
+                case PropertyNameHandling.Strict:
                 default:
                     break;
             }
@@ -99,7 +99,7 @@ namespace Azure.Core.Dynamic
 
             // If we're using the PascalToCamel mapping and the strict name lookup
             // failed, do a second lookup with a camelCase name as well.
-            if (_options.CaseMapping == CaseMapping.PascalToCamel && char.IsUpper(name[0]))
+            if (_options.PropertyNameHandling == PropertyNameHandling.ToCamelCase && char.IsUpper(name[0]))
             {
                 if (_element.TryGetProperty(ConvertToCamelCase(name), out element))
                 {
@@ -151,7 +151,7 @@ namespace Azure.Core.Dynamic
                 value = ConvertType(value);
             }
 
-            if (_options.CaseMapping == CaseMapping.PascalToCamel)
+            if (_options.PropertyNameHandling == PropertyNameHandling.ToCamelCase)
             {
                 name = ConvertToCamelCase(name);
             }
