@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.ModelSerializationTests
 {

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.ModelSerializationTests
 {

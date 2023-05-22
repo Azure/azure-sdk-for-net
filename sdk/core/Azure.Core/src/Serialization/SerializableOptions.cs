@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Serialization;
-
-namespace Azure
+namespace Azure.Core.Serialization
 {
     /// <summary>
     /// Provides the client options for serializing models.
@@ -24,10 +22,5 @@ namespace Azure
         /// Bool that determines if Json will be PrettyPrinted. Default is false.
         /// </summary>
         public bool PrettyPrint { get; set; }
-
-        /// <summary>
-        /// The type of ObjectSerializer used to Serialize the Model.
-        /// </summary>
-        public ObjectSerializer? Serializer { get; set; }
     }
 }
