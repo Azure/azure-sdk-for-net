@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
 
             ContainerGroupResource retrievedContainerGroup = await containerGroup.GetAsync();
             VerifyContainerGroupProperties(containerGroup.Data, retrievedContainerGroup.Data);
+            Assert.AreEqual(retrievedContainerGroup.Data.InstanceView.State, "Running");
         }
 
         [TestCase]
