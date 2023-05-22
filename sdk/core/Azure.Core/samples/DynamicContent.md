@@ -41,7 +41,7 @@ JSON members can be set on the dynamic object.  Pass `DynamicCaseMapping.PascalT
 Response response = client.GetWidget();
 dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 widget.Name = "New Name";
-client.SetWidget(RequestContent.Create(widget));
+client.SetWidget(RequestContent.Create((object)widget));
 ```
 
 ### Get or set array values
@@ -149,7 +149,7 @@ Response response = client.GetLargeWidget();
 using (dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel))
 {
     widget.Name = "New Name";
-    client.SetWidget(RequestContent.Create(widget));
+    client.SetWidget(RequestContent.Create((object)widget));
 }
 ```
 
@@ -186,7 +186,7 @@ To make this common case easier to implement, Dynamic JSON is mutable.  This all
 Response response = client.GetWidget();
 dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 widget.Name = "New Name";
-client.SetWidget(RequestContent.Create(widget));
+client.SetWidget(RequestContent.Create((object)widget));
 ```
 
 Note: The implementation of Azure.Core's dynamic JSON is optimized for round-trip scenarios.  Given the performance goals of its design, using it to author large JSON payloads from scratch is not recommended.
