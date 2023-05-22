@@ -33,16 +33,43 @@ namespace Azure.Messaging.EventGrid.Tests
             #endregion
 
             #region Snippet:PublishSingleEvent
-            var @ev = new CloudEvent("employee_source", "type", new TestModel { Name = "Bob", Age = 18 });
-            await client.PublishCloudEventAsync(topicName, new CloudEvent("employee_source", "type", new TestModel { Name = "Bob", Age = 18 }));
+
+#if SNIPPET
+            var evt = new CloudEvent("employee_source", "type", new TestModel { Name = "Bob", Age = 18 });
+#else
+            var evt = new CloudEvent("employee_source", "type", new TestModel { Name = "Bob", Age = 18 })
+            {
+                Id = Recording.Random.NewGuid().ToString(),
+                Time = Recording.Now
+            };
+#endif
+            await client.PublishCloudEventAsync(topicName, evt);
             #endregion
 
             #region Snippet:PublishBatchOfEvents
+#if SNIPPET
             await client.PublishCloudEventsAsync(
                 topicName,
                 new[] {
                     new CloudEvent("employee_source", "type", new TestModel { Name = "Tom", Age = 55 }),
-                    new CloudEvent("employee_source", "type", new TestModel { Name = "Alice", Age = 25 })});
+                    new CloudEvent("employee_source", "type", new TestModel { Name = "Alice", Age = 25 })
+                });
+#else
+            await client.PublishCloudEventsAsync(
+                topicName,
+                new[] {
+                    new CloudEvent("employee_source", "type", new TestModel { Name = "Tom", Age = 55 })
+                    {
+                        Id = Recording.Random.NewGuid().ToString(),
+                        Time = Recording.Now
+                    },
+                    new CloudEvent("employee_source", "type", new TestModel { Name = "Alice", Age = 25 })
+                    {
+                        Id = Recording.Random.NewGuid().ToString(),
+                        Time = Recording.Now
+                    }
+                });
+#endif
             #endregion
 
             #region Snippet:ReceiveAndProcessEvents
