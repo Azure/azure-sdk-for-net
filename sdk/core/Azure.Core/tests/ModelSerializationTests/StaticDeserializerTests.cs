@@ -34,7 +34,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
             }
             expectedSerialized.Append("\"name\":\"Rabbit\",");
             expectedSerialized.Append("\"isHungry\":false,");
-            expectedSerialized.Append("\"weight\":2.3,");
+            expectedSerialized.Append("\"weight\":2.3");
             if (!ignoreUnknown)
             {
                 expectedSerialized.Append(",\"numberOfLegs\":4");
