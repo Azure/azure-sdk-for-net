@@ -21,8 +21,20 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\EventGridClient.cs">
+      <Link>Generated\Generated\EventGridClient.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\EventGridClientOptions.cs">
+      <Link>Generated\Generated\EventGridClientOptions.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EventGridSourceGenerator\src\EventGridSourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\Azure.Messaging.EventGridV2\src\Generated\Docs\EventGridClient.xml">
+      <Link>Generated\Generated\Docs\EventGridClient.xml</Link>
+    </Content>
   </ItemGroup>
 </Project>
