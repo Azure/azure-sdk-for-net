@@ -1,24 +1,12 @@
 # Release History
 
-## 1.0.0-beta.3 (2023-05-23)
-
-### Breaking Changes
-
-- Removed method 'Response<ComponentLinkedStorageAccountResource> GetComponentLinkedStorageAccount(ResourceGroupResource resourceGroupResource, String resourceName, StorageType storageType, CancellationToken cancellationToken)' in type Azure.ResourceManager.ApplicationInsights.ApplicationInsightsExtensions
-- Removed method 'Task<Response<ComponentLinkedStorageAccountResource>> GetComponentLinkedStorageAccountAsync(ResourceGroupResource resourceGroupResource, String resourceName, StorageType storageType, CancellationToken cancellationToken)' in type Azure.ResourceManager.ApplicationInsights.ApplicationInsightsExtensions
-- Removed method 'ComponentLinkedStorageAccountCollection GetComponentLinkedStorageAccounts(ResourceGroupResource resourceGroupResource)' in type Azure.ResourceManager.ApplicationInsights.ApplicationInsightsExtensions
+## 1.0.0-beta.3 (2023-05-25)
 
 ### Other Changes
 
-- Upgraded api-version tag from 'package-2022-07-27-only' to 'package-2022-12-09-only'. Tag detail available at C:\git\azure-rest-api-specs\specification\applicationinsights\resource-manager\readme.md
+- Upgraded api-version tag from 'package-2020-03-01-preview' to 'package-2022-12-09-only'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/1fea23ac36b111293dc3efc30f725e9ebb790f7f/specification/applicationinsights/resource-manager/readme.md
 - Upgraded Azure.Core from 1.28.0 to 1.32.0
 - Upgraded Azure.ResourceManager from 1.4.0 to 1.5.0
-- Obsoleted method 'ArmOperation<ComponentLinkedStorageAccountResource> CreateOrUpdate(WaitUntil waitUntil, String resourceName, StorageType storageType, ComponentLinkedStorageAccountData data, CancellationToken cancellationToken)' in type Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountCollection
-- Obsoleted method 'Task<ArmOperation<ComponentLinkedStorageAccountResource>> CreateOrUpdateAsync(WaitUntil waitUntil, String resourceName, StorageType storageType, ComponentLinkedStorageAccountData data, CancellationToken cancellationToken)' in type Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountCollection
-- Obsoleted method 'Response<Boolean> Exists(String resourceName, StorageType storageType, CancellationToken cancellationToken)' in type Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountCollection
-- Obsoleted method 'Task<Response<Boolean>> ExistsAsync(String resourceName, StorageType storageType, CancellationToken cancellationToken)' in type Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountCollection
-- Obsoleted method 'Response<ComponentLinkedStorageAccountResource> Get(String resourceName, StorageType storageType, CancellationToken cancellationToken)' in type Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountCollection
-- Obsoleted method 'Task<Response<ComponentLinkedStorageAccountResource>> GetAsync(String resourceName, StorageType storageType, CancellationToken cancellationToken)' in type Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountCollection
 
 ## 1.0.0-beta.2 (2023-02-16)
 

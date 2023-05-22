@@ -26,6 +26,18 @@ namespace Azure.ResourceManager.ApplicationInsights
     public partial class ComponentLinkedStorageAccountCollection : ArmCollection
     {
         /// <summary>
+        /// Return the ComponentLinkedStorageAccountCollection with the given resource name instead of current instance for backward compatibility
+        /// </summary>
+        /// <param name="resourceName"></param>
+        /// <returns></returns>
+        private ComponentLinkedStorageAccountCollection GetCollectionWithGivenResourceName(string resourceName)
+        {
+            var id = ApplicationInsightsComponentResource.CreateResourceIdentifier(this.Id.SubscriptionId, this.Id.ResourceGroupName, resourceName);
+            var component = this.Client.GetApplicationInsightsComponentResource(id);
+            return component.GetComponentLinkedStorageAccounts();
+        }
+
+        /// <summary>
         /// Replace current linked storage account for an Application Insights component.
         /// <list type="bullet">
         /// <item>
@@ -39,7 +51,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceName"> This parameter is obsoleted and will be ignored  </param>
+        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
         /// <param name="data"> Properties that need to be specified to update linked storage accounts for an Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -48,7 +60,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<ComponentLinkedStorageAccountResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, StorageType storageType, ComponentLinkedStorageAccountData data, CancellationToken cancellationToken = default)
         {
-            return await this.CreateOrUpdateAsync(waitUntil, storageType, data, cancellationToken).ConfigureAwait(false);
+            var collection = this.GetCollectionWithGivenResourceName(resourceName);
+            return await collection.CreateOrUpdateAsync(waitUntil, storageType, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -65,7 +78,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceName"> This parameter is obsoleted and will be ignored  </param>
+        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
         /// <param name="data"> Properties that need to be specified to update linked storage accounts for an Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -74,7 +87,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<ComponentLinkedStorageAccountResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, StorageType storageType, ComponentLinkedStorageAccountData data, CancellationToken cancellationToken = default)
         {
-            return this.CreateOrUpdate(waitUntil, storageType, data, cancellationToken);
+            return this.CreateOrUpdateAsync(waitUntil, resourceName, storageType, data, cancellationToken).Result;
         }
 
         /// <summary>
@@ -90,14 +103,15 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> This parameter is obsoleted and will be ignored</param>
+        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ComponentLinkedStorageAccountResource>> GetAsync(string resourceName, StorageType storageType, CancellationToken cancellationToken = default)
         {
-            return await this.GetAsync(storageType, cancellationToken).ConfigureAwait(false);
+            var collection = this.GetCollectionWithGivenResourceName(resourceName);
+            return await collection.GetAsync(storageType, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -113,14 +127,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> This parameter is obsoleted and will be ignored</param>
+        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ComponentLinkedStorageAccountResource> Get(string resourceName, StorageType storageType, CancellationToken cancellationToken = default)
         {
-            return this.Get(storageType, cancellationToken);
+            return this.GetAsync(resourceName, storageType, cancellationToken).Result;
         }
 
         /// <summary>
@@ -136,14 +150,15 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> This parameter is obsoleted and will be ignored</param>
+        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<bool>> ExistsAsync(string resourceName, StorageType storageType, CancellationToken cancellationToken = default)
         {
-            return await this.ExistsAsync(storageType, cancellationToken).ConfigureAwait(false);
+            var collection = this.GetCollectionWithGivenResourceName(resourceName);
+            return await collection.ExistsAsync(storageType, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -159,14 +174,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> This parameter is obsoleted and will be ignored</param>
+        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<bool> Exists(string resourceName, StorageType storageType, CancellationToken cancellationToken = default)
         {
-            return this.Exists(storageType, cancellationToken);
+            return this.ExistsAsync(resourceName, storageType, cancellationToken).Result;
         }
     }
 }
