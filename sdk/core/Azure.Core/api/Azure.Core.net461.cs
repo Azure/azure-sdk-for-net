@@ -89,13 +89,6 @@ namespace Azure
         public static bool operator !=(Azure.HttpRange left, Azure.HttpRange right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial interface IJsonSerializable
-    {
-        void Deserialize(System.IO.Stream stream, Azure.SerializableOptions? options = null);
-        void Serialize(System.IO.Stream stream, Azure.SerializableOptions? options = null);
-        bool TryDeserialize(System.IO.Stream stream, out long bytesConsumed, Azure.SerializableOptions? options = null);
-        bool TrySerialize(System.IO.Stream stream, out long bytesWritten, Azure.SerializableOptions? options = null);
-    }
     public partial class JsonPatchDocument
     {
         public JsonPatchDocument() { }
@@ -277,13 +270,6 @@ namespace Azure
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static implicit operator T (Azure.Response<T> response) { throw null; }
-    }
-    public partial class SerializableOptions
-    {
-        public SerializableOptions() { }
-        public bool IgnoreAdditionalProperties { get { throw null; } set { } }
-        public bool IgnoreReadOnlyProperties { get { throw null; } set { } }
-        public bool PrettyPrint { get { throw null; } set { } }
     }
     public partial class SyncAsyncEventArgs : System.EventArgs
     {
@@ -1078,6 +1064,13 @@ namespace Azure.Core.Pipeline
 }
 namespace Azure.Core.Serialization
 {
+    public partial interface IJsonSerializable
+    {
+        void Deserialize(System.IO.Stream stream, Azure.Core.Serialization.SerializableOptions? options = null);
+        void Serialize(System.IO.Stream stream, Azure.Core.Serialization.SerializableOptions? options = null);
+        bool TryDeserialize(System.IO.Stream stream, out long bytesConsumed, Azure.Core.Serialization.SerializableOptions? options = null);
+        bool TrySerialize(System.IO.Stream stream, out long bytesWritten, Azure.Core.Serialization.SerializableOptions? options = null);
+    }
     public partial interface IMemberNameConverter
     {
         string? ConvertMemberName(System.Reflection.MemberInfo member);
@@ -1095,6 +1088,12 @@ namespace Azure.Core.Serialization
         public override System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken) { throw null; }
         public override System.Threading.Tasks.ValueTask<System.BinaryData> SerializeAsync(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public static partial class ModelSerializer
+    {
+        public static T Deserialize<T>(System.IO.Stream stream, Azure.Core.Serialization.SerializableOptions? options = null) where T : Azure.Core.Serialization.IJsonSerializable, new() { throw null; }
+        public static T Deserialize<T>(string json, Azure.Core.Serialization.SerializableOptions? options = null) where T : Azure.Core.Serialization.IJsonSerializable, new() { throw null; }
+        public static System.IO.Stream Serialize<T>(T model, Azure.Core.Serialization.SerializableOptions? options = null) where T : Azure.Core.Serialization.IJsonSerializable, new() { throw null; }
+    }
     public abstract partial class ObjectSerializer
     {
         protected ObjectSerializer() { }
@@ -1104,6 +1103,13 @@ namespace Azure.Core.Serialization
         public virtual System.BinaryData Serialize(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public abstract System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken);
         public virtual System.Threading.Tasks.ValueTask<System.BinaryData> SerializeAsync(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SerializableOptions
+    {
+        public SerializableOptions() { }
+        public bool IgnoreAdditionalProperties { get { throw null; } set { } }
+        public bool IgnoreReadOnlyProperties { get { throw null; } set { } }
+        public bool PrettyPrint { get { throw null; } set { } }
     }
 }
 namespace Azure.Messaging
