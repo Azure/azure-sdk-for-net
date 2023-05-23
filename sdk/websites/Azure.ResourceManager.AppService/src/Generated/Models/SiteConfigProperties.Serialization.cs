@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(DefaultDocuments))
             {
-                if (DefaultDocuments != null)
+                if (DefaultDocuments != null && Optional.IsCollectionDefined(DefaultDocuments))
                 {
                     writer.WritePropertyName("defaultDocuments"u8);
                     writer.WriteStartArray();
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(AppSettings))
             {
-                if (AppSettings != null)
+                if (AppSettings != null && Optional.IsCollectionDefined(AppSettings))
                 {
                     writer.WritePropertyName("appSettings"u8);
                     writer.WriteStartArray();
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(ConnectionStrings))
             {
-                if (ConnectionStrings != null)
+                if (ConnectionStrings != null && Optional.IsCollectionDefined(ConnectionStrings))
                 {
                     writer.WritePropertyName("connectionStrings"u8);
                     writer.WriteStartArray();
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(HandlerMappings))
             {
-                if (HandlerMappings != null)
+                if (HandlerMappings != null && Optional.IsCollectionDefined(HandlerMappings))
                 {
                     writer.WritePropertyName("handlerMappings"u8);
                     writer.WriteStartArray();
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(VirtualApplications))
             {
-                if (VirtualApplications != null)
+                if (VirtualApplications != null && Optional.IsCollectionDefined(VirtualApplications))
                 {
                     writer.WritePropertyName("virtualApplications"u8);
                     writer.WriteStartArray();
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(IPSecurityRestrictions))
             {
-                if (IPSecurityRestrictions != null)
+                if (IPSecurityRestrictions != null && Optional.IsCollectionDefined(IPSecurityRestrictions))
                 {
                     writer.WritePropertyName("ipSecurityRestrictions"u8);
                     writer.WriteStartArray();
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(ScmIPSecurityRestrictions))
             {
-                if (ScmIPSecurityRestrictions != null)
+                if (ScmIPSecurityRestrictions != null && Optional.IsCollectionDefined(ScmIPSecurityRestrictions))
                 {
                     writer.WritePropertyName("scmIpSecurityRestrictions"u8);
                     writer.WriteStartArray();
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(AzureStorageAccounts))
             {
-                if (AzureStorageAccounts != null)
+                if (AzureStorageAccounts != null && Optional.IsCollectionDefined(AzureStorageAccounts))
                 {
                     writer.WritePropertyName("azureStorageAccounts"u8);
                     writer.WriteStartObject();
