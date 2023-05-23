@@ -98,6 +98,7 @@ rename-mapping:
   SUCScheduleProperties.nextRun: NextRunOn
   SUCScheduleProperties.nextRunOffsetMinutes: NextRunInMinutes
   Webhook.properties.expiryTime: ExpireOn
+  Webhook.properties.uri: uriString
   WebhookCreateOrUpdateParameters.properties.expiryTime: ExpireOn
   ScheduleCreateOrUpdateParameters.properties.expiryTime: ExpireOn
   Activity.id: -|arm-id
@@ -130,7 +131,6 @@ rename-mapping:
   WindowsUpdateClasses: WindowsUpdateClassification
   WindowsProperties.excludedKbNumbers: ExcludedKBNumbers
   WindowsProperties.includedKbNumbers: IncludedKBNumbers
-  WebhookProperties.uri: uriString
 
 prepend-rp-prefix:
   - Certificate

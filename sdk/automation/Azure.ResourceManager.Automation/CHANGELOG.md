@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Add property `UriString` to class `AutomationWebhookData`, replace the `Uri`.
+
 ### Bugs Fixed
 
 ### Other Changes

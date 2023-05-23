@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(Uri))
+            if (Optional.IsDefined(UriString))
             {
                 writer.WritePropertyName("uri"u8);
-                writer.WriteStringValue(Uri.AbsoluteUri);
+                writer.WriteStringValue(UriString);
             }
             if (Optional.IsDefined(ExpireOn))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Automation
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<bool> isEnabled = default;
-            Optional<Uri> uri = default;
+            Optional<string> uri = default;
             Optional<DateTimeOffset> expiryTime = default;
             Optional<DateTimeOffset?> lastInvokedTime = default;
             Optional<IDictionary<string, string>> parameters = default;
@@ -160,11 +160,7 @@ namespace Azure.ResourceManager.Automation
                         }
                         if (property0.NameEquals("uri"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            uri = new Uri(property0.Value.GetString());
+                            uri = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("expiryTime"u8))

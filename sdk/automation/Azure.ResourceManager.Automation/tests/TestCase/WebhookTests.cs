@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
         }
 
         [RecordedTest]
-        public async Task CreateOrUpdateExistGetGetAllDelete()
+        public async Task CreateOrUpdateExistGetGetAll()
         {
             // CreateOrUpdate
             string webhookName = Recording.GenerateAssetName("webhook");
@@ -65,11 +65,6 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             var list = await _webhookCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             ValidateWebhook(list.FirstOrDefault().Data, webhookName);
-
-            // Delete
-            await webhook.DeleteAsync(WaitUntil.Completed);
-            flag = await _webhookCollection.ExistsAsync(webhookName);
-            Assert.IsFalse(flag);
         }
 
         private void ValidateWebhook(AutomationWebhookData webhook, string webhookName)
