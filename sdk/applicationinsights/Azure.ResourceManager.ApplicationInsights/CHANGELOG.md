@@ -4,9 +4,9 @@
 
 ### Breaking Changes
 
-- ComponentLinkedStorageAccountCollection can be retrieved through ApplicationInsightsComponentResource instead of ResourceGroupResource
-- ComponentLinkedStorageAccountResource can be retrieved through ComponentLinkedStorageAccountCollection instead of ResourceGroupResource
-- Resource Name of ApplicationInsightsComponentResource is no longer needed when calling ComponentLinkedStorageAccountCollection's related operations
+- ComponentLinkedStorageAccountCollection can be retrieved through ApplicationInsightsComponentResource instead of ResourceGroupResource.
+- ComponentLinkedStorageAccountResource can't be retrieved through ResourceGroupResource any more. Please use ComponentLinkedStorageAccountCollection instead.
+- Resource Name of ApplicationInsightsComponentResource is no longer needed when calling ComponentLinkedStorageAccountCollection's related operations.
 
 ### Other Changes
 
