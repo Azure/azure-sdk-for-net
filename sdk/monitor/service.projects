@@ -21,4 +21,11 @@
   <ItemGroup Condition="'$(SDKType)' == 'mgmtclient'">
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.ResourceManager.*\**\*.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <!-- Make sure backup/restore tests in the Administration package do not run parallel with other tests. -->
+    <ProjectReference Update="$(MSBuildThisFileDirectory)Azure.Monitor.OpenTelemetry.AspNetCore\tests\Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests\Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests.csproj">
+      <TestInParallel>false</TestInParallel>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
