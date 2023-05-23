@@ -37,11 +37,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         [RecordedTest]
         public async Task VerifyDistro()
         {
-            //if (IsAsync)
-            //{
-            //    // Sync and Async tests are being run in the same process. This is causing tests to fail.
-            //    Assert.Inconclusive("Disable async test.");
-            //}
+            if (IsAsync)
+            {
+                // Sync and Async tests are being run in the same process. This is causing tests to fail.
+                Assert.Inconclusive("Disable async test.");
+            }
 
             // SETUP TELEMETRY CLIENT (FOR QUERIYNG LOG ANALYTICS)
             _logsQueryClient = InstrumentClient(new LogsQueryClient(
