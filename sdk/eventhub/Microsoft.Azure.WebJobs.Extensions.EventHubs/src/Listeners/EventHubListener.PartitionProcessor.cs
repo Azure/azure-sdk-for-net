@@ -224,15 +224,16 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     return;
                 }
 
-                // If ownership of the partition is lost, we should not checkpoint as the event may need to be processed again.
-                if (_stoppedReason is ProcessingStoppedReason.OwnershipLost)
+                // If we are shutting down (or have lost ownership) and the function invocation failed, we should not checkpoint
+                // as there is a possibility the failure caused the user's function to not execute. We use the token rather than
+                // the _stoppedReason because the _stoppedReason is not set until after the partition processor has stopped.
+                if (linkedCts.IsCancellationRequested && !result.Succeeded)
                 {
                     return;
                 }
 
-                // If we are shutting down and the function invocation failed, we should not checkpoint
-                // as there is a possibility the failure caused the user's function to not execute.
-                if (_stoppedReason is ProcessingStoppedReason.Shutdown && !result.Succeeded)
+                // If ownership of the partition is lost, we should not checkpoint as the event may need to be processed again.
+                if (_stoppedReason is ProcessingStoppedReason.OwnershipLost)
                 {
                     return;
                 }
