@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="PublishCloudEventAsync(string,RequestContent,RequestContext)">
+    </member>
+    <member name="PublishCloudEvent(string,RequestContent,RequestContext)">
+    </member>
+    <member name="PublishCloudEventsAsync(string,RequestContent,RequestContext)">
+    </member>
+    <member name="PublishCloudEvents(string,RequestContent,RequestContext)">
+    </member>
+    <member name="ReceiveCloudEventsAsync(string,string,int?,int?,RequestContext)">
+    </member>
+    <member name="ReceiveCloudEvents(string,string,int?,int?,RequestContext)">
+    </member>
+    <member name="AcknowledgeCloudEventsAsync(string,string,RequestContent,RequestContext)">
+<example>
+This sample shows how to call AcknowledgeCloudEventsAsync with required parameters and request content and parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EventGridClient(endpoint, credential);
+
+var data = new {
+    lockTokens = new[] {
+        "<String>"
+    },
+};
+
+Response response = await client.AcknowledgeCloudEventsAsync("<topicName>", "<eventSubscriptionName>", RequestContent.Create(data), new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
+Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("errorDescription").ToString());
+Console.WriteLine(result.GetProperty("succeededLockTokens")[0].ToString());
+]]></code>
+</example>
+    </member>
+    <member name="AcknowledgeCloudEvents(string,string,RequestContent,RequestContext)">
+<example>
+This sample shows how to call AcknowledgeCloudEvents with required parameters and request content and parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EventGridClient(endpoint, credential);
+
+var data = new {
+    lockTokens = new[] {
+        "<String>"
+    },
+};
+
+Response response = client.AcknowledgeCloudEvents("<topicName>", "<eventSubscriptionName>", RequestContent.Create(data), new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
+Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("errorDescription").ToString());
+Console.WriteLine(result.GetProperty("succeededLockTokens")[0].ToString());
+]]></code>
+</example>
+    </member>
+    <member name="ReleaseCloudEventsAsync(string,string,RequestContent,RequestContext)">
+<example>
+This sample shows how to call ReleaseCloudEventsAsync with required parameters and request content and parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EventGridClient(endpoint, credential);
+
+var data = new {
+    lockTokens = new[] {
+        "<String>"
+    },
+};
+
+Response response = await client.ReleaseCloudEventsAsync("<topicName>", "<eventSubscriptionName>", RequestContent.Create(data), new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
+Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("errorDescription").ToString());
+Console.WriteLine(result.GetProperty("succeededLockTokens")[0].ToString());
+]]></code>
+</example>
+    </member>
+    <member name="ReleaseCloudEvents(string,string,RequestContent,RequestContext)">
+<example>
+This sample shows how to call ReleaseCloudEvents with required parameters and request content and parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EventGridClient(endpoint, credential);
+
+var data = new {
+    lockTokens = new[] {
+        "<String>"
+    },
+};
+
+Response response = client.ReleaseCloudEvents("<topicName>", "<eventSubscriptionName>", RequestContent.Create(data), new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
+Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("errorDescription").ToString());
+Console.WriteLine(result.GetProperty("succeededLockTokens")[0].ToString());
+]]></code>
+</example>
+    </member>
+    <member name="RejectCloudEventsAsync(string,string,RequestContent,RequestContext)">
+<example>
+This sample shows how to call RejectCloudEventsAsync with required parameters and request content and parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EventGridClient(endpoint, credential);
+
+var data = new {
+    lockTokens = new[] {
+        "<String>"
+    },
+};
+
+Response response = await client.RejectCloudEventsAsync("<topicName>", "<eventSubscriptionName>", RequestContent.Create(data), new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
+Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("errorDescription").ToString());
+Console.WriteLine(result.GetProperty("succeededLockTokens")[0].ToString());
+]]></code>
+</example>
+    </member>
+    <member name="RejectCloudEvents(string,string,RequestContent,RequestContext)">
+<example>
+This sample shows how to call RejectCloudEvents with required parameters and request content and parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EventGridClient(endpoint, credential);
+
+var data = new {
+    lockTokens = new[] {
+        "<String>"
+    },
+};
+
+Response response = client.RejectCloudEvents("<topicName>", "<eventSubscriptionName>", RequestContent.Create(data), new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
+Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("errorDescription").ToString());
+Console.WriteLine(result.GetProperty("succeededLockTokens")[0].ToString());
+]]></code>
+</example>
+    </member>
+  </members>
+</doc>
