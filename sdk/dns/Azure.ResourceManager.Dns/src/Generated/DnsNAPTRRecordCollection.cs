@@ -20,28 +20,28 @@ using Azure.ResourceManager.Dns.Models;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DnsZoneNAPTRResource" /> and their operations.
-    /// Each <see cref="DnsZoneNAPTRResource" /> in the collection will belong to the same instance of <see cref="DnsZoneResource" />.
-    /// To get a <see cref="DnsZoneNAPTRCollection" /> instance call the GetDnsZoneNAPTRs method from an instance of <see cref="DnsZoneResource" />.
+    /// A class representing a collection of <see cref="DnsNAPTRRecordResource" /> and their operations.
+    /// Each <see cref="DnsNAPTRRecordResource" /> in the collection will belong to the same instance of <see cref="DnsZoneResource" />.
+    /// To get a <see cref="DnsNAPTRRecordCollection" /> instance call the GetDnsNAPTRRecords method from an instance of <see cref="DnsZoneResource" />.
     /// </summary>
-    public partial class DnsZoneNAPTRCollection : ArmCollection, IEnumerable<DnsZoneNAPTRResource>, IAsyncEnumerable<DnsZoneNAPTRResource>
+    public partial class DnsNAPTRRecordCollection : ArmCollection, IEnumerable<DnsNAPTRRecordResource>, IAsyncEnumerable<DnsNAPTRRecordResource>
     {
-        private readonly ClientDiagnostics _dnsZoneNAPTRRecordSetsClientDiagnostics;
-        private readonly RecordSetsRestOperations _dnsZoneNAPTRRecordSetsRestClient;
+        private readonly ClientDiagnostics _dnsNAPTRRecordRecordSetsClientDiagnostics;
+        private readonly RecordSetsRestOperations _dnsNAPTRRecordRecordSetsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DnsZoneNAPTRCollection"/> class for mocking. </summary>
-        protected DnsZoneNAPTRCollection()
+        /// <summary> Initializes a new instance of the <see cref="DnsNAPTRRecordCollection"/> class for mocking. </summary>
+        protected DnsNAPTRRecordCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DnsZoneNAPTRCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DnsNAPTRRecordCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal DnsZoneNAPTRCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DnsNAPTRRecordCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dnsZoneNAPTRRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", DnsZoneNAPTRResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DnsZoneNAPTRResource.ResourceType, out string dnsZoneNAPTRRecordSetsApiVersion);
-            _dnsZoneNAPTRRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dnsZoneNAPTRRecordSetsApiVersion);
+            _dnsNAPTRRecordRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", DnsNAPTRRecordResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DnsNAPTRRecordResource.ResourceType, out string dnsNAPTRRecordRecordSetsApiVersion);
+            _dnsNAPTRRecordRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dnsNAPTRRecordRecordSetsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DnsZoneNAPTRResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relativeRecordSetName, DnsRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DnsNAPTRRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relativeRecordSetName, DnsRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dnsZoneNAPTRRecordSetsClientDiagnostics.CreateScope("DnsZoneNAPTRCollection.CreateOrUpdate");
+            using var scope = _dnsNAPTRRecordRecordSetsClientDiagnostics.CreateScope("DnsNAPTRRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _dnsZoneNAPTRRecordSetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NAPTR".ToDnsRecordType(), relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsArmOperation<DnsZoneNAPTRResource>(Response.FromValue(new DnsZoneNAPTRResource(Client, response), response.GetRawResponse()));
+                var response = await _dnsNAPTRRecordRecordSetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NAPTR".ToDnsRecordType(), relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new DnsArmOperation<DnsNAPTRRecordResource>(Response.FromValue(new DnsNAPTRRecordResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -115,17 +115,17 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DnsZoneNAPTRResource> CreateOrUpdate(WaitUntil waitUntil, string relativeRecordSetName, DnsRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DnsNAPTRRecordResource> CreateOrUpdate(WaitUntil waitUntil, string relativeRecordSetName, DnsRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dnsZoneNAPTRRecordSetsClientDiagnostics.CreateScope("DnsZoneNAPTRCollection.CreateOrUpdate");
+            using var scope = _dnsNAPTRRecordRecordSetsClientDiagnostics.CreateScope("DnsNAPTRRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _dnsZoneNAPTRRecordSetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NAPTR".ToDnsRecordType(), relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new DnsArmOperation<DnsZoneNAPTRResource>(Response.FromValue(new DnsZoneNAPTRResource(Client, response), response.GetRawResponse()));
+                var response = _dnsNAPTRRecordRecordSetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NAPTR".ToDnsRecordType(), relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken);
+                var operation = new DnsArmOperation<DnsNAPTRRecordResource>(Response.FromValue(new DnsNAPTRRecordResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -153,18 +153,18 @@ namespace Azure.ResourceManager.Dns
         /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        public virtual async Task<Response<DnsZoneNAPTRResource>> GetAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DnsNAPTRRecordResource>> GetAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
 
-            using var scope = _dnsZoneNAPTRRecordSetsClientDiagnostics.CreateScope("DnsZoneNAPTRCollection.Get");
+            using var scope = _dnsNAPTRRecordRecordSetsClientDiagnostics.CreateScope("DnsNAPTRRecordCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dnsZoneNAPTRRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NAPTR".ToDnsRecordType(), relativeRecordSetName, cancellationToken).ConfigureAwait(false);
+                var response = await _dnsNAPTRRecordRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NAPTR".ToDnsRecordType(), relativeRecordSetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DnsZoneNAPTRResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsNAPTRRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,18 +189,18 @@ namespace Azure.ResourceManager.Dns
         /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        public virtual Response<DnsZoneNAPTRResource> Get(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        public virtual Response<DnsNAPTRRecordResource> Get(string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
 
-            using var scope = _dnsZoneNAPTRRecordSetsClientDiagnostics.CreateScope("DnsZoneNAPTRCollection.Get");
+            using var scope = _dnsNAPTRRecordRecordSetsClientDiagnostics.CreateScope("DnsNAPTRRecordCollection.Get");
             scope.Start();
             try
             {
-                var response = _dnsZoneNAPTRRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NAPTR".ToDnsRecordType(), relativeRecordSetName, cancellationToken);
+                var response = _dnsNAPTRRecordRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NAPTR".ToDnsRecordType(), relativeRecordSetName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DnsZoneNAPTRResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsNAPTRRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -225,12 +225,12 @@ namespace Azure.ResourceManager.Dns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DnsZoneNAPTRResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DnsZoneNAPTRResource> GetAllAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DnsNAPTRRecordResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DnsNAPTRRecordResource> GetAllAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsZoneNAPTRRecordSetsRestClient.CreateListByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NAPTR".ToDnsRecordType(), top, recordsetnamesuffix);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsZoneNAPTRRecordSetsRestClient.CreateListByTypeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NAPTR".ToDnsRecordType(), top, recordsetnamesuffix);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsZoneNAPTRResource(Client, DnsRecordData.DeserializeDnsRecordData(e)), _dnsZoneNAPTRRecordSetsClientDiagnostics, Pipeline, "DnsZoneNAPTRCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsNAPTRRecordRecordSetsRestClient.CreateListByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NAPTR".ToDnsRecordType(), top, recordsetnamesuffix);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsNAPTRRecordRecordSetsRestClient.CreateListByTypeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NAPTR".ToDnsRecordType(), top, recordsetnamesuffix);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsNAPTRRecordResource(Client, DnsRecordData.DeserializeDnsRecordData(e)), _dnsNAPTRRecordRecordSetsClientDiagnostics, Pipeline, "DnsNAPTRRecordCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,12 +249,12 @@ namespace Azure.ResourceManager.Dns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DnsZoneNAPTRResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DnsZoneNAPTRResource> GetAll(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DnsNAPTRRecordResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DnsNAPTRRecordResource> GetAll(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsZoneNAPTRRecordSetsRestClient.CreateListByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NAPTR".ToDnsRecordType(), top, recordsetnamesuffix);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsZoneNAPTRRecordSetsRestClient.CreateListByTypeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NAPTR".ToDnsRecordType(), top, recordsetnamesuffix);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsZoneNAPTRResource(Client, DnsRecordData.DeserializeDnsRecordData(e)), _dnsZoneNAPTRRecordSetsClientDiagnostics, Pipeline, "DnsZoneNAPTRCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsNAPTRRecordRecordSetsRestClient.CreateListByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NAPTR".ToDnsRecordType(), top, recordsetnamesuffix);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsNAPTRRecordRecordSetsRestClient.CreateListByTypeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NAPTR".ToDnsRecordType(), top, recordsetnamesuffix);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsNAPTRRecordResource(Client, DnsRecordData.DeserializeDnsRecordData(e)), _dnsNAPTRRecordRecordSetsClientDiagnostics, Pipeline, "DnsNAPTRRecordCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -277,11 +277,11 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
 
-            using var scope = _dnsZoneNAPTRRecordSetsClientDiagnostics.CreateScope("DnsZoneNAPTRCollection.Exists");
+            using var scope = _dnsNAPTRRecordRecordSetsClientDiagnostics.CreateScope("DnsNAPTRRecordCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dnsZoneNAPTRRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NAPTR".ToDnsRecordType(), relativeRecordSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _dnsNAPTRRecordRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NAPTR".ToDnsRecordType(), relativeRecordSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -311,11 +311,11 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
 
-            using var scope = _dnsZoneNAPTRRecordSetsClientDiagnostics.CreateScope("DnsZoneNAPTRCollection.Exists");
+            using var scope = _dnsNAPTRRecordRecordSetsClientDiagnostics.CreateScope("DnsNAPTRRecordCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dnsZoneNAPTRRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NAPTR".ToDnsRecordType(), relativeRecordSetName, cancellationToken: cancellationToken);
+                var response = _dnsNAPTRRecordRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "NAPTR".ToDnsRecordType(), relativeRecordSetName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        IEnumerator<DnsZoneNAPTRResource> IEnumerable<DnsZoneNAPTRResource>.GetEnumerator()
+        IEnumerator<DnsNAPTRRecordResource> IEnumerable<DnsNAPTRRecordResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Dns
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<DnsZoneNAPTRResource> IAsyncEnumerable<DnsZoneNAPTRResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DnsNAPTRRecordResource> IAsyncEnumerable<DnsNAPTRRecordResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

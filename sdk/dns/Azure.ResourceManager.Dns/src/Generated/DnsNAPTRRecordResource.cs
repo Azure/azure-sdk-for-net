@@ -18,46 +18,46 @@ using Azure.ResourceManager.Dns.Models;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>
-    /// A Class representing a DnsZoneNAPTR along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DnsZoneNAPTRResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDnsZoneNAPTRResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetDnsZoneNAPTR method.
+    /// A Class representing a DnsNAPTRRecord along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DnsNAPTRRecordResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetDnsNAPTRRecordResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetDnsNAPTRRecord method.
     /// </summary>
-    public partial class DnsZoneNAPTRResource : ArmResource
+    public partial class DnsNAPTRRecordResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DnsZoneNAPTRResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="DnsNAPTRRecordResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/NAPTR/{relativeRecordSetName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _dnsZoneNAPTRRecordSetsClientDiagnostics;
-        private readonly RecordSetsRestOperations _dnsZoneNAPTRRecordSetsRestClient;
+        private readonly ClientDiagnostics _dnsNAPTRRecordRecordSetsClientDiagnostics;
+        private readonly RecordSetsRestOperations _dnsNAPTRRecordRecordSetsRestClient;
         private readonly DnsRecordData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="DnsZoneNAPTRResource"/> class for mocking. </summary>
-        protected DnsZoneNAPTRResource()
+        /// <summary> Initializes a new instance of the <see cref="DnsNAPTRRecordResource"/> class for mocking. </summary>
+        protected DnsNAPTRRecordResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DnsZoneNAPTRResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "DnsNAPTRRecordResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DnsZoneNAPTRResource(ArmClient client, DnsRecordData data) : this(client, data.Id)
+        internal DnsNAPTRRecordResource(ArmClient client, DnsRecordData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DnsZoneNAPTRResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DnsNAPTRRecordResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DnsZoneNAPTRResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DnsNAPTRRecordResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dnsZoneNAPTRRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string dnsZoneNAPTRRecordSetsApiVersion);
-            _dnsZoneNAPTRRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dnsZoneNAPTRRecordSetsApiVersion);
+            _dnsNAPTRRecordRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string dnsNAPTRRecordRecordSetsApiVersion);
+            _dnsNAPTRRecordRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dnsNAPTRRecordRecordSetsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -101,16 +101,16 @@ namespace Azure.ResourceManager.Dns
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DnsZoneNAPTRResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DnsNAPTRRecordResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _dnsZoneNAPTRRecordSetsClientDiagnostics.CreateScope("DnsZoneNAPTRResource.Get");
+            using var scope = _dnsNAPTRRecordRecordSetsClientDiagnostics.CreateScope("DnsNAPTRRecordResource.Get");
             scope.Start();
             try
             {
-                var response = await _dnsZoneNAPTRRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NAPTR".ToDnsRecordType(), Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _dnsNAPTRRecordRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NAPTR".ToDnsRecordType(), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DnsZoneNAPTRResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsNAPTRRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -133,16 +133,16 @@ namespace Azure.ResourceManager.Dns
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DnsZoneNAPTRResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DnsNAPTRRecordResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _dnsZoneNAPTRRecordSetsClientDiagnostics.CreateScope("DnsZoneNAPTRResource.Get");
+            using var scope = _dnsNAPTRRecordRecordSetsClientDiagnostics.CreateScope("DnsNAPTRRecordResource.Get");
             scope.Start();
             try
             {
-                var response = _dnsZoneNAPTRRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NAPTR".ToDnsRecordType(), Id.Name, cancellationToken);
+                var response = _dnsNAPTRRecordRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NAPTR".ToDnsRecordType(), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DnsZoneNAPTRResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsNAPTRRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _dnsZoneNAPTRRecordSetsClientDiagnostics.CreateScope("DnsZoneNAPTRResource.Delete");
+            using var scope = _dnsNAPTRRecordRecordSetsClientDiagnostics.CreateScope("DnsNAPTRRecordResource.Delete");
             scope.Start();
             try
             {
-                var response = await _dnsZoneNAPTRRecordSetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NAPTR".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _dnsNAPTRRecordRecordSetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NAPTR".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -204,11 +204,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _dnsZoneNAPTRRecordSetsClientDiagnostics.CreateScope("DnsZoneNAPTRResource.Delete");
+            using var scope = _dnsNAPTRRecordRecordSetsClientDiagnostics.CreateScope("DnsNAPTRRecordResource.Delete");
             scope.Start();
             try
             {
-                var response = _dnsZoneNAPTRRecordSetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NAPTR".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken);
+                var response = _dnsNAPTRRecordRecordSetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NAPTR".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -238,16 +238,16 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<DnsZoneNAPTRResource>> UpdateAsync(DnsRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DnsNAPTRRecordResource>> UpdateAsync(DnsRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dnsZoneNAPTRRecordSetsClientDiagnostics.CreateScope("DnsZoneNAPTRResource.Update");
+            using var scope = _dnsNAPTRRecordRecordSetsClientDiagnostics.CreateScope("DnsNAPTRRecordResource.Update");
             scope.Start();
             try
             {
-                var response = await _dnsZoneNAPTRRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NAPTR".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DnsZoneNAPTRResource(Client, response.Value), response.GetRawResponse());
+                var response = await _dnsNAPTRRecordRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NAPTR".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DnsNAPTRRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -273,16 +273,16 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<DnsZoneNAPTRResource> Update(DnsRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<DnsNAPTRRecordResource> Update(DnsRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dnsZoneNAPTRRecordSetsClientDiagnostics.CreateScope("DnsZoneNAPTRResource.Update");
+            using var scope = _dnsNAPTRRecordRecordSetsClientDiagnostics.CreateScope("DnsNAPTRRecordResource.Update");
             scope.Start();
             try
             {
-                var response = _dnsZoneNAPTRRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NAPTR".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken);
-                return Response.FromValue(new DnsZoneNAPTRResource(Client, response.Value), response.GetRawResponse());
+                var response = _dnsNAPTRRecordRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NAPTR".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken);
+                return Response.FromValue(new DnsNAPTRRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
