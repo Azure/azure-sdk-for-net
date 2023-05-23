@@ -30,39 +30,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
-                if (EnvironmentVariables != null)
+                writer.WritePropertyName("environmentVariables"u8);
+                writer.WriteStartObject();
+                foreach (var item in EnvironmentVariables)
                 {
-                    writer.WritePropertyName("environmentVariables"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in EnvironmentVariables)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("environmentVariables");
-                }
+                writer.WriteEndObject();
             }
             if (Optional.IsCollectionDefined(Outputs))
             {
-                if (Outputs != null)
+                writer.WritePropertyName("outputs"u8);
+                writer.WriteStartObject();
+                foreach (var item in Outputs)
                 {
-                    writer.WritePropertyName("outputs"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Outputs)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
-                    }
-                    writer.WriteEndObject();
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("outputs");
-                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(Resources))
             {
@@ -133,21 +119,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(JobType.ToString());
             if (Optional.IsCollectionDefined(Services))
             {
-                if (Services != null)
+                writer.WritePropertyName("services"u8);
+                writer.WriteStartObject();
+                foreach (var item in Services)
                 {
-                    writer.WritePropertyName("services"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Services)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
-                    }
-                    writer.WriteEndObject();
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("services");
-                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(Description))
             {
@@ -163,39 +142,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(Properties))
             {
-                if (Properties != null)
+                writer.WritePropertyName("properties"u8);
+                writer.WriteStartObject();
+                foreach (var item in Properties)
                 {
-                    writer.WritePropertyName("properties"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Properties)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("properties");
-                }
+                writer.WriteEndObject();
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                if (Tags != null)
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
                 {
-                    writer.WritePropertyName("tags"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Tags)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("tags");
-                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
         }

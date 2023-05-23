@@ -66,56 +66,35 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             }
             if (Optional.IsCollectionDefined(ConfigurationSettings))
             {
-                if (ConfigurationSettings != null)
+                writer.WritePropertyName("configurationSettings"u8);
+                writer.WriteStartObject();
+                foreach (var item in ConfigurationSettings)
                 {
-                    writer.WritePropertyName("configurationSettings"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in ConfigurationSettings)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("configurationSettings");
-                }
+                writer.WriteEndObject();
             }
             if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
             {
-                if (ConfigurationProtectedSettings != null)
+                writer.WritePropertyName("configurationProtectedSettings"u8);
+                writer.WriteStartObject();
+                foreach (var item in ConfigurationProtectedSettings)
                 {
-                    writer.WritePropertyName("configurationProtectedSettings"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in ConfigurationProtectedSettings)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("configurationProtectedSettings");
-                }
+                writer.WriteEndObject();
             }
             if (Optional.IsCollectionDefined(Statuses))
             {
-                if (Statuses != null)
+                writer.WritePropertyName("statuses"u8);
+                writer.WriteStartArray();
+                foreach (var item in Statuses)
                 {
-                    writer.WritePropertyName("statuses"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in Statuses)
-                    {
-                        writer.WriteObjectValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("statuses");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(AksAssignedIdentity))
             {

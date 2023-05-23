@@ -23,20 +23,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             if (Optional.IsCollectionDefined(DependsOn))
             {
-                if (DependsOn != null)
+                writer.WritePropertyName("dependsOn"u8);
+                writer.WriteStartArray();
+                foreach (var item in DependsOn)
                 {
-                    writer.WritePropertyName("dependsOn"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in DependsOn)
-                    {
-                        writer.WriteStringValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("dependsOn");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(TimeoutInSeconds))
             {

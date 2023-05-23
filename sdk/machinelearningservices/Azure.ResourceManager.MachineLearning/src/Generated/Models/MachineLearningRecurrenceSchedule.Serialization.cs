@@ -32,37 +32,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(MonthDays))
             {
-                if (MonthDays != null)
+                writer.WritePropertyName("monthDays"u8);
+                writer.WriteStartArray();
+                foreach (var item in MonthDays)
                 {
-                    writer.WritePropertyName("monthDays"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in MonthDays)
-                    {
-                        writer.WriteNumberValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteNumberValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("monthDays");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(WeekDays))
             {
-                if (WeekDays != null)
+                writer.WritePropertyName("weekDays"u8);
+                writer.WriteStartArray();
+                foreach (var item in WeekDays)
                 {
-                    writer.WritePropertyName("weekDays"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in WeekDays)
-                    {
-                        writer.WriteStringValue(item.ToString());
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item.ToString());
                 }
-                else
-                {
-                    writer.WriteNull("weekDays");
-                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }

@@ -19,37 +19,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AllowedTrainingAlgorithms))
             {
-                if (AllowedTrainingAlgorithms != null)
+                writer.WritePropertyName("allowedTrainingAlgorithms"u8);
+                writer.WriteStartArray();
+                foreach (var item in AllowedTrainingAlgorithms)
                 {
-                    writer.WritePropertyName("allowedTrainingAlgorithms"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in AllowedTrainingAlgorithms)
-                    {
-                        writer.WriteStringValue(item.ToString());
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item.ToString());
                 }
-                else
-                {
-                    writer.WriteNull("allowedTrainingAlgorithms");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(BlockedTrainingAlgorithms))
             {
-                if (BlockedTrainingAlgorithms != null)
+                writer.WritePropertyName("blockedTrainingAlgorithms"u8);
+                writer.WriteStartArray();
+                foreach (var item in BlockedTrainingAlgorithms)
                 {
-                    writer.WritePropertyName("blockedTrainingAlgorithms"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in BlockedTrainingAlgorithms)
-                    {
-                        writer.WriteStringValue(item.ToString());
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item.ToString());
                 }
-                else
-                {
-                    writer.WriteNull("blockedTrainingAlgorithms");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(IsDnnTrainingEnabled))
             {

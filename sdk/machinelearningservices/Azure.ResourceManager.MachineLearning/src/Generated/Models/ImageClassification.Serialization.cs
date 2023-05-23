@@ -35,20 +35,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(SearchSpace))
             {
-                if (SearchSpace != null)
+                writer.WritePropertyName("searchSpace"u8);
+                writer.WriteStartArray();
+                foreach (var item in SearchSpace)
                 {
-                    writer.WritePropertyName("searchSpace"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in SearchSpace)
-                    {
-                        writer.WriteObjectValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("searchSpace");
-                }
+                writer.WriteEndArray();
             }
             writer.WritePropertyName("limitSettings"u8);
             writer.WriteObjectValue(LimitSettings);
