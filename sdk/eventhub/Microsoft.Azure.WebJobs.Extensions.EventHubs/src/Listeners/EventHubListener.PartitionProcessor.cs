@@ -44,6 +44,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             private Task _cachedEventsBackgroundTask;
             private CancellationTokenSource _cachedEventsBackgroundTaskCts;
             private SemaphoreSlim _cachedEventsGuard;
+            private ProcessingStoppedReason? _stoppedReason;
 
             /// <summary>
             /// When we have a minimum batch size greater than 1, this class manages caching events.
@@ -72,6 +73,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             {
                 // signal cancellation for any in progress executions and clear the cached events
                 _cts.Cancel();
+                _stoppedReason = reason;
                 CachedEventsManager?.ClearEventCache();
 
                 _logger.LogDebug(GetOperationDetails(context, $"CloseAsync, {reason}"));
@@ -222,16 +224,15 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     return;
                 }
 
-                // If the partition processing token is canceled but the overall processor token is NOT canceled, this means we likely lost ownership
-                // of the partition and should not checkpoint. This is best effort and not thread-safe.
-                if (partitionCancellationToken.IsCancellationRequested && !_cts.IsCancellationRequested)
+                // If the . This is best effort and not thread-safe.
+                if (_stoppedReason is ProcessingStoppedReason.OwnershipLost)
                 {
                     return;
                 }
 
-                // If the overall processor token is canceled, we are shutting down. If the function invocation failed, we should not checkpoint,
+                // If we are shutting down and the function invocation failed, we should not checkpoint
                 // as there is a possibility the failure caused the user's function to not execute.
-                if (_cts.IsCancellationRequested && !result.Succeeded)
+                if (_stoppedReason is ProcessingStoppedReason.Shutdown && !result.Succeeded)
                 {
                     return;
                 }
