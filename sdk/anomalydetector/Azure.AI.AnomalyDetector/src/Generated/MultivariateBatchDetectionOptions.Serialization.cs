@@ -21,15 +21,8 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStringValue(DataSource.AbsoluteUri);
             if (Optional.IsDefined(TopContributorCount))
             {
-                if (TopContributorCount != null)
-                {
-                    writer.WritePropertyName("topContributorCount"u8);
-                    writer.WriteNumberValue(TopContributorCount.Value);
-                }
-                else
-                {
-                    writer.WriteNull("topContributorCount");
-                }
+                writer.WritePropertyName("topContributorCount"u8);
+                writer.WriteNumberValue(TopContributorCount.Value);
             }
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime, "O");
@@ -45,7 +38,7 @@ namespace Azure.AI.AnomalyDetector
                 return null;
             }
             Uri dataSource = default;
-            Optional<int?> topContributorCount = default;
+            Optional<int> topContributorCount = default;
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
             foreach (var property in element.EnumerateObject())
@@ -59,7 +52,6 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        topContributorCount = null;
                         continue;
                     }
                     topContributorCount = property.Value.GetInt32();
