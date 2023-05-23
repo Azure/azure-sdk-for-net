@@ -60,7 +60,7 @@ namespace Azure.Core.Samples
             Response response = client.GetWidget();
             dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
             widget.Name = "New Name";
-            client.SetWidget(RequestContent.Create((object)widget));
+            client.SetWidget(RequestContent.Create(widget));
             #endregion
 
             Assert.IsTrue(widget.Name == "New Name");
@@ -225,7 +225,7 @@ namespace Azure.Core.Samples
             Response response = client.GetWidget();
             dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
             widget.Name = "New Name";
-            client.SetWidget(RequestContent.Create((object)widget));
+            client.SetWidget(RequestContent.Create(widget));
             #endregion
         }
 
