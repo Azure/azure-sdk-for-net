@@ -8,6 +8,20 @@ namespace Azure.Communication.Chat
     /// <summary> Options for the chat message. </summary>
     public class SendChatMessageOptions
     {
+        //internal SendChatMessageOptions(string content, ChatMessageType messageType, string senderDisplayName, IDictionary<string, string> metadata)
+        //{
+        //    Content = content;
+        //    MessageType = messageType;
+        //    SenderDisplayName = senderDisplayName;
+        //    Metadata = metadata;
+        //}
+        //internal SendChatMessageOptions(string content, ChatMessageType messageType, string senderDisplayName)
+        //{
+        //    Content = content;
+        //    MessageType = messageType;
+        //    SenderDisplayName = senderDisplayName;
+        //}
+
         /// <summary>Content for the message</summary>
         public string Content { get; set; }
         /// <summary>The message type.</summary>
