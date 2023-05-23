@@ -28,10 +28,10 @@ namespace Azure.Core.Samples
                 "species": "beagle"
             }
             */
-            client.SetPet(RequestContent.Create(data, PropertyNameHandling.ToCamelCase));
+            client.SetPet(RequestContent.Create(data, NameConverter.CamelCase));
             #endregion
 
-            Response response = client.SetPet(RequestContent.Create(data, PropertyNameHandling.ToCamelCase));
+            Response response = client.SetPet(RequestContent.Create(data, NameConverter.CamelCase));
             dynamic value = response.Content.ToDynamicFromJson();
 
             // Validate it's written camel case.

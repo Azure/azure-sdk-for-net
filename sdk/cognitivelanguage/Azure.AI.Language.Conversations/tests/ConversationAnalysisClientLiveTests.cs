@@ -40,13 +40,13 @@ namespace Azure.AI.Language.Conversations.Tests
                 Kind = "Conversation",
             };
 
-            Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data, PropertyNameHandling.ToCamelCase));
+            Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data, NameConverter.CamelCase));
 
             // assert - main object
             Assert.IsNotNull(response);
 
             // deserialize
-            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(PropertyNameHandling.ToCamelCase);
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(NameConverter.CamelCase);
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
@@ -92,7 +92,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // deserialize
-            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(PropertyNameHandling.ToCamelCase);
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(NameConverter.CamelCase);
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
@@ -149,7 +149,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // deserialize
-            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(PropertyNameHandling.ToCamelCase);
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(NameConverter.CamelCase);
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
@@ -201,7 +201,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // deserialize
-            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(PropertyNameHandling.ToCamelCase);
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(NameConverter.CamelCase);
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
@@ -256,7 +256,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
 
-            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(PropertyNameHandling.ToCamelCase);
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(NameConverter.CamelCase);
             Assert.That((string)conversationalTaskResult.Result.Prediction.TopIntent, Is.EqualTo("Send"));
         }
 
@@ -322,7 +322,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
 
-            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson(PropertyNameHandling.ToCamelCase);
+            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson(NameConverter.CamelCase);
             Assert.NotNull(jobResults);
 
             foreach (dynamic analyzeConversationSummarization in jobResults.Tasks.Items)

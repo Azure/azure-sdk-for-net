@@ -278,7 +278,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanMakeChangesAndAddNewProperty()
         {
-            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.ToCamelCase };
+            DynamicDataOptions options = new() { NameConverter = NameConverter.CamelCase };
             dynamic jsonData = BinaryData.FromString("""
                 {
                   "foo" : 1
@@ -300,7 +300,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAddPocoProperty()
         {
-            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.ToCamelCase };
+            DynamicDataOptions options = new() { NameConverter = NameConverter.CamelCase };
             dynamic value = BinaryData.FromBytes("""
                 {
                     "foo": 1
@@ -344,7 +344,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAddNestedPocoProperty()
         {
-            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.ToCamelCase };
+            DynamicDataOptions options = new() { NameConverter = NameConverter.CamelCase };
             dynamic value = BinaryData.FromBytes("""
                 {
                     "foo": 1
@@ -388,7 +388,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanSetNestedPocoProperty()
         {
-            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.ToCamelCase };
+            DynamicDataOptions options = new() { NameConverter = NameConverter.CamelCase };
             dynamic value = BinaryData.FromBytes("""
                 {
                     "foo": 1
@@ -454,7 +454,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanCheckOptionalPropertyWithChanges()
         {
-            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.ToCamelCase };
+            DynamicDataOptions options = new() { NameConverter = NameConverter.CamelCase };
             dynamic json = BinaryData.FromString("""
                 {
                   "foo" : "foo",
@@ -553,7 +553,7 @@ namespace Azure.Core.Tests
         [Test]
         public void ThrowsInvalidCastForOriginalJsonValue()
         {
-            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.ToCamelCase };
+            DynamicDataOptions options = new() { NameConverter = NameConverter.CamelCase };
             dynamic json = BinaryData.FromString(
                 """
                 {
@@ -586,7 +586,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanCastToByte()
         {
-            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.ToCamelCase };
+            DynamicDataOptions options = new() { NameConverter = NameConverter.CamelCase };
             dynamic json = BinaryData.FromString("""
                 {
                   "foo" : 42
@@ -619,7 +619,7 @@ namespace Azure.Core.Tests
         [TestCaseSource(nameof(NumberValues))]
         public void CanCastToNumber<T, U>(string serializedX, T x, T y, T z, U invalid)
         {
-            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.ToCamelCase };
+            DynamicDataOptions options = new() { NameConverter = NameConverter.CamelCase };
             dynamic json = BinaryData.FromString($"{{\"foo\" : {serializedX}}}").ToDynamicFromJson(options);
 
             // Get from parsed JSON
@@ -655,7 +655,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanExplicitCastToGuid()
         {
-            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.ToCamelCase };
+            DynamicDataOptions options = new() { NameConverter = NameConverter.CamelCase };
             Guid guid = Guid.NewGuid();
             dynamic json = BinaryData.FromString($"{{\"foo\" : \"{guid}\"}}").ToDynamicFromJson(options);
 
@@ -695,7 +695,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanExplicitCastToDateTime()
         {
-            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.ToCamelCase };
+            DynamicDataOptions options = new() { NameConverter = NameConverter.CamelCase };
             DateTime dateTime = DateTime.UtcNow;
             string dateTimeString = FormatDateTime(dateTime);
             dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson(options);
@@ -738,7 +738,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanExplicitCastToDateTimeOffset()
         {
-            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.ToCamelCase };
+            DynamicDataOptions options = new() { NameConverter = NameConverter.CamelCase };
             DateTimeOffset dateTime = DateTimeOffset.UtcNow;
             string dateTimeString = FormatDateTimeOffset(dateTime);
             dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson(options);
@@ -1057,7 +1057,7 @@ namespace Azure.Core.Tests
         #region Helpers
         internal static dynamic GetDynamicJson(string json)
         {
-            DynamicDataOptions options = new() { PropertyNameHandling = PropertyNameHandling.ToCamelCase };
+            DynamicDataOptions options = new() { NameConverter = NameConverter.CamelCase };
             return new BinaryData(json).ToDynamicFromJson(options);
         }
 

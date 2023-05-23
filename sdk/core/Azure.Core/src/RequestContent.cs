@@ -91,13 +91,13 @@ namespace Azure.Core
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
         /// </summary>
         /// <param name="serializable">The <see cref="object"/> to serialize.</param>
-        /// <param name="propertyNameHandling"></param>
+        /// <param name="nameConverter"></param>
         /// <param name="dateTimeHandling"></param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
-        public static RequestContent Create(object serializable, PropertyNameHandling propertyNameHandling, DateTimeHandling dateTimeHandling = DateTimeHandling.Rfc3339)
+        public static RequestContent Create(object serializable, NameConverter nameConverter, DateTimeHandling dateTimeHandling = DateTimeHandling.Rfc3339)
         {
             JsonSerializerOptions options = new();
-            if (propertyNameHandling == PropertyNameHandling.ToCamelCase)
+            if (nameConverter == NameConverter.CamelCase)
             {
                 options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             };

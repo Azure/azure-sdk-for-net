@@ -19,7 +19,7 @@ namespace Azure.Core.Dynamic
         /// <summary>
         /// Gets or sets an object that specifies how dynamic property names will be mapped to member names in the data buffer.
         /// </summary>
-        public PropertyNameHandling PropertyNameHandling { get; set; }
+        public NameConverter NameConverter { get; set; }
 
         /// <summary>
         /// Gets or sets an object that specifies how DateTime and DateTimeOffset should be handled when serializing and deserializing.
