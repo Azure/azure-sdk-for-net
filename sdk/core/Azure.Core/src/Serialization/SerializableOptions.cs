@@ -22,5 +22,10 @@ namespace Azure.Core.Serialization
         /// Bool that determines if Json will be PrettyPrinted. Default is false.
         /// </summary>
         public bool PrettyPrint { get; set; }
+
+        /// <summary>
+        /// todo
+        /// </summary>
+        public ObjectSerializer? Serializer { get; set; }
     }
 }

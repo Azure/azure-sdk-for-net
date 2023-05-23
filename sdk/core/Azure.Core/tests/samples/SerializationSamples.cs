@@ -2,18 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Azure.Core.Experimental.Tests;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.ModelSerializationTests;
-using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
 
 namespace Azure.Core.Samples
@@ -133,9 +128,6 @@ namespace Azure.Core.Samples
 
             //stj example
             DogListProperty dog = JsonSerializer.Deserialize<DogListProperty>(json);
-
-            //modelSerializer example
-            DogListProperty dog2 = ModelSerializer.Deserialize<DogListProperty>(json);
             #endregion
         }
 

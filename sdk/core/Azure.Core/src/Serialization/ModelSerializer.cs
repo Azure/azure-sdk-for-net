@@ -11,7 +11,7 @@ namespace Azure.Core.Serialization
     public static class ModelSerializer
     {
         /// <summary>
-        /// Serailize a model.
+        /// Serialize a model.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="model"></param>
