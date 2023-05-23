@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.IoTFirmwareDefense.Tests
 {
-    public class IoTFirmwareDefenseManagementTestEnvironment : TestEnvironment
+    public class IoTFirmwareDefenseTestEnvironment : TestEnvironment
     {
     }
 }

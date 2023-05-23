@@ -4,9 +4,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
-    <Folder Include="SessionRecords\" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="FluentAssertions"/>
+    <Folder Include="NewFolder\" />
+    <Folder Include="Tests\" />
   </ItemGroup>
 </Project>

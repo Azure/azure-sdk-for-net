@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.IoTFirmwareDefense.Tests
 {
-    public class IoTFirmwareDefenseManagementTestBase : ManagementRecordedTestBase<IoTFirmwareDefenseManagementTestEnvironment>
+    public class IoTFirmwareDefenseTestBase : ManagementRecordedTestBase<IoTFirmwareDefenseTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
-        protected IoTFirmwareDefenseManagementTestBase(bool isAsync, RecordedTestMode mode)
+        protected IoTFirmwareDefenseTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
         }
 
-        protected IoTFirmwareDefenseManagementTestBase(bool isAsync)
+        protected IoTFirmwareDefenseTestBase(bool isAsync)
             : base(isAsync)
         {
         }
@@ -37,6 +37,12 @@ namespace Azure.ResourceManager.IoTFirmwareDefense.Tests
             string rgName = Recording.GenerateAssetName(rgNamePrefix);
             ResourceGroupData input = new ResourceGroupData(location);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
+            return lro.Value;
+        }
+        protected async Task<ResourceGroupResource> DeleteResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        {
+            string rgName = Recording.GenerateAssetName(rgNamePrefix);
+            var lro = await subscription.GetResourceGroupAsync(rgName);
             return lro.Value;
         }
     }
