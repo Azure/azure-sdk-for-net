@@ -44,10 +44,4 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <!--Temp until next version of Azure.Messaging.EventHubs is released-->
-  <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.csproj" />
-  </ItemGroup>
-  <!--End Temp-->
-
 </Project>
