@@ -45,7 +45,7 @@
   "resources": [
       {
           "type": "Microsoft.Communication/CommunicationServices",
-          "apiVersion": "2021-10-01-preview",
+          "apiVersion": "2023-03-31",
           "name": "[variables('uniqueSubDomainName')]",
           "location": "global",
           "properties": {
@@ -78,7 +78,7 @@
       },
       "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": {
           "type": "string",
-          "value": "[listKeys(resourceId('Microsoft.Communication/CommunicationServices',variables('uniqueSubDomainName')), '2021-10-01-preview').primaryConnectionString]"
+          "value": "[listKeys(resourceId('Microsoft.Communication/CommunicationServices',variables('uniqueSubDomainName')), '2020-08-20-preview').primaryConnectionString]"
       },
       "RESOURCE_GROUP_NAME": {
           "type": "string",
