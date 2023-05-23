@@ -24,20 +24,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteObjectValue(Action);
             if (Optional.IsCollectionDefined(MatchConditions))
             {
-                if (MatchConditions != null)
+                writer.WritePropertyName("matchConditions"u8);
+                writer.WriteStartArray();
+                foreach (var item in MatchConditions)
                 {
-                    writer.WritePropertyName("matchConditions"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in MatchConditions)
-                    {
-                        writer.WriteObjectValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("matchConditions");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(MatchProcessingBehavior))
             {

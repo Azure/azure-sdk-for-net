@@ -74,20 +74,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             if (Optional.IsCollectionDefined(PackageDependencies))
             {
-                if (PackageDependencies != null)
+                writer.WritePropertyName("packageDependencies"u8);
+                writer.WriteStartArray();
+                foreach (var item in PackageDependencies)
                 {
-                    writer.WritePropertyName("packageDependencies"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in PackageDependencies)
-                    {
-                        writer.WriteObjectValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("packageDependencies");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(Version))
             {
