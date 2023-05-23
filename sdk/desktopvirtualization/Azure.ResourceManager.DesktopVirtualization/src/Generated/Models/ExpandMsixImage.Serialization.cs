@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             if (Optional.IsCollectionDefined(PackageDependencies))
             {
-                if (PackageDependencies != null)
+                if (PackageDependencies != null && Optional.IsCollectionDefined(PackageDependencies))
                 {
                     writer.WritePropertyName("packageDependencies"u8);
                     writer.WriteStartArray();

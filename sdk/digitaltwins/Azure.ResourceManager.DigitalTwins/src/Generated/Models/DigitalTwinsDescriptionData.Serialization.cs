@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DigitalTwins
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
-                if (PrivateEndpointConnections != null)
+                if (PrivateEndpointConnections != null && Optional.IsCollectionDefined(PrivateEndpointConnections))
                 {
                     writer.WritePropertyName("privateEndpointConnections"u8);
                     writer.WriteStartArray();
