@@ -1110,6 +1110,7 @@ namespace Azure.Core.Serialization
         public bool IgnoreAdditionalProperties { get { throw null; } set { } }
         public bool IgnoreReadOnlyProperties { get { throw null; } set { } }
         public bool PrettyPrint { get { throw null; } set { } }
+        public Azure.Core.Serialization.ObjectSerializer? Serializer { get { throw null; } set { } }
     }
 }
 namespace Azure.Messaging
