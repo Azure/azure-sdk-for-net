@@ -16,6 +16,7 @@ security: AADToken
 security-scopes:  https://api.adu.microsoft.com/.default
 # disable renaming pagination parameter "top" since the SDK is GAed
 disable-pagination-top-renaming: true
+keep-non-overloadable-protocol-signature: true
 ```
 
 ### Fix 304s

@@ -221,7 +221,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTestAsync(string testId, RequestContext context)
+        public virtual async Task<Response> GetTestAsync(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
@@ -256,7 +256,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTest(string,RequestContext)']/*" />
-        public virtual Response GetTest(string testId, RequestContext context)
+        public virtual Response GetTest(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
@@ -372,7 +372,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFileAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTestFileAsync(string testId, string fileName, RequestContext context)
+        public virtual async Task<Response> GetTestFileAsync(string testId, string fileName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
@@ -409,7 +409,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFile(string,string,RequestContext)']/*" />
-        public virtual Response GetTestFile(string testId, string fileName, RequestContext context)
+        public virtual Response GetTestFile(string testId, string fileName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
@@ -593,7 +593,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetAppComponentsAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetAppComponentsAsync(string testId, RequestContext context)
+        public virtual async Task<Response> GetAppComponentsAsync(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
@@ -628,7 +628,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetAppComponents(string,RequestContext)']/*" />
-        public virtual Response GetAppComponents(string testId, RequestContext context)
+        public virtual Response GetAppComponents(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
@@ -737,7 +737,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsConfigAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetServerMetricsConfigAsync(string testId, RequestContext context)
+        public virtual async Task<Response> GetServerMetricsConfigAsync(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
@@ -772,7 +772,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsConfig(string,RequestContext)']/*" />
-        public virtual Response GetServerMetricsConfig(string testId, RequestContext context)
+        public virtual Response GetServerMetricsConfig(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
@@ -807,7 +807,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFilesAsync(string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetTestFilesAsync(string testId, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetTestFilesAsync(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
@@ -833,7 +833,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFiles(string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetTestFiles(string testId, RequestContext context)
+        public virtual Pageable<BinaryData> GetTestFiles(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 

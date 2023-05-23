@@ -8,6 +8,7 @@ input-file:
 generation1-convenience-client: true
 # https://github.com/Azure/autorest/issues/4075
 skip-semantics-validation: true
+keep-non-overloadable-protocol-signature: true
 modelerfour:
     seal-single-value-enum-by-default: true
 ```

@@ -39,7 +39,7 @@ namespace Azure.Analytics.Purview.Scanning.Tests
                     }
                 }
             };
-            Response createResponse = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data));
+            Response createResponse = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data), new());
             Assert.AreEqual(200, createResponse.Status);
             //Get
             Response getResponse = await client.GetFilterAsync(new());
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Purview.Scanning.Tests
             var client = GetPurviewScanClient("test-datasource1014", "test-scan1014");
             string runUUID = "32767c50-ccd7-c3fd-5aea-94abe54044de";
             //Run
-            Response runScanResponse = await client.RunScanAsync(runUUID);
+            Response runScanResponse = await client.RunScanAsync(runUUID, null, new());
             Assert.AreEqual(202, runScanResponse.Status);
             //Get list
             var getScanRunListResponseList = client.GetRunsAsync(new()).GetAsyncEnumerator();
@@ -96,7 +96,7 @@ namespace Azure.Analytics.Purview.Scanning.Tests
             Response createResponse = await client.CreateOrUpdateTriggerAsync(RequestContent.Create(data));
             Assert.AreEqual(201, createResponse.Status);
             //Delete
-            Response deleteResponse = await client.DeleteTriggerAsync();
+            Response deleteResponse = await client.DeleteTriggerAsync(new());
             Assert.AreEqual(200, deleteResponse.Status);
         }
         [RecordedTest]
@@ -133,7 +133,7 @@ namespace Azure.Analytics.Purview.Scanning.Tests
             JsonElement getBodyJson = jsonDocument.RootElement;
             Assert.AreEqual("datasources/test-datasource1009/scans/test-scan1009-2", getBodyJson.GetProperty("id").GetString());
             //Delete
-            Response deleteResponse = await client.DeleteAsync();
+            Response deleteResponse = await client.DeleteAsync(new());
             Assert.AreEqual(200, deleteResponse.Status);
         }
 

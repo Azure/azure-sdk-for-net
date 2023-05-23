@@ -38,7 +38,7 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
 #endif
 
             // Get received assets
-            var receivedAssets = await receivedAssetsClient.GetReceivedAssetsAsync(receivedShareName).ToEnumerableAsync();
+            var receivedAssets = await receivedAssetsClient.GetReceivedAssetsAsync(receivedShareName, null, new()).ToEnumerableAsync();
             using var jsonDocument = JsonDocument.Parse(receivedAssets.First());
             var receivedAssetName = jsonDocument.RootElement.GetProperty("name").GetString();
 

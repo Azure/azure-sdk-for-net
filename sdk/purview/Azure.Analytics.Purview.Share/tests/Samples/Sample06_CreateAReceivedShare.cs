@@ -36,7 +36,7 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
 #endif
 
             // Create received share
-            var receivedInvitations = await receivedInvitationsClient.GetReceivedInvitationsAsync().ToEnumerableAsync();
+            var receivedInvitations = await receivedInvitationsClient.GetReceivedInvitationsAsync(null, null, null, new()).ToEnumerableAsync();
             var receivedShareName = "fabrikam-received-share";
             var receivedInvitation = receivedInvitations.LastOrDefault();
 

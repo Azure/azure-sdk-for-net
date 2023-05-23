@@ -27,7 +27,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 #else
             var sentShareClient = GetSentSharesClient();
 
-            Operation operation = await sentShareClient.DeleteSentShareAsync(WaitUntil.Completed, "9393cfc1-7300-4159-aeff-277b2026846a");
+            Operation operation = await sentShareClient.DeleteSentShareAsync(WaitUntil.Completed, "9393cfc1-7300-4159-aeff-277b2026846a", new());
 #endif
 
             #endregion

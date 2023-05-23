@@ -118,7 +118,7 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='GetAnalyzeConversationJobStatusAsync(Guid,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> GetAnalyzeConversationJobStatusAsync(Guid jobId, bool? showStats, RequestContext context)
+        public virtual async Task<Response> GetAnalyzeConversationJobStatusAsync(Guid jobId, bool? showStats = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.GetAnalyzeConversationJobStatus");
             scope.Start();
@@ -150,7 +150,7 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='GetAnalyzeConversationJobStatus(Guid,bool?,RequestContext)']/*" />
-        public virtual Response GetAnalyzeConversationJobStatus(Guid jobId, bool? showStats, RequestContext context)
+        public virtual Response GetAnalyzeConversationJobStatus(Guid jobId, bool? showStats = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.GetAnalyzeConversationJobStatus");
             scope.Start();

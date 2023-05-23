@@ -27,7 +27,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            Response response = client.GetProjectDetails("<projectName>", new RequestContext());
+            Response response = client.GetProjectDetails("<projectName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -62,7 +62,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            Response response = await client.GetProjectDetailsAsync("<projectName>", new RequestContext());
+            Response response = await client.GetProjectDetailsAsync("<projectName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -199,7 +199,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            Response response = client.GetDeleteStatus("<jobId>", new RequestContext());
+            Response response = client.GetDeleteStatus("<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -234,7 +234,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            Response response = await client.GetDeleteStatusAsync("<jobId>", new RequestContext());
+            Response response = await client.GetDeleteStatusAsync("<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -269,7 +269,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            Response response = client.GetExportStatus("<projectName>", "<jobId>", new RequestContext());
+            Response response = client.GetExportStatus("<projectName>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -304,7 +304,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>", new RequestContext());
+            Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -339,7 +339,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            Response response = client.GetImportStatus("<projectName>", "<jobId>", new RequestContext());
+            Response response = client.GetImportStatus("<projectName>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -374,7 +374,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>", new RequestContext());
+            Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -409,7 +409,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            Response response = client.GetDeployStatus("<projectName>", "<deploymentName>", "<jobId>", new RequestContext());
+            Response response = client.GetDeployStatus("<projectName>", "<deploymentName>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -444,7 +444,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            Response response = await client.GetDeployStatusAsync("<projectName>", "<deploymentName>", "<jobId>", new RequestContext());
+            Response response = await client.GetDeployStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -555,7 +555,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            Response response = client.GetUpdateSourcesStatus("<projectName>", "<jobId>", new RequestContext());
+            Response response = client.GetUpdateSourcesStatus("<projectName>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -590,7 +590,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            Response response = await client.GetUpdateSourcesStatusAsync("<projectName>", "<jobId>", new RequestContext());
+            Response response = await client.GetUpdateSourcesStatusAsync("<projectName>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -625,7 +625,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            Response response = client.GetUpdateQnasStatus("<projectName>", "<jobId>", new RequestContext());
+            Response response = client.GetUpdateQnasStatus("<projectName>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -660,7 +660,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            Response response = await client.GetUpdateQnasStatusAsync("<projectName>", "<jobId>", new RequestContext());
+            Response response = await client.GetUpdateQnasStatusAsync("<projectName>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -769,7 +769,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            foreach (var item in client.GetProjects(new RequestContext()))
+            foreach (var item in client.GetProjects())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -806,7 +806,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            await foreach (var item in client.GetProjectsAsync(new RequestContext()))
+            await foreach (var item in client.GetProjectsAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -843,7 +843,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            foreach (var item in client.GetDeployments("<projectName>", new RequestContext()))
+            foreach (var item in client.GetDeployments("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -874,7 +874,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            await foreach (var item in client.GetDeploymentsAsync("<projectName>", new RequestContext()))
+            await foreach (var item in client.GetDeploymentsAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -905,7 +905,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            foreach (var item in client.GetSynonyms("<projectName>", new RequestContext()))
+            foreach (var item in client.GetSynonyms("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("alterations")[0].ToString());
@@ -935,7 +935,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            await foreach (var item in client.GetSynonymsAsync("<projectName>", new RequestContext()))
+            await foreach (var item in client.GetSynonymsAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("alterations")[0].ToString());
@@ -965,7 +965,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            foreach (var item in client.GetSources("<projectName>", new RequestContext()))
+            foreach (var item in client.GetSources("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("sourceUri").ToString());
@@ -1000,7 +1000,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            await foreach (var item in client.GetSourcesAsync("<projectName>", new RequestContext()))
+            await foreach (var item in client.GetSourcesAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("sourceUri").ToString());
@@ -1035,7 +1035,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            foreach (var item in client.GetQnas("<projectName>", "<source>", new RequestContext()))
+            foreach (var item in client.GetQnas("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -1086,7 +1086,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            await foreach (var item in client.GetQnasAsync("<projectName>", "<source>", new RequestContext()))
+            await foreach (var item in client.GetQnasAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -1189,7 +1189,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var operation = client.Export(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>", new RequestContext());
+            var operation = client.Export(WaitUntil.Completed, "<projectName>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1226,7 +1226,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>", new RequestContext());
+            var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1265,7 +1265,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
             var data = new { };
 
-            var operation = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>", new RequestContext());
+            var operation = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1380,7 +1380,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
             var data = new { };
 
-            var operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>", new RequestContext());
+            var operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1493,7 +1493,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", new RequestContext());
+            var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1524,7 +1524,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", new RequestContext());
+            var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1559,7 +1559,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
     new {
         op = "add",
         value = new {
-            sourceUri = new {},
+            sourceUri = "http://localhost:3000",
             sourceKind = "file",
         },
     }
@@ -1589,7 +1589,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         value = new {
             displayName = "<displayName>",
             source = "<source>",
-            sourceUri = new {},
+            sourceUri = "http://localhost:3000",
             sourceKind = "file",
             contentStructureKind = "unstructured",
         },
@@ -1621,7 +1621,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
     new {
         op = "add",
         value = new {
-            sourceUri = new {},
+            sourceUri = "http://localhost:3000",
             sourceKind = "file",
         },
     }
@@ -1651,7 +1651,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
         value = new {
             displayName = "<displayName>",
             source = "<source>",
-            sourceUri = new {},
+            sourceUri = "http://localhost:3000",
             sourceKind = "file",
             contentStructureKind = "unstructured",
         },

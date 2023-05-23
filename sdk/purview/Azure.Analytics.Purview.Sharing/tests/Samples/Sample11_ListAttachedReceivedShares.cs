@@ -30,7 +30,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 #else
             var receivedSharesClient = GetReceivedSharesClient();
 
-            List<BinaryData> createResponse = await receivedSharesClient.GetAllAttachedReceivedSharesAsync("/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/faisalaltell/providers/Microsoft.Storage/storageAccounts/ftreceiversan").ToEnumerableAsync();
+            List<BinaryData> createResponse = await receivedSharesClient.GetAllAttachedReceivedSharesAsync("/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/faisalaltell/providers/Microsoft.Storage/storageAccounts/ftreceiversan", null, null, null, new()).ToEnumerableAsync();
 #endif
 
             #endregion

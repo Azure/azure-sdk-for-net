@@ -60,11 +60,11 @@ namespace Azure.Analytics.Synapse.AccessControl
         public virtual Azure.Response DeleteRoleAssignmentById(string roleAssignmentId, string scope = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteRoleAssignmentByIdAsync(string roleAssignmentId, string scope = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Synapse.AccessControl.RoleAssignmentDetails> GetRoleAssignmentById(string roleAssignmentId) { throw null; }
-        public virtual Azure.Response GetRoleAssignmentById(string roleAssignmentId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetRoleAssignmentById(string roleAssignmentId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.AccessControl.RoleAssignmentDetails>> GetRoleAssignmentByIdAsync(string roleAssignmentId) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetRoleAssignmentByIdAsync(string roleAssignmentId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetRoleAssignments(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetRoleAssignmentsAsync(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetRoleAssignmentByIdAsync(string roleAssignmentId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response GetRoleAssignments(string roleId, string principalId, string scope, string continuationToken, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetRoleAssignmentsAsync(string roleId, string principalId, string scope, string continuationToken, Azure.RequestContext context) { throw null; }
     }
     public partial class RoleDefinitionsClient
     {
@@ -72,12 +72,12 @@ namespace Azure.Analytics.Synapse.AccessControl
         public RoleDefinitionsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public RoleDefinitionsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.AccessControl.AccessControlClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response GetRoleDefinitionById(string roleDefinitionId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetRoleDefinitionByIdAsync(string roleDefinitionId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetRoleDefinitions(bool? isBuiltIn = default(bool?), string scope = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetRoleDefinitionsAsync(bool? isBuiltIn = default(bool?), string scope = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetScopes(Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetScopesAsync(Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetRoleDefinitionById(string roleDefinitionId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetRoleDefinitionByIdAsync(string roleDefinitionId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response GetRoleDefinitions(bool? isBuiltIn, string scope, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetRoleDefinitionsAsync(bool? isBuiltIn, string scope, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response GetScopes(Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetScopesAsync(Azure.RequestContext context) { throw null; }
     }
     public partial class SubjectInfo
     {

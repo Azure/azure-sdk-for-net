@@ -177,6 +177,20 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAnalysisClient(endpoint, credential);
 
+Response response = await client.GetAnalyzeConversationJobStatusAsync(Guid.NewGuid());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetAnalyzeConversationJobStatusAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConversationAnalysisClient(endpoint, credential);
+
 Response response = await client.GetAnalyzeConversationJobStatusAsync(Guid.NewGuid(), true, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -213,6 +227,20 @@ https://learn.microsoft.com/rest/api/language/2023-04-01/conversation-analysis-r
     <member name="GetAnalyzeConversationJobStatus(Guid,bool?,RequestContext)">
 <example>
 This sample shows how to call GetAnalyzeConversationJobStatus with required parameters and parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConversationAnalysisClient(endpoint, credential);
+
+Response response = client.GetAnalyzeConversationJobStatus(Guid.NewGuid());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetAnalyzeConversationJobStatus with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");

@@ -71,7 +71,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
         {
             ReceivedSharesClient client = GetReceivedSharesClient();
 
-            Response response = await client.GetReceivedShareAsync(receivedShareId);
+            Response response = await client.GetReceivedShareAsync(receivedShareId, new());
 
             var jsonDocument = JsonDocument.Parse(GetContentFromResponse(response));
             JsonElement getBodyJson = jsonDocument.RootElement;
@@ -84,7 +84,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
         {
             ReceivedSharesClient client = GetReceivedSharesClient();
 
-            Operation response = await client.DeleteReceivedShareAsync(WaitUntil.Completed, receivedShareId);
+            Operation response = await client.DeleteReceivedShareAsync(WaitUntil.Completed, receivedShareId, new());
 
             Assert.IsTrue(response.HasCompleted);
         }
@@ -94,7 +94,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
         {
             ReceivedSharesClient client = GetReceivedSharesClient();
 
-            List<BinaryData> detachedReceivedShares = await client.GetAllDetachedReceivedSharesAsync().ToEnumerableAsync();
+            List<BinaryData> detachedReceivedShares = await client.GetAllDetachedReceivedSharesAsync(null, null, null, new()).ToEnumerableAsync();
 
             Assert.Greater(detachedReceivedShares.Count, 0);
 
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
         {
             ReceivedSharesClient client = GetReceivedSharesClient();
 
-            List<BinaryData> attachedReceivedShares = await client.GetAllAttachedReceivedSharesAsync("/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/faisalaltell/providers/Microsoft.Storage/storageAccounts/ftreceiversan").ToEnumerableAsync();
+            List<BinaryData> attachedReceivedShares = await client.GetAllAttachedReceivedSharesAsync("/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/faisalaltell/providers/Microsoft.Storage/storageAccounts/ftreceiversan", null, null, null, new()).ToEnumerableAsync();
 
             Assert.Greater(attachedReceivedShares.Count, 0);
 

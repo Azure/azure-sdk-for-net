@@ -887,7 +887,7 @@ var client = new LoadTestRunClient(endpoint, credential);
 
 var data = new {};
 
-await foreach (var item in client.GetMetricsAsync("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", RequestContent.Create(data), "<aggregation>", "<interval>", new RequestContext()))
+await foreach (var item in client.GetMetricsAsync("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", RequestContent.Create(data)))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
@@ -931,7 +931,7 @@ var client = new LoadTestRunClient(endpoint, credential);
 
 var data = new {};
 
-foreach (var item in client.GetMetrics("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", RequestContent.Create(data), "<aggregation>", "<interval>", new RequestContext()))
+foreach (var item in client.GetMetrics("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", RequestContent.Create(data)))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
@@ -973,6 +973,18 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
+await foreach (var item in client.GetMetricDimensionValuesAsync("<testRunId>", "<name>", "<metricName>", "<metricNamespace>", "<timeInterval>"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetMetricDimensionValuesAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new LoadTestRunClient(endpoint, credential);
+
 await foreach (var item in client.GetMetricDimensionValuesAsync("<testRunId>", "<name>", "<metricName>", "<metricNamespace>", "<timeInterval>", "<interval>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -984,6 +996,18 @@ await foreach (var item in client.GetMetricDimensionValuesAsync("<testRunId>", "
     <member name="GetMetricDimensionValues(string,string,string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetMetricDimensionValues with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new LoadTestRunClient(endpoint, credential);
+
+foreach (var item in client.GetMetricDimensionValues("<testRunId>", "<name>", "<metricName>", "<metricNamespace>", "<timeInterval>"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetMetricDimensionValues with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
