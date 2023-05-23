@@ -30,6 +30,13 @@ namespace Azure.Core.Samples
             */
             client.SetPet(RequestContent.Create(data, PropertyNameHandling.ToCamelCase));
             #endregion
+
+            Response response = client.SetPet(RequestContent.Create(data, PropertyNameHandling.ToCamelCase));
+            dynamic value = response.Content.ToDynamicFromJson();
+
+            // Validate it's written camel case.
+            Assert.AreEqual(data.Name, (string)value.name);
+            Assert.AreEqual(data.Species, (string)value.species);
         }
     }
 }

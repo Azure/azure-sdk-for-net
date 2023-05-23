@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Identity.Client;
+using System.IO;
+using System.Threading;
+using Azure.Core.TestFramework;
 
 namespace Azure.Core.Samples.FakeClients
 {
@@ -34,9 +32,16 @@ namespace Azure.Core.Samples.FakeClients
         //      "name": "snoopy",
         //      "species": "beagle"
         // }
-        public Response SetPet(RequestContent requestBody, RequestContext context = null)
+        public Response SetPet(RequestContent content, RequestContext context = null)
         {
-            throw new NotImplementedException();
+            using MemoryStream stream = new();
+            content.WriteTo(stream, CancellationToken.None);
+            stream.Position = 0;
+
+            MockResponse response = new(200);
+            response.SetContent(BinaryData.FromStream(stream).ToArray());
+
+            return response;
         }
     }
 
