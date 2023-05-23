@@ -17,8 +17,9 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
     {
         private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
+        protected ArmClient client { get; private set; }
         public MetricDefinitionsTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         public async Task TestSetUp()
         {
             ArmClientOptions options = new ArmClientOptions();
-            var client = GetArmClient(options);
+            client = GetArmClient(options);
             _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
@@ -47,18 +48,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             string serverName = Recording.GenerateAssetName("sql-server-");
             SqlServerResource sqlServer;
             ResourceIdentifier resourceId;
-            if (Mode == RecordedTestMode.Playback)
-            {
-                resourceId = SqlServerResource.CreateResourceIdentifier("db1ab6f0-4769-4b27-930e-01e2ef9c123c", _resourceGroup.Data.Name, serverName);
-                sqlServer = new ArmClient(new DefaultAzureCredential()).GetSqlServerResource(resourceId);
-            }
-            else
-            {
-                using (Recording.DisableRecording())
-                {
-                    sqlServer = await CreateDefaultSqlServer(serverName, AzureLocation.EastUS, _resourceGroup);
-                }
-            }
+                resourceId = SqlServerResource.CreateResourceIdentifier("db1ab6f0-4769-4b27-930e-01e2ef9c123c", "sqlserver0523", "sqlservertest0523");
+                sqlServer = client.GetSqlServerResource(resourceId);
             var collection = sqlServer.GetSqlDatabases();
             string databaseName = Recording.GenerateAssetName("sql-database-");
 
