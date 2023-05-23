@@ -140,20 +140,13 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsCollectionDefined(Aliases))
             {
-                if (Aliases != null)
+                writer.WritePropertyName("aliases"u8);
+                writer.WriteStartArray();
+                foreach (var item in Aliases)
                 {
-                    writer.WritePropertyName("aliases"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in Aliases)
-                    {
-                        writer.WriteObjectValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("aliases");
-                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }

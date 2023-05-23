@@ -47,21 +47,14 @@ namespace Azure.Quantum.Jobs.Models
             writer.WriteStringValue(Target);
             if (Optional.IsCollectionDefined(Metadata))
             {
-                if (Metadata != null)
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
                 {
-                    writer.WritePropertyName("metadata"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Metadata)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("metadata");
-                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(OutputDataUri))
             {
@@ -75,20 +68,13 @@ namespace Azure.Quantum.Jobs.Models
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                if (Tags != null)
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartArray();
+                foreach (var item in Tags)
                 {
-                    writer.WritePropertyName("tags"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in Tags)
-                    {
-                        writer.WriteStringValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("tags");
-                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }

@@ -66,20 +66,13 @@ namespace Azure.ResourceManager.Reservations.Models
             }
             if (Optional.IsCollectionDefined(AppliedScopes))
             {
-                if (AppliedScopes != null)
+                writer.WritePropertyName("appliedScopes"u8);
+                writer.WriteStartArray();
+                foreach (var item in AppliedScopes)
                 {
-                    writer.WritePropertyName("appliedScopes"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in AppliedScopes)
-                    {
-                        writer.WriteStringValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("appliedScopes");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(AppliedScopeProperties))
             {

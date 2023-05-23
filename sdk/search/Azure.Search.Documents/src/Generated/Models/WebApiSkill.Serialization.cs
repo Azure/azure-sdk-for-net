@@ -21,21 +21,14 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Uri);
             if (Optional.IsCollectionDefined(HttpHeaders))
             {
-                if (HttpHeaders != null)
+                writer.WritePropertyName("httpHeaders"u8);
+                writer.WriteStartObject();
+                foreach (var item in HttpHeaders)
                 {
-                    writer.WritePropertyName("httpHeaders"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in HttpHeaders)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("httpHeaders");
-                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(HttpMethod))
             {

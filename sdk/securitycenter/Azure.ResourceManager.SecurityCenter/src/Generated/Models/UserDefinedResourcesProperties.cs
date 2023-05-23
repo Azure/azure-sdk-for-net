@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public UserDefinedResourcesProperties(string query, IEnumerable<string> querySubscriptions)
         {
             Query = query;
-            QuerySubscriptions = querySubscriptions?.ToList();
+            QuerySubscriptions = querySubscriptions?.ToList() as IList<string> ?? new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of UserDefinedResourcesProperties. </summary>
