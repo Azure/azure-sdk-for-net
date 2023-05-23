@@ -854,6 +854,9 @@ namespace Azure.ResourceManager.Automation
         public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
         public string RunbookName { get { throw null; } set { } }
         public string RunOn { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property has been replaced by UriString", false)]
+        public System.Uri Uri { get { throw null; } set { } }
         public string UriString { get { throw null; } set { } }
     }
     public partial class AutomationWebhookResource : Azure.ResourceManager.ArmResource
@@ -1173,16 +1176,6 @@ namespace Azure.ResourceManager.Automation
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.SoftwareUpdateConfigurationResource>> GetAsync(string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automation.SoftwareUpdateConfigurationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Automation.SoftwareUpdateConfigurationData data, string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automation.SoftwareUpdateConfigurationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Automation.SoftwareUpdateConfigurationData data, string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-}
-namespace Azure.ResourceManager.Automation.Customized
-{
-    public partial class AutomationWebhookData
-    {
-        public AutomationWebhookData() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        [System.ObsoleteAttribute("This property has been replaced by UriString", false)]
-        public System.Uri Uri { get { throw null; } set { } }
     }
 }
 namespace Azure.ResourceManager.Automation.Models
