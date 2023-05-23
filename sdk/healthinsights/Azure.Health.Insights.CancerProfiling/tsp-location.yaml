@@ -1,0 +1,6 @@
+directory: specification/cognitiveservices/HealthInsights/healthinsights.oncophenotype/
+additionalDirectories:
+  - specification/cognitiveservices/HealthInsights/healthinsights.openapi/
+  - specification/cognitiveservices/HealthInsights/healthinsights.common/
+commit: bdc89afc8a56a7268828efa4cd81a50bf7ebde2f
+repo: azure/azure-rest-api-specs

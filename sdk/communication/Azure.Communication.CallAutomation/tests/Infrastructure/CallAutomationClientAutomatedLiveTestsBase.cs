@@ -76,11 +76,15 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         [TearDown]
         public async Task CleanUp()
         {
-            await DeRegisterCallBackWithDispatcher();
-            await _recordedEventListener.DisposeAsync();
-            _eventstore.Clear();
-            _incomingcontextstore.Clear();
-            await Task.CompletedTask;
+            try
+            {
+                await _recordedEventListener.DisposeAsync();
+                _eventstore.Clear();
+                _incomingcontextstore.Clear();
+                await Task.CompletedTask;
+            }
+            catch
+            { }
         }
 
         public bool SkipCallingServerInteractionLiveTests
@@ -195,8 +199,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                     {
                         using (Recording.DisableRecording())
                         {
-                            var hangUpOptions = new HangUpOptions(true);
-                            await client.GetCallConnection(callConnectionId).HangUpAsync(hangUpOptions).ConfigureAwait(false);
+                            await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
                         }
                     }
                 }
@@ -212,7 +215,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         /// <returns>The instrumented <see cref="CallAutomationClientOptions" />.</returns>
         private CallAutomationClientOptions CreateServerCallingClientOptionsWithCorrelationVectorLogs(CommunicationUserIdentifier? source = null)
         {
-            CallAutomationClientOptions callClientOptions = new CallAutomationClientOptions(source: source);
+            CallAutomationClientOptions callClientOptions = new CallAutomationClientOptions() { Source = source };
             callClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
             return InstrumentClientOptions(callClientOptions);
         }

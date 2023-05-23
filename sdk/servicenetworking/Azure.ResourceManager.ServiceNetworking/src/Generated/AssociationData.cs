@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="location"> The location. </param>
         /// <param name="associationType"> Association Type. </param>
         /// <param name="subnet"> Association Subnet. </param>
-        /// <param name="provisioningState"> Provisioning State. </param>
+        /// <param name="provisioningState"> Provisioning State of Traffic Controller Association Resource. </param>
         internal AssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AssociationType? associationType, WritableSubResource subnet, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             AssociationType = associationType;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             }
         }
 
-        /// <summary> Provisioning State. </summary>
+        /// <summary> Provisioning State of Traffic Controller Association Resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }
 }

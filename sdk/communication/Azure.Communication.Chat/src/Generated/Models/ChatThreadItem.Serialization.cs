@@ -39,7 +39,6 @@ namespace Azure.Communication.Chat
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deletedOn = property.Value.GetDateTimeOffset("O");
@@ -49,7 +48,6 @@ namespace Azure.Communication.Chat
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastMessageReceivedOn = property.Value.GetDateTimeOffset("O");

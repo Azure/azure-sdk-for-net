@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -78,20 +79,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsTrue(keyPhrases.Contains("perro"));
             Assert.IsTrue(keyPhrases.Contains("veterinario"));
-        }
-
-        [RecordedTest]
-        public async Task ExtractKeyPhrasesWithWarningTest()
-        {
-            TextAnalyticsClient client = GetClient();
-            string document = "Anthony runs his own personal training business so thisisaverylongtokenwhichwillbetruncatedtoshowushowwarningsareemittedintheapi";
-
-            ExtractKeyPhrasesResultCollection keyPhrasesCollection = await client.ExtractKeyPhrasesBatchAsync(new List<string> { document }, "es", new TextAnalyticsRequestOptions() { ModelVersion = "2020-07-01" });
-            KeyPhraseCollection keyPhrases = keyPhrasesCollection.FirstOrDefault().KeyPhrases;
-
-            ValidateInDocumenResult(keyPhrases, 1);
-
-            Assert.AreEqual(TextAnalyticsWarningCode.LongWordsInDocument, keyPhrases.Warnings.FirstOrDefault().WarningCode.ToString());
         }
 
         [RecordedTest]
@@ -197,8 +184,9 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         [RecordedTest]
+        [RetryOnInternalServerError]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         [Ignore("LRO not implemented")]
         public async Task ExtractKeyPhrasesWithMultipleActions()
         {
@@ -257,6 +245,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task AnalyzeOperationExtractKeyPhrasesWithAutoDetectedLanguageTest()
         {

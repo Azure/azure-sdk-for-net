@@ -823,7 +823,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public string AcceptLanguage { get { throw null; } set { } }
         public string ArraySeparator { get { throw null; } set { } }
         public string ColumnDelimiter { get { throw null; } set { } }
-        public Azure.ResourceManager.CustomerInsights.Models.FormatType FormatType { get { throw null; } set { } }
+        public Azure.ResourceManager.CustomerInsights.Models.FormatType FormatType { get { throw null; } }
         public string QuoteCharacter { get { throw null; } set { } }
         public string QuoteEscapeCharacter { get { throw null; } set { } }
     }

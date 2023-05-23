@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -24,13 +25,13 @@ namespace Azure.AI.TextAnalytics.Tests
         private const string SingleLabelClassifyDocument2 =
             "David Schmidt, senior vice president--Food Safety, International Food Information Council (IFIC), Washington, D.C., discussed the physical activity component.";
 
-        private static readonly List<string> s_singleLabelClassifyBatchConvenienceDocuments = new List<string>
+        private static readonly List<string> s_batchConvenienceDocuments = new()
         {
             SingleLabelClassifyDocument1,
             SingleLabelClassifyDocument2,
         };
 
-        private static List<TextDocumentInput> s_singleLabelClassifyBatchDocuments = new List<TextDocumentInput>
+        private static List<TextDocumentInput> s_batchDocuments = new()
         {
             new TextDocumentInput("1", SingleLabelClassifyDocument1)
             {
@@ -42,7 +43,16 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         };
 
+        [SetUp]
+        public void TestSetup()
+        {
+            // These tests require a pre-trained, static resource,
+            // which is currently only available in the public cloud.
+            TestEnvironment.IgnoreIfNotPublicCloud();
+        }
+
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task SingleLabelClassifyWithDisableServiceLogs()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
@@ -52,7 +62,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 SingleLabelClassifyActions = new List<SingleLabelClassifyAction>() { new SingleLabelClassifyAction(TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName) { DisableServiceLogs = true } }
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_singleLabelClassifyBatchConvenienceDocuments, batchActions);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_batchConvenienceDocuments, batchActions);
 
             await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
@@ -67,6 +77,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task SingleLabelClassifyBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
@@ -102,6 +113,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task SingleLabelClassifyBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
@@ -114,7 +126,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_singleLabelClassifyBatchConvenienceDocuments, batchActions);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_batchConvenienceDocuments, batchActions);
 
             await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
@@ -129,6 +141,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task SingleLabelClassifyBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
@@ -146,7 +159,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 IncludeStatistics = true
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_singleLabelClassifyBatchConvenienceDocuments, batchActions, "en", options);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_batchConvenienceDocuments, batchActions, "en", options);
 
             await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
@@ -161,6 +174,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task SingleLabelClassifyBatchTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
@@ -173,7 +187,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_singleLabelClassifyBatchDocuments, batchActions);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_batchDocuments, batchActions);
 
             await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
@@ -188,6 +202,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task SingleLabelClassifyBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
@@ -205,7 +220,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 IncludeStatistics = true
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_singleLabelClassifyBatchDocuments, batchActions, options);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_batchDocuments, batchActions, options);
 
             await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
@@ -220,6 +235,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [Ignore("Issue https://github.com/Azure/azure-sdk-for-net/issues/25152")]
         public async Task SingleLabelClassifyWithMultipleActions()
         {
@@ -241,7 +257,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_singleLabelClassifyBatchConvenienceDocuments, batchActions);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_batchConvenienceDocuments, batchActions);
 
             await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
@@ -257,10 +273,11 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task StartSingleLabelClassify()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
-            ClassifyDocumentOperation operation = await client.StartSingleLabelClassifyAsync(s_singleLabelClassifyBatchDocuments, TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName);
+            ClassifyDocumentOperation operation = await client.StartSingleLabelClassifyAsync(s_batchDocuments, TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName);
 
             await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
@@ -271,10 +288,11 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task StartSingleLabelClassifyWithName()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
-            ClassifyDocumentOperation operation = await client.StartSingleLabelClassifyAsync(s_singleLabelClassifyBatchDocuments, TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName, new SingleLabelClassifyOptions
+            ClassifyDocumentOperation operation = await client.StartSingleLabelClassifyAsync(s_batchDocuments, TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName, new SingleLabelClassifyOptions
             {
                 DisplayName = "StartSingleLabelClassifyWithName",
             });
@@ -289,13 +307,14 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task SingleLabelClassifyBatchConvenienceWithAutoDetectedLanguageTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             ClassifyDocumentOperation operation = await client.StartSingleLabelClassifyAsync(
-                s_singleLabelClassifyBatchConvenienceDocuments,
+                s_batchConvenienceDocuments,
                 TestEnvironment.SingleClassificationProjectName,
                 TestEnvironment.SingleClassificationDeploymentName,
                 "auto");
@@ -307,11 +326,31 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public void AnalyzeOperationSingleLabelClassifyActionNotSupported()
+        {
+            TestDiagnostics = false;
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
+            TextAnalyticsActions batchActions = new()
+            {
+                SingleLabelClassifyActions = new[]
+                {
+                    new SingleLabelClassifyAction(TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName),
+                },
+            };
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(s_batchDocuments, batchActions));
+            Assert.AreEqual("SingleLabelClassifyAction is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task AnalyzeOperationSingleLabelClassifyWithAutoDetectedLanguageTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
-            List<string> documents = s_singleLabelClassifyBatchConvenienceDocuments;
+            List<string> documents = s_batchConvenienceDocuments;
             TextAnalyticsActions actions = new()
             {
                 SingleLabelClassifyActions = new List<SingleLabelClassifyAction>()

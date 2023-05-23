@@ -222,9 +222,14 @@ namespace Azure.ResourceManager.Monitor
         public string ConfigurationAccessEndpoint { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.DataCollectionEndpointFailoverConfiguration FailoverConfiguration { get { throw null; } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string ImmutableId { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.DataCollectionEndpointResourceKind? Kind { get { throw null; } set { } }
         public string LogsIngestionEndpoint { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.DataCollectionEndpointMetadata Metadata { get { throw null; } }
+        public string MetricsIngestionEndpoint { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.Models.DataCollectionRulePrivateLinkScopedResourceInfo> PrivateLinkScopedResources { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.DataCollectionEndpointProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
     }
@@ -272,6 +277,8 @@ namespace Azure.ResourceManager.Monitor
         public Azure.Core.ResourceIdentifier DataCollectionRuleId { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.DataCollectionRuleAssociationMetadata Metadata { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string MetadataProvisionedBy { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.DataCollectionRuleAssociationProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -313,8 +320,11 @@ namespace Azure.ResourceManager.Monitor
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.DataCollectionRuleDestinations Destinations { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string ImmutableId { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.DataCollectionRuleResourceKind? Kind { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.DataCollectionRuleMetadata Metadata { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string MetadataProvisionedBy { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.DataCollectionRuleProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Monitor.Models.DataStreamDeclaration> StreamDeclarations { get { throw null; } }
@@ -584,7 +594,15 @@ namespace Azure.ResourceManager.Monitor
         public static Azure.ResourceManager.Monitor.MetricAlertCollection GetMetricAlerts(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Monitor.MetricAlertResource> GetMetricAlerts(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Monitor.MetricAlertResource> GetMetricAlertsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Monitor.Models.MonitorSingleMetricBaseline> GetMonitorMetricBaselines(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.Monitor.Models.ArmResourceGetMonitorMetricBaselinesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Monitor.Models.MonitorSingleMetricBaseline> GetMonitorMetricBaselinesAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.Monitor.Models.ArmResourceGetMonitorMetricBaselinesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Monitor.Models.MonitorMetricDefinition> GetMonitorMetricDefinitions(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string metricnamespace = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Monitor.Models.MonitorMetricDefinition> GetMonitorMetricDefinitionsAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string metricnamespace = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Monitor.Models.MonitorMetricNamespace> GetMonitorMetricNamespaces(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string startTime = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Monitor.Models.MonitorMetricNamespace> GetMonitorMetricNamespacesAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string startTime = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Monitor.Models.MonitorMetric> GetMonitorMetrics(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.Monitor.Models.ArmResourceGetMonitorMetricsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Monitor.Models.SubscriptionMonitorMetric> GetMonitorMetrics(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Monitor.Models.SubscriptionResourceGetMonitorMetricsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Monitor.Models.MonitorMetric> GetMonitorMetricsAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.Monitor.Models.ArmResourceGetMonitorMetricsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Monitor.Models.SubscriptionMonitorMetric> GetMonitorMetricsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Monitor.Models.SubscriptionResourceGetMonitorMetricsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Monitor.Models.SubscriptionMonitorMetric> GetMonitorMetricsWithPost(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Monitor.Models.SubscriptionResourceGetMonitorMetricsWithPostOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Monitor.Models.SubscriptionMonitorMetric> GetMonitorMetricsWithPostAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Monitor.Models.SubscriptionResourceGetMonitorMetricsWithPostOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -927,11 +945,38 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.AlertSeverity left, Azure.ResourceManager.Monitor.Models.AlertSeverity right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ArmResourceGetMonitorMetricBaselinesOptions
+    {
+        public ArmResourceGetMonitorMetricBaselinesOptions() { }
+        public string Aggregation { get { throw null; } set { } }
+        public string Filter { get { throw null; } set { } }
+        public System.TimeSpan? Interval { get { throw null; } set { } }
+        public string Metricnames { get { throw null; } set { } }
+        public string Metricnamespace { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.MonitorResultType? ResultType { get { throw null; } set { } }
+        public string Sensitivities { get { throw null; } set { } }
+        public string Timespan { get { throw null; } set { } }
+    }
+    public partial class ArmResourceGetMonitorMetricsOptions
+    {
+        public ArmResourceGetMonitorMetricsOptions() { }
+        public string Aggregation { get { throw null; } set { } }
+        public bool? AutoAdjustTimegrain { get { throw null; } set { } }
+        public string Filter { get { throw null; } set { } }
+        public System.TimeSpan? Interval { get { throw null; } set { } }
+        public string Metricnames { get { throw null; } set { } }
+        public string Metricnamespace { get { throw null; } set { } }
+        public string Orderby { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.MonitorResultType? ResultType { get { throw null; } set { } }
+        public string Timespan { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
+        public bool? ValidateDimensions { get { throw null; } set { } }
+    }
     public partial class AutoscaleNotification
     {
         public AutoscaleNotification() { }
         public Azure.ResourceManager.Monitor.Models.EmailNotification Email { get { throw null; } set { } }
-        public Azure.ResourceManager.Monitor.Models.MonitorOperationType Operation { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.MonitorOperationType Operation { get { throw null; } [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)] set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.WebhookNotification> Webhooks { get { throw null; } }
     }
     public partial class AutoscaleProfile
@@ -983,12 +1028,21 @@ namespace Azure.ResourceManager.Monitor.Models
         public long? MinFailingPeriodsToAlert { get { throw null; } set { } }
         public long? NumberOfEvaluationPeriods { get { throw null; } set { } }
     }
+    public partial class DataCollectionEndpointFailoverConfiguration : Azure.ResourceManager.Monitor.Models.DataCollectionRuleBcdrFailoverConfigurationSpec
+    {
+        internal DataCollectionEndpointFailoverConfiguration() { }
+    }
+    public partial class DataCollectionEndpointMetadata : Azure.ResourceManager.Monitor.Models.DataCollectionRuleRelatedResourceMetadata
+    {
+        internal DataCollectionEndpointMetadata() { }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataCollectionEndpointProvisioningState : System.IEquatable<Azure.ResourceManager.Monitor.Models.DataCollectionEndpointProvisioningState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public DataCollectionEndpointProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.DataCollectionEndpointProvisioningState Canceled { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.DataCollectionEndpointProvisioningState Creating { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.DataCollectionEndpointProvisioningState Deleting { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.DataCollectionEndpointProvisioningState Failed { get { throw null; } }
@@ -1022,12 +1076,17 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.DataCollectionEndpointResourceKind left, Azure.ResourceManager.Monitor.Models.DataCollectionEndpointResourceKind right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class DataCollectionRuleAssociationMetadata : Azure.ResourceManager.Monitor.Models.DataCollectionRuleRelatedResourceMetadata
+    {
+        internal DataCollectionRuleAssociationMetadata() { }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataCollectionRuleAssociationProvisioningState : System.IEquatable<Azure.ResourceManager.Monitor.Models.DataCollectionRuleAssociationProvisioningState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public DataCollectionRuleAssociationProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleAssociationProvisioningState Canceled { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleAssociationProvisioningState Creating { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleAssociationProvisioningState Deleting { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleAssociationProvisioningState Failed { get { throw null; } }
@@ -1043,6 +1102,40 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.DataCollectionRuleAssociationProvisioningState left, Azure.ResourceManager.Monitor.Models.DataCollectionRuleAssociationProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class DataCollectionRuleBcdrFailoverConfigurationSpec
+    {
+        internal DataCollectionRuleBcdrFailoverConfigurationSpec() { }
+        public string ActiveLocation { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.Models.DataCollectionRuleBcdrLocationSpec> Locations { get { throw null; } }
+    }
+    public partial class DataCollectionRuleBcdrLocationSpec
+    {
+        internal DataCollectionRuleBcdrLocationSpec() { }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.DataCollectionRuleBcdrLocationSpecProvisioningStatus? ProvisioningStatus { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DataCollectionRuleBcdrLocationSpecProvisioningStatus : System.IEquatable<Azure.ResourceManager.Monitor.Models.DataCollectionRuleBcdrLocationSpecProvisioningStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DataCollectionRuleBcdrLocationSpecProvisioningStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleBcdrLocationSpecProvisioningStatus Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleBcdrLocationSpecProvisioningStatus Creating { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleBcdrLocationSpecProvisioningStatus Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleBcdrLocationSpecProvisioningStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleBcdrLocationSpecProvisioningStatus Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleBcdrLocationSpecProvisioningStatus Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.DataCollectionRuleBcdrLocationSpecProvisioningStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.DataCollectionRuleBcdrLocationSpecProvisioningStatus left, Azure.ResourceManager.Monitor.Models.DataCollectionRuleBcdrLocationSpecProvisioningStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.DataCollectionRuleBcdrLocationSpecProvisioningStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.DataCollectionRuleBcdrLocationSpecProvisioningStatus left, Azure.ResourceManager.Monitor.Models.DataCollectionRuleBcdrLocationSpecProvisioningStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DataCollectionRuleDataSources : Azure.ResourceManager.Monitor.Models.DataSourcesSpec
     {
         public DataCollectionRuleDataSources() { }
@@ -1051,12 +1144,59 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         public DataCollectionRuleDestinations() { }
     }
+    public partial class DataCollectionRuleEventHubDataSource
+    {
+        public DataCollectionRuleEventHubDataSource() { }
+        public string ConsumerGroup { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public string Stream { get { throw null; } set { } }
+    }
+    public partial class DataCollectionRuleEventHubDestination
+    {
+        public DataCollectionRuleEventHubDestination() { }
+        public Azure.Core.ResourceIdentifier EventHubResourceId { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+    }
+    public partial class DataCollectionRuleEventHubDirectDestination
+    {
+        public DataCollectionRuleEventHubDirectDestination() { }
+        public Azure.Core.ResourceIdentifier EventHubResourceId { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DataCollectionRuleKnownPrometheusForwarderDataSourceStream : System.IEquatable<Azure.ResourceManager.Monitor.Models.DataCollectionRuleKnownPrometheusForwarderDataSourceStream>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DataCollectionRuleKnownPrometheusForwarderDataSourceStream(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleKnownPrometheusForwarderDataSourceStream MicrosoftPrometheusMetrics { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.DataCollectionRuleKnownPrometheusForwarderDataSourceStream other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.DataCollectionRuleKnownPrometheusForwarderDataSourceStream left, Azure.ResourceManager.Monitor.Models.DataCollectionRuleKnownPrometheusForwarderDataSourceStream right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.DataCollectionRuleKnownPrometheusForwarderDataSourceStream (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.DataCollectionRuleKnownPrometheusForwarderDataSourceStream left, Azure.ResourceManager.Monitor.Models.DataCollectionRuleKnownPrometheusForwarderDataSourceStream right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DataCollectionRuleMetadata : Azure.ResourceManager.Monitor.Models.DataCollectionRuleRelatedResourceMetadata
+    {
+        internal DataCollectionRuleMetadata() { }
+    }
+    public partial class DataCollectionRulePrivateLinkScopedResourceInfo
+    {
+        internal DataCollectionRulePrivateLinkScopedResourceInfo() { }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        public string ScopeId { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataCollectionRuleProvisioningState : System.IEquatable<Azure.ResourceManager.Monitor.Models.DataCollectionRuleProvisioningState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public DataCollectionRuleProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleProvisioningState Canceled { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleProvisioningState Creating { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleProvisioningState Deleting { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleProvisioningState Failed { get { throw null; } }
@@ -1071,6 +1211,12 @@ namespace Azure.ResourceManager.Monitor.Models
         public static implicit operator Azure.ResourceManager.Monitor.Models.DataCollectionRuleProvisioningState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.DataCollectionRuleProvisioningState left, Azure.ResourceManager.Monitor.Models.DataCollectionRuleProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class DataCollectionRuleRelatedResourceMetadata
+    {
+        internal DataCollectionRuleRelatedResourceMetadata() { }
+        public string ProvisionedBy { get { throw null; } }
+        public string ProvisionedByResourceId { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataCollectionRuleResourceKind : System.IEquatable<Azure.ResourceManager.Monitor.Models.DataCollectionRuleResourceKind>
@@ -1089,6 +1235,20 @@ namespace Azure.ResourceManager.Monitor.Models
         public static implicit operator Azure.ResourceManager.Monitor.Models.DataCollectionRuleResourceKind (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.DataCollectionRuleResourceKind left, Azure.ResourceManager.Monitor.Models.DataCollectionRuleResourceKind right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class DataCollectionRuleStorageBlobDestination
+    {
+        public DataCollectionRuleStorageBlobDestination() { }
+        public string ContainerName { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier StorageAccountResourceId { get { throw null; } set { } }
+    }
+    public partial class DataCollectionRuleStorageTableDestination
+    {
+        public DataCollectionRuleStorageTableDestination() { }
+        public string Name { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier StorageAccountResourceId { get { throw null; } set { } }
+        public string TableName { get { throw null; } set { } }
     }
     public partial class DataColumnDefinition
     {
@@ -1134,6 +1294,7 @@ namespace Azure.ResourceManager.Monitor.Models
     public partial class DataFlow
     {
         public DataFlow() { }
+        public string BuiltInTransform { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Destinations { get { throw null; } }
         public string OutputStream { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.DataFlowStream> Streams { get { throw null; } }
@@ -1160,15 +1321,23 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.DataFlowStream left, Azure.ResourceManager.Monitor.Models.DataFlowStream right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class DataImportSourcesEventHub : Azure.ResourceManager.Monitor.Models.DataCollectionRuleEventHubDataSource
+    {
+        public DataImportSourcesEventHub() { }
+    }
     public partial class DataSourcesSpec
     {
         public DataSourcesSpec() { }
+        public Azure.ResourceManager.Monitor.Models.DataImportSourcesEventHub DataImportsEventHub { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.ExtensionDataSource> Extensions { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.IisLogsDataSource> IisLogs { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.LogFilesDataSource> LogFiles { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.PerfCounterDataSource> PerformanceCounters { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.PlatformTelemetryDataSource> PlatformTelemetry { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.PrometheusForwarderDataSource> PrometheusForwarder { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.SyslogDataSource> Syslog { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.WindowsEventLogDataSource> WindowsEventLogs { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.WindowsFirewallLogsDataSource> WindowsFirewallLogs { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataStatus : System.IEquatable<Azure.ResourceManager.Monitor.Models.DataStatus>
@@ -1197,7 +1366,13 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         public DestinationsSpec() { }
         public string AzureMonitorMetricsName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.DataCollectionRuleEventHubDestination> EventHubs { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.DataCollectionRuleEventHubDirectDestination> EventHubsDirect { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.LogAnalyticsDestination> LogAnalytics { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MonitoringAccountDestination> MonitoringAccounts { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.DataCollectionRuleStorageBlobDestination> StorageAccounts { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.DataCollectionRuleStorageBlobDestination> StorageBlobsDirect { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.DataCollectionRuleStorageTableDestination> StorageTablesDirect { get { throw null; } }
     }
     public partial class DynamicMetricCriteria : Azure.ResourceManager.Monitor.Models.MultiMetricCriteria
     {
@@ -1581,6 +1756,15 @@ namespace Azure.ResourceManager.Monitor.Models
         Count = 4,
         Last = 5,
     }
+    public enum MonitorAggregationType
+    {
+        None = 0,
+        Average = 1,
+        Count = 2,
+        Minimum = 3,
+        Maximum = 4,
+        Total = 5,
+    }
     public partial class MonitorArmRoleReceiver
     {
         public MonitorArmRoleReceiver(string name, string roleId) { }
@@ -1613,6 +1797,31 @@ namespace Azure.ResourceManager.Monitor.Models
         public System.Uri HttpTriggerUri { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public bool? UseCommonAlertSchema { get { throw null; } set { } }
+    }
+    public partial class MonitorBaselineMetadata
+    {
+        internal MonitorBaselineMetadata() { }
+        public string Name { get { throw null; } }
+        public string Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MonitorBaselineSensitivity : System.IEquatable<Azure.ResourceManager.Monitor.Models.MonitorBaselineSensitivity>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MonitorBaselineSensitivity(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.MonitorBaselineSensitivity High { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorBaselineSensitivity Low { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorBaselineSensitivity Medium { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorBaselineSensitivity other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorBaselineSensitivity left, Azure.ResourceManager.Monitor.Models.MonitorBaselineSensitivity right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorBaselineSensitivity (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.MonitorBaselineSensitivity left, Azure.ResourceManager.Monitor.Models.MonitorBaselineSensitivity right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MonitorCategoryType : System.IEquatable<Azure.ResourceManager.Monitor.Models.MonitorCategoryType>
@@ -1723,6 +1932,13 @@ namespace Azure.ResourceManager.Monitor.Models
         public System.DateTimeOffset? ResolvedOn { get { throw null; } }
         public string RuleName { get { throw null; } }
     }
+    public partial class MonitoringAccountDestination
+    {
+        public MonitoringAccountDestination() { }
+        public string AccountId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier AccountResourceId { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+    }
     public partial class MonitorItsmReceiver
     {
         public MonitorItsmReceiver(string name, string workspaceId, string connectionId, string ticketConfiguration, Azure.Core.AzureLocation region) { }
@@ -1752,6 +1968,68 @@ namespace Azure.ResourceManager.Monitor.Models
         public Azure.ResourceManager.Monitor.Models.MonitorLocalizableString Name { get { throw null; } }
         public string Value { get { throw null; } }
     }
+    public partial class MonitorMetric
+    {
+        internal MonitorMetric() { }
+        public string DisplayDescription { get { throw null; } }
+        public string ErrorCode { get { throw null; } }
+        public string ErrorMessage { get { throw null; } }
+        public string Id { get { throw null; } }
+        public string MetricType { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorLocalizableString Name { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.Models.MonitorTimeSeriesElement> Timeseries { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorMetricUnit Unit { get { throw null; } }
+    }
+    public partial class MonitorMetricAvailability
+    {
+        internal MonitorMetricAvailability() { }
+        public System.TimeSpan? Retention { get { throw null; } }
+        public System.TimeSpan? TimeGrain { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MonitorMetricClass : System.IEquatable<Azure.ResourceManager.Monitor.Models.MonitorMetricClass>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MonitorMetricClass(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.MonitorMetricClass Availability { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorMetricClass Errors { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorMetricClass Latency { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorMetricClass Saturation { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorMetricClass Transactions { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorMetricClass other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorMetricClass left, Azure.ResourceManager.Monitor.Models.MonitorMetricClass right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorMetricClass (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.MonitorMetricClass left, Azure.ResourceManager.Monitor.Models.MonitorMetricClass right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class MonitorMetricDefinition
+    {
+        internal MonitorMetricDefinition() { }
+        public string Category { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.Models.MonitorLocalizableString> Dimensions { get { throw null; } }
+        public string DisplayDescription { get { throw null; } }
+        public string Id { get { throw null; } }
+        public bool? IsDimensionRequired { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.Models.MonitorMetricAvailability> MetricAvailabilities { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorMetricClass? MetricClass { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorLocalizableString Name { get { throw null; } }
+        public string Namespace { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorAggregationType? PrimaryAggregationType { get { throw null; } }
+        public string ResourceId { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.Models.MonitorAggregationType> SupportedAggregationTypes { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorMetricUnit? Unit { get { throw null; } }
+    }
+    public partial class MonitorMetricNamespace : Azure.ResourceManager.Models.ResourceData
+    {
+        internal MonitorMetricNamespace() { }
+        public Azure.ResourceManager.Monitor.Models.MonitorNamespaceClassification? Classification { get { throw null; } }
+        public string MetricNamespaceNameValue { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MonitorMetricResultType : System.IEquatable<Azure.ResourceManager.Monitor.Models.MonitorMetricResultType>
     {
@@ -1769,6 +2047,12 @@ namespace Azure.ResourceManager.Monitor.Models
         public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorMetricResultType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.MonitorMetricResultType left, Azure.ResourceManager.Monitor.Models.MonitorMetricResultType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class MonitorMetricSingleDimension
+    {
+        internal MonitorMetricSingleDimension() { }
+        public string Name { get { throw null; } }
+        public string Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MonitorMetricUnit : System.IEquatable<Azure.ResourceManager.Monitor.Models.MonitorMetricUnit>
@@ -1808,6 +2092,25 @@ namespace Azure.ResourceManager.Monitor.Models
         public double? Minimum { get { throw null; } }
         public System.DateTimeOffset TimeStamp { get { throw null; } }
         public double? Total { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MonitorNamespaceClassification : System.IEquatable<Azure.ResourceManager.Monitor.Models.MonitorNamespaceClassification>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MonitorNamespaceClassification(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.MonitorNamespaceClassification Custom { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorNamespaceClassification Platform { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorNamespaceClassification Qos { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorNamespaceClassification other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorNamespaceClassification left, Azure.ResourceManager.Monitor.Models.MonitorNamespaceClassification right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorNamespaceClassification (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.MonitorNamespaceClassification left, Azure.ResourceManager.Monitor.Models.MonitorNamespaceClassification right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MonitorOperationType : System.IEquatable<Azure.ResourceManager.Monitor.Models.MonitorOperationType>
@@ -1927,6 +2230,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public MonitorPublicNetworkAccess(string value) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccess Disabled { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccess Enabled { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccess SecuredByPerimeter { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccess other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -1948,6 +2252,11 @@ namespace Azure.ResourceManager.Monitor.Models
         public MonitorRecurrence(Azure.ResourceManager.Monitor.Models.RecurrenceFrequency frequency, Azure.ResourceManager.Monitor.Models.RecurrentSchedule schedule) { }
         public Azure.ResourceManager.Monitor.Models.RecurrenceFrequency Frequency { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.RecurrentSchedule Schedule { get { throw null; } set { } }
+    }
+    public enum MonitorResultType
+    {
+        Data = 0,
+        Metadata = 1,
     }
     public partial class MonitorScaleAction
     {
@@ -1977,6 +2286,21 @@ namespace Azure.ResourceManager.Monitor.Models
         ExactCount = 2,
         ServiceAllowedNextValue = 3,
     }
+    public partial class MonitorSingleBaseline
+    {
+        internal MonitorSingleBaseline() { }
+        public System.Collections.Generic.IReadOnlyList<double> HighThresholds { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<double> LowThresholds { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorBaselineSensitivity Sensitivity { get { throw null; } }
+    }
+    public partial class MonitorSingleMetricBaseline : Azure.ResourceManager.Models.ResourceData
+    {
+        internal MonitorSingleMetricBaseline() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.Models.MonitorTimeSeriesBaseline> Baselines { get { throw null; } }
+        public System.TimeSpan Interval { get { throw null; } }
+        public string Namespace { get { throw null; } }
+        public string Timespan { get { throw null; } }
+    }
     public partial class MonitorSmsReceiver
     {
         public MonitorSmsReceiver(string name, string countryCode, string phoneNumber) { }
@@ -1984,6 +2308,15 @@ namespace Azure.ResourceManager.Monitor.Models
         public string Name { get { throw null; } set { } }
         public string PhoneNumber { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.MonitorReceiverStatus? Status { get { throw null; } }
+    }
+    public partial class MonitorTimeSeriesBaseline
+    {
+        internal MonitorTimeSeriesBaseline() { }
+        public string Aggregation { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.Models.MonitorSingleBaseline> Data { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.Models.MonitorMetricSingleDimension> Dimensions { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.Models.MonitorBaselineMetadata> MetadataValues { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<System.DateTimeOffset> Timestamps { get { throw null; } }
     }
     public partial class MonitorTimeSeriesElement
     {
@@ -2113,6 +2446,12 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.PerfCounterDataSourceStream left, Azure.ResourceManager.Monitor.Models.PerfCounterDataSourceStream right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class PlatformTelemetryDataSource
+    {
+        public PlatformTelemetryDataSource(System.Collections.Generic.IEnumerable<string> streams) { }
+        public string Name { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Streams { get { throw null; } }
+    }
     public partial class PredictiveAutoscalePolicy
     {
         public PredictiveAutoscalePolicy(Azure.ResourceManager.Monitor.Models.PredictiveAutoscalePolicyScaleMode scaleMode) { }
@@ -2130,6 +2469,13 @@ namespace Azure.ResourceManager.Monitor.Models
         internal PredictiveValue() { }
         public System.DateTimeOffset TimeStamp { get { throw null; } }
         public double Value { get { throw null; } }
+    }
+    public partial class PrometheusForwarderDataSource
+    {
+        public PrometheusForwarderDataSource() { }
+        public System.Collections.Generic.IDictionary<string, string> LabelIncludeFilter { get { throw null; } }
+        public string Name { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.DataCollectionRuleKnownPrometheusForwarderDataSourceStream> Streams { get { throw null; } }
     }
     public enum RecurrenceFrequency
     {
@@ -2153,6 +2499,7 @@ namespace Azure.ResourceManager.Monitor.Models
     public partial class ResourceForUpdate
     {
         public ResourceForUpdate() { }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class RetentionPolicy
@@ -2506,5 +2853,11 @@ namespace Azure.ResourceManager.Monitor.Models
         public static implicit operator Azure.ResourceManager.Monitor.Models.WindowsEventLogDataSourceStream (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.WindowsEventLogDataSourceStream left, Azure.ResourceManager.Monitor.Models.WindowsEventLogDataSourceStream right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class WindowsFirewallLogsDataSource
+    {
+        public WindowsFirewallLogsDataSource(System.Collections.Generic.IEnumerable<string> streams) { }
+        public string Name { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Streams { get { throw null; } }
     }
 }

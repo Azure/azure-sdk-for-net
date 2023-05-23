@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Initializes a new instance of EmergingIssueImpact. </summary>
         internal EmergingIssueImpact()
         {
-            Regions = new ChangeTrackingList<ImpactedRegion>();
+            Regions = new ChangeTrackingList<EmergingIssueImpactedRegion>();
         }
 
         /// <summary> Initializes a new instance of EmergingIssueImpact. </summary>
         /// <param name="id"> The impacted service id. </param>
         /// <param name="name"> The impacted service name. </param>
         /// <param name="regions"> The list of impacted regions for corresponding emerging issues. </param>
-        internal EmergingIssueImpact(string id, string name, IReadOnlyList<ImpactedRegion> regions)
+        internal EmergingIssueImpact(string id, string name, IReadOnlyList<EmergingIssueImpactedRegion> regions)
         {
             Id = id;
             Name = name;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> The impacted service name. </summary>
         public string Name { get; }
         /// <summary> The list of impacted regions for corresponding emerging issues. </summary>
-        public IReadOnlyList<ImpactedRegion> Regions { get; }
+        public IReadOnlyList<EmergingIssueImpactedRegion> Regions { get; }
     }
 }

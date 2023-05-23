@@ -1,0 +1,122 @@
+name: GitHub Scheduled Event Processor
+
+on:
+  schedule:
+    # Close stale issues, runs every day at 1am - CloseStaleIssues
+    - cron: '0 1 * * *'
+    # Identify stale pull requests, every Friday at 5am - IdentifyStalePullRequests
+    - cron: '0 5 * * FRI'
+    # Close stale pull requests, every 6 hours at 02:30 AM, 08:30 AM, 02:30 PM and 08:30 PM - CloseStalePullRequests
+    - cron: '30 2,8,14,20 * * *'
+    # Identify stale issues, every 6 hours at 03:30 AM, 09:30 AM, 03:30 PM and 09:30 PM - IdentifyStaleIssues
+    - cron: '30 3,9,15,21 * * *'
+    # Close addressed issues, every 6 hours at 04:30 AM, 10:30 AM, 04:30 PM and 10:30 PM - CloseAddressedIssues
+    - cron: '30 4,10,16,22 * * *'
+    # Lock closed issues, every 6 hours at 05:30 AM, 11:30 AM, 05:30 PM and 11:30 PM - LockClosedIssues
+    - cron: '30 5,11,17,23 * * *'
+# This removes all unnecessary permissions, the ones needed will be set below.
+# https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
+permissions: {}
+
+jobs:
+  event-handler:
+    permissions:
+      issues: write
+      pull-requests: write
+    name: Handle ${{ github.event.schedule }} ${{ github.event.action }} event
+    runs-on: ubuntu-latest
+    steps:
+      # To run github-event-processor built from source, for testing purposes, uncomment everything
+      # in between the Start/End-Build From Source comments and comment everything in between the
+      # Start/End-Install comments
+      # Start-Install
+      - name: Install GitHub Event Processor
+        run: >
+          dotnet tool install
+          Azure.Sdk.Tools.GitHubEventProcessor
+          --version 1.0.0-dev.20230505.2
+          --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json
+          --global
+        shell: bash
+      # End-Install
+
+      # Testing checkout of sources from the Azure/azure-sdk-tools repository
+      # The ref: is the SHA from the pull request in that repository or the
+      # refs/pull/<PRNumber>/merge for the latest on any given PR. If the repository
+      # is a fork eg. <User>/azure-sdk-tools then the repository down below will
+      # need to point to that fork
+      # Start-Build
+      # - name: Checkout tools repo for GitHub Event Processor sources
+      #   uses: actions/checkout@v3
+      #   with:
+      #     repository: Azure/azure-sdk-tools
+      #     path: azure-sdk-tools
+      #     ref: <refs/pull/<PRNumber>/merge> or <sha>
+
+      # - name: Build and install GitHubEventProcessor from sources
+      #   run: |
+      #     dotnet pack
+      #     dotnet tool install --global --prerelease --add-source ../../../artifacts/packages/Debug Azure.Sdk.Tools.GitHubEventProcessor
+      #   shell: bash
+      #   working-directory: azure-sdk-tools/tools/github-event-processor/Azure.Sdk.Tools.GitHubEventProcessor
+      # End-Build
+
+      - name: Close Stale Issues Scheduled Event
+        if: github.event.schedule == '0 1 * * *'
+        run: |
+          echo $GITHUB_PAYLOAD > payload.json
+          github-event-processor ${{ github.event_name }} payload.json CloseStaleIssues
+        shell: bash
+        env:
+          GITHUB_PAYLOAD: ${{ toJson(github.event) }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Identify Stale PullRequests Scheduled Event
+        if: github.event.schedule == '0 5 * * FRI'
+        run: |
+          echo $GITHUB_PAYLOAD > payload.json
+          github-event-processor ${{ github.event_name }} payload.json IdentifyStalePullRequests
+        shell: bash
+        env:
+          GITHUB_PAYLOAD: ${{ toJson(github.event) }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Close Stale PullRequests Scheduled Event
+        if: github.event.schedule == '30 2,8,14,20 * * *'
+        run: |
+          echo $GITHUB_PAYLOAD > payload.json
+          github-event-processor ${{ github.event_name }} payload.json CloseStalePullRequests
+        shell: bash
+        env:
+          GITHUB_PAYLOAD: ${{ toJson(github.event) }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Identify Stale Issues Scheduled Event
+        if: github.event.schedule == '30 3,9,15,21 * * *'
+        run: |
+          echo $GITHUB_PAYLOAD > payload.json
+          github-event-processor ${{ github.event_name }} payload.json IdentifyStaleIssues
+        shell: bash
+        env:
+          GITHUB_PAYLOAD: ${{ toJson(github.event) }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Close Addressed Issues Scheduled Event
+        if: github.event.schedule == '30 4,10,16,22 * * *'
+        run: |
+          echo $GITHUB_PAYLOAD > payload.json
+          github-event-processor ${{ github.event_name }} payload.json CloseAddressedIssues
+        shell: bash
+        env:
+          GITHUB_PAYLOAD: ${{ toJson(github.event) }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Lock Closed Issues Scheduled Event
+        if: github.event.schedule == '30 5,11,17,23 * * *'
+        run: |
+          echo $GITHUB_PAYLOAD > payload.json
+          github-event-processor ${{ github.event_name }} payload.json LockClosedIssues
+        shell: bash
+        env:
+          GITHUB_PAYLOAD: ${{ toJson(github.event) }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

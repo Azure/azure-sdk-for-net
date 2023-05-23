@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        oAuthUrl = null;
                         continue;
                     }
                     oAuthUrl = new Uri(property.Value.GetString());
@@ -43,7 +42,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        toBotFromChannelOpenIdMetadataUrl = null;
                         continue;
                     }
                     toBotFromChannelOpenIdMetadataUrl = new Uri(property.Value.GetString());
@@ -58,7 +56,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        toBotFromEmulatorOpenIdMetadataUrl = null;
                         continue;
                     }
                     toBotFromEmulatorOpenIdMetadataUrl = new Uri(property.Value.GetString());
@@ -68,7 +65,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        toChannelFromBotLoginUrl = null;
                         continue;
                     }
                     toChannelFromBotLoginUrl = new Uri(property.Value.GetString());
@@ -83,7 +79,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     validateAuthority = property.Value.GetBoolean();

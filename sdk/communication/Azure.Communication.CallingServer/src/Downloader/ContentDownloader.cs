@@ -84,7 +84,7 @@ namespace Azure.Communication.CallingServer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _client._clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Communication.CallingServer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _client._clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 

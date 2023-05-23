@@ -19,7 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private const int Version = 2;
         private const int MaxlinksAllowed = 100;
 
-        internal static List<TelemetryItem> OtelToAzureMonitorTrace(Batch<Activity> batchActivity, AzureMonitorResource? resource, string instrumentationKey)
+        internal static List<TelemetryItem> OtelToAzureMonitorTrace(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, string instrumentationKey)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             TelemetryItem telemetryItem;
@@ -28,8 +28,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 try
                 {
-                    var monitorTags = EnumerateActivityTags(activity);
-                    telemetryItem = new TelemetryItem(activity, ref monitorTags, resource, instrumentationKey);
+                    var activityTagsProcessor = EnumerateActivityTags(activity);
+                    telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey);
 
                     // Check for Exceptions events
                     if (activity.Events.Any())
@@ -43,19 +43,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             telemetryItem.Data = new MonitorBase
                             {
                                 BaseType = "RequestData",
-                                BaseData = new RequestData(Version, activity, ref monitorTags),
+                                BaseData = new RequestData(Version, activity, ref activityTagsProcessor),
                             };
                             break;
                         case TelemetryType.Dependency:
                             telemetryItem.Data = new MonitorBase
                             {
                                 BaseType = "RemoteDependencyData",
-                                BaseData = new RemoteDependencyData(Version, activity, ref monitorTags),
+                                BaseData = new RemoteDependencyData(Version, activity, ref activityTagsProcessor),
                             };
                             break;
                     }
 
-                    monitorTags.Return();
+                    activityTagsProcessor.Return();
                     telemetryItems.Add(telemetryItem);
                 }
                 catch (Exception ex)
@@ -78,7 +78,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
 
-                    destination.Add(tag.Key, tag.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength));
+                    destination.Add(tag.Key, tag.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
                 }
             }
         }
@@ -133,20 +133,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 linksJson.Append(']');
 
-                AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object>(msLinks, linksJson.ToString()));
+                AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object?>(msLinks, linksJson.ToString()));
             }
         }
 
-        internal static TagEnumerationState EnumerateActivityTags(Activity activity)
+        internal static ActivityTagsProcessor EnumerateActivityTags(Activity activity)
         {
-            var monitorTags = new TagEnumerationState
-            {
-                MappedTags = AzMonList.Initialize(),
-                UnMappedTags = AzMonList.Initialize()
-            };
-
-            monitorTags.ForEach(activity.TagObjects);
-            return monitorTags;
+            var activityTagsProcessor = new ActivityTagsProcessor();
+            activityTagsProcessor.CategorizeTags(activity);
+            return activityTagsProcessor;
         }
 
         internal static string? GetLocationIp(ref AzMonList MappedTags)

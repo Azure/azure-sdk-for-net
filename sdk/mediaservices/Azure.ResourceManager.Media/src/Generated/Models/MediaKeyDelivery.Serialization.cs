@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     accessControl = MediaAccessControl.DeserializeMediaAccessControl(property.Value);

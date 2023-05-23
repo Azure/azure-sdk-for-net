@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute
             Optional<SupportedOperatingSystemType> osType = default;
             Optional<OperatingSystemStateType> osState = default;
             Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<GalleryImageIdentifier> identifier = default;
+            Optional<CommunityGalleryImageIdentifier> identifier = default;
             Optional<RecommendedMachineConfiguration> recommended = default;
             Optional<Disallowed> disallowed = default;
             Optional<HyperVGeneration> hyperVGeneration = default;
@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.Compute
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -58,7 +57,6 @@ namespace Azure.ResourceManager.Compute
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
@@ -77,7 +75,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             osType = property0.Value.GetString().ToSupportedOperatingSystemType();
@@ -87,7 +84,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             osState = property0.Value.GetString().ToOperatingSystemStateType();
@@ -97,7 +93,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endOfLifeDate = property0.Value.GetDateTimeOffset("O");
@@ -107,17 +102,15 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            identifier = GalleryImageIdentifier.DeserializeGalleryImageIdentifier(property0.Value);
+                            identifier = CommunityGalleryImageIdentifier.DeserializeCommunityGalleryImageIdentifier(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("recommended"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             recommended = RecommendedMachineConfiguration.DeserializeRecommendedMachineConfiguration(property0.Value);
@@ -127,7 +120,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             disallowed = Disallowed.DeserializeDisallowed(property0.Value);
@@ -137,7 +129,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hyperVGeneration = new HyperVGeneration(property0.Value.GetString());
@@ -147,7 +138,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<GalleryImageFeature> array = new List<GalleryImageFeature>();
@@ -162,7 +152,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             purchasePlan = ImagePurchasePlan.DeserializeImagePurchasePlan(property0.Value);
@@ -172,7 +161,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             architecture = new ArchitectureType(property0.Value.GetString());
@@ -182,7 +170,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                privacyStatementUri = null;
                                 continue;
                             }
                             privacyStatementUri = new Uri(property0.Value.GetString());

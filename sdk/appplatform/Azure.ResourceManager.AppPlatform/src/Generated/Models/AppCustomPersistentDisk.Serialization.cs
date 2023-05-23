@@ -39,7 +39,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     customPersistentDiskProperties = AppCustomPersistentDiskProperties.DeserializeAppCustomPersistentDiskProperties(property.Value);

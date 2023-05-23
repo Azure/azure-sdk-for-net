@@ -77,7 +77,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fixedDate = MonitorTimeWindow.DeserializeMonitorTimeWindow(property.Value);
@@ -87,7 +86,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recurrence = MonitorRecurrence.DeserializeMonitorRecurrence(property.Value);

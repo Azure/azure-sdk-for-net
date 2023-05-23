@@ -46,7 +46,9 @@
     "sdk/objectanchors/*/api/*.cs",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
-    "sdk/videoanalyzer/*/api/*.cs"
+    "sdk/videoanalyzer/*/api/*.cs",
+    "sdk/newrelicobservability/*/api/*.cs",
+    "sdk/paloaltonetworks.ngfw/*/api/*.cs"
   ],
   // cspell is not case sensitive
   // Sort words alphabetically to make this list easier to use
@@ -60,20 +62,25 @@
     "deserializable",
     "deserializes",
     "diagnoser",
+    "dicom",
     "dont",
     "dotnetcli",
     "dtmf",
     "epsg",
     "expando",
+    "fhir",
     "finalizer",
     "finalizers",
+    "hnsw",
     "illumos",
+    "interventional",
     "ints",
     "kubernetes",
     "lucene",
     "mgmt",
     "nunit",
     "odata",
+    "onco",
     "otel",
     "overridden",
     "parallelization",
@@ -272,6 +279,12 @@
       ]
     },
     {
+      "filename": "**/sdk/consumption/**/*",
+      "words": [
+        "payg"
+      ]
+    },
+    {
       "filename": "**/sdk/customer-insights/**/*.cs",
       "words": [
         "kpis"
@@ -298,6 +311,13 @@
       "filename": "**/sdk/datadog/**/*.cs",
       "words": [
         "liftr"
+      ]
+    },
+    {
+      "filename": "**/sdk/newrelic/**/*.cs",
+      "words": [
+        "liftr",
+        "payg"
       ]
     },
     {
@@ -419,6 +439,8 @@
     {
       "filename": "**/sdk/formrecognizer/**/*.cs",
       "words": [
+        "Upca",
+        "Upce",
         "ZhHant"
       ]
     },
@@ -557,7 +579,13 @@
         "Vnets",
         "Vxlan",
         "WAFV",
-        "Wans"
+        "Wans",
+        "Idps",
+        "idps",
+        "Ocsp",
+        "Afri",
+        "Apac",
+        "Latam"
       ]
     },
     {
@@ -637,6 +665,29 @@
       ]
     },
     {
+      "filename": "**/sdk/paloaltonetworks/**/*",
+      "words": [
+      	"armid",
+      	"cpus",
+      	"eastus",
+      	"cloudngfw",
+      	"fqdnlists",
+      	"isvtestuklegacy",
+      	"liftr",
+      	"liftrpantestplan",
+      	"msal",
+        "ngfw",
+        "panrsid",
+        "palo",
+        "paloaltonetworks",
+        "payg",
+        "praval",
+        "rgopenapi",
+        "vmos",
+        "vwan"
+      ]
+    },
+    {
       "filename": "**/sdk/peering/**/*.cs",
       "words": [
         "asns",
@@ -678,6 +729,12 @@
       "words": [
         "checkin",
         "regionality"
+      ]
+    },
+    {
+      "filename": "**/sdk/qumulo/**/*",
+      "words": [
+      	"qumulo"
       ]
     },
     {

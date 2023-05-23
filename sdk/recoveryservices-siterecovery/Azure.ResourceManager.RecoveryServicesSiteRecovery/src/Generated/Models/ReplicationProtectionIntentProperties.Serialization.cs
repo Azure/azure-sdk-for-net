@@ -45,7 +45,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isActive = property.Value.GetBoolean();
@@ -60,7 +59,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     providerSpecificDetails = ReplicationProtectionIntentProviderSpecificSettings.DeserializeReplicationProtectionIntentProviderSpecificSettings(property.Value);

@@ -132,7 +132,6 @@ namespace Azure.ResourceManager.Hci
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -167,7 +166,6 @@ namespace Azure.ResourceManager.Hci
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -186,7 +184,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new HciProvisioningState(property0.Value.GetString());
@@ -196,7 +193,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new HciClusterStatus(property0.Value.GetString());
@@ -206,7 +202,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             cloudId = property0.Value.GetGuid();
@@ -221,7 +216,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             aadClientId = property0.Value.GetGuid();
@@ -231,7 +225,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             aadTenantId = property0.Value.GetGuid();
@@ -241,7 +234,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             aadApplicationObjectId = property0.Value.GetGuid();
@@ -251,7 +243,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             aadServicePrincipalObjectId = property0.Value.GetGuid();
@@ -261,7 +252,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             softwareAssuranceProperties = SoftwareAssuranceProperties.DeserializeSoftwareAssuranceProperties(property0.Value);
@@ -271,7 +261,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             desiredProperties = HciClusterDesiredProperties.DeserializeHciClusterDesiredProperties(property0.Value);
@@ -281,7 +270,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reportedProperties = HciClusterReportedProperties.DeserializeHciClusterReportedProperties(property0.Value);
@@ -291,7 +279,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             trialDaysRemaining = property0.Value.GetSingle();
@@ -306,7 +293,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             registrationTimestamp = property0.Value.GetDateTimeOffset("O");
@@ -316,7 +302,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastSyncTimestamp = property0.Value.GetDateTimeOffset("O");
@@ -326,7 +311,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastBillingTimestamp = property0.Value.GetDateTimeOffset("O");
@@ -358,7 +342,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             principalId = property0.Value.GetGuid();
@@ -368,7 +351,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             tenantId = property0.Value.GetGuid();
@@ -378,7 +360,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             type0 = new HciManagedServiceIdentityType(property0.Value.GetString());
@@ -388,7 +369,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();

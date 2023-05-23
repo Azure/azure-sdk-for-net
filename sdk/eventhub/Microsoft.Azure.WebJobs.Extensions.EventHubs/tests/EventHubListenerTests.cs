@@ -6,9 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
+using Azure.Messaging.EventHubs.Tests;
 using Microsoft.Azure.WebJobs.EventHubs.Listeners;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host.Executors;
@@ -46,12 +49,21 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var loggerMock = new Mock<ILogger>();
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
             executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(new FunctionResult(true));
-            var eventProcessor = new EventHubListener.EventProcessor(options, executor.Object, loggerMock.Object, true);
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true);
 
             for (int i = 0; i < 100; i++)
             {
                 List<EventData> events = new List<EventData>() { new EventData(new byte[0]) };
                 await eventProcessor.ProcessEventsAsync(partitionContext, events, CancellationToken.None);
+            }
+
+            try
+            {
+                eventProcessor.Dispose();
+            }
+            catch (OperationCanceledException)
+            {
+                // Expected; ignore.
             }
 
             Assert.AreEqual(expected, checkpoints);
@@ -77,7 +89,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var loggerMock = new Mock<ILogger>();
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
             executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(new FunctionResult(true));
-            var eventProcessor = new EventHubListener.EventProcessor(options, executor.Object, loggerMock.Object, false);
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, false);
 
             for (int i = 0; i < 100; i++)
             {
@@ -85,9 +97,243 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 await eventProcessor.ProcessEventsAsync(partitionContext, events, CancellationToken.None);
             }
 
+            try
+            {
+                eventProcessor.Dispose();
+            }
+            catch (OperationCanceledException)
+            {
+                // Expected; ignore.
+            }
+
             processor.Verify(
                 p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
                 Times.Exactly(expected));
+        }
+
+        [TestCase(1, 29)]
+        [TestCase(5, 5)]
+        [TestCase(10, 2)]
+        [TestCase(30, 0)]
+        [TestCase(35, 0)]
+        public async Task ProcessEvents_MultipleDispatch_MinBatch_CheckpointsCorrectly_NoCheckpoint(int batchCheckpointFrequency, int expected)
+        {
+            var partitionContext = EventHubTests.GetPartitionContext();
+            var options = new EventHubOptions
+            {
+                BatchCheckpointFrequency = batchCheckpointFrequency,
+                MaxWaitTime = TimeSpan.FromSeconds(60),
+                MinEventBatchSize = 10
+            };
+
+            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
+            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            processor.Setup(p => p.GetLastReadCheckpoint(partitionContext.PartitionId)).Returns(() => null);
+            partitionContext.ProcessorHost = processor.Object;
+
+            var loggerMock = new Mock<ILogger>();
+            var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
+            executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(new FunctionResult(true));
+
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, false);
+
+            for (int i = 0; i < 60; i++)
+            {
+                List<EventData> events = new List<EventData>() { new EventData("event1"), new EventData("event2"), new EventData("event3"), new EventData("event4"), new EventData("event5") };
+                await eventProcessor.ProcessEventsAsync(partitionContext, events, CancellationToken.None);
+            }
+
+            try
+            {
+                eventProcessor.Dispose();
+            }
+            catch (OperationCanceledException)
+            {
+                // Expected; ignore.
+            }
+
+            // Because the first invocation will allow a partial batch due to the old checkpoint,
+            // the last 5 events will remain in the cache after disposing and stopping the background task.
+            Assert.NotNull(eventProcessor.CachedEventsManager);
+            Assert.AreEqual(5, eventProcessor.CachedEventsManager.CachedEvents.Count);
+
+            processor.Verify(
+                p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
+                Times.Exactly(expected));
+
+            processor.Verify(
+                p => p.GetLastReadCheckpoint(partitionContext.PartitionId),
+                Times.AtLeastOnce);
+        }
+
+        [TestCase(1, 30)]
+        [TestCase(5, 6)]
+        [TestCase(10, 3)]
+        [TestCase(30, 1)]
+        [TestCase(35, 0)]
+        public async Task ProcessEvents_MultipleDispatch_MinBatch_CheckpointsCorrectly_RecentCheckpoint(int batchCheckpointFrequency, int expected)
+        {
+            var partitionContext = EventHubTests.GetPartitionContext();
+
+            var options = new EventHubOptions
+            {
+                BatchCheckpointFrequency = batchCheckpointFrequency,
+                MaxWaitTime = TimeSpan.FromSeconds(60),
+                MinEventBatchSize = 10
+            };
+
+            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
+            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            processor.Setup(p => p.GetLastReadCheckpoint(partitionContext.PartitionId)).Returns(() => new CheckpointInfo(123, 45678, DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(1))));
+            partitionContext.ProcessorHost = processor.Object;
+
+            var loggerMock = new Mock<ILogger>();
+            var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
+            executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(new FunctionResult(true));
+
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, false);
+
+            for (int i = 0; i < 60; i++)
+            {
+                List<EventData> events = new List<EventData>() { new EventData("event1"), new EventData("event2"), new EventData("event3"), new EventData("event4"), new EventData("event5") };
+                await eventProcessor.ProcessEventsAsync(partitionContext, events, CancellationToken.None);
+            }
+
+            try
+            {
+                eventProcessor.Dispose();
+            }
+            catch (OperationCanceledException)
+            {
+                // Expected; ignore.
+            }
+
+            Assert.NotNull(eventProcessor.CachedEventsManager);
+            Assert.AreEqual(0, eventProcessor.CachedEventsManager.CachedEvents.Count);
+
+            processor.Verify(
+                p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
+                Times.Exactly(expected));
+
+            processor.Verify(
+                p => p.GetLastReadCheckpoint(partitionContext.PartitionId),
+                Times.AtLeastOnce);
+        }
+
+        [TestCase(1, 29)]
+        [TestCase(5, 5)]
+        [TestCase(10, 2)]
+        [TestCase(30, 0)]
+        [TestCase(35, 0)]
+        public async Task ProcessEvents_MultipleDispatch_MinBatch_CheckpointsCorrectly_OldCheckpoint(int batchCheckpointFrequency, int expected)
+        {
+            var partitionContext = EventHubTests.GetPartitionContext();
+
+            var options = new EventHubOptions
+            {
+                BatchCheckpointFrequency = batchCheckpointFrequency,
+                MaxWaitTime = TimeSpan.FromSeconds(60),
+                MinEventBatchSize = 10
+            };
+
+            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
+            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            processor.Setup(p => p.GetLastReadCheckpoint(partitionContext.PartitionId)).Returns(() => new CheckpointInfo(123, 45678, DateTimeOffset.UtcNow.Subtract(TimeSpan.FromHours(1))));
+            partitionContext.ProcessorHost = processor.Object;
+
+            var loggerMock = new Mock<ILogger>();
+            var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
+            executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(new FunctionResult(true));
+
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, false);
+
+            for (int i = 0; i < 60; i++)
+            {
+                List<EventData> events = new List<EventData>() { new EventData("event1"), new EventData("event2"), new EventData("event3"), new EventData("event4"), new EventData("event5") };
+                await eventProcessor.ProcessEventsAsync(partitionContext, events, CancellationToken.None);
+            }
+
+            try
+            {
+                eventProcessor.Dispose();
+            }
+            catch (OperationCanceledException)
+            {
+                // Expected; ignore.
+            }
+
+            // Because the first invocation will allow a partial batch due to the old checkpoint,
+            // the last 5 events will remain in the cache after disposing and stopping the background task.
+            Assert.NotNull(eventProcessor.CachedEventsManager);
+            Assert.AreEqual(5, eventProcessor.CachedEventsManager.CachedEvents.Count);
+
+            processor.Verify(
+                p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
+                Times.Exactly(expected));
+
+            processor.Verify(
+                p => p.GetLastReadCheckpoint(partitionContext.PartitionId),
+                Times.AtLeastOnce);
+        }
+
+        [Test]
+        public async Task ProcessEvents_MultipleDispatch_MinBatch_BackgroundInvokesPartialBatch()
+        {
+            var partitionContext = EventHubTests.GetPartitionContext();
+
+            var options = new EventHubOptions
+            {
+                BatchCheckpointFrequency = 1,
+                MaxWaitTime = TimeSpan.FromSeconds(20),
+                MinEventBatchSize = 10
+            };
+
+            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
+            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            processor.Setup(p => p.GetLastReadCheckpoint(partitionContext.PartitionId)).Returns(() => new CheckpointInfo(123, 45678, DateTimeOffset.UtcNow.Subtract(TimeSpan.FromHours(1))));
+            partitionContext.ProcessorHost = processor.Object;
+
+            // Because the first invocation will allow a partial batch due to the old checkpoint,
+            // the last 5 events will remain in the cache until the background task invokes.  We
+            // expect to see 28 invocations with full batches and 2 partials.
+            var expectedInvocations = 31;
+            var invocations = 0;
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var loggerMock = new Mock<ILogger>();
+            var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
+
+            executor
+                .Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
+                .Callback(() =>
+                {
+                    if (++invocations == expectedInvocations)
+                    {
+                        completionSource.TrySetResult(true);
+                    }
+                })
+                .ReturnsAsync(new FunctionResult(true));
+
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, false);
+
+            for (int i = 0; i < 60; i++)
+            {
+                List<EventData> events = new List<EventData>() { new EventData("event1"), new EventData("event2"), new EventData("event3"), new EventData("event4"), new EventData("event5") };
+                await eventProcessor.ProcessEventsAsync(partitionContext, events, CancellationToken.None);
+            }
+
+            await completionSource.Task.TimeoutAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            try
+            {
+                eventProcessor.Dispose();
+            }
+            catch (OperationCanceledException)
+            {
+                // Expected; ignore.
+            }
+
+            Assert.NotNull(eventProcessor.CachedEventsManager);
+            Assert.AreEqual(eventProcessor.CachedEventsManager.CachedEvents.Count, 0);
         }
 
         /// <summary>
@@ -124,13 +370,149 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var loggerMock = new Mock<ILogger>();
 
-            var eventProcessor = new EventHubListener.EventProcessor(options, executor.Object, loggerMock.Object, true);
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true);
 
             await eventProcessor.ProcessEventsAsync(partitionContext, events, CancellationToken.None);
 
             processor.Verify(
                 p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
                 Times.Once);
+        }
+
+        /// <summary>
+        /// If the partition processor token is signaled, we should NOT checkpoint as the partition ownership
+        /// has been lost.
+        /// </summary>
+        [Test]
+        public async Task ProcessEvents_OwnershipLost_DoesNotCheckpoint()
+        {
+            var partitionContext = EventHubTests.GetPartitionContext();
+            var options = new EventHubOptions();
+
+            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
+            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            processor.Setup(p => p.GetLastReadCheckpoint(It.IsAny<string>())).Returns(default(CheckpointInfo));
+
+            partitionContext.ProcessorHost = processor.Object;
+            var loggerMock = new Mock<ILogger>();
+            var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
+
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true);
+
+            List<EventData> events = new List<EventData>();
+            List<FunctionResult> results = new List<FunctionResult>();
+            for (int i = 0; i < 10; i++)
+            {
+                events.Add(new EventData(new byte[0]));
+                results.Add(new FunctionResult(true));
+            }
+
+            int execution = 0;
+            var cts = new CancellationTokenSource();
+
+            executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(() =>
+            {
+                if (execution == 0)
+                {
+                    eventProcessor.CloseAsync(partitionContext, ProcessingStoppedReason.OwnershipLost).GetAwaiter().GetResult();
+                }
+                var result = results[execution++];
+                return result;
+            });
+
+            await eventProcessor.ProcessEventsAsync(partitionContext, events, cts.Token);
+
+            processor.Verify(
+                p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
+                Times.Never);
+        }
+
+        /// <summary>
+        /// If function execution succeeds when the function host is shutting down, we should NOT checkpoint.
+        /// </summary>
+        [Test]
+        public async Task ProcessEvents_Succeeds_ShuttingDown_DoesNotCheckpoint()
+        {
+            var partitionContext = EventHubTests.GetPartitionContext();
+            var options = new EventHubOptions();
+
+            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
+            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            processor.Setup(p => p.GetLastReadCheckpoint(It.IsAny<string>())).Returns(default(CheckpointInfo));
+            partitionContext.ProcessorHost = processor.Object;
+
+            List<EventData> events = new List<EventData>();
+            List<FunctionResult> results = new List<FunctionResult>();
+            for (int i = 0; i < 10; i++)
+            {
+                events.Add(new EventData(new byte[0]));
+                results.Add(new FunctionResult(true));
+            }
+
+            var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
+            int execution = 0;
+            var loggerMock = new Mock<ILogger>();
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true);
+
+            executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(() =>
+            {
+                if (execution == 0)
+                {
+                    eventProcessor.CloseAsync(partitionContext, ProcessingStoppedReason.Shutdown).GetAwaiter().GetResult();
+                }
+                var result = results[execution++];
+                return result;
+            });
+
+            await eventProcessor.ProcessEventsAsync(partitionContext, events, CancellationToken.None);
+
+            processor.Verify(
+                p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
+                Times.Never);
+        }
+
+        /// <summary>
+        /// If function execution fails when the function host is shutting down, we should NOT checkpoint.
+        /// </summary>
+        [Test]
+        public async Task ProcessEvents_Fails_ShuttingDown_DoesNotCheckpoint()
+        {
+            var partitionContext = EventHubTests.GetPartitionContext();
+            var options = new EventHubOptions();
+
+            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
+            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            processor.Setup(p => p.GetLastReadCheckpoint(It.IsAny<string>())).Returns(default(CheckpointInfo));
+            partitionContext.ProcessorHost = processor.Object;
+
+            List<EventData> events = new List<EventData>();
+            List<FunctionResult> results = new List<FunctionResult>();
+            for (int i = 0; i < 10; i++)
+            {
+                events.Add(new EventData(new byte[0]));
+                results.Add(new FunctionResult(false));
+            }
+
+            var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
+            int execution = 0;
+            var loggerMock = new Mock<ILogger>();
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true);
+
+            executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(() =>
+            {
+                if (execution == 0)
+                {
+                    eventProcessor.CloseAsync(partitionContext, ProcessingStoppedReason.Shutdown).GetAwaiter().GetResult();
+                }
+                var result = results[execution++];
+                return result;
+            });
+
+            await eventProcessor.ProcessEventsAsync(partitionContext, events, CancellationToken.None);
+
+            processor.Verify(
+                p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
+                Times.Never);
         }
 
         [Test]
@@ -141,11 +523,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
             processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            processor.Setup(p => p.GetLastReadCheckpoint(partitionContext.PartitionId)).Returns(() => null);
             partitionContext.ProcessorHost = processor.Object;
 
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
             var loggerMock = new Mock<ILogger>();
-            var eventProcessor = new EventHubListener.EventProcessor(options, executor.Object, loggerMock.Object, true);
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true);
 
             await eventProcessor.CloseAsync(partitionContext, ProcessingStoppedReason.Shutdown);
 
@@ -155,13 +538,36 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         }
 
         [Test]
+        public async Task Partition_OwnershipLost_DropsEvents()
+        {
+            var partitionContext = EventHubTests.GetPartitionContext();
+            var options = new EventHubOptions { MinEventBatchSize = 5 };
+
+            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
+            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            processor.Setup(p => p.GetLastReadCheckpoint(partitionContext.PartitionId)).Returns(() => null);
+            partitionContext.ProcessorHost = processor.Object;
+
+            var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
+            var loggerMock = new Mock<ILogger>();
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true);
+            var mockStoredEvents = new Queue<EventData>();
+            mockStoredEvents.Enqueue(new EventData("E1"));
+            eventProcessor.CachedEventsManager.CachedEvents = mockStoredEvents;
+
+            await eventProcessor.CloseAsync(partitionContext, ProcessingStoppedReason.OwnershipLost);
+
+            Assert.IsFalse(eventProcessor.CachedEventsManager.HasCachedEvents);
+        }
+
+        [Test]
         public async Task ProcessErrorsAsync_LoggedAsError()
         {
             var partitionContext = EventHubTests.GetPartitionContext(partitionId: "123", eventHubPath: "abc", owner: "def");
             var options = new EventHubOptions();
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
             var testLogger = new TestLogger("Test");
-            var eventProcessor = new EventHubListener.EventProcessor(options, executor.Object, testLogger, true);
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, testLogger, true);
 
             var ex = new InvalidOperationException("My InvalidOperationException!");
 
@@ -179,7 +585,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var options = new EventHubOptions();
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
             var testLogger = new TestLogger("Test");
-            var eventProcessor = new EventHubListener.EventProcessor(options, executor.Object, testLogger, true);
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, testLogger, true);
 
             var disconnectedEx = new EventHubsException(true, "My ReceiverDisconnectedException!", EventHubsException.FailureReason.ConsumerDisconnected);
 
@@ -290,7 +696,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 }
             })
             .ReturnsAsync(new FunctionResult(true));
-            var eventProcessor = new EventHubListener.EventProcessor(options, executor.Object, loggerMock.Object, true);
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true);
             List<EventData> events = new List<EventData>() { new EventData(new byte[0]) };
             CancellationTokenSource source = new CancellationTokenSource();
             // Start another thread to cancel execution

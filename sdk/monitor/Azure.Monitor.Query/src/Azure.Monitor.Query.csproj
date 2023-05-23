@@ -2,9 +2,9 @@
   <PropertyGroup>
     <Description>A library for querying Azure Monitor's Logs and Metrics data sources.</Description>
     <AssemblyTitle>Azure Monitor Query client library</AssemblyTitle>
-    <Version>1.2.0-beta.1</Version>
+    <Version>1.3.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.1.0</ApiCompatVersion>
+    <ApiCompatVersion>1.2.0</ApiCompatVersion>
     <PackageTags>Azure Monitor Query</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);AZC0001</NoWarn>
