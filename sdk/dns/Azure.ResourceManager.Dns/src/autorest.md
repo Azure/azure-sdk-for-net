@@ -60,16 +60,7 @@ rename-rules:
   GET: Get
   PUT: Put
   RecordType: DnsRecordType
-  ARecord: DnsARecordInfo
-  AaaaRecord: DnsAaaaRecordInfo
-  MxRecord: DnsMXRecordInfo
-  NsRecord: DnsNSRecordInfo
-  PtrRecord: DnsPtrRecordInfo
-  SrvRecord: DnsSrvRecordInfo
-  TxtRecord: DnsTxtRecordInfo
-  CnameRecord: DnsCnameRecordInfo
-  SoaRecord: DnsSoaRecordInfo
-  CaaRecord: DnsCaaRecordInfo
+
 
 override-operation-name:
   RecordSets_ListByDnsZone: GetAllRecordData # Change back to GetRecords once the polymorphic resource change is merged.
@@ -88,6 +79,27 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/SRV: DnsSrvRecord
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/TXT: DnsTxtRecord
 
+rename-mapping:
+  ARecord: DnsARecordInfo
+  AaaaRecord: DnsAaaaRecordInfo
+  MxRecord: DnsMXRecordInfo
+  NsRecord: DnsNSRecordInfo
+  PtrRecord: DnsPtrRecordInfo
+  SrvRecord: DnsSrvRecordInfo
+  TxtRecord: DnsTxtRecordInfo
+  CnameRecord: DnsCnameRecordInfo
+  SoaRecord: DnsSoaRecordInfo
+  CaaRecord: DnsCaaRecordInfo
+  SoaRecord.expireTime: expireTimeInSeconds
+  SoaRecord.retryTime: retryTimeInSeconds
+  SoaRecord.minimumTTL: minimumTtlInSeconds
+  SoaRecord.refreshTime: refreshTimeInSeconds
+
+prepend-rp-prefix:
+  - Zone
+  - ZoneType
+  - ZoneListResult
+
 directive:
   - remove-operation: RecordSets_ListAllByDnsZone
   - from: swagger-document
@@ -104,28 +116,4 @@ directive:
       $.ZoneProperties.properties.maxNumberOfRecordSets["x-ms-client-name"] = "maxNumberOfRecords";
       $.ZoneProperties.properties.maxNumberOfRecordsPerRecordSet["x-ms-client-name"] = "maxNumberOfRecordsPerRecord";
       $.ZoneProperties.properties.numberOfRecordSets["x-ms-client-name"] = "numberOfRecords";
-
-# FooTime => FooTimeInSeconds
-  - from: swagger-document
-    where: $.definitions
-    transform: >
-      $.SoaRecord.properties.expireTime["x-ms-client-name"] = "expireTimeInSeconds";
-      $.SoaRecord.properties.retryTime["x-ms-client-name"] = "retryTimeInSeconds";
-      $.SoaRecord.properties.minimumTTL["x-ms-client-name"] = "minimumTtlInSeconds";
-      $.SoaRecord.properties.refreshTime["x-ms-client-name"] = "refreshTimeInSeconds";
-
-# Add Prepend Name
-  - from: swagger-document
-    where: $.definitions
-    transform: >
-      $.Zone["x-ms-client-name"] = "DnsZone";
-      $.ZoneProperties.properties.zoneType["x-ms-enum"].name = "DnsZoneType";
-      $.ZoneListResult["x-ms-client-name"] = "DnsZoneListResult";
-
-# Mx Ns => MX NS
-  - from: swagger-document
-    where: $.definitions
-    transform: >
-      $.RecordSetProperties.properties.MXRecords["x-ms-client-name"] = "MXRecords";
-      $.RecordSetProperties.properties.NSRecords["x-ms-client-name"] = "NSRecords";
 ```
