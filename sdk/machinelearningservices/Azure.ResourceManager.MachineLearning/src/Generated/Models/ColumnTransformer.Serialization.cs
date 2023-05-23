@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Fields))
             {
-                if (Fields != null)
+                if (Fields != null && Optional.IsCollectionDefined(Fields))
                 {
                     writer.WritePropertyName("fields"u8);
                     writer.WriteStartArray();

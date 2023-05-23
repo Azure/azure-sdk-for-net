@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(CvSplitColumnNames))
             {
-                if (CvSplitColumnNames != null)
+                if (CvSplitColumnNames != null && Optional.IsCollectionDefined(CvSplitColumnNames))
                 {
                     writer.WritePropertyName("cvSplitColumnNames"u8);
                     writer.WriteStartArray();

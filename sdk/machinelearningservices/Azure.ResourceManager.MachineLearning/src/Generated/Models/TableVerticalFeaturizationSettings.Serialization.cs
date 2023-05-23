@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(BlockedTransformers))
             {
-                if (BlockedTransformers != null)
+                if (BlockedTransformers != null && Optional.IsCollectionDefined(BlockedTransformers))
                 {
                     writer.WritePropertyName("blockedTransformers"u8);
                     writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(ColumnNameAndTypes))
             {
-                if (ColumnNameAndTypes != null)
+                if (ColumnNameAndTypes != null && Optional.IsCollectionDefined(ColumnNameAndTypes))
                 {
                     writer.WritePropertyName("columnNameAndTypes"u8);
                     writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(TransformerParams))
             {
-                if (TransformerParams != null)
+                if (TransformerParams != null && Optional.IsCollectionDefined(TransformerParams))
                 {
                     writer.WritePropertyName("transformerParams"u8);
                     writer.WriteStartObject();

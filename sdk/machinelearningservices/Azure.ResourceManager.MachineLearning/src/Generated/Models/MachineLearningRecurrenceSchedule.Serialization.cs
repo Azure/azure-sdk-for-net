@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(MonthDays))
             {
-                if (MonthDays != null)
+                if (MonthDays != null && Optional.IsCollectionDefined(MonthDays))
                 {
                     writer.WritePropertyName("monthDays"u8);
                     writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(WeekDays))
             {
-                if (WeekDays != null)
+                if (WeekDays != null && Optional.IsCollectionDefined(WeekDays))
                 {
                     writer.WritePropertyName("weekDays"u8);
                     writer.WriteStartArray();

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             }
             if (Optional.IsCollectionDefined(ConfigurationSettings))
             {
-                if (ConfigurationSettings != null)
+                if (ConfigurationSettings != null && Optional.IsCollectionDefined(ConfigurationSettings))
                 {
                     writer.WritePropertyName("configurationSettings"u8);
                     writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             }
             if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
             {
-                if (ConfigurationProtectedSettings != null)
+                if (ConfigurationProtectedSettings != null && Optional.IsCollectionDefined(ConfigurationProtectedSettings))
                 {
                     writer.WritePropertyName("configurationProtectedSettings"u8);
                     writer.WriteStartObject();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             }
             if (Optional.IsCollectionDefined(Statuses))
             {
-                if (Statuses != null)
+                if (Statuses != null && Optional.IsCollectionDefined(Statuses))
                 {
                     writer.WritePropertyName("statuses"u8);
                     writer.WriteStartArray();

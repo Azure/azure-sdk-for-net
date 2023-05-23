@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             if (Optional.IsCollectionDefined(DependsOn))
             {
-                if (DependsOn != null)
+                if (DependsOn != null && Optional.IsCollectionDefined(DependsOn))
                 {
                     writer.WritePropertyName("dependsOn"u8);
                     writer.WriteStartArray();

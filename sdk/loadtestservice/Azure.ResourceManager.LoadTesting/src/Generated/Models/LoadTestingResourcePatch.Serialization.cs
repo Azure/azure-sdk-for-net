@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                if (Tags != null)
+                if (Tags != null && Optional.IsCollectionDefined(Tags))
                 {
                     writer.WritePropertyName("tags"u8);
                     writer.WriteStartObject();

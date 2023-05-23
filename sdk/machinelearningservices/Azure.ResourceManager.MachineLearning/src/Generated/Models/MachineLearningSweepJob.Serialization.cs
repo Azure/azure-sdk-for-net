@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(Inputs))
             {
-                if (Inputs != null)
+                if (Inputs != null && Optional.IsCollectionDefined(Inputs))
                 {
                     writer.WritePropertyName("inputs"u8);
                     writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteObjectValue(Objective);
             if (Optional.IsCollectionDefined(Outputs))
             {
-                if (Outputs != null)
+                if (Outputs != null && Optional.IsCollectionDefined(Outputs))
                 {
                     writer.WritePropertyName("outputs"u8);
                     writer.WriteStartObject();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(JobType.ToString());
             if (Optional.IsCollectionDefined(Services))
             {
-                if (Services != null)
+                if (Services != null && Optional.IsCollectionDefined(Services))
                 {
                     writer.WritePropertyName("services"u8);
                     writer.WriteStartObject();
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(Properties))
             {
-                if (Properties != null)
+                if (Properties != null && Optional.IsCollectionDefined(Properties))
                 {
                     writer.WritePropertyName("properties"u8);
                     writer.WriteStartObject();
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                if (Tags != null)
+                if (Tags != null && Optional.IsCollectionDefined(Tags))
                 {
                     writer.WritePropertyName("tags"u8);
                     writer.WriteStartObject();

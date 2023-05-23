@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(NodeSelector))
             {
-                if (NodeSelector != null)
+                if (NodeSelector != null && Optional.IsCollectionDefined(NodeSelector))
                 {
                     writer.WritePropertyName("nodeSelector"u8);
                     writer.WriteStartObject();

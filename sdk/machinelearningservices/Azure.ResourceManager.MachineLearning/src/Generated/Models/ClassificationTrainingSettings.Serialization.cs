@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AllowedTrainingAlgorithms))
             {
-                if (AllowedTrainingAlgorithms != null)
+                if (AllowedTrainingAlgorithms != null && Optional.IsCollectionDefined(AllowedTrainingAlgorithms))
                 {
                     writer.WritePropertyName("allowedTrainingAlgorithms"u8);
                     writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(BlockedTrainingAlgorithms))
             {
-                if (BlockedTrainingAlgorithms != null)
+                if (BlockedTrainingAlgorithms != null && Optional.IsCollectionDefined(BlockedTrainingAlgorithms))
                 {
                     writer.WritePropertyName("blockedTrainingAlgorithms"u8);
                     writer.WriteStartArray();

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Data))
             {
-                if (Data != null)
+                if (Data != null && Optional.IsCollectionDefined(Data))
                 {
                     writer.WritePropertyName("data"u8);
                     writer.WriteStartObject();
