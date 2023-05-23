@@ -45,20 +45,13 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteNumberValue(Threshold);
             if (Optional.IsCollectionDefined(Dimensions))
             {
-                if (Dimensions != null)
+                writer.WritePropertyName("dimensions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Dimensions)
                 {
-                    writer.WritePropertyName("dimensions"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in Dimensions)
-                    {
-                        writer.WriteObjectValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("dimensions");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(IsDividedPerInstance))
             {

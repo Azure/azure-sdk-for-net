@@ -45,20 +45,13 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             writer.WriteObjectValue(GravityWrapper);
             if (Optional.IsCollectionDefined(KeyFrameIndexes))
             {
-                if (KeyFrameIndexes != null)
+                writer.WritePropertyName("keyFrameIndexes"u8);
+                writer.WriteStartArray();
+                foreach (var item in KeyFrameIndexes)
                 {
-                    writer.WritePropertyName("keyFrameIndexes"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in KeyFrameIndexes)
-                    {
-                        writer.WriteNumberValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteNumberValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("keyFrameIndexes");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(GroundTruthTrajectoryCameraPoses))
             {
