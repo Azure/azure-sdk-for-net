@@ -844,6 +844,27 @@ namespace Azure.Core.Tests
             Assert.Throws<KeyNotFoundException>(() => _ = json["bar"]);
             Assert.Throws<KeyNotFoundException>(() => { if (json["bar"] == null) {; } });
         }
+
+        [Test]
+        public void CanSetBinaryDataValue()
+        {
+            dynamic json = BinaryData.FromString("""{ "data" : null }""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+
+            var value = new
+            {
+                foo = 1
+            };
+
+            BinaryData serializedValue = BinaryData.FromObjectAsJson(value);
+            JsonDocument doc = JsonDocument.Parse(serializedValue);
+
+            Assert.AreEqual(1, doc.RootElement.GetProperty("foo").GetInt32());
+
+            json.data = serializedValue;
+
+            Assert.AreEqual(1, (int)json.data.foo);
+        }
+
         [Test]
         public void ArrayItemsCanBeAssigned()
         {
@@ -1084,8 +1105,8 @@ namespace Azure.Core.Tests
             yield return new object[] { 1, "1" };
             yield return new object[] { 1.0, "1" };
 #if NETCOREAPP
-            yield return new object[] {1.1D, "1.1"};
-            yield return new object[] {1.1F, "1.1"};
+            yield return new object[] { 1.1D, "1.1" };
+            yield return new object[] { 1.1F, "1.1" };
 #else
             yield return new object[] { 1.1D, "1.1000000000000001" };
             yield return new object[] { 1.1F, "1.10000002" };

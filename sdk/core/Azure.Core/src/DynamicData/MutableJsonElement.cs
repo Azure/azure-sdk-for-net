@@ -986,6 +986,29 @@ namespace Azure.Core.Json
         /// Sets the value of this element to the passed-in value.
         /// </summary>
         /// <param name="value">The value to assign to the element.</param>
+        public void Set(MutableJsonElement value)
+        {
+            EnsureValid();
+
+            value.EnsureValid();
+
+            JsonElement element = value._element;
+
+            if (Changes.TryGetChange(value._path, value._highWaterMark, out MutableJsonChange change))
+            {
+                if (change.ReplacesJsonElement)
+                {
+                    element = change.AsJsonElement();
+                }
+            }
+
+            Changes.AddChange(_path, element, true);
+        }
+
+        /// <summary>
+        /// Sets the value of this element to the passed-in value.
+        /// </summary>
+        /// <param name="value">The value to assign to the element.</param>
         public void Set(object value)
         {
             EnsureValid();
@@ -1053,29 +1076,6 @@ namespace Azure.Core.Json
                     Changes.AddChange(_path, value, true);
                     break;
             }
-        }
-
-        /// <summary>
-        /// Sets the value of this element to the passed-in value.
-        /// </summary>
-        /// <param name="value">The value to assign to the element.</param>
-        public void Set(MutableJsonElement value)
-        {
-            EnsureValid();
-
-            value.EnsureValid();
-
-            JsonElement element = value._element;
-
-            if (Changes.TryGetChange(value._path, value._highWaterMark, out MutableJsonChange change))
-            {
-                if (change.ReplacesJsonElement)
-                {
-                    element = change.AsJsonElement();
-                }
-            }
-
-            Changes.AddChange(_path, element, true);
         }
 
         /// <inheritdoc/>
