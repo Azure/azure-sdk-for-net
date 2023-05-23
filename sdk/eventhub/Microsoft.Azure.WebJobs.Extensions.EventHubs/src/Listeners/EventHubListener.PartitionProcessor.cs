@@ -224,7 +224,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     return;
                 }
 
-                // If the . This is best effort and not thread-safe.
+                // If ownership of the partition is lost, we should not checkpoint as the event may need to be processed again.
                 if (_stoppedReason is ProcessingStoppedReason.OwnershipLost)
                 {
                     return;
