@@ -67,20 +67,13 @@ namespace Azure.ResourceManager.Batch.Models
             }
             if (Optional.IsCollectionDefined(AllowedAuthenticationModes))
             {
-                if (AllowedAuthenticationModes != null)
+                writer.WritePropertyName("allowedAuthenticationModes"u8);
+                writer.WriteStartArray();
+                foreach (var item in AllowedAuthenticationModes)
                 {
-                    writer.WritePropertyName("allowedAuthenticationModes"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in AllowedAuthenticationModes)
-                    {
-                        writer.WriteStringValue(item.ToSerialString());
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item.ToSerialString());
                 }
-                else
-                {
-                    writer.WriteNull("allowedAuthenticationModes");
-                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

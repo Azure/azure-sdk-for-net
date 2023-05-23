@@ -114,20 +114,13 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsCollectionDefined(UriSigningKeys))
             {
-                if (UriSigningKeys != null)
+                writer.WritePropertyName("urlSigningKeys"u8);
+                writer.WriteStartArray();
+                foreach (var item in UriSigningKeys)
                 {
-                    writer.WritePropertyName("urlSigningKeys"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in UriSigningKeys)
-                    {
-                        writer.WriteObjectValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("urlSigningKeys");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(DeliveryPolicy))
             {
