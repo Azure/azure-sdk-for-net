@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteNumberValue(Threshold);
             if (Optional.IsCollectionDefined(Dimensions))
             {
-                if (Dimensions != null)
+                if (Dimensions != null && Optional.IsCollectionDefined(Dimensions))
                 {
                     writer.WritePropertyName("dimensions"u8);
                     writer.WriteStartArray();

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Notifications))
             {
-                if (Notifications != null)
+                if (Notifications != null && Optional.IsCollectionDefined(Notifications))
                 {
                     writer.WritePropertyName("notifications"u8);
                     writer.WriteStartArray();
