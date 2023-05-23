@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
         private AutomationRunbookResource _runbook;
         private AutomationWebhookCollection _webhookCollection;
 
-        public WebhookTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public WebhookTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
         private void ValidateWebhook(AutomationWebhookData webhook, string webhookName)
         {
             Assert.IsNotNull(webhook);
+            Assert.IsNotEmpty(webhook.Id);
+            Assert.AreEqual(webhookName, webhook.Name);
+            Assert.AreEqual(_runbook.Data.Name, webhook.RunbookName);
+            Assert.IsTrue(string.IsNullOrWhiteSpace(webhook.UriString));
         }
     }
 }

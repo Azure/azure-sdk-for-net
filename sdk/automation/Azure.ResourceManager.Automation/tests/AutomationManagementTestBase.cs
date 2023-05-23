@@ -3,11 +3,9 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Automation.Tests
