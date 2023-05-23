@@ -447,7 +447,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 ResumeFromCheckpointId = transfer.Id
             };
-            TestEventsRaised resumeFailureHolder = new TestEventsRaised(resumeOptions);
+            TestEventsRaised testEventRaised2 = new TestEventsRaised(resumeOptions);
             DataTransfer resumeTransfer = await CreateSingleLongTransferAsync(
                 manager: transferManager,
                 sourceResource: sourceResource,
@@ -458,7 +458,7 @@ namespace Azure.Storage.DataMovement.Tests
             await resumeTransfer.AwaitCompletion(waitTransferCompletion.Token);
 
             // Assert
-            resumeFailureHolder.AssertPausedCheck();
+            testEventRaised2.AssertContainerCompletedCheck(1);
             Assert.AreEqual(StorageTransferStatus.Completed, resumeTransfer.TransferStatus);
             Assert.IsTrue(resumeTransfer.HasCompleted);
 
@@ -809,18 +809,19 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 ResumeFromCheckpointId = transfer.Id
             };
-            TestEventsRaised resumeFailureHolder = new TestEventsRaised(resumeOptions);
+            TestEventsRaised testEventsRaised2 = new TestEventsRaised(resumeOptions);
             DataTransfer resumeTransfer = await CreateDirectoryLongTransferAsync(
                 manager: transferManager,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                transferOptions: resumeOptions);
+                transferOptions: resumeOptions,
+                transferCount: 100);
 
             CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(600));
             await resumeTransfer.AwaitCompletion(waitTransferCompletion.Token);
 
             // Assert
-            resumeFailureHolder.AssertPausedCheck();
+            testEventsRaised2.AssertContainerCompletedCheck(100);
             Assert.AreEqual(StorageTransferStatus.Completed, resumeTransfer.TransferStatus);
             Assert.IsTrue(resumeTransfer.HasCompleted);
 
