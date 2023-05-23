@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Uri);
             if (Optional.IsCollectionDefined(HttpHeaders))
             {
-                if (HttpHeaders != null)
+                if (HttpHeaders != null && Optional.IsCollectionDefined(HttpHeaders))
                 {
                     writer.WritePropertyName("httpHeaders"u8);
                     writer.WriteStartObject();

@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             if (Optional.IsCollectionDefined(Parameters))
             {
-                if (Parameters != null)
+                if (Parameters != null && Optional.IsCollectionDefined(Parameters))
                 {
                     writer.WritePropertyName("parameters"u8);
                     writer.WriteStartObject();
