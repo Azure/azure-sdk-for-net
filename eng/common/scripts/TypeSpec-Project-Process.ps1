@@ -102,11 +102,11 @@ $repoRootPath =  (Join-Path $PSScriptRoot .. .. ..)
 $repoRootPath = Resolve-Path $repoRootPath
 $repoRootPath = $repoRootPath -replace "\\", "/"
 $tspConfigPath = Join-Path $repoRootPath 'tspconfig.yaml'
+$tmpTspConfigPath = $tspConfigPath
 # example url of tspconfig.yaml: https://github.com/Azure/azure-rest-api-specs-pr/blob/724ccc4d7ef7655c0b4d5c5ac4a5513f19bbef35/specification/containerservice/Fleet.Management/tspconfig.yaml
 if ($TypeSpecProjectDirectory -match '^https://github.com/(?<repo>Azure/azure-rest-api-specs(-pr)?)/blob/(?<commit>[0-9a-f]{40})/(?<path>.*)/tspconfig.yaml$') {
   try {
-    $TypeSpecProjectDirectory = $TypeSpecProjectDirectory -replace "github.com", "raw.githubusercontent.com"
-    $TypeSpecProjectDirectory = $TypeSpecProjectDirectory -replace "/blob/", "/"
+    $TypeSpecProjectDirectory = $TypeSpecProjectDirectory -replace "https://github.com/(.*)/(tree|blob)", "https://raw.githubusercontent.com/`$1"
     Invoke-WebRequest $TypeSpecProjectDirectory -OutFile $tspConfigPath -MaximumRetryCount 3
   }
   catch {
@@ -124,8 +124,20 @@ if ($TypeSpecProjectDirectory -match '^https://github.com/(?<repo>Azure/azure-re
     Write-Error "Failed to find tspconfig.yaml in '$TypeSpecProjectDirectory'"
     exit 1
   }
+  if($TypeSpecProjectDirectory -match "^.*/(?<path>specification/.*)$") {
+    $TypeSpecProjectDirectory = $Matches["path"]
+  } else {
+    Write-Error "'$TypeSpecProjectDirectory' doesn't have 'specification' in path."
+    exit 1
+  }
 }
+
 $tspConfigYaml = Get-Content $tspConfigPath -Raw | ConvertFrom-Yaml
+
+# delete the tmp tspconfig.yaml downloaded from github
+if (Test-Path $tmpTspConfigPath) {
+  Remove-Item $tspConfigPath
+}
 # call CreateUpdate-TspLocation function
 $sdkProjectFolder = CreateUpdate-TspLocation $tspConfigYaml $TypeSpecProjectDirectory $CommitHash $repo $repoRootPath
 
