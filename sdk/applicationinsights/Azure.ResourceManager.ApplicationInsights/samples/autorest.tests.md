@@ -12,4 +12,6 @@ testgen:
   sample: true
   skipped-operations:
   - LiveToken_Get
+  - WorkItemConfigurations_Create
+  - WorkItemConfigurations_UpdateItem
 ```

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -923,50 +922,6 @@ Value = BinaryData.FromString("2017-09-01T00:00:00"),
             Console.WriteLine($"Succeeded");
         }
 
-        // WorkItemConfigurationsCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateWorkItemConfiguration_WorkItemConfigurationsCreate()
-        {
-            // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/WorkItemConfigCreate.json
-            // this example is just showing the usage of "WorkItemConfigurations_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApplicationInsightsComponentResource created on azure
-            // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "my-resource-group";
-            string resourceName = "my-component";
-            ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
-
-            // invoke the operation
-            WorkItemCreateConfiguration workItemConfigurationProperties = new WorkItemCreateConfiguration()
-            {
-                ConnectorId = "d334e2a4-6733-488e-8645-a9fdc1694f41",
-                ConnectorDataConfiguration = "{\"VSOAccountBaseUrl\":\"https://testtodelete.visualstudio.com\",\"ProjectCollection\":\"DefaultCollection\",\"Project\":\"todeletefirst\",\"ResourceId\":\"d0662b05-439a-4a1b-840b-33a7f8b42ebf\",\"Custom\":\"{\\\"/fields/System.WorkItemType\\\":\\\"Bug\\\",\\\"/fields/System.AreaPath\\\":\\\"todeletefirst\\\",\\\"/fields/System.AssignedTo\\\":\\\"\\\"}\"}",
-                IsValidateOnly = true,
-                WorkItemProperties =
-{
-["0"] = new Dictionary<string, object>()
-{
-["name"] = "Title",
-["value"] = "Validate Only Title"},
-["1"] = new Dictionary<string, object>()
-{
-["name"] = "Description",
-["value"] = "Validate Only Description"},
-},
-            };
-            WorkItemConfiguration result = await applicationInsightsComponent.CreateWorkItemConfigurationAsync(workItemConfigurationProperties);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
         // WorkItemConfigurationsGetDefault
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -1046,51 +1001,6 @@ Value = BinaryData.FromString("2017-09-01T00:00:00"),
             // invoke the operation
             string workItemConfigId = "Visual Studio Team Services";
             WorkItemConfiguration result = await applicationInsightsComponent.GetItemWorkItemConfigurationAsync(workItemConfigId);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // WorkItemConfigurationsCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task UpdateItemWorkItemConfiguration_WorkItemConfigurationsCreate()
-        {
-            // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/WorkItemConfigUpdate.json
-            // this example is just showing the usage of "WorkItemConfigurations_UpdateItem" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApplicationInsightsComponentResource created on azure
-            // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "my-resource-group";
-            string resourceName = "my-component";
-            ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
-
-            // invoke the operation
-            string workItemConfigId = "Visual Studio Team Services";
-            WorkItemCreateConfiguration workItemConfigurationProperties = new WorkItemCreateConfiguration()
-            {
-                ConnectorId = "d334e2a4-6733-488e-8645-a9fdc1694f41",
-                ConnectorDataConfiguration = "{\"VSOAccountBaseUrl\":\"https://testtodelete.visualstudio.com\",\"ProjectCollection\":\"DefaultCollection\",\"Project\":\"todeletefirst\",\"ResourceId\":\"d0662b05-439a-4a1b-840b-33a7f8b42ebf\",\"Custom\":\"{\\\"/fields/System.WorkItemType\\\":\\\"Bug\\\",\\\"/fields/System.AreaPath\\\":\\\"todeletefirst\\\",\\\"/fields/System.AssignedTo\\\":\\\"\\\"}\"}",
-                IsValidateOnly = true,
-                WorkItemProperties =
-{
-["0"] = new Dictionary<string, object>()
-{
-["name"] = "Title",
-["value"] = "Validate Only Title"},
-["1"] = new Dictionary<string, object>()
-{
-["name"] = "Description",
-["value"] = "Validate Only Description"},
-},
-            };
-            WorkItemConfiguration result = await applicationInsightsComponent.UpdateItemWorkItemConfigurationAsync(workItemConfigId, workItemConfigurationProperties);
 
             Console.WriteLine($"Succeeded: {result}");
         }
