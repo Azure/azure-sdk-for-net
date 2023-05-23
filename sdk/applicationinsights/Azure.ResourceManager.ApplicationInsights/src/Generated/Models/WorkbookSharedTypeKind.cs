@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// The kind of workbook. Only valid value is shared.
-    /// Serialized Name: WorkbookSharedTypeKind
-    /// </summary>
+    /// <summary> The kind of workbook. Only valid value is shared. </summary>
     public readonly partial struct WorkbookSharedTypeKind : IEquatable<WorkbookSharedTypeKind>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         private const string SharedValue = "shared";
 
-        /// <summary>
-        /// shared
-        /// Serialized Name: WorkbookSharedTypeKind.shared
-        /// </summary>
+        /// <summary> shared. </summary>
         public static WorkbookSharedTypeKind Shared { get; } = new WorkbookSharedTypeKind(SharedValue);
         /// <summary> Determines if two <see cref="WorkbookSharedTypeKind"/> values are the same. </summary>
         public static bool operator ==(WorkbookSharedTypeKind left, WorkbookSharedTypeKind right) => left.Equals(right);

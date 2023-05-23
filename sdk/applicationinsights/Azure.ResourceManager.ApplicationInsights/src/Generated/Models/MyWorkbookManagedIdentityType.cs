@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// The identity type.
-    /// Serialized Name: MyWorkbookManagedIdentityType
-    /// </summary>
+    /// <summary> The identity type. </summary>
     public readonly partial struct MyWorkbookManagedIdentityType : IEquatable<MyWorkbookManagedIdentityType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         private const string UserAssignedValue = "UserAssigned";
         private const string NoneValue = "None";
 
-        /// <summary>
-        /// UserAssigned
-        /// Serialized Name: MyWorkbookManagedIdentityType.UserAssigned
-        /// </summary>
+        /// <summary> UserAssigned. </summary>
         public static MyWorkbookManagedIdentityType UserAssigned { get; } = new MyWorkbookManagedIdentityType(UserAssignedValue);
-        /// <summary>
-        /// None
-        /// Serialized Name: MyWorkbookManagedIdentityType.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static MyWorkbookManagedIdentityType None { get; } = new MyWorkbookManagedIdentityType(NoneValue);
         /// <summary> Determines if two <see cref="MyWorkbookManagedIdentityType"/> values are the same. </summary>
         public static bool operator ==(MyWorkbookManagedIdentityType left, MyWorkbookManagedIdentityType right) => left.Equals(right);

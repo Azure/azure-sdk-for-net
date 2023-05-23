@@ -7,26 +7,14 @@
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// The kind of WebTest that this web test watches. Choices are ping, multistep and standard.
-    /// Serialized Name: WebTestKind
-    /// </summary>
+    /// <summary> The kind of WebTest that this web test watches. Choices are ping, multistep and standard. </summary>
     public enum WebTestKind
     {
-        /// <summary>
-        /// ping
-        /// Serialized Name: WebTestKind.ping
-        /// </summary>
+        /// <summary> ping. </summary>
         Ping,
-        /// <summary>
-        /// multistep
-        /// Serialized Name: WebTestKind.multistep
-        /// </summary>
+        /// <summary> multistep. </summary>
         Multistep,
-        /// <summary>
-        /// standard
-        /// Serialized Name: WebTestKind.standard
-        /// </summary>
+        /// <summary> standard. </summary>
         Standard
     }
 }

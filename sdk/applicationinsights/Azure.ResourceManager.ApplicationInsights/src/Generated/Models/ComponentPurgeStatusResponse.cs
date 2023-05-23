@@ -7,26 +7,17 @@
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Response containing status for a specific purge operation.
-    /// Serialized Name: ComponentPurgeStatusResponse
-    /// </summary>
+    /// <summary> Response containing status for a specific purge operation. </summary>
     public partial class ComponentPurgeStatusResponse
     {
         /// <summary> Initializes a new instance of ComponentPurgeStatusResponse. </summary>
-        /// <param name="status">
-        /// Status of the operation represented by the requested Id.
-        /// Serialized Name: ComponentPurgeStatusResponse.status
-        /// </param>
+        /// <param name="status"> Status of the operation represented by the requested Id. </param>
         internal ComponentPurgeStatusResponse(PurgeState status)
         {
             Status = status;
         }
 
-        /// <summary>
-        /// Status of the operation represented by the requested Id.
-        /// Serialized Name: ComponentPurgeStatusResponse.status
-        /// </summary>
+        /// <summary> Status of the operation represented by the requested Id. </summary>
         public PurgeState Status { get; }
     }
 }

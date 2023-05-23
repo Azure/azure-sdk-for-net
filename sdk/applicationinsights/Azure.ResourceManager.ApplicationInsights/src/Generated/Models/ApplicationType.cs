@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Type of application being monitored.
-    /// Serialized Name: ApplicationType
-    /// </summary>
+    /// <summary> Type of application being monitored. </summary>
     public readonly partial struct ApplicationType : IEquatable<ApplicationType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         private const string WebValue = "web";
         private const string OtherValue = "other";
 
-        /// <summary>
-        /// web
-        /// Serialized Name: ApplicationType.web
-        /// </summary>
+        /// <summary> web. </summary>
         public static ApplicationType Web { get; } = new ApplicationType(WebValue);
-        /// <summary>
-        /// other
-        /// Serialized Name: ApplicationType.other
-        /// </summary>
+        /// <summary> other. </summary>
         public static ApplicationType Other { get; } = new ApplicationType(OtherValue);
         /// <summary> Determines if two <see cref="ApplicationType"/> values are the same. </summary>
         public static bool operator ==(ApplicationType left, ApplicationType right) => left.Equals(right);

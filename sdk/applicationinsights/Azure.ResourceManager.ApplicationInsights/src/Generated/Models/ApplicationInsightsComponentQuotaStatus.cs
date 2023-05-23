@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// An Application Insights component daily data volume cap status
-    /// Serialized Name: ApplicationInsightsComponentQuotaStatus
-    /// </summary>
+    /// <summary> An Application Insights component daily data volume cap status. </summary>
     public partial class ApplicationInsightsComponentQuotaStatus
     {
         /// <summary> Initializes a new instance of ApplicationInsightsComponentQuotaStatus. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of ApplicationInsightsComponentQuotaStatus. </summary>
-        /// <param name="appId">
-        /// The Application ID for the Application Insights component.
-        /// Serialized Name: ApplicationInsightsComponentQuotaStatus.AppId
-        /// </param>
-        /// <param name="shouldBeThrottled">
-        /// The daily data volume cap is met, and data ingestion will be stopped.
-        /// Serialized Name: ApplicationInsightsComponentQuotaStatus.ShouldBeThrottled
-        /// </param>
-        /// <param name="expirationTime">
-        /// Date and time when the daily data volume cap will be reset, and data ingestion will resume.
-        /// Serialized Name: ApplicationInsightsComponentQuotaStatus.ExpirationTime
-        /// </param>
+        /// <param name="appId"> The Application ID for the Application Insights component. </param>
+        /// <param name="shouldBeThrottled"> The daily data volume cap is met, and data ingestion will be stopped. </param>
+        /// <param name="expirationTime"> Date and time when the daily data volume cap will be reset, and data ingestion will resume. </param>
         internal ApplicationInsightsComponentQuotaStatus(string appId, bool? shouldBeThrottled, string expirationTime)
         {
             AppId = appId;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             ExpirationTime = expirationTime;
         }
 
-        /// <summary>
-        /// The Application ID for the Application Insights component.
-        /// Serialized Name: ApplicationInsightsComponentQuotaStatus.AppId
-        /// </summary>
+        /// <summary> The Application ID for the Application Insights component. </summary>
         public string AppId { get; }
-        /// <summary>
-        /// The daily data volume cap is met, and data ingestion will be stopped.
-        /// Serialized Name: ApplicationInsightsComponentQuotaStatus.ShouldBeThrottled
-        /// </summary>
+        /// <summary> The daily data volume cap is met, and data ingestion will be stopped. </summary>
         public bool? ShouldBeThrottled { get; }
-        /// <summary>
-        /// Date and time when the daily data volume cap will be reset, and data ingestion will resume.
-        /// Serialized Name: ApplicationInsightsComponentQuotaStatus.ExpirationTime
-        /// </summary>
+        /// <summary> Date and time when the daily data volume cap will be reset, and data ingestion will resume. </summary>
         public string ExpirationTime { get; }
     }
 }

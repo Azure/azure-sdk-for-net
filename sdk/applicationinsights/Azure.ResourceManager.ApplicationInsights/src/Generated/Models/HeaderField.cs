@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// A header to add to the WebTest.
-    /// Serialized Name: HeaderField
-    /// </summary>
+    /// <summary> A header to add to the WebTest. </summary>
     public partial class HeaderField
     {
         /// <summary> Initializes a new instance of HeaderField. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of HeaderField. </summary>
-        /// <param name="headerFieldName">
-        /// The name of the header.
-        /// Serialized Name: HeaderField.key
-        /// </param>
-        /// <param name="headerFieldValue">
-        /// The value of the header.
-        /// Serialized Name: HeaderField.value
-        /// </param>
+        /// <param name="headerFieldName"> The name of the header. </param>
+        /// <param name="headerFieldValue"> The value of the header. </param>
         internal HeaderField(string headerFieldName, string headerFieldValue)
         {
             HeaderFieldName = headerFieldName;
             HeaderFieldValue = headerFieldValue;
         }
 
-        /// <summary>
-        /// The name of the header.
-        /// Serialized Name: HeaderField.key
-        /// </summary>
+        /// <summary> The name of the header. </summary>
         public string HeaderFieldName { get; set; }
-        /// <summary>
-        /// The value of the header.
-        /// Serialized Name: HeaderField.value
-        /// </summary>
+        /// <summary> The value of the header. </summary>
         public string HeaderFieldValue { get; set; }
     }
 }

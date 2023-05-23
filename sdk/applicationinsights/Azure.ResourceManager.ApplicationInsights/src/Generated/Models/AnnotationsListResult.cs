@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Annotations list result.
-    /// Serialized Name: AnnotationsListResult
-    /// </summary>
+    /// <summary> Annotations list result. </summary>
     internal partial class AnnotationsListResult
     {
         /// <summary> Initializes a new instance of AnnotationsListResult. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of AnnotationsListResult. </summary>
-        /// <param name="value">
-        /// An array of annotations.
-        /// Serialized Name: AnnotationsListResult.value
-        /// </param>
+        /// <param name="value"> An array of annotations. </param>
         internal AnnotationsListResult(IReadOnlyList<Annotation> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// An array of annotations.
-        /// Serialized Name: AnnotationsListResult.value
-        /// </summary>
+        /// <summary> An array of annotations. </summary>
         public IReadOnlyList<Annotation> Value { get; }
     }
 }

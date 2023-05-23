@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// The CategoryType.
-    /// Serialized Name: CategoryType
-    /// </summary>
+    /// <summary> The CategoryType. </summary>
     public readonly partial struct CategoryType : IEquatable<CategoryType>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         private const string PerformanceValue = "performance";
         private const string RetentionValue = "retention";
 
-        /// <summary>
-        /// workbook
-        /// Serialized Name: CategoryType.workbook
-        /// </summary>
+        /// <summary> workbook. </summary>
         public static CategoryType Workbook { get; } = new CategoryType(WorkbookValue);
-        /// <summary>
-        /// TSG
-        /// Serialized Name: CategoryType.TSG
-        /// </summary>
+        /// <summary> TSG. </summary>
         public static CategoryType TSG { get; } = new CategoryType(TSGValue);
-        /// <summary>
-        /// performance
-        /// Serialized Name: CategoryType.performance
-        /// </summary>
+        /// <summary> performance. </summary>
         public static CategoryType Performance { get; } = new CategoryType(PerformanceValue);
-        /// <summary>
-        /// retention
-        /// Serialized Name: CategoryType.retention
-        /// </summary>
+        /// <summary> retention. </summary>
         public static CategoryType Retention { get; } = new CategoryType(RetentionValue);
         /// <summary> Determines if two <see cref="CategoryType"/> values are the same. </summary>
         public static bool operator ==(CategoryType left, CategoryType right) => left.Equals(right);

@@ -11,10 +11,7 @@ using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// WorkbookTemplate list result.
-    /// Serialized Name: WorkbookTemplatesListResult
-    /// </summary>
+    /// <summary> WorkbookTemplate list result. </summary>
     internal partial class WorkbookTemplatesListResult
     {
         /// <summary> Initializes a new instance of WorkbookTemplatesListResult. </summary>
@@ -24,19 +21,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of WorkbookTemplatesListResult. </summary>
-        /// <param name="value">
-        /// An array of workbook templates.
-        /// Serialized Name: WorkbookTemplatesListResult.value
-        /// </param>
+        /// <param name="value"> An array of workbook templates. </param>
         internal WorkbookTemplatesListResult(IReadOnlyList<WorkbookTemplateData> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// An array of workbook templates.
-        /// Serialized Name: WorkbookTemplatesListResult.value
-        /// </summary>
+        /// <summary> An array of workbook templates. </summary>
         public IReadOnlyList<WorkbookTemplateData> Value { get; }
     }
 }

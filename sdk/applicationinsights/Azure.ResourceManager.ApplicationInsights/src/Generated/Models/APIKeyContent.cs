@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// An Application Insights component API Key creation request definition.
-    /// Serialized Name: APIKeyRequest
-    /// </summary>
+    /// <summary> An Application Insights component API Key creation request definition. </summary>
     public partial class APIKeyContent
     {
         /// <summary> Initializes a new instance of APIKeyContent. </summary>
@@ -23,20 +20,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             LinkedWriteProperties = new ChangeTrackingList<string>();
         }
 
-        /// <summary>
-        /// The name of the API Key.
-        /// Serialized Name: APIKeyRequest.name
-        /// </summary>
+        /// <summary> The name of the API Key. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// The read access rights of this API Key.
-        /// Serialized Name: APIKeyRequest.linkedReadProperties
-        /// </summary>
+        /// <summary> The read access rights of this API Key. </summary>
         public IList<string> LinkedReadProperties { get; }
-        /// <summary>
-        /// The write access rights of this API Key.
-        /// Serialized Name: APIKeyRequest.linkedWriteProperties
-        /// </summary>
+        /// <summary> The write access rights of this API Key. </summary>
         public IList<string> LinkedWriteProperties { get; }
     }
 }

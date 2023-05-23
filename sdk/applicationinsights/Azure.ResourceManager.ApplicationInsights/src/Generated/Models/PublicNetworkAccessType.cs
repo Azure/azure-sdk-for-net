@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// The network access type for operating on the Application Insights Component. By default it is Enabled
-    /// Serialized Name: PublicNetworkAccessType
-    /// </summary>
+    /// <summary> The network access type for operating on the Application Insights Component. By default it is Enabled. </summary>
     public readonly partial struct PublicNetworkAccessType : IEquatable<PublicNetworkAccessType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enables connectivity to Application Insights through public DNS.
-        /// Serialized Name: PublicNetworkAccessType.Enabled
-        /// </summary>
+        /// <summary> Enables connectivity to Application Insights through public DNS. </summary>
         public static PublicNetworkAccessType Enabled { get; } = new PublicNetworkAccessType(EnabledValue);
-        /// <summary>
-        /// Disables public connectivity to Application Insights through public DNS.
-        /// Serialized Name: PublicNetworkAccessType.Disabled
-        /// </summary>
+        /// <summary> Disables public connectivity to Application Insights through public DNS. </summary>
         public static PublicNetworkAccessType Disabled { get; } = new PublicNetworkAccessType(DisabledValue);
         /// <summary> Determines if two <see cref="PublicNetworkAccessType"/> values are the same. </summary>
         public static bool operator ==(PublicNetworkAccessType left, PublicNetworkAccessType right) => left.Equals(right);

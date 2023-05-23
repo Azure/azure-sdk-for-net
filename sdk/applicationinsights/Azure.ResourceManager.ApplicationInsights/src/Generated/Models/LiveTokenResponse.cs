@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// The response to a live token query.
-    /// Serialized Name: LiveTokenResponse
-    /// </summary>
+    /// <summary> The response to a live token query. </summary>
     public partial class LiveTokenResponse
     {
         /// <summary> Initializes a new instance of LiveTokenResponse. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of LiveTokenResponse. </summary>
-        /// <param name="liveToken">
-        /// JWT token for accessing live metrics stream data.
-        /// Serialized Name: LiveTokenResponse.liveToken
-        /// </param>
+        /// <param name="liveToken"> JWT token for accessing live metrics stream data. </param>
         internal LiveTokenResponse(string liveToken)
         {
             LiveToken = liveToken;
         }
 
-        /// <summary>
-        /// JWT token for accessing live metrics stream data.
-        /// Serialized Name: LiveTokenResponse.liveToken
-        /// </summary>
+        /// <summary> JWT token for accessing live metrics stream data. </summary>
         public string LiveToken { get; }
     }
 }

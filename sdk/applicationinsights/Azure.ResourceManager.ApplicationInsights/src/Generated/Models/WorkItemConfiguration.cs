@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Work item configuration associated with an application insights resource.
-    /// Serialized Name: WorkItemConfiguration
-    /// </summary>
+    /// <summary> Work item configuration associated with an application insights resource. </summary>
     public partial class WorkItemConfiguration
     {
         /// <summary> Initializes a new instance of WorkItemConfiguration. </summary>
@@ -19,26 +16,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of WorkItemConfiguration. </summary>
-        /// <param name="connectorId">
-        /// Connector identifier where work item is created
-        /// Serialized Name: WorkItemConfiguration.ConnectorId
-        /// </param>
-        /// <param name="configDisplayName">
-        /// Configuration friendly name
-        /// Serialized Name: WorkItemConfiguration.ConfigDisplayName
-        /// </param>
-        /// <param name="isDefault">
-        /// Boolean value indicating whether configuration is default
-        /// Serialized Name: WorkItemConfiguration.IsDefault
-        /// </param>
-        /// <param name="id">
-        /// Unique Id for work item
-        /// Serialized Name: WorkItemConfiguration.Id
-        /// </param>
-        /// <param name="configProperties">
-        /// Serialized JSON object for detailed properties
-        /// Serialized Name: WorkItemConfiguration.ConfigProperties
-        /// </param>
+        /// <param name="connectorId"> Connector identifier where work item is created. </param>
+        /// <param name="configDisplayName"> Configuration friendly name. </param>
+        /// <param name="isDefault"> Boolean value indicating whether configuration is default. </param>
+        /// <param name="id"> Unique Id for work item. </param>
+        /// <param name="configProperties"> Serialized JSON object for detailed properties. </param>
         internal WorkItemConfiguration(string connectorId, string configDisplayName, bool? isDefault, string id, string configProperties)
         {
             ConnectorId = connectorId;
@@ -48,30 +30,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             ConfigProperties = configProperties;
         }
 
-        /// <summary>
-        /// Connector identifier where work item is created
-        /// Serialized Name: WorkItemConfiguration.ConnectorId
-        /// </summary>
+        /// <summary> Connector identifier where work item is created. </summary>
         public string ConnectorId { get; }
-        /// <summary>
-        /// Configuration friendly name
-        /// Serialized Name: WorkItemConfiguration.ConfigDisplayName
-        /// </summary>
+        /// <summary> Configuration friendly name. </summary>
         public string ConfigDisplayName { get; }
-        /// <summary>
-        /// Boolean value indicating whether configuration is default
-        /// Serialized Name: WorkItemConfiguration.IsDefault
-        /// </summary>
+        /// <summary> Boolean value indicating whether configuration is default. </summary>
         public bool? IsDefault { get; }
-        /// <summary>
-        /// Unique Id for work item
-        /// Serialized Name: WorkItemConfiguration.Id
-        /// </summary>
+        /// <summary> Unique Id for work item. </summary>
         public string Id { get; }
-        /// <summary>
-        /// Serialized JSON object for detailed properties
-        /// Serialized Name: WorkItemConfiguration.ConfigProperties
-        /// </summary>
+        /// <summary> Serialized JSON object for detailed properties. </summary>
         public string ConfigProperties { get; }
     }
 }

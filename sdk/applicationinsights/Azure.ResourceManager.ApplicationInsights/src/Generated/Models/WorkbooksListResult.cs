@@ -11,10 +11,7 @@ using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Workbook list result.
-    /// Serialized Name: WorkbooksListResult
-    /// </summary>
+    /// <summary> Workbook list result. </summary>
     internal partial class WorkbooksListResult
     {
         /// <summary> Initializes a new instance of WorkbooksListResult. </summary>
@@ -24,23 +21,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of WorkbooksListResult. </summary>
-        /// <param name="value">
-        /// An array of workbooks.
-        /// Serialized Name: WorkbooksListResult.value
-        /// </param>
-        /// <param name="nextLink"> Serialized Name: WorkbooksListResult.nextLink. </param>
+        /// <param name="value"> An array of workbooks. </param>
+        /// <param name="nextLink"></param>
         internal WorkbooksListResult(IReadOnlyList<WorkbookData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// An array of workbooks.
-        /// Serialized Name: WorkbooksListResult.value
-        /// </summary>
+        /// <summary> An array of workbooks. </summary>
         public IReadOnlyList<WorkbookData> Value { get; }
-        /// <summary> Serialized Name: WorkbooksListResult.nextLink. </summary>
+        /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }
 }

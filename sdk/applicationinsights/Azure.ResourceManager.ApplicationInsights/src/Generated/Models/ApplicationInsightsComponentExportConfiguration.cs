@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Properties that define a Continuous Export configuration.
-    /// Serialized Name: ApplicationInsightsComponentExportConfiguration
-    /// </summary>
+    /// <summary> Properties that define a Continuous Export configuration. </summary>
     public partial class ApplicationInsightsComponentExportConfiguration
     {
         /// <summary> Initializes a new instance of ApplicationInsightsComponentExportConfiguration. </summary>
@@ -19,82 +16,25 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of ApplicationInsightsComponentExportConfiguration. </summary>
-        /// <param name="exportId">
-        /// The unique ID of the export configuration inside an Application Insights component. It is auto generated when the Continuous Export configuration is created.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.ExportId
-        /// </param>
-        /// <param name="instrumentationKey">
-        /// The instrumentation key of the Application Insights component.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.InstrumentationKey
-        /// </param>
-        /// <param name="recordTypes">
-        /// This comma separated list of document types that will be exported. The possible values include &apos;Requests&apos;, &apos;Event&apos;, &apos;Exceptions&apos;, &apos;Metrics&apos;, &apos;PageViews&apos;, &apos;PageViewPerformance&apos;, &apos;Rdd&apos;, &apos;PerformanceCounters&apos;, &apos;Availability&apos;, &apos;Messages&apos;.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.RecordTypes
-        /// </param>
-        /// <param name="applicationName">
-        /// The name of the Application Insights component.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.ApplicationName
-        /// </param>
-        /// <param name="subscriptionId">
-        /// The subscription of the Application Insights component.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.SubscriptionId
-        /// </param>
-        /// <param name="resourceGroup">
-        /// The resource group of the Application Insights component.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.ResourceGroup
-        /// </param>
-        /// <param name="destinationStorageSubscriptionId">
-        /// The destination storage account subscription ID.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.DestinationStorageSubscriptionId
-        /// </param>
-        /// <param name="destinationStorageLocationId">
-        /// The destination account location ID.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.DestinationStorageLocationId
-        /// </param>
-        /// <param name="destinationAccountId">
-        /// The name of destination account.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.DestinationAccountId
-        /// </param>
-        /// <param name="destinationType">
-        /// The destination type.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.DestinationType
-        /// </param>
-        /// <param name="isUserEnabled">
-        /// This will be &apos;true&apos; if the Continuous Export configuration is enabled, otherwise it will be &apos;false&apos;.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.IsUserEnabled
-        /// </param>
-        /// <param name="lastUserUpdate">
-        /// Last time the Continuous Export configuration was updated.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.LastUserUpdate
-        /// </param>
-        /// <param name="notificationQueueEnabled">
-        /// Deprecated
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.NotificationQueueEnabled
-        /// </param>
-        /// <param name="exportStatus">
-        /// This indicates current Continuous Export configuration status. The possible values are &apos;Preparing&apos;, &apos;Success&apos;, &apos;Failure&apos;.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.ExportStatus
-        /// </param>
-        /// <param name="lastSuccessTime">
-        /// The last time data was successfully delivered to the destination storage container for this Continuous Export configuration.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.LastSuccessTime
-        /// </param>
-        /// <param name="lastGapTime">
-        /// The last time the Continuous Export configuration started failing.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.LastGapTime
-        /// </param>
-        /// <param name="permanentErrorReason">
-        /// This is the reason the Continuous Export configuration started failing. It can be &apos;AzureStorageNotFound&apos; or &apos;AzureStorageAccessDenied&apos;.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.PermanentErrorReason
-        /// </param>
-        /// <param name="storageName">
-        /// The name of the destination storage account.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.StorageName
-        /// </param>
-        /// <param name="containerName">
-        /// The name of the destination storage container.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.ContainerName
-        /// </param>
+        /// <param name="exportId"> The unique ID of the export configuration inside an Application Insights component. It is auto generated when the Continuous Export configuration is created. </param>
+        /// <param name="instrumentationKey"> The instrumentation key of the Application Insights component. </param>
+        /// <param name="recordTypes"> This comma separated list of document types that will be exported. The possible values include &apos;Requests&apos;, &apos;Event&apos;, &apos;Exceptions&apos;, &apos;Metrics&apos;, &apos;PageViews&apos;, &apos;PageViewPerformance&apos;, &apos;Rdd&apos;, &apos;PerformanceCounters&apos;, &apos;Availability&apos;, &apos;Messages&apos;. </param>
+        /// <param name="applicationName"> The name of the Application Insights component. </param>
+        /// <param name="subscriptionId"> The subscription of the Application Insights component. </param>
+        /// <param name="resourceGroup"> The resource group of the Application Insights component. </param>
+        /// <param name="destinationStorageSubscriptionId"> The destination storage account subscription ID. </param>
+        /// <param name="destinationStorageLocationId"> The destination account location ID. </param>
+        /// <param name="destinationAccountId"> The name of destination account. </param>
+        /// <param name="destinationType"> The destination type. </param>
+        /// <param name="isUserEnabled"> This will be &apos;true&apos; if the Continuous Export configuration is enabled, otherwise it will be &apos;false&apos;. </param>
+        /// <param name="lastUserUpdate"> Last time the Continuous Export configuration was updated. </param>
+        /// <param name="notificationQueueEnabled"> Deprecated. </param>
+        /// <param name="exportStatus"> This indicates current Continuous Export configuration status. The possible values are &apos;Preparing&apos;, &apos;Success&apos;, &apos;Failure&apos;. </param>
+        /// <param name="lastSuccessTime"> The last time data was successfully delivered to the destination storage container for this Continuous Export configuration. </param>
+        /// <param name="lastGapTime"> The last time the Continuous Export configuration started failing. </param>
+        /// <param name="permanentErrorReason"> This is the reason the Continuous Export configuration started failing. It can be &apos;AzureStorageNotFound&apos; or &apos;AzureStorageAccessDenied&apos;. </param>
+        /// <param name="storageName"> The name of the destination storage account. </param>
+        /// <param name="containerName"> The name of the destination storage container. </param>
         internal ApplicationInsightsComponentExportConfiguration(string exportId, string instrumentationKey, string recordTypes, string applicationName, string subscriptionId, string resourceGroup, string destinationStorageSubscriptionId, string destinationStorageLocationId, string destinationAccountId, string destinationType, string isUserEnabled, string lastUserUpdate, string notificationQueueEnabled, string exportStatus, string lastSuccessTime, string lastGapTime, string permanentErrorReason, string storageName, string containerName)
         {
             ExportId = exportId;
@@ -118,100 +58,43 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             ContainerName = containerName;
         }
 
-        /// <summary>
-        /// The unique ID of the export configuration inside an Application Insights component. It is auto generated when the Continuous Export configuration is created.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.ExportId
-        /// </summary>
+        /// <summary> The unique ID of the export configuration inside an Application Insights component. It is auto generated when the Continuous Export configuration is created. </summary>
         public string ExportId { get; }
-        /// <summary>
-        /// The instrumentation key of the Application Insights component.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.InstrumentationKey
-        /// </summary>
+        /// <summary> The instrumentation key of the Application Insights component. </summary>
         public string InstrumentationKey { get; }
-        /// <summary>
-        /// This comma separated list of document types that will be exported. The possible values include &apos;Requests&apos;, &apos;Event&apos;, &apos;Exceptions&apos;, &apos;Metrics&apos;, &apos;PageViews&apos;, &apos;PageViewPerformance&apos;, &apos;Rdd&apos;, &apos;PerformanceCounters&apos;, &apos;Availability&apos;, &apos;Messages&apos;.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.RecordTypes
-        /// </summary>
+        /// <summary> This comma separated list of document types that will be exported. The possible values include &apos;Requests&apos;, &apos;Event&apos;, &apos;Exceptions&apos;, &apos;Metrics&apos;, &apos;PageViews&apos;, &apos;PageViewPerformance&apos;, &apos;Rdd&apos;, &apos;PerformanceCounters&apos;, &apos;Availability&apos;, &apos;Messages&apos;. </summary>
         public string RecordTypes { get; }
-        /// <summary>
-        /// The name of the Application Insights component.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.ApplicationName
-        /// </summary>
+        /// <summary> The name of the Application Insights component. </summary>
         public string ApplicationName { get; }
-        /// <summary>
-        /// The subscription of the Application Insights component.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.SubscriptionId
-        /// </summary>
+        /// <summary> The subscription of the Application Insights component. </summary>
         public string SubscriptionId { get; }
-        /// <summary>
-        /// The resource group of the Application Insights component.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.ResourceGroup
-        /// </summary>
+        /// <summary> The resource group of the Application Insights component. </summary>
         public string ResourceGroup { get; }
-        /// <summary>
-        /// The destination storage account subscription ID.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.DestinationStorageSubscriptionId
-        /// </summary>
+        /// <summary> The destination storage account subscription ID. </summary>
         public string DestinationStorageSubscriptionId { get; }
-        /// <summary>
-        /// The destination account location ID.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.DestinationStorageLocationId
-        /// </summary>
+        /// <summary> The destination account location ID. </summary>
         public string DestinationStorageLocationId { get; }
-        /// <summary>
-        /// The name of destination account.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.DestinationAccountId
-        /// </summary>
+        /// <summary> The name of destination account. </summary>
         public string DestinationAccountId { get; }
-        /// <summary>
-        /// The destination type.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.DestinationType
-        /// </summary>
+        /// <summary> The destination type. </summary>
         public string DestinationType { get; }
-        /// <summary>
-        /// This will be &apos;true&apos; if the Continuous Export configuration is enabled, otherwise it will be &apos;false&apos;.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.IsUserEnabled
-        /// </summary>
+        /// <summary> This will be &apos;true&apos; if the Continuous Export configuration is enabled, otherwise it will be &apos;false&apos;. </summary>
         public string IsUserEnabled { get; }
-        /// <summary>
-        /// Last time the Continuous Export configuration was updated.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.LastUserUpdate
-        /// </summary>
+        /// <summary> Last time the Continuous Export configuration was updated. </summary>
         public string LastUserUpdate { get; }
-        /// <summary>
-        /// Deprecated
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.NotificationQueueEnabled
-        /// </summary>
+        /// <summary> Deprecated. </summary>
         public string NotificationQueueEnabled { get; }
-        /// <summary>
-        /// This indicates current Continuous Export configuration status. The possible values are &apos;Preparing&apos;, &apos;Success&apos;, &apos;Failure&apos;.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.ExportStatus
-        /// </summary>
+        /// <summary> This indicates current Continuous Export configuration status. The possible values are &apos;Preparing&apos;, &apos;Success&apos;, &apos;Failure&apos;. </summary>
         public string ExportStatus { get; }
-        /// <summary>
-        /// The last time data was successfully delivered to the destination storage container for this Continuous Export configuration.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.LastSuccessTime
-        /// </summary>
+        /// <summary> The last time data was successfully delivered to the destination storage container for this Continuous Export configuration. </summary>
         public string LastSuccessTime { get; }
-        /// <summary>
-        /// The last time the Continuous Export configuration started failing.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.LastGapTime
-        /// </summary>
+        /// <summary> The last time the Continuous Export configuration started failing. </summary>
         public string LastGapTime { get; }
-        /// <summary>
-        /// This is the reason the Continuous Export configuration started failing. It can be &apos;AzureStorageNotFound&apos; or &apos;AzureStorageAccessDenied&apos;.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.PermanentErrorReason
-        /// </summary>
+        /// <summary> This is the reason the Continuous Export configuration started failing. It can be &apos;AzureStorageNotFound&apos; or &apos;AzureStorageAccessDenied&apos;. </summary>
         public string PermanentErrorReason { get; }
-        /// <summary>
-        /// The name of the destination storage account.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.StorageName
-        /// </summary>
+        /// <summary> The name of the destination storage account. </summary>
         public string StorageName { get; }
-        /// <summary>
-        /// The name of the destination storage container.
-        /// Serialized Name: ApplicationInsightsComponentExportConfiguration.ContainerName
-        /// </summary>
+        /// <summary> The name of the destination storage container. </summary>
         public string ContainerName { get; }
     }
 }

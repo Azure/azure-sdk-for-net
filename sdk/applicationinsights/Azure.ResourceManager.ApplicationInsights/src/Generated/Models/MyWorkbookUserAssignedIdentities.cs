@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Customer Managed Identity
-    /// Serialized Name: MyWorkbookUserAssignedIdentities
-    /// </summary>
+    /// <summary> Customer Managed Identity. </summary>
     public partial class MyWorkbookUserAssignedIdentities
     {
         /// <summary> Initializes a new instance of MyWorkbookUserAssignedIdentities. </summary>
@@ -21,29 +18,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of MyWorkbookUserAssignedIdentities. </summary>
-        /// <param name="principalId">
-        /// The principal ID of resource identity.
-        /// Serialized Name: MyWorkbookUserAssignedIdentities.principalId
-        /// </param>
-        /// <param name="tenantId">
-        /// The tenant ID of resource.
-        /// Serialized Name: MyWorkbookUserAssignedIdentities.tenantId
-        /// </param>
+        /// <param name="principalId"> The principal ID of resource identity. </param>
+        /// <param name="tenantId"> The tenant ID of resource. </param>
         internal MyWorkbookUserAssignedIdentities(string principalId, Guid? tenantId)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
         }
 
-        /// <summary>
-        /// The principal ID of resource identity.
-        /// Serialized Name: MyWorkbookUserAssignedIdentities.principalId
-        /// </summary>
+        /// <summary> The principal ID of resource identity. </summary>
         public string PrincipalId { get; }
-        /// <summary>
-        /// The tenant ID of resource.
-        /// Serialized Name: MyWorkbookUserAssignedIdentities.tenantId
-        /// </summary>
+        /// <summary> The tenant ID of resource. </summary>
         public Guid? TenantId { get; }
     }
 }

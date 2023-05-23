@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Used by the Application Insights system to determine what kind of flow this component was created by. This is to be set to &apos;Bluefield&apos; when creating/updating a component via the REST API.
-    /// Serialized Name: FlowType
-    /// </summary>
+    /// <summary> Used by the Application Insights system to determine what kind of flow this component was created by. This is to be set to &apos;Bluefield&apos; when creating/updating a component via the REST API. </summary>
     public readonly partial struct FlowType : IEquatable<FlowType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         private const string BluefieldValue = "Bluefield";
 
-        /// <summary>
-        /// Bluefield
-        /// Serialized Name: FlowType.Bluefield
-        /// </summary>
+        /// <summary> Bluefield. </summary>
         public static FlowType Bluefield { get; } = new FlowType(BluefieldValue);
         /// <summary> Determines if two <see cref="FlowType"/> values are the same. </summary>
         public static bool operator ==(FlowType left, FlowType right) => left.Equals(right);

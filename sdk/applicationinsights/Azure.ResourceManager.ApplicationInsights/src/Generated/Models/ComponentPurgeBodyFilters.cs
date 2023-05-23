@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// User-defined filters to return data which will be purged from the table.
-    /// Serialized Name: ComponentPurgeBodyFilters
-    /// </summary>
+    /// <summary> User-defined filters to return data which will be purged from the table. </summary>
     public partial class ComponentPurgeBodyFilters
     {
         /// <summary> Initializes a new instance of ComponentPurgeBodyFilters. </summary>
@@ -20,19 +17,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         {
         }
 
-        /// <summary>
-        /// The column of the table over which the given query should run
-        /// Serialized Name: ComponentPurgeBodyFilters.column
-        /// </summary>
+        /// <summary> The column of the table over which the given query should run. </summary>
         public string Column { get; set; }
-        /// <summary>
-        /// A query operator to evaluate over the provided column and value(s). Supported operators are ==, =~, in, in~, &gt;, &gt;=, &lt;, &lt;=, between, and have the same behavior as they would in a KQL query.
-        /// Serialized Name: ComponentPurgeBodyFilters.operator
-        /// </summary>
+        /// <summary> A query operator to evaluate over the provided column and value(s). Supported operators are ==, =~, in, in~, &gt;, &gt;=, &lt;, &lt;=, between, and have the same behavior as they would in a KQL query. </summary>
         public string Operator { get; set; }
         /// <summary>
         /// the value for the operator to function over. This can be a number (e.g., &gt; 100), a string (timestamp &gt;= &apos;2017-09-01&apos;) or array of values.
-        /// Serialized Name: ComponentPurgeBodyFilters.value
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -62,10 +52,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// </para>
         /// </summary>
         public BinaryData Value { get; set; }
-        /// <summary>
-        /// When filtering over custom dimensions, this key will be used as the name of the custom dimension.
-        /// Serialized Name: ComponentPurgeBodyFilters.key
-        /// </summary>
+        /// <summary> When filtering over custom dimensions, this key will be used as the name of the custom dimension. </summary>
         public string Key { get; set; }
     }
 }

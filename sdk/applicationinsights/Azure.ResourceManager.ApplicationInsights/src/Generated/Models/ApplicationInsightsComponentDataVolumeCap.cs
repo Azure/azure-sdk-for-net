@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// An Application Insights component daily data volume cap
-    /// Serialized Name: ApplicationInsightsComponentDataVolumeCap
-    /// </summary>
+    /// <summary> An Application Insights component daily data volume cap. </summary>
     public partial class ApplicationInsightsComponentDataVolumeCap
     {
         /// <summary> Initializes a new instance of ApplicationInsightsComponentDataVolumeCap. </summary>
@@ -19,30 +16,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of ApplicationInsightsComponentDataVolumeCap. </summary>
-        /// <param name="cap">
-        /// Daily data volume cap in GB.
-        /// Serialized Name: ApplicationInsightsComponentDataVolumeCap.Cap
-        /// </param>
-        /// <param name="resetTime">
-        /// Daily data volume cap UTC reset hour.
-        /// Serialized Name: ApplicationInsightsComponentDataVolumeCap.ResetTime
-        /// </param>
-        /// <param name="warningThreshold">
-        /// Reserved, not used for now.
-        /// Serialized Name: ApplicationInsightsComponentDataVolumeCap.WarningThreshold
-        /// </param>
-        /// <param name="isStopSendNotificationWhenHitThreshold">
-        /// Reserved, not used for now.
-        /// Serialized Name: ApplicationInsightsComponentDataVolumeCap.StopSendNotificationWhenHitThreshold
-        /// </param>
-        /// <param name="isStopSendNotificationWhenHitCap">
-        /// Do not send a notification email when the daily data volume cap is met.
-        /// Serialized Name: ApplicationInsightsComponentDataVolumeCap.StopSendNotificationWhenHitCap
-        /// </param>
-        /// <param name="maxHistoryCap">
-        /// Maximum daily data volume cap that the user can set for this component.
-        /// Serialized Name: ApplicationInsightsComponentDataVolumeCap.MaxHistoryCap
-        /// </param>
+        /// <param name="cap"> Daily data volume cap in GB. </param>
+        /// <param name="resetTime"> Daily data volume cap UTC reset hour. </param>
+        /// <param name="warningThreshold"> Reserved, not used for now. </param>
+        /// <param name="isStopSendNotificationWhenHitThreshold"> Reserved, not used for now. </param>
+        /// <param name="isStopSendNotificationWhenHitCap"> Do not send a notification email when the daily data volume cap is met. </param>
+        /// <param name="maxHistoryCap"> Maximum daily data volume cap that the user can set for this component. </param>
         internal ApplicationInsightsComponentDataVolumeCap(float? cap, int? resetTime, int? warningThreshold, bool? isStopSendNotificationWhenHitThreshold, bool? isStopSendNotificationWhenHitCap, float? maxHistoryCap)
         {
             Cap = cap;
@@ -53,35 +32,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             MaxHistoryCap = maxHistoryCap;
         }
 
-        /// <summary>
-        /// Daily data volume cap in GB.
-        /// Serialized Name: ApplicationInsightsComponentDataVolumeCap.Cap
-        /// </summary>
+        /// <summary> Daily data volume cap in GB. </summary>
         public float? Cap { get; set; }
-        /// <summary>
-        /// Daily data volume cap UTC reset hour.
-        /// Serialized Name: ApplicationInsightsComponentDataVolumeCap.ResetTime
-        /// </summary>
+        /// <summary> Daily data volume cap UTC reset hour. </summary>
         public int? ResetTime { get; }
-        /// <summary>
-        /// Reserved, not used for now.
-        /// Serialized Name: ApplicationInsightsComponentDataVolumeCap.WarningThreshold
-        /// </summary>
+        /// <summary> Reserved, not used for now. </summary>
         public int? WarningThreshold { get; set; }
-        /// <summary>
-        /// Reserved, not used for now.
-        /// Serialized Name: ApplicationInsightsComponentDataVolumeCap.StopSendNotificationWhenHitThreshold
-        /// </summary>
+        /// <summary> Reserved, not used for now. </summary>
         public bool? IsStopSendNotificationWhenHitThreshold { get; set; }
-        /// <summary>
-        /// Do not send a notification email when the daily data volume cap is met.
-        /// Serialized Name: ApplicationInsightsComponentDataVolumeCap.StopSendNotificationWhenHitCap
-        /// </summary>
+        /// <summary> Do not send a notification email when the daily data volume cap is met. </summary>
         public bool? IsStopSendNotificationWhenHitCap { get; set; }
-        /// <summary>
-        /// Maximum daily data volume cap that the user can set for this component.
-        /// Serialized Name: ApplicationInsightsComponentDataVolumeCap.MaxHistoryCap
-        /// </summary>
+        /// <summary> Maximum daily data volume cap that the user can set for this component. </summary>
         public float? MaxHistoryCap { get; }
     }
 }

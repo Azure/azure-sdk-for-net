@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Properties that define an API key of an Application Insights Component.
-    /// Serialized Name: ApplicationInsightsComponentAPIKey
-    /// </summary>
+    /// <summary> Properties that define an API key of an Application Insights Component. </summary>
     public partial class ApplicationInsightsComponentAPIKey
     {
         /// <summary> Initializes a new instance of ApplicationInsightsComponentAPIKey. </summary>
@@ -24,30 +21,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of ApplicationInsightsComponentAPIKey. </summary>
-        /// <param name="id">
-        /// The unique ID of the API key inside an Application Insights component. It is auto generated when the API key is created.
-        /// Serialized Name: ApplicationInsightsComponentAPIKey.id
-        /// </param>
-        /// <param name="apiKey">
-        /// The API key value. It will be only return once when the API Key was created.
-        /// Serialized Name: ApplicationInsightsComponentAPIKey.apiKey
-        /// </param>
-        /// <param name="createdDate">
-        /// The create date of this API key.
-        /// Serialized Name: ApplicationInsightsComponentAPIKey.createdDate
-        /// </param>
-        /// <param name="name">
-        /// The name of the API key.
-        /// Serialized Name: ApplicationInsightsComponentAPIKey.name
-        /// </param>
-        /// <param name="linkedReadProperties">
-        /// The read access rights of this API Key.
-        /// Serialized Name: ApplicationInsightsComponentAPIKey.linkedReadProperties
-        /// </param>
-        /// <param name="linkedWriteProperties">
-        /// The write access rights of this API Key.
-        /// Serialized Name: ApplicationInsightsComponentAPIKey.linkedWriteProperties
-        /// </param>
+        /// <param name="id"> The unique ID of the API key inside an Application Insights component. It is auto generated when the API key is created. </param>
+        /// <param name="apiKey"> The API key value. It will be only return once when the API Key was created. </param>
+        /// <param name="createdDate"> The create date of this API key. </param>
+        /// <param name="name"> The name of the API key. </param>
+        /// <param name="linkedReadProperties"> The read access rights of this API Key. </param>
+        /// <param name="linkedWriteProperties"> The write access rights of this API Key. </param>
         internal ApplicationInsightsComponentAPIKey(string id, string apiKey, string createdDate, string name, IReadOnlyList<string> linkedReadProperties, IReadOnlyList<string> linkedWriteProperties)
         {
             Id = id;
@@ -58,35 +37,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             LinkedWriteProperties = linkedWriteProperties;
         }
 
-        /// <summary>
-        /// The unique ID of the API key inside an Application Insights component. It is auto generated when the API key is created.
-        /// Serialized Name: ApplicationInsightsComponentAPIKey.id
-        /// </summary>
+        /// <summary> The unique ID of the API key inside an Application Insights component. It is auto generated when the API key is created. </summary>
         public string Id { get; }
-        /// <summary>
-        /// The API key value. It will be only return once when the API Key was created.
-        /// Serialized Name: ApplicationInsightsComponentAPIKey.apiKey
-        /// </summary>
+        /// <summary> The API key value. It will be only return once when the API Key was created. </summary>
         public string ApiKey { get; }
-        /// <summary>
-        /// The create date of this API key.
-        /// Serialized Name: ApplicationInsightsComponentAPIKey.createdDate
-        /// </summary>
+        /// <summary> The create date of this API key. </summary>
         public string CreatedDate { get; }
-        /// <summary>
-        /// The name of the API key.
-        /// Serialized Name: ApplicationInsightsComponentAPIKey.name
-        /// </summary>
+        /// <summary> The name of the API key. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The read access rights of this API Key.
-        /// Serialized Name: ApplicationInsightsComponentAPIKey.linkedReadProperties
-        /// </summary>
+        /// <summary> The read access rights of this API Key. </summary>
         public IReadOnlyList<string> LinkedReadProperties { get; }
-        /// <summary>
-        /// The write access rights of this API Key.
-        /// Serialized Name: ApplicationInsightsComponentAPIKey.linkedWriteProperties
-        /// </summary>
+        /// <summary> The write access rights of this API Key. </summary>
         public IReadOnlyList<string> LinkedWriteProperties { get; }
     }
 }

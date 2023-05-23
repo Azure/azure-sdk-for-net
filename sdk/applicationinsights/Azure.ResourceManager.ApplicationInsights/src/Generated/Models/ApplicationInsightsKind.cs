@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// The kind of workbook. Choices are user and shared.
-    /// Serialized Name: Kind
-    /// </summary>
+    /// <summary> The kind of workbook. Choices are user and shared. </summary>
     public readonly partial struct ApplicationInsightsKind : IEquatable<ApplicationInsightsKind>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         private const string UserValue = "user";
         private const string SharedValue = "shared";
 
-        /// <summary>
-        /// user
-        /// Serialized Name: Kind.user
-        /// </summary>
+        /// <summary> user. </summary>
         public static ApplicationInsightsKind User { get; } = new ApplicationInsightsKind(UserValue);
-        /// <summary>
-        /// shared
-        /// Serialized Name: Kind.shared
-        /// </summary>
+        /// <summary> shared. </summary>
         public static ApplicationInsightsKind Shared { get; } = new ApplicationInsightsKind(SharedValue);
         /// <summary> Determines if two <see cref="ApplicationInsightsKind"/> values are the same. </summary>
         public static bool operator ==(ApplicationInsightsKind left, ApplicationInsightsKind right) => left.Equals(right);

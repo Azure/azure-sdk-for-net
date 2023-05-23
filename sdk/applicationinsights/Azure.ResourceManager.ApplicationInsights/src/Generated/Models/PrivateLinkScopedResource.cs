@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// The private link scope resource reference.
-    /// Serialized Name: PrivateLinkScopedResource
-    /// </summary>
+    /// <summary> The private link scope resource reference. </summary>
     public partial class PrivateLinkScopedResource
     {
         /// <summary> Initializes a new instance of PrivateLinkScopedResource. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of PrivateLinkScopedResource. </summary>
-        /// <param name="resourceId">
-        /// The full resource Id of the private link scope resource.
-        /// Serialized Name: PrivateLinkScopedResource.ResourceId
-        /// </param>
-        /// <param name="scopeId">
-        /// The private link scope unique Identifier.
-        /// Serialized Name: PrivateLinkScopedResource.ScopeId
-        /// </param>
+        /// <param name="resourceId"> The full resource Id of the private link scope resource. </param>
+        /// <param name="scopeId"> The private link scope unique Identifier. </param>
         internal PrivateLinkScopedResource(string resourceId, string scopeId)
         {
             ResourceId = resourceId;
             ScopeId = scopeId;
         }
 
-        /// <summary>
-        /// The full resource Id of the private link scope resource.
-        /// Serialized Name: PrivateLinkScopedResource.ResourceId
-        /// </summary>
+        /// <summary> The full resource Id of the private link scope resource. </summary>
         public string ResourceId { get; }
-        /// <summary>
-        /// The private link scope unique Identifier.
-        /// Serialized Name: PrivateLinkScopedResource.ScopeId
-        /// </summary>
+        /// <summary> The private link scope unique Identifier. </summary>
         public string ScopeId { get; }
     }
 }

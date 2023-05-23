@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// An Application Insights component Continuous Export configuration request definition.
-    /// Serialized Name: ApplicationInsightsComponentExportRequest
-    /// </summary>
+    /// <summary> An Application Insights component Continuous Export configuration request definition. </summary>
     public partial class ApplicationInsightsComponentExportRequest
     {
         /// <summary> Initializes a new instance of ApplicationInsightsComponentExportRequest. </summary>
@@ -20,50 +17,23 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         {
         }
 
-        /// <summary>
-        /// The document types to be exported, as comma separated values. Allowed values include &apos;Requests&apos;, &apos;Event&apos;, &apos;Exceptions&apos;, &apos;Metrics&apos;, &apos;PageViews&apos;, &apos;PageViewPerformance&apos;, &apos;Rdd&apos;, &apos;PerformanceCounters&apos;, &apos;Availability&apos;, &apos;Messages&apos;.
-        /// Serialized Name: ApplicationInsightsComponentExportRequest.RecordTypes
-        /// </summary>
+        /// <summary> The document types to be exported, as comma separated values. Allowed values include &apos;Requests&apos;, &apos;Event&apos;, &apos;Exceptions&apos;, &apos;Metrics&apos;, &apos;PageViews&apos;, &apos;PageViewPerformance&apos;, &apos;Rdd&apos;, &apos;PerformanceCounters&apos;, &apos;Availability&apos;, &apos;Messages&apos;. </summary>
         public string RecordTypes { get; set; }
-        /// <summary>
-        /// The Continuous Export destination type. This has to be &apos;Blob&apos;.
-        /// Serialized Name: ApplicationInsightsComponentExportRequest.DestinationType
-        /// </summary>
+        /// <summary> The Continuous Export destination type. This has to be &apos;Blob&apos;. </summary>
         public string DestinationType { get; set; }
-        /// <summary>
-        /// The SAS URL for the destination storage container. It must grant write permission.
-        /// Serialized Name: ApplicationInsightsComponentExportRequest.DestinationAddress
-        /// </summary>
+        /// <summary> The SAS URL for the destination storage container. It must grant write permission. </summary>
         public string DestinationAddress { get; set; }
-        /// <summary>
-        /// Set to &apos;true&apos; to create a Continuous Export configuration as enabled, otherwise set it to &apos;false&apos;.
-        /// Serialized Name: ApplicationInsightsComponentExportRequest.IsEnabled
-        /// </summary>
+        /// <summary> Set to &apos;true&apos; to create a Continuous Export configuration as enabled, otherwise set it to &apos;false&apos;. </summary>
         public string IsEnabled { get; set; }
-        /// <summary>
-        /// Deprecated
-        /// Serialized Name: ApplicationInsightsComponentExportRequest.NotificationQueueEnabled
-        /// </summary>
+        /// <summary> Deprecated. </summary>
         public string NotificationQueueEnabled { get; set; }
-        /// <summary>
-        /// Deprecated
-        /// Serialized Name: ApplicationInsightsComponentExportRequest.NotificationQueueUri
-        /// </summary>
+        /// <summary> Deprecated. </summary>
         public Uri NotificationQueueUri { get; set; }
-        /// <summary>
-        /// The subscription ID of the destination storage container.
-        /// Serialized Name: ApplicationInsightsComponentExportRequest.DestinationStorageSubscriptionId
-        /// </summary>
+        /// <summary> The subscription ID of the destination storage container. </summary>
         public string DestinationStorageSubscriptionId { get; set; }
-        /// <summary>
-        /// The location ID of the destination storage container.
-        /// Serialized Name: ApplicationInsightsComponentExportRequest.DestinationStorageLocationId
-        /// </summary>
+        /// <summary> The location ID of the destination storage container. </summary>
         public string DestinationStorageLocationId { get; set; }
-        /// <summary>
-        /// The name of destination storage account.
-        /// Serialized Name: ApplicationInsightsComponentExportRequest.DestinationAccountId
-        /// </summary>
+        /// <summary> The name of destination storage account. </summary>
         public string DestinationAccountId { get; set; }
     }
 }

@@ -12,17 +12,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Describes the list of API Keys of an Application Insights Component.
-    /// Serialized Name: ApplicationInsightsComponentAPIKeyListResult
-    /// </summary>
+    /// <summary> Describes the list of API Keys of an Application Insights Component. </summary>
     internal partial class ApplicationInsightsComponentAPIKeyListResult
     {
         /// <summary> Initializes a new instance of ApplicationInsightsComponentAPIKeyListResult. </summary>
-        /// <param name="value">
-        /// List of API Key definitions.
-        /// Serialized Name: ApplicationInsightsComponentAPIKeyListResult.value
-        /// </param>
+        /// <param name="value"> List of API Key definitions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ApplicationInsightsComponentAPIKeyListResult(IEnumerable<ApplicationInsightsComponentAPIKey> value)
         {
@@ -32,19 +26,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of ApplicationInsightsComponentAPIKeyListResult. </summary>
-        /// <param name="value">
-        /// List of API Key definitions.
-        /// Serialized Name: ApplicationInsightsComponentAPIKeyListResult.value
-        /// </param>
+        /// <param name="value"> List of API Key definitions. </param>
         internal ApplicationInsightsComponentAPIKeyListResult(IReadOnlyList<ApplicationInsightsComponentAPIKey> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// List of API Key definitions.
-        /// Serialized Name: ApplicationInsightsComponentAPIKeyListResult.value
-        /// </summary>
+        /// <summary> List of API Key definitions. </summary>
         public IReadOnlyList<ApplicationInsightsComponentAPIKey> Value { get; }
     }
 }

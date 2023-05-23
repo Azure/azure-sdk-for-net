@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// An Application Insights component feature capabilities
-    /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities
-    /// </summary>
+    /// <summary> An Application Insights component feature capabilities. </summary>
     public partial class ApplicationInsightsComponentFeatureCapabilities
     {
         /// <summary> Initializes a new instance of ApplicationInsightsComponentFeatureCapabilities. </summary>
@@ -19,70 +16,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of ApplicationInsightsComponentFeatureCapabilities. </summary>
-        /// <param name="supportExportData">
-        /// Whether allow to use continuous export feature.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.SupportExportData
-        /// </param>
-        /// <param name="burstThrottlePolicy">
-        /// Reserved, not used now.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.BurstThrottlePolicy
-        /// </param>
-        /// <param name="metadataClass">
-        /// Reserved, not used now.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.MetadataClass
-        /// </param>
-        /// <param name="liveStreamMetrics">
-        /// Reserved, not used now.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.LiveStreamMetrics
-        /// </param>
-        /// <param name="applicationMap">
-        /// Reserved, not used now.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.ApplicationMap
-        /// </param>
-        /// <param name="workItemIntegration">
-        /// Whether allow to use work item integration feature.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.WorkItemIntegration
-        /// </param>
-        /// <param name="powerBIIntegration">
-        /// Reserved, not used now.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.PowerBIIntegration
-        /// </param>
-        /// <param name="openSchema">
-        /// Reserved, not used now.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.OpenSchema
-        /// </param>
-        /// <param name="proactiveDetection">
-        /// Reserved, not used now.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.ProactiveDetection
-        /// </param>
-        /// <param name="analyticsIntegration">
-        /// Reserved, not used now.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.AnalyticsIntegration
-        /// </param>
-        /// <param name="multipleStepWebTest">
-        /// Whether allow to use multiple steps web test feature.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.MultipleStepWebTest
-        /// </param>
-        /// <param name="apiAccessLevel">
-        /// Reserved, not used now.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.ApiAccessLevel
-        /// </param>
-        /// <param name="trackingType">
-        /// The application insights component used tracking type.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.TrackingType
-        /// </param>
-        /// <param name="dailyCap">
-        /// Daily data volume cap in GB.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.DailyCap
-        /// </param>
-        /// <param name="dailyCapResetTime">
-        /// Daily data volume cap UTC reset hour.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.DailyCapResetTime
-        /// </param>
-        /// <param name="throttleRate">
-        /// Reserved, not used now.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.ThrottleRate
-        /// </param>
+        /// <param name="supportExportData"> Whether allow to use continuous export feature. </param>
+        /// <param name="burstThrottlePolicy"> Reserved, not used now. </param>
+        /// <param name="metadataClass"> Reserved, not used now. </param>
+        /// <param name="liveStreamMetrics"> Reserved, not used now. </param>
+        /// <param name="applicationMap"> Reserved, not used now. </param>
+        /// <param name="workItemIntegration"> Whether allow to use work item integration feature. </param>
+        /// <param name="powerBIIntegration"> Reserved, not used now. </param>
+        /// <param name="openSchema"> Reserved, not used now. </param>
+        /// <param name="proactiveDetection"> Reserved, not used now. </param>
+        /// <param name="analyticsIntegration"> Reserved, not used now. </param>
+        /// <param name="multipleStepWebTest"> Whether allow to use multiple steps web test feature. </param>
+        /// <param name="apiAccessLevel"> Reserved, not used now. </param>
+        /// <param name="trackingType"> The application insights component used tracking type. </param>
+        /// <param name="dailyCap"> Daily data volume cap in GB. </param>
+        /// <param name="dailyCapResetTime"> Daily data volume cap UTC reset hour. </param>
+        /// <param name="throttleRate"> Reserved, not used now. </param>
         internal ApplicationInsightsComponentFeatureCapabilities(bool? supportExportData, string burstThrottlePolicy, string metadataClass, bool? liveStreamMetrics, bool? applicationMap, bool? workItemIntegration, bool? powerBIIntegration, bool? openSchema, bool? proactiveDetection, bool? analyticsIntegration, bool? multipleStepWebTest, string apiAccessLevel, string trackingType, float? dailyCap, float? dailyCapResetTime, float? throttleRate)
         {
             SupportExportData = supportExportData;
@@ -103,85 +52,37 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             ThrottleRate = throttleRate;
         }
 
-        /// <summary>
-        /// Whether allow to use continuous export feature.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.SupportExportData
-        /// </summary>
+        /// <summary> Whether allow to use continuous export feature. </summary>
         public bool? SupportExportData { get; }
-        /// <summary>
-        /// Reserved, not used now.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.BurstThrottlePolicy
-        /// </summary>
+        /// <summary> Reserved, not used now. </summary>
         public string BurstThrottlePolicy { get; }
-        /// <summary>
-        /// Reserved, not used now.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.MetadataClass
-        /// </summary>
+        /// <summary> Reserved, not used now. </summary>
         public string MetadataClass { get; }
-        /// <summary>
-        /// Reserved, not used now.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.LiveStreamMetrics
-        /// </summary>
+        /// <summary> Reserved, not used now. </summary>
         public bool? LiveStreamMetrics { get; }
-        /// <summary>
-        /// Reserved, not used now.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.ApplicationMap
-        /// </summary>
+        /// <summary> Reserved, not used now. </summary>
         public bool? ApplicationMap { get; }
-        /// <summary>
-        /// Whether allow to use work item integration feature.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.WorkItemIntegration
-        /// </summary>
+        /// <summary> Whether allow to use work item integration feature. </summary>
         public bool? WorkItemIntegration { get; }
-        /// <summary>
-        /// Reserved, not used now.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.PowerBIIntegration
-        /// </summary>
+        /// <summary> Reserved, not used now. </summary>
         public bool? PowerBIIntegration { get; }
-        /// <summary>
-        /// Reserved, not used now.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.OpenSchema
-        /// </summary>
+        /// <summary> Reserved, not used now. </summary>
         public bool? OpenSchema { get; }
-        /// <summary>
-        /// Reserved, not used now.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.ProactiveDetection
-        /// </summary>
+        /// <summary> Reserved, not used now. </summary>
         public bool? ProactiveDetection { get; }
-        /// <summary>
-        /// Reserved, not used now.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.AnalyticsIntegration
-        /// </summary>
+        /// <summary> Reserved, not used now. </summary>
         public bool? AnalyticsIntegration { get; }
-        /// <summary>
-        /// Whether allow to use multiple steps web test feature.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.MultipleStepWebTest
-        /// </summary>
+        /// <summary> Whether allow to use multiple steps web test feature. </summary>
         public bool? MultipleStepWebTest { get; }
-        /// <summary>
-        /// Reserved, not used now.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.ApiAccessLevel
-        /// </summary>
+        /// <summary> Reserved, not used now. </summary>
         public string ApiAccessLevel { get; }
-        /// <summary>
-        /// The application insights component used tracking type.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.TrackingType
-        /// </summary>
+        /// <summary> The application insights component used tracking type. </summary>
         public string TrackingType { get; }
-        /// <summary>
-        /// Daily data volume cap in GB.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.DailyCap
-        /// </summary>
+        /// <summary> Daily data volume cap in GB. </summary>
         public float? DailyCap { get; }
-        /// <summary>
-        /// Daily data volume cap UTC reset hour.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.DailyCapResetTime
-        /// </summary>
+        /// <summary> Daily data volume cap UTC reset hour. </summary>
         public float? DailyCapResetTime { get; }
-        /// <summary>
-        /// Reserved, not used now.
-        /// Serialized Name: ApplicationInsightsComponentFeatureCapabilities.ThrottleRate
-        /// </summary>
+        /// <summary> Reserved, not used now. </summary>
         public float? ThrottleRate { get; }
     }
 }

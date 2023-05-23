@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// A set of properties that can be defined in the context of a specific item type. Each type may have its own properties.
-    /// Serialized Name: ApplicationInsightsComponentAnalyticsItemProperties
-    /// </summary>
+    /// <summary> A set of properties that can be defined in the context of a specific item type. Each type may have its own properties. </summary>
     internal partial class ApplicationInsightsComponentAnalyticsItemProperties
     {
         /// <summary> Initializes a new instance of ApplicationInsightsComponentAnalyticsItemProperties. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of ApplicationInsightsComponentAnalyticsItemProperties. </summary>
-        /// <param name="functionAlias">
-        /// A function alias, used when the type of the item is Function
-        /// Serialized Name: ApplicationInsightsComponentAnalyticsItemProperties.functionAlias
-        /// </param>
+        /// <param name="functionAlias"> A function alias, used when the type of the item is Function. </param>
         internal ApplicationInsightsComponentAnalyticsItemProperties(string functionAlias)
         {
             FunctionAlias = functionAlias;
         }
 
-        /// <summary>
-        /// A function alias, used when the type of the item is Function
-        /// Serialized Name: ApplicationInsightsComponentAnalyticsItemProperties.functionAlias
-        /// </summary>
+        /// <summary> A function alias, used when the type of the item is Function. </summary>
         public string FunctionAlias { get; set; }
     }
 }

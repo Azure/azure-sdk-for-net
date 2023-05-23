@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// The collection of validation rule properties
-    /// Serialized Name: WebTestPropertiesValidationRules
-    /// </summary>
+    /// <summary> The collection of validation rule properties. </summary>
     public partial class WebTestPropertiesValidationRules
     {
         /// <summary> Initializes a new instance of WebTestPropertiesValidationRules. </summary>
@@ -19,26 +16,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of WebTestPropertiesValidationRules. </summary>
-        /// <param name="contentValidation">
-        /// The collection of content validation properties
-        /// Serialized Name: WebTestPropertiesValidationRules.ContentValidation
-        /// </param>
-        /// <param name="checkSsl">
-        /// Checks to see if the SSL cert is still valid.
-        /// Serialized Name: WebTestPropertiesValidationRules.SSLCheck
-        /// </param>
-        /// <param name="sslCertRemainingLifetimeCheck">
-        /// A number of days to check still remain before the the existing SSL cert expires.  Value must be positive and the SSLCheck must be set to true.
-        /// Serialized Name: WebTestPropertiesValidationRules.SSLCertRemainingLifetimeCheck
-        /// </param>
-        /// <param name="expectedHttpStatusCode">
-        /// Validate that the WebTest returns the http status code provided.
-        /// Serialized Name: WebTestPropertiesValidationRules.ExpectedHttpStatusCode
-        /// </param>
-        /// <param name="ignoreHttpStatusCode">
-        /// When set, validation will ignore the status code.
-        /// Serialized Name: WebTestPropertiesValidationRules.IgnoreHttpStatusCode
-        /// </param>
+        /// <param name="contentValidation"> The collection of content validation properties. </param>
+        /// <param name="checkSsl"> Checks to see if the SSL cert is still valid. </param>
+        /// <param name="sslCertRemainingLifetimeCheck"> A number of days to check still remain before the the existing SSL cert expires.  Value must be positive and the SSLCheck must be set to true. </param>
+        /// <param name="expectedHttpStatusCode"> Validate that the WebTest returns the http status code provided. </param>
+        /// <param name="ignoreHttpStatusCode"> When set, validation will ignore the status code. </param>
         internal WebTestPropertiesValidationRules(WebTestPropertiesValidationRulesContentValidation contentValidation, bool? checkSsl, int? sslCertRemainingLifetimeCheck, int? expectedHttpStatusCode, bool? ignoreHttpStatusCode)
         {
             ContentValidation = contentValidation;
@@ -48,30 +30,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             IgnoreHttpStatusCode = ignoreHttpStatusCode;
         }
 
-        /// <summary>
-        /// The collection of content validation properties
-        /// Serialized Name: WebTestPropertiesValidationRules.ContentValidation
-        /// </summary>
+        /// <summary> The collection of content validation properties. </summary>
         public WebTestPropertiesValidationRulesContentValidation ContentValidation { get; set; }
-        /// <summary>
-        /// Checks to see if the SSL cert is still valid.
-        /// Serialized Name: WebTestPropertiesValidationRules.SSLCheck
-        /// </summary>
+        /// <summary> Checks to see if the SSL cert is still valid. </summary>
         public bool? CheckSsl { get; set; }
-        /// <summary>
-        /// A number of days to check still remain before the the existing SSL cert expires.  Value must be positive and the SSLCheck must be set to true.
-        /// Serialized Name: WebTestPropertiesValidationRules.SSLCertRemainingLifetimeCheck
-        /// </summary>
+        /// <summary> A number of days to check still remain before the the existing SSL cert expires.  Value must be positive and the SSLCheck must be set to true. </summary>
         public int? SSLCertRemainingLifetimeCheck { get; set; }
-        /// <summary>
-        /// Validate that the WebTest returns the http status code provided.
-        /// Serialized Name: WebTestPropertiesValidationRules.ExpectedHttpStatusCode
-        /// </summary>
+        /// <summary> Validate that the WebTest returns the http status code provided. </summary>
         public int? ExpectedHttpStatusCode { get; set; }
-        /// <summary>
-        /// When set, validation will ignore the status code.
-        /// Serialized Name: WebTestPropertiesValidationRules.IgnoreHttpStatusCode
-        /// </summary>
+        /// <summary> When set, validation will ignore the status code. </summary>
         public bool? IgnoreHttpStatusCode { get; set; }
     }
 }

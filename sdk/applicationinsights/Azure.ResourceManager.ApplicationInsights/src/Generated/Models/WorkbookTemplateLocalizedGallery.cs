@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Localized template data and gallery information.
-    /// Serialized Name: WorkbookTemplateLocalizedGallery
-    /// </summary>
+    /// <summary> Localized template data and gallery information. </summary>
     public partial class WorkbookTemplateLocalizedGallery
     {
         /// <summary> Initializes a new instance of WorkbookTemplateLocalizedGallery. </summary>
@@ -24,14 +21,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of WorkbookTemplateLocalizedGallery. </summary>
-        /// <param name="templateData">
-        /// Valid JSON object containing workbook template payload.
-        /// Serialized Name: WorkbookTemplateLocalizedGallery.templateData
-        /// </param>
-        /// <param name="galleries">
-        /// Workbook galleries supported by the template.
-        /// Serialized Name: WorkbookTemplateLocalizedGallery.galleries
-        /// </param>
+        /// <param name="templateData"> Valid JSON object containing workbook template payload. </param>
+        /// <param name="galleries"> Workbook galleries supported by the template. </param>
         internal WorkbookTemplateLocalizedGallery(BinaryData templateData, IList<WorkbookTemplateGallery> galleries)
         {
             TemplateData = templateData;
@@ -40,7 +31,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary>
         /// Valid JSON object containing workbook template payload.
-        /// Serialized Name: WorkbookTemplateLocalizedGallery.templateData
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -70,10 +60,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// </para>
         /// </summary>
         public BinaryData TemplateData { get; set; }
-        /// <summary>
-        /// Workbook galleries supported by the template.
-        /// Serialized Name: WorkbookTemplateLocalizedGallery.galleries
-        /// </summary>
+        /// <summary> Workbook galleries supported by the template. </summary>
         public IList<WorkbookTemplateGallery> Galleries { get; }
     }
 }

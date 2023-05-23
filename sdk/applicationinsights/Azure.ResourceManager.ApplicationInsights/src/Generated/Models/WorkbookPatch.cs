@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// The parameters that can be provided when updating workbook properties properties.
-    /// Serialized Name: WorkbookUpdateParameters
-    /// </summary>
+    /// <summary> The parameters that can be provided when updating workbook properties properties. </summary>
     public partial class WorkbookPatch
     {
         /// <summary> Initializes a new instance of WorkbookPatch. </summary>
@@ -23,45 +20,21 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             TagsPropertiesTags = new ChangeTrackingList<string>();
         }
 
-        /// <summary>
-        /// The kind of workbook. Only valid value is shared.
-        /// Serialized Name: WorkbookUpdateParameters.kind
-        /// </summary>
+        /// <summary> The kind of workbook. Only valid value is shared. </summary>
         public WorkbookUpdateSharedTypeKind? Kind { get; set; }
-        /// <summary>
-        /// Resource tags.
-        /// Serialized Name: WorkbookUpdateParameters.tags
-        /// </summary>
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// The user-defined name (display name) of the workbook.
-        /// Serialized Name: WorkbookUpdateParameters.properties.displayName
-        /// </summary>
+        /// <summary> The user-defined name (display name) of the workbook. </summary>
         public string DisplayName { get; set; }
-        /// <summary>
-        /// Configuration of this particular workbook. Configuration data is a string containing valid JSON
-        /// Serialized Name: WorkbookUpdateParameters.properties.serializedData
-        /// </summary>
+        /// <summary> Configuration of this particular workbook. Configuration data is a string containing valid JSON. </summary>
         public string SerializedData { get; set; }
-        /// <summary>
-        /// Workbook category, as defined by the user at creation time.
-        /// Serialized Name: WorkbookUpdateParameters.properties.category
-        /// </summary>
+        /// <summary> Workbook category, as defined by the user at creation time. </summary>
         public string Category { get; set; }
-        /// <summary>
-        /// A list of 0 or more tags that are associated with this workbook definition
-        /// Serialized Name: WorkbookUpdateParameters.properties.tags
-        /// </summary>
+        /// <summary> A list of 0 or more tags that are associated with this workbook definition. </summary>
         public IList<string> TagsPropertiesTags { get; }
-        /// <summary>
-        /// The description of the workbook.
-        /// Serialized Name: WorkbookUpdateParameters.properties.description
-        /// </summary>
+        /// <summary> The description of the workbook. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// The unique revision id for this workbook definition
-        /// Serialized Name: WorkbookUpdateParameters.properties.revision
-        /// </summary>
+        /// <summary> The unique revision id for this workbook definition. </summary>
         public string Revision { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Work item configuration list result.
-    /// Serialized Name: WorkItemConfigurationsListResult
-    /// </summary>
+    /// <summary> Work item configuration list result. </summary>
     internal partial class WorkItemConfigurationsListResult
     {
         /// <summary> Initializes a new instance of WorkItemConfigurationsListResult. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of WorkItemConfigurationsListResult. </summary>
-        /// <param name="value">
-        /// An array of work item configurations.
-        /// Serialized Name: WorkItemConfigurationsListResult.value
-        /// </param>
+        /// <param name="value"> An array of work item configurations. </param>
         internal WorkItemConfigurationsListResult(IReadOnlyList<WorkItemConfiguration> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// An array of work item configurations.
-        /// Serialized Name: WorkItemConfigurationsListResult.value
-        /// </summary>
+        /// <summary> An array of work item configurations. </summary>
         public IReadOnlyList<WorkItemConfiguration> Value { get; }
     }
 }

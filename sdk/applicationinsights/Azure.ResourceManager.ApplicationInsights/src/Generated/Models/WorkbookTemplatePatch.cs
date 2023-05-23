@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// The parameters that can be provided when updating workbook template.
-    /// Serialized Name: WorkbookTemplateUpdateParameters
-    /// </summary>
+    /// <summary> The parameters that can be provided when updating workbook template. </summary>
     public partial class WorkbookTemplatePatch
     {
         /// <summary> Initializes a new instance of WorkbookTemplatePatch. </summary>
@@ -25,24 +22,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Localized = new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>();
         }
 
-        /// <summary>
-        /// Resource tags
-        /// Serialized Name: WorkbookTemplateUpdateParameters.tags
-        /// </summary>
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// Priority of the template. Determines which template to open when a workbook gallery is opened in viewer mode.
-        /// Serialized Name: WorkbookTemplateUpdateParameters.properties.priority
-        /// </summary>
+        /// <summary> Priority of the template. Determines which template to open when a workbook gallery is opened in viewer mode. </summary>
         public int? Priority { get; set; }
-        /// <summary>
-        /// Information about the author of the workbook template.
-        /// Serialized Name: WorkbookTemplateUpdateParameters.properties.author
-        /// </summary>
+        /// <summary> Information about the author of the workbook template. </summary>
         public string Author { get; set; }
         /// <summary>
         /// Valid JSON object containing workbook template payload.
-        /// Serialized Name: WorkbookTemplateUpdateParameters.properties.templateData
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -72,15 +59,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// </para>
         /// </summary>
         public BinaryData TemplateData { get; set; }
-        /// <summary>
-        /// Workbook galleries supported by the template.
-        /// Serialized Name: WorkbookTemplateUpdateParameters.properties.galleries
-        /// </summary>
+        /// <summary> Workbook galleries supported by the template. </summary>
         public IList<WorkbookTemplateGallery> Galleries { get; }
-        /// <summary>
-        /// Key value pair of localized gallery. Each key is the locale code of languages supported by the Azure portal.
-        /// Serialized Name: WorkbookTemplateUpdateParameters.properties.localized
-        /// </summary>
+        /// <summary> Key value pair of localized gallery. Each key is the locale code of languages supported by the Azure portal. </summary>
         public IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> Localized { get; }
     }
 }

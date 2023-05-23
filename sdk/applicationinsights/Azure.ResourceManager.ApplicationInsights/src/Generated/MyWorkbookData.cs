@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// <summary>
     /// A class representing the MyWorkbook data model.
     /// An Application Insights private workbook definition.
-    /// Serialized Name: MyWorkbook
     /// </summary>
     public partial class MyWorkbookData : Models.MyWorkbookResource
     {
@@ -26,74 +25,23 @@ namespace Azure.ResourceManager.ApplicationInsights
         }
 
         /// <summary> Initializes a new instance of MyWorkbookData. </summary>
-        /// <param name="identity">
-        /// Identity used for BYOS
-        /// Serialized Name: MyWorkbookResource.identity
-        /// </param>
-        /// <param name="id">
-        /// Azure resource Id
-        /// Serialized Name: MyWorkbookResource.id
-        /// </param>
-        /// <param name="name">
-        /// Azure resource name
-        /// Serialized Name: MyWorkbookResource.name
-        /// </param>
-        /// <param name="resourceType">
-        /// Azure resource type
-        /// Serialized Name: MyWorkbookResource.type
-        /// </param>
-        /// <param name="location">
-        /// Resource location
-        /// Serialized Name: MyWorkbookResource.location
-        /// </param>
-        /// <param name="tags">
-        /// Resource tags
-        /// Serialized Name: MyWorkbookResource.tags
-        /// </param>
-        /// <param name="etag">
-        /// Resource etag
-        /// Serialized Name: MyWorkbookResource.etag
-        /// </param>
-        /// <param name="kind">
-        /// The kind of workbook. Choices are user and shared.
-        /// Serialized Name: MyWorkbook.kind
-        /// </param>
-        /// <param name="systemData">
-        /// Metadata pertaining to creation and last modification of the resource.
-        /// Serialized Name: MyWorkbook.systemData
-        /// </param>
-        /// <param name="displayName">
-        /// The user-defined name of the private workbook.
-        /// Serialized Name: MyWorkbook.properties.displayName
-        /// </param>
-        /// <param name="serializedData">
-        /// Configuration of this particular private workbook. Configuration data is a string containing valid JSON
-        /// Serialized Name: MyWorkbook.properties.serializedData
-        /// </param>
-        /// <param name="version">
-        /// This instance&apos;s version of the data model. This can change as new features are added that can be marked private workbook.
-        /// Serialized Name: MyWorkbook.properties.version
-        /// </param>
-        /// <param name="timeModified">
-        /// Date and time in UTC of the last modification that was made to this private workbook definition.
-        /// Serialized Name: MyWorkbook.properties.timeModified
-        /// </param>
-        /// <param name="category">
-        /// Workbook category, as defined by the user at creation time.
-        /// Serialized Name: MyWorkbook.properties.category
-        /// </param>
-        /// <param name="userId">
-        /// Unique user id of the specific user that owns this private workbook.
-        /// Serialized Name: MyWorkbook.properties.userId
-        /// </param>
-        /// <param name="sourceId">
-        /// Optional resourceId for a source resource.
-        /// Serialized Name: MyWorkbook.properties.sourceId
-        /// </param>
-        /// <param name="storageUri">
-        /// BYOS Storage Account URI
-        /// Serialized Name: MyWorkbook.properties.storageUri
-        /// </param>
+        /// <param name="identity"> Identity used for BYOS. </param>
+        /// <param name="id"> Azure resource Id. </param>
+        /// <param name="name"> Azure resource name. </param>
+        /// <param name="resourceType"> Azure resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="etag"> Resource etag. </param>
+        /// <param name="kind"> The kind of workbook. Choices are user and shared. </param>
+        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        /// <param name="displayName"> The user-defined name of the private workbook. </param>
+        /// <param name="serializedData"> Configuration of this particular private workbook. Configuration data is a string containing valid JSON. </param>
+        /// <param name="version"> This instance&apos;s version of the data model. This can change as new features are added that can be marked private workbook. </param>
+        /// <param name="timeModified"> Date and time in UTC of the last modification that was made to this private workbook definition. </param>
+        /// <param name="category"> Workbook category, as defined by the user at creation time. </param>
+        /// <param name="userId"> Unique user id of the specific user that owns this private workbook. </param>
+        /// <param name="sourceId"> Optional resourceId for a source resource. </param>
+        /// <param name="storageUri"> BYOS Storage Account URI. </param>
         internal MyWorkbookData(MyWorkbookManagedIdentity identity, string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, string> etag, ApplicationInsightsKind? kind, SystemData systemData, string displayName, string serializedData, string version, string timeModified, string category, string userId, string sourceId, Uri storageUri) : base(identity, id, name, resourceType, location, tags, etag)
         {
             Kind = kind;
@@ -108,55 +56,25 @@ namespace Azure.ResourceManager.ApplicationInsights
             StorageUri = storageUri;
         }
 
-        /// <summary>
-        /// The kind of workbook. Choices are user and shared.
-        /// Serialized Name: MyWorkbook.kind
-        /// </summary>
+        /// <summary> The kind of workbook. Choices are user and shared. </summary>
         public ApplicationInsightsKind? Kind { get; set; }
-        /// <summary>
-        /// Metadata pertaining to creation and last modification of the resource.
-        /// Serialized Name: MyWorkbook.systemData
-        /// </summary>
+        /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
         public SystemData SystemData { get; }
-        /// <summary>
-        /// The user-defined name of the private workbook.
-        /// Serialized Name: MyWorkbook.properties.displayName
-        /// </summary>
+        /// <summary> The user-defined name of the private workbook. </summary>
         public string DisplayName { get; set; }
-        /// <summary>
-        /// Configuration of this particular private workbook. Configuration data is a string containing valid JSON
-        /// Serialized Name: MyWorkbook.properties.serializedData
-        /// </summary>
+        /// <summary> Configuration of this particular private workbook. Configuration data is a string containing valid JSON. </summary>
         public string SerializedData { get; set; }
-        /// <summary>
-        /// This instance&apos;s version of the data model. This can change as new features are added that can be marked private workbook.
-        /// Serialized Name: MyWorkbook.properties.version
-        /// </summary>
+        /// <summary> This instance&apos;s version of the data model. This can change as new features are added that can be marked private workbook. </summary>
         public string Version { get; set; }
-        /// <summary>
-        /// Date and time in UTC of the last modification that was made to this private workbook definition.
-        /// Serialized Name: MyWorkbook.properties.timeModified
-        /// </summary>
+        /// <summary> Date and time in UTC of the last modification that was made to this private workbook definition. </summary>
         public string TimeModified { get; }
-        /// <summary>
-        /// Workbook category, as defined by the user at creation time.
-        /// Serialized Name: MyWorkbook.properties.category
-        /// </summary>
+        /// <summary> Workbook category, as defined by the user at creation time. </summary>
         public string Category { get; set; }
-        /// <summary>
-        /// Unique user id of the specific user that owns this private workbook.
-        /// Serialized Name: MyWorkbook.properties.userId
-        /// </summary>
+        /// <summary> Unique user id of the specific user that owns this private workbook. </summary>
         public string UserId { get; }
-        /// <summary>
-        /// Optional resourceId for a source resource.
-        /// Serialized Name: MyWorkbook.properties.sourceId
-        /// </summary>
+        /// <summary> Optional resourceId for a source resource. </summary>
         public string SourceId { get; set; }
-        /// <summary>
-        /// BYOS Storage Account URI
-        /// Serialized Name: MyWorkbook.properties.storageUri
-        /// </summary>
+        /// <summary> BYOS Storage Account URI. </summary>
         public Uri StorageUri { get; set; }
     }
 }

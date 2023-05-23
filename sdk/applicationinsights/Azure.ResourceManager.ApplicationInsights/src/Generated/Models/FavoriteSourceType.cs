@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// The FavoriteSourceType.
-    /// Serialized Name: FavoriteSourceType
-    /// </summary>
+    /// <summary> The FavoriteSourceType. </summary>
     public readonly partial struct FavoriteSourceType : IEquatable<FavoriteSourceType>
     {
         private readonly string _value;
@@ -34,45 +31,21 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         private const string ImpactValue = "impact";
         private const string SegmentationValue = "segmentation";
 
-        /// <summary>
-        /// retention
-        /// Serialized Name: FavoriteSourceType.retention
-        /// </summary>
+        /// <summary> retention. </summary>
         public static FavoriteSourceType Retention { get; } = new FavoriteSourceType(RetentionValue);
-        /// <summary>
-        /// notebook
-        /// Serialized Name: FavoriteSourceType.notebook
-        /// </summary>
+        /// <summary> notebook. </summary>
         public static FavoriteSourceType Notebook { get; } = new FavoriteSourceType(NotebookValue);
-        /// <summary>
-        /// sessions
-        /// Serialized Name: FavoriteSourceType.sessions
-        /// </summary>
+        /// <summary> sessions. </summary>
         public static FavoriteSourceType Sessions { get; } = new FavoriteSourceType(SessionsValue);
-        /// <summary>
-        /// events
-        /// Serialized Name: FavoriteSourceType.events
-        /// </summary>
+        /// <summary> events. </summary>
         public static FavoriteSourceType Events { get; } = new FavoriteSourceType(EventsValue);
-        /// <summary>
-        /// userflows
-        /// Serialized Name: FavoriteSourceType.userflows
-        /// </summary>
+        /// <summary> userflows. </summary>
         public static FavoriteSourceType Userflows { get; } = new FavoriteSourceType(UserflowsValue);
-        /// <summary>
-        /// funnel
-        /// Serialized Name: FavoriteSourceType.funnel
-        /// </summary>
+        /// <summary> funnel. </summary>
         public static FavoriteSourceType Funnel { get; } = new FavoriteSourceType(FunnelValue);
-        /// <summary>
-        /// impact
-        /// Serialized Name: FavoriteSourceType.impact
-        /// </summary>
+        /// <summary> impact. </summary>
         public static FavoriteSourceType Impact { get; } = new FavoriteSourceType(ImpactValue);
-        /// <summary>
-        /// segmentation
-        /// Serialized Name: FavoriteSourceType.segmentation
-        /// </summary>
+        /// <summary> segmentation. </summary>
         public static FavoriteSourceType Segmentation { get; } = new FavoriteSourceType(SegmentationValue);
         /// <summary> Determines if two <see cref="FavoriteSourceType"/> values are the same. </summary>
         public static bool operator ==(FavoriteSourceType left, FavoriteSourceType right) => left.Equals(right);

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// An XML configuration specification for a WebTest.
-    /// Serialized Name: WebTestPropertiesConfiguration
-    /// </summary>
+    /// <summary> An XML configuration specification for a WebTest. </summary>
     internal partial class WebTestPropertiesConfiguration
     {
         /// <summary> Initializes a new instance of WebTestPropertiesConfiguration. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of WebTestPropertiesConfiguration. </summary>
-        /// <param name="webTest">
-        /// The XML specification of a WebTest to run against an application.
-        /// Serialized Name: WebTestPropertiesConfiguration.WebTest
-        /// </param>
+        /// <param name="webTest"> The XML specification of a WebTest to run against an application. </param>
         internal WebTestPropertiesConfiguration(string webTest)
         {
             WebTest = webTest;
         }
 
-        /// <summary>
-        /// The XML specification of a WebTest to run against an application.
-        /// Serialized Name: WebTestPropertiesConfiguration.WebTest
-        /// </summary>
+        /// <summary> The XML specification of a WebTest to run against an application. </summary>
         public string WebTest { get; set; }
     }
 }

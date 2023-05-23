@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Gallery information for a workbook template.
-    /// Serialized Name: WorkbookTemplateGallery
-    /// </summary>
+    /// <summary> Gallery information for a workbook template. </summary>
     public partial class WorkbookTemplateGallery
     {
         /// <summary> Initializes a new instance of WorkbookTemplateGallery. </summary>
@@ -19,26 +16,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of WorkbookTemplateGallery. </summary>
-        /// <param name="name">
-        /// Name of the workbook template in the gallery.
-        /// Serialized Name: WorkbookTemplateGallery.name
-        /// </param>
-        /// <param name="category">
-        /// Category for the gallery.
-        /// Serialized Name: WorkbookTemplateGallery.category
-        /// </param>
-        /// <param name="workbookTemplateGalleryType">
-        /// Type of workbook supported by the workbook template.
-        /// Serialized Name: WorkbookTemplateGallery.type
-        /// </param>
-        /// <param name="order">
-        /// Order of the template within the gallery.
-        /// Serialized Name: WorkbookTemplateGallery.order
-        /// </param>
-        /// <param name="resourceType">
-        /// Azure resource type supported by the gallery.
-        /// Serialized Name: WorkbookTemplateGallery.resourceType
-        /// </param>
+        /// <param name="name"> Name of the workbook template in the gallery. </param>
+        /// <param name="category"> Category for the gallery. </param>
+        /// <param name="workbookTemplateGalleryType"> Type of workbook supported by the workbook template. </param>
+        /// <param name="order"> Order of the template within the gallery. </param>
+        /// <param name="resourceType"> Azure resource type supported by the gallery. </param>
         internal WorkbookTemplateGallery(string name, string category, string workbookTemplateGalleryType, int? order, string resourceType)
         {
             Name = name;
@@ -48,30 +30,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             ResourceType = resourceType;
         }
 
-        /// <summary>
-        /// Name of the workbook template in the gallery.
-        /// Serialized Name: WorkbookTemplateGallery.name
-        /// </summary>
+        /// <summary> Name of the workbook template in the gallery. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Category for the gallery.
-        /// Serialized Name: WorkbookTemplateGallery.category
-        /// </summary>
+        /// <summary> Category for the gallery. </summary>
         public string Category { get; set; }
-        /// <summary>
-        /// Type of workbook supported by the workbook template.
-        /// Serialized Name: WorkbookTemplateGallery.type
-        /// </summary>
+        /// <summary> Type of workbook supported by the workbook template. </summary>
         public string WorkbookTemplateGalleryType { get; set; }
-        /// <summary>
-        /// Order of the template within the gallery.
-        /// Serialized Name: WorkbookTemplateGallery.order
-        /// </summary>
+        /// <summary> Order of the template within the gallery. </summary>
         public int? Order { get; set; }
-        /// <summary>
-        /// Azure resource type supported by the gallery.
-        /// Serialized Name: WorkbookTemplateGallery.resourceType
-        /// </summary>
+        /// <summary> Azure resource type supported by the gallery. </summary>
         public string ResourceType { get; set; }
     }
 }

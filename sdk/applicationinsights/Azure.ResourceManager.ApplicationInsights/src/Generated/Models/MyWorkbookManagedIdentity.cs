@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Customer Managed Identity
-    /// Serialized Name: MyWorkbookManagedIdentity
-    /// </summary>
+    /// <summary> Customer Managed Identity. </summary>
     public partial class MyWorkbookManagedIdentity
     {
         /// <summary> Initializes a new instance of MyWorkbookManagedIdentity. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of MyWorkbookManagedIdentity. </summary>
-        /// <param name="userAssignedIdentities">
-        /// Customer Managed Identity
-        /// Serialized Name: MyWorkbookManagedIdentity.userAssignedIdentities
-        /// </param>
-        /// <param name="identityType">
-        /// The identity type.
-        /// Serialized Name: MyWorkbookManagedIdentity.type
-        /// </param>
+        /// <param name="userAssignedIdentities"> Customer Managed Identity. </param>
+        /// <param name="identityType"> The identity type. </param>
         internal MyWorkbookManagedIdentity(MyWorkbookUserAssignedIdentities userAssignedIdentities, MyWorkbookManagedIdentityType? identityType)
         {
             UserAssignedIdentities = userAssignedIdentities;
             IdentityType = identityType;
         }
 
-        /// <summary>
-        /// Customer Managed Identity
-        /// Serialized Name: MyWorkbookManagedIdentity.userAssignedIdentities
-        /// </summary>
+        /// <summary> Customer Managed Identity. </summary>
         public MyWorkbookUserAssignedIdentities UserAssignedIdentities { get; set; }
-        /// <summary>
-        /// The identity type.
-        /// Serialized Name: MyWorkbookManagedIdentity.type
-        /// </summary>
+        /// <summary> The identity type. </summary>
         public MyWorkbookManagedIdentityType? IdentityType { get; set; }
     }
 }

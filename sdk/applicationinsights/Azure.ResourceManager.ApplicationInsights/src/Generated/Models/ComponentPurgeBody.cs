@@ -12,21 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Describes the body of a purge request for an App Insights component
-    /// Serialized Name: ComponentPurgeBody
-    /// </summary>
+    /// <summary> Describes the body of a purge request for an App Insights component. </summary>
     public partial class ComponentPurgeBody
     {
         /// <summary> Initializes a new instance of ComponentPurgeBody. </summary>
-        /// <param name="table">
-        /// Table from which to purge data.
-        /// Serialized Name: ComponentPurgeBody.table
-        /// </param>
-        /// <param name="filters">
-        /// The set of columns and filters (queries) to run over them to purge the resulting data.
-        /// Serialized Name: ComponentPurgeBody.filters
-        /// </param>
+        /// <param name="table"> Table from which to purge data. </param>
+        /// <param name="filters"> The set of columns and filters (queries) to run over them to purge the resulting data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> or <paramref name="filters"/> is null. </exception>
         public ComponentPurgeBody(string table, IEnumerable<ComponentPurgeBodyFilters> filters)
         {
@@ -37,15 +28,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Filters = filters.ToList();
         }
 
-        /// <summary>
-        /// Table from which to purge data.
-        /// Serialized Name: ComponentPurgeBody.table
-        /// </summary>
+        /// <summary> Table from which to purge data. </summary>
         public string Table { get; }
-        /// <summary>
-        /// The set of columns and filters (queries) to run over them to purge the resulting data.
-        /// Serialized Name: ComponentPurgeBody.filters
-        /// </summary>
+        /// <summary> The set of columns and filters (queries) to run over them to purge the resulting data. </summary>
         public IList<ComponentPurgeBodyFilters> Filters { get; }
     }
 }

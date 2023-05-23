@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// A container holding only the Tags for a resource, allowing the user to update the tags on a WebTest instance.
-    /// Serialized Name: TagsResource
-    /// </summary>
+    /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags on a WebTest instance. </summary>
     public partial class TagsResource
     {
         /// <summary> Initializes a new instance of TagsResource. </summary>
@@ -22,10 +19,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary>
-        /// Resource tags
-        /// Serialized Name: TagsResource.tags
-        /// </summary>
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

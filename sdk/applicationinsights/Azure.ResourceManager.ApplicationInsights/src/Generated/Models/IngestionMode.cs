@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Indicates the flow of the ingestion.
-    /// Serialized Name: IngestionMode
-    /// </summary>
+    /// <summary> Indicates the flow of the ingestion. </summary>
     public readonly partial struct IngestionMode : IEquatable<IngestionMode>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         private const string ApplicationInsightsWithDiagnosticSettingsValue = "ApplicationInsightsWithDiagnosticSettings";
         private const string LogAnalyticsValue = "LogAnalytics";
 
-        /// <summary>
-        /// ApplicationInsights
-        /// Serialized Name: IngestionMode.ApplicationInsights
-        /// </summary>
+        /// <summary> ApplicationInsights. </summary>
         public static IngestionMode ApplicationInsights { get; } = new IngestionMode(ApplicationInsightsValue);
-        /// <summary>
-        /// ApplicationInsightsWithDiagnosticSettings
-        /// Serialized Name: IngestionMode.ApplicationInsightsWithDiagnosticSettings
-        /// </summary>
+        /// <summary> ApplicationInsightsWithDiagnosticSettings. </summary>
         public static IngestionMode ApplicationInsightsWithDiagnosticSettings { get; } = new IngestionMode(ApplicationInsightsWithDiagnosticSettingsValue);
-        /// <summary>
-        /// LogAnalytics
-        /// Serialized Name: IngestionMode.LogAnalytics
-        /// </summary>
+        /// <summary> LogAnalytics. </summary>
         public static IngestionMode LogAnalytics { get; } = new IngestionMode(LogAnalyticsValue);
         /// <summary> Determines if two <see cref="IngestionMode"/> values are the same. </summary>
         public static bool operator ==(IngestionMode left, IngestionMode right) => left.Equals(right);

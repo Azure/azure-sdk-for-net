@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Properties that define an Analytics item that is associated to an Application Insights component.
-    /// Serialized Name: ApplicationInsightsComponentAnalyticsItem
-    /// </summary>
+    /// <summary> Properties that define an Analytics item that is associated to an Application Insights component. </summary>
     public partial class ApplicationInsightsComponentAnalyticsItem
     {
         /// <summary> Initializes a new instance of ApplicationInsightsComponentAnalyticsItem. </summary>
@@ -19,42 +16,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of ApplicationInsightsComponentAnalyticsItem. </summary>
-        /// <param name="id">
-        /// Internally assigned unique id of the item definition.
-        /// Serialized Name: ApplicationInsightsComponentAnalyticsItem.Id
-        /// </param>
-        /// <param name="name">
-        /// The user-defined name of the item.
-        /// Serialized Name: ApplicationInsightsComponentAnalyticsItem.Name
-        /// </param>
-        /// <param name="content">
-        /// The content of this item
-        /// Serialized Name: ApplicationInsightsComponentAnalyticsItem.Content
-        /// </param>
-        /// <param name="version">
-        /// This instance&apos;s version of the data model. This can change as new features are added.
-        /// Serialized Name: ApplicationInsightsComponentAnalyticsItem.Version
-        /// </param>
-        /// <param name="scope">
-        /// Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component.
-        /// Serialized Name: ApplicationInsightsComponentAnalyticsItem.Scope
-        /// </param>
-        /// <param name="itemType">
-        /// Enum indicating the type of the Analytics item.
-        /// Serialized Name: ApplicationInsightsComponentAnalyticsItem.Type
-        /// </param>
-        /// <param name="timeCreated">
-        /// Date and time in UTC when this item was created.
-        /// Serialized Name: ApplicationInsightsComponentAnalyticsItem.TimeCreated
-        /// </param>
-        /// <param name="timeModified">
-        /// Date and time in UTC of the last modification that was made to this item.
-        /// Serialized Name: ApplicationInsightsComponentAnalyticsItem.TimeModified
-        /// </param>
-        /// <param name="properties">
-        /// A set of properties that can be defined in the context of a specific item type. Each type may have its own properties.
-        /// Serialized Name: ApplicationInsightsComponentAnalyticsItem.Properties
-        /// </param>
+        /// <param name="id"> Internally assigned unique id of the item definition. </param>
+        /// <param name="name"> The user-defined name of the item. </param>
+        /// <param name="content"> The content of this item. </param>
+        /// <param name="version"> This instance&apos;s version of the data model. This can change as new features are added. </param>
+        /// <param name="scope"> Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component. </param>
+        /// <param name="itemType"> Enum indicating the type of the Analytics item. </param>
+        /// <param name="timeCreated"> Date and time in UTC when this item was created. </param>
+        /// <param name="timeModified"> Date and time in UTC of the last modification that was made to this item. </param>
+        /// <param name="properties"> A set of properties that can be defined in the context of a specific item type. Each type may have its own properties. </param>
         internal ApplicationInsightsComponentAnalyticsItem(string id, string name, string content, string version, ItemScope? scope, ItemType? itemType, string timeCreated, string timeModified, ApplicationInsightsComponentAnalyticsItemProperties properties)
         {
             Id = id;
@@ -68,55 +38,25 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Properties = properties;
         }
 
-        /// <summary>
-        /// Internally assigned unique id of the item definition.
-        /// Serialized Name: ApplicationInsightsComponentAnalyticsItem.Id
-        /// </summary>
+        /// <summary> Internally assigned unique id of the item definition. </summary>
         public string Id { get; set; }
-        /// <summary>
-        /// The user-defined name of the item.
-        /// Serialized Name: ApplicationInsightsComponentAnalyticsItem.Name
-        /// </summary>
+        /// <summary> The user-defined name of the item. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// The content of this item
-        /// Serialized Name: ApplicationInsightsComponentAnalyticsItem.Content
-        /// </summary>
+        /// <summary> The content of this item. </summary>
         public string Content { get; set; }
-        /// <summary>
-        /// This instance&apos;s version of the data model. This can change as new features are added.
-        /// Serialized Name: ApplicationInsightsComponentAnalyticsItem.Version
-        /// </summary>
+        /// <summary> This instance&apos;s version of the data model. This can change as new features are added. </summary>
         public string Version { get; }
-        /// <summary>
-        /// Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component.
-        /// Serialized Name: ApplicationInsightsComponentAnalyticsItem.Scope
-        /// </summary>
+        /// <summary> Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component. </summary>
         public ItemScope? Scope { get; set; }
-        /// <summary>
-        /// Enum indicating the type of the Analytics item.
-        /// Serialized Name: ApplicationInsightsComponentAnalyticsItem.Type
-        /// </summary>
+        /// <summary> Enum indicating the type of the Analytics item. </summary>
         public ItemType? ItemType { get; set; }
-        /// <summary>
-        /// Date and time in UTC when this item was created.
-        /// Serialized Name: ApplicationInsightsComponentAnalyticsItem.TimeCreated
-        /// </summary>
+        /// <summary> Date and time in UTC when this item was created. </summary>
         public string TimeCreated { get; }
-        /// <summary>
-        /// Date and time in UTC of the last modification that was made to this item.
-        /// Serialized Name: ApplicationInsightsComponentAnalyticsItem.TimeModified
-        /// </summary>
+        /// <summary> Date and time in UTC of the last modification that was made to this item. </summary>
         public string TimeModified { get; }
-        /// <summary>
-        /// A set of properties that can be defined in the context of a specific item type. Each type may have its own properties.
-        /// Serialized Name: ApplicationInsightsComponentAnalyticsItem.Properties
-        /// </summary>
+        /// <summary> A set of properties that can be defined in the context of a specific item type. Each type may have its own properties. </summary>
         internal ApplicationInsightsComponentAnalyticsItemProperties Properties { get; set; }
-        /// <summary>
-        /// A function alias, used when the type of the item is Function
-        /// Serialized Name: ApplicationInsightsComponentAnalyticsItemProperties.functionAlias
-        /// </summary>
+        /// <summary> A function alias, used when the type of the item is Function. </summary>
         public string ApplicationInsightsComponentAnalyticsItemFunctionAlias
         {
             get => Properties is null ? default : Properties.FunctionAlias;

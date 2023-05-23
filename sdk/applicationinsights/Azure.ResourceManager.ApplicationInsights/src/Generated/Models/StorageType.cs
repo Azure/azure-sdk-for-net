@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// The StorageType.
-    /// Serialized Name: StorageType
-    /// </summary>
+    /// <summary> The StorageType. </summary>
     public readonly partial struct StorageType : IEquatable<StorageType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         private const string ServiceProfilerValue = "ServiceProfiler";
 
-        /// <summary>
-        /// ServiceProfiler
-        /// Serialized Name: StorageType.ServiceProfiler
-        /// </summary>
+        /// <summary> ServiceProfiler. </summary>
         public static StorageType ServiceProfiler { get; } = new StorageType(ServiceProfilerValue);
         /// <summary> Determines if two <see cref="StorageType"/> values are the same. </summary>
         public static bool operator ==(StorageType left, StorageType right) => left.Equals(right);

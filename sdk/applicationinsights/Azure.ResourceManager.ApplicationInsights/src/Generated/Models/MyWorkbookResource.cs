@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// An azure resource object
-    /// Serialized Name: MyWorkbookResource
-    /// </summary>
+    /// <summary> An azure resource object. </summary>
     public partial class MyWorkbookResource
     {
         /// <summary> Initializes a new instance of MyWorkbookResource. </summary>
@@ -24,34 +21,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of MyWorkbookResource. </summary>
-        /// <param name="identity">
-        /// Identity used for BYOS
-        /// Serialized Name: MyWorkbookResource.identity
-        /// </param>
-        /// <param name="id">
-        /// Azure resource Id
-        /// Serialized Name: MyWorkbookResource.id
-        /// </param>
-        /// <param name="name">
-        /// Azure resource name
-        /// Serialized Name: MyWorkbookResource.name
-        /// </param>
-        /// <param name="resourceType">
-        /// Azure resource type
-        /// Serialized Name: MyWorkbookResource.type
-        /// </param>
-        /// <param name="location">
-        /// Resource location
-        /// Serialized Name: MyWorkbookResource.location
-        /// </param>
-        /// <param name="tags">
-        /// Resource tags
-        /// Serialized Name: MyWorkbookResource.tags
-        /// </param>
-        /// <param name="etag">
-        /// Resource etag
-        /// Serialized Name: MyWorkbookResource.etag
-        /// </param>
+        /// <param name="identity"> Identity used for BYOS. </param>
+        /// <param name="id"> Azure resource Id. </param>
+        /// <param name="name"> Azure resource name. </param>
+        /// <param name="resourceType"> Azure resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="etag"> Resource etag. </param>
         internal MyWorkbookResource(MyWorkbookManagedIdentity identity, string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, string> etag)
         {
             Identity = identity;
@@ -63,40 +39,19 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             ETag = etag;
         }
 
-        /// <summary>
-        /// Identity used for BYOS
-        /// Serialized Name: MyWorkbookResource.identity
-        /// </summary>
+        /// <summary> Identity used for BYOS. </summary>
         public MyWorkbookManagedIdentity Identity { get; set; }
-        /// <summary>
-        /// Azure resource Id
-        /// Serialized Name: MyWorkbookResource.id
-        /// </summary>
+        /// <summary> Azure resource Id. </summary>
         public string Id { get; set; }
-        /// <summary>
-        /// Azure resource name
-        /// Serialized Name: MyWorkbookResource.name
-        /// </summary>
+        /// <summary> Azure resource name. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Azure resource type
-        /// Serialized Name: MyWorkbookResource.type
-        /// </summary>
+        /// <summary> Azure resource type. </summary>
         public string ResourceType { get; set; }
-        /// <summary>
-        /// Resource location
-        /// Serialized Name: MyWorkbookResource.location
-        /// </summary>
+        /// <summary> Resource location. </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary>
-        /// Resource tags
-        /// Serialized Name: MyWorkbookResource.tags
-        /// </summary>
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// Resource etag
-        /// Serialized Name: MyWorkbookResource.etag
-        /// </summary>
+        /// <summary> Resource etag. </summary>
         public IDictionary<string, string> ETag { get; }
     }
 }

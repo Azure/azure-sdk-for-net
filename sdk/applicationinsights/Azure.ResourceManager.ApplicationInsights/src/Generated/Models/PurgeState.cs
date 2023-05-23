@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Status of the operation represented by the requested Id.
-    /// Serialized Name: PurgeState
-    /// </summary>
+    /// <summary> Status of the operation represented by the requested Id. </summary>
     public readonly partial struct PurgeState : IEquatable<PurgeState>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         private const string PendingValue = "pending";
         private const string CompletedValue = "completed";
 
-        /// <summary>
-        /// pending
-        /// Serialized Name: PurgeState.pending
-        /// </summary>
+        /// <summary> pending. </summary>
         public static PurgeState Pending { get; } = new PurgeState(PendingValue);
-        /// <summary>
-        /// completed
-        /// Serialized Name: PurgeState.completed
-        /// </summary>
+        /// <summary> completed. </summary>
         public static PurgeState Completed { get; } = new PurgeState(CompletedValue);
         /// <summary> Determines if two <see cref="PurgeState"/> values are the same. </summary>
         public static bool operator ==(PurgeState left, PurgeState right) => left.Equals(right);

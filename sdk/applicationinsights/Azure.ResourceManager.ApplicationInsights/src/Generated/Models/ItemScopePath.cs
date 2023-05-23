@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// The ItemScopePath.
-    /// Serialized Name: ItemScopePath
-    /// </summary>
+    /// <summary> The ItemScopePath. </summary>
     public readonly partial struct ItemScopePath : IEquatable<ItemScopePath>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         private const string AnalyticsItemsValue = "analyticsItems";
         private const string MyanalyticsItemsValue = "myanalyticsItems";
 
-        /// <summary>
-        /// analyticsItems
-        /// Serialized Name: ItemScopePath.analyticsItems
-        /// </summary>
+        /// <summary> analyticsItems. </summary>
         public static ItemScopePath AnalyticsItems { get; } = new ItemScopePath(AnalyticsItemsValue);
-        /// <summary>
-        /// myanalyticsItems
-        /// Serialized Name: ItemScopePath.myanalyticsItems
-        /// </summary>
+        /// <summary> myanalyticsItems. </summary>
         public static ItemScopePath MyanalyticsItems { get; } = new ItemScopePath(MyanalyticsItemsValue);
         /// <summary> Determines if two <see cref="ItemScopePath"/> values are the same. </summary>
         public static bool operator ==(ItemScopePath left, ItemScopePath right) => left.Equals(right);

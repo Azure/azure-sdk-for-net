@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component.
-    /// Serialized Name: ItemScope
-    /// </summary>
+    /// <summary> Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component. </summary>
     public readonly partial struct ItemScope : IEquatable<ItemScope>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         private const string SharedValue = "shared";
         private const string UserValue = "user";
 
-        /// <summary>
-        /// shared
-        /// Serialized Name: ItemScope.shared
-        /// </summary>
+        /// <summary> shared. </summary>
         public static ItemScope Shared { get; } = new ItemScope(SharedValue);
-        /// <summary>
-        /// user
-        /// Serialized Name: ItemScope.user
-        /// </summary>
+        /// <summary> user. </summary>
         public static ItemScope User { get; } = new ItemScope(UserValue);
         /// <summary> Determines if two <see cref="ItemScope"/> values are the same. </summary>
         public static bool operator ==(ItemScope left, ItemScope right) => left.Equals(right);

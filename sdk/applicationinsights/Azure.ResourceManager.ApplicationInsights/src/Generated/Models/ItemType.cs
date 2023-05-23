@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Enum indicating the type of the Analytics item.
-    /// Serialized Name: ItemType
-    /// </summary>
+    /// <summary> Enum indicating the type of the Analytics item. </summary>
     public readonly partial struct ItemType : IEquatable<ItemType>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         private const string RecentValue = "recent";
         private const string FunctionValue = "function";
 
-        /// <summary>
-        /// none
-        /// Serialized Name: ItemType.none
-        /// </summary>
+        /// <summary> none. </summary>
         public static ItemType None { get; } = new ItemType(NoneValue);
-        /// <summary>
-        /// query
-        /// Serialized Name: ItemType.query
-        /// </summary>
+        /// <summary> query. </summary>
         public static ItemType Query { get; } = new ItemType(QueryValue);
-        /// <summary>
-        /// recent
-        /// Serialized Name: ItemType.recent
-        /// </summary>
+        /// <summary> recent. </summary>
         public static ItemType Recent { get; } = new ItemType(RecentValue);
-        /// <summary>
-        /// function
-        /// Serialized Name: ItemType.function
-        /// </summary>
+        /// <summary> function. </summary>
         public static ItemType Function { get; } = new ItemType(FunctionValue);
         /// <summary> Determines if two <see cref="ItemType"/> values are the same. </summary>
         public static bool operator ==(ItemType left, ItemType right) => left.Equals(right);

@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Response containing operationId for a specific purge action.
-    /// Serialized Name: ComponentPurgeResponse
-    /// </summary>
+    /// <summary> Response containing operationId for a specific purge action. </summary>
     public partial class ComponentPurgeResponse
     {
         /// <summary> Initializes a new instance of ComponentPurgeResponse. </summary>
-        /// <param name="operationId">
-        /// Id to use when querying for status for a particular purge operation.
-        /// Serialized Name: ComponentPurgeResponse.operationId
-        /// </param>
+        /// <param name="operationId"> Id to use when querying for status for a particular purge operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         internal ComponentPurgeResponse(string operationId)
         {
@@ -29,10 +23,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             OperationId = operationId;
         }
 
-        /// <summary>
-        /// Id to use when querying for status for a particular purge operation.
-        /// Serialized Name: ComponentPurgeResponse.operationId
-        /// </summary>
+        /// <summary> Id to use when querying for status for a particular purge operation. </summary>
         public string OperationId { get; }
     }
 }

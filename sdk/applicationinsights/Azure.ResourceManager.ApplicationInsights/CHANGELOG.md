@@ -1,12 +1,18 @@
 # Release History
 
-## 1.0.0-beta.3 (2023-05-25)
+## 1.0.0-beta.3 (2023-05-26)
+
+### Breaking Changes
+
+- ComponentLinkedStorageAccountCollection can be retrieved through ApplicationInsightsComponentResource instead of ResourceGroupResource
+- ComponentLinkedStorageAccountResource can be retrieved through ComponentLinkedStorageAccountCollection instead of ResourceGroupResource
+- Resource Name of ApplicationInsightsComponentResource is no longer needed when calling ComponentLinkedStorageAccountCollection's related operations
 
 ### Other Changes
 
 - Upgraded api-version tag from 'package-2020-03-01-preview' to 'package-2022-12-09-only'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/1fea23ac36b111293dc3efc30f725e9ebb790f7f/specification/applicationinsights/resource-manager/readme.md
 - Upgraded Azure.Core from 1.28.0 to 1.32.0
-- Upgraded Azure.ResourceManager from 1.4.0 to 1.5.0
+- Upgraded Azure.ResourceManager from 1.4.0 to 1.6.0
 
 ## 1.0.0-beta.2 (2023-02-16)
 

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Properties that define a web test location available to an Application Insights Component.
-    /// Serialized Name: ApplicationInsightsComponentWebTestLocation
-    /// </summary>
+    /// <summary> Properties that define a web test location available to an Application Insights Component. </summary>
     public partial class ApplicationInsightsComponentWebTestLocation
     {
         /// <summary> Initializes a new instance of ApplicationInsightsComponentWebTestLocation. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of ApplicationInsightsComponentWebTestLocation. </summary>
-        /// <param name="displayName">
-        /// The display name of the web test location.
-        /// Serialized Name: ApplicationInsightsComponentWebTestLocation.DisplayName
-        /// </param>
-        /// <param name="tag">
-        /// Internally defined geographic location tag.
-        /// Serialized Name: ApplicationInsightsComponentWebTestLocation.Tag
-        /// </param>
+        /// <param name="displayName"> The display name of the web test location. </param>
+        /// <param name="tag"> Internally defined geographic location tag. </param>
         internal ApplicationInsightsComponentWebTestLocation(string displayName, string tag)
         {
             DisplayName = displayName;
             Tag = tag;
         }
 
-        /// <summary>
-        /// The display name of the web test location.
-        /// Serialized Name: ApplicationInsightsComponentWebTestLocation.DisplayName
-        /// </summary>
+        /// <summary> The display name of the web test location. </summary>
         public string DisplayName { get; }
-        /// <summary>
-        /// Internally defined geographic location tag.
-        /// Serialized Name: ApplicationInsightsComponentWebTestLocation.Tag
-        /// </summary>
+        /// <summary> Internally defined geographic location tag. </summary>
         public string Tag { get; }
     }
 }

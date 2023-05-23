@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// <summary>
     /// A class representing the WorkbookTemplate data model.
     /// An Application Insights workbook template definition.
-    /// Serialized Name: WorkbookTemplate
     /// </summary>
     public partial class WorkbookTemplateData : TrackedResourceData
     {
@@ -35,26 +34,11 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="priority">
-        /// Priority of the template. Determines which template to open when a workbook gallery is opened in viewer mode.
-        /// Serialized Name: WorkbookTemplate.properties.priority
-        /// </param>
-        /// <param name="author">
-        /// Information about the author of the workbook template.
-        /// Serialized Name: WorkbookTemplate.properties.author
-        /// </param>
-        /// <param name="templateData">
-        /// Valid JSON object containing workbook template payload.
-        /// Serialized Name: WorkbookTemplate.properties.templateData
-        /// </param>
-        /// <param name="galleries">
-        /// Workbook galleries supported by the template.
-        /// Serialized Name: WorkbookTemplate.properties.galleries
-        /// </param>
-        /// <param name="localizedGalleries">
-        /// Key value pair of localized gallery. Each key is the locale code of languages supported by the Azure portal.
-        /// Serialized Name: WorkbookTemplate.properties.localized
-        /// </param>
+        /// <param name="priority"> Priority of the template. Determines which template to open when a workbook gallery is opened in viewer mode. </param>
+        /// <param name="author"> Information about the author of the workbook template. </param>
+        /// <param name="templateData"> Valid JSON object containing workbook template payload. </param>
+        /// <param name="galleries"> Workbook galleries supported by the template. </param>
+        /// <param name="localizedGalleries"> Key value pair of localized gallery. Each key is the locale code of languages supported by the Azure portal. </param>
         internal WorkbookTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, int? priority, string author, BinaryData templateData, IList<WorkbookTemplateGallery> galleries, IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> localizedGalleries) : base(id, name, resourceType, systemData, tags, location)
         {
             Priority = priority;
@@ -64,19 +48,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             LocalizedGalleries = localizedGalleries;
         }
 
-        /// <summary>
-        /// Priority of the template. Determines which template to open when a workbook gallery is opened in viewer mode.
-        /// Serialized Name: WorkbookTemplate.properties.priority
-        /// </summary>
+        /// <summary> Priority of the template. Determines which template to open when a workbook gallery is opened in viewer mode. </summary>
         public int? Priority { get; set; }
-        /// <summary>
-        /// Information about the author of the workbook template.
-        /// Serialized Name: WorkbookTemplate.properties.author
-        /// </summary>
+        /// <summary> Information about the author of the workbook template. </summary>
         public string Author { get; set; }
         /// <summary>
         /// Valid JSON object containing workbook template payload.
-        /// Serialized Name: WorkbookTemplate.properties.templateData
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -106,15 +83,9 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </para>
         /// </summary>
         public BinaryData TemplateData { get; set; }
-        /// <summary>
-        /// Workbook galleries supported by the template.
-        /// Serialized Name: WorkbookTemplate.properties.galleries
-        /// </summary>
+        /// <summary> Workbook galleries supported by the template. </summary>
         public IList<WorkbookTemplateGallery> Galleries { get; }
-        /// <summary>
-        /// Key value pair of localized gallery. Each key is the locale code of languages supported by the Azure portal.
-        /// Serialized Name: WorkbookTemplate.properties.localized
-        /// </summary>
+        /// <summary> Key value pair of localized gallery. Each key is the locale code of languages supported by the Azure portal. </summary>
         public IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> LocalizedGalleries { get; }
     }
 }

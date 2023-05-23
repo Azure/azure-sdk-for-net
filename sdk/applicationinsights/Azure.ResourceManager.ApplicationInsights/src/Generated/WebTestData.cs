@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// <summary>
     /// A class representing the WebTest data model.
     /// An Application Insights WebTest definition.
-    /// Serialized Name: WebTest
     /// </summary>
     public partial class WebTestData : TrackedResourceData
     {
@@ -33,62 +32,20 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="kind">
-        /// The kind of WebTest that this web test watches. Choices are ping, multistep and standard.
-        /// Serialized Name: WebTest.kind
-        /// </param>
-        /// <param name="syntheticMonitorId">
-        /// Unique ID of this WebTest. This is typically the same value as the Name field.
-        /// Serialized Name: WebTest.properties.SyntheticMonitorId
-        /// </param>
-        /// <param name="webTestName">
-        /// User defined name if this WebTest.
-        /// Serialized Name: WebTest.properties.Name
-        /// </param>
-        /// <param name="description">
-        /// User defined description for this WebTest.
-        /// Serialized Name: WebTest.properties.Description
-        /// </param>
-        /// <param name="isEnabled">
-        /// Is the test actively being monitored.
-        /// Serialized Name: WebTest.properties.Enabled
-        /// </param>
-        /// <param name="frequencyInSeconds">
-        /// Interval in seconds between test runs for this WebTest. Default value is 300.
-        /// Serialized Name: WebTest.properties.Frequency
-        /// </param>
-        /// <param name="timeoutInSeconds">
-        /// Seconds until this WebTest will timeout and fail. Default value is 30.
-        /// Serialized Name: WebTest.properties.Timeout
-        /// </param>
-        /// <param name="webTestKind">
-        /// The kind of web test this is, valid choices are ping, multistep and standard.
-        /// Serialized Name: WebTest.properties.Kind
-        /// </param>
-        /// <param name="isRetryEnabled">
-        /// Allow for retries should this WebTest fail.
-        /// Serialized Name: WebTest.properties.RetryEnabled
-        /// </param>
-        /// <param name="locations">
-        /// A list of where to physically run the tests from to give global coverage for accessibility of your application.
-        /// Serialized Name: WebTest.properties.Locations
-        /// </param>
-        /// <param name="configuration">
-        /// An XML configuration specification for a WebTest.
-        /// Serialized Name: WebTest.properties.Configuration
-        /// </param>
-        /// <param name="provisioningState">
-        /// Current state of this component, whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed.
-        /// Serialized Name: WebTest.properties.provisioningState
-        /// </param>
-        /// <param name="request">
-        /// The collection of request properties
-        /// Serialized Name: WebTest.properties.Request
-        /// </param>
-        /// <param name="validationRules">
-        /// The collection of validation rule properties
-        /// Serialized Name: WebTest.properties.ValidationRules
-        /// </param>
+        /// <param name="kind"> The kind of WebTest that this web test watches. Choices are ping, multistep and standard. </param>
+        /// <param name="syntheticMonitorId"> Unique ID of this WebTest. This is typically the same value as the Name field. </param>
+        /// <param name="webTestName"> User defined name if this WebTest. </param>
+        /// <param name="description"> User defined description for this WebTest. </param>
+        /// <param name="isEnabled"> Is the test actively being monitored. </param>
+        /// <param name="frequencyInSeconds"> Interval in seconds between test runs for this WebTest. Default value is 300. </param>
+        /// <param name="timeoutInSeconds"> Seconds until this WebTest will timeout and fail. Default value is 30. </param>
+        /// <param name="webTestKind"> The kind of web test this is, valid choices are ping, multistep and standard. </param>
+        /// <param name="isRetryEnabled"> Allow for retries should this WebTest fail. </param>
+        /// <param name="locations"> A list of where to physically run the tests from to give global coverage for accessibility of your application. </param>
+        /// <param name="configuration"> An XML configuration specification for a WebTest. </param>
+        /// <param name="provisioningState"> Current state of this component, whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed. </param>
+        /// <param name="request"> The collection of request properties. </param>
+        /// <param name="validationRules"> The collection of validation rule properties. </param>
         internal WebTestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WebTestKind? kind, string syntheticMonitorId, string webTestName, string description, bool? isEnabled, int? frequencyInSeconds, int? timeoutInSeconds, WebTestKind? webTestKind, bool? isRetryEnabled, IList<WebTestGeolocation> locations, WebTestPropertiesConfiguration configuration, string provisioningState, WebTestPropertiesRequest request, WebTestPropertiesValidationRules validationRules) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
@@ -107,65 +64,29 @@ namespace Azure.ResourceManager.ApplicationInsights
             ValidationRules = validationRules;
         }
 
-        /// <summary>
-        /// The kind of WebTest that this web test watches. Choices are ping, multistep and standard.
-        /// Serialized Name: WebTest.kind
-        /// </summary>
+        /// <summary> The kind of WebTest that this web test watches. Choices are ping, multistep and standard. </summary>
         public WebTestKind? Kind { get; set; }
-        /// <summary>
-        /// Unique ID of this WebTest. This is typically the same value as the Name field.
-        /// Serialized Name: WebTest.properties.SyntheticMonitorId
-        /// </summary>
+        /// <summary> Unique ID of this WebTest. This is typically the same value as the Name field. </summary>
         public string SyntheticMonitorId { get; set; }
-        /// <summary>
-        /// User defined name if this WebTest.
-        /// Serialized Name: WebTest.properties.Name
-        /// </summary>
+        /// <summary> User defined name if this WebTest. </summary>
         public string WebTestName { get; set; }
-        /// <summary>
-        /// User defined description for this WebTest.
-        /// Serialized Name: WebTest.properties.Description
-        /// </summary>
+        /// <summary> User defined description for this WebTest. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// Is the test actively being monitored.
-        /// Serialized Name: WebTest.properties.Enabled
-        /// </summary>
+        /// <summary> Is the test actively being monitored. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// Interval in seconds between test runs for this WebTest. Default value is 300.
-        /// Serialized Name: WebTest.properties.Frequency
-        /// </summary>
+        /// <summary> Interval in seconds between test runs for this WebTest. Default value is 300. </summary>
         public int? FrequencyInSeconds { get; set; }
-        /// <summary>
-        /// Seconds until this WebTest will timeout and fail. Default value is 30.
-        /// Serialized Name: WebTest.properties.Timeout
-        /// </summary>
+        /// <summary> Seconds until this WebTest will timeout and fail. Default value is 30. </summary>
         public int? TimeoutInSeconds { get; set; }
-        /// <summary>
-        /// The kind of web test this is, valid choices are ping, multistep and standard.
-        /// Serialized Name: WebTest.properties.Kind
-        /// </summary>
+        /// <summary> The kind of web test this is, valid choices are ping, multistep and standard. </summary>
         public WebTestKind? WebTestKind { get; set; }
-        /// <summary>
-        /// Allow for retries should this WebTest fail.
-        /// Serialized Name: WebTest.properties.RetryEnabled
-        /// </summary>
+        /// <summary> Allow for retries should this WebTest fail. </summary>
         public bool? IsRetryEnabled { get; set; }
-        /// <summary>
-        /// A list of where to physically run the tests from to give global coverage for accessibility of your application.
-        /// Serialized Name: WebTest.properties.Locations
-        /// </summary>
+        /// <summary> A list of where to physically run the tests from to give global coverage for accessibility of your application. </summary>
         public IList<WebTestGeolocation> Locations { get; }
-        /// <summary>
-        /// An XML configuration specification for a WebTest.
-        /// Serialized Name: WebTest.properties.Configuration
-        /// </summary>
+        /// <summary> An XML configuration specification for a WebTest. </summary>
         internal WebTestPropertiesConfiguration Configuration { get; set; }
-        /// <summary>
-        /// The XML specification of a WebTest to run against an application.
-        /// Serialized Name: WebTestPropertiesConfiguration.WebTest
-        /// </summary>
+        /// <summary> The XML specification of a WebTest to run against an application. </summary>
         public string WebTest
         {
             get => Configuration is null ? default : Configuration.WebTest;
@@ -177,20 +98,11 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        /// <summary>
-        /// Current state of this component, whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed.
-        /// Serialized Name: WebTest.properties.provisioningState
-        /// </summary>
+        /// <summary> Current state of this component, whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// The collection of request properties
-        /// Serialized Name: WebTest.properties.Request
-        /// </summary>
+        /// <summary> The collection of request properties. </summary>
         public WebTestPropertiesRequest Request { get; set; }
-        /// <summary>
-        /// The collection of validation rule properties
-        /// Serialized Name: WebTest.properties.ValidationRules
-        /// </summary>
+        /// <summary> The collection of validation rule properties. </summary>
         public WebTestPropertiesValidationRules ValidationRules { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// The ItemTypeParameter.
-    /// Serialized Name: ItemTypeParameter
-    /// </summary>
+    /// <summary> The ItemTypeParameter. </summary>
     public readonly partial struct ItemTypeParameter : IEquatable<ItemTypeParameter>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         private const string FolderValue = "folder";
         private const string RecentValue = "recent";
 
-        /// <summary>
-        /// none
-        /// Serialized Name: ItemTypeParameter.none
-        /// </summary>
+        /// <summary> none. </summary>
         public static ItemTypeParameter None { get; } = new ItemTypeParameter(NoneValue);
-        /// <summary>
-        /// query
-        /// Serialized Name: ItemTypeParameter.query
-        /// </summary>
+        /// <summary> query. </summary>
         public static ItemTypeParameter Query { get; } = new ItemTypeParameter(QueryValue);
-        /// <summary>
-        /// function
-        /// Serialized Name: ItemTypeParameter.function
-        /// </summary>
+        /// <summary> function. </summary>
         public static ItemTypeParameter Function { get; } = new ItemTypeParameter(FunctionValue);
-        /// <summary>
-        /// folder
-        /// Serialized Name: ItemTypeParameter.folder
-        /// </summary>
+        /// <summary> folder. </summary>
         public static ItemTypeParameter Folder { get; } = new ItemTypeParameter(FolderValue);
-        /// <summary>
-        /// recent
-        /// Serialized Name: ItemTypeParameter.recent
-        /// </summary>
+        /// <summary> recent. </summary>
         public static ItemTypeParameter Recent { get; } = new ItemTypeParameter(RecentValue);
         /// <summary> Determines if two <see cref="ItemTypeParameter"/> values are the same. </summary>
         public static bool operator ==(ItemTypeParameter left, ItemTypeParameter right) => left.Equals(right);

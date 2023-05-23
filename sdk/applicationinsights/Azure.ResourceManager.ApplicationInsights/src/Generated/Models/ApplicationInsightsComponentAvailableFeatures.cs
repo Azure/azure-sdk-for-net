@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// An Application Insights component available features.
-    /// Serialized Name: ApplicationInsightsComponentAvailableFeatures
-    /// </summary>
+    /// <summary> An Application Insights component available features. </summary>
     public partial class ApplicationInsightsComponentAvailableFeatures
     {
         /// <summary> Initializes a new instance of ApplicationInsightsComponentAvailableFeatures. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of ApplicationInsightsComponentAvailableFeatures. </summary>
-        /// <param name="result">
-        /// A list of Application Insights component feature.
-        /// Serialized Name: ApplicationInsightsComponentAvailableFeatures.Result
-        /// </param>
+        /// <param name="result"> A list of Application Insights component feature. </param>
         internal ApplicationInsightsComponentAvailableFeatures(IReadOnlyList<ApplicationInsightsComponentFeature> result)
         {
             Result = result;
         }
 
-        /// <summary>
-        /// A list of Application Insights component feature.
-        /// Serialized Name: ApplicationInsightsComponentAvailableFeatures.Result
-        /// </summary>
+        /// <summary> A list of Application Insights component feature. </summary>
         public IReadOnlyList<ApplicationInsightsComponentFeature> Result { get; }
     }
 }

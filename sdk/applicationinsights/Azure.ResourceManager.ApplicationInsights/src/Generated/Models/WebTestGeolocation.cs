@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Geo-physical location to run a WebTest from. You must specify one or more locations for the test to run from.
-    /// Serialized Name: WebTestGeolocation
-    /// </summary>
+    /// <summary> Geo-physical location to run a WebTest from. You must specify one or more locations for the test to run from. </summary>
     public partial class WebTestGeolocation
     {
         /// <summary> Initializes a new instance of WebTestGeolocation. </summary>
@@ -21,19 +18,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of WebTestGeolocation. </summary>
-        /// <param name="location">
-        /// Location ID for the WebTest to run from.
-        /// Serialized Name: WebTestGeolocation.Id
-        /// </param>
+        /// <param name="location"> Location ID for the WebTest to run from. </param>
         internal WebTestGeolocation(AzureLocation? location)
         {
             Location = location;
         }
 
-        /// <summary>
-        /// Location ID for the WebTest to run from.
-        /// Serialized Name: WebTestGeolocation.Id
-        /// </summary>
+        /// <summary> Location ID for the WebTest to run from. </summary>
         public AzureLocation? Location { get; set; }
     }
 }

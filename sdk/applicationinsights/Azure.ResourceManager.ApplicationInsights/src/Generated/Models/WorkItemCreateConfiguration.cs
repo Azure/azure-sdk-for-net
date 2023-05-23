@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Work item configuration creation payload
-    /// Serialized Name: WorkItemCreateConfiguration
-    /// </summary>
+    /// <summary> Work item configuration creation payload. </summary>
     public partial class WorkItemCreateConfiguration
     {
         /// <summary> Initializes a new instance of WorkItemCreateConfiguration. </summary>
@@ -22,25 +19,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             WorkItemProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary>
-        /// Unique connector id
-        /// Serialized Name: WorkItemCreateConfiguration.ConnectorId
-        /// </summary>
+        /// <summary> Unique connector id. </summary>
         public string ConnectorId { get; set; }
-        /// <summary>
-        /// Serialized JSON object for detailed properties
-        /// Serialized Name: WorkItemCreateConfiguration.ConnectorDataConfiguration
-        /// </summary>
+        /// <summary> Serialized JSON object for detailed properties. </summary>
         public string ConnectorDataConfiguration { get; set; }
-        /// <summary>
-        /// Boolean indicating validate only
-        /// Serialized Name: WorkItemCreateConfiguration.ValidateOnly
-        /// </summary>
+        /// <summary> Boolean indicating validate only. </summary>
         public bool? IsValidateOnly { get; set; }
-        /// <summary>
-        /// Custom work item properties
-        /// Serialized Name: WorkItemCreateConfiguration.WorkItemProperties
-        /// </summary>
+        /// <summary> Custom work item properties. </summary>
         public IDictionary<string, string> WorkItemProperties { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Describes what tool created this Application Insights component. Customers using this API should set this to the default &apos;rest&apos;.
-    /// Serialized Name: RequestSource
-    /// </summary>
+    /// <summary> Describes what tool created this Application Insights component. Customers using this API should set this to the default &apos;rest&apos;. </summary>
     public readonly partial struct RequestSource : IEquatable<RequestSource>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         private const string RestValue = "rest";
 
-        /// <summary>
-        /// rest
-        /// Serialized Name: RequestSource.rest
-        /// </summary>
+        /// <summary> rest. </summary>
         public static RequestSource Rest { get; } = new RequestSource(RestValue);
         /// <summary> Determines if two <see cref="RequestSource"/> values are the same. </summary>
         public static bool operator ==(RequestSource left, RequestSource right) => left.Equals(right);

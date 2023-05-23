@@ -13,17 +13,11 @@ using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// A list of 0 or more Application Insights WebTest definitions.
-    /// Serialized Name: WebTestListResult
-    /// </summary>
+    /// <summary> A list of 0 or more Application Insights WebTest definitions. </summary>
     internal partial class WebTestListResult
     {
         /// <summary> Initializes a new instance of WebTestListResult. </summary>
-        /// <param name="value">
-        /// Set of Application Insights WebTest definitions.
-        /// Serialized Name: WebTestListResult.value
-        /// </param>
+        /// <param name="value"> Set of Application Insights WebTest definitions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal WebTestListResult(IEnumerable<WebTestData> value)
         {
@@ -33,29 +27,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of WebTestListResult. </summary>
-        /// <param name="value">
-        /// Set of Application Insights WebTest definitions.
-        /// Serialized Name: WebTestListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to get the next part of the returned list of WebTest, should the return set be too large for a single request. May be null.
-        /// Serialized Name: WebTestListResult.nextLink
-        /// </param>
+        /// <param name="value"> Set of Application Insights WebTest definitions. </param>
+        /// <param name="nextLink"> The link to get the next part of the returned list of WebTest, should the return set be too large for a single request. May be null. </param>
         internal WebTestListResult(IReadOnlyList<WebTestData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Set of Application Insights WebTest definitions.
-        /// Serialized Name: WebTestListResult.value
-        /// </summary>
+        /// <summary> Set of Application Insights WebTest definitions. </summary>
         public IReadOnlyList<WebTestData> Value { get; }
-        /// <summary>
-        /// The link to get the next part of the returned list of WebTest, should the return set be too large for a single request. May be null.
-        /// Serialized Name: WebTestListResult.nextLink
-        /// </summary>
+        /// <summary> The link to get the next part of the returned list of WebTest, should the return set be too large for a single request. May be null. </summary>
         public string NextLink { get; }
     }
 }

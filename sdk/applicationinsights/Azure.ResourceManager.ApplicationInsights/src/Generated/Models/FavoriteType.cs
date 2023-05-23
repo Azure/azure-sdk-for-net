@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary>
-    /// Enum indicating if this favorite definition is owned by a specific user or is shared between all users with access to the Application Insights component.
-    /// Serialized Name: FavoriteType
-    /// </summary>
+    /// <summary> Enum indicating if this favorite definition is owned by a specific user or is shared between all users with access to the Application Insights component. </summary>
     public enum FavoriteType
     {
-        /// <summary>
-        /// shared
-        /// Serialized Name: FavoriteType.shared
-        /// </summary>
+        /// <summary> shared. </summary>
         Shared,
-        /// <summary>
-        /// user
-        /// Serialized Name: FavoriteType.user
-        /// </summary>
+        /// <summary> user. </summary>
         User
     }
 }
