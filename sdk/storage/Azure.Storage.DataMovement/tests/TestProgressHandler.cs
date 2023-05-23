@@ -62,7 +62,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Reduce update list to list of BytesTransferred updates
             IEnumerable<long> actualUpdates = _updates.Select(u => u.BytesTransferred.Value).Distinct();
 
-            Assert.IsTrue(actualUpdates.SequenceEqual(expectedUpdates));
+            CollectionAssert.AreEqual(expectedUpdates, actualUpdates);
         }
     }
 }

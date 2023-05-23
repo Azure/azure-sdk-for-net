@@ -22,6 +22,7 @@ namespace Azure.Storage.DataMovement
         private long _inProgressCount = 0;
         private long _queuedCount = 0;
         private long _bytesTransferred = 0;
+        private object _bytesTransferredLock = new();
 
         public TransferProgressTracker(IProgress<StorageTransferProgress> progressHandler, ProgressHandlerOptions options)
         {
@@ -84,10 +85,13 @@ namespace Azure.Storage.DataMovement
         /// <param name="bytesTransferred"></param>
         public void IncrementBytesTransferred(long bytesTransferred)
         {
-            Interlocked.Add(ref _bytesTransferred, bytesTransferred);
             if (_options.TrackBytesTransferred)
             {
-                _progressHandler?.Report(GetTransferProgress());
+                lock (_bytesTransferredLock)
+                {
+                    _bytesTransferred += bytesTransferred;
+                    _progressHandler?.Report(GetTransferProgress());
+                }
             }
         }
 

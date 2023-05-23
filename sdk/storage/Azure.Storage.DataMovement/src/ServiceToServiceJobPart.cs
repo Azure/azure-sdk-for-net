@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -226,6 +227,7 @@ namespace Azure.Storage.DataMovement
                 }
                 else
                 {
+                    ReportBytesWritten(completeLength);
                     await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
                 }
             }
@@ -296,8 +298,7 @@ namespace Azure.Storage.DataMovement
             {
                 QueuePutBlockTask = async (long offset, long blockSize, long expectedLength) => await jobPart.PutBlockFromUri(offset, blockSize, expectedLength).ConfigureAwait(false),
                 QueueCommitBlockTask = async () => await jobPart.CompleteTransferAsync().ConfigureAwait(false),
-                ReportProgressInBytes = (long bytesWritten) =>
-                    jobPart.ReportBytesWritten(bytesWritten),
+                ReportProgressInBytes = (long bytesWritten) => jobPart.ReportBytesWritten(bytesWritten),
                 InvokeFailedHandler = async (ex) => await jobPart.InvokeFailedArg(ex).ConfigureAwait(false),
             };
         }
@@ -345,7 +346,7 @@ namespace Azure.Storage.DataMovement
             // Partition the stream into individual blocks
             foreach ((long Offset, long Length) block in commitBlockList)
             {
-                // Queue paritioned block task
+                // Queue partitioned block task
                 await QueueChunkToChannelAsync(
                     async () =>
                     await PutBlockFromUri(
@@ -353,6 +354,16 @@ namespace Azure.Storage.DataMovement
                         block.Length,
                         expectedLength).ConfigureAwait(false)).ConfigureAwait(false);
             }
+        }
+
+        private static long ParseCopyProgress(string copyProgress)
+        {
+            string[] progress = copyProgress.Split('/');
+            if (progress.Length != 2)
+            {
+                throw new ArgumentException($"Invalid copy progress - {copyProgress}");
+            }
+            return long.Parse(progress[0], CultureInfo.InvariantCulture);
         }
 
         internal async Task CopyStatusCheckAsync(bool waitEnabled = true)
@@ -375,7 +386,7 @@ namespace Azure.Storage.DataMovement
                         _dataTransfer.Id,
                         properties.CopyStatus.Value,
                         properties.CopyId,
-                        ParseRangeTotalLength(properties.CopyProgress),
+                        ParseCopyProgress(properties.CopyProgress),
                         false,
                         _cancellationToken)).ConfigureAwait(false);
                 }
@@ -383,32 +394,6 @@ namespace Azure.Storage.DataMovement
                 {
                     await InvokeFailedArg(
                         new Exception("Get properties failed to return copy progress on the destination.")).ConfigureAwait(false);
-                }
-            }
-            catch (Exception ex)
-            {
-                await InvokeFailedArg(ex).ConfigureAwait(false);
-            }
-        }
-
-        internal async Task QueueGetPropertiesAsync()
-        {
-            try
-            {
-                StorageResourceProperties properties = await _destinationResource.GetPropertiesAsync().ConfigureAwait(false);
-                if (properties.CopyStatus.HasValue)
-                {
-                    await _copyStatusHandler.InvokeEvent(new CopyStatusEventArgs(
-                        _dataTransfer.Id,
-                        properties.CopyStatus.Value,
-                        properties.CopyId,
-                        ParseRangeTotalLength(properties.CopyProgress),
-                        false,
-                        _cancellationToken)).ConfigureAwait(false);
-                }
-                else
-                {
-                    await InvokeFailedArg(new Exception("Error: Get Properties request does not contain a copy status on the destination.")).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)

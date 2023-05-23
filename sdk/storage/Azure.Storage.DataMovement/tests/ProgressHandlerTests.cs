@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.DataMovement.Models;
 using NUnit.Framework;
@@ -132,10 +133,12 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
-        public async Task ProgressHandler_AsyncCopy()
+        [TestCase(TransferCopyMethod.AsyncCopy)]
+        [TestCase(TransferCopyMethod.SyncCopy)]
+        public async Task ProgressHandler_Copy(TransferCopyMethod copyMethod)
         {
             // Arrange
-            await using DisposingBlobContainer source = await GetTestContainerAsync();
+            await using DisposingBlobContainer source = await GetTestContainerAsync(publicAccessType: PublicAccessType.Blob);
             await using DisposingBlobContainer destination = await GetTestContainerAsync();
 
             await PopulateTestContainer(source.Container);
@@ -146,7 +149,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destination.Container,
                 new BlobStorageResourceContainerOptions()
                 {
-                    CopyMethod = TransferCopyMethod.AsyncCopy
+                    CopyMethod = copyMethod
                 });
 
             // Act / Assert
