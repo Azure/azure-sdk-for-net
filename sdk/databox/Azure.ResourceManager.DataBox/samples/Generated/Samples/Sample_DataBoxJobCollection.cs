@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataBox.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_JobsListByResourceGroup()
         {
-            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-02-01/examples/JobsListByResourceGroup.json
+            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsListByResourceGroup.json
             // this example is just showing the usage of "Jobs_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
-            string resourceGroupName = "SdkRg5154";
+            string subscriptionId = "YourSubscriptionId";
+            string resourceGroupName = "YourResourceGroupName";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataBox.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_JobsGet()
         {
-            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-02-01/examples/JobsGet.json
+            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsGet.json
             // this example is just showing the usage of "Jobs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
-            string resourceGroupName = "SdkRg5154";
+            string subscriptionId = "YourSubscriptionId";
+            string resourceGroupName = "YourResourceGroupName";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBox.Samples
             DataBoxJobCollection collection = resourceGroupResource.GetDataBoxJobs();
 
             // invoke the operation
-            string jobName = "SdkJob952";
+            string jobName = "TestJobName1";
             string expand = "details";
             DataBoxJobResource result = await collection.GetAsync(jobName, expand: expand);
 
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBox.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_JobsGet()
         {
-            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-02-01/examples/JobsGet.json
+            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsGet.json
             // this example is just showing the usage of "Jobs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
-            string resourceGroupName = "SdkRg5154";
+            string subscriptionId = "YourSubscriptionId";
+            string resourceGroupName = "YourResourceGroupName";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataBox.Samples
             DataBoxJobCollection collection = resourceGroupResource.GetDataBoxJobs();
 
             // invoke the operation
-            string jobName = "SdkJob952";
+            string jobName = "TestJobName1";
             string expand = "details";
             bool result = await collection.ExistsAsync(jobName, expand: expand);
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataBox.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_JobsGetCmk()
         {
-            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-02-01/examples/JobsGetCmk.json
+            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsGetCmk.json
             // this example is just showing the usage of "Jobs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
-            string resourceGroupName = "SdkRg7937";
+            string subscriptionId = "YourSubscriptionId";
+            string resourceGroupName = "YourResourceGroupName";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataBox.Samples
             DataBoxJobCollection collection = resourceGroupResource.GetDataBoxJobs();
 
             // invoke the operation
-            string jobName = "SdkJob1735";
+            string jobName = "TestJobName1";
             string expand = "details";
             DataBoxJobResource result = await collection.GetAsync(jobName, expand: expand);
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataBox.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_JobsGetCmk()
         {
-            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-02-01/examples/JobsGetCmk.json
+            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsGetCmk.json
             // this example is just showing the usage of "Jobs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -172,8 +172,8 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
-            string resourceGroupName = "SdkRg7937";
+            string subscriptionId = "YourSubscriptionId";
+            string resourceGroupName = "YourResourceGroupName";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DataBox.Samples
             DataBoxJobCollection collection = resourceGroupResource.GetDataBoxJobs();
 
             // invoke the operation
-            string jobName = "SdkJob1735";
+            string jobName = "TestJobName1";
             string expand = "details";
             bool result = await collection.ExistsAsync(jobName, expand: expand);
 
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DataBox.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_JobsGetCopyStuck()
         {
-            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-02-01/examples/JobsGetCopyStuck.json
+            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsGetCopyStuck.json
             // this example is just showing the usage of "Jobs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -203,8 +203,8 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
-            string resourceGroupName = "dmstestresource";
+            string subscriptionId = "YourSubscriptionId";
+            string resourceGroupName = "YourResourceGroupName";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DataBox.Samples
             DataBoxJobCollection collection = resourceGroupResource.GetDataBoxJobs();
 
             // invoke the operation
-            string jobName = "TJx-637505258985313014";
+            string jobName = "TestJobName1";
             string expand = "details";
             DataBoxJobResource result = await collection.GetAsync(jobName, expand: expand);
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataBox.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_JobsGetCopyStuck()
         {
-            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-02-01/examples/JobsGetCopyStuck.json
+            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsGetCopyStuck.json
             // this example is just showing the usage of "Jobs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -238,8 +238,8 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
-            string resourceGroupName = "dmstestresource";
+            string subscriptionId = "YourSubscriptionId";
+            string resourceGroupName = "YourResourceGroupName";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DataBox.Samples
             DataBoxJobCollection collection = resourceGroupResource.GetDataBoxJobs();
 
             // invoke the operation
-            string jobName = "TJx-637505258985313014";
+            string jobName = "TestJobName1";
             string expand = "details";
             bool result = await collection.ExistsAsync(jobName, expand: expand);
 
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DataBox.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_JobsGetExport()
         {
-            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-02-01/examples/JobsGetExport.json
+            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsGetExport.json
             // this example is just showing the usage of "Jobs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -269,8 +269,8 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
-            string resourceGroupName = "SdkRg8091";
+            string subscriptionId = "YourSubscriptionId";
+            string resourceGroupName = "YourResourceGroupName";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DataBox.Samples
             DataBoxJobCollection collection = resourceGroupResource.GetDataBoxJobs();
 
             // invoke the operation
-            string jobName = "SdkJob6429";
+            string jobName = "TestJobName1";
             string expand = "details";
             DataBoxJobResource result = await collection.GetAsync(jobName, expand: expand);
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DataBox.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_JobsGetExport()
         {
-            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-02-01/examples/JobsGetExport.json
+            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsGetExport.json
             // this example is just showing the usage of "Jobs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -304,8 +304,8 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
-            string resourceGroupName = "SdkRg8091";
+            string subscriptionId = "YourSubscriptionId";
+            string resourceGroupName = "YourResourceGroupName";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.DataBox.Samples
             DataBoxJobCollection collection = resourceGroupResource.GetDataBoxJobs();
 
             // invoke the operation
-            string jobName = "SdkJob6429";
+            string jobName = "TestJobName1";
             string expand = "details";
             bool result = await collection.ExistsAsync(jobName, expand: expand);
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.DataBox.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_JobsGetWaitingForAction()
         {
-            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-02-01/examples/JobsGetWaitingForAction.json
+            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsGetWaitingForAction.json
             // this example is just showing the usage of "Jobs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -335,8 +335,8 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
-            string resourceGroupName = "dmstestresource";
+            string subscriptionId = "YourSubscriptionId";
+            string resourceGroupName = "YourResourceGroupName";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.DataBox.Samples
             DataBoxJobCollection collection = resourceGroupResource.GetDataBoxJobs();
 
             // invoke the operation
-            string jobName = "TJx-637505258985313014";
+            string jobName = "TestJobName1";
             string expand = "details";
             DataBoxJobResource result = await collection.GetAsync(jobName, expand: expand);
 
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.DataBox.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_JobsGetWaitingForAction()
         {
-            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-02-01/examples/JobsGetWaitingForAction.json
+            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsGetWaitingForAction.json
             // this example is just showing the usage of "Jobs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -370,8 +370,8 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
-            string resourceGroupName = "dmstestresource";
+            string subscriptionId = "YourSubscriptionId";
+            string resourceGroupName = "YourResourceGroupName";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.DataBox.Samples
             DataBoxJobCollection collection = resourceGroupResource.GetDataBoxJobs();
 
             // invoke the operation
-            string jobName = "TJx-637505258985313014";
+            string jobName = "TestJobName1";
             string expand = "details";
             bool result = await collection.ExistsAsync(jobName, expand: expand);
 
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.DataBox.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_JobsCreate()
         {
-            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-02-01/examples/JobsCreate.json
+            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsCreate.json
             // this example is just showing the usage of "Jobs_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -401,8 +401,8 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
-            string resourceGroupName = "SdkRg5154";
+            string subscriptionId = "YourSubscriptionId";
+            string resourceGroupName = "YourResourceGroupName";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -410,28 +410,28 @@ namespace Azure.ResourceManager.DataBox.Samples
             DataBoxJobCollection collection = resourceGroupResource.GetDataBoxJobs();
 
             // invoke the operation
-            string jobName = "SdkJob952";
+            string jobName = "TestJobName1";
             DataBoxJobData data = new DataBoxJobData(new AzureLocation("westus"), DataBoxJobTransferType.ImportToAzure, new DataBoxSku(DataBoxSkuName.DataBox))
             {
-                Details = new DataBoxJobDetails(new DataBoxContactDetails("Public SDK Test", "1234567890", new string[]
+                Details = new DataBoxJobDetails(new DataBoxContactDetails("XXXX XXXX", "0000000000", new string[]
             {
-"testing@microsoft.com"
+"xxxx@xxxx.xxx"
             })
                 {
-                    PhoneExtension = "1234",
+                    PhoneExtension = "",
                 })
                 {
-                    ShippingAddress = new DataBoxShippingAddress("16 TOWNSEND ST", "US", "94107")
+                    ShippingAddress = new DataBoxShippingAddress("XXXX XXXX", "XX", "00000")
                     {
-                        StreetAddress2 = "Unit 1",
-                        City = "San Francisco",
-                        StateOrProvince = "CA",
-                        CompanyName = "Microsoft",
+                        StreetAddress2 = "XXXX XXXX",
+                        City = "XXXX XXXX",
+                        StateOrProvince = "XX",
+                        CompanyName = "XXXX XXXX",
                         AddressType = DataBoxShippingAddressType.Commercial,
                     },
                     DataImportDetails =
 {
-new DataImportDetails(new DataBoxStorageAccountDetails(new ResourceIdentifier("/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourcegroups/databoxbvt/providers/Microsoft.Storage/storageAccounts/databoxbvttestaccount")))
+new DataImportDetails(new DataBoxStorageAccountDetails(new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourcegroups/YourResourceGroupName/providers/Microsoft.Storage/storageAccounts/YourStorageAccountName")))
 },
                 },
             };
@@ -450,7 +450,7 @@ new DataImportDetails(new DataBoxStorageAccountDetails(new ResourceIdentifier("/
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_JobsCreateDevicePassword()
         {
-            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-02-01/examples/JobsCreateDevicePassword.json
+            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsCreateDevicePassword.json
             // this example is just showing the usage of "Jobs_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -460,8 +460,8 @@ new DataImportDetails(new DataBoxStorageAccountDetails(new ResourceIdentifier("/
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
-            string resourceGroupName = "SdkRg7478";
+            string subscriptionId = "YourSubscriptionId";
+            string resourceGroupName = "YourResourceGroupName";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -469,29 +469,29 @@ new DataImportDetails(new DataBoxStorageAccountDetails(new ResourceIdentifier("/
             DataBoxJobCollection collection = resourceGroupResource.GetDataBoxJobs();
 
             // invoke the operation
-            string jobName = "SdkJob9640";
+            string jobName = "TestJobName1";
             DataBoxJobData data = new DataBoxJobData(new AzureLocation("westus"), DataBoxJobTransferType.ImportToAzure, new DataBoxSku(DataBoxSkuName.DataBox))
             {
-                Details = new DataBoxJobDetails(new DataBoxContactDetails("Public SDK Test", "1234567890", new string[]
+                Details = new DataBoxJobDetails(new DataBoxContactDetails("XXXX XXXX", "0000000000", new string[]
             {
-"testing@microsoft.com"
+"xxxx@xxxx.xxx"
             })
                 {
-                    PhoneExtension = "1234",
+                    PhoneExtension = "",
                 })
                 {
                     DevicePassword = "<devicePassword>",
-                    ShippingAddress = new DataBoxShippingAddress("16 TOWNSEND ST", "US", "94107")
+                    ShippingAddress = new DataBoxShippingAddress("XXXX XXXX", "XX", "00000")
                     {
-                        StreetAddress2 = "Unit 1",
-                        City = "San Francisco",
-                        StateOrProvince = "CA",
-                        CompanyName = "Microsoft",
+                        StreetAddress2 = "XXXX XXXX",
+                        City = "XXXX XXXX",
+                        StateOrProvince = "XX",
+                        CompanyName = "XXXX XXXX",
                         AddressType = DataBoxShippingAddressType.Commercial,
                     },
                     DataImportDetails =
 {
-new DataImportDetails(new DataBoxStorageAccountDetails(new ResourceIdentifier("/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/databoxbvt1/providers/Microsoft.Storage/storageAccounts/databoxbvttestaccount2"))
+new DataImportDetails(new DataBoxStorageAccountDetails(new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Storage/storageAccounts/YourStorageAccountName"))
 {
 SharePassword = "<sharePassword>",
 })
@@ -513,7 +513,7 @@ SharePassword = "<sharePassword>",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_JobsCreateDoubleEncryption()
         {
-            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-02-01/examples/JobsCreateDoubleEncryption.json
+            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsCreateDoubleEncryption.json
             // this example is just showing the usage of "Jobs_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -523,8 +523,8 @@ SharePassword = "<sharePassword>",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
-            string resourceGroupName = "SdkRg608";
+            string subscriptionId = "YourSubscriptionId";
+            string resourceGroupName = "YourResourceGroupName";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -532,32 +532,35 @@ SharePassword = "<sharePassword>",
             DataBoxJobCollection collection = resourceGroupResource.GetDataBoxJobs();
 
             // invoke the operation
-            string jobName = "SdkJob6599";
+            string jobName = "TestJobName1";
             DataBoxJobData data = new DataBoxJobData(new AzureLocation("westus"), DataBoxJobTransferType.ImportToAzure, new DataBoxSku(DataBoxSkuName.DataBox))
             {
-                Details = new DataBoxJobDetails(new DataBoxContactDetails("Public SDK Test", "1234567890", new string[]
+                Details = new DataBoxJobDetails(new DataBoxContactDetails("XXXX XXXX", "0000000000", new string[]
             {
-"testing@microsoft.com"
+"xxxx@xxxx.xxx"
             })
                 {
-                    PhoneExtension = "1234",
+                    PhoneExtension = "",
                 })
                 {
-                    ShippingAddress = new DataBoxShippingAddress("16 TOWNSEND ST", "US", "94107")
+                    ShippingAddress = new DataBoxShippingAddress("XXXX XXXX", "XX", "00000")
                     {
-                        StreetAddress2 = "Unit 1",
-                        City = "San Francisco",
-                        StateOrProvince = "CA",
-                        CompanyName = "Microsoft",
+                        StreetAddress2 = "XXXX XXXX",
+                        City = "XXXX XXXX",
+                        StateOrProvince = "XX",
+                        CompanyName = "XXXX XXXX",
                         AddressType = DataBoxShippingAddressType.Commercial,
                     },
                     DataImportDetails =
 {
-new DataImportDetails(new DataBoxStorageAccountDetails(new ResourceIdentifier("/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourcegroups/databoxbvt/providers/Microsoft.Storage/storageAccounts/databoxbvttestaccount")))
+new DataImportDetails(new DataBoxStorageAccountDetails(new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourcegroups/YourResourceGroupName/providers/Microsoft.Storage/storageAccounts/YourStorageAccountName")))
 },
                     Preferences = new DataBoxOrderPreferences()
                     {
-                        DoubleEncryption = DataBoxDoubleEncryption.Enabled,
+                        EncryptionPreferences = new DataBoxEncryptionPreferences()
+                        {
+                            DoubleEncryption = DataBoxDoubleEncryption.Enabled,
+                        },
                     },
                 },
             };
@@ -576,7 +579,7 @@ new DataImportDetails(new DataBoxStorageAccountDetails(new ResourceIdentifier("/
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_JobsCreateExport()
         {
-            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-02-01/examples/JobsCreateExport.json
+            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsCreateExport.json
             // this example is just showing the usage of "Jobs_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -586,8 +589,8 @@ new DataImportDetails(new DataBoxStorageAccountDetails(new ResourceIdentifier("/
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
-            string resourceGroupName = "SdkRg8091";
+            string subscriptionId = "YourSubscriptionId";
+            string resourceGroupName = "YourResourceGroupName";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -595,23 +598,23 @@ new DataImportDetails(new DataBoxStorageAccountDetails(new ResourceIdentifier("/
             DataBoxJobCollection collection = resourceGroupResource.GetDataBoxJobs();
 
             // invoke the operation
-            string jobName = "SdkJob6429";
+            string jobName = "TestJobName1";
             DataBoxJobData data = new DataBoxJobData(new AzureLocation("westus"), DataBoxJobTransferType.ExportFromAzure, new DataBoxSku(DataBoxSkuName.DataBox))
             {
-                Details = new DataBoxJobDetails(new DataBoxContactDetails("Public SDK Test", "1234567890", new string[]
+                Details = new DataBoxJobDetails(new DataBoxContactDetails("XXXX XXXX", "0000000000", new string[]
             {
-"testing@microsoft.com"
+"xxxx@xxxx.xxx"
             })
                 {
-                    PhoneExtension = "1234",
+                    PhoneExtension = "",
                 })
                 {
-                    ShippingAddress = new DataBoxShippingAddress("16 TOWNSEND ST", "US", "94107")
+                    ShippingAddress = new DataBoxShippingAddress("XXXX XXXX", "XX", "00000")
                     {
-                        StreetAddress2 = "Unit 1",
-                        City = "San Francisco",
-                        StateOrProvince = "CA",
-                        CompanyName = "Microsoft",
+                        StreetAddress2 = "XXXX XXXX",
+                        City = "XXXX XXXX",
+                        StateOrProvince = "XX",
+                        CompanyName = "XXXX XXXX",
                         AddressType = DataBoxShippingAddressType.Commercial,
                     },
                     DataExportDetails =
@@ -623,7 +626,7 @@ TransferAllDetailsInclude = new TransferAllDetails(DataAccountType.StorageAccoun
 TransferAllBlobs = true,
 TransferAllFiles = true,
 },
-},new DataBoxStorageAccountDetails(new ResourceIdentifier("/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/akvenkat/providers/Microsoft.Storage/storageAccounts/aaaaaa2")))
+},new DataBoxStorageAccountDetails(new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Storage/storageAccounts/YourStorageAccountName")))
 },
                 },
             };
@@ -642,7 +645,7 @@ TransferAllFiles = true,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_JobsCreateWithUserAssignedIdentity()
         {
-            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-02-01/examples/JobsCreateWithUserAssignedIdentity.json
+            // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/JobsCreateWithUserAssignedIdentity.json
             // this example is just showing the usage of "Jobs_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -652,8 +655,8 @@ TransferAllFiles = true,
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
-            string resourceGroupName = "SdkRg7552";
+            string subscriptionId = "YourSubscriptionId";
+            string resourceGroupName = "YourResourceGroupName";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -661,35 +664,35 @@ TransferAllFiles = true,
             DataBoxJobCollection collection = resourceGroupResource.GetDataBoxJobs();
 
             // invoke the operation
-            string jobName = "SdkJob5337";
+            string jobName = "TestJobName1";
             DataBoxJobData data = new DataBoxJobData(new AzureLocation("westus"), DataBoxJobTransferType.ImportToAzure, new DataBoxSku(DataBoxSkuName.DataBox))
             {
-                Details = new DataBoxJobDetails(new DataBoxContactDetails("Public SDK Test", "1234567890", new string[]
+                Details = new DataBoxJobDetails(new DataBoxContactDetails("XXXX XXXX", "0000000000", new string[]
             {
-"testing@microsoft.com"
+"xxxx@xxxx.xxx"
             })
                 {
-                    PhoneExtension = "1234",
+                    PhoneExtension = "",
                 })
                 {
-                    ShippingAddress = new DataBoxShippingAddress("16 TOWNSEND ST", "US", "94107")
+                    ShippingAddress = new DataBoxShippingAddress("XXXX XXXX", "XX", "00000")
                     {
-                        StreetAddress2 = "Unit 1",
-                        City = "San Francisco",
-                        StateOrProvince = "CA",
-                        CompanyName = "Microsoft",
+                        StreetAddress2 = "XXXX XXXX",
+                        City = "XXXX XXXX",
+                        StateOrProvince = "XX",
+                        CompanyName = "XXXX XXXX",
                         AddressType = DataBoxShippingAddressType.Commercial,
                     },
                     DataImportDetails =
 {
-new DataImportDetails(new DataBoxStorageAccountDetails(new ResourceIdentifier("/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/databoxbvt1/providers/Microsoft.Storage/storageAccounts/databoxbvttestaccount2")))
+new DataImportDetails(new DataBoxStorageAccountDetails(new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Storage/storageAccounts/YourStorageAccountName")))
 },
                 },
                 Identity = new ManagedServiceIdentity("UserAssigned")
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/akvenkat/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdkIdentity")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testIdentity")] = new UserAssignedIdentity(),
 },
                 },
             };

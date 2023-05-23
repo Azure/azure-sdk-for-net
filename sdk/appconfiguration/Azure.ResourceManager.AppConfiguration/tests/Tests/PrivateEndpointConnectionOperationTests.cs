@@ -32,8 +32,6 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [SetUp]
         public async Task TestSetUp()
         {
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-            {
                 Initialize();
                 string groupName = Recording.GenerateAssetName(ResourceGroupPrefix);
                 string VnetName = Recording.GenerateAssetName("vnetname");
@@ -82,12 +80,11 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                             RequestMessage = "Please approve my connection",
                         }
                         },
-                    Subnet = new SubnetData() { Id = subnetID}
+                    Subnet = new SubnetData() { Id = subnetID }
                 };
                 PrivateEndpointResource = (await ResGroup.GetPrivateEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, EndpointName, privateEndpointData)).Value;
                 List<AppConfigurationPrivateEndpointConnectionResource> connections = await ConfigStore.GetAppConfigurationPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
                 Connection = connections.FirstOrDefault();
-            }
         }
 
         [Test]
@@ -110,7 +107,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task GetAvailableLocationsTest()
         {
-            IEnumerable<AzureLocation> locations =  (await Connection.GetAvailableLocationsAsync()).Value;
+            IEnumerable<AzureLocation> locations = (await Connection.GetAvailableLocationsAsync()).Value;
 
             Assert.IsNotEmpty(locations);
         }

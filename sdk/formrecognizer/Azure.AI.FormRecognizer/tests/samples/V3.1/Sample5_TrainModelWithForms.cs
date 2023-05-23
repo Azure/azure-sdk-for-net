@@ -28,7 +28,7 @@ namespace Azure.AI.FormRecognizer.Samples
 #if SNIPPET
             Uri trainingFileUri = new Uri("<trainingFileUri>");
 #else
-            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrlV2);
+            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
             FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 

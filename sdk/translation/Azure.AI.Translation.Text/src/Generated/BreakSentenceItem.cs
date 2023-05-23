@@ -37,7 +37,7 @@ namespace Azure.AI.Translation.Text
         internal BreakSentenceItem(DetectedLanguage detectedLanguage, IReadOnlyList<int> sentLen)
         {
             DetectedLanguage = detectedLanguage;
-            SentLen = sentLen.ToList();
+            SentLen = sentLen;
         }
 
         /// <summary> The detectedLanguage property is only present in the result object when language auto-detection is requested. </summary>

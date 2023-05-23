@@ -412,7 +412,8 @@ namespace Azure.Core.Pipeline
 
                 public bool RequestRequiresNewToken(TokenRequestContext context) =>
                     (context.Scopes != null && !context.Scopes.AsSpan().SequenceEqual(CurrentContext.Scopes.AsSpan())) ||
-                    (context.Claims != null && !string.Equals(context.Claims, CurrentContext.Claims));
+                    (context.Claims != null && !string.Equals(context.Claims, CurrentContext.Claims)) ||
+                    (context.TenantId != null && !string.Equals(context.TenantId, CurrentContext.TenantId));
 
                 public bool BackgroundTokenAcquiredSuccessfully(DateTimeOffset now) =>
                     BackgroundUpdateTcs != null &&

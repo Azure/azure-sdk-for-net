@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Workloads.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
+            writer.WriteStringValue(FileShareId);
             writer.WritePropertyName("privateEndpointId"u8);
             writer.WriteStringValue(PrivateEndpointId);
             writer.WritePropertyName("configurationType"u8);
@@ -30,19 +30,19 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            string id = default;
-            string privateEndpointId = default;
+            ResourceIdentifier id = default;
+            ResourceIdentifier privateEndpointId = default;
             ConfigurationType configurationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("privateEndpointId"u8))
                 {
-                    privateEndpointId = property.Value.GetString();
+                    privateEndpointId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("configurationType"u8))

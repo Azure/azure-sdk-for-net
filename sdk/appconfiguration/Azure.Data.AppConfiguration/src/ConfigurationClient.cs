@@ -175,9 +175,9 @@ namespace Azure.Data.AppConfiguration
                     case 201:
                         return await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false);
                     case 412:
-                        throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(null, "Setting was already present.")).ConfigureAwait(false);
+                        throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser());
                     default:
-                        throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+                        throw new RequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -214,9 +214,9 @@ namespace Azure.Data.AppConfiguration
                     case 201:
                         return CreateResponse(response);
                     case 412:
-                        throw ClientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "Setting was already present."));
+                        throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser());
                     default:
-                        throw ClientDiagnostics.CreateRequestFailedException(response);
+                        throw new RequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -283,10 +283,10 @@ namespace Azure.Data.AppConfiguration
                 return response.Status switch
                 {
                     200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
-                    409 => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(null, "The setting is read only")).ConfigureAwait(false),
+                    409 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
 
                     // Throws on 412 if resource was modified.
-                    _ => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false),
+                    _ => throw new RequestFailedException(response),
                 };
             }
             catch (Exception e)
@@ -326,10 +326,10 @@ namespace Azure.Data.AppConfiguration
                 return response.Status switch
                 {
                     200 => CreateResponse(response),
-                    409 => throw ClientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only")),
+                    409 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
 
                     // Throws on 412 if resource was modified.
-                    _ => throw ClientDiagnostics.CreateRequestFailedException(response),
+                    _ => throw new RequestFailedException(response),
                 };
             }
             catch (Exception e)
@@ -415,10 +415,10 @@ namespace Azure.Data.AppConfiguration
                 {
                     200 => response,
                     204 => response,
-                    409 => throw ClientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only")),
+                    409 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
 
                     // Throws on 412 if resource was modified.
-                    _ => throw ClientDiagnostics.CreateRequestFailedException(response)
+                    _ => throw new RequestFailedException(response)
                 };
             }
             catch (Exception e)
@@ -444,10 +444,10 @@ namespace Azure.Data.AppConfiguration
                 {
                     200 => response,
                     204 => response,
-                    409 => throw ClientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only.")),
+                    409 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
 
                     // Throws on 412 if resource was modified.
-                    _ => throw ClientDiagnostics.CreateRequestFailedException(response)
+                    _ => throw new RequestFailedException(response)
                 };
             }
             catch (Exception e)
@@ -569,7 +569,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
                     304 => CreateResourceModifiedResponse(response),
-                    _ => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false),
+                    _ => throw new RequestFailedException(response),
                 };
             }
             catch (Exception e)
@@ -605,7 +605,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     200 => CreateResponse(response),
                     304 => CreateResourceModifiedResponse(response),
-                    _ => throw ClientDiagnostics.CreateRequestFailedException(response),
+                    _ => throw new RequestFailedException(response),
                 };
             }
             catch (Exception e)
@@ -1370,9 +1370,7 @@ namespace Azure.Data.AppConfiguration
                     200 => async
                         ? await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false)
                         : CreateResponse(response),
-                    _ => throw (async
-                        ? await ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false)
-                        : ClientDiagnostics.CreateRequestFailedException(response))
+                    _ => throw new RequestFailedException(response)
                 };
             }
             catch (Exception e)
@@ -1619,6 +1617,28 @@ namespace Azure.Data.AppConfiguration
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, after, select, status, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSnapshotsNextPageRequest(nextLink, name, after, select, status, context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", context);
+        }
+
+        private class ConfigurationRequestFailedDetailsParser : RequestFailedDetailsParser
+        {
+            public override bool TryParse(Response response, out ResponseError error, out IDictionary<string, string> data)
+            {
+                switch (response.Status)
+                {
+                    case 409:
+                        error = new ResponseError(null, "The setting is read only");
+                        data = null;
+                        return true;
+                    case 412:
+                        error = new ResponseError(null, "Setting was already present.");
+                        data = null;
+                        return true;
+                    default:
+                        error = null;
+                        data = null;
+                        return false;
+                }
+            }
         }
     }
 }

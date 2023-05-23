@@ -42,6 +42,15 @@ namespace Azure.Storage
             public byte[] StorageCrc64AsArray => StorageCrc64.IsEmpty ? null : StorageCrc64.ToArray();
         }
 
+        internal static int GetHashSizeInBytes(StorageChecksumAlgorithm algorithm)
+            => algorithm.ResolveAuto() switch
+            {
+                StorageChecksumAlgorithm.None => 0,
+                StorageChecksumAlgorithm.MD5 => Constants.MD5SizeInBytes,
+                StorageChecksumAlgorithm.StorageCrc64 => Constants.StorageCrc64SizeInBytes,
+                _ => throw Errors.InvalidArgument(nameof(algorithm))
+            };
+
         internal static UploadTransferValidationOptions ToUploadTransferValidationOptions(this GetHashResult hashResult)
         {
             if (hashResult == null)
@@ -358,6 +367,20 @@ namespace Azure.Storage
                     => new NonCryptographicHashAlgorithmHasher(StorageCrc64HashAlgorithm.Create()),
                 _ => throw Errors.InvalidArgument(nameof(algorithm))
             };
+        }
+
+        public static (ReadOnlyMemory<byte> Checksum, StorageChecksumAlgorithm Algorithm) GetResponseChecksumOrDefault(Response response)
+        {
+            if (response.Headers.TryGetValue("x-ms-content-crc64", out byte[] crc))
+            {
+                return (crc, StorageChecksumAlgorithm.StorageCrc64);
+            }
+            if (response.Headers.TryGetValue("Content-MD5", out byte[] md5))
+            {
+                return (md5, StorageChecksumAlgorithm.MD5);
+            }
+
+            return (ReadOnlyMemory<byte>.Empty, StorageChecksumAlgorithm.None);
         }
     }
 }
