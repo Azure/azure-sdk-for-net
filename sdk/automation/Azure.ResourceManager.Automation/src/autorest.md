@@ -130,6 +130,7 @@ rename-mapping:
   WindowsUpdateClasses: WindowsUpdateClassification
   WindowsProperties.excludedKbNumbers: ExcludedKBNumbers
   WindowsProperties.includedKbNumbers: IncludedKBNumbers
+  WebhookProperties.uri: uriString
 
 prepend-rp-prefix:
   - Certificate
