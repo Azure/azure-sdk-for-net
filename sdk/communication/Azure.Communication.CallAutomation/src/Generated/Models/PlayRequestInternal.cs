@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Communication;
 using Azure.Core;
 
@@ -16,18 +17,18 @@ namespace Azure.Communication.CallAutomation
     internal partial class PlayRequestInternal
     {
         /// <summary> Initializes a new instance of PlayRequestInternal. </summary>
-        /// <param name="playSourceInfo"> The source of the audio to be played. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="playSourceInfo"/> is null. </exception>
-        public PlayRequestInternal(PlaySourceInternal playSourceInfo)
+        /// <param name="playSource"> The source of the audio to be played. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="playSource"/> is null. </exception>
+        public PlayRequestInternal(IEnumerable<PlaySourceInternal> playSource)
         {
-            Argument.AssertNotNull(playSourceInfo, nameof(playSourceInfo));
+            Argument.AssertNotNull(playSource, nameof(playSource));
 
-            PlaySourceInfo = playSourceInfo;
+            PlaySource = playSource.ToList();
             PlayTo = new ChangeTrackingList<CommunicationIdentifierModel>();
         }
 
         /// <summary> The source of the audio to be played. </summary>
-        public PlaySourceInternal PlaySourceInfo { get; }
+        public IList<PlaySourceInternal> PlaySource { get; }
         /// <summary> Defines options for playing the audio. </summary>
         public PlayOptionsInternal PlayOptions { get; set; }
         /// <summary> The value to identify context of the operation. </summary>

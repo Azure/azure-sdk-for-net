@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -13,7 +14,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// A PlaySource object representing the source to play.
         /// </summary>
-        public PlaySource PlaySource { get; }
+        public IReadOnlyList<PlaySource> PlaySources { get; }
 
         /// <summary>
         /// The option to play the provided audio source in loop when set to true.
@@ -30,7 +31,16 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public PlayToAllOptions(PlaySource playSource)
         {
-            PlaySource = playSource;
+            List<PlaySource> playSources = new List<PlaySource>() { playSource };
+            PlaySources = playSources;
+        }
+
+        /// <summary>
+        /// Creates a new PlayToAllOptions object with list of play sources.
+        /// </summary>
+        public PlayToAllOptions(IEnumerable<PlaySource> playSources)
+        {
+            PlaySources = playSources.ToList();
         }
     }
 }
