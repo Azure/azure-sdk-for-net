@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountResource> GetComponentLinkedStorageAccount(Azure.ResourceManager.ApplicationInsights.Models.StorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountResource>> GetComponentLinkedStorageAccountAsync(Azure.ResourceManager.ApplicationInsights.Models.StorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountCollection GetComponentLinkedStorageAccounts() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentQuotaStatus> GetComponentQuotaStatu(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentQuotaStatus>> GetComponentQuotaStatuAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentQuotaStatus> GetComponentQuotaStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentQuotaStatus>> GetComponentQuotaStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.Models.WorkItemConfiguration> GetDefaultWorkItemConfiguration(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.Models.WorkItemConfiguration>> GetDefaultWorkItemConfigurationAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentExportConfiguration> GetExportConfiguration(string exportId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public bool? IsMainFeature { get { throw null; } }
         public string MeterId { get { throw null; } }
         public string MeterRateFrequency { get { throw null; } }
-        public string ResouceId { get { throw null; } }
+        public string ResourceId { get { throw null; } }
         public string SupportedAddonFeatures { get { throw null; } }
         public string Title { get { throw null; } }
     }
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         private readonly int _dummyPrimitive;
         public ItemScopePath(string value) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.Models.ItemScopePath AnalyticsItems { get { throw null; } }
-        public static Azure.ResourceManager.ApplicationInsights.Models.ItemScopePath MyanalyticsItems { get { throw null; } }
+        public static Azure.ResourceManager.ApplicationInsights.Models.ItemScopePath MyAnalyticsItems { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ApplicationInsights.Models.ItemScopePath other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

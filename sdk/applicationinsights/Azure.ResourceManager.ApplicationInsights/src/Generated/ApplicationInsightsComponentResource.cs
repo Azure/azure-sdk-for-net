@@ -1459,9 +1459,9 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApplicationInsightsComponentQuotaStatus>> GetComponentQuotaStatuAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationInsightsComponentQuotaStatus>> GetComponentQuotaStatusAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _componentQuotaStatusClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.GetComponentQuotaStatu");
+            using var scope = _componentQuotaStatusClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.GetComponentQuotaStatus");
             scope.Start();
             try
             {
@@ -1489,9 +1489,9 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApplicationInsightsComponentQuotaStatus> GetComponentQuotaStatu(CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationInsightsComponentQuotaStatus> GetComponentQuotaStatus(CancellationToken cancellationToken = default)
         {
-            using var scope = _componentQuotaStatusClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.GetComponentQuotaStatu");
+            using var scope = _componentQuotaStatusClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.GetComponentQuotaStatus");
             scope.Start();
             try
             {

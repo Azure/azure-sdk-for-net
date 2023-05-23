@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="featureName"> The pricing feature name. </param>
         /// <param name="meterId"> The meter id used for the feature. </param>
         /// <param name="meterRateFrequency"> The meter rate for the feature&apos;s meter. </param>
-        /// <param name="resouceId"> Reserved, not used now. </param>
+        /// <param name="resourceId"> Reserved, not used now. </param>
         /// <param name="isHidden"> Reserved, not used now. </param>
         /// <param name="capabilities"> A list of Application Insights component feature capability. </param>
         /// <param name="title"> Display name of the feature. </param>
         /// <param name="isMainFeature"> Whether can apply addon feature on to it. </param>
         /// <param name="supportedAddonFeatures"> The add on features on main feature. </param>
-        internal ApplicationInsightsComponentFeature(string featureName, string meterId, string meterRateFrequency, string resouceId, bool? isHidden, IReadOnlyList<ApplicationInsightsComponentFeatureCapability> capabilities, string title, bool? isMainFeature, string supportedAddonFeatures)
+        internal ApplicationInsightsComponentFeature(string featureName, string meterId, string meterRateFrequency, string resourceId, bool? isHidden, IReadOnlyList<ApplicationInsightsComponentFeatureCapability> capabilities, string title, bool? isMainFeature, string supportedAddonFeatures)
         {
             FeatureName = featureName;
             MeterId = meterId;
             MeterRateFrequency = meterRateFrequency;
-            ResouceId = resouceId;
+            ResourceId = resourceId;
             IsHidden = isHidden;
             Capabilities = capabilities;
             Title = title;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> The meter rate for the feature&apos;s meter. </summary>
         public string MeterRateFrequency { get; }
         /// <summary> Reserved, not used now. </summary>
-        public string ResouceId { get; }
+        public string ResourceId { get; }
         /// <summary> Reserved, not used now. </summary>
         public bool? IsHidden { get; }
         /// <summary> A list of Application Insights component feature capability. </summary>

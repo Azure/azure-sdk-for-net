@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         private const string AnalyticsItemsValue = "analyticsItems";
-        private const string MyanalyticsItemsValue = "myanalyticsItems";
+        private const string MyAnalyticsItemsValue = "myanalyticsItems";
 
         /// <summary> analyticsItems. </summary>
         public static ItemScopePath AnalyticsItems { get; } = new ItemScopePath(AnalyticsItemsValue);
         /// <summary> myanalyticsItems. </summary>
-        public static ItemScopePath MyanalyticsItems { get; } = new ItemScopePath(MyanalyticsItemsValue);
+        public static ItemScopePath MyAnalyticsItems { get; } = new ItemScopePath(MyAnalyticsItemsValue);
         /// <summary> Determines if two <see cref="ItemScopePath"/> values are the same. </summary>
         public static bool operator ==(ItemScopePath left, ItemScopePath right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ItemScopePath"/> values are not the same. </summary>

@@ -707,7 +707,7 @@ Value = BinaryData.FromString("2017-09-01T00:00:00"),
         // ComponentCurrentBillingFeaturesGet
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetComponentQuotaStatu_ComponentCurrentBillingFeaturesGet()
+        public async Task GetComponentQuotaStatus_ComponentCurrentBillingFeaturesGet()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/QuotaStatusGet.json
             // this example is just showing the usage of "ComponentQuotaStatus_Get" operation, for the dependent resources, they will have to be created separately.
@@ -726,7 +726,7 @@ Value = BinaryData.FromString("2017-09-01T00:00:00"),
             ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
 
             // invoke the operation
-            ApplicationInsightsComponentQuotaStatus result = await applicationInsightsComponent.GetComponentQuotaStatuAsync();
+            ApplicationInsightsComponentQuotaStatus result = await applicationInsightsComponent.GetComponentQuotaStatusAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

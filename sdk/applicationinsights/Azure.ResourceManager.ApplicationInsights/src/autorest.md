@@ -67,6 +67,8 @@ rename-mapping:
   WorkItemCreateConfiguration.ValidateOnly: IsValidateOnly
   WebTest.properties.RetryEnabled: IsRetryEnabled
   WebTestPropertiesValidationRules.SSLCheck: CheckSsl
+  ApplicationInsightsComponentFeature.ResouceId: ResourceId
+  ItemScopePath.myanalyticsItems: MyAnalyticsItems
 
 directive:
   - from: webTestLocations_API.json
@@ -88,4 +90,6 @@ directive:
     transform: >
       delete $["x-ms-pageable"]
 
+override-operation-name:
+  ComponentQuotaStatus_Get: GetComponentQuotaStatus
 ```
