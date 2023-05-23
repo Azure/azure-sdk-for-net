@@ -277,7 +277,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                         _logger.LogDebug($"Partition Processor has waited MaxWaitTime since last invocation and is attempting to invoke function on all held events ({details})");
 
                         await TriggerExecute(triggerEvents, _mostRecentPartitionContext, backgroundCancellationTokenSource.Token).ConfigureAwait(false);
-                        await CheckpointAsync(triggerEvents.Last(), _mostRecentPartitionContext).ConfigureAwait(false);
+                        if (!backgroundCancellationTokenSource.Token.IsCancellationRequested)
+                        {
+                            await CheckpointAsync(triggerEvents.Last(), _mostRecentPartitionContext).ConfigureAwait(false);
+                        }
                     }
                     else
                     {
