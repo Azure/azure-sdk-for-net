@@ -22,28 +22,19 @@ namespace Azure.Communication.PhoneNumbers
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string UnknownValue = "unknown";
+        private const string OtherValue = "other";
         private const string GeographicValue = "geographic";
         private const string MobileValue = "mobile";
-        private const string PagingValue = "paging";
-        private const string FreePhoneValue = "freePhone";
-        private const string SpecialServicesValue = "specialServices";
-        private const string TestNumberValue = "testNumber";
-        private const string VoipValue = "voip";
 
+        /// <summary> unknown. </summary>
+        public static OperatorNumberType Unknown { get; } = new OperatorNumberType(UnknownValue);
+        /// <summary> other. </summary>
+        public static OperatorNumberType Other { get; } = new OperatorNumberType(OtherValue);
         /// <summary> geographic. </summary>
         public static OperatorNumberType Geographic { get; } = new OperatorNumberType(GeographicValue);
         /// <summary> mobile. </summary>
         public static OperatorNumberType Mobile { get; } = new OperatorNumberType(MobileValue);
-        /// <summary> paging. </summary>
-        public static OperatorNumberType Paging { get; } = new OperatorNumberType(PagingValue);
-        /// <summary> freePhone. </summary>
-        public static OperatorNumberType FreePhone { get; } = new OperatorNumberType(FreePhoneValue);
-        /// <summary> specialServices. </summary>
-        public static OperatorNumberType SpecialServices { get; } = new OperatorNumberType(SpecialServicesValue);
-        /// <summary> testNumber. </summary>
-        public static OperatorNumberType TestNumber { get; } = new OperatorNumberType(TestNumberValue);
-        /// <summary> voip. </summary>
-        public static OperatorNumberType Voip { get; } = new OperatorNumberType(VoipValue);
         /// <summary> Determines if two <see cref="OperatorNumberType"/> values are the same. </summary>
         public static bool operator ==(OperatorNumberType left, OperatorNumberType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperatorNumberType"/> values are not the same. </summary>

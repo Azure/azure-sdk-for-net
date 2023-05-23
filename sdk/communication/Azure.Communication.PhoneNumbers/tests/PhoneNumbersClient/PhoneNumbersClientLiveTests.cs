@@ -440,6 +440,36 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsNotNull(offerings);
         }
 
+        [Test]
+        public async Task SearchOperatorInformation()
+        {
+            var client = CreateClient();
+            var phoneNumber = "+14251234567";
+
+            var operatorInfoResults = await client.SearchOperatorInformationAsync(new[] { phoneNumber });
+            Assert.IsNotNull(operatorInfoResults);
+            Assert.IsNotNull(operatorInfoResults.Value?.Results);
+            Assert.AreEqual(1, operatorInfoResults.Value?.Results.Count);
+            Assert.AreEqual(phoneNumber, operatorInfoResults.Value?.Results[0].PhoneNumber);
+            Console.WriteLine("OperatorInfo " + operatorInfoResults.Value?.Results[0].ToString());
+        }
+
+        [Test]
+        public async Task SearchOperatorInformation_TooManyPhoneNumbers()
+        {
+            var client = CreateClient();
+
+            try
+            {
+                var operatorInfoResults = await client.SearchOperatorInformationAsync(new[] { "+14251234567", "+12061234567" });
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
+                Assert.NotNull(ex.Message);
+            }
+        }
+
         private static bool IsSuccess(int statusCode)
         {
             return statusCode >= 200 && statusCode < 300;
