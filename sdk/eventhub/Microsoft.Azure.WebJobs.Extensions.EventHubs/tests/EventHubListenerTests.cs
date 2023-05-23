@@ -380,7 +380,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         }
 
         /// <summary>
-        /// If the partition processor token is signaled, we should not checkpoint as the partition ownership
+        /// If the partition processor token is signaled, we should NOT checkpoint as the partition ownership
         /// has been lost.
         /// </summary>
         [Test]
@@ -428,10 +428,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         }
 
         /// <summary>
-        /// If function execution succeeds when the function host is shutting down, we should still checkpoint.
+        /// If function execution succeeds when the function host is shutting down, we should NOT checkpoint.
         /// </summary>
         [Test]
-        public async Task ProcessEvents_Succeeds_ShuttingDown_DoesCheckpoint()
+        public async Task ProcessEvents_Succeeds_ShuttingDown_DoesNotCheckpoint()
         {
             var partitionContext = EventHubTests.GetPartitionContext();
             var options = new EventHubOptions();
@@ -468,7 +468,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             processor.Verify(
                 p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
-                Times.Once);
+                Times.Never);
         }
 
         /// <summary>
