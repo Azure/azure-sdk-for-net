@@ -14,7 +14,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Tests
         [Test]
         public void ParameterBindingDataTest()
         {
-            var lockToken = Guid.NewGuid();
             var input = new EventData(BinaryData.FromString("body"))
             {
                 ContentType = "contentType",
@@ -27,10 +26,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Tests
             Assert.AreEqual("application/octet-stream", bindingData.ContentType);
             Assert.AreEqual("1.0", bindingData.Version);
             Assert.AreEqual("AzureEventHubsEventData", bindingData.Source);
-
-            var bytes = bindingData.Content.ToMemory();
-            var lockTokenBytes = bytes.Slice(0, 16).ToArray();
-            Assert.AreEqual(lockToken.ToByteArray(), lockTokenBytes);
 
             var output = new EventData(AmqpAnnotatedMessage.FromBytes(bindingData.Content));
 
