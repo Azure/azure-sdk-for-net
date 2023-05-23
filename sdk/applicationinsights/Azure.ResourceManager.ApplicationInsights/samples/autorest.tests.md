@@ -10,4 +10,6 @@ require: ../src/autorest.md
 include-x-ms-examples-original-file: true
 testgen:
   sample: true
+  skipped-operations:
+  - LiveToken_Get
 ```
