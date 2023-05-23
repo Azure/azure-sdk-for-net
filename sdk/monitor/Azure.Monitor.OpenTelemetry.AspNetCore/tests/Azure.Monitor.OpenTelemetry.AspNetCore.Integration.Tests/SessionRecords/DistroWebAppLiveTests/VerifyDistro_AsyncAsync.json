@@ -1,0 +1,261 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/33283218-aeb0-4388-b0c0-77a9bf80a8d2/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "179",
+        "Content-Type": "application/json",
+        "traceparent": "00-8b60f4252a8c23d80a9967e7fc1156b2-deeb8c16935db2a3-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "682519235e002f292833495525a3e9b5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "query": "AppDependencies | where Data == \u0027http://localhost:9998/\u0027 | where AppRoleName == \u0027DistroWebAppLiveTests\u0027 | top 1 by TimeGenerated",
+        "timespan": "PT30M"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
+        "Age": "1",
+        "Connection": "keep-alive",
+        "Content-Length": "2425",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 23 May 2023 23:09:34 GMT",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "Via": "1.1 draft-oms-7487455674-whb6k",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "tables": [
+          {
+            "name": "PrimaryResult",
+            "columns": [
+              {
+                "name": "TenantId",
+                "type": "string"
+              },
+              {
+                "name": "TimeGenerated",
+                "type": "datetime"
+              },
+              {
+                "name": "Id",
+                "type": "string"
+              },
+              {
+                "name": "Target",
+                "type": "string"
+              },
+              {
+                "name": "DependencyType",
+                "type": "string"
+              },
+              {
+                "name": "Name",
+                "type": "string"
+              },
+              {
+                "name": "Data",
+                "type": "string"
+              },
+              {
+                "name": "Success",
+                "type": "bool"
+              },
+              {
+                "name": "ResultCode",
+                "type": "string"
+              },
+              {
+                "name": "DurationMs",
+                "type": "real"
+              },
+              {
+                "name": "PerformanceBucket",
+                "type": "string"
+              },
+              {
+                "name": "Properties",
+                "type": "dynamic"
+              },
+              {
+                "name": "Measurements",
+                "type": "dynamic"
+              },
+              {
+                "name": "OperationName",
+                "type": "string"
+              },
+              {
+                "name": "OperationId",
+                "type": "string"
+              },
+              {
+                "name": "ParentId",
+                "type": "string"
+              },
+              {
+                "name": "SyntheticSource",
+                "type": "string"
+              },
+              {
+                "name": "SessionId",
+                "type": "string"
+              },
+              {
+                "name": "UserId",
+                "type": "string"
+              },
+              {
+                "name": "UserAuthenticatedId",
+                "type": "string"
+              },
+              {
+                "name": "UserAccountId",
+                "type": "string"
+              },
+              {
+                "name": "AppVersion",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleName",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleInstance",
+                "type": "string"
+              },
+              {
+                "name": "ClientType",
+                "type": "string"
+              },
+              {
+                "name": "ClientModel",
+                "type": "string"
+              },
+              {
+                "name": "ClientOS",
+                "type": "string"
+              },
+              {
+                "name": "ClientIP",
+                "type": "string"
+              },
+              {
+                "name": "ClientCity",
+                "type": "string"
+              },
+              {
+                "name": "ClientStateOrProvince",
+                "type": "string"
+              },
+              {
+                "name": "ClientCountryOrRegion",
+                "type": "string"
+              },
+              {
+                "name": "ClientBrowser",
+                "type": "string"
+              },
+              {
+                "name": "ResourceGUID",
+                "type": "string"
+              },
+              {
+                "name": "IKey",
+                "type": "string"
+              },
+              {
+                "name": "SDKVersion",
+                "type": "string"
+              },
+              {
+                "name": "ItemCount",
+                "type": "int"
+              },
+              {
+                "name": "ReferencedItemId",
+                "type": "string"
+              },
+              {
+                "name": "ReferencedType",
+                "type": "string"
+              },
+              {
+                "name": "SourceSystem",
+                "type": "string"
+              },
+              {
+                "name": "Type",
+                "type": "string"
+              },
+              {
+                "name": "_ResourceId",
+                "type": "string"
+              }
+            ],
+            "rows": [
+              [
+                "33283218-aeb0-4388-b0c0-77a9bf80a8d2",
+                "2023-05-23T23:07:31.347577Z",
+                "48400d1e15eff85c",
+                "localhost:9998",
+                "HTTP",
+                "GET /",
+                "http://localhost:9998/",
+                true,
+                "200",
+                130.9024,
+                "\u003C250ms",
+                "{\u0022http.flavor\u0022:\u00221.1\u0022,\u0022_MS.ProcessedByMetricExtractors\u0022:\u0022(Name: X,Ver:\u00271.1\u0027)\u0022}",
+                null,
+                "",
+                "51b8e30843f1f10b1271e8be7eb21020",
+                "51b8e30843f1f10b1271e8be7eb21020",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "DistroWebAppLiveTests",
+                "TL-XPS",
+                "PC",
+                "Other",
+                "Windows 10",
+                "0.0.0.0",
+                "Seattle",
+                "Washington",
+                "United States",
+                "Other",
+                "6cbe8a21-11ea-42f8-b456-19144d0c3dde",
+                "375a4ad1-58c9-4f8f-bf21-7f483a813bd5",
+                "dotnet7.0.5:otel1.4.0:ext1.0.0-alpha.20230523.1",
+                1,
+                "",
+                "",
+                "Azure",
+                "AppDependencies",
+                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/rg-mothrmonitor/providers/microsoft.insights/components/tca5ef17935bdced8"
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "CONNECTION_STRING": "InstrumentationKey=375a4ad1-58c9-4f8f-bf21-7f483a813bd5;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/",
+    "LOGS_ENDPOINT": "https://api.loganalytics.io",
+    "RandomSeed": "1701759828",
+    "WORKSPACE_ID": "33283218-aeb0-4388-b0c0-77a9bf80a8d2"
+  }
+}
