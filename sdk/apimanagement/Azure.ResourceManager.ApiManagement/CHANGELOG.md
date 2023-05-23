@@ -1,10 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (2023-05-19)
+## 1.1.0-beta.1 (2023-05-23)
 
 ### Features Added
 
-- Add model factory
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 
