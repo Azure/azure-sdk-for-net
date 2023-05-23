@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
             if (Optional.IsCollectionDefined(AllowedAuthenticationModes))
             {
-                if (AllowedAuthenticationModes != null)
+                if (AllowedAuthenticationModes != null && Optional.IsCollectionDefined(AllowedAuthenticationModes))
                 {
                     writer.WritePropertyName("allowedAuthenticationModes"u8);
                     writer.WriteStartArray();
