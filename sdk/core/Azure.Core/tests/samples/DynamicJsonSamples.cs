@@ -1,250 +1,264 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-//using System;
-//using Azure.Core.Dynamic;
-//using Azure.Core.TestFramework;
-//using NUnit.Framework;
+using System;
+using Azure.Core.Dynamic;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
 
-//namespace Azure.Core.Samples
-//{
-//    public class DynamicJsonSamples
-//    {
-//        [Test]
-//        public void GetDynamicJson()
-//        {
-//            WidgetsClient client = GetMockClient();
+namespace Azure.Core.Samples
+{
+    public class DynamicJsonSamples
+    {
+        [Test]
+        public void GetDynamicJson()
+        {
+            WidgetsClient client = GetMockClient();
 
-//            #region Snippet:AzureCoreGetDynamicJson
-//            Response response = client.GetWidget();
-//            dynamic widget = response.Content.ToDynamicFromJson();
-//            #endregion
+            #region Snippet:AzureCoreGetDynamicJson
+            Response response = client.GetWidget();
+            dynamic widget = response.Content.ToDynamicFromJson();
+            #endregion
 
-//            Assert.IsTrue(widget.Name == "Widget");
-//        }
+            Assert.IsTrue(widget.name == "Widget");
+        }
 
-//        [Test]
-//        public void GetDynamicJsonProperty()
-//        {
-//            WidgetsClient client = GetMockClient();
+        [Test]
+        public void GetDynamicJsonProperty()
+        {
+            WidgetsClient client = GetMockClient();
 
-//            #region Snippet:AzureCoreGetDynamicJsonProperty
-//            Response response = client.GetWidget();
-//            dynamic widget = response.Content.ToDynamicFromJson();
-//            string name = widget.Name;
-//            #endregion
+            #region Snippet:AzureCoreGetDynamicJsonProperty
+            Response response = client.GetWidget();
+            dynamic widget = response.Content.ToDynamicFromJson();
+            string name = widget.name;
+            #endregion
 
-//            Assert.IsTrue(name == "Widget");
-//        }
+            Assert.IsTrue(name == "Widget");
+        }
 
-//        [Test]
-//        public void SetDynamicJsonProperty()
-//        {
-//            WidgetsClient client = GetMockClient();
+        [Test]
+        public void GetDynamicJsonPropertyPascalCase()
+        {
+            WidgetsClient client = GetMockClient();
 
-//            #region Snippet:AzureCoreSetDynamicJsonProperty
-//            Response response = client.GetWidget();
-//            dynamic widget = response.Content.ToDynamicFromJson();
-//            widget.Name = "New Name";
-//            client.SetWidget(RequestContent.Create(widget));
-//            #endregion
+            #region Snippet:AzureCoreGetDynamicJsonPropertyPascalCase
+            Response response = client.GetWidget();
+            dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            string name = widget.Name;
+            #endregion
 
-//            Assert.IsTrue(widget.Name == "New Name");
-//        }
+            Assert.IsTrue(name == "Widget");
+        }
 
-//        [Test]
-//        public void GetDynamicJsonArrayValue()
-//        {
-//            WidgetsClient client = GetMockClient();
+        [Test]
+        public void SetDynamicJsonProperty()
+        {
+            WidgetsClient client = GetMockClient();
 
-//            #region Snippet:AzureCoreGetDynamicJsonArrayValue
-//            Response response = client.GetWidget();
-//            dynamic widget = response.Content.ToDynamicFromJson();
-//#if !SNIPPET
-//            widget.Values = new int[] { 1, 2, 3 };
-//#endif
+            #region Snippet:AzureCoreSetDynamicJsonProperty
+            Response response = client.GetWidget();
+            dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            widget.Name = "New Name";
+            client.SetWidget(RequestContent.Create((object)widget));
+            #endregion
 
-//            // JSON is `{ "values" : [1, 2, 3] }`
-//            if (widget.Values.Length > 0)
-//            {
-//                int value = widget.Values[0];
-//            }
-//            #endregion
+            Assert.IsTrue(widget.Name == "New Name");
+        }
 
-//            Assert.IsTrue(widget.Values.Length > 0);
-//            Assert.IsTrue(widget.Values[0] == 1);
-//        }
+        [Test]
+        public void GetDynamicJsonArrayValue()
+        {
+            WidgetsClient client = GetMockClient();
 
-//        [Test]
-//        public void GetDynamicJsonOptionalProperty()
-//        {
-//            WidgetsClient client = GetMockClient();
+            #region Snippet:AzureCoreGetDynamicJsonArrayValue
+            Response response = client.GetWidget();
+            dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+#if !SNIPPET
+            widget.Values = new int[] { 1, 2, 3 };
+#endif
 
-//            #region Snippet:AzureCoreGetDynamicJsonOptionalProperty
-//            Response response = client.GetWidget();
-//            dynamic widget = response.Content.ToDynamicFromJson();
+            // JSON is `{ "values" : [1, 2, 3] }`
+            if (widget.Values.Length > 0)
+            {
+                int value = widget.Values[0];
+            }
+            #endregion
 
-//            // JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
+            Assert.IsTrue(widget.Values.Length > 0);
+            Assert.IsTrue(widget.Values[0] == 1);
+        }
 
-//            // Check whether optional property is present
-//            if (widget.Details != null)
-//            {
-//                string color = widget.Details.Color;
-//            }
-//            #endregion
+        [Test]
+        public void GetDynamicJsonOptionalProperty()
+        {
+            WidgetsClient client = GetMockClient();
 
-//            Assert.IsTrue(widget.Details.Color == "blue");
-//        }
+            #region Snippet:AzureCoreGetDynamicJsonOptionalProperty
+            Response response = client.GetWidget();
+            dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 
-//        [Test]
-//        public void EnumerateDynamicJsonObject()
-//        {
-//            WidgetsClient client = GetMockClient();
+            // JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
 
-//            #region Snippet:AzureCoreEnumerateDynamicJsonObject
-//            Response response = client.GetWidget();
-//            dynamic widget = response.Content.ToDynamicFromJson();
+            // Check whether optional property is present
+            if (widget.Details != null)
+            {
+                string color = widget.Details.Color;
+            }
+            #endregion
 
-//            // JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
-//            foreach (dynamic property in widget.Details)
-//            {
-//                Console.WriteLine($"Widget has property {property.Name}='{property.Value}'.");
-//            }
-//            #endregion
+            Assert.IsTrue(widget.Details.Color == "blue");
+        }
 
-//            Assert.IsTrue(widget.details.color == "blue");
-//        }
+        [Test]
+        public void EnumerateDynamicJsonObject()
+        {
+            WidgetsClient client = GetMockClient();
 
-//        [Test]
-//        public void CastDynamicJsonToPOCO()
-//        {
-//            WidgetsClient client = GetMockClient();
+            #region Snippet:AzureCoreEnumerateDynamicJsonObject
+            Response response = client.GetWidget();
+            dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 
-//            #region Snippet:AzureCoreCastDynamicJsonToPOCO
-//            Response response = client.GetWidget();
-//            dynamic content = response.Content.ToDynamicFromJson();
+            // JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
+            foreach (dynamic property in widget.Details)
+            {
+                Console.WriteLine($"Widget has property {property.Name}='{property.Value}'.");
+            }
+            #endregion
 
-//            // JSON is `{ "id" : "123", "name" : "Widget" }`
-//            Widget widget = (Widget)content;
-//            #endregion
+            Assert.IsTrue(widget.details.color == "blue");
+        }
 
-//            Assert.IsTrue(widget.Id == "123");
-//            Assert.IsTrue(widget.Name == "Widget");
-//        }
+        [Test]
+        public void CastDynamicJsonToPOCO()
+        {
+            WidgetsClient client = GetMockClient();
 
-//        #region Snippet:AzureCoreDynamicJsonPOCO
-//        public class Widget
-//        {
-//            public string Id { get; set; }
-//            public string Name { get; set; }
-//        }
-//        #endregion
+            #region Snippet:AzureCoreCastDynamicJsonToPOCO
+            Response response = client.GetWidget();
+            dynamic content = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 
-//        [Test]
-//        public void GetPropertyWithInvalidCharacters()
-//        {
-//            WidgetsClient client = GetMockClient();
+            // JSON is `{ "id" : "123", "name" : "Widget" }`
+            Widget widget = (Widget)content;
+            #endregion
 
-//            #region Snippet:AzureCoreGetDynamicPropertyInvalidCharacters
-//            Response response = client.GetWidget();
-//            dynamic widget = response.Content.ToDynamicFromJson();
-//#if !SNIPPET
-//            widget["$id"] = "123";
-//#endif
+            Assert.IsTrue(widget.Id == "123");
+            Assert.IsTrue(widget.Name == "Widget");
+        }
 
-//            /// JSON is `{ "$id" = "123" }`
-//            string id = widget["$id"];
-//            #endregion
+        #region Snippet:AzureCoreDynamicJsonPOCO
+        public class Widget
+        {
+            public string Id { get; set; }
+            public string Name { get; set; }
+        }
+        #endregion
 
-//            Assert.IsTrue(id == "123");
-//        }
+        [Test]
+        public void GetPropertyWithInvalidCharacters()
+        {
+            WidgetsClient client = GetMockClient();
 
-//        [Test]
-//        public void SetPropertyWithoutCaseMapping()
-//        {
-//            WidgetsClient client = GetMockClient();
+            #region Snippet:AzureCoreGetDynamicPropertyInvalidCharacters
+            Response response = client.GetWidget();
+            dynamic widget = response.Content.ToDynamicFromJson();
+#if !SNIPPET
+            widget["$id"] = "123";
+#endif
 
-//            #region Snippet:AzureCoreSetPropertyWithoutCaseMapping
-//            Response response = client.GetWidget();
-//            dynamic widget = response.Content.ToDynamicFromJson();
+            /// JSON is `{ "$id" = "123" }`
+            string id = widget["$id"];
+            #endregion
 
-//            widget.Details["IPAddress"] = "127.0.0.1";
-//            // JSON is `{ "details" : { "IPAddress" : "127.0.0.1" } }`
-//            #endregion
+            Assert.IsTrue(id == "123");
+        }
 
-//            Assert.IsTrue(widget.Details.IPAddress == "127.0.0.1");
-//        }
+        [Test]
+        public void SetPropertyWithoutCaseMapping()
+        {
+            WidgetsClient client = GetMockClient();
 
-//        [Test]
-//        public void SetWidgetAnonymousType()
-//        {
-//            WidgetsClient client = GetMockClient();
+            #region Snippet:AzureCoreSetPropertyWithoutCaseMapping
+            Response response = client.GetWidget();
+            dynamic widget = response.Content.ToDynamicFromJson();
 
-//            #region Snippet:AzureCoreRoundTripAnonymousType
-//            Response response = client.GetWidget();
-//            dynamic widget = response.Content.ToDynamicFromJson();
+            widget.details["IPAddress"] = "127.0.0.1";
+            // JSON is `{ "details" : { "IPAddress" : "127.0.0.1" } }`
+            #endregion
 
-//            RequestContent update = RequestContent.Create(
-//                new
-//                {
-//                    id = (string)widget.id,
-//                    name = "New Name",
-//                    properties = new object[]
-//                    {
-//                        new { color = "blue" }
-//                    }
+            Assert.IsTrue(widget.details.IPAddress == "127.0.0.1");
+        }
 
-//                    // A forgotten field may be deleted!
-//                }
-//            );
+        [Test]
+        public void SetWidgetAnonymousType()
+        {
+            WidgetsClient client = GetMockClient();
 
-//            client.SetWidget(update);
-//            #endregion
-//        }
+            #region Snippet:AzureCoreRoundTripAnonymousType
+            Response response = client.GetWidget();
+            dynamic widget = response.Content.ToDynamicFromJson();
 
-//        [Test]
-//        public void SetWidgetDynamicJson()
-//        {
-//            WidgetsClient client = GetMockClient();
+            RequestContent update = RequestContent.Create(
+                new
+                {
+                    id = (string)widget.id,
+                    name = "New Name",
+                    properties = new object[]
+                    {
+                        new { color = "blue" }
+                    }
 
-//            #region Snippet:AzureCoreRoundTripDynamicJson
-//            Response response = client.GetWidget();
-//            dynamic widget = response.Content.ToDynamicFromJson();
-//            widget.Name = "New Name";
-//            client.SetWidget(RequestContent.Create(widget));
-//            #endregion
-//        }
+                    // A forgotten field may be deleted!
+                }
+            );
 
-//        private WidgetsClient GetMockClient()
-//        {
-//            string initial = """
-//                {
-//                    "id" : "123",
-//                    "name" : "Widget",
-//                    "details" : {
-//                        "color" : "blue",
-//                        "size" : "small"
-//                    }
-//                }
-//                """;
-//            string updated = """
-//                {
-//                    "id" : "123",
-//                    "name" : "New Name",
-//                    "details" : {
-//                        "color" : "blue",
-//                        "size" : "small"
-//                    }
-//                }
-//                """;
+            client.SetWidget(update);
+            #endregion
+        }
 
-//            WidgetsClientOptions options = new WidgetsClientOptions()
-//            {
-//                Transport = new MockTransport(
-//                    new MockResponse(200).SetContent(initial),
-//                    new MockResponse(200).SetContent(updated))
-//            };
-//            return new WidgetsClient(new Uri("https://example.azure.com"), new MockCredential(), options);
-//        }
-//    }
-//}
+        [Test]
+        public void SetWidgetDynamicJson()
+        {
+            WidgetsClient client = GetMockClient();
+
+            #region Snippet:AzureCoreRoundTripDynamicJson
+            Response response = client.GetWidget();
+            dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            widget.Name = "New Name";
+            client.SetWidget(RequestContent.Create((object)widget));
+            #endregion
+        }
+
+        private WidgetsClient GetMockClient()
+        {
+            string initial = """
+                {
+                    "id" : "123",
+                    "name" : "Widget",
+                    "details" : {
+                        "color" : "blue",
+                        "size" : "small"
+                    }
+                }
+                """;
+            string updated = """
+                {
+                    "id" : "123",
+                    "name" : "New Name",
+                    "details" : {
+                        "color" : "blue",
+                        "size" : "small"
+                    }
+                }
+                """;
+
+            WidgetsClientOptions options = new WidgetsClientOptions()
+            {
+                Transport = new MockTransport(
+                    new MockResponse(200).SetContent(initial),
+                    new MockResponse(200).SetContent(updated))
+            };
+            return new WidgetsClient(new Uri("https://example.azure.com"), new MockCredential(), options);
+        }
+    }
+}

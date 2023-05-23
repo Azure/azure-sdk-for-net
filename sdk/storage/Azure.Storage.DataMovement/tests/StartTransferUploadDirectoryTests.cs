@@ -191,6 +191,53 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        public async Task LocalToBlockBlobDirectory_SmallChunks_ManyFiles()
+        {
+            // Arrange
+            long blobSize = 2 * Constants.KB;
+            int waitTimeInSec = 10;
+            TransferManagerOptions transferManagerOptions = new TransferManagerOptions()
+            {
+                ErrorHandling = ErrorHandlingOptions.StopOnAllFailures,
+                MaximumConcurrency = 3,
+            };
+            TransferOptions options = new TransferOptions()
+            {
+                InitialTransferSize = 512,
+                MaximumTransferChunkSize = 512,
+            };
+            List<string> files = new List<string>();
+
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
+            string localDirectory = CreateRandomDirectory(testDirectory.DirectoryPath);
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
+
+            files.Add(await CreateRandomFileAsync(localDirectory, size: blobSize));
+            files.Add(await CreateRandomFileAsync(localDirectory, size: blobSize));
+            files.Add(await CreateRandomFileAsync(localDirectory, size: blobSize));
+            files.Add(await CreateRandomFileAsync(localDirectory, size: blobSize));
+            files.Add(await CreateRandomFileAsync(localDirectory, size: blobSize));
+
+            string openSubfolder = CreateRandomDirectory(localDirectory);
+            files.Add(await CreateRandomFileAsync(openSubfolder, size: blobSize));
+            files.Add(await CreateRandomFileAsync(openSubfolder, size: blobSize));
+            files.Add(await CreateRandomFileAsync(openSubfolder, size: blobSize));
+            string openSubfolder2 = CreateRandomDirectory(localDirectory);
+            files.Add(await CreateRandomFileAsync(openSubfolder2, size: blobSize));
+            files.Add(await CreateRandomFileAsync(openSubfolder2, size: blobSize));
+
+            // Act / Assert
+            await UploadBlobDirectoryAndVerify(
+                test.Container,
+                localDirectory,
+                files,
+                waitTimeInSec: waitTimeInSec,
+                transferManagerOptions: transferManagerOptions,
+                options: options);
+        }
+
+        [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task DirectoryUpload_EmptyFolder()
         {
             // Arrange
@@ -547,7 +594,9 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
-        public async Task DirectoryUpload_ContinueOnFailure()
+        [TestCase(ErrorHandlingOptions.ContinueOnFailure)]
+        [TestCase(ErrorHandlingOptions.StopOnAllFailures)]
+        public async Task DirectoryUpload_ErrorHandling(ErrorHandlingOptions errorHandling)
         {
             // Arrange
             using DisposingLocalDirectory source = DisposingLocalDirectory.GetTestDirectory();
@@ -561,7 +610,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferManager transferManager = new TransferManager(new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
+                ErrorHandling = errorHandling
             });
 
             StorageResourceContainer sourceResource =
@@ -586,13 +635,22 @@ namespace Azure.Storage.DataMovement.Tests
             IEnumerable<string> destinationFiles =
                 (await destination.Container.GetBlobsAsync().ToEnumerableAsync()).Select(b => b.Name);
 
-            Assert.AreEqual(1, testEventsRaised.FailedEvents.Count);
+            if (errorHandling == ErrorHandlingOptions.ContinueOnFailure)
+            {
+                testEventsRaised.AssertContainerCompletedWithFailedCheckContinue(1);
 
-            // Verify all files exist, meaning files without conflict were transferred
-            Assert.IsTrue(files
-                .Select(f => f.Substring(source.DirectoryPath.Length + 1).Replace("\\", "/"))
-                .OrderBy(f => f)
-                .SequenceEqual(destinationFiles.OrderBy(f => f)));
+                // Verify all files exist, meaning files without conflict were transferred.
+                Assert.IsTrue(files
+                    .Select(f => f.Substring(source.DirectoryPath.Length + 1).Replace("\\", "/"))
+                    .OrderBy(f => f)
+                    .SequenceEqual(destinationFiles.OrderBy(f => f)));
+            }
+            else if (errorHandling == ErrorHandlingOptions.StopOnAllFailures)
+            {
+                testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
+
+                // Cannot do any file verification as transfer may proceed while job being cancelled
+            }
         }
 
         #endregion
@@ -681,7 +739,6 @@ namespace Azure.Storage.DataMovement.Tests
             testEventsRaised.AssertContainerCompletedCheck(4);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_AwaitCompletion_Failed()
@@ -716,7 +773,6 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains("BlobAlreadyExists"));
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_AwaitCompletion_Skipped()
@@ -780,7 +836,6 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_EnsureCompleted_Failed()
@@ -815,7 +870,6 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains("BlobAlreadyExists"));
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_EnsureCompleted_Skipped()

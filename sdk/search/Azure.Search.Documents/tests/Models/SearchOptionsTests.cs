@@ -56,11 +56,12 @@ namespace Azure.Search.Documents.Tests.Models
             Assert.IsNull(searchOptions.QueryAnswerRaw);
 
             searchOptions.QueryAnswer = QueryAnswerType.None;
-            Assert.AreEqual($"{QueryAnswerType.None}|count-1|threshold-0.7", searchOptions.QueryAnswerRaw);
+            Assert.AreEqual($"{QueryAnswerType.None}", searchOptions.QueryAnswerRaw);
             Assert.IsNull(searchOptions.QueryAnswerCount);
+            Assert.IsNull(searchOptions.QueryAnswerThreshold);
 
             searchOptions.QueryAnswer = QueryAnswerType.Extractive;
-            Assert.AreEqual($"{QueryAnswerType.Extractive}|count-1|threshold-0.7", searchOptions.QueryAnswerRaw);
+            Assert.AreEqual($"{QueryAnswerType.Extractive}", searchOptions.QueryAnswerRaw);
             Assert.IsNull(searchOptions.QueryAnswerCount);
 
             searchOptions.QueryAnswerRaw = "none";
@@ -149,7 +150,7 @@ namespace Azure.Search.Documents.Tests.Models
             Assert.IsNull(searchOptions.QueryAnswerRaw);
             Assert.IsNull(searchOptions.QueryAnswer);
 
-            searchOptions.QueryAnswerRaw = "|threshold-0.5|count-3";
+            searchOptions.QueryAnswerRaw = "|threshold-0.5,count-3";
             Assert.AreEqual(3, searchOptions.QueryAnswerCount);
             Assert.AreEqual(0.5, searchOptions.QueryAnswerThreshold);
             Assert.IsNull(searchOptions.QueryAnswer);
@@ -164,25 +165,25 @@ namespace Azure.Search.Documents.Tests.Models
 
             // We can set `QueryAnswer` to one of the known values, using either a string or a pre-defined value.
             searchOptions.QueryAnswer = "none";
-            Assert.AreEqual($"{QueryAnswerType.None}|count-{searchOptions.QueryAnswerCount}|threshold-{searchOptions.QueryAnswerThreshold}", searchOptions.QueryAnswerRaw);
+            Assert.AreEqual($"{QueryAnswerType.None}|count-{searchOptions.QueryAnswerCount},threshold-{searchOptions.QueryAnswerThreshold}", searchOptions.QueryAnswerRaw);
 
             searchOptions.QueryAnswer = QueryAnswerType.None;
-            Assert.AreEqual($"{QueryAnswerType.None}|count-{searchOptions.QueryAnswerCount}|threshold-{searchOptions.QueryAnswerThreshold}", searchOptions.QueryAnswerRaw);
+            Assert.AreEqual($"{QueryAnswerType.None}|count-{searchOptions.QueryAnswerCount},threshold-{searchOptions.QueryAnswerThreshold}", searchOptions.QueryAnswerRaw);
 
             searchOptions.QueryAnswer = "extractive";
-            Assert.AreEqual($"{QueryAnswerType.Extractive}|count-{searchOptions.QueryAnswerCount}|threshold-{searchOptions.QueryAnswerThreshold}", searchOptions.QueryAnswerRaw);
+            Assert.AreEqual($"{QueryAnswerType.Extractive}|count-{searchOptions.QueryAnswerCount},threshold-{searchOptions.QueryAnswerThreshold}", searchOptions.QueryAnswerRaw);
 
             searchOptions.QueryAnswer = QueryAnswerType.Extractive;
-            Assert.AreEqual($"{QueryAnswerType.Extractive}|count-{searchOptions.QueryAnswerCount}|threshold-{searchOptions.QueryAnswerThreshold}", searchOptions.QueryAnswerRaw);
+            Assert.AreEqual($"{QueryAnswerType.Extractive}|count-{searchOptions.QueryAnswerCount},threshold-{searchOptions.QueryAnswerThreshold}", searchOptions.QueryAnswerRaw);
 
             // We can also set `QueryAnswer` to a value unknown to the SDK.
             searchOptions.QueryAnswer = "unknown";
-            Assert.AreEqual($"unknown|count-{searchOptions.QueryAnswerCount}|threshold-{searchOptions.QueryAnswerThreshold}", searchOptions.QueryAnswerRaw);
+            Assert.AreEqual($"unknown|count-{searchOptions.QueryAnswerCount},threshold-{searchOptions.QueryAnswerThreshold}", searchOptions.QueryAnswerRaw);
 
             searchOptions.QueryAnswer = new QueryAnswerType("unknown");
-            Assert.AreEqual($"unknown|count-{searchOptions.QueryAnswerCount}|threshold-{searchOptions.QueryAnswerThreshold}", searchOptions.QueryAnswerRaw);
+            Assert.AreEqual($"unknown|count-{searchOptions.QueryAnswerCount},threshold-{searchOptions.QueryAnswerThreshold}", searchOptions.QueryAnswerRaw);
 
-            searchOptions.QueryAnswerRaw = "unknown|count-10|threshold-0.8";
+            searchOptions.QueryAnswerRaw = "unknown|count-10,threshold-0.8";
             Assert.AreEqual("unknown", $"{searchOptions.QueryAnswer}");
             Assert.AreEqual(10, searchOptions.QueryAnswerCount);
             Assert.AreEqual(0.8, searchOptions.QueryAnswerThreshold);
@@ -279,7 +280,7 @@ namespace Azure.Search.Documents.Tests.Models
                 QueryCaption = QueryCaptionType.Extractive,
             };
 
-            Assert.AreEqual("extractive|count-5|threshold-0.8", semanticSearchOptions.QueryAnswerRaw);
+            Assert.AreEqual("extractive|count-5,threshold-0.8", semanticSearchOptions.QueryAnswerRaw);
             Assert.AreEqual("extractive|highlight-True", semanticSearchOptions.QueryCaptionRaw);
         }
     }

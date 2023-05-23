@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using Azure.Core.Dynamic;
+using Azure.Core.GeoJson;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -305,7 +306,7 @@ namespace Azure.Core.Tests
                 }
                 """u8.ToArray()).ToDynamicFromJson(options);
 
-            JsonDataTests.SampleModel model = new()
+            SampleModel model = new()
             {
                 Message = "hi",
                 Number = 2,
@@ -333,10 +334,10 @@ namespace Azure.Core.Tests
             Assert.IsTrue(roundTripValue.model.message == value.Model.Message);
             Assert.IsTrue(roundTripValue.model.number == value.Model.Number);
 
-            Assert.AreEqual(model, (JsonDataTests.SampleModel)roundTripValue.model);
-            Assert.AreEqual(model, (JsonDataTests.SampleModel)roundTripValue.Model);
-            Assert.AreEqual(model, (JsonDataTests.SampleModel)value.model);
-            Assert.AreEqual(model, (JsonDataTests.SampleModel)value.Model);
+            Assert.AreEqual(model, (SampleModel)roundTripValue.model);
+            Assert.AreEqual(model, (SampleModel)roundTripValue.Model);
+            Assert.AreEqual(model, (SampleModel)value.model);
+            Assert.AreEqual(model, (SampleModel)value.Model);
         }
 
         [Test]
@@ -843,6 +844,214 @@ namespace Azure.Core.Tests
             Assert.Throws<KeyNotFoundException>(() => _ = json["bar"]);
             Assert.Throws<KeyNotFoundException>(() => { if (json["bar"] == null) {; } });
         }
+        [Test]
+        public void ArrayItemsCanBeAssigned()
+        {
+            dynamic json = DynamicJsonTests.GetDynamicJson("[0, 1, 2, 3]");
+
+            json[1] = 2;
+            json[2] = null;
+            json[3] = "string";
+
+            Assert.AreEqual("[0,2,null,\"string\"]", json.ToString());
+        }
+
+        [Test]
+        public void ExistingObjectPropertiesCanBeAssigned()
+        {
+            dynamic json = DynamicJsonTests.GetDynamicJson("{\"a\":1}");
+
+            json.a = "2";
+
+            Assert.AreEqual("{\"a\":\"2\"}", json.ToString());
+        }
+
+        [TestCaseSource(nameof(PrimitiveValues))]
+        public void NewObjectPropertiesCanBeAssignedWithPrimitive<T>(T value, string expected)
+        {
+            dynamic json = DynamicJsonTests.GetDynamicJson("{}");
+
+            json.a = value;
+
+            Assert.AreEqual("{\"a\":" + expected + "}", json.ToString());
+        }
+
+        [TestCaseSource(nameof(PrimitiveValues))]
+        public void PrimitiveValuesCanBeParsedDirectly<T>(T value, string expected)
+        {
+            dynamic json = DynamicJsonTests.GetDynamicJson(expected);
+
+            Assert.AreEqual(value, (T)json);
+        }
+
+        [Test]
+        public void NewObjectPropertiesCanBeAssignedWithArrays()
+        {
+            dynamic json = DynamicJsonTests.GetDynamicJson("{}");
+
+            json.a = new object[] { 1, 2, null, "string" };
+
+            Assert.AreEqual("{\"a\":[1,2,null,\"string\"]}", json.ToString());
+        }
+
+        [Test]
+        public void NewObjectPropertiesCanBeAssignedWithObject()
+        {
+            dynamic json = DynamicJsonTests.GetDynamicJson("{}");
+
+            json.a = DynamicJsonTests.GetDynamicJson("{}");
+            json.a.b = 2;
+
+            Assert.AreEqual("{\"a\":{\"b\":2}}", json.ToString());
+        }
+
+        [Test]
+        public void NewObjectPropertiesCanBeAssignedWithObjectIndirectly()
+        {
+            dynamic json = DynamicJsonTests.GetDynamicJson("{}");
+            dynamic anotherJson = DynamicJsonTests.GetDynamicJson("{}");
+
+            json.a = anotherJson;
+            anotherJson.b = 2;
+
+            Assert.AreEqual("{\"a\":{\"b\":2}}", json.ToString());
+        }
+
+        [Test]
+        public void NewObjectPropertiesCanBeAssignedWithSerializedObject()
+        {
+            dynamic json = DynamicJsonTests.GetDynamicJson("{}");
+
+            json.a = new GeoPoint(1, 2);
+
+            Assert.AreEqual("{\"a\":{\"type\":\"Point\",\"coordinates\":[1,2]}}", json.ToString());
+        }
+
+        [TestCaseSource(nameof(PrimitiveValues))]
+        public void CanModifyNestedProperties<T>(T value, string expected)
+        {
+            dynamic json = DynamicJsonTests.GetDynamicJson("{\"a\":{\"b\":2}}");
+
+            json.a.b = value;
+
+            Assert.AreEqual("{\"a\":{\"b\":" + expected + "}}", json.ToString());
+            Assert.AreEqual(value, (T)json.a.b);
+
+            dynamic reparsedJson = DynamicJsonTests.GetDynamicJson(json.ToString());
+
+            Assert.AreEqual(value, (T)reparsedJson.a.b);
+        }
+        [Test]
+        public void DynamicCanConvertToString() => Assert.AreEqual("string", JsonAsType<string>("\"string\""));
+
+        [Test]
+        public void DynamicCanConvertToInt() => Assert.AreEqual(5, JsonAsType<int>("5"));
+
+        [Test]
+        public void DynamicCanConvertToLong() => Assert.AreEqual(5L, JsonAsType<long>("5"));
+
+        [Test]
+        public void DynamicCanConvertToBool() => Assert.AreEqual(true, JsonAsType<bool>("true"));
+
+        [Test]
+        public void DynamicCanConvertToNullAsString() => Assert.AreEqual(null, JsonAsType<string>("null"));
+
+        [Test]
+        public void DynamicCanConvertToNullAsNullableInt() => Assert.AreEqual(null, JsonAsType<int?>("null"));
+
+        [Test]
+        public void DynamicCanConvertToNullAsNullableLong() => Assert.AreEqual(null, JsonAsType<long?>("null"));
+
+        [Test]
+        public void DynamicCanConvertToNullAsNullableBool() => Assert.AreEqual(null, JsonAsType<bool?>("null"));
+
+        [Test]
+        public void DynamicCanConvertToIEnumerableDynamic()
+        {
+            dynamic jsonData = DynamicJsonTests.GetDynamicJson("[1, null, \"s\"]");
+            int i = 0;
+            foreach (var dynamicItem in jsonData)
+            {
+                switch (i)
+                {
+                    case 0:
+                        Assert.AreEqual(1, (int)dynamicItem);
+                        break;
+                    case 1:
+                        Assert.AreEqual(null, (string)dynamicItem);
+                        break;
+                    case 2:
+                        Assert.AreEqual("s", (string)dynamicItem);
+                        break;
+                    default:
+                        Assert.Fail();
+                        break;
+                }
+
+                i++;
+            }
+            Assert.AreEqual(3, i);
+        }
+
+        [Test]
+        public void DynamicCanConvertToIEnumerableInt()
+        {
+            dynamic jsonData = DynamicJsonTests.GetDynamicJson("[0, 1, 2, 3]");
+            int i = 0;
+            foreach (int dynamicItem in jsonData)
+            {
+                Assert.AreEqual(i, dynamicItem);
+
+                i++;
+            }
+            Assert.AreEqual(4, i);
+        }
+
+        [Test]
+        public void CanAccessProperties()
+        {
+            dynamic jsonData = DynamicJsonTests.GetDynamicJson("""
+                {
+                  "primitive" : "Hello",
+                  "nested" : {
+                      "nestedPrimitive": true
+                 }
+              }
+            """);
+
+            Assert.AreEqual("Hello", (string)jsonData.primitive);
+            Assert.AreEqual(true, (bool)jsonData.nested.nestedPrimitive);
+        }
+
+        [Test]
+        public void CanRoundTripSerialize()
+        {
+            dynamic orig = new BinaryData(
+                """
+                {
+                    "property" : "hello"
+                }
+                """).ToDynamicFromJson();
+
+            void validate(dynamic d)
+            {
+                Assert.IsTrue(d.property == "hello");
+
+                int count = 0;
+                foreach (dynamic item in d)
+                {
+                    count++;
+                }
+
+                Assert.IsTrue(count == 1);
+            }
+
+            validate(orig);
+
+            dynamic roundTrip = JsonSerializer.Deserialize<DynamicData>(JsonSerializer.Serialize(orig, orig.GetType()));
+
+            validate(roundTrip);
+        }
 
         #region Helpers
         internal static dynamic GetDynamicJson(string json)
@@ -866,6 +1075,30 @@ namespace Azure.Core.Tests
             yield return new object[] { "42.1", 42.1f, 43.1f, 44.1f, false /* don't test range */ };
             yield return new object[] { "42.1", 42.1d, 43.1d, 44.1d, false /* don't test range */ };
             yield return new object[] { "42.1", 42.1m, 43.1m, 44.1m, false /* don't test range */ };
+        }
+
+        public static IEnumerable<object[]> PrimitiveValues()
+        {
+            yield return new object[] { "string", "\"string\"" };
+            yield return new object[] { 1L, "1" };
+            yield return new object[] { 1, "1" };
+            yield return new object[] { 1.0, "1" };
+#if NETCOREAPP
+            yield return new object[] {1.1D, "1.1"};
+            yield return new object[] {1.1F, "1.1"};
+#else
+            yield return new object[] { 1.1D, "1.1000000000000001" };
+            yield return new object[] { 1.1F, "1.10000002" };
+#endif
+            yield return new object[] { 1.1M, "1.1" };
+            yield return new object[] { true, "true" };
+            yield return new object[] { false, "false" };
+            yield return new object[] { 1U, "1" };
+            yield return new object[] { 1UL, "1" };
+            yield return new object[] { (byte)1, "1" };
+            yield return new object[] { (sbyte)1, "1" };
+            yield return new object[] { (short)1, "1" };
+            yield return new object[] { (ushort)1, "1" };
         }
 
         internal class CustomType
@@ -913,6 +1146,43 @@ namespace Azure.Core.Tests
             }
 
             public bool Equals(ChildModel obj)
+            {
+                return Message == obj.Message && Number == obj.Number;
+            }
+        }
+        private T JsonAsType<T>(string json)
+        {
+            dynamic jsonData = DynamicJsonTests.GetDynamicJson(json);
+            return (T)jsonData;
+        }
+
+#pragma warning disable CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
+        internal class SampleModel : IEquatable<SampleModel>
+#pragma warning restore CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
+        {
+            public SampleModel() { }
+
+            public string Message { get; set; }
+            public int Number { get; set; }
+
+            public SampleModel(string message, int number)
+            {
+                Message = message;
+                Number = number;
+            }
+
+            public override bool Equals(object obj)
+            {
+                SampleModel other = obj as SampleModel;
+                if (other == null)
+                {
+                    return false;
+                }
+
+                return Equals(other);
+            }
+
+            public bool Equals(SampleModel obj)
             {
                 return Message == obj.Message && Number == obj.Number;
             }
