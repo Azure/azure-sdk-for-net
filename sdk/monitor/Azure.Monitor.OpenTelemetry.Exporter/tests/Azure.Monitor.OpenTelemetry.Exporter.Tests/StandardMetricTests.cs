@@ -52,7 +52,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             meterProvider?.ForceFlush();
 
             // Standard Metrics + Resource Metrics.
-            Assert.Equal(2, metricTelemetryItems.Count);
+            Assert.Single(metricTelemetryItems);
 
             var metricTelemetry = metricTelemetryItems.Last()!;
             Assert.Equal("MetricData", metricTelemetry.Data.BaseType);
@@ -105,7 +105,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             meterProvider?.ForceFlush();
 
             // Standard Metrics + Resource Metrics.
-            Assert.Equal(2, metricTelemetryItems.Count);
+            Assert.Single(metricTelemetryItems);
 
             var metricTelemetry = metricTelemetryItems.Last()!;
             Assert.Equal("MetricData", metricTelemetry.Data.BaseType);

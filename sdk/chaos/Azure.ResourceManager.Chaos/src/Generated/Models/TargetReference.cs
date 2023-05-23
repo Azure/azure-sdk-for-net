@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Enum of the Target reference type. </summary>
-        public TargetReferenceType ReferenceType { get; set; }
+        public TargetReferenceType ReferenceType { get; }
         /// <summary> String of the resource ID of a Target resource. </summary>
         public string Id { get; set; }
     }

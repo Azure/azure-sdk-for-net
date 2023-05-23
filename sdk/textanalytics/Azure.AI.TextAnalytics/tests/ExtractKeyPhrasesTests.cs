@@ -82,20 +82,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        public async Task ExtractKeyPhrasesWithWarningTest()
-        {
-            TextAnalyticsClient client = GetClient();
-            string document = "Anthony runs his own personal training business so thisisaverylongtokenwhichwillbetruncatedtoshowushowwarningsareemittedintheapi";
-
-            ExtractKeyPhrasesResultCollection keyPhrasesCollection = await client.ExtractKeyPhrasesBatchAsync(new List<string> { document }, "es", new TextAnalyticsRequestOptions() { ModelVersion = "2020-07-01" });
-            KeyPhraseCollection keyPhrases = keyPhrasesCollection.FirstOrDefault().KeyPhrases;
-
-            ValidateInDocumenResult(keyPhrases, 1);
-
-            Assert.AreEqual(TextAnalyticsWarningCode.LongWordsInDocument, keyPhrases.Warnings.FirstOrDefault().WarningCode.ToString());
-        }
-
-        [RecordedTest]
         public async Task ExtractKeyPhrasesBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();

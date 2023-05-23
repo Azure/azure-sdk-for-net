@@ -38,29 +38,23 @@ namespace Azure.Storage.DataMovement
         internal DataTransferState _state;
 
         /// <summary>
-        /// Only to be created internally by the transfer manager.
+        /// For mocking.
         /// </summary>
         internal DataTransfer()
         {
-            _state = new DataTransferState();
         }
 
         /// <summary>
-        /// For mocking
+        /// Constructing a DataTransfer object.
         /// </summary>
-        /// <param name="status"></param>
-        internal DataTransfer(StorageTransferStatus status)
+        /// <param name="id">The transfer ID of the transfer object.</param>
+        /// <param name="status">The Transfer Status of the Transfer. See <see cref="StorageTransferStatus"/>.</param>
+        internal DataTransfer(
+            string id,
+            StorageTransferStatus status = StorageTransferStatus.Queued)
         {
-            _state = new DataTransferState(status);
-        }
-
-        /// <summary>
-        /// Only to be created internally by the transfer manager when someone
-        /// provides a valid job plan file to resume from.
-        /// </summary>
-        internal DataTransfer(string id, long bytesTransferred = 0)
-        {
-            _state = new DataTransferState(id, bytesTransferred);
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            _state = new DataTransferState(id, status);
         }
 
         /// <summary>
@@ -91,9 +85,11 @@ namespace Azure.Storage.DataMovement
         ///
         /// Will return true if the pause has taken place.
         /// </returns>
-        public async Task PauseIfRunningAsync(CancellationToken cancellationToken = default)
+        public virtual async Task PauseIfRunningAsync(CancellationToken cancellationToken = default)
         {
             await _state.PauseIfRunningAsync(cancellationToken).ConfigureAwait(false);
         }
+
+        internal virtual bool CanPause() => _state.CanPause();
     }
 }
