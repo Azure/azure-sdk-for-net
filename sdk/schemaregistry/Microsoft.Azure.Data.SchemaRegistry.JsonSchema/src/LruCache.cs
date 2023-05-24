@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
     /// </summary>
     /// <typeparam name="TKey">The type of key</typeparam>
     /// <typeparam name="TValue">The type of value</typeparam>
-    public class LruCache<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
+    internal class LruCache<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
     {
         private readonly int _capacity;
         private readonly LinkedList<KeyValuePair<TKey, TValue>> _linkedList;
@@ -22,10 +22,6 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
 
         internal int TotalLength { get; private set; }
 
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <param name="capacity"></param>
         public LruCache(int capacity)
         {
             _capacity = capacity;
@@ -34,12 +30,6 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             _syncLock = new object();
         }
 
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
         public bool TryGet(TKey key, out TValue value)
         {
             lock (_syncLock)
@@ -58,12 +48,6 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             }
         }
 
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="val"></param>
-        /// <param name="length"></param>
         public void AddOrUpdate(TKey key, TValue val, int length)
         {
             lock (_syncLock)
@@ -93,10 +77,6 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             }
         }
 
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <returns></returns>
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => _linkedList.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

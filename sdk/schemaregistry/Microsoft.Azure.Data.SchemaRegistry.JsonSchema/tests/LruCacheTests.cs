@@ -15,8 +15,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             {
                 cache.AddOrUpdate(i.ToString(), i, i.ToString().Length);
             }
-            //Assert.AreEqual(10, cache.Count);
-            //Assert.AreEqual(20, cache.TotalLength);
+            Assert.AreEqual(10, cache.Count);
+            Assert.AreEqual(20, cache.TotalLength);
 
             for (int i = 0; i < 10; i++)
             {
@@ -58,9 +58,9 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             cache.AddOrUpdate("1", 1, 1);
             cache.TryGet("1", out int val);
             Assert.AreEqual(1, val);
-            //Assert.AreEqual(1, cache.TotalLength);
+            Assert.AreEqual(1, cache.TotalLength);
             cache.AddOrUpdate("1", 10, 2);
-            //Assert.AreEqual(2, cache.TotalLength);
+            Assert.AreEqual(2, cache.TotalLength);
             cache.TryGet("1", out val);
             Assert.AreEqual(10, val);
         }
