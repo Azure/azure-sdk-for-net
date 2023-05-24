@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Dns
             DnsSrvRecords = new ChangeTrackingList<DnsSrvRecordInfo>();
             DnsTxtRecords = new ChangeTrackingList<DnsTxtRecordInfo>();
             DnsCaaRecords = new ChangeTrackingList<DnsCaaRecordInfo>();
+            DnsDSRecords = new ChangeTrackingList<DnsDSRecordInfo>();
+            DnsTlsaRecords = new ChangeTrackingList<DnsTlsaRecordInfo>();
+            DnsNaptrRecords = new ChangeTrackingList<DnsNaptrRecordInfo>();
         }
 
         /// <summary> Initializes a new instance of RecordData. </summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cnameRecordInfo"> The CNAME record in the  record set. </param>
         /// <param name="soaRecordInfo"> The SOA record in the record set. </param>
         /// <param name="caaRecords"> The list of CAA records in the record set. </param>
-        internal DnsRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<DnsARecordInfo> aRecords, IList<DnsAaaaRecordInfo> aaaaRecords, IList<DnsMXRecordInfo> mxRecords, IList<DnsNSRecordInfo> nsRecords, IList<DnsPtrRecordInfo> ptrRecords, IList<DnsSrvRecordInfo> srvRecords, IList<DnsTxtRecordInfo> txtRecords, DnsCnameRecordInfo cnameRecordInfo, DnsSoaRecordInfo soaRecordInfo, IList<DnsCaaRecordInfo> caaRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource)
+        /// <param name="dsRecords"> The list of DS records in the record set. </param>
+        /// <param name="tlsaRecords"> The list of TLSA records in the record set. </param>
+        /// <param name="naptrRecords"> The list of NAPTR records in the record set. </param>
+        internal DnsRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<DnsARecordInfo> aRecords, IList<DnsAaaaRecordInfo> aaaaRecords, IList<DnsMXRecordInfo> mxRecords, IList<DnsNSRecordInfo> nsRecords, IList<DnsPtrRecordInfo> ptrRecords, IList<DnsSrvRecordInfo> srvRecords, IList<DnsTxtRecordInfo> txtRecords, DnsCnameRecordInfo cnameRecordInfo, DnsSoaRecordInfo soaRecordInfo, IList<DnsCaaRecordInfo> caaRecords, IList<DnsDSRecordInfo> dsRecords, IList<DnsTlsaRecordInfo> tlsaRecords, IList<DnsNaptrRecordInfo> naptrRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource)
         {
             DnsARecords = aRecords;
             DnsAaaaRecords = aaaaRecords;
@@ -63,6 +69,9 @@ namespace Azure.ResourceManager.Dns
             DnsCnameRecordInfo = cnameRecordInfo;
             DnsSoaRecordInfo = soaRecordInfo;
             DnsCaaRecords = caaRecords;
+            DnsDSRecords = dsRecords;
+            DnsTlsaRecords = tlsaRecords;
+            DnsNaptrRecords = naptrRecords;
         }
 
         /// <summary> The list of A records in the record set. </summary>
@@ -97,5 +106,11 @@ namespace Azure.ResourceManager.Dns
         public DnsSoaRecordInfo DnsSoaRecordInfo { get; set; }
         /// <summary> The list of CAA records in the record set. </summary>
         public IList<DnsCaaRecordInfo> DnsCaaRecords { get; }
+        /// <summary> The list of DS records in the record set. </summary>
+        public IList<DnsDSRecordInfo> DnsDSRecords { get; }
+        /// <summary> The list of TLSA records in the record set. </summary>
+        public IList<DnsTlsaRecordInfo> DnsTlsaRecords { get; }
+        /// <summary> The list of NAPTR records in the record set. </summary>
+        public IList<DnsNaptrRecordInfo> DnsNaptrRecords { get; }
     }
 }

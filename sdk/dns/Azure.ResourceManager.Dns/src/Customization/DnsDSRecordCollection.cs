@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Dns
     public partial class DnsDSRecordCollection : ArmCollection, IEnumerable<DnsDSRecordResource>, IAsyncEnumerable<DnsDSRecordResource>
     {
         private readonly ClientDiagnostics _dnsDSRecordRecordSetsClientDiagnostics;
-        private readonly RecordSetsRestOperations _dnsDSRecordRecordSetsRestClient;
+        private readonly DnsDSRecordRestOperations _dnsDSRecordRecordSetsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="DnsDSRecordCollection"/> class for mocking. </summary>
         protected DnsDSRecordCollection()
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Dns
         {
             _dnsDSRecordRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", DnsDSRecordResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DnsDSRecordResource.ResourceType, out string dnsDSRecordRecordSetsApiVersion);
-            _dnsDSRecordRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dnsDSRecordRecordSetsApiVersion);
+            _dnsDSRecordRecordSetsRestClient = new DnsDSRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dnsDSRecordRecordSetsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DnsDSRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relativeRecordSetName, DnsRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DnsDSRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relativeRecordSetName, DnsDSRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
             Argument.AssertNotNull(data, nameof(data));
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DnsDSRecordResource> CreateOrUpdate(WaitUntil waitUntil, string relativeRecordSetName, DnsRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DnsDSRecordResource> CreateOrUpdate(WaitUntil waitUntil, string relativeRecordSetName, DnsDSRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
             Argument.AssertNotNull(data, nameof(data));
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Dns
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsDSRecordRecordSetsRestClient.CreateListByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "DS".ToDnsRecordType(), top, recordsetnamesuffix);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsDSRecordRecordSetsRestClient.CreateListByTypeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "DS".ToDnsRecordType(), top, recordsetnamesuffix);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsDSRecordResource(Client, DnsRecordData.DeserializeDnsRecordData(e)), _dnsDSRecordRecordSetsClientDiagnostics, Pipeline, "DnsDSRecordCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsDSRecordResource(Client, DnsDSRecordData.DeserializeDnsDSRecordData(e)), _dnsDSRecordRecordSetsClientDiagnostics, Pipeline, "DnsDSRecordCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Dns
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsDSRecordRecordSetsRestClient.CreateListByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "DS".ToDnsRecordType(), top, recordsetnamesuffix);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsDSRecordRecordSetsRestClient.CreateListByTypeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "DS".ToDnsRecordType(), top, recordsetnamesuffix);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsDSRecordResource(Client, DnsRecordData.DeserializeDnsRecordData(e)), _dnsDSRecordRecordSetsClientDiagnostics, Pipeline, "DnsDSRecordCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsDSRecordResource(Client, DnsDSRecordData.DeserializeDnsDSRecordData(e)), _dnsDSRecordRecordSetsClientDiagnostics, Pipeline, "DnsDSRecordCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
