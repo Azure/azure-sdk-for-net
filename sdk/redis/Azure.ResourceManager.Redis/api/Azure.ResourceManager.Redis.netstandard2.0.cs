@@ -265,6 +265,7 @@ namespace Azure.ResourceManager.Redis.Models
         public string Format { get { throw null; } set { } }
         public string PreferredDataArchiveAuthMethod { get { throw null; } set { } }
         public string Prefix { get { throw null; } }
+        public string StorageSubscriptionId { get { throw null; } set { } }
     }
     public partial class ImportRdbContent
     {
@@ -272,6 +273,7 @@ namespace Azure.ResourceManager.Redis.Models
         public System.Collections.Generic.IList<string> Files { get { throw null; } }
         public string Format { get { throw null; } set { } }
         public string PreferredDataArchiveAuthMethod { get { throw null; } set { } }
+        public string StorageSubscriptionId { get { throw null; } set { } }
     }
     public partial class RedisAccessKeys
     {
@@ -298,6 +300,7 @@ namespace Azure.ResourceManager.Redis.Models
         public string RdbBackupFrequency { get { throw null; } set { } }
         public int? RdbBackupMaxSnapshotCount { get { throw null; } set { } }
         public string RdbStorageConnectionString { get { throw null; } set { } }
+        public string StorageSubscriptionId { get { throw null; } set { } }
         public string ZonalConfiguration { get { throw null; } }
     }
     public partial class RedisCreateOrUpdateContent
