@@ -3,15 +3,12 @@
 
 using System;
 using System.Buffers;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using System.IO.Pipelines;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Queues.Models;
 using CoreWCF;
+using CoreWCF.Channels;
 using CoreWCF.Configuration;
 using CoreWCF.Queue.Common;
 using Microsoft.Extensions.DependencyInjection;
@@ -58,28 +55,13 @@ namespace Azure.Storage.CoreWCF.Channels
             var context = new AzureQueueStorageMessageContext
             {
                 QueueMessageReader = reader,
-                LocalAddress = endpointAddress,
-                //DispatchResultHandler = NotifyError,
+                LocalAddress = endpointAddress
             };
 
-            IDictionary<string, object> propertyDictionary = new Dictionary<string, object>
-            {
-                { "AzureQueueMessage", queueMessage }
-            };
+            var receiveContext = new AzureQueueReceiveContext(queueMessage, _deadLetterQueueClient);
+            context.ReceiveContext = receiveContext;
 
-            context.SetProperties(propertyDictionary);
             return context;
-        }
-
-        private async Task NotifyError(/*QueueDispatchResult dispatchResult, */QueueMessageContext context)
-        {
-            //if (dispatchResult == QueueDispatchResult.Failed)
-            {
-                BinaryFormatter binaryFormatter= new();
-                MemoryStream memoryStream= new();
-                binaryFormatter.Serialize(memoryStream, context.Properties["AzureQueueMessage"]);
-                await _deadLetterQueueClient.SendMessageAsync(BinaryData.FromBytes(memoryStream.ToArray()), default).ConfigureAwait(false);
-            }
         }
     }
 }
