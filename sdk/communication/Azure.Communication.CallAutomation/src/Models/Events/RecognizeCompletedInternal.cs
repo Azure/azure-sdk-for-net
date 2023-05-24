@@ -28,9 +28,7 @@ namespace Azure.Communication.CallAutomation
         /// Determines the sub-type of the recognize operation.
         /// In case of cancel operation the this field is not set and is returned empty
         /// </param>
-        /// <param name="collectTonesResult"> Defines the result for RecognitionType = Dtmf. </param>
-        /// <param name="choiceResult"> Defines the result for RecognitionType = Choices. </param>
-        internal RecognizeCompletedInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, CollectTonesResult collectTonesResult, ChoiceResult choiceResult)
+        internal RecognizeCompletedInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -38,8 +36,6 @@ namespace Azure.Communication.CallAutomation
             OperationContext = operationContext;
             ResultInformation = resultInformation;
             RecognitionType = recognitionType;
-            CollectTonesResult = collectTonesResult;
-            ChoiceResult = choiceResult;
         }
 
         /// <summary>

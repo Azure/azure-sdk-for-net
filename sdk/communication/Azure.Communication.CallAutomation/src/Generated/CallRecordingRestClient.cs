@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CallRecordingRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-01-15-preview")
+        public CallRecordingRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-03-06")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -38,7 +38,7 @@ namespace Azure.Communication.CallAutomation
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateStartRecordingRequest(StartCallRecordingRequestInternal startCallRecording, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
+        internal HttpMessage CreateStartRecordingRequest(StartCallRecordingRequestInternal startCallRecording, Guid? repeatabilityRequestID, DateTimeOffset? repeatabilityFirstSent)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -54,7 +54,7 @@ namespace Azure.Communication.CallAutomation
             }
             if (repeatabilityFirstSent != null)
             {
-                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent);
+                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent.Value, "R");
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -70,7 +70,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startCallRecording"/> is null. </exception>
-        public async Task<Response<RecordingStateResult>> StartRecordingAsync(StartCallRecordingRequestInternal startCallRecording, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RecordingStateResult>> StartRecordingAsync(StartCallRecordingRequestInternal startCallRecording, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (startCallRecording == null)
             {
@@ -99,7 +99,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startCallRecording"/> is null. </exception>
-        public Response<RecordingStateResult> StartRecording(StartCallRecordingRequestInternal startCallRecording, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public Response<RecordingStateResult> StartRecording(StartCallRecordingRequestInternal startCallRecording, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (startCallRecording == null)
             {

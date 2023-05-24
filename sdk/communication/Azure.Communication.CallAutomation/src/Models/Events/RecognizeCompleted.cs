@@ -19,8 +19,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary> The abstract recognize result. </summary>
         public RecognizeResult RecognizeResult { get; }
 
-        private static string SPEECH_DTMF_ERROR = "Speech or Dtmf Recognition return two results!";
-
         /// <summary>
         /// The recognition type.
         /// </summary>
@@ -67,29 +65,6 @@ namespace Azure.Communication.CallAutomation
             if (internalEvent.RecognitionType == CallMediaRecognitionType.Dtmf)
             {
                 RecognizeResult = internalEvent.DtmfResult;
-            }
-            else if (internalEvent.RecognitionType == CallMediaRecognitionType.Choices)
-            {
-                RecognizeResult = internalEvent.ChoiceResult;
-            }
-            else if (internalEvent.RecognitionType == CallMediaRecognitionType.Speech)
-            {
-                RecognizeResult = internalEvent.SpeechResult;
-            }
-            else if (internalEvent.RecognitionType == CallMediaRecognitionType.SpeechOrDtmf)
-            {
-                if (internalEvent.SpeechResult != null)
-                {
-                    RecognizeResult = internalEvent.SpeechResult;
-                }
-                else if (internalEvent.DtmfResult != null)
-                {
-                    RecognizeResult = internalEvent.DtmfResult;
-                }
-                else
-                {
-                    throw new Exception(SPEECH_DTMF_ERROR);
-                }
             }
         }
 
@@ -150,18 +125,6 @@ namespace Azure.Communication.CallAutomation
                 DtmfResult dtmfResult = (DtmfResult)RecognizeResult;
                 writer.WritePropertyName("dtmfResult");
                 JsonSerializer.Serialize(writer, dtmfResult, jsonSeializerOptionForObject);
-            }
-            else if (RecognitionType == CallMediaRecognitionType.Choices)
-            {
-                ChoiceResult choiceResult = (ChoiceResult)RecognizeResult;
-                writer.WritePropertyName("choiceResult");
-                JsonSerializer.Serialize(writer, choiceResult, jsonSeializerOptionForObject);
-            }
-            else if (RecognitionType == CallMediaRecognitionType.Speech)
-            {
-                SpeechResult speechResult = (SpeechResult)RecognizeResult;
-                writer.WritePropertyName("speechResult");
-                JsonSerializer.Serialize(writer, speechResult, jsonSeializerOptionForObject);
             }
 
             writer.WriteEndObject();

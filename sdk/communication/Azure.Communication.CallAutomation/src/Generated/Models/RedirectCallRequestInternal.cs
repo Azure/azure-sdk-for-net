@@ -31,7 +31,5 @@ namespace Azure.Communication.CallAutomation
         public string IncomingCallContext { get; }
         /// <summary> The target identity to redirect the call to. </summary>
         public CommunicationIdentifierModel Target { get; }
-        /// <summary> Used by customer to send custom context to targets. </summary>
-        public CustomContextInternal CustomContext { get; set; }
     }
 }

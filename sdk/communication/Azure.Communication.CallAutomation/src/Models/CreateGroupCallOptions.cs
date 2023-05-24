@@ -45,25 +45,5 @@ namespace Azure.Communication.CallAutomation
         /// The Operation context.
         /// </summary>
         public string OperationContext { get; set; }
-
-        /// <summary>
-        /// Media Streaming Configuration.
-        /// </summary>
-        public MediaStreamingOptions MediaStreamingOptions { get; set; }
-
-        /// <summary>
-        /// The endpoint URL of the Azure Cognitive Services resource attached
-        /// </summary>
-        public Uri AzureCognitiveServicesEndpointUrl { get; set; }
-
-        /// <summary>
-        /// Custom Context for PSTN targets.
-        /// </summary>
-        public IDictionary<string, string> SipHeaders { get; set; }
-
-        /// <summary>
-        /// Custom Context for Voip targets.
-        /// </summary>
-        public IDictionary<string, string> VoipHeaders { get; set; }
     }
 }
