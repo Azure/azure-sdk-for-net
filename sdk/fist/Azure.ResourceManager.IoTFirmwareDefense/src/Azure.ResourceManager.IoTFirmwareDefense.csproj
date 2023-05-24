@@ -2,6 +2,7 @@
   <PropertyGroup>
     <Version>1.0.0-beta.1</Version>
     <PackageId>Azure.ResourceManager.IoTFirmwareDefense</PackageId>
+    <TargetFramework>$(RequiredTargetFrameworks)</TargetFramework>
     <Description>Azure Resource Manager client SDK for Azure resource provider IoTFirmwareDefense.</Description>
     <PackageTags>azure;management;arm;resource manager;iotfirmwaredefense</PackageTags>
   </PropertyGroup>
