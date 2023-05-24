@@ -50,7 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             if (_fileBlobProvider != null)
             {
-                _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager);
+                _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager, _connectionVars);
             }
 
             _statsbeat = InitializeStatsbeat(options, _connectionVars, platform);
@@ -97,7 +97,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
             }
 
-            return new ApplicationInsightsRestClient(new ClientDiagnostics(options), pipeline, connectionVars);
+            return new ApplicationInsightsRestClient(new ClientDiagnostics(options), pipeline, host: connectionVars.IngestionEndpoint);
         }
 
         private static PersistentBlobProvider? InitializeOfflineStorage(IPlatform platform, ConnectionVars connectionVars, bool disableOfflineStorage, string? configuredStorageDirectory)
@@ -176,7 +176,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 if (result == ExportResult.Failure && _fileBlobProvider != null)
                 {
                     _transmissionStateManager.EnableBackOff(httpMessage.Response);
-                    result = HttpPipelineHelper.HandleFailures(httpMessage, _fileBlobProvider);
+                    result = HttpPipelineHelper.HandleFailures(httpMessage, _fileBlobProvider, _connectionVars);
                 }
                 else
                 {

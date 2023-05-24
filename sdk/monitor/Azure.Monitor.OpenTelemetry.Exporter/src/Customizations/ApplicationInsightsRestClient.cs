@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
@@ -18,13 +17,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     internal partial class ApplicationInsightsRestClient
     {
         private RawRequestUriBuilder _rawRequestUriBuilder;
-        private readonly ConnectionVars _connectionVars;
-
-        public ApplicationInsightsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ConnectionVars connectionVars)
-            : this(clientDiagnostics, pipeline, host: connectionVars.IngestionEndpoint)
-        {
-            _connectionVars = connectionVars;
-        }
 
         /// <summary>
         /// This operation sends a sequence of telemetry events that will be monitored by Azure Monitor.
@@ -112,8 +104,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private HttpMessage CreateRequest(RequestContent requestContent)
         {
             var message = _pipeline.CreateMessage();
-            message.SetConnectionVars(_connectionVars);
-
             var request = message.Request;
             request.Method = RequestMethod.Post;
             request.Uri = LazyInitializer.EnsureInitialized(ref _rawRequestUriBuilder, () =>
