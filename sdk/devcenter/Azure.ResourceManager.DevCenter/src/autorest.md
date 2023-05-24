@@ -5,7 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
+generate-model-factory: true
 csharp: true
 library-name: DevCenter
 namespace: Azure.ResourceManager.DevCenter
@@ -51,6 +51,9 @@ prepend-rp-prefix:
   - ProvisioningState
   - ResourceRange
   - Schedule
+  - ScheduledType
+  - ScheduledFrequency
+  - ScheduleEnableStatus
   - TrackedResourceUpdate
   - UsageName
   - UsageUnit
@@ -112,6 +115,7 @@ override-operation-name:
   Usages_ListByLocation: GetDevCenterUsagesByLocationAsync
   CheckNameAvailability_Execute: ExecuteDevCenterCheckNameAvailabilityAsync
   Skus_ListBySubscription: GetDevCenterSkusBySubscriptionAsync
+  NetworkConnections_ListOutboundNetworkDependenciesEndpoints: GetOutboundEnvironmentEndpoints
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/attachednetworks: AttachedNetworkConnection

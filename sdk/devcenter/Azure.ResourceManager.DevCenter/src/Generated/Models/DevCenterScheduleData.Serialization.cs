@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.DevCenter
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ScheduledType> type0 = default;
-            Optional<ScheduledFrequency> frequency = default;
+            Optional<DevCenterScheduledType> type0 = default;
+            Optional<DevCenterScheduledFrequency> frequency = default;
             Optional<string> time = default;
             Optional<string> timeZone = default;
-            Optional<ScheduleEnableStatus> state = default;
+            Optional<DevCenterScheduleEnableStatus> state = default;
             Optional<DevCenterProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            type0 = new ScheduledType(property0.Value.GetString());
+                            type0 = new DevCenterScheduledType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("frequency"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            frequency = new ScheduledFrequency(property0.Value.GetString());
+                            frequency = new DevCenterScheduledFrequency(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("time"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            state = new ScheduleEnableStatus(property0.Value.GetString());
+                            state = new DevCenterScheduleEnableStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

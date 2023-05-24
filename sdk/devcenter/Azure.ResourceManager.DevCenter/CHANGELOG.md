@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (Unreleased)
+## 1.0.0 (2023-05-23)
 
 This package is the first stable release of the Dev Center Management client library.
 
@@ -22,7 +22,7 @@ Polishing since last public beta release:
 ### Other Changes
 
 - Upgraded dependent `Azure.Core` to `1.32.0`.
-- Upgraded dependent `Azure.ResourceManager` to `1.5.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.6.0`.
 
 ## 1.0.0-beta.2 (2023-02-17)
 

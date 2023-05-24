@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.DevCenter.Samples
             string scheduleName = "autoShutdown";
             DevCenterScheduleData data = new DevCenterScheduleData()
             {
-                ScheduledType = ScheduledType.StopDevBox,
-                Frequency = ScheduledFrequency.Daily,
+                ScheduledType = DevCenterScheduledType.StopDevBox,
+                Frequency = DevCenterScheduledFrequency.Daily,
                 Time = "17:30",
                 TimeZone = "America/Los_Angeles",
-                State = ScheduleEnableStatus.IsEnabled,
+                State = DevCenterScheduleEnableStatus.IsEnabled,
             };
             ArmOperation<DevCenterScheduleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, scheduleName, data);
             DevCenterScheduleResource result = lro.Value;

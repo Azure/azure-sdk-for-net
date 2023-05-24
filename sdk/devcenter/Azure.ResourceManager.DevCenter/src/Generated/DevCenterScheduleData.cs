@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="timeZone"> The IANA timezone id at which the schedule should execute. </param>
         /// <param name="state"> Indicates whether or not this scheduled task is enabled. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal DevCenterScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ScheduledType? scheduledType, ScheduledFrequency? frequency, string time, string timeZone, ScheduleEnableStatus? state, DevCenterProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal DevCenterScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterScheduledType? scheduledType, DevCenterScheduledFrequency? frequency, string time, string timeZone, DevCenterScheduleEnableStatus? state, DevCenterProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             ScheduledType = scheduledType;
             Frequency = frequency;
@@ -44,15 +44,15 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Supported type this scheduled task represents. </summary>
-        public ScheduledType? ScheduledType { get; set; }
+        public DevCenterScheduledType? ScheduledType { get; set; }
         /// <summary> The frequency of this scheduled task. </summary>
-        public ScheduledFrequency? Frequency { get; set; }
+        public DevCenterScheduledFrequency? Frequency { get; set; }
         /// <summary> The target time to trigger the action. The format is HH:MM. </summary>
         public string Time { get; set; }
         /// <summary> The IANA timezone id at which the schedule should execute. </summary>
         public string TimeZone { get; set; }
         /// <summary> Indicates whether or not this scheduled task is enabled. </summary>
-        public ScheduleEnableStatus? State { get; set; }
+        public DevCenterScheduleEnableStatus? State { get; set; }
         /// <summary> The provisioning state of the resource. </summary>
         public DevCenterProvisioningState? ProvisioningState { get; }
     }

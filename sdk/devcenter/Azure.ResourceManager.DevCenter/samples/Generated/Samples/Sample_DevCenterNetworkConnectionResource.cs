@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         // ListOutboundNetworkDependencies
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetOutboundNetworkDependenciesEndpoints_ListOutboundNetworkDependencies()
+        public async Task GetOutboundEnvironmentEndpoints_ListOutboundNetworkDependencies()
         {
             // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/NetworkConnections_ListOutboundNetworkDependenciesEndpoints.json
             // this example is just showing the usage of "NetworkConnections_ListOutboundNetworkDependenciesEndpoints" operation, for the dependent resources, they will have to be created separately.
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
             DevCenterNetworkConnectionResource devCenterNetworkConnection = client.GetDevCenterNetworkConnectionResource(devCenterNetworkConnectionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (OutboundEnvironmentEndpoint item in devCenterNetworkConnection.GetOutboundNetworkDependenciesEndpointsAsync())
+            await foreach (OutboundEnvironmentEndpoint item in devCenterNetworkConnection.GetOutboundEnvironmentEndpointsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

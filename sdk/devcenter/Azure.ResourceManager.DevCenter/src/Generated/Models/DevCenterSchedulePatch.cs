@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> Supported type this scheduled task represents. </summary>
-        public ScheduledType? ScheduledType { get; set; }
+        public DevCenterScheduledType? ScheduledType { get; set; }
         /// <summary> The frequency of this scheduled task. </summary>
-        public ScheduledFrequency? Frequency { get; set; }
+        public DevCenterScheduledFrequency? Frequency { get; set; }
         /// <summary> The target time to trigger the action. The format is HH:MM. </summary>
         public string Time { get; set; }
         /// <summary> The IANA timezone id at which the schedule should execute. </summary>
         public string TimeZone { get; set; }
         /// <summary> Indicates whether or not this scheduled task is enabled. </summary>
-        public ScheduleEnableStatus? State { get; set; }
+        public DevCenterScheduleEnableStatus? State { get; set; }
     }
 }

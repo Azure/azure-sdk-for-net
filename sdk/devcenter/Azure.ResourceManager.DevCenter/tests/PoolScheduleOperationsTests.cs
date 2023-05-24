@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.DevCenter.Tests
 
             var scheduleData = new DevCenterScheduleData()
             {
-                ScheduledType = ScheduledType.StopDevBox,
-                Frequency = ScheduledFrequency.Daily,
-                State = ScheduleEnableStatus.IsEnabled,
+                ScheduledType = DevCenterScheduledType.StopDevBox,
+                Frequency = DevCenterScheduledFrequency.Daily,
+                State = DevCenterScheduleEnableStatus.IsEnabled,
                 Time = "17:30",
                 TimeZone = "America/Los_Angeles",
             };
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
             // Update
             DevCenterSchedulePatch updateRequest = new DevCenterSchedulePatch()
             {
-                State = ScheduleEnableStatus.IsDisabled,
+                State = DevCenterScheduleEnableStatus.IsDisabled,
             };
             ArmOperation<DevCenterScheduleResource> updateResponse = await retrievedResource.Value.UpdateAsync(WaitUntil.Completed, updateRequest);
 
