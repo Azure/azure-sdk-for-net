@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="isEnabled"> Gets or sets the value of the enabled flag of the webhook. </param>
-        /// <param name="uriString"> Gets or sets the webhook uri. </param>
+        /// <param name="uri"> Gets or sets the webhook uri. </param>
         /// <param name="expireOn"> Gets or sets the expiry time. </param>
         /// <param name="lastInvokedOn"> Gets or sets the last invoked time. </param>
         /// <param name="parameters"> Gets or sets the parameters of the job that is created when the webhook calls the runbook it is associated with. </param>
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Automation
         /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
         /// <param name="lastModifiedBy"> Details of the user who last modified the Webhook. </param>
         /// <param name="description"> Gets or sets the description. </param>
-        internal AutomationWebhookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, string uriString, DateTimeOffset? expireOn, DateTimeOffset? lastInvokedOn, IDictionary<string, string> parameters, RunbookAssociationProperty runbook, string runOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, string description) : base(id, name, resourceType, systemData)
+        internal AutomationWebhookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, Uri uri, DateTimeOffset? expireOn, DateTimeOffset? lastInvokedOn, IDictionary<string, string> parameters, RunbookAssociationProperty runbook, string runOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, string description) : base(id, name, resourceType, systemData)
         {
             IsEnabled = isEnabled;
-            UriString = uriString;
+            Uri = uri;
             ExpireOn = expireOn;
             LastInvokedOn = lastInvokedOn;
             Parameters = parameters;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Automation
         /// <summary> Gets or sets the value of the enabled flag of the webhook. </summary>
         public bool? IsEnabled { get; set; }
         /// <summary> Gets or sets the webhook uri. </summary>
-        public string UriString { get; set; }
+        public Uri Uri { get; set; }
         /// <summary> Gets or sets the expiry time. </summary>
         public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> Gets or sets the last invoked time. </summary>

@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(UriString))
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
-                writer.WriteStringValue(UriString);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(ExpireOn))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Automation
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<bool> isEnabled = default;
-            Optional<string> uri = default;
+            Optional<Uri> uri = default;
             Optional<DateTimeOffset> expiryTime = default;
             Optional<DateTimeOffset?> lastInvokedTime = default;
             Optional<IDictionary<string, string>> parameters = default;
@@ -160,12 +160,16 @@ namespace Azure.ResourceManager.Automation
                         }
                         if (property0.NameEquals("uri"u8))
                         {
-                            uri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
+                            {
+                                continue;
+                            }
+                            uri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("expiryTime"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }
@@ -174,7 +178,7 @@ namespace Azure.ResourceManager.Automation
                         }
                         if (property0.NameEquals("lastInvokedTime"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 lastInvokedTime = null;
                                 continue;
@@ -212,7 +216,7 @@ namespace Azure.ResourceManager.Automation
                         }
                         if (property0.NameEquals("creationTime"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }
@@ -221,7 +225,7 @@ namespace Azure.ResourceManager.Automation
                         }
                         if (property0.NameEquals("lastModifiedTime"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }

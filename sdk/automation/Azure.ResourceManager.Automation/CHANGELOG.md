@@ -6,9 +6,9 @@
 
 ### Breaking Changes
 
-- Add property `UriString` to class `AutomationWebhookData`, replace the `Uri`.
-
 ### Bugs Fixed
+
+- Fixed an issue that `System.UriFormatException` is thrown when `Uri` type field is empty during serialization of `AutomationWebhookData`.
 
 ### Other Changes
 

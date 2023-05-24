@@ -47,11 +47,14 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
         }
 
         [RecordedTest]
+        [LiveOnly]// Uri contains Credential info should be sanitized, and
         public async Task CreateOrUpdateExistGetGetAll()
         {
             // CreateOrUpdate
             string webhookName = Recording.GenerateAssetName("webhook");
             var webhook = await CreateWebhook(webhookName);
+            ValidateWebhook(webhook.Data, webhookName);
+            Assert.IsNotNull(webhook.Data.Uri);
 
             // Exist
             var flag = await _webhookCollection.ExistsAsync(webhookName);
@@ -60,11 +63,13 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             // Get
             var getwebhook = await _webhookCollection.GetAsync(webhookName);
             ValidateWebhook(getwebhook.Value.Data, webhookName);
+            Assert.IsNull(getwebhook.Value.Data.Uri);
 
             // GetAll
             var list = await _webhookCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             ValidateWebhook(list.FirstOrDefault().Data, webhookName);
+            Assert.IsNull(list.FirstOrDefault().Data.Uri);
         }
 
         private void ValidateWebhook(AutomationWebhookData webhook, string webhookName)
@@ -73,7 +78,6 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             Assert.IsNotEmpty(webhook.Id);
             Assert.AreEqual(webhookName, webhook.Name);
             Assert.AreEqual(_runbook.Data.Name, webhook.RunbookName);
-            Assert.IsTrue(string.IsNullOrWhiteSpace(webhook.UriString));
         }
     }
 }

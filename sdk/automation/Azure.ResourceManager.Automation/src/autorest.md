@@ -98,7 +98,6 @@ rename-mapping:
   SUCScheduleProperties.nextRun: NextRunOn
   SUCScheduleProperties.nextRunOffsetMinutes: NextRunInMinutes
   Webhook.properties.expiryTime: ExpireOn
-  Webhook.properties.uri: uriString
   WebhookCreateOrUpdateParameters.properties.expiryTime: ExpireOn
   ScheduleCreateOrUpdateParameters.properties.expiryTime: ExpireOn
   Activity.id: -|arm-id
@@ -220,6 +219,11 @@ rename-rules:
 
 no-property-type-replacement:
   - JobNavigation
+
+models-to-treat-empty-string-as-null:
+  - AutomationWebhookData
+  # - Webhook.properties.uri
+  # : uriString
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/objectDataTypes/{typeName}/fields: AutomationAccountResource
