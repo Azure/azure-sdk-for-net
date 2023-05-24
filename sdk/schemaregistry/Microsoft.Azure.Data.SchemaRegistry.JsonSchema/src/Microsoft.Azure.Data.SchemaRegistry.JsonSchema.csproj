@@ -8,9 +8,12 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
+	<ItemGroup>
+		<ProjectReference Include="..\..\Azure.Data.SchemaRegistry\src\Azure.Data.SchemaRegistry.csproj" />
+	</ItemGroup>
+
   <ItemGroup>
-    <PackageReference Include="Apache.Avro" />
-    <PackageReference Include="Azure.Data.SchemaRegistry" />
+    <!--<PackageReference Include="Azure.Data.SchemaRegistry" />-->
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
 

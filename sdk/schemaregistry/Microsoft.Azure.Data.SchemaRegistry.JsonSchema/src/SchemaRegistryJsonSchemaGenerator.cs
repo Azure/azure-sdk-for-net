@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
@@ -11,6 +12,20 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
     /// </summary>
     public abstract class SchemaRegistryJsonSchemaGenerator
     {
+        ///// <summary>
+        ///// TODO.
+        ///// </summary>
+        ///// <param name="data"></param>
+        ///// <param name="dataType"></param>
+        ///// <param name="schemaDefinition"></param>
+        ///// <param name="cancellationToken"></param>
+        ///// <returns></returns>
+        //public virtual async Task<bool> IsValidToSchemaAsync(Object data, Type dataType, string schemaDefinition, CancellationToken cancellationToken)
+        //{
+        //    await Task.Yield();
+        //    return true;
+        //}
+
         /// <summary>
         /// TODO.
         /// </summary>
@@ -18,18 +33,16 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         /// <param name="dataType"></param>
         /// <param name="schemaDefinition"></param>
         /// <returns></returns>
-        public virtual async ValueTask<bool> IsValidToSchema(Object data, Type dataType, string schemaDefinition)
+        public virtual bool IsValidToSchema(Object data, Type dataType, string schemaDefinition)
         {
-            await Task.Yield();
             return true;
         }
 
         /// <summary>
         /// TODO.
         /// </summary>
-        /// <param name="data"></param>
         /// <param name="dataType"></param>
         /// <returns></returns>
-        public abstract string GenerateSchemaFromObject(Object data, Type dataType);
+        public abstract string GenerateSchemaFromObject(Type dataType);
     }
 }

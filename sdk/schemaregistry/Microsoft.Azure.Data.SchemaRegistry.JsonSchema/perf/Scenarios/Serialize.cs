@@ -7,9 +7,9 @@
 //using Azure.Test.Perf;
 //using TestSchema;
 
-//namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Perf.Scenarios
+//namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Perf.Scenarios
 //{
-//    public class Serialize : SchemaRegistryAvroSerializerPerfTestBase
+//    public class Serialize : SchemaRegistryJsonSerializerPerfTestBase
 //    {
 //        private readonly List<Employee> _employees = new();
 
@@ -17,7 +17,7 @@
 //        {
 //            for (int i = 0; i < options.Count; i++)
 //            {
-//                _employees.Add(new Employee() { Name = "Caketown", Age = 42});
+//                _employees.Add(new Employee() { Name = "Caketown", Age = 42 });
 //            }
 //        }
 

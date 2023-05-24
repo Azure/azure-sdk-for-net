@@ -1,0 +1,56 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://t1e4564477a3bf4db-json.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/UnregisteredEmployee:get-id?api-version=2022-10",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "320",
+        "Content-Type": "application/json; serialization=json",
+        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.4.0-alpha.20230523.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "711a6932685dc3931a1c5799483b69bf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Employee",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Age": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "Name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 24 May 2023 01:06:41 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Transfer-Encoding": "chunked",
+        "x-ms-error-code": "ItemNotFound"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "ItemNotFound",
+          "message": "Schema azsdk_net_test_group/UnregisteredEmployee does not exist. TrackingId:ef67a345-a0b0-4656-893e-d94bc2e388db_G21, SystemTracker:t1e4564477a3bf4db-json.servicebus.windows.net:$schemaGroups/azsdk_net_test_group/schemas/UnregisteredEmployee:get-id, Timestamp:2023-05-24T01:06:41"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "1014260383",
+    "SCHEMAREGISTRY_ENDPOINT_JSON": "t1e4564477a3bf4db-json.servicebus.windows.net",
+    "SCHEMAREGISTRY_GROUP": "azsdk_net_test_group"
+  }
+}

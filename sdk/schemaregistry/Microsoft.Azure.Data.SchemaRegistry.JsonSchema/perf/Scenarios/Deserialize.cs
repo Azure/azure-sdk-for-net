@@ -8,9 +8,9 @@
 //using Azure.Test.Perf;
 //using TestSchema;
 
-//namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Perf.Scenarios
+//namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Perf.Scenarios
 //{
-//    public class Deserialize : SchemaRegistryAvroSerializerPerfTestBase
+//    public class Deserialize : SchemaRegistryJsonSerializerPerfTestBase
 //    {
 //        private readonly List<MessageContent> _serializedData = new();
 //        public Deserialize(SizeCountOptions options) : base(options)

@@ -11,20 +11,19 @@ using Azure;
 using Azure.Core.Pipeline;
 using Azure.Messaging;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
 {
     /// <summary>
     /// A <see cref="SchemaRegistryJsonSerializer"/> uses the <see cref="SchemaRegistryClient"/> to
-    /// serialize and deserialize Avro payloads.
+    /// serialize and deserialize Json payloads.
     /// </summary>
     public class SchemaRegistryJsonSerializer
     {
         private readonly SchemaRegistryClient _client;
         private readonly string _groupName;
         private readonly SchemaRegistryJsonSchemaGenerator _jsonSchemaGenerator;
-        private const string JsonMimeType = "application/json";
+        private const string JsonMimeType = "application/json"; //TODO: confirm
         private const int CacheCapacity = 128;
 
         /// <summary>
@@ -46,7 +45,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         /// </summary>
         /// <param name="client">The <see cref="SchemaRegistryClient"/> instance to use for looking up schemas.</param>
         /// <param name="groupName">The Schema Registry group name that contains the schemas that will be used to serialize.</param>
-        /// <param name="jsonSchemaGenerator">TODO</param>
+        /// <param name="jsonSchemaGenerator">The class that will be used to generate schemas from .NET types and validate deserialized data.</param>
         /// <exception cref="ArgumentNullException"></exception>
         public SchemaRegistryJsonSerializer(SchemaRegistryClient client, string groupName, SchemaRegistryJsonSchemaGenerator jsonSchemaGenerator)
         {
@@ -71,10 +70,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
 
         #region Serialize
         /// <summary>
-        /// Serializes the message data as Avro and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
-        /// will be set to "avro/binary+schemaId" where schemaId is the ID of the schema used to serialize the data.
+        /// Serializes the message data as Json and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
+        /// will be set to "application/json+schemaId" where schemaId is the ID of the schema that was generated from the type.
         /// </summary>
-        /// <param name="data">The data to serialize to Avro and serialize into the message.</param>
+        /// <param name="data">The data to serialize to Json and serialize into the message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <typeparam name="TMessage">The <see cref="MessageContent"/> type to serialize the data into.</typeparam>
         /// <typeparam name="TData">The type of the data to serialize.</typeparam>
@@ -82,15 +81,12 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         ///   This can occur if the <code>groupName</code> was not specified when constructing the <see cref="SchemaRegistryJsonSerializer"/>.
         ///   It can also occur if the <typeparamref name="TMessage"/> type does not have a public parameterless constructor.
         /// </exception>
-        /// <exception cref="ArgumentException">
-        ///   The <typeparamref name="TData"/> is not convertible to ISpecificRecord or GenericRecord.
-        /// </exception>
         /// <exception cref="RequestFailedException">
         ///   An error occurred while attempting to communicate with the Schema Registry service.
         /// </exception>
         /// <exception cref="Exception">
-        ///   The data did not adhere to the Avro schema, or the schema itself was invalid.
-        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the Apache Avro library.
+        ///   The data did not adhere to the Json schema, or the schema itself was invalid.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaRegistryJsonSchemaGenerator"/> class.
         /// </exception>
         public TMessage Serialize<TMessage, TData>(
             TData data,
@@ -98,10 +94,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             => (TMessage) SerializeInternalAsync(data, typeof(TData), typeof(TMessage), false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// serializes the message data as Avro and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
-        /// will be set to "avro/binary+schemaId" where schemaId is the ID of the schema used to serialize the data.
+        /// serializes the message data as Json and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
+        /// will be set to "application/json+schemaId" where schemaId is the ID of the schema that was generated from the type.
         /// </summary>
-        /// <param name="data">The data to serialize to Avro and serialize into the message.</param>
+        /// <param name="data">The data to serialize to Json and serialize into the message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <typeparam name="TMessage">The <see cref="MessageContent"/> type to serialize the data into.</typeparam>
         /// <typeparam name="TData">The type of the data to serialize.</typeparam>
@@ -109,15 +105,12 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         ///   This can occur if the <code>groupName</code> was not specified when constructing the <see cref="SchemaRegistryJsonSerializer"/>.
         ///   It can also occur if the <typeparamref name="TMessage"/> type does not have a public parameterless constructor.
         /// </exception>
-        /// <exception cref="ArgumentException">
-        ///   The <typeparamref name="TData"/> is not convertible to ISpecificRecord or GenericRecord.
-        /// </exception>
         /// <exception cref="RequestFailedException">
         ///   An error occurred while attempting to communicate with the Schema Registry service.
         /// </exception>
         /// <exception cref="Exception">
-        ///   The data did not adhere to the Avro schema, or the schema itself was invalid.
-        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the Apache Avro library.
+        ///   The data did not adhere to the Json schema, or the schema itself was invalid.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaRegistryJsonSchemaGenerator"/> class.
         /// </exception>
         public async ValueTask<TMessage> SerializeAsync<TMessage, TData>(
             TData data,
@@ -125,10 +118,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             => (TMessage) await SerializeInternalAsync(data, typeof(TData), typeof(TMessage), true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// serializes the message data as Avro and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
-        /// will be set to "avro/binary+schemaId" where schemaId is the ID of the schema used to serialize the data.
+        /// serializes the message data as Json and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
+        /// will be set to "application/json+schemaId" where schemaId is the ID of the schema that was generated from the type.
         /// </summary>
-        /// <param name="data">The data to serialize to Avro and serialize into the message.</param>
+        /// <param name="data">The data to serialize to Json and serialize into the message.</param>
         /// <param name="dataType">The type of the data to serialize. If left blank, the type will be determined at runtime by
         /// calling <see cref="Object.GetType"/>.</param>
         /// <param name="messageType">The type of message to serialize the data into. Must extend from <see cref="MessageContent"/>, and
@@ -139,15 +132,12 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         ///   This can occur if the <code>groupName</code> was not specified when constructing the <see cref="SchemaRegistryJsonSerializer"/>.
         ///   It can also occur if the <paramref name="messageType"/> does not have a public parameterless constructor.
         /// </exception>
-        /// <exception cref="ArgumentException">
-        ///   The <paramref name="dataType"/> is not convertible to ISpecificRecord or GenericRecord.
-        /// </exception>
         /// <exception cref="RequestFailedException">
         ///   An error occurred while attempting to communicate with the Schema Registry service.
         /// </exception>
         /// <exception cref="Exception">
-        ///   The data did not adhere to the Avro schema, or the schema itself was invalid.
-        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the Apache Avro library.
+        ///   The data did not adhere to the Json schema, or the schema itself was invalid.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaRegistryJsonSchemaGenerator"/> class.
         /// </exception>
         public MessageContent Serialize(
             object data,
@@ -157,10 +147,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             => SerializeInternalAsync(data, dataType, messageType, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// serializes the message data as Avro and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
-        /// will be set to "avro/binary+schemaId" where schemaId is the ID of the schema used to serialize the data.
+        /// serializes the message data as Json and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
+        /// will be set to "application/json+schemaId" where schemaId is the ID of the schema that was generated from the type.
         /// </summary>
-        /// <param name="data">The data to serialize to Avro and serialize into the message.</param>
+        /// <param name="data">The data to serialize to Json and serialize into the message.</param>
         /// <param name="dataType">The type of the data to serialize. If left blank, the type will be determined at runtime by
         /// calling <see cref="Object.GetType"/>.</param>
         /// <param name="messageType">The type of message to serialize the data into. Must extend from <see cref="MessageContent"/>, and
@@ -171,18 +161,129 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         ///   This can occur if the <code>groupName</code> was not specified when constructing the <see cref="SchemaRegistryJsonSerializer"/>.
         ///   It can also occur if the <paramref name="messageType"/> does not have a public parameterless constructor.
         /// </exception>
-        /// <exception cref="ArgumentException">
-        ///   The <paramref name="dataType"/> is not convertible to ISpecificRecord or GenericRecord.
+        /// <exception cref="RequestFailedException">
+        ///   An error occurred while attempting to communicate with the Schema Registry service.
+        /// </exception>
+        /// <exception cref="Exception">
+        ///   The data did not adhere to the Json schema, or the schema itself was invalid.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaRegistryJsonSchemaGenerator"/> class.
+        /// </exception>
+        public async ValueTask<MessageContent> SerializeAsync(
+            object data,
+            Type dataType = default,
+            Type messageType = default,
+            CancellationToken cancellationToken = default)
+            => await SerializeInternalAsync(data, dataType, messageType, true, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// serializes the message data as Json and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
+        /// will be set to "application/json+schemaId" where schemaId is the ID of the schema used to serialize the data.
+        /// </summary>
+        /// <typeparam name="TMessage">The <see cref="MessageContent"/> type to serialize the data into.</typeparam>
+        /// <typeparam name="TData">The type of the data to serialize.</typeparam>
+        /// <param name="data">The data to serialize to Json and serialize into the message.</param>
+        /// <param name="schemaId">The Id of the schema that is associated with the given type.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation</param>
+        /// <exception cref="InvalidOperationException">
+        ///   This can occur if the <code>groupName</code> was not specified when constructing the <see cref="SchemaRegistryJsonSerializer"/>.
+        ///   It can also occur if the <typeparamref name="TMessage"/> does not have a public parameterless constructor.
         /// </exception>
         /// <exception cref="RequestFailedException">
         ///   An error occurred while attempting to communicate with the Schema Registry service.
         /// </exception>
         /// <exception cref="Exception">
-        ///   The data did not adhere to the Avro schema, or the schema itself was invalid.
-        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the Apache Avro library.
+        ///   The data did not adhere to the Json schema, or the schema itself was invalid.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaRegistryJsonSchemaGenerator"/> class.
+        /// </exception>
+        public TMessage Serialize<TMessage, TData>(
+            TData data,
+            string schemaId,
+            CancellationToken cancellationToken = default) where TMessage : MessageContent, new()
+            => (TMessage)SerializeInternalAsync(data, typeof(TData), typeof(TMessage), false, cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// serializes the message data as Json and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
+        /// will be set to "application/json+schemaId" where schemaId is the ID of the schema used to serialize the data.
+        /// </summary>
+        /// <param name="data">The data to serialize to Json and serialize into the message.</param>
+        /// <param name="schemaId">The Id of the schema that is associated with the given type.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <typeparam name="TMessage">The <see cref="MessageContent"/> type to serialize the data into.</typeparam>
+        /// <typeparam name="TData">The type of the data to serialize.</typeparam>
+        /// <exception cref="InvalidOperationException">
+        ///   This can occur if the <code>groupName</code> was not specified when constructing the <see cref="SchemaRegistryJsonSerializer"/>.
+        ///   It can also occur if the <typeparamref name="TMessage"/> type does not have a public parameterless constructor.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        ///   An error occurred while attempting to communicate with the Schema Registry service.
+        /// </exception>
+        /// <exception cref="Exception">
+        ///   The data did not adhere to the Json schema, or the schema itself was invalid.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaRegistryJsonSchemaGenerator"/> class.
+        /// </exception>
+        public async ValueTask<TMessage> SerializeAsync<TMessage, TData>(
+            TData data,
+            string schemaId,
+            CancellationToken cancellationToken = default) where TMessage : MessageContent, new()
+            => (TMessage)await SerializeInternalAsync(data, typeof(TData), typeof(TMessage), true, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// serializes the message data as Json and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
+        /// will be set to "application/json+schemaId" where schemaId is the ID of the schema used to serialize the data.
+        /// </summary>
+        /// <param name="data">The data to serialize to Json and serialize into the message.</param>
+        /// <param name="schemaId">The Id of the schema that is associated with the given type.</param>
+        /// <param name="dataType">The type of the data to serialize. If left blank, the type will be determined at runtime by
+        /// calling <see cref="Object.GetType"/>.</param>
+        /// <param name="messageType">The type of message to serialize the data into. Must extend from <see cref="MessageContent"/>, and
+        /// have a parameterless constructor.
+        /// If left blank, the data will be serialized into a <see cref="MessageContent"/> instance.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <exception cref="InvalidOperationException">
+        ///   This can occur if the <code>groupName</code> was not specified when constructing the <see cref="SchemaRegistryJsonSerializer"/>.
+        ///   It can also occur if the <paramref name="messageType"/> does not have a public parameterless constructor.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        ///   An error occurred while attempting to communicate with the Schema Registry service.
+        /// </exception>
+        /// <exception cref="Exception">
+        ///   The data did not adhere to the Json schema, or the schema itself was invalid.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaRegistryJsonSchemaGenerator"/> class.
+        /// </exception>
+        public MessageContent Serialize(
+            object data,
+            string schemaId,
+            Type dataType = default,
+            Type messageType = default,
+            CancellationToken cancellationToken = default)
+            => SerializeInternalAsync(data, dataType, messageType, false, cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// serializes the message data as Json and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
+        /// will be set to "application/json+schemaId" where schemaId is the ID of the schema used to serialize the data.
+        /// </summary>
+        /// <param name="data">The data to serialize to Json and serialize into the message.</param>
+        /// <param name="schemaId">The Id of the schema that is associated with the given type.</param>
+        /// <param name="dataType">The type of the data to serialize. If left blank, the type will be determined at runtime by
+        /// calling <see cref="Object.GetType"/>.</param>
+        /// <param name="messageType">The type of message to serialize the data into. Must extend from <see cref="MessageContent"/>, and
+        /// have a parameterless constructor.
+        /// If left blank, the data will be serialized into a <see cref="MessageContent"/> instance.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <exception cref="InvalidOperationException">
+        ///   This can occur if the <code>groupName</code> was not specified when constructing the <see cref="SchemaRegistryJsonSerializer"/>.
+        ///   It can also occur if the <paramref name="messageType"/> does not have a public parameterless constructor.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        ///   An error occurred while attempting to communicate with the Schema Registry service.
+        /// </exception>
+        /// <exception cref="Exception">
+        ///   The data did not adhere to the Json schema, or the schema itself was invalid.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaRegistryJsonSchemaGenerator"/> class.
         /// </exception>
         public async ValueTask<MessageContent> SerializeAsync(
             object data,
+            string schemaId,
             Type dataType = default,
             Type messageType = default,
             CancellationToken cancellationToken = default)
@@ -198,7 +299,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             if (_groupName == null)
             {
                 throw new InvalidOperationException(
-                    "A group name must be specified in the 'SchemaRegistryAvroSerializer' constructor if you will be attempting to serialize. " +
+                    "A group name must be specified in the 'SchemaRegistryJsonSerializer' constructor if you will be attempting to serialize. " +
                     "The group name can be omitted if only deserializing.");
             }
 
@@ -226,56 +327,71 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             bool async,
             CancellationToken cancellationToken)
         {
-            dataType ??= value?.GetType() ?? typeof(object);
-
-            var schema = _jsonSchemaGenerator.GenerateSchemaFromObject(value, dataType);
-            var jsonSerializerOptions = new JsonSerializerOptions();
-            var jsonSerializerContext = new JsonSerializerContext();
-
-            using Stream stream = new MemoryStream();
-            if (async)
+            try
             {
-                await JsonSerializer.SerializeAsync(stream, value, dataType, jsonSerializerOptions, cancellationToken).ConfigureAwait(false);
+                // Serialize the data
+                dataType ??= value?.GetType() ?? typeof(object);
+
+                using Stream stream = new MemoryStream();
+                BinaryData data;
+                if (async)
+                {
+                    await JsonSerializer.SerializeAsync(stream, value, dataType, new JsonSerializerOptions(), cancellationToken).ConfigureAwait(false);
+
+                    stream.Position = 0;
+                    data = BinaryData.FromStream(stream);
+                }
+                else
+                {
+                    var jsonString = JsonSerializer.Serialize(value, dataType);
+                    data = BinaryData.FromString(jsonString);
+                }
+
+                // Get the schema from the service
+                var schemaString = _jsonSchemaGenerator.GenerateSchemaFromObject(dataType);
+
+                // Attempt to validate
+                var isValid = _jsonSchemaGenerator.IsValidToSchema(data, dataType, schemaString);
+
+                if (!isValid)
+                {
+                    throw new Exception($"Data type {dataType} is not valid according to the schema definition, {schemaString}"); // TODO: maybe don't print the string?
+                }
+
+                if (async)
+                {
+                    return (await GetSchemaIdAsync(schemaString, dataType.Name, true, cancellationToken).ConfigureAwait(false), data);
+                }
+                else
+                {
+                    return (GetSchemaIdAsync(schemaString, dataType.Name, false, cancellationToken).EnsureCompleted(), data);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                JsonSerializer.Serialize(stream, value, dataType, jsonSerializerOptions);
+                throw new Exception(
+                    "An error occurred while attempting to parse the schema to use when serializing to Json. " +
+                    $"Make sure that the schema represents valid Json.",
+                    ex);
             }
-
-            stream.Position = 0;
-            BinaryData data = BinaryData.FromStream(stream);
-
-            var schemaProperties = await _client.RegisterSchemaAsync(_groupName, nameof(value), schema, SchemaFormat.Json, cancellationToken).ConfigureAwait(false);
-
-            var id = schemaProperties.Value.Id;
-            return (id, data);
         }
 
-        private async Task<string> GetSchemaIdAsync(Schema schema, bool async, CancellationToken cancellationToken)
+        private async Task<string> GetSchemaIdAsync(string schema, string schemaName, bool async, CancellationToken cancellationToken)
         {
             if (_schemaToIdMap.TryGet(schema, out var value))
             {
                 return value;
             }
 
-            SchemaProperties schemaProperties;
-            string schemaString = schema.ToString();
-            if (async)
-            {
-                await _client.GetSchemaPropertiesAsync(_groupName, schema.Fullname, schemaString, SchemaFormat.Avro, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                schemaProperties = _options.AutoRegisterSchemas
-                    ? _client.RegisterSchema(_groupName, schema.Fullname, schemaString, SchemaFormat.Avro, cancellationToken)
-                    : _client.GetSchemaProperties(_groupName, schema.Fullname, schemaString, SchemaFormat.Avro, cancellationToken);
-            }
+            var schemaProperties = (async) ?
+                await _client.GetSchemaPropertiesAsync(_groupName, schemaName, schema, SchemaFormat.Json, cancellationToken).ConfigureAwait(false) :
+                _client.GetSchemaProperties(_groupName, schemaName, schema, SchemaFormat.Json, cancellationToken);
 
-            string id = schemaProperties.Id;
+            string id = schemaProperties.Value.Id;
 
-            _schemaToIdMap.AddOrUpdate(schema, id, schemaString.Length);
-            _idToSchemaMap.AddOrUpdate(id, schema, schemaString.Length);
-            //SchemaRegistryAvroEventSource.Log.CacheUpdated(_idToSchemaMap, _schemaToIdMap);
+            _schemaToIdMap.AddOrUpdate(schema, id, schema.Length);
+            _idToSchemaMap.AddOrUpdate(id, schema, schema.Length);
+            // TODO - log that cache was updated
             return id;
         }
         #endregion
@@ -289,18 +405,15 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         /// <typeparam name="TData">The type to deserialize the message data into.</typeparam>
         /// <returns>The deserialized data.</returns>
         /// <exception cref="FormatException">
-        ///   The ContentType is not in the expected format. The ContentType is expected to be 'avro/binary+schema-id', where 'schema-id' is
+        ///   The ContentType is not in the expected format. The ContentType is expected to be 'application/json+schema-id', where 'schema-id' is
         ///   the Schema Registry schema ID.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        ///   The <typeparamref name="TData"/> type is not convertible to ISpecificRecord or GenericRecord.
         /// </exception>
         /// <exception cref="RequestFailedException">
         ///   An error occurred while attempting to communicate with the Schema Registry service.
         /// </exception>
         /// <exception cref="Exception">
         ///   The schema from <typeparamref name="TData"/> was not compatible with the schema used to serialize the data, or the schema itself was invalid.
-        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the Apache Avro library.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaRegistryJsonSchemaGenerator"/> class.
         /// </exception>
         public TData Deserialize<TData>(
             MessageContent content,
@@ -315,18 +428,15 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         /// <typeparam name="TData">The type to deserialize the message data into.</typeparam>
         /// <returns>The deserialized data.</returns>
         /// <exception cref="FormatException">
-        ///   The ContentType is not in the expected format. The ContentType is expected to be 'avro/binary+schema-id', where 'schema-id' is
+        ///   The ContentType is not in the expected format. The ContentType is expected to be 'application/json+schema-id', where 'schema-id' is
         ///   the Schema Registry schema ID.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        ///   The <typeparamref name="TData"/> type is not convertible to ISpecificRecord or GenericRecord.
         /// </exception>
         /// <exception cref="RequestFailedException">
         ///   An error occurred while attempting to communicate with the Schema Registry service.
         /// </exception>
         /// <exception cref="Exception">
         ///   The schema from <typeparamref name="TData"/> was not compatible with the schema used to serialize the data, or the schema itself was invalid.
-        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the Apache Avro library.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaRegistryJsonSchemaGenerator"/> class.
         /// </exception>
         public async ValueTask<TData> DeserializeAsync<TData>(
             MessageContent content,
@@ -341,18 +451,15 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>The deserialized data.</returns>
         /// <exception cref="FormatException">
-        ///   The ContentType is not in the expected format. The ContentType is expected to be 'avro/binary+schema-id', where 'schema-id' is
+        ///   The ContentType is not in the expected format. The ContentType is expected to be 'application/json+schema-id', where 'schema-id' is
         ///   the Schema Registry schema ID.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        ///   The <paramref name="dataType"/> is not convertible to ISpecificRecord or GenericRecord.
         /// </exception>
         /// <exception cref="RequestFailedException">
         ///   An error occurred while attempting to communicate with the Schema Registry service.
         /// </exception>
         /// <exception cref="Exception">
         ///   The schema from <paramref name="dataType"/> was not compatible with the schema used to serialize the data, or the schema itself was invalid.
-        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the Apache Avro library.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaRegistryJsonSchemaGenerator"/> class.
         /// </exception>
         public object Deserialize(
             MessageContent content,
@@ -368,18 +475,15 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>The deserialized data.</returns>
         /// <exception cref="FormatException">
-        ///   The ContentType is not in the expected format. The ContentType is expected to be 'avro/binary+schema-id', where 'schema-id' is
+        ///   The ContentType is not in the expected format. The ContentType is expected to be 'application/json+schema-id', where 'schema-id' is
         ///   the Schema Registry schema ID.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        ///   The <paramref name="dataType"/> is not convertible to ISpecificRecord or GenericRecord.
         /// </exception>
         /// <exception cref="RequestFailedException">
         ///   An error occurred while attempting to communicate with the Schema Registry service.
         /// </exception>
         /// <exception cref="Exception">
         ///   The schema from <paramref name="dataType"/> was not compatible with the schema used to serialize the data, or the schema itself was invalid.
-        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the Apache Avro library.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaRegistryJsonSchemaGenerator"/> class.
         /// </exception>
         public async ValueTask<object> DeserializeAsync(
             MessageContent content,
@@ -398,9 +502,9 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             Argument.AssertNotNull(contentType, nameof(contentType));
 
             string[] contentTypeArray = contentType.ToString().Split('+');
-            if (contentTypeArray.Length != 2 || contentTypeArray[0] != AvroMimeType)
+            if (contentTypeArray.Length != 2 || contentTypeArray[0] != JsonMimeType)
             {
-                throw new FormatException("Content type was not in the expected format of 'avro/binary+schema-id', where 'schema-id' " +
+                throw new FormatException("Content type was not in the expected format of 'application/json+schema-id', where 'schema-id' " +
                                           "is the Schema Registry schema ID.");
             }
 
@@ -425,67 +529,60 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
         {
             Argument.AssertNotNull(schemaId, nameof(schemaId));
 
-            SupportedType supportedType = GetSupportedTypeOrThrow(dataType);
-
-            Schema writerSchema;
+            string schemaDefinition;
             try
             {
                 if (async)
                 {
-                    writerSchema = await GetSchemaByIdAsync(schemaId, true, cancellationToken).ConfigureAwait(false);
+                    schemaDefinition = await GetSchemaByIdAsync(schemaId, true, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    writerSchema = GetSchemaByIdAsync(schemaId, false, cancellationToken).EnsureCompleted();
+                    schemaDefinition = GetSchemaByIdAsync(schemaId, false, cancellationToken).EnsureCompleted();
                 }
             }
-            catch (SchemaParseException ex)
+            catch (Exception ex)
             {
-                throw new Exception(
-                    $"An error occurred while attempting to parse the schema (schema ID: {schemaId}) that was used to serialize the Avro. " +
-                    $"Make sure that the schema represents valid Avro.",
-                    ex);
+                throw new Exception($"An error occurred while attempting to retrieve the schema with id {schemaId}.", ex);
             }
 
-            Schema readerSchema;
-            object returnInstance = null;
+            object objectToReturn;
             try
             {
-                if (supportedType == SupportedType.SpecificRecord)
+                var dataStream = data.ToStream();
+                if (async)
                 {
-                    returnInstance = Activator.CreateInstance(dataType);
-                    readerSchema = ((ISpecificRecord)returnInstance).Schema;
+                    objectToReturn = await JsonSerializer.DeserializeAsync(dataStream, dataType, cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    readerSchema = writerSchema;
+                    objectToReturn = JsonSerializer.Deserialize(data, dataType);
                 }
             }
-            catch (SchemaParseException ex)
+            catch (Exception ex)
             {
-                throw new Exception(
-                    "An error occurred while attempting to parse the schema that you are attempting to deserialize the data with. " +
-                    "Make sure that the schema represents valid Avro.",
-                    ex);
+                throw new Exception($"An error occurred while attempting to deserialize the data.", ex);
             }
 
+            bool isValid;
             try
             {
-                var binaryDecoder = new BinaryDecoder(data.ToStream());
-                DatumReader<object> reader = GetReader(writerSchema, readerSchema, supportedType);
-                return reader.Read(reuse: returnInstance, binaryDecoder);
+                isValid = _jsonSchemaGenerator.IsValidToSchema(objectToReturn, dataType, schemaDefinition);
             }
-            catch (AvroException ex)
+            catch (Exception ex)
             {
-                throw new Exception(
-                    "An error occurred while attempting to deserialize " +
-                    $"Avro that was serialized with schemaId: {schemaId}. The schema used to deserialize the data may not be compatible with the schema that was used" +
-                    $"to serialize the data. Please ensure that the schemas are compatible.",
-                    ex);
+                throw new Exception($"An error occurred while attempting to validate the deserialized object.", ex);
             }
+
+            if (!isValid)
+            {
+                throw new Exception("The object is not valid according to the schema.");
+            }
+
+            return objectToReturn;
         }
 
-        private async Task<Schema> GetSchemaByIdAsync(string schemaId, bool async, CancellationToken cancellationToken)
+        private async Task<string> GetSchemaByIdAsync(string schemaId, bool async, CancellationToken cancellationToken)
         {
             if (_idToSchemaMap.TryGet(schemaId, out var cachedSchema))
             {
@@ -501,21 +598,12 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
             {
                 schemaDefinition = _client.GetSchema(schemaId, cancellationToken).Value.Definition;
             }
-            var schema = Schema.Parse(schemaDefinition);
-            _idToSchemaMap.AddOrUpdate(schemaId, schema, schemaDefinition.Length);
-            _schemaToIdMap.AddOrUpdate(schema, schemaId, schemaDefinition.Length);
-            //SchemaRegistryAvroEventSource.Log.CacheUpdated(_idToSchemaMap, _schemaToIdMap);
-            return schema;
-        }
 
-        private static DatumReader<object> GetReader(Schema writerSchema, Schema readerSchema, SupportedType supportedType)
-        {
-            if (supportedType == SupportedType.SpecificRecord)
-            {
-                return new SpecificDatumReader<object>(writerSchema, readerSchema);
-            }
+            _idToSchemaMap.AddOrUpdate(schemaId, schemaDefinition, schemaDefinition.Length);
+            _schemaToIdMap.AddOrUpdate(schemaDefinition, schemaId, schemaDefinition.Length);
 
-            return new GenericDatumReader<object>(writerSchema, readerSchema);
+            // TODO - log that cache was updated
+            return schemaDefinition;
         }
         #endregion
     }

@@ -1,25 +1,27 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Avro;
-using Avro.Generic;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
-using Avro.Specific;
 using Azure;
 using Azure.Identity;
 using Azure.Messaging;
+using Azure.Data.SchemaRegistry;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Producer;
 using TestSchema;
+using System.Threading;
+using System.Collections.Generic;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
 {
     public class SchemaRegistryJsonObjectSerializerLiveTests : SchemaRegistryJsonObjectSerializerLiveTestBase
     {
+        private static readonly string _schema = "{\r\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r\n  \"title\": \"Employee\",\r\n  \"type\": \"object\",\r\n  \"additionalProperties\": false,\r\n  \"properties\": {\r\n    \"Age\": {\r\n      \"type\": \"integer\",\r\n      \"format\": \"int32\"\r\n    },\r\n    \"Name\": {\r\n      \"type\": [\r\n        \"null\",\r\n        \"string\"\r\n      ]\r\n    }\r\n  }\r\n}";
+
         public SchemaRegistryJsonObjectSerializerLiveTests(bool isAsync) : base(isAsync)
         {
         }
@@ -27,18 +29,262 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
         [RecordedTest]
         public async Task CanSerializeAndDeserialize()
         {
+            // We need to test sync and async because the System.Text.Json serialization methods are different in async vs sync
             var client = CreateClient();
             var groupName = TestEnvironment.SchemaRegistryGroup;
-            var employee = new Employee { Age = 42, Name = "Caketown" };
+            var employee = new Employee { Age = 62, Name = "Bob" };
 
-            var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SchemaRegistryJsonSerializerOptions { AutoRegisterSchemas = true });
+            await client.RegisterSchemaAsync(groupName, (typeof(Employee)).Name, _schema, SchemaFormat.Json, CancellationToken.None).ConfigureAwait(false);
+
+            var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator());
             MessageContent content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
 
             Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
 
             Assert.IsNotNull(deserializedEmployee);
+            Assert.AreEqual("Bob", deserializedEmployee.Name);
+            Assert.AreEqual(62, deserializedEmployee.Age);
+        }
+
+        [RecordedTest]
+        public async Task CanSerializeAndDeserializeWithSchemaId()
+        {
+            // We need to test sync and async because the System.Text.Json serialization methods are different in async vs sync
+            var client = CreateClient();
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var employee = new Employee { Age = 62, Name = "Bob" };
+
+            var propertiesResponse = await client.RegisterSchemaAsync(groupName, (typeof(Employee)).Name, _schema, SchemaFormat.Json, CancellationToken.None).ConfigureAwait(false);
+            var schemaId = propertiesResponse.Value.Id;
+
+            var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator());
+            MessageContent content = await serializer.SerializeAsync<MessageContent, Employee>(employee, schemaId);
+
+            Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
+
+            Assert.IsNotNull(deserializedEmployee);
+            Assert.AreEqual("Bob", deserializedEmployee.Name);
+            Assert.AreEqual(62, deserializedEmployee.Age);
+        }
+
+        [RecordedTest]
+        public async Task CanSerializeAndDeserializeWithSeparateInstances()
+        {
+            var client = CreateClient();
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var employee = new Employee { Age = 42, Name = "Caketown" };
+
+            await client.RegisterSchemaAsync(groupName, (typeof(Employee)).Name, _schema, SchemaFormat.Json, CancellationToken.None).ConfigureAwait(false);
+
+            var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator());
+            MessageContent content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
+
+            // validate that we can use the constructor that only takes the client when deserializing since groupName is not necessary
+            serializer = new SchemaRegistryJsonSerializer(client, new SampleJsonGenerator());
+            Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
+
+            Assert.IsNotNull(deserializedEmployee);
             Assert.AreEqual("Caketown", deserializedEmployee.Name);
             Assert.AreEqual(42, deserializedEmployee.Age);
+        }
+
+        [RecordedTest]
+        public async Task CanSerializeAndDeserializeWithCompatibleSchema()
+        {
+            var client = CreateClient();
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var employee = new EmployeeV2 { Age = 42, Name = "Caketown", City = "Redmond" };
+
+            await client.RegisterSchemaAsync(groupName, (typeof(EmployeeV2)).Name, _schema, SchemaFormat.Json, CancellationToken.None).ConfigureAwait(false);
+
+            var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator());
+            var content = await serializer.SerializeAsync<MessageContent, EmployeeV2>(employee);
+
+            // deserialize using the old schema, which is forward compatible with the new schema
+            // if you swap the old schema and the new schema in your mind, then this can also be thought as a backwards compatible test
+
+            var deserializedObject = await serializer.DeserializeAsync<Employee>(content);
+            var readEmployee = deserializedObject as Employee;
+            Assert.IsNotNull(readEmployee);
+            Assert.AreEqual("Caketown", readEmployee.Name);
+            Assert.AreEqual(42, readEmployee.Age);
+
+            // deserialize using the new schema to make sure we are respecting it
+            var readEmployeeV2 = await serializer.DeserializeAsync<EmployeeV2>(content);
+            Assert.IsNotNull(readEmployee);
+            Assert.AreEqual("Caketown", readEmployeeV2.Name);
+            Assert.AreEqual(42, readEmployeeV2.Age);
+            Assert.AreEqual("Redmond", readEmployeeV2.City);
+        }
+
+        [RecordedTest]
+        public async Task CanDeserializeIntoNonCompatibleType()
+        {
+            var client = CreateClient();
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var employee = new Employee() { Age = 42, Name = "Caketown" };
+
+            var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator());
+            var content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
+
+            // Since the serializer does not have built-in validation, deserialize is able to fill undefined properties with null values.
+            var deserialized = await serializer.DeserializeAsync<EmployeeV2>(content);
+            Assert.IsNotNull(deserialized);
+            Assert.AreEqual("Caketown", deserialized.Name);
+            Assert.AreEqual(42, deserialized.Age);
+            Assert.AreEqual(null, deserialized.City);
+        }
+
+        [RecordedTest]
+        public async Task ThrowsExceptionWhenDeserializingWithInvalidJsonSchema()
+        {
+            // TODO : need to find a case that throws an exception in the serialize call
+            await Task.Yield();
+        }
+
+        [RecordedTest]
+        public void CannotDeserializeWithNullSchemaId()
+        {
+            var client = CreateClient();
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+
+            var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator());
+            var content = new MessageContent
+            {
+                Data = new BinaryData(Array.Empty<byte>()),
+                ContentType = null
+            };
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await serializer.DeserializeAsync<TimeZoneInfo>(content));
+        }
+
+        [RecordedTest]
+        [LiveOnly] // due to Event Hubs integration
+        public async Task CanUseEncoderWithEventData()
+        {
+            var client = CreateClient();
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+
+            var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator());
+
+            var employee = new Employee { Age = 42, Name = "Caketown" };
+            EventData eventData = (EventData)await serializer.SerializeAsync(employee, messageType: typeof(EventData));
+
+            // construct a publisher and publish the events to our event hub
+            var fullyQualifiedNamespace = TestEnvironment.SchemaRegistryEventHubEndpoint;
+            var eventHubName = TestEnvironment.SchemaRegistryEventHubName;
+            var credential = TestEnvironment.Credential;
+
+            await using var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
+            await producer.SendAsync(new EventData[] { eventData });
+
+            Assert.IsFalse(eventData.IsReadOnly);
+            string[] contentType = eventData.ContentType.Split('+');
+            Assert.AreEqual(2, contentType.Length);
+            Assert.AreEqual("application/json", contentType[0]);
+            Assert.IsNotEmpty(contentType[1]);
+
+            // construct a consumer and consume the event from our event hub
+            await using var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, fullyQualifiedNamespace, eventHubName, credential);
+            await foreach (PartitionEvent receivedEvent in consumer.ReadEventsAsync())
+            {
+                Employee deserialized = (Employee)await serializer.DeserializeAsync(eventData, typeof(Employee));
+
+                // decoding should not alter the message
+                contentType = eventData.ContentType.Split('+');
+                Assert.AreEqual(2, contentType.Length);
+                Assert.AreEqual("application/json", contentType[0]);
+                Assert.IsNotEmpty(contentType[1]);
+
+                // verify the payload was decoded correctly
+                Assert.IsNotNull(deserialized);
+                Assert.AreEqual("Caketown", deserialized.Name);
+                Assert.AreEqual(42, deserialized.Age);
+                break;
+            }
+        }
+
+        [RecordedTest]
+        public async Task CanUseEncoderWithEventDataUsingGenerics()
+        {
+            var client = CreateClient();
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+
+            var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator());
+
+            var employee = new Employee { Age = 42, Name = "Caketown" };
+            EventData eventData = await serializer.SerializeAsync<EventData, Employee>(employee);
+
+            Assert.IsFalse(eventData.IsReadOnly);
+            string[] contentType = eventData.ContentType.Split('+');
+            Assert.AreEqual(2, contentType.Length);
+            Assert.AreEqual("application/json", contentType[0]);
+            Assert.IsNotEmpty(contentType[1]);
+
+            Employee deserialized = await serializer.DeserializeAsync<Employee>(eventData);
+
+            // decoding should not alter the message
+            contentType = eventData.ContentType.Split('+');
+            Assert.AreEqual(2, contentType.Length);
+            Assert.AreEqual("application/json", contentType[0]);
+            Assert.IsNotEmpty(contentType[1]);
+
+            // verify the payload was decoded correctly
+            Assert.IsNotNull(deserialized);
+            Assert.AreEqual("Caketown", deserialized.Name);
+            Assert.AreEqual(42, deserialized.Age);
+        }
+
+        [RecordedTest]
+        public void SerializingToMessageTypeWithoutConstructorThrows()
+        {
+            var client = CreateClient();
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+
+            var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator());
+            Assert.ThrowsAsync<InvalidOperationException>(
+                async () => await serializer.SerializeAsync(new Employee { Age = 42, Name = "Caketown" }, messageType: typeof(MessageContentWithNoConstructor)));
+        }
+
+        [RecordedTest]
+        public void SerializingThrowsForNonExistentSchema()
+        {
+            var client = CreateClient();
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+
+            var serializer = new SchemaRegistryJsonSerializer(client, groupName, new SampleJsonGenerator());
+            Assert.That(
+                async () => await serializer.SerializeAsync(new UnregisteredEmployee { Age = 42, Name = "Caketown" }), Throws.InstanceOf<Exception>().And.Property(nameof(Exception.InnerException)).InstanceOf<RequestFailedException>());
+        }
+
+        [RecordedTest]
+        public void SerializingWithoutGroupNameThrows()
+        {
+            var client = CreateClient();
+
+            var serializer = new SchemaRegistryJsonSerializer(client, new SampleJsonGenerator());
+            Assert.ThrowsAsync<InvalidOperationException>(
+                async () => await serializer.SerializeAsync(new Employee { Age = 42, Name = "Caketown" }));
+        }
+
+        public class UnregisteredEmployee
+        {
+            public string Name { get; set; }
+            public int Age { get; set; }
+        }
+
+        public class MessageContentWithNoConstructor : MessageContent
+        {
+            internal MessageContentWithNoConstructor()
+            {
+            }
+        }
+
+        private class SampleJsonGenerator : SchemaRegistryJsonSchemaGenerator
+        {
+            public override string GenerateSchemaFromObject(Type dataType)
+            {
+                return _schema;
+            }
         }
     }
 }

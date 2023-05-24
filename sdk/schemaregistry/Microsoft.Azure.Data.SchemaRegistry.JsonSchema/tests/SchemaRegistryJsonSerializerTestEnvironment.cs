@@ -7,9 +7,11 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests
 {
     public class SchemaRegistryJsonSerializerTestEnvironment : TestEnvironment
     {
-        public string SchemaRegistryEndpoint => GetRecordedVariable("SCHEMAREGISTRY_ENDPOINT_AVRO");
+        public string SchemaRegistryEndpoint => GetRecordedVariable("SCHEMAREGISTRY_ENDPOINT_JSON");
 
         public string SchemaRegistryGroup => GetRecordedVariable("SCHEMAREGISTRY_GROUP");
+
+        public string SchemaRegistryEventHubEndpoint => GetRecordedVariable("SCHEMAREGISTRY_ENDPOINT_AVRO");
 
         public string SchemaRegistryEventHubName => GetVariable("SCHEMAREGISTRY_EVENTHUB_NAME");
     }
