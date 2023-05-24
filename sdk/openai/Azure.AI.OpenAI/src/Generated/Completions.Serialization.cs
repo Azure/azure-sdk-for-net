@@ -21,6 +21,7 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             Optional<string> id = default;
+            CompletionsObject @object = default;
             Optional<int> created = default;
             Optional<string> model = default;
             Optional<IReadOnlyList<Choice>> choices = default;
@@ -30,6 +31,11 @@ namespace Azure.AI.OpenAI
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("object"u8))
+                {
+                    @object = new CompletionsObject(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("created"u8))
@@ -66,7 +72,7 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new Completions(id, Optional.ToNullable(created), model, Optional.ToList(choices), usage);
+            return new Completions(id, @object, Optional.ToNullable(created), model, Optional.ToList(choices), usage);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
