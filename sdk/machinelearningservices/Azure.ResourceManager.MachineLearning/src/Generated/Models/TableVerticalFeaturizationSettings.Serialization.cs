@@ -18,38 +18,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(BlockedTransformers))
             {
-                if (BlockedTransformers != null)
+                writer.WritePropertyName("blockedTransformers"u8);
+                writer.WriteStartArray();
+                foreach (var item in BlockedTransformers)
                 {
-                    writer.WritePropertyName("blockedTransformers"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in BlockedTransformers)
-                    {
-                        writer.WriteStringValue(item.ToString());
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item.ToString());
                 }
-                else
-                {
-                    writer.WriteNull("blockedTransformers");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(ColumnNameAndTypes))
             {
-                if (ColumnNameAndTypes != null)
+                writer.WritePropertyName("columnNameAndTypes"u8);
+                writer.WriteStartObject();
+                foreach (var item in ColumnNameAndTypes)
                 {
-                    writer.WritePropertyName("columnNameAndTypes"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in ColumnNameAndTypes)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("columnNameAndTypes");
-                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(EnableDnnFeaturization))
             {
@@ -63,31 +49,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(TransformerParams))
             {
-                if (TransformerParams != null)
+                writer.WritePropertyName("transformerParams"u8);
+                writer.WriteStartObject();
+                foreach (var item in TransformerParams)
                 {
-                    writer.WritePropertyName("transformerParams"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in TransformerParams)
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
                     {
-                        writer.WritePropertyName(item.Key);
-                        if (item.Value == null)
-                        {
-                            writer.WriteNullValue();
-                            continue;
-                        }
-                        writer.WriteStartArray();
-                        foreach (var item0 in item.Value)
-                        {
-                            writer.WriteObjectValue(item0);
-                        }
-                        writer.WriteEndArray();
+                        writer.WriteNullValue();
+                        continue;
                     }
-                    writer.WriteEndObject();
+                    writer.WriteStartArray();
+                    foreach (var item0 in item.Value)
+                    {
+                        writer.WriteObjectValue(item0);
+                    }
+                    writer.WriteEndArray();
                 }
-                else
-                {
-                    writer.WriteNull("transformerParams");
-                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(DatasetLanguage))
             {

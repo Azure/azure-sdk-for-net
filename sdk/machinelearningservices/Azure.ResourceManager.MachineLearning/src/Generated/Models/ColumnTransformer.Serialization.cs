@@ -19,20 +19,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Fields))
             {
-                if (Fields != null)
+                writer.WritePropertyName("fields"u8);
+                writer.WriteStartArray();
+                foreach (var item in Fields)
                 {
-                    writer.WritePropertyName("fields"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in Fields)
-                    {
-                        writer.WriteStringValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("fields");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(Parameters))
             {

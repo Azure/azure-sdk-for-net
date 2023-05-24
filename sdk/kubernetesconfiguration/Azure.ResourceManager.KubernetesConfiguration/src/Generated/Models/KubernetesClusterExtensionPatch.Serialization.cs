@@ -41,39 +41,25 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             if (Optional.IsCollectionDefined(ConfigurationSettings))
             {
-                if (ConfigurationSettings != null)
+                writer.WritePropertyName("configurationSettings"u8);
+                writer.WriteStartObject();
+                foreach (var item in ConfigurationSettings)
                 {
-                    writer.WritePropertyName("configurationSettings"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in ConfigurationSettings)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("configurationSettings");
-                }
+                writer.WriteEndObject();
             }
             if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
             {
-                if (ConfigurationProtectedSettings != null)
+                writer.WritePropertyName("configurationProtectedSettings"u8);
+                writer.WriteStartObject();
+                foreach (var item in ConfigurationProtectedSettings)
                 {
-                    writer.WritePropertyName("configurationProtectedSettings"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in ConfigurationProtectedSettings)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("configurationProtectedSettings");
-                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

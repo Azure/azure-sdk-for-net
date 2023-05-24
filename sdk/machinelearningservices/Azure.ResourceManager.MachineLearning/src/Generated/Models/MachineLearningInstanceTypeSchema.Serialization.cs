@@ -18,21 +18,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(NodeSelector))
             {
-                if (NodeSelector != null)
+                writer.WritePropertyName("nodeSelector"u8);
+                writer.WriteStartObject();
+                foreach (var item in NodeSelector)
                 {
-                    writer.WritePropertyName("nodeSelector"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in NodeSelector)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("nodeSelector");
-                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(Resources))
             {

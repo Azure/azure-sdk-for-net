@@ -35,20 +35,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(CvSplitColumnNames))
             {
-                if (CvSplitColumnNames != null)
+                writer.WritePropertyName("cvSplitColumnNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in CvSplitColumnNames)
                 {
-                    writer.WritePropertyName("cvSplitColumnNames"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in CvSplitColumnNames)
-                    {
-                        writer.WriteStringValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("cvSplitColumnNames");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(FeaturizationSettings))
             {

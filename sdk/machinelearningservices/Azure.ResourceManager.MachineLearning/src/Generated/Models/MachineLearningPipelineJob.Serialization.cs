@@ -19,66 +19,45 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Inputs))
             {
-                if (Inputs != null)
+                writer.WritePropertyName("inputs"u8);
+                writer.WriteStartObject();
+                foreach (var item in Inputs)
                 {
-                    writer.WritePropertyName("inputs"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Inputs)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
-                    }
-                    writer.WriteEndObject();
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("inputs");
-                }
+                writer.WriteEndObject();
             }
             if (Optional.IsCollectionDefined(Jobs))
             {
-                if (Jobs != null)
+                writer.WritePropertyName("jobs"u8);
+                writer.WriteStartObject();
+                foreach (var item in Jobs)
                 {
-                    writer.WritePropertyName("jobs"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Jobs)
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
                     {
-                        writer.WritePropertyName(item.Key);
-                        if (item.Value == null)
-                        {
-                            writer.WriteNullValue();
-                            continue;
-                        }
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                        JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
 #endif
-                    }
-                    writer.WriteEndObject();
                 }
-                else
-                {
-                    writer.WriteNull("jobs");
-                }
+                writer.WriteEndObject();
             }
             if (Optional.IsCollectionDefined(Outputs))
             {
-                if (Outputs != null)
+                writer.WritePropertyName("outputs"u8);
+                writer.WriteStartObject();
+                foreach (var item in Outputs)
                 {
-                    writer.WritePropertyName("outputs"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Outputs)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
-                    }
-                    writer.WriteEndObject();
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("outputs");
-                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(Settings))
             {
@@ -170,21 +149,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(JobType.ToString());
             if (Optional.IsCollectionDefined(Services))
             {
-                if (Services != null)
+                writer.WritePropertyName("services"u8);
+                writer.WriteStartObject();
+                foreach (var item in Services)
                 {
-                    writer.WritePropertyName("services"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Services)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
-                    }
-                    writer.WriteEndObject();
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("services");
-                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(Description))
             {
@@ -200,39 +172,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(Properties))
             {
-                if (Properties != null)
+                writer.WritePropertyName("properties"u8);
+                writer.WriteStartObject();
+                foreach (var item in Properties)
                 {
-                    writer.WritePropertyName("properties"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Properties)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("properties");
-                }
+                writer.WriteEndObject();
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                if (Tags != null)
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
                 {
-                    writer.WritePropertyName("tags"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Tags)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("tags");
-                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
         }
