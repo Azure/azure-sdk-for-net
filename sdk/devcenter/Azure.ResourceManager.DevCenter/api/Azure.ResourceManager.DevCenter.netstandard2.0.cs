@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatusDetail DevCenterHealthStatusDetail(string code = null, string message = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.DevCenterImageData DevCenterImageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string publisher = null, string offer = null, string sku = null, Azure.ResourceManager.DevCenter.Models.RecommendedMachineConfiguration recommendedMachineConfiguration = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport? hibernateSupport = default(Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport?)) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterImageReference DevCenterImageReference(Azure.Core.ResourceIdentifier id = null, string exactVersion = null) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.DevCenterNameAvailabilityResult DevCenterNameAvailabilityResult(bool? isNameAvailable = default(bool?), Azure.ResourceManager.DevCenter.Models.DevCenterUnavailableReason? reason = default(Azure.ResourceManager.DevCenter.Models.DevCenterUnavailableReason?), string message = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterNameAvailabilityResult DevCenterNameAvailabilityResult(bool? isNameAvailable = default(bool?), Azure.ResourceManager.DevCenter.Models.DevCenterNameUnavailableReason? reason = default(Azure.ResourceManager.DevCenter.Models.DevCenterNameUnavailableReason?), string message = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.DevCenterNetworkConnectionData DevCenterNetworkConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.Core.ResourceIdentifier subnetId = null, string domainName = null, string organizationUnit = null, string domainUsername = null, string domainPassword = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheckStatus? healthCheckStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheckStatus?), string networkingResourceGroupName = null, Azure.ResourceManager.DevCenter.Models.DomainJoinType? domainJoinType = default(Azure.ResourceManager.DevCenter.Models.DomainJoinType?)) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.DevCenterOperationStatus DevCenterOperationStatus(Azure.Core.ResourceIdentifier id = null, string name = null, string status = null, float? percentComplete = default(float?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Models.OperationStatusResult> operations = null, Azure.ResponseError error = null, Azure.Core.ResourceIdentifier resourceId = null, System.BinaryData properties = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.DevCenterPoolData DevCenterPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string devBoxDefinitionName = null, string networkConnectionName = null, Azure.ResourceManager.DevCenter.Models.DevCenterLicenseType? licenseType = default(Azure.ResourceManager.DevCenter.Models.DevCenterLicenseType?), Azure.ResourceManager.DevCenter.Models.LocalAdminStatus? localAdministrator = default(Azure.ResourceManager.DevCenter.Models.LocalAdminStatus?), Azure.ResourceManager.DevCenter.Models.StopOnDisconnectConfiguration stopOnDisconnect = null, Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatus? healthStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatusDetail> healthStatusDetails = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?)) { throw null; }
@@ -928,7 +928,25 @@ namespace Azure.ResourceManager.DevCenter.Models
         internal DevCenterNameAvailabilityResult() { }
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.DevCenterUnavailableReason? Reason { get { throw null; } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterNameUnavailableReason? Reason { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterNameUnavailableReason : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterNameUnavailableReason>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterNameUnavailableReason(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterNameUnavailableReason AlreadyExists { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterNameUnavailableReason Invalid { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterNameUnavailableReason other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterNameUnavailableReason left, Azure.ResourceManager.DevCenter.Models.DevCenterNameUnavailableReason right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterNameUnavailableReason (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterNameUnavailableReason left, Azure.ResourceManager.DevCenter.Models.DevCenterNameUnavailableReason right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class DevCenterNetworkConnectionPatch : Azure.ResourceManager.DevCenter.Models.DevCenterTrackedResourceUpdate
     {
@@ -1103,24 +1121,6 @@ namespace Azure.ResourceManager.DevCenter.Models
         public DevCenterTrackedResourceUpdate() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DevCenterUnavailableReason : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterUnavailableReason>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DevCenterUnavailableReason(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.DevCenterUnavailableReason AlreadyExists { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.DevCenterUnavailableReason Invalid { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterUnavailableReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterUnavailableReason left, Azure.ResourceManager.DevCenter.Models.DevCenterUnavailableReason right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterUnavailableReason (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterUnavailableReason left, Azure.ResourceManager.DevCenter.Models.DevCenterUnavailableReason right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class DevCenterUsage
     {
