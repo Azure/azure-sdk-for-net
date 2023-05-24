@@ -18,13 +18,52 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStartObject();
             writer.WritePropertyName("applicationId"u8);
             writer.WriteStringValue(ApplicationId);
-            writer.WritePropertyName("password"u8);
-            writer.WriteStringValue(Password);
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteStringValue(Password);
+            }
             writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
             writer.WritePropertyName("tenantId"u8);
             writer.WriteStringValue(TenantId);
             writer.WriteEndObject();
+        }
+
+        internal static ServicePrincipalInformation DeserializeServicePrincipalInformation(JsonElement element)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string applicationId = default;
+            Optional<string> password = default;
+            string principalId = default;
+            Guid tenantId = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("applicationId"u8))
+                {
+                    applicationId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("password"u8))
+                {
+                    password = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("principalId"u8))
+                {
+                    principalId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tenantId"u8))
+                {
+                    tenantId = property.Value.GetGuid();
+                    continue;
+                }
+            }
+            return new ServicePrincipalInformation(applicationId, password.Value, principalId, tenantId);
         }
     }
 }

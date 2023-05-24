@@ -14,23 +14,33 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public partial class ImageRepositoryCredentials
     {
         /// <summary> Initializes a new instance of ImageRepositoryCredentials. </summary>
-        /// <param name="password"> The password or token used to access an image in the target repository. </param>
-        /// <param name="registryUri"> The URL of the authentication server used to validate the repository credentials. </param>
+        /// <param name="registryUriString"> The URL of the authentication server used to validate the repository credentials. </param>
         /// <param name="username"> The username used to access an image in the target repository. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="password"/>, <paramref name="registryUri"/> or <paramref name="username"/> is null. </exception>
-        public ImageRepositoryCredentials(string password, string registryUri, string username)
+        /// <exception cref="ArgumentNullException"> <paramref name="registryUriString"/> or <paramref name="username"/> is null. </exception>
+        public ImageRepositoryCredentials(string registryUriString, string username)
         {
-            Argument.AssertNotNull(password, nameof(password));
-            Argument.AssertNotNull(registryUri, nameof(registryUri));
+            Argument.AssertNotNull(registryUriString, nameof(registryUriString));
             Argument.AssertNotNull(username, nameof(username));
 
+            RegistryUriString = registryUriString;
+            Username = username;
+        }
+
+        /// <summary> Initializes a new instance of ImageRepositoryCredentials. </summary>
+        /// <param name="password"> The password or token used to access an image in the target repository. </param>
+        /// <param name="registryUriString"> The URL of the authentication server used to validate the repository credentials. </param>
+        /// <param name="username"> The username used to access an image in the target repository. </param>
+        internal ImageRepositoryCredentials(string password, string registryUriString, string username)
+        {
             Password = password;
-            RegistryUri = registryUri;
+            RegistryUriString = registryUriString;
             Username = username;
         }
 
         /// <summary> The password or token used to access an image in the target repository. </summary>
         public string Password { get; set; }
+        /// <summary> The URL of the authentication server used to validate the repository credentials. </summary>
+        public string RegistryUriString { get; set; }
         /// <summary> The username used to access an image in the target repository. </summary>
         public string Username { get; set; }
     }

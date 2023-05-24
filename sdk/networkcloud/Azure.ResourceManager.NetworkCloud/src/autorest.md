@@ -14,46 +14,15 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-# `delete` transformations are to remove APIs/methods that result in Access Denied for end users.
-directive:
-  - from: swagger-document
-    where: "$.definitions.ClusterAvailableUpgradeVersion.properties.expectedDuration"
-    transform:
-      $["x-ms-format"] = "duration"
-  - from: swagger-document
-    where: "$.definitions.ConsolePatchProperties.properties.duration"
-    transform:
-      $["x-ms-format"] = "duration"
-  - from: swagger-document
-    where: "$.paths[/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}]"
-    transform: delete $.put
-  - from: swagger-document
-    where: "$.paths[/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}]"
-    transform: delete $.delete
-  - from: swagger-document
-    where: "$.paths[/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/hybridAksClusters/{hybridAksClusterName}]"
-    transform: delete $.put
-  - from: swagger-document
-    where: "$.paths[/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/hybridAksClusters/{hybridAksClusterName}]"
-    transform: delete $.delete
-  - from: swagger-document
-    where: "$.paths[/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/racks/{rackName}]"
-    transform: delete $.put
-  - from: swagger-document
-    where: "$.paths[/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/racks/{rackName}]"
-    transform: delete $.delete
-  - from: swagger-document
-    where: "$.paths[/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/storageAppliances/{storageApplianceName}]"
-    transform: delete $.put
-  - from: swagger-document
-    where: "$.paths[/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/storageAppliances/{storageApplianceName}]"
-    transform: delete $.delete
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+
+rename-mapping:
+  ImageRepositoryCredentials.registryUrl: registryUriString
 
 rename-rules:
   CPU: Cpu
@@ -77,5 +46,34 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+directive:
+  - from: networkcloud.json
+    where: $.definitions
+    transform:
+      $.ClusterAvailableUpgradeVersion.properties.expectedDuration['x-ms-format'] = 'duration';
+  # The `password` is not required as it return null from service side
+  - from: networkcloud.json
+    where: $.definitions
+    transform:
+      $.AdministrativeCredentials.required =  [ "username" ]; 
+      $.ImageRepositoryCredentials.required = [
+        "username",
+        "registryUrl"
+      ];
+      $.ServicePrincipalInformation.required = [
+        "tenantId",
+        "principalId",
+        "applicationId"
+      ];
+  # `delete` transformations are to remove APIs/methods that result in Access Denied for end users.
+  - remove-operation: BareMetalMachines_CreateOrUpdate
+  - remove-operation: BareMetalMachines_Delete
+  - remove-operation: HybridAksClusters_CreateOrUpdate
+  - remove-operation: HybridAksClusters_Delete
+  - remove-operation: Racks_CreateOrUpdate
+  - remove-operation: Racks_Delete
+  - remove-operation: StorageAppliances_CreateOrUpdate
+  - remove-operation: StorageAppliances_Delete
 
 ```

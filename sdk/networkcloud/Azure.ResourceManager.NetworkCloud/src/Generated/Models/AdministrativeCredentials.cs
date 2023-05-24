@@ -14,14 +14,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public partial class AdministrativeCredentials
     {
         /// <summary> Initializes a new instance of AdministrativeCredentials. </summary>
-        /// <param name="password"> The password of the administrator of the device used during initialization. </param>
         /// <param name="username"> The username of the administrator of the device used during initialization. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="password"/> or <paramref name="username"/> is null. </exception>
-        public AdministrativeCredentials(string password, string username)
+        /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
+        public AdministrativeCredentials(string username)
         {
-            Argument.AssertNotNull(password, nameof(password));
             Argument.AssertNotNull(username, nameof(username));
 
+            Username = username;
+        }
+
+        /// <summary> Initializes a new instance of AdministrativeCredentials. </summary>
+        /// <param name="password"> The password of the administrator of the device used during initialization. </param>
+        /// <param name="username"> The username of the administrator of the device used during initialization. </param>
+        internal AdministrativeCredentials(string password, string username)
+        {
             Password = password;
             Username = username;
         }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             TrunkedNetworkResource trunkedNetwork = Client.GetTrunkedNetworkResource(trunkedNetworkResourceId);
 
             // Create
-            var listOfVlans = TestEnvironment.TrunkedNetworkVlans.Split(",");
+            var listOfVlans = TestEnvironment.TrunkedNetworkVlans.Split(',');
             var vlans = new List<long>();
             foreach (var item in listOfVlans)
             {

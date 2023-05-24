@@ -15,11 +15,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("password"u8);
-            writer.WriteStringValue(Password);
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteStringValue(Password);
+            }
             writer.WritePropertyName("username"u8);
             writer.WriteStringValue(Username);
             writer.WriteEndObject();
+        }
+
+        internal static AdministrativeCredentials DeserializeAdministrativeCredentials(JsonElement element)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> password = default;
+            string username = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("password"u8))
+                {
+                    password = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("username"u8))
+                {
+                    username = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new AdministrativeCredentials(password.Value, username);
         }
     }
 }
