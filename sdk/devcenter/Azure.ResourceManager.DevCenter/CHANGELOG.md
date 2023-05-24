@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (2023-05-23)
+## 1.0.0 (2023-05-24)
 
 This package is the first stable release of the Dev Center Management client library.
 
@@ -16,8 +16,6 @@ Polishing since last public beta release:
 - Corrected the format of all `ResouceType` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
 - Optimized the name of some models and functions.
-
-### Bugs Fixed
 
 ### Other Changes
 
