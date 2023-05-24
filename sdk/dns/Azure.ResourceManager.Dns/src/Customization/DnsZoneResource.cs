@@ -15,7 +15,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Resources;
 
-// <summary> Rename parameter: relativeRecordSetName to FooRecordName. </summary>
+// <summary> Rename parameter: relativeRecordSetName to NaptrRecordName. </summary>
 [assembly: CodeGenSuppressType("DnsZoneResource")]
 
 namespace Azure.ResourceManager.Dns
