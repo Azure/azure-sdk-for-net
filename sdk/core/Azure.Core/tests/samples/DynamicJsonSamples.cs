@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Core.Dynamic;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -108,6 +109,34 @@ namespace Azure.Core.Samples
             #endregion
 
             Assert.IsTrue(widget.Details.Color == "blue");
+        }
+
+        [Test]
+        public void CheckPropertyNullOrAbsent()
+        {
+            WidgetsClient client = GetMockClient();
+
+            Response response = client.GetWidget();
+            dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+
+            bool threw = false;
+
+            #region Snippet:AzureCoreCheckPropertyNullOrAbsent
+            try
+            {
+                double price = widget.Details["price"];
+            }
+            catch (KeyNotFoundException)
+            {
+                Console.WriteLine("Widget details do not contain 'price'.");
+#if !SNIPPET
+                threw = true;
+#endif
+            }
+
+            #endregion
+
+            Assert.IsTrue(threw);
         }
 
         [Test]
@@ -243,7 +272,7 @@ namespace Azure.Core.Samples
                 details = widget.Details;
 #endif
                 widget.Name = "New Name";
-                client.SetWidget(RequestContent.Create((object)widget));
+                client.SetWidget(RequestContent.Create(widget));
             }
             #endregion
 

@@ -35,7 +35,7 @@ string name = widget.Name;
 
 ### Set a JSON property
 
-JSON members can be set on the dynamic object.  Pass `DynamicCaseMapping.PascalToCamel` to `ToDynamicFromJson()` to write JSON members with camelCase names.
+JSON members can be set on the dynamic object.
 
 ```C# Snippet:AzureCoreSetDynamicJsonProperty
 Response response = client.GetWidget();
@@ -43,6 +43,8 @@ dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToC
 widget.Name = "New Name";
 client.SetWidget(RequestContent.Create(widget));
 ```
+
+Pass `DynamicCaseMapping.PascalToCamel` to `ToDynamicFromJson()` to write JSON members with camelCase names, which is used by [most Azure services](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#json-field-name-casing).
 
 ### Get or set array values
 
@@ -61,7 +63,7 @@ if (widget.Values.Length > 0)
 
 ### Enumerate a collection
 
-Dynamic JSON objects and arrays are `IEnumerable` and can be iterated over with the `foreach` keyword.
+Dynamic JSON objects and arrays implement `IEnumerable` and can be iterated over with the `foreach` keyword.
 
 ```C# Snippet:AzureCoreEnumerateDynamicJsonObject
 Response response = client.GetWidget();
@@ -92,6 +94,17 @@ if (widget.Details != null)
 ```
 
 To differentiate between an absent property and a property with a `null` value, use property indexers.
+
+```C# Snippet:AzureCoreCheckPropertyNullOrAbsent
+try
+{
+    double price = widget.Details["price"];
+}
+catch (KeyNotFoundException)
+{
+    Console.WriteLine("Widget details do not contain 'price'.");
+}
+```
 
 ### Get a property with invalid C# characters in its name
 
@@ -139,17 +152,17 @@ widget.details["IPAddress"] = "127.0.0.1";
 // JSON is `{ "details" : { "IPAddress" : "127.0.0.1" } }`
 ```
 
-### Dispose large JSON
+### Dispose large JSON documents
 
 Memory allocated when JSON is parsed will be garbage collected like any allocated byte array.
-If you need greater control of when memory is returned to the pool (e.g. for atypically large JSON payloads), you can use dynamic content with the `using` keyword.
+If you need to control when memory is returned to the pool (e.g. for atypically large JSON payloads), you can use dynamic content with the `using` keyword.
 
 ```C# Snippet:AzureCoreDisposeDynamicJson
 Response response = client.GetLargeWidget();
 using (dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel))
 {
     widget.Name = "New Name";
-    client.SetWidget(RequestContent.Create((object)widget));
+    client.SetWidget(RequestContent.Create(widget));
 }
 ```
 
