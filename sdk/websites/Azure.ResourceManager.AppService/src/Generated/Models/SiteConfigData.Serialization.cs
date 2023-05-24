@@ -40,20 +40,13 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsCollectionDefined(DefaultDocuments))
             {
-                if (DefaultDocuments != null)
+                writer.WritePropertyName("defaultDocuments"u8);
+                writer.WriteStartArray();
+                foreach (var item in DefaultDocuments)
                 {
-                    writer.WritePropertyName("defaultDocuments"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in DefaultDocuments)
-                    {
-                        writer.WriteStringValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("defaultDocuments");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(NetFrameworkVersion))
             {
@@ -261,54 +254,33 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsCollectionDefined(AppSettings))
             {
-                if (AppSettings != null)
+                writer.WritePropertyName("appSettings"u8);
+                writer.WriteStartArray();
+                foreach (var item in AppSettings)
                 {
-                    writer.WritePropertyName("appSettings"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in AppSettings)
-                    {
-                        writer.WriteObjectValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("appSettings");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(ConnectionStrings))
             {
-                if (ConnectionStrings != null)
+                writer.WritePropertyName("connectionStrings"u8);
+                writer.WriteStartArray();
+                foreach (var item in ConnectionStrings)
                 {
-                    writer.WritePropertyName("connectionStrings"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in ConnectionStrings)
-                    {
-                        writer.WriteObjectValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("connectionStrings");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(HandlerMappings))
             {
-                if (HandlerMappings != null)
+                writer.WritePropertyName("handlerMappings"u8);
+                writer.WriteStartArray();
+                foreach (var item in HandlerMappings)
                 {
-                    writer.WritePropertyName("handlerMappings"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in HandlerMappings)
-                    {
-                        writer.WriteObjectValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("handlerMappings");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(DocumentRoot))
             {
@@ -432,20 +404,13 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsCollectionDefined(VirtualApplications))
             {
-                if (VirtualApplications != null)
+                writer.WritePropertyName("virtualApplications"u8);
+                writer.WriteStartArray();
+                foreach (var item in VirtualApplications)
                 {
-                    writer.WritePropertyName("virtualApplications"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in VirtualApplications)
-                    {
-                        writer.WriteObjectValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("virtualApplications");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(LoadBalancing))
             {
@@ -665,37 +630,23 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsCollectionDefined(IPSecurityRestrictions))
             {
-                if (IPSecurityRestrictions != null)
+                writer.WritePropertyName("ipSecurityRestrictions"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPSecurityRestrictions)
                 {
-                    writer.WritePropertyName("ipSecurityRestrictions"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in IPSecurityRestrictions)
-                    {
-                        writer.WriteObjectValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("ipSecurityRestrictions");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(ScmIPSecurityRestrictions))
             {
-                if (ScmIPSecurityRestrictions != null)
+                writer.WritePropertyName("scmIpSecurityRestrictions"u8);
+                writer.WriteStartArray();
+                foreach (var item in ScmIPSecurityRestrictions)
                 {
-                    writer.WritePropertyName("scmIpSecurityRestrictions"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in ScmIPSecurityRestrictions)
-                    {
-                        writer.WriteObjectValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("scmIpSecurityRestrictions");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(AllowIPSecurityRestrictionsForScmToUseMain))
             {
@@ -831,21 +782,14 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsCollectionDefined(AzureStorageAccounts))
             {
-                if (AzureStorageAccounts != null)
+                writer.WritePropertyName("azureStorageAccounts"u8);
+                writer.WriteStartObject();
+                foreach (var item in AzureStorageAccounts)
                 {
-                    writer.WritePropertyName("azureStorageAccounts"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in AzureStorageAccounts)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
-                    }
-                    writer.WriteEndObject();
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("azureStorageAccounts");
-                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
