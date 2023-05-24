@@ -41,7 +41,7 @@ JSON members can be set on the dynamic object.
 Response response = client.GetWidget();
 dynamic widget = response.Content.ToDynamicFromJson(NameConverter.CamelCase);
 widget.Name = "New Name";
-client.SetWidget(RequestContent.Create((object)widget));
+client.SetWidget(RequestContent.Create(widget));
 ```
 
 ### Get or set array values
@@ -170,7 +170,7 @@ To make this common case easier to implement, Dynamic JSON is mutable.  This all
 Response response = client.GetWidget();
 dynamic widget = response.Content.ToDynamicFromJson(NameConverter.CamelCase);
 widget.Name = "New Name";
-client.SetWidget(RequestContent.Create((object)widget));
+client.SetWidget(RequestContent.Create(widget));
 ```
 
 Note: The implementation of Azure.Core's dynamic JSON is optimized for round-trip scenarios.  Given the performance goals of its design, using it to author large JSON payloads from scratch is not recommended.
