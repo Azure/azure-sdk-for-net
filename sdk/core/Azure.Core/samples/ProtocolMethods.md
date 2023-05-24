@@ -103,7 +103,7 @@ var data = new
     "species": "beagle"
 }
 */
-client.SetPet(RequestContent.Create(data, NameConverter.CamelCase));
+client.SetPet(RequestContent.Create(data, NameConversion.CamelCase));
 ```
 
 ### 3. Handle the Response

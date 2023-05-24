@@ -10,9 +10,9 @@ namespace Azure.Core.Serialization
     {
         /// <summary>
         /// DateTime and DateTimeOffset values will be serialized and deserialized using
-        /// System.Text.Json defaults.
+        /// System.Text.Json default ISO 8601-1:2019 format.
         /// </summary>
-        None,
+        Iso8601,
 
         /// <summary>
         /// DateTime and DateTimeOffset values will be

@@ -32,7 +32,7 @@ namespace Azure.Core.Tests.Public
                     "message": "Hi",
                     "number" : 5
                 }
-                """).ToDynamicFromJson(NameConverter.CamelCase);
+                """).ToDynamicFromJson(NameConversion.CamelCase);
 
             Assert.AreEqual(new SampleModel("Hi", 5), (SampleModel)data);
         }

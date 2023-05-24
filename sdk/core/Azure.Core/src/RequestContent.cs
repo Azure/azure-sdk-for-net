@@ -102,10 +102,10 @@ namespace Azure.Core
         /// <param name="nameConverter"></param>
         /// <param name="dateTimeHandling"></param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
-        public static RequestContent Create(object serializable, NameConverter nameConverter, DateTimeHandling dateTimeHandling = DateTimeHandling.Rfc3339)
+        public static RequestContent Create(object serializable, NameConversion nameConverter, DateTimeHandling dateTimeHandling = DateTimeHandling.Iso8601)
         {
             JsonSerializerOptions options = new();
-            if (nameConverter == NameConverter.CamelCase)
+            if (nameConverter == NameConversion.CamelCase)
             {
                 options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             };

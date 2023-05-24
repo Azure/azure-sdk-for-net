@@ -60,7 +60,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             Response response = await client.GetProjectAsync(TestEnvironment.ProjectName);
 
-            dynamic project = response.Content.ToDynamicFromJson(NameConverter.CamelCase);
+            dynamic project = response.Content.ToDynamicFromJson(NameConversion.CamelCase);
             Assert.That((string)project.ProjectKind, Is.EqualTo("Conversation"));
         }
     }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Serialization;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -160,6 +161,29 @@ namespace Azure.Core.Tests
             content.WriteTo(destination, default);
 
             CollectionAssert.AreEqual(expected.ToArray(), destination.ToArray());
+        }
+
+        [Test]
+        public void DateTimeSerializationIsUnchangedByOverload()
+        {
+            var value = new
+            {
+                DateTimeProperty = DateTime.Now,
+                DateTimeOffsetProperty = DateTimeOffset.Now,
+                DateTimeUtcProperty = DateTime.UtcNow,
+                DateTimeOffsetUtcProperty = DateTimeOffset.UtcNow
+            };
+
+            using RequestContent defaultContent = RequestContent.Create(value);
+            using RequestContent overloadContent = RequestContent.Create(value, NameConversion.None);
+
+            using MemoryStream defaultSerialization = new();
+            using MemoryStream overloadSerialization = new();
+
+            defaultContent.WriteTo(defaultSerialization, CancellationToken.None);
+            overloadContent.WriteTo(overloadSerialization, CancellationToken.None);
+
+            CollectionAssert.AreEqual(defaultSerialization.ToArray(), overloadSerialization.ToArray());
         }
     }
 }
