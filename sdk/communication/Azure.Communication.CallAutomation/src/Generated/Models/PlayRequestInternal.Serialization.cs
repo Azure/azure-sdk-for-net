@@ -15,9 +15,9 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("playSource"u8);
+            writer.WritePropertyName("playSources"u8);
             writer.WriteStartArray();
-            foreach (var item in PlaySource)
+            foreach (var item in PlaySources)
             {
                 writer.WriteObjectValue(item);
             }
