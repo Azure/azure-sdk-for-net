@@ -3,6 +3,7 @@ namespace Azure.Messaging.EventHubs
     public partial class EventData : Azure.Messaging.MessageContent
     {
         public EventData() { }
+        public EventData(Azure.Core.Amqp.AmqpAnnotatedMessage amqpMessage) { }
         public EventData(System.BinaryData eventBody) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected EventData(System.BinaryData eventBody, System.Collections.Generic.IDictionary<string, object> properties = null, System.Collections.Generic.IReadOnlyDictionary<string, object> systemProperties = null, long sequenceNumber = (long)-9223372036854775808, long offset = (long)-9223372036854775808, System.DateTimeOffset enqueuedTime = default(System.DateTimeOffset), string partitionKey = null) { }

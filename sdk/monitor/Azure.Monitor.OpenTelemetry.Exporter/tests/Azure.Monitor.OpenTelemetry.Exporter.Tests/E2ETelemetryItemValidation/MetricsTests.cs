@@ -259,7 +259,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             // ASSERT
             metricReader.Collect();
-            Assert.True(telemetryItems.Count == 2);
+            Assert.True(telemetryItems.Count == 1);
             var telemetryItem = telemetryItems.Last()!;
             this.telemetryOutput.Write(telemetryItem);
             TelemetryItemValidationHelper.AssertMetricTelemetry(
@@ -274,7 +274,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             { }
 
             metricReader.Collect();
-            Assert.True(telemetryItems.Count == 2);
+            Assert.True(telemetryItems.Count == 1);
             telemetryItem = telemetryItems.Last()!;
             this.telemetryOutput.Write(telemetryItem!);
             TelemetryItemValidationHelper.AssertMetricTelemetry(
