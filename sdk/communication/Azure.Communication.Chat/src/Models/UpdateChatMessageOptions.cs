@@ -8,18 +8,6 @@ namespace Azure.Communication.Chat
     /// <summary> Options for the chat message. </summary>
     public class UpdateChatMessageOptions
     {
-        //internal UpdateChatMessageOptions(string messageId, string content, IDictionary<string, string> metadata)
-        //{
-        //    MessageId = messageId;
-        //    Content = content;
-        //    Metadata = metadata;
-        //}
-        //internal UpdateChatMessageOptions(string messageId, string content)
-        //{
-        //    MessageId = messageId;
-        //    Content = content;
-        //}
-
         /// <summary> The id of the chat message. </summary>
         public string MessageId { get; set; }
         /// <summary> Content of a chat message. </summary>

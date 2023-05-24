@@ -91,7 +91,7 @@ namespace Azure.Communication.Chat
         /// <param name="createdBy"> Created by </param>
         /// <param name="deletedOn"> Deleted on date time </param>
         /// <returns>A new <see cref="ChatThreadProperties"/> instance for mocking.</returns>
-        public static ChatThreadProperties ChatThreadProperties(string id, string topic, DateTimeOffset createdOn, CommunicationIdentifier createdBy, DateTimeOffset deletedOn) => new ChatThreadProperties(id,topic,createdOn, createdBy, deletedOn);
+        public static ChatThreadProperties ChatThreadProperties(string id, string topic, DateTimeOffset createdOn, CommunicationIdentifier createdBy, DateTimeOffset deletedOn) => new ChatThreadProperties(id, topic, createdOn, createdBy, deletedOn);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateChatThreadResult"/> class.
@@ -110,36 +110,11 @@ namespace Azure.Communication.Chat
         /// <returns>A new <see cref="ChatParticipant"/> instance for mocking.</returns>
         public static ChatParticipant ChatParticipant(CommunicationIdentifier user, string displayName, DateTimeOffset? shareHistoryTime) => new ChatParticipant(user, displayName, shareHistoryTime);
 
-        ///// <summary>
-        ///// Initializes a new instance of the <see cref="SendChatMessageOptions"/> class.
-        ///// </summary>
-        ///// <param name="content"> Content for the message </param>
-        ///// <param name="messageType">The message type.</param>
-        ///// <param name="senderDisplayName"> Time from which the chat history is shared with the member. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`.</param>
-        ///// <param name="metadata"> Properties bag for custom attributes to the message in the form of key-value pair. </param>        /// <returns>A new <see cref="SendChatMessageOptions"/> instance for mocking.</returns>
-        //public static SendChatMessageOptions SendChatMessageOptions(string content, ChatMessageType messageType, string senderDisplayName, IDictionary<string, string> metadata) => new SendChatMessageOptions(content, messageType, senderDisplayName, metadata);
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SendChatMessageResult"/> class.
         /// </summary>
         /// <param name="id"> A server-generated message id. </param>
         /// <returns>A new <see cref="SendChatMessageResult"/> instance for mocking.</returns>
         public static SendChatMessageResult SendChatMessageResult(string id) => new SendChatMessageResult(id);
-
-        ///// <summary>
-        ///// Initializes a new instance of the <see cref="TypingNotificationOptions"/> class.
-        ///// </summary>
-        ///// <param name="senderDisplayName"> The display name of the message sender. This property is used to populate sender name for push notifications. </param>
-        ///// <returns>A new <see cref="TypingNotificationOptions"/> instance for mocking.</returns>
-        //public static TypingNotificationOptions TypingNotificationOptions(string senderDisplayName) => new TypingNotificationOptions { };
-
-    //    /// <summary>
-    //    /// Initializes a new instance of the <see cref="UpdateChatMessageOptions"/> class.
-    //    /// </summary>
-    //    /// <param name="messageId">The id of the chat message.</param>
-    //    /// <param name="content">Content of a chat message. </param>
-    //    /// <param name="metadata">Properties bag for custom attributes to the message in the form of key-value pair. </param>
-    //    /// <returns>A new <see cref="UpdateChatMessageOptions"/> instance for mocking.</returns>
-    //    public static UpdateChatMessageOptions UpdateChatMessageOptions(string messageId, string content, IDictionary<string, string> metadata) => new UpdateChatMessageOptions(messageId,content,metadata);
     }
 }
