@@ -1,20 +1,20 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://shreja-search-service.search.windows.net/indexes?api-version=2021-04-30-Preview",
+      "RequestUri": "https://azs-net-t0eeade0124fbb432.search.windows.net/indexes?api-version=2023-07-01-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "Content-Length": "4339",
+        "Content-Length": "4570",
         "Content-Type": "application/json",
-        "traceparent": "00-b1bea31bd5c8ae499056fbba2279ed84-ece9e1452a1d3943-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.4.0-alpha.20220707.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "771bb42381f73c51f5b3a160586bb907",
+        "traceparent": "00-e335b86bdc960e689c9ac366fdd69e30-8c4f921b7ac53a91-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230508.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "690cbbdce6c54771c34d8fe2686868f7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "name": "siyvrrnu",
+        "name": "lmwmqwyg",
         "fields": [
           {
             "name": "hotelId",
@@ -57,6 +57,13 @@
             "sortable": false,
             "facetable": false,
             "analyzer": "fr.lucene"
+          },
+          {
+            "name": "descriptionVector",
+            "type": "Collection(Edm.Single)",
+            "searchable": true,
+            "dimensions": 1536,
+            "vectorSearchConfiguration": "my-vector-config"
           },
           {
             "name": "category",
@@ -319,30 +326,39 @@
               "hotelName"
             ]
           }
-        ]
+        ],
+        "vectorSearch": {
+          "algorithmConfigurations": [
+            {
+              "name": "my-vector-config",
+              "kind": "hnsw"
+            }
+          ]
+        }
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "client-request-id": "771bb423-81f7-3c51-f5b3-a160586bb907",
-        "Content-Length": "7156",
-        "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Thu, 07 Jul 2022 19:17:24 GMT",
-        "elapsed-time": "840",
-        "ETag": "W/\u00220x8DA604D52F306AA\u0022",
-        "Expires": "-1",
-        "Location": "https://shreja-search-service.search.windows.net/indexes(\u0027siyvrrnu\u0027)?api-version=2021-04-30-Preview",
+        "client-request-id": "690cbbdc-e6c5-4771-c34d-8fe2686868f7",
+        "Content-Type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+        "Date": "Tue, 09 May 2023 00:44:32 GMT",
+        "elapsed-time": "726",
+        "ETag": "\u00220x8DB50268E27061B\u0022",
+        "Location": "https://azs-net-t0eeade0124fbb432.search.windows.net/indexes(\u0027lmwmqwyg\u0027)?api-version=2023-07-01-Preview",
         "OData-Version": "4.0",
-        "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "771bb423-81f7-3c51-f5b3-a160586bb907",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "771bb423-81f7-3c51-f5b3-a160586bb907"
+        "request-id": "690cbbdc-e6c5-4771-c34d-8fe2686868f7",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": [
+          "max-age=2592000",
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "690cbbdc-e6c5-4771-c34d-8fe2686868f7"
       },
       "ResponseBody": {
-        "@odata.context": "https://shreja-search-service.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8DA604D52F306AA\u0022",
-        "name": "siyvrrnu",
+        "@odata.context": "https://azs-net-t0eeade0124fbb432.search.windows.net/$metadata#indexes/$entity",
+        "@odata.etag": "\u00220x8DB50268E27061B\u0022",
+        "name": "lmwmqwyg",
         "defaultScoringProfile": null,
         "fields": [
           {
@@ -358,6 +374,8 @@
             "searchAnalyzer": null,
             "analyzer": null,
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -373,6 +391,8 @@
             "searchAnalyzer": null,
             "analyzer": null,
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -388,6 +408,8 @@
             "searchAnalyzer": null,
             "analyzer": "en.lucene",
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -403,6 +425,25 @@
             "searchAnalyzer": null,
             "analyzer": "fr.lucene",
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
+            "synonymMaps": []
+          },
+          {
+            "name": "descriptionVector",
+            "type": "Collection(Edm.Single)",
+            "searchable": true,
+            "filterable": false,
+            "retrievable": true,
+            "sortable": false,
+            "facetable": false,
+            "key": false,
+            "indexAnalyzer": null,
+            "searchAnalyzer": null,
+            "analyzer": null,
+            "normalizer": null,
+            "dimensions": 1536,
+            "vectorSearchConfiguration": "my-vector-config",
             "synonymMaps": []
           },
           {
@@ -418,6 +459,8 @@
             "searchAnalyzer": null,
             "analyzer": null,
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -433,6 +476,8 @@
             "searchAnalyzer": null,
             "analyzer": null,
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -448,6 +493,8 @@
             "searchAnalyzer": null,
             "analyzer": null,
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -463,6 +510,8 @@
             "searchAnalyzer": null,
             "analyzer": null,
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -478,6 +527,8 @@
             "searchAnalyzer": null,
             "analyzer": null,
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -493,6 +544,8 @@
             "searchAnalyzer": null,
             "analyzer": null,
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -508,6 +561,8 @@
             "searchAnalyzer": null,
             "analyzer": null,
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -523,6 +578,8 @@
             "searchAnalyzer": null,
             "analyzer": null,
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -542,6 +599,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -557,6 +616,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": "lowercase",
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -572,6 +633,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -587,6 +650,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -602,6 +667,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               }
             ]
@@ -623,6 +690,8 @@
                 "searchAnalyzer": null,
                 "analyzer": "en.lucene",
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -638,6 +707,8 @@
                 "searchAnalyzer": null,
                 "analyzer": "fr.lucene",
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -653,6 +724,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -668,6 +741,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -683,6 +758,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -698,6 +775,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -713,6 +792,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -728,6 +809,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               }
             ]
@@ -790,26 +873,40 @@
           "k1": null,
           "b": null
         },
-        "semantic": null
+        "semantic": null,
+        "vectorSearch": {
+          "algorithmConfigurations": [
+            {
+              "name": "my-vector-config",
+              "kind": "hnsw",
+              "hnswParameters": {
+                "metric": "cosine",
+                "m": 4,
+                "efConstruction": 400,
+                "efSearch": 500
+              }
+            }
+          ]
+        }
       }
     },
     {
-      "RequestUri": "https://shreja-search-service.search.windows.net/indexes(\u0027siyvrrnu\u0027)?allowIndexDowntime=true\u0026api-version=2021-04-30-Preview",
+      "RequestUri": "https://azs-net-t0eeade0124fbb432.search.windows.net/indexes(\u0027lmwmqwyg\u0027)?allowIndexDowntime=true\u0026api-version=2023-07-01-Preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "Content-Length": "5360",
+        "Content-Length": "5772",
         "Content-Type": "application/json",
-        "If-Match": "\u00220x8DA604D52F306AA\u0022",
+        "If-Match": "\u00220x8DB50268E27061B\u0022",
         "Prefer": "return=representation",
-        "traceparent": "00-874b134bc79d9e44a4e6e90d3da985ec-176bd76f4f645a4b-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.4.0-alpha.20220707.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "9a06a86931b85bb5706d9382e0566e37",
+        "traceparent": "00-6f7144878c18a926b9814c91e024adf4-60679060bff6d25a-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230508.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "127c2c767decc6955f0158e957241dc9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "name": "siyvrrnu",
+        "name": "lmwmqwyg",
         "fields": [
           {
             "name": "hotelId",
@@ -855,6 +952,19 @@
             "sortable": false,
             "facetable": false,
             "analyzer": "fr.lucene",
+            "synonymMaps": []
+          },
+          {
+            "name": "descriptionVector",
+            "type": "Collection(Edm.Single)",
+            "key": false,
+            "retrievable": true,
+            "searchable": true,
+            "filterable": false,
+            "sortable": false,
+            "facetable": false,
+            "dimensions": 1536,
+            "vectorSearchConfiguration": "my-vector-config",
             "synonymMaps": []
           },
           {
@@ -1173,29 +1283,44 @@
         "similarity": {
           "@odata.type": "#Microsoft.Azure.Search.BM25Similarity"
         },
-        "@odata.etag": "\u00220x8DA604D52F306AA\u0022"
+        "vectorSearch": {
+          "algorithmConfigurations": [
+            {
+              "name": "my-vector-config",
+              "kind": "hnsw",
+              "hnswParameters": {
+                "m": 4,
+                "efConstruction": 400,
+                "efSearch": 500,
+                "metric": "cosine"
+              }
+            }
+          ]
+        },
+        "@odata.etag": "\u00220x8DB50268E27061B\u0022"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "client-request-id": "9a06a869-31b8-5bb5-706d-9382e0566e37",
-        "Content-Length": "7593",
-        "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Thu, 07 Jul 2022 19:17:25 GMT",
-        "elapsed-time": "395",
-        "ETag": "W/\u00220x8DA604D533BC502\u0022",
-        "Expires": "-1",
+        "client-request-id": "127c2c76-7dec-c695-5f01-58e957241dc9",
+        "Content-Type": "application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8",
+        "Date": "Tue, 09 May 2023 00:44:32 GMT",
+        "elapsed-time": "224",
+        "ETag": "\u00220x8DB50268E51BBFF\u0022",
         "OData-Version": "4.0",
-        "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "9a06a869-31b8-5bb5-706d-9382e0566e37",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "9a06a869-31b8-5bb5-706d-9382e0566e37"
+        "request-id": "127c2c76-7dec-c695-5f01-58e957241dc9",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": [
+          "max-age=2592000",
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "127c2c76-7dec-c695-5f01-58e957241dc9"
       },
       "ResponseBody": {
-        "@odata.context": "https://shreja-search-service.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8DA604D533BC502\u0022",
-        "name": "siyvrrnu",
+        "@odata.context": "https://azs-net-t0eeade0124fbb432.search.windows.net/$metadata#indexes/$entity",
+        "@odata.etag": "\u00220x8DB50268E51BBFF\u0022",
+        "name": "lmwmqwyg",
         "defaultScoringProfile": null,
         "fields": [
           {
@@ -1211,6 +1336,8 @@
             "searchAnalyzer": null,
             "analyzer": null,
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -1226,6 +1353,8 @@
             "searchAnalyzer": null,
             "analyzer": null,
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -1241,6 +1370,8 @@
             "searchAnalyzer": null,
             "analyzer": "en.lucene",
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -1256,6 +1387,25 @@
             "searchAnalyzer": null,
             "analyzer": "fr.lucene",
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
+            "synonymMaps": []
+          },
+          {
+            "name": "descriptionVector",
+            "type": "Collection(Edm.Single)",
+            "searchable": true,
+            "filterable": false,
+            "retrievable": true,
+            "sortable": false,
+            "facetable": false,
+            "key": false,
+            "indexAnalyzer": null,
+            "searchAnalyzer": null,
+            "analyzer": null,
+            "normalizer": null,
+            "dimensions": 1536,
+            "vectorSearchConfiguration": "my-vector-config",
             "synonymMaps": []
           },
           {
@@ -1271,6 +1421,8 @@
             "searchAnalyzer": null,
             "analyzer": null,
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -1286,6 +1438,8 @@
             "searchAnalyzer": null,
             "analyzer": null,
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -1301,6 +1455,8 @@
             "searchAnalyzer": null,
             "analyzer": null,
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -1316,6 +1472,8 @@
             "searchAnalyzer": null,
             "analyzer": null,
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -1331,6 +1489,8 @@
             "searchAnalyzer": null,
             "analyzer": null,
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -1346,6 +1506,8 @@
             "searchAnalyzer": null,
             "analyzer": null,
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -1361,6 +1523,8 @@
             "searchAnalyzer": null,
             "analyzer": null,
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -1376,6 +1540,8 @@
             "searchAnalyzer": null,
             "analyzer": null,
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           },
           {
@@ -1395,6 +1561,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -1410,6 +1578,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": "lowercase",
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -1425,6 +1595,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -1440,6 +1612,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -1455,6 +1629,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               }
             ]
@@ -1476,6 +1652,8 @@
                 "searchAnalyzer": null,
                 "analyzer": "en.lucene",
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -1491,6 +1669,8 @@
                 "searchAnalyzer": null,
                 "analyzer": "fr.lucene",
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -1506,6 +1686,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -1521,6 +1703,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -1536,6 +1720,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -1551,6 +1737,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -1566,6 +1754,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               },
               {
@@ -1581,6 +1771,8 @@
                 "searchAnalyzer": null,
                 "analyzer": null,
                 "normalizer": null,
+                "dimensions": null,
+                "vectorSearchConfiguration": null,
                 "synonymMaps": []
               }
             ]
@@ -1598,6 +1790,8 @@
             "searchAnalyzer": null,
             "analyzer": "asciiTags",
             "normalizer": null,
+            "dimensions": null,
+            "vectorSearchConfiguration": null,
             "synonymMaps": []
           }
         ],
@@ -1671,42 +1865,57 @@
           "k1": null,
           "b": null
         },
-        "semantic": null
+        "semantic": null,
+        "vectorSearch": {
+          "algorithmConfigurations": [
+            {
+              "name": "my-vector-config",
+              "kind": "hnsw",
+              "hnswParameters": {
+                "metric": "cosine",
+                "m": 4,
+                "efConstruction": 400,
+                "efSearch": 500
+              }
+            }
+          ]
+        }
       }
     },
     {
-      "RequestUri": "https://shreja-search-service.search.windows.net/indexes(\u0027siyvrrnu\u0027)?api-version=2021-04-30-Preview",
+      "RequestUri": "https://azs-net-t0eeade0124fbb432.search.windows.net/indexes(\u0027lmwmqwyg\u0027)?api-version=2023-07-01-Preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "Content-Length": "0",
-        "traceparent": "00-c2de6bf8b276c14784454be90bb42a95-fe28b12c01484246-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.4.0-alpha.20220707.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "46f366ae89155386ec10ab4ffc6bcd20",
+        "traceparent": "00-739d3e9a5a1c8dce0004dbe245983790-028a83effb334a8f-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230508.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a29c647e36f949d801946893f94a99f7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "client-request-id": "46f366ae-8915-5386-ec10-ab4ffc6bcd20",
-        "Date": "Thu, 07 Jul 2022 19:17:25 GMT",
-        "elapsed-time": "410",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "request-id": "46f366ae-8915-5386-ec10-ab4ffc6bcd20",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "46f366ae-8915-5386-ec10-ab4ffc6bcd20"
+        "client-request-id": "a29c647e-36f9-49d8-0194-6893f94a99f7",
+        "Date": "Tue, 09 May 2023 00:44:32 GMT",
+        "elapsed-time": "357",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "a29c647e-36f9-49d8-0194-6893f94a99f7",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": [
+          "max-age=2592000",
+          "max-age=15724800; includeSubDomains"
+        ],
+        "x-ms-client-request-id": "a29c647e-36f9-49d8-0194-6893f94a99f7"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
-    "RandomSeed": "1292821620",
-    "SearchIndexName": "siyvrrnu",
+    "RandomSeed": "1025851591",
+    "SearchIndexName": "lmwmqwyg",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
-    "SEARCH_ENDPOINT_SUFFIX": null,
-    "SEARCH_SERVICE_NAME": "shreja-search-service"
+    "SEARCH_ENDPOINT_SUFFIX": "search.windows.net",
+    "SEARCH_SERVICE_NAME": "azs-net-t0eeade0124fbb432"
   }
 }

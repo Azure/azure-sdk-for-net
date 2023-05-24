@@ -70,7 +70,7 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     _sha256.TransformFinalBlock(Array.Empty<byte>(), 0, 0);
                     string computedDigest = BlobHelper.FormatDigest(_sha256.Hash);
-                    BlobHelper.ValidateDigest(computedDigest, _digest);
+                    BlobHelper.ValidateDigest(computedDigest, _digest, BlobHelper.ContentDigestDoesntMatchRequestedMessage);
                     _validated = true;
                 }
             }

@@ -4,7 +4,7 @@ Some Azure SDK APIs return values that hold raw JSON, for example [protocol meth
 
 ## Accessing Response Content
 
-### Get `dynamic` from `Response`
+### Get dynamic from Response
 
 Dynamic content is obtained from the `Response` return value.
 
@@ -20,6 +20,16 @@ JSON members are read using dynamic property access.
 ```C# Snippet:AzureCoreGetDynamicJsonProperty
 Response response = client.GetWidget();
 dynamic widget = response.Content.ToDynamicFromJson();
+string name = widget.name;
+```
+
+### Get a JSON property idiomatically
+
+To treat the dynamic content like a standard .NET type, it is recommended to pass `DynamicCaseMapping.PascalToCamel` when calling `ToDynamicFromJson()`.  This enables getting JSON members with PascalCase property names, and will write any JSON members with camelCase names.
+
+```C# Snippet:AzureCoreGetDynamicJsonPropertyPascalCase
+Response response = client.GetWidget();
+dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 string name = widget.Name;
 ```
 
@@ -29,7 +39,7 @@ JSON members can be set on the dynamic object.
 
 ```C# Snippet:AzureCoreSetDynamicJsonProperty
 Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson();
+dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 widget.Name = "New Name";
 client.SetWidget(RequestContent.Create(widget));
 ```
@@ -40,7 +50,7 @@ JSON array values are accessed using array indexers.  The `Length` property retu
 
 ```C# Snippet:AzureCoreGetDynamicJsonArrayValue
 Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson();
+dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 
 // JSON is `{ "values" : [1, 2, 3] }`
 if (widget.Values.Length > 0)
@@ -55,7 +65,7 @@ Optional properties will return null if not present in the JSON content.
 
 ```C# Snippet:AzureCoreGetDynamicJsonOptionalProperty
 Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson();
+dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 
 // JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
 
@@ -72,7 +82,7 @@ Dynamic JSON objects and arrays are `IEnumerable` and can be iterated over with 
 
 ```C# Snippet:AzureCoreEnumerateDynamicJsonObject
 Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson();
+dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 
 // JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
 foreach (dynamic property in widget.Details)
@@ -99,7 +109,7 @@ Dynamic JSON objects can be cast to CLR types using the cast operator.
 
 ```C# Snippet:AzureCoreCastDynamicJsonToPOCO
 Response response = client.GetWidget();
-dynamic content = response.Content.ToDynamicFromJson();
+dynamic content = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 
 // JSON is `{ "id" : "123", "name" : "Widget" }`
 Widget widget = (Widget)content;
@@ -117,13 +127,13 @@ public class Widget
 
 When working with JSON from Azure services, you can learn what properties are available in the JSON response content from the REST API documentation for the service, examples in the protocol method documentation, or by expanding the [Dynamic View](https://learn.microsoft.com/visualstudio/debugger/watch-and-quickwatch-windows) in Visual Studio.
 
-To behave as much as possible like Azure SDK model types, `DynamicData` allows JSON members to be accessed using PascalCase property names, and will write any added properties with camelCase names.  If there is a need to bypass these name mappings, JSON members can be accessed with exact strings using property indexers.
+If you are using `DynamicData` with the `DynamicCaseMapping.PascalToProperty` setting and there is a need to bypass these name mappings, JSON members can be accessed with exact strings using property indexers.
 
 ```C# Snippet:AzureCoreSetPropertyWithoutCaseMapping
 Response response = client.GetWidget();
 dynamic widget = response.Content.ToDynamicFromJson();
 
-widget.Details["IPAddress"] = "127.0.0.1";
+widget.details["IPAddress"] = "127.0.0.1";
 // JSON is `{ "details" : { "IPAddress" : "127.0.0.1" } }`
 ```
 
@@ -158,7 +168,7 @@ To make this common case easier to implement, Dynamic JSON is mutable.  This all
 
 ```C# Snippet:AzureCoreRoundTripDynamicJson
 Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson();
+dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
 widget.Name = "New Name";
 client.SetWidget(RequestContent.Create(widget));
 ```

@@ -20,6 +20,4 @@ Conversation Analysis is a cloud-based conversational AI service that applies cu
 - [Analyze an utterance using extra options](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample4_AnalyzeConversationWithOptions.md)
 - [Import a project](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample5_ImportProject.md)
 - [Analyze a conversation with Conversation Summarization](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample6_AnalyzeConversation_ConversationSummarization.md)
-- [Analyze a conversation with Conversation PII using text input](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample7_AnalyzeConversation_ConversationPII_Text.md)
-- [Analyze a conversation with Conversation PII using transcript input](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample8_AnalyzeConversation_ConversationPII_Transcript.md)
-- [Analyze a conversation with Conversation Sentiment](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample9_AnalyzeConversation_ConversationSentiment.md)
+- [Export a project](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample7_ExportProject.md)
