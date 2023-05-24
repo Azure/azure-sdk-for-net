@@ -56,15 +56,15 @@ directive:
   - from: networkcloud.json
     where: $.definitions
     transform:
-      $.AdministrativeCredentials.required =  [ "username" ]; 
+      $.AdministrativeCredentials.required =  [ 'username' ];
       $.ImageRepositoryCredentials.required = [
-        "username",
-        "registryUrl"
+        'username',
+        'registryUrl'
       ];
       $.ServicePrincipalInformation.required = [
-        "tenantId",
-        "principalId",
-        "applicationId"
+        'tenantId',
+        'principalId',
+        'applicationId'
       ];
   # `delete` transformations are to remove APIs/methods that result in Access Denied for end users.
   - remove-operation: BareMetalMachines_CreateOrUpdate
