@@ -376,8 +376,8 @@ namespace Azure.ResourceManager.DevCenter
         public virtual Azure.Response<Azure.ResourceManager.DevCenter.DevCenterNetworkConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.DevCenterNetworkConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DevCenter.HealthCheckStatusDetailResource GetHealthCheckStatusDetail() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevCenter.Models.OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpoints(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevCenter.Models.OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevCenter.Models.OutboundEnvironmentEndpoint> GetOutboundEnvironmentEndpoints(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevCenter.Models.OutboundEnvironmentEndpoint> GetOutboundEnvironmentEndpointsAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevCenter.DevCenterNetworkConnectionResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.DevCenterNetworkConnectionResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation RunHealthChecks(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -553,10 +553,10 @@ namespace Azure.ResourceManager.DevCenter
     public partial class DevCenterScheduleData : Azure.ResourceManager.Models.ResourceData
     {
         public DevCenterScheduleData() { }
-        public Azure.ResourceManager.DevCenter.Models.ScheduledFrequency? Frequency { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterScheduledFrequency? Frequency { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.DevCenter.Models.ScheduledType? ScheduledType { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.ScheduleEnableStatus? State { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterScheduledType? ScheduledType { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterScheduleEnableStatus? State { get { throw null; } set { } }
         public string Time { get { throw null; } set { } }
         public string TimeZone { get { throw null; } set { } }
     }
@@ -717,6 +717,40 @@ namespace Azure.ResourceManager.DevCenter
 }
 namespace Azure.ResourceManager.DevCenter.Models
 {
+    public static partial class ArmDevCenterModelFactory
+    {
+        public static Azure.ResourceManager.DevCenter.AllowedEnvironmentTypeData AllowedEnvironmentTypeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.DevCenter.AttachedNetworkConnectionData AttachedNetworkConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), Azure.Core.ResourceIdentifier networkConnectionId = null, Azure.Core.AzureLocation? networkConnectionLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheckStatus? healthCheckStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheckStatus?), Azure.ResourceManager.DevCenter.Models.DomainJoinType? domainJoinType = default(Azure.ResourceManager.DevCenter.Models.DomainJoinType?)) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.CheckNameAvailabilityResponse CheckNameAvailabilityResponse(bool? nameAvailable = default(bool?), Azure.ResourceManager.DevCenter.Models.CheckNameAvailabilityReason? reason = default(Azure.ResourceManager.DevCenter.Models.CheckNameAvailabilityReason?), string message = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.DevBoxDefinitionData DevBoxDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DevCenter.Models.DevCenterImageReference imageReference = null, Azure.ResourceManager.DevCenter.Models.DevCenterSku sku = null, string osStorageType = null, Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport? hibernateSupport = default(Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport?), Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), Azure.ResourceManager.DevCenter.Models.ImageValidationStatus? imageValidationStatus = default(Azure.ResourceManager.DevCenter.Models.ImageValidationStatus?), Azure.ResourceManager.DevCenter.Models.ImageValidationErrorDetails imageValidationErrorDetails = null, Azure.ResourceManager.DevCenter.Models.DevCenterImageReference activeImageReference = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterCapability DevCenterCapability(string name = null, string value = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.DevCenterCatalogData DevCenterCatalogData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DevCenter.Models.DevCenterGitCatalog gitHub = null, Azure.ResourceManager.DevCenter.Models.DevCenterGitCatalog adoGit = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), Azure.ResourceManager.DevCenter.Models.CatalogSyncState? syncState = default(Azure.ResourceManager.DevCenter.Models.CatalogSyncState?), System.DateTimeOffset? lastSyncOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.DevCenter.DevCenterData DevCenterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), System.Uri devCenterUri = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterEndpointDetail DevCenterEndpointDetail(int? port = default(int?)) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterEnvironmentRole DevCenterEnvironmentRole(string roleName = null, string description = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.DevCenterEnvironmentTypeData DevCenterEnvironmentTypeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.DevCenter.DevCenterGalleryData DevCenterGalleryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), Azure.Core.ResourceIdentifier galleryResourceId = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheck DevCenterHealthCheck(Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheckStatus? status = default(Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheckStatus?), string displayName = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string errorType = null, string recommendedAction = null, string additionalDetails = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatusDetail DevCenterHealthStatusDetail(string code = null, string message = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.DevCenterImageData DevCenterImageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string publisher = null, string offer = null, string sku = null, Azure.ResourceManager.DevCenter.Models.RecommendedMachineConfiguration recommendedMachineConfiguration = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport? hibernateSupport = default(Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport?)) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterImageReference DevCenterImageReference(Azure.Core.ResourceIdentifier id = null, string exactVersion = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.DevCenterNetworkConnectionData DevCenterNetworkConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.Core.ResourceIdentifier subnetId = null, string domainName = null, string organizationUnit = null, string domainUsername = null, string domainPassword = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheckStatus? healthCheckStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheckStatus?), string networkingResourceGroupName = null, Azure.ResourceManager.DevCenter.Models.DomainJoinType? domainJoinType = default(Azure.ResourceManager.DevCenter.Models.DomainJoinType?)) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterOperationStatus DevCenterOperationStatus(Azure.Core.ResourceIdentifier id = null, string name = null, string status = null, float? percentComplete = default(float?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Models.OperationStatusResult> operations = null, Azure.ResponseError error = null, string resourceId = null, System.BinaryData properties = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.DevCenterPoolData DevCenterPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string devBoxDefinitionName = null, string networkConnectionName = null, Azure.ResourceManager.DevCenter.Models.DevCenterLicenseType? licenseType = default(Azure.ResourceManager.DevCenter.Models.DevCenterLicenseType?), Azure.ResourceManager.DevCenter.Models.LocalAdminStatus? localAdministrator = default(Azure.ResourceManager.DevCenter.Models.LocalAdminStatus?), Azure.ResourceManager.DevCenter.Models.StopOnDisconnectConfiguration stopOnDisconnect = null, Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatus? healthStatus = default(Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatusDetail> healthStatusDetails = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.DevCenter.DevCenterProjectData DevCenterProjectData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.Core.ResourceIdentifier devCenterId = null, string description = null, int? maxDevBoxesPerUser = default(int?), Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?), System.Uri devCenterUri = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterResourceRange DevCenterResourceRange(int? min = default(int?), int? max = default(int?)) { throw null; }
+        public static Azure.ResourceManager.DevCenter.DevCenterScheduleData DevCenterScheduleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DevCenter.Models.DevCenterScheduledType? scheduledType = default(Azure.ResourceManager.DevCenter.Models.DevCenterScheduledType?), Azure.ResourceManager.DevCenter.Models.DevCenterScheduledFrequency? frequency = default(Azure.ResourceManager.DevCenter.Models.DevCenterScheduledFrequency?), string time = null, string timeZone = null, Azure.ResourceManager.DevCenter.Models.DevCenterScheduleEnableStatus? state = default(Azure.ResourceManager.DevCenter.Models.DevCenterScheduleEnableStatus?), Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterSkuDetails DevCenterSkuDetails(string name = null, Azure.ResourceManager.DevCenter.Models.DevCenterSkuTier? tier = default(Azure.ResourceManager.DevCenter.Models.DevCenterSkuTier?), string size = null, string family = null, int? capacity = default(int?), Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), System.Collections.Generic.IEnumerable<string> locations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterCapability> capabilities = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterUsage DevCenterUsage(long? currentValue = default(long?), long? limit = default(long?), Azure.ResourceManager.DevCenter.Models.DevCenterUsageUnit? unit = default(Azure.ResourceManager.DevCenter.Models.DevCenterUsageUnit?), Azure.ResourceManager.DevCenter.Models.DevCenterUsageName name = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterUsageName DevCenterUsageName(string localizedValue = null, string value = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.EndpointDependency EndpointDependency(string domainName = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterEndpointDetail> endpointDetails = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.HealthCheckStatusDetailData HealthCheckStatusDetailData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheck> healthChecks = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.ImageValidationErrorDetails ImageValidationErrorDetails(string code = null, string message = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.ImageVersionData ImageVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string namePropertiesName = null, System.DateTimeOffset? publishedOn = default(System.DateTimeOffset?), bool? excludeFromLatest = default(bool?), int? osDiskImageSizeInGb = default(int?), Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.OutboundEnvironmentEndpoint OutboundEnvironmentEndpoint(string category = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevCenter.Models.EndpointDependency> endpoints = null) { throw null; }
+        public static Azure.ResourceManager.DevCenter.ProjectEnvironmentTypeData ProjectEnvironmentTypeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.Core.ResourceIdentifier deploymentTargetId = null, Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus? status = default(Azure.ResourceManager.DevCenter.Models.EnvironmentTypeEnableStatus?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DevCenter.Models.DevCenterEnvironmentRole> roles = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DevCenter.Models.DevCenterUserRoleAssignmentValue> userRoleAssignments = null, Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? provisioningState = default(Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.RecommendedMachineConfiguration RecommendedMachineConfiguration(Azure.ResourceManager.DevCenter.Models.DevCenterResourceRange memory = null, Azure.ResourceManager.DevCenter.Models.DevCenterResourceRange vCpus = null) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CatalogSyncState : System.IEquatable<Azure.ResourceManager.DevCenter.Models.CatalogSyncState>
     {
@@ -988,12 +1022,64 @@ namespace Azure.ResourceManager.DevCenter.Models
         public int? Max { get { throw null; } }
         public int? Min { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterScheduledFrequency : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterScheduledFrequency>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterScheduledFrequency(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterScheduledFrequency Daily { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterScheduledFrequency other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterScheduledFrequency left, Azure.ResourceManager.DevCenter.Models.DevCenterScheduledFrequency right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterScheduledFrequency (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterScheduledFrequency left, Azure.ResourceManager.DevCenter.Models.DevCenterScheduledFrequency right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterScheduledType : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterScheduledType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterScheduledType(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterScheduledType StopDevBox { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterScheduledType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterScheduledType left, Azure.ResourceManager.DevCenter.Models.DevCenterScheduledType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterScheduledType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterScheduledType left, Azure.ResourceManager.DevCenter.Models.DevCenterScheduledType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DevCenterScheduleEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.DevCenterScheduleEnableStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DevCenterScheduleEnableStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterScheduleEnableStatus IsDisabled { get { throw null; } }
+        public static Azure.ResourceManager.DevCenter.Models.DevCenterScheduleEnableStatus IsEnabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DevCenter.Models.DevCenterScheduleEnableStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.DevCenterScheduleEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterScheduleEnableStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DevCenter.Models.DevCenterScheduleEnableStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.DevCenterScheduleEnableStatus left, Azure.ResourceManager.DevCenter.Models.DevCenterScheduleEnableStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DevCenterSchedulePatch : Azure.ResourceManager.DevCenter.Models.DevCenterTrackedResourceUpdate
     {
         public DevCenterSchedulePatch() { }
-        public Azure.ResourceManager.DevCenter.Models.ScheduledFrequency? Frequency { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.ScheduledType? ScheduledType { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.ScheduleEnableStatus? State { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterScheduledFrequency? Frequency { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterScheduledType? ScheduledType { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterScheduleEnableStatus? State { get { throw null; } set { } }
         public string Time { get { throw null; } set { } }
         public string TimeZone { get { throw null; } set { } }
     }
@@ -1171,58 +1257,6 @@ namespace Azure.ResourceManager.DevCenter.Models
         internal RecommendedMachineConfiguration() { }
         public Azure.ResourceManager.DevCenter.Models.DevCenterResourceRange Memory { get { throw null; } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterResourceRange VCpus { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ScheduledFrequency : System.IEquatable<Azure.ResourceManager.DevCenter.Models.ScheduledFrequency>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ScheduledFrequency(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.ScheduledFrequency Daily { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.ScheduledFrequency other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.ScheduledFrequency left, Azure.ResourceManager.DevCenter.Models.ScheduledFrequency right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.ScheduledFrequency (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.ScheduledFrequency left, Azure.ResourceManager.DevCenter.Models.ScheduledFrequency right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ScheduledType : System.IEquatable<Azure.ResourceManager.DevCenter.Models.ScheduledType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ScheduledType(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.ScheduledType StopDevBox { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.ScheduledType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.ScheduledType left, Azure.ResourceManager.DevCenter.Models.ScheduledType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.ScheduledType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.ScheduledType left, Azure.ResourceManager.DevCenter.Models.ScheduledType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ScheduleEnableStatus : System.IEquatable<Azure.ResourceManager.DevCenter.Models.ScheduleEnableStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ScheduleEnableStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DevCenter.Models.ScheduleEnableStatus IsDisabled { get { throw null; } }
-        public static Azure.ResourceManager.DevCenter.Models.ScheduleEnableStatus IsEnabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DevCenter.Models.ScheduleEnableStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DevCenter.Models.ScheduleEnableStatus left, Azure.ResourceManager.DevCenter.Models.ScheduleEnableStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DevCenter.Models.ScheduleEnableStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DevCenter.Models.ScheduleEnableStatus left, Azure.ResourceManager.DevCenter.Models.ScheduleEnableStatus right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class StopOnDisconnectConfiguration
     {
