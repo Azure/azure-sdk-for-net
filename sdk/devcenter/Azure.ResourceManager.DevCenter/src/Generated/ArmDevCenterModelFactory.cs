@@ -292,14 +292,14 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterUsageName(localizedValue, value);
         }
 
-        /// <summary> Initializes a new instance of CheckDevCenterNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of DevCenterNameAvailabilityResult. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
-        /// <returns> A new <see cref="Models.CheckDevCenterNameAvailabilityResult"/> instance for mocking. </returns>
-        public static CheckDevCenterNameAvailabilityResult CheckDevCenterNameAvailabilityResult(bool? isNameAvailable = null, CheckDevCenterUnavailableReason? reason = null, string message = null)
+        /// <returns> A new <see cref="Models.DevCenterNameAvailabilityResult"/> instance for mocking. </returns>
+        public static DevCenterNameAvailabilityResult DevCenterNameAvailabilityResult(bool? isNameAvailable = null, DevCenterNameUnavailableReason? reason = null, string message = null)
         {
-            return new CheckDevCenterNameAvailabilityResult(isNameAvailable, reason, message);
+            return new DevCenterNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
         /// <summary> Initializes a new instance of DevCenterSkuDetails. </summary>

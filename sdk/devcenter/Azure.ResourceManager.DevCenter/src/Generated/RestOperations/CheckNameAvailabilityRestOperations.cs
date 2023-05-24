@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevCenter
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateExecuteRequest(string subscriptionId, CheckDevCenterNameAvailabilityContent content)
+        internal HttpMessage CreateExecuteRequest(string subscriptionId, DevCenterNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckDevCenterNameAvailabilityResult>> ExecuteAsync(string subscriptionId, CheckDevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<DevCenterNameAvailabilityResult>> ExecuteAsync(string subscriptionId, DevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        CheckDevCenterNameAvailabilityResult value = default;
+                        DevCenterNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckDevCenterNameAvailabilityResult.DeserializeCheckDevCenterNameAvailabilityResult(document.RootElement);
+                        value = DevCenterNameAvailabilityResult.DeserializeDevCenterNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckDevCenterNameAvailabilityResult> Execute(string subscriptionId, CheckDevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<DevCenterNameAvailabilityResult> Execute(string subscriptionId, DevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        CheckDevCenterNameAvailabilityResult value = default;
+                        DevCenterNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckDevCenterNameAvailabilityResult.DeserializeCheckDevCenterNameAvailabilityResult(document.RootElement);
+                        value = DevCenterNameAvailabilityResult.DeserializeDevCenterNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

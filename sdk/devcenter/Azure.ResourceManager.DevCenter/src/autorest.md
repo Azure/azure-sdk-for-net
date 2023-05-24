@@ -113,18 +113,18 @@ rename-mapping:
   DomainJoinType.HybridAzureADJoin: HybridAadJoin
   DomainJoinType.AzureADJoin: AadJoin
   CheckNameAvailabilityResponse.nameAvailable: IsNameAvailable
-  CheckNameAvailabilityRequest: CheckDevCenterNameAvailabilityContent
-  CheckNameAvailabilityResponse: CheckDevCenterNameAvailabilityResult
-  CheckNameAvailabilityReason: CheckDevCenterUnavailableReason
+  CheckNameAvailabilityRequest: DevCenterNameAvailabilityContent
+  CheckNameAvailabilityResponse: DevCenterNameAvailabilityResult
+  CheckNameAvailabilityReason: DevCenterNameUnavailableReason
   ProjectEnvironmentType: DevCenterProjectEnvironment
   ImageVersion.properties.osDiskImageSizeInGb:  OsDiskImageSizeInGB
   ImageVersion.properties.excludeFromLatest: IsExcludedFromLatest
 
 override-operation-name:
   OperationStatuses_Get: GetDevCenterOperationStatus
-  Usages_ListByLocation: GetDevCenterUsagesByLocationAsync
-  CheckNameAvailability_Execute: ExecuteCheckDevCenterNameAvailabilityAsync
-  Skus_ListBySubscription: GetDevCenterSkusBySubscriptionAsync
+  Usages_ListByLocation: GetDevCenterUsagesByLocation
+  CheckNameAvailability_Execute: CheckDevCenterNameAvailability
+  Skus_ListBySubscription: GetDevCenterSkusBySubscription
   NetworkConnections_ListOutboundNetworkDependenciesEndpoints: GetOutboundEnvironmentEndpoints
 
 request-path-to-resource-name:

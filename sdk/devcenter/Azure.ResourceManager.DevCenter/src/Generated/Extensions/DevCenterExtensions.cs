@@ -698,9 +698,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="location"> The Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevCenterUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DevCenterUsage> GetDevCenterUsagesByLocationAsyncAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DevCenterUsage> GetDevCenterUsagesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterUsagesByLocationAsyncAsync(location, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterUsagesByLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -720,9 +720,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="location"> The Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevCenterUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DevCenterUsage> GetDevCenterUsagesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static Pageable<DevCenterUsage> GetDevCenterUsagesByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterUsagesByLocationAsync(location, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterUsagesByLocation(location, cancellationToken);
         }
 
         /// <summary>
@@ -742,11 +742,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CheckDevCenterNameAvailabilityResult>> ExecuteCheckDevCenterNameAvailabilityAsyncAsync(this SubscriptionResource subscriptionResource, CheckDevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<DevCenterNameAvailabilityResult>> CheckDevCenterNameAvailabilityAsync(this SubscriptionResource subscriptionResource, DevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).ExecuteCheckDevCenterNameAvailabilityAsyncAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDevCenterNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -766,11 +766,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CheckDevCenterNameAvailabilityResult> ExecuteCheckDevCenterNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckDevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<DevCenterNameAvailabilityResult> CheckDevCenterNameAvailability(this SubscriptionResource subscriptionResource, DevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).ExecuteCheckDevCenterNameAvailabilityAsync(content, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDevCenterNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -790,9 +790,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevCenterSkuDetails" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DevCenterSkuDetails> GetDevCenterSkusBySubscriptionAsyncAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DevCenterSkuDetails> GetDevCenterSkusBySubscriptionAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterSkusBySubscriptionAsyncAsync(top, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterSkusBySubscriptionAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -812,9 +812,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevCenterSkuDetails" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DevCenterSkuDetails> GetDevCenterSkusBySubscriptionAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
+        public static Pageable<DevCenterSkuDetails> GetDevCenterSkusBySubscription(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterSkusBySubscriptionAsync(top, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterSkusBySubscription(top, cancellationToken);
         }
 
         /// <summary>
