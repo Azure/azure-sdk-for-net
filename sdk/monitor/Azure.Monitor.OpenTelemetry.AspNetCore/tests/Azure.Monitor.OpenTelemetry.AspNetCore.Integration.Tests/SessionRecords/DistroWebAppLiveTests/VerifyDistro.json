@@ -1,20 +1,20 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/d2c8840c-37f0-4495-84b3-44817a413b8d/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/33283218-aeb0-4388-b0c0-77a9bf80a8d2/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "126",
+        "Content-Length": "179",
         "Content-Type": "application/json",
-        "traceparent": "00-3f4008f1f803e230e58ddc7a1510484b-6ea0a44f2490d7bd-00",
-        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "69119c1153f342eeeb9c25b59f3fda1b",
+        "traceparent": "00-96c190206c9672f1717ab6c6ef2aecd7-2e8e334b521fb0e0-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "28a87c500b38f9446fbd8fd6b0e14494",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "AppDependencies | where AppRoleName == \u0027VerifyTraceExporter\u0027 | top 1 by TimeGenerated",
+        "query": "AppDependencies | where Data == \u0027http://localhost:9998/\u0027 | where AppRoleName == \u0027DistroWebAppLiveTests\u0027 | top 1 by TimeGenerated",
         "timespan": "PT30M"
       },
       "StatusCode": 200,
@@ -22,15 +22,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
         "Connection": "keep-alive",
-        "Content-Length": "2321",
+        "Content-Length": "2436",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Oct 2022 23:55:59 GMT",
+        "Date": "Wed, 24 May 2023 20:39:02 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "Vary": [
-          "Accept-Encoding",
-          "Accept-Encoding"
-        ],
-        "Via": "1.1 draft-oms-6f6f8965d6-zl72k",
+        "Vary": "Accept-Encoding",
+        "Via": "1.1 draft-oms-65c7bccb55-g79dl",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -205,47 +202,47 @@
             ],
             "rows": [
               [
-                "d2c8840c-37f0-4495-84b3-44817a413b8d",
-                "2022-10-07T23:50:56.102Z",
-                "1c66e2a5d55d96be",
-                "Test",
-                "Other",
-                "Test",
-                "",
+                "33283218-aeb0-4388-b0c0-77a9bf80a8d2",
+                "2023-05-24T20:21:02.429781Z",
+                "f9452d1aabcf2dd7",
+                "localhost:9998",
+                "HTTP",
+                "GET /",
+                "http://localhost:9998/",
                 true,
-                "",
-                1.5819,
+                "200",
+                11.628,
                 "\u003C250ms",
-                "{\u0022foo\u0022:\u0022bar\u0022}",
+                "{\u0022http.flavor\u0022:\u00221.1\u0022,\u0022_MS.ProcessedByMetricExtractors\u0022:\u0022(Name: X,Ver:\u00271.1\u0027)\u0022}",
                 null,
                 "",
-                "a78b61f2e3cdd56472ef4d31a32b6e4e",
-                "a78b61f2e3cdd56472ef4d31a32b6e4e",
+                "bc260bdd4f27f54a7d4d1270a26d6d09",
+                "bc260bdd4f27f54a7d4d1270a26d6d09",
                 "",
                 "",
                 "",
                 "",
                 "",
                 "",
-                "VerifyTraceExporter",
-                "MININT-2SLKNC9",
+                "DistroWebAppLiveTests",
+                "Mac-1684957586475.local",
                 "PC",
                 "Other",
-                "Windows",
+                "Other",
                 "0.0.0.0",
-                "Seattle",
-                "Washington",
+                "San Jose",
+                "California",
                 "United States",
                 "Other",
-                "e6972532-cab8-4731-a183-2c8e0efe6df1",
-                "1c264d16-b09d-473a-95a0-3d3e14603642",
-                "dotnet6.0.9:otel1.3.1:ext1.0.0-alpha.20221007.1",
+                "6cbe8a21-11ea-42f8-b456-19144d0c3dde",
+                "375a4ad1-58c9-4f8f-bf21-7f483a813bd5",
+                "dotnet7.0.1:otel1.4.0:ext1.0.0-alpha.20230524.3",
                 1,
                 "",
                 "",
                 "Azure",
                 "AppDependencies",
-                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/rg-vibankwamonitor/providers/microsoft.insights/components/vibankwamonitor"
+                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/rg-mothrmonitor/providers/microsoft.insights/components/tca5ef17935bdced8"
               ]
             ]
           }
@@ -255,9 +252,9 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "CONNECTION_STRING": "InstrumentationKey=1c264d16-b09d-473a-95a0-3d3e14603642;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/",
+    "CONNECTION_STRING": "InstrumentationKey=375a4ad1-58c9-4f8f-bf21-7f483a813bd5;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/",
     "LOGS_ENDPOINT": "https://api.loganalytics.io",
-    "RandomSeed": "1139773864",
-    "WORKSPACE_ID": "d2c8840c-37f0-4495-84b3-44817a413b8d"
+    "RandomSeed": "277228534",
+    "WORKSPACE_ID": "33283218-aeb0-4388-b0c0-77a9bf80a8d2"
   }
 }

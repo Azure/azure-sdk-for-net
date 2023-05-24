@@ -32,111 +32,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
         // DEVELOPER TIP: Can pass RecordedTestMode.Live into the base ctor to run this test with a live resource.
         // DEVELOPER TIP: Can pass RecordedTestMode.Record into the base ctor to re-record the SessionRecords.
-        public DistroWebAppLiveTests(bool isAsync) : base(isAsync) { }
+        public DistroWebAppLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record) { }
 
         [RecordedTest]
-        [AsyncOnly]
-        public async Task VerifyDistro_Async()
+        [SyncOnly] // This test cannot run concurrently with another test because OTel instruments the process and will cause side effects.
+        public async Task VerifyDistro()
         {
-            //if (IsAsync)
-            //{
-            //    // Sync and Async tests are being run in the same process. This is causing tests to fail.
-            //    Assert.Inconclusive("Disable async test.");
-            //}
-
-            // SETUP TELEMETRY CLIENT (FOR QUERIYNG LOG ANALYTICS)
-            _logsQueryClient = InstrumentClient(new LogsQueryClient(
-                TestEnvironment.LogsEndpoint,
-                TestEnvironment.Credential,
-                InstrumentClientOptions(new LogsQueryClientOptions()
-                {
-                    Diagnostics = { IsLoggingContentEnabled = true }
-                })
-            ));
-
-            _logsQueryClient.SetQueryWorkSpaceId(TestEnvironment.WorkspaceId);
-
-            // SETUP WEBAPPLICATION WITH OPENTELEMETRY
-            var resourceAttributes = new Dictionary<string, object>
-            {
-                { "service.name", RoleName },
-            };
-
-            var resourceBuilder = ResourceBuilder.CreateDefault();
-            resourceBuilder.AddAttributes(resourceAttributes);
-
-            var builder = WebApplication.CreateBuilder();
-            builder.Logging.ClearProviders();
-            builder.Services.AddOptions<OpenTelemetryLoggerOptions>()
-                .Configure(options =>
-                {
-                    options.SetResourceBuilder(resourceBuilder);
-                });
-            builder.Services.AddOpenTelemetry()
-                .ConfigureResource(x => x.AddAttributes(resourceAttributes))
-                .UseAzureMonitor(options =>
-                {
-                    options.ConnectionString = TestEnvironment.ConnectionString;
-                });
-
-            var app = builder.Build();
-            app.MapGet("/", () =>
-            {
-                app.Logger.LogInformation(LogMessage);
-
-                return "Response from Test Server";
-            });
-
-            _ = app.RunAsync(TestServerUrl);
-
-            // ACT
-            using var httpClient = new HttpClient();
-            var res = await httpClient.GetStringAsync(TestServerUrl).ConfigureAwait(false);
-            Assert.True(res.Equals("Response from Test Server"), "If this assert fails, the in-process test server is not running.");
-
-            // SHUTDOWN
-
-            // NOTE: If this test starts failing, Flushing may be necessary.
-            //var tracerProvider = app.Services.GetRequiredService<TracerProvider>();
-            //tracerProvider.ForceFlush();
-            //tracerProvider.Shutdown();
-
-            await app.StopAsync(); // shutdown to prevent collecting the log queries.
-
-            // ASSERT
-            // NOTE: The following queries are using the LogAnalytics schema.
-            // TODO: NEED TO PERFORM COLUMN LEVEL VALIDATIONS.
-            await VerifyTelemetry(
-                description: "Dependency for invoking HttpClient, from testhost",
-                query: $"AppDependencies | where Data == '{TestServerUrl}' | where AppRoleName == '{RoleName}' | top 1 by TimeGenerated");
-
-            await VerifyTelemetry(
-                description: "RequestTelemetry, from WebApp",
-                query: $"AppRequests | where Url == '{TestServerUrl}' | where AppRoleName == '{RoleName}' | top 1 by TimeGenerated");
-
-            await VerifyTelemetry(
-                description: "Metric for outgoing request, from testhost",
-                query: $"AppMetrics | where Name == 'http.client.duration' | where AppRoleName == '{RoleName}' | where Properties.['net.peer.name'] == 'localhost' | top 1 by TimeGenerated");
-
-            await VerifyTelemetry(
-                description: "Metric for incoming request, from WebApp",
-                query: $"AppMetrics | where Name == 'http.server.duration' | where AppRoleName == '{RoleName}' | where Properties.['net.host.name'] == 'localhost' | top 1 by TimeGenerated");
-
-            await VerifyTelemetry(
-                description: "ILogger LogInformation, from WebApp",
-                query: $"AppTraces | where Message == '{LogMessage}' | where AppRoleName == '{RoleName}' | top 1 by TimeGenerated");
-        }
-
-        [RecordedTest]
-        [SyncOnly]
-        public async Task VerifyDistro_Sync()
-        {
-            //if (IsAsync)
-            //{
-            //    // Sync and Async tests are being run in the same process. This is causing tests to fail.
-            //    Assert.Inconclusive("Disable async test.");
-            //}
-
             // SETUP TELEMETRY CLIENT (FOR QUERIYNG LOG ANALYTICS)
             _logsQueryClient = InstrumentClient(new LogsQueryClient(
                 TestEnvironment.LogsEndpoint,
