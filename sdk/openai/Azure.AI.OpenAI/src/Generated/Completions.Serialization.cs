@@ -21,7 +21,7 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             Optional<string> id = default;
-            Optional<int?> created = default;
+            Optional<int> created = default;
             Optional<string> model = default;
             Optional<IReadOnlyList<Choice>> choices = default;
             CompletionsUsage usage = default;
@@ -36,7 +36,6 @@ namespace Azure.AI.OpenAI
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        created = null;
                         continue;
                     }
                     created = property.Value.GetInt32();
