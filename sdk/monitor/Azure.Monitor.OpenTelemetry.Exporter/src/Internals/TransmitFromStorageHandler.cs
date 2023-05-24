@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Timers;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using OpenTelemetry;
 using OpenTelemetry.PersistentStorage.Abstractions;
 

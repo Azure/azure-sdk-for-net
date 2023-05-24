@@ -5,7 +5,7 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
