@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,7 +17,6 @@ namespace Azure.Storage.DataMovement.Tests
 {
     public class ProgressHandlerTests : DataMovementBlobTestBase
     {
-        private int _size = Constants.KB;
         private string[] _testFiles = { "file1", "dir1/file1", "dir1/file2", "dir1/file3", "dir2/file1" };
         private long[] _expectedBytesTransferred = { 0, 1024, 2048, 3072, 4096, 5120 };
 
@@ -25,26 +25,62 @@ namespace Azure.Storage.DataMovement.Tests
         {
         }
 
-        private async Task PopulateTestContainer(BlobContainerClient container)
+        private async Task PopulateTestContainer(BlobContainerClient container, int blobSize = Constants.KB, int? blobCount = null)
         {
-            foreach (string file in _testFiles)
+            // Use known file set
+            if (blobCount == null)
             {
-                await container.UploadBlobAsync(file, BinaryData.FromBytes(GetRandomBuffer(_size)));
+                foreach (string file in _testFiles)
+                {
+                    await container.UploadBlobAsync(file, BinaryData.FromBytes(GetRandomBuffer(blobSize)));
+                }
+            }
+            else
+            {
+                for (int i = 0; i < blobCount.Value; i++)
+                {
+                    await container.UploadBlobAsync(GetNewBlobName(), BinaryData.FromBytes(GetRandomBuffer(blobSize)));
+                }
             }
         }
 
-        private async Task PopulateTestLocalDirectory(string directoryPath)
+        private async Task PopulateTestLocalDirectory(string directoryPath, int fileSize = Constants.KB, int? fileCount = null)
         {
-            // Manually follows _testFiles pattern
-            await CreateRandomFileAsync(directoryPath, "file1", size: _size);
+            // Use known file set
+            if (fileCount == null)
+            {
+                // Manually follows _testFiles pattern
+                await CreateRandomFileAsync(directoryPath, "file1", size: fileSize);
 
-            string subFolder = CreateRandomDirectory(directoryPath, "dir1");
-            await CreateRandomFileAsync(subFolder, "file1", size: _size);
-            await CreateRandomFileAsync(subFolder, "file2", size: _size);
-            await CreateRandomFileAsync(subFolder, "file3", size: _size);
+                string subFolder = CreateRandomDirectory(directoryPath, "dir1");
+                await CreateRandomFileAsync(subFolder, "file1", size: fileSize);
+                await CreateRandomFileAsync(subFolder, "file2", size: fileSize);
+                await CreateRandomFileAsync(subFolder, "file3", size: fileSize);
 
-            string subFolder2 = CreateRandomDirectory(directoryPath, "dir2");
-            await CreateRandomFileAsync(subFolder2, "file1", size: _size);
+                string subFolder2 = CreateRandomDirectory(directoryPath, "dir2");
+                await CreateRandomFileAsync(subFolder2, "file1", size: fileSize);
+            }
+            else
+            {
+                for (int i = 0; i < fileCount.Value; i++)
+                {
+                    await CreateRandomFileAsync(directoryPath, size: fileSize);
+                }
+            }
+        }
+
+        private long[] CalculateExpectedBytesUpdates(int fileSize, int fileCount, int chunkSize)
+        {
+            int numUpdates = (fileSize / chunkSize) * fileCount;
+            List<long> expectedBytesTransferred = new List<long>(numUpdates + 1);
+
+            int totalBytes = 0;
+            for (int i = 0; i <= numUpdates; i++)
+            {
+                expectedBytesTransferred.Add(totalBytes);
+                totalBytes += chunkSize;
+            }
+            return expectedBytesTransferred.ToArray();
         }
 
         private async Task TransferAndAssertProgress(
@@ -55,8 +91,10 @@ namespace Azure.Storage.DataMovement.Tests
             int skippedCount = 0,
             int failedCount = 0,
             TransferManagerOptions transferManagerOptions = default,
+            TransferOptions transferOptions = default,
             ProgressHandlerOptions progressHandlerOptions = default,
-            StorageResourceCreateMode createMode = StorageResourceCreateMode.Overwrite)
+            StorageResourceCreateMode createMode = StorageResourceCreateMode.Overwrite,
+            int waitTime = 10)
         {
             transferManagerOptions ??= new TransferManagerOptions()
             {
@@ -66,18 +104,16 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManager transferManager = new TransferManager(transferManagerOptions);
 
             TestProgressHandler progressHandler = new TestProgressHandler();
-            TransferOptions transferOptions = new TransferOptions()
+            transferOptions ??= new TransferOptions();
+            transferOptions.ProgressHandler = progressHandler;
+            transferOptions.ProgressHandlerOptions = progressHandlerOptions ?? new ProgressHandlerOptions()
             {
-                ProgressHandler = progressHandler,
-                ProgressHandlerOptions = progressHandlerOptions ?? new ProgressHandlerOptions()
-                {
-                    TrackBytesTransferred = true
-                },
-                CreateMode = createMode,
+                TrackBytesTransferred = true
             };
+            transferOptions.CreateMode = createMode;
 
             DataTransfer transfer = await transferManager.StartTransferAsync(source, destination, transferOptions);
-            CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTime));
             await transfer.AwaitCompletion(tokenSource.Token);
             Console.WriteLine("Transfer completed");
 
@@ -173,8 +209,8 @@ namespace Azure.Storage.DataMovement.Tests
             await PopulateTestLocalDirectory(source.DirectoryPath);
 
             // Create conflicts
-            await destination.Container.UploadBlobAsync(_testFiles[0], BinaryData.FromBytes(GetRandomBuffer(_size)));
-            await destination.Container.UploadBlobAsync(_testFiles[2], BinaryData.FromBytes(GetRandomBuffer(_size)));
+            await destination.Container.UploadBlobAsync(_testFiles[0], BinaryData.FromBytes(GetRandomBuffer(10)));
+            await destination.Container.UploadBlobAsync(_testFiles[2], BinaryData.FromBytes(GetRandomBuffer(10)));
 
             StorageResourceContainer sourceResource =
                 new LocalDirectoryStorageResourceContainer(source.DirectoryPath);
@@ -190,6 +226,71 @@ namespace Azure.Storage.DataMovement.Tests
                 skippedCount: createMode == StorageResourceCreateMode.Skip ? 2 : 0,
                 failedCount: createMode == StorageResourceCreateMode.Fail ? 2 : 0,
                 createMode: createMode);
+        }
+
+        [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        [TestCase(TransferType.Upload)]
+        [TestCase(TransferType.Download)]
+        [TestCase(TransferType.AsyncCopy)]
+        [TestCase(TransferType.SyncCopy)]
+        public async Task ProgressHandler_Large(TransferType transferType)
+        {
+            // Arrange
+            // For this test, file size should be multiple of chunk size to make predictable progress updates
+            int fileSize = 2 * Constants.KB;
+            int fileCount = 10;
+            int chunkSize = Constants.KB / 2;
+
+            using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.Blob);
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
+
+            StorageResourceContainer sourceResource;
+            StorageResourceContainer destinationResource;
+            if (transferType == TransferType.Upload)
+            {
+                await PopulateTestLocalDirectory(localDirectory.DirectoryPath, fileSize, fileCount);
+                sourceResource = new LocalDirectoryStorageResourceContainer(localDirectory.DirectoryPath);
+                destinationResource = new BlobStorageResourceContainer(destinationContainer.Container);
+            }
+            else if (transferType == TransferType.Download)
+            {
+                await PopulateTestContainer(sourceContainer.Container, fileSize, fileCount);
+                sourceResource = new BlobStorageResourceContainer(sourceContainer.Container);
+                destinationResource = new LocalDirectoryStorageResourceContainer(localDirectory.DirectoryPath);
+            }
+            else // TransferType.AsyncCopy or TransferType.SyncCopy
+            {
+                await PopulateTestContainer(sourceContainer.Container, fileSize, fileCount);
+                sourceResource = new BlobStorageResourceContainer(sourceContainer.Container);
+                destinationResource = new BlobStorageResourceContainer(destinationContainer.Container,
+                    new BlobStorageResourceContainerOptions()
+                    {
+                        CopyMethod = transferType == TransferType.AsyncCopy ? TransferCopyMethod.AsyncCopy : TransferCopyMethod.SyncCopy
+                    });
+            }
+
+            TransferManagerOptions transferManagerOptions = new TransferManagerOptions()
+            {
+                ErrorHandling = ErrorHandlingOptions.StopOnAllFailures,
+                MaximumConcurrency = 3
+            };
+            TransferOptions transferOptions = new TransferOptions()
+            {
+                InitialTransferSize = chunkSize,
+                MaximumTransferChunkSize = chunkSize
+            };
+
+            // Act / Assert
+            await TransferAndAssertProgress(
+                sourceResource,
+                destinationResource,
+                CalculateExpectedBytesUpdates(fileSize, fileCount, chunkSize),
+                10 /* fileCount */,
+                transferManagerOptions: transferManagerOptions,
+                transferOptions: transferOptions,
+                waitTime: 30);
         }
     }
 }

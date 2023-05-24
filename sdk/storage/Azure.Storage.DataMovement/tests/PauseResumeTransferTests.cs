@@ -31,14 +31,6 @@ namespace Azure.Storage.DataMovement.Tests
         {
         }
 
-        public enum TransferType
-        {
-            Upload,
-            Download,
-            AsyncCopy,
-            SyncCopy
-        }
-
         private async Task AssertDirectorySourceAndDestinationAsync(
             TransferType transferType,
             StorageResourceContainer sourceResource,

@@ -163,8 +163,9 @@ namespace Azure.Storage.DataMovement
                     }
 
                     Interlocked.Add(ref _bytesTransferred, args.BytesTransferred);
-                    // Use progress tracker to get the amount of bytes transferred
-                    _reportProgressInBytes(_bytesTransferred);
+                    // Report the incremental bytes transferred
+                    _reportProgressInBytes(args.BytesTransferred);
+
                     if (_bytesTransferred == _expectedLength)
                     {
                         // Add CommitBlockList task to the channel
