@@ -1072,6 +1072,10 @@ namespace Azure.Core.Json
                 case JsonDocument d:
                     Set(d.RootElement);
                     break;
+                case BinaryData:
+                    throw new NotSupportedException("Assigning a 'BinaryData' type is not supported.");
+                case Stream:
+                    throw new NotSupportedException("Assigning a 'Stream' type is not supported.");
                 default:
                     Changes.AddChange(_path, value, true);
                     break;
