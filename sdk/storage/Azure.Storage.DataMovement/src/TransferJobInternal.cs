@@ -225,6 +225,8 @@ namespace Azure.Storage.DataMovement
             _sourceResourceContainer = sourceResource;
             _destinationResourceContainer = destinationResource;
             _isSingleResource = false;
+            _initialTransferSize = transferOptions?.InitialTransferSize;
+            _maximumTransferChunkSize = transferOptions?.MaximumTransferChunkSize;
         }
 
         public void Dispose()
