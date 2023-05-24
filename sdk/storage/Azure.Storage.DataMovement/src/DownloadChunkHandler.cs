@@ -52,8 +52,7 @@ namespace Azure.Storage.DataMovement
         /// waiting to update the bytesTransferredand other required operations.
         /// </summary>
         private readonly Channel<DownloadRangeEventArgs> _downloadRangeChannel;
-        private readonly CancellationTokenSource _channelCancellationSource;
-        private CancellationToken _cancellationToken => _channelCancellationSource.Token;
+        private CancellationToken _cancellationToken;
 
         private readonly SemaphoreSlim _currentBytesSemaphore;
         private long _bytesTransferred;
@@ -90,12 +89,17 @@ namespace Azure.Storage.DataMovement
         /// <param name="behaviors">
         /// Contains all the supported function calls.
         /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token of the job part or job to cancel any ongoing waiting in the
+        /// download chunk handler to prevent infinite waiting.
+        /// </param>
         /// <exception cref="ArgumentException"></exception>
         public DownloadChunkHandler(
             long currentTransferred,
             long expectedLength,
             IList<HttpRange> ranges,
-            Behaviors behaviors)
+            Behaviors behaviors,
+            CancellationToken cancellationToken)
         {
             // Create channel of finished Stage Chunk Args to update the bytesTransferred
             // and for ending tasks like commit block.
@@ -107,8 +111,8 @@ namespace Azure.Storage.DataMovement
                     // Single reader is required as we can only read and write to bytesTransferred value
                     SingleReader = true,
                 });
-            _channelCancellationSource = new CancellationTokenSource();
             _processDownloadRangeEvents = Task.Run(() => NotifyOfPendingChunkDownloadEvents());
+            _cancellationToken = cancellationToken;
 
             _expectedLength = expectedLength;
             _ranges = ranges;
@@ -146,11 +150,6 @@ namespace Azure.Storage.DataMovement
         {
             _downloadRangeChannel.Writer.Complete();
             await _downloadRangeChannel.Reader.Completion.ConfigureAwait(false);
-            if (!_channelCancellationSource.IsCancellationRequested)
-            {
-                _channelCancellationSource.Cancel();
-            }
-            _channelCancellationSource.Dispose();
 
             if (_currentBytesSemaphore != default)
             {

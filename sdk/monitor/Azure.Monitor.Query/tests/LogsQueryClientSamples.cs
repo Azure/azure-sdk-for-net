@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Monitor.Query.Tests
 {
-    public class LogsQueryClientSamples: SamplesBase<MonitorQueryTestEnvironment>
+    public class LogsQueryClientSamples : SamplesBase<MonitorQueryTestEnvironment>
     {
         [Test]
         [Explicit]
@@ -385,23 +385,29 @@ namespace Azure.Monitor.Query.Tests
         public async Task QueryLogsByResourceAsTable()
         {
             #region Snippet:QueryResource
-#if SNIPPET
-            string resourceId = "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/<resource_provider>/<resource>";
-#else
-            string resourceId = TestEnvironment.StorageAccountId;
-#endif
             var client = new LogsQueryClient(new DefaultAzureCredential());
 
-            Response<LogsQueryResult> result = await client.QueryResourceAsync(
+#if SNIPPET
+            string resourceId = "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/<resource_provider>/<resource>";
+            string tableName = "<table_name>";
+#else
+            string tableName = "MyTable_CL";
+            string resourceId = TestEnvironment.WorkspacePrimaryResourceId;
+#endif
+            Response<LogsQueryResult> results = await client.QueryResourceAsync(
                 new ResourceIdentifier(resourceId),
-                "AzureActivity | top 10 by TimeGenerated",
-                new QueryTimeRange(TimeSpan.FromDays(1)));
+                $"{tableName} | distinct * | project TimeGenerated",
+                new QueryTimeRange(TimeSpan.FromDays(7)));
 
-            LogsTable table = result.Value.Table;
-
-            foreach (LogsTableRow row in table.Rows)
+            LogsTable resultTable = results.Value.Table;
+            foreach (LogsTableRow row in resultTable.Rows)
             {
                 Console.WriteLine($"{row["OperationName"]} {row["ResourceGroup"]}");
+            }
+
+            foreach (LogsTableColumn columns in resultTable.Columns)
+            {
+                Console.WriteLine("Name: " + columns.Name + " Type: " + columns.Type);
             }
             #endregion
         }

@@ -189,7 +189,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 new HttpRange(0, blockSize)
             };
-            var downloadChunkHandler = new DownloadChunkHandler(
+            await using var downloadChunkHandler = new DownloadChunkHandler(
                 currentTransferred: 0,
                 expectedLength: blockSize,
                 ranges: ranges,
@@ -200,7 +200,8 @@ namespace Azure.Storage.DataMovement.Tests
                     QueueCompleteFileDownload = mockBehaviors.QueueCompleteFileDownloadTask.Object,
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
-                });
+                },
+                CancellationToken.None);
 
             PredictableStream content = new PredictableStream(blockSize);
 
@@ -232,18 +233,19 @@ namespace Azure.Storage.DataMovement.Tests
             // Set up tasks
             MockDownloadChunkBehaviors mockBehaviors = GetMockDownloadChunkBehaviors();
             List<HttpRange> ranges = GetRanges(blockSize);
-            var downloadChunkHandler = new DownloadChunkHandler(
+            await using var downloadChunkHandler = new DownloadChunkHandler(
                 currentTransferred: 0,
                 expectedLength: blockSize * 2,
                 ranges: ranges,
-                new DownloadChunkHandler.Behaviors
+                behaviors: new DownloadChunkHandler.Behaviors
                 {
                     CopyToDestinationFile = mockBehaviors.CopyToDestinationFileTask.Object,
                     CopyToChunkFile = mockBehaviors.CopyToChunkFileTask.Object,
                     QueueCompleteFileDownload = mockBehaviors.QueueCompleteFileDownloadTask.Object,
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
-                });
+                },
+                cancellationToken: CancellationToken.None);
 
             PredictableStream content = new PredictableStream(blockSize);
 
@@ -297,18 +299,17 @@ namespace Azure.Storage.DataMovement.Tests
             MockDownloadChunkBehaviors mockBehaviors = GetMockDownloadChunkBehaviors();
             List<HttpRange> ranges = GetRanges(blockSize);
 
-            var downloadChunkHandler = new DownloadChunkHandler(
+            await using var downloadChunkHandler = new DownloadChunkHandler(
                 currentTransferred: 0,
                 expectedLength: blockSize * 2,
                 ranges: ranges,
-                new DownloadChunkHandler.Behaviors
-                {
+                behaviors: new DownloadChunkHandler.Behaviors {
                     CopyToDestinationFile = mockBehaviors.CopyToDestinationFileTask.Object,
                     CopyToChunkFile = mockBehaviors.CopyToChunkFileTask.Object,
                     QueueCompleteFileDownload = mockBehaviors.QueueCompleteFileDownloadTask.Object,
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
-                    InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
-                });
+                    InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object },
+                cancellationToken: CancellationToken.None);
 
             PredictableStream content = new PredictableStream(blockSize);
 
@@ -351,18 +352,19 @@ namespace Azure.Storage.DataMovement.Tests
             MockDownloadChunkBehaviors mockBehaviors = GetMockDownloadChunkBehaviors();
             List<HttpRange> ranges = GetRanges(blockSize);
 
-            var downloadChunkHandler = new DownloadChunkHandler(
+            await using var downloadChunkHandler = new DownloadChunkHandler(
                 currentTransferred: 0,
                 expectedLength: blockSize * 2,
                 ranges: ranges,
-                new DownloadChunkHandler.Behaviors
+                behaviors: new DownloadChunkHandler.Behaviors
                 {
                     CopyToDestinationFile = mockBehaviors.CopyToDestinationFileTask.Object,
                     CopyToChunkFile = mockBehaviors.CopyToChunkFileTask.Object,
                     QueueCompleteFileDownload = mockBehaviors.QueueCompleteFileDownloadTask.Object,
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
-                });
+                },
+                cancellationToken: CancellationToken.None);
 
             PredictableStream content = new PredictableStream(blockSize);
 
@@ -418,18 +420,19 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 ranges.Add(new HttpRange(i * blockSize, blockSize));
             }
-            var downloadChunkHandler = new DownloadChunkHandler(
+            await using var downloadChunkHandler = new DownloadChunkHandler(
                 currentTransferred: 0,
                 expectedLength: blockSize * (taskSize),
                 ranges: ranges,
-                new DownloadChunkHandler.Behaviors
+                behaviors: new DownloadChunkHandler.Behaviors
                 {
                     CopyToDestinationFile = mockBehaviors.CopyToDestinationFileTask.Object,
                     CopyToChunkFile = mockBehaviors.CopyToChunkFileTask.Object,
                     QueueCompleteFileDownload = mockBehaviors.QueueCompleteFileDownloadTask.Object,
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
-                });
+                },
+                cancellationToken: CancellationToken.None);
 
             List<Task> runningTasks = new List<Task>();
 
@@ -473,14 +476,15 @@ namespace Azure.Storage.DataMovement.Tests
                 currentTransferred: 0,
                 expectedLength: blockSize * 2,
                 ranges: ranges,
-                new DownloadChunkHandler.Behaviors
+                behaviors: new DownloadChunkHandler.Behaviors
                 {
                     CopyToDestinationFile = mockBehaviors.CopyToDestinationFileTask.Object,
                     CopyToChunkFile = mockBehaviors.CopyToChunkFileTask.Object,
                     QueueCompleteFileDownload = mockBehaviors.QueueCompleteFileDownloadTask.Object,
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
-                });
+                },
+                cancellationToken: CancellationToken.None);
 
             PredictableStream content = new PredictableStream(blockSize);
 
@@ -514,14 +518,15 @@ namespace Azure.Storage.DataMovement.Tests
                 currentTransferred: 0,
                 expectedLength: blockSize * 2,
                 ranges: ranges,
-                new DownloadChunkHandler.Behaviors
+                behaviors: new DownloadChunkHandler.Behaviors
                 {
                     CopyToDestinationFile = mockBehaviors.CopyToDestinationFileTask.Object,
                     CopyToChunkFile = mockBehaviors.CopyToChunkFileTask.Object,
                     QueueCompleteFileDownload = mockBehaviors.QueueCompleteFileDownloadTask.Object,
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
-                });
+                },
+                cancellationToken: CancellationToken.None);
 
             PredictableStream content = new PredictableStream(blockSize);
 
@@ -558,14 +563,15 @@ namespace Azure.Storage.DataMovement.Tests
                 currentTransferred: 0,
                 expectedLength: blockSize,
                 ranges: ranges,
-                new DownloadChunkHandler.Behaviors
+                behaviors: new DownloadChunkHandler.Behaviors
                 {
                     CopyToDestinationFile = mockBehaviors.CopyToDestinationFileTask.Object,
                     CopyToChunkFile = mockBehaviors.CopyToChunkFileTask.Object,
                     QueueCompleteFileDownload = mockBehaviors.QueueCompleteFileDownloadTask.Object,
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
-                });
+                },
+                cancellationToken: CancellationToken.None);
 
             PredictableStream content = new PredictableStream(blockSize);
 
