@@ -589,6 +589,22 @@
       ]
     },
     {
+      "filename": "**/sdk/networkcloud/**/*.cs",
+      "words": [
+        "Reimage",
+        "Uncordon",
+        "Ipam",
+        "Virtio",
+        "nics",
+        "Lldp",
+        "Nics",
+        "Dpdk",
+        "Sriov",
+        "Sata",
+        "Uefi"
+      ]
+    },
+    {
       "filename": "**/sdk/keyvault/**/*.cs",
       "words": [
         "deletesas",
