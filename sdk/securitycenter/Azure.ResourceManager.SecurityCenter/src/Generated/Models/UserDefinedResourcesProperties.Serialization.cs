@@ -25,20 +25,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WriteNull("query");
             }
-            if (QuerySubscriptions != null)
+            writer.WritePropertyName("querySubscriptions"u8);
+            writer.WriteStartArray();
+            foreach (var item in QuerySubscriptions)
             {
-                writer.WritePropertyName("querySubscriptions"u8);
-                writer.WriteStartArray();
-                foreach (var item in QuerySubscriptions)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteStringValue(item);
             }
-            else
-            {
-                writer.WriteNull("querySubscriptions");
-            }
+            writer.WriteEndArray();
             writer.WriteEndObject();
         }
 
@@ -78,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new UserDefinedResourcesProperties(query, querySubscriptions);
+            return new UserDefinedResourcesProperties(query, querySubscriptions ?? new ChangeTrackingList<string>());
         }
     }
 }
