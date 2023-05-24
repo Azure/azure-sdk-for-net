@@ -42,20 +42,13 @@ namespace Azure.ResourceManager.DigitalTwins
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
-                if (PrivateEndpointConnections != null)
+                writer.WritePropertyName("privateEndpointConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WritePropertyName("privateEndpointConnections"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in PrivateEndpointConnections)
-                    {
-                        writer.WriteObjectValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("privateEndpointConnections");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {

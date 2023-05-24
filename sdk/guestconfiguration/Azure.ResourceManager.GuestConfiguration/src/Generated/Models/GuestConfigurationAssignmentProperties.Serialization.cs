@@ -34,20 +34,13 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
             if (Optional.IsCollectionDefined(VmssVmList))
             {
-                if (VmssVmList != null)
+                writer.WritePropertyName("vmssVMList"u8);
+                writer.WriteStartArray();
+                foreach (var item in VmssVmList)
                 {
-                    writer.WritePropertyName("vmssVMList"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in VmssVmList)
-                    {
-                        writer.WriteObjectValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("vmssVMList");
-                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }
