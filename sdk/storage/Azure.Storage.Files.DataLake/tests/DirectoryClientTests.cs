@@ -1020,6 +1020,28 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        //[LiveOnly]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2023_08_03)]
+        public async Task DeleteAsync_Paginated()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            var name = GetNewDirectoryName();
+            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(name));
+            await directory.CreateIfNotExistsAsync();
+
+            for (int i = 0; i < 5000; i++)
+            {
+                DataLakeFileClient fileClient = directory.GetFileClient(GetNewFileName());
+                await fileClient.CreateIfNotExistsAsync();
+            };
+
+            // Act
+            Response response = await directory.DeleteAsync();
+        }
+
+        [RecordedTest]
         public async Task RenameAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();

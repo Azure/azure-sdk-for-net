@@ -1875,31 +1875,40 @@ namespace Azure.Storage.Files.DataLake
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<PathDeleteHeaders> response;
+                    ResponseWithHeaders<PathDeleteHeaders> response = null;
+                    bool paginated = _clientConfiguration.ClientOptions.Version >= DataLakeClientOptions.ServiceVersion.V2023_05_03;
 
-                    if (async)
+                    do
                     {
-                        response = await PathRestClient.DeleteAsync(
-                            recursive: recursive,
-                            leaseId: conditions?.LeaseId,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            cancellationToken: cancellationToken)
-                            .ConfigureAwait(false);
+                        if (async)
+                        {
+                            response = await PathRestClient.DeleteAsync(
+                                recursive: recursive,
+                                continuation: response?.Headers?.Continuation,
+                                leaseId: conditions?.LeaseId,
+                                ifMatch: conditions?.IfMatch?.ToString(),
+                                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                                ifModifiedSince: conditions?.IfModifiedSince,
+                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                paginated: paginated,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            response = PathRestClient.Delete(
+                                recursive: recursive,
+                                continuation: response?.Headers?.Continuation,
+                                leaseId: conditions?.LeaseId,
+                                ifMatch: conditions?.IfMatch?.ToString(),
+                                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                                ifModifiedSince: conditions?.IfModifiedSince,
+                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                paginated: paginated,
+                                cancellationToken: cancellationToken);
+                        }
                     }
-                    else
-                    {
-                        response = PathRestClient.Delete(
-                            recursive: recursive,
-                            leaseId: conditions?.LeaseId,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            cancellationToken: cancellationToken);
-                    }
+                    while (!string.IsNullOrEmpty(response?.Headers?.Continuation));
 
                     return response.GetRawResponse();
                 }
