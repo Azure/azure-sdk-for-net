@@ -1,13 +1,5 @@
 namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema
 {
-    public partial class LruCache<TKey, TValue> : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.IEnumerable
-    {
-        public LruCache(int capacity) { }
-        public void AddOrUpdate(TKey key, TValue val, int length) { }
-        public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, TValue>> GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-        public bool TryGet(TKey key, out TValue value) { throw null; }
-    }
     public abstract partial class SchemaRegistryJsonSchemaGenerator
     {
         protected SchemaRegistryJsonSchemaGenerator() { }
