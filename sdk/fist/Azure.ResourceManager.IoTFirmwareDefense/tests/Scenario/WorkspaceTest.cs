@@ -11,12 +11,12 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.IoTFirmwareDefense.Tests
 {
-    public class WorkspaceCollectionTest : IoTFirmwareDefenseTestBase
+    public class WorkspaceTest : IoTFirmwareDefenseTestBase
     {
         private static readonly string rgName = "testRg";
         private static ResourceGroupResource rg;
 
-        public WorkspaceCollectionTest(bool isAsync)
+        public WorkspaceTest(bool isAsync)
             : base(isAsync)
         {
         }
