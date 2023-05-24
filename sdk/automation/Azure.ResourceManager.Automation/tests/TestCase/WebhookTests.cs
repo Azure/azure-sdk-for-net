@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
         }
 
         [RecordedTest]
-        [LiveOnly]// Uri contains Credential info should be sanitized, and
+        [LiveOnly]// Uri contains Credential info that should be sanitized, and `new Uri("Sanitized")` cannot pass the playback.
         public async Task CreateOrUpdateExistGetGetAll()
         {
             // CreateOrUpdate

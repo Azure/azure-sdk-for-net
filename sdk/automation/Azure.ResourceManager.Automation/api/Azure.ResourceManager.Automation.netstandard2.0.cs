@@ -854,10 +854,7 @@ namespace Azure.ResourceManager.Automation
         public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
         public string RunbookName { get { throw null; } set { } }
         public string RunOn { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        [System.ObsoleteAttribute("This property has been replaced by UriString", false)]
         public System.Uri Uri { get { throw null; } set { } }
-        public string UriString { get { throw null; } set { } }
     }
     public partial class AutomationWebhookResource : Azure.ResourceManager.ArmResource
     {

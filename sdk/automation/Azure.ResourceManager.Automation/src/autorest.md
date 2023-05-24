@@ -222,8 +222,6 @@ no-property-type-replacement:
 
 models-to-treat-empty-string-as-null:
   - AutomationWebhookData
-  # - Webhook.properties.uri
-  # : uriString
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/objectDataTypes/{typeName}/fields: AutomationAccountResource
