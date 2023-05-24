@@ -35,7 +35,7 @@ string name = widget.Name;
 
 ### Set a JSON property
 
-JSON members can be set on the dynamic object.
+JSON members can be set on the dynamic object.  Pass `DynamicCaseMapping.PascalToCamel` to `ToDynamicFromJson()` to write JSON members with camelCase names.
 
 ```C# Snippet:AzureCoreSetDynamicJsonProperty
 Response response = client.GetWidget();
@@ -43,8 +43,6 @@ dynamic widget = response.Content.ToDynamicFromJson(DynamicCaseMapping.PascalToC
 widget.Name = "New Name";
 client.SetWidget(RequestContent.Create(widget));
 ```
-
-Pass `DynamicCaseMapping.PascalToCamel` to `ToDynamicFromJson()` to write JSON members with camelCase names, which is used by [most Azure services](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#json-field-name-casing).
 
 ### Get or set array values
 
@@ -141,6 +139,8 @@ public class Widget
 ### Work with Azure values
 
 When working with JSON from Azure services, you can learn what properties are available in the JSON response content from the REST API documentation for the service, examples in the protocol method documentation, or by expanding the [Dynamic View](https://learn.microsoft.com/visualstudio/debugger/watch-and-quickwatch-windows) in Visual Studio.
+
+Note that most Azure services name JSON fields [with camelCase names](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#json-field-name-casing) to [treat them with case-sensitivity](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#json-field-names-case-sensitivity).  Not every Azure service adheres to this convention; please consult the service REST API documentation.
 
 If you are using the `DynamicCaseMapping.PascalToCamel` setting and there is a need to bypass these name mappings, JSON members can be accessed with exact strings using property indexers.
 
