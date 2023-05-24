@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
@@ -34,7 +34,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework
         /// <remarks>
         /// Copied from <see href="https://github.com/open-telemetry/opentelemetry-dotnet/blob/f471a9f197d797015123fe95d3e12b6abf8e1f5f/test/OpenTelemetry.Instrumentation.AspNetCore.Tests/BasicTests.cs#L558-L570"/>.
         /// </remarks>
-        internal void WaitForActivityExport(ConcurrentBag<TelemetryItem> telemetryItems)
+        internal void WaitForActivityExport(List<TelemetryItem> telemetryItems)
         {
             var result = SpinWait.SpinUntil(
                 condition: () =>
