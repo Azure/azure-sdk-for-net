@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class ProjectEnvironmentTypePatch : IUtf8JsonSerializable
+    public partial class DevCenterProjectEnvironmentPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

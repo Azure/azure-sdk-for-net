@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         // NameAvailability
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task ExecuteDevCenterCheckNameAvailabilityAsync_NameAvailability()
+        public async Task ExecuteCheckDevCenterNameAvailabilityAsync_NameAvailability()
         {
             // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/CheckNameAvailability.json
             // this example is just showing the usage of "CheckNameAvailability_Execute" operation, for the dependent resources, they will have to be created separately.
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.DevCenter.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            CheckNameAvailabilityContent content = new CheckNameAvailabilityContent()
+            CheckDevCenterNameAvailabilityContent content = new CheckDevCenterNameAvailabilityContent()
             {
                 Name = "name1",
                 ResourceType = new ResourceType("Microsoft.DevCenter/devcenters"),
             };
-            CheckNameAvailabilityResponse result = await subscriptionResource.ExecuteDevCenterCheckNameAvailabilityAsyncAsync(content);
+            CheckDevCenterNameAvailabilityResult result = await subscriptionResource.ExecuteCheckDevCenterNameAvailabilityAsyncAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

@@ -57,7 +57,7 @@ prepend-rp-prefix:
   - TrackedResourceUpdate
   - UsageName
   - UsageUnit
-  - UserRoleAssignmentValue
+  - CatalogSyncState
 
 rename-rules:
   CPU: Cpu
@@ -95,7 +95,7 @@ rename-mapping:
   ProjectEnvironmentType.properties.deploymentTargetId: -|arm-id
   ProjectEnvironmentTypeUpdate.properties.deploymentTargetId: -|arm-id
   ImageReference.id: -|arm-id
-  # OperationStatus.resourceId: -|arm-id
+  OperationStatus.resourceId: -|arm-id
   DevCenterSku.resourceType: -|resource-type
   CheckNameAvailabilityRequest.type: -|resource-type
   EnvironmentTypeEnableStatus.Enabled: IsEnabled
@@ -109,11 +109,21 @@ rename-mapping:
   StopOnDisconnectEnableStatus.Enabled: IsEnabled
   StopOnDisconnectEnableStatus.Disabled: IsDisabled
   AttachedNetworkConnection.properties.networkConnectionLocation: -|azure-location
+  UserRoleAssignmentValue: DevCenterUserRoleAssignments
+  DomainJoinType.HybridAzureADJoin: HybridAadJoin
+  DomainJoinType.AzureADJoin: AadJoin
+  CheckNameAvailabilityResponse.nameAvailable: IsNameAvailable
+  CheckNameAvailabilityRequest: CheckDevCenterNameAvailabilityContent
+  CheckNameAvailabilityResponse: CheckDevCenterNameAvailabilityResult
+  CheckNameAvailabilityReason: CheckDevCenterUnavailableReason
+  ProjectEnvironmentType: DevCenterProjectEnvironment
+  ImageVersion.properties.osDiskImageSizeInGb:  OsDiskImageSizeInGB
+  ImageVersion.properties.excludeFromLatest: IsExcludedFromLatest
 
 override-operation-name:
   OperationStatuses_Get: GetDevCenterOperationStatus
   Usages_ListByLocation: GetDevCenterUsagesByLocationAsync
-  CheckNameAvailability_Execute: ExecuteDevCenterCheckNameAvailabilityAsync
+  CheckNameAvailability_Execute: ExecuteCheckDevCenterNameAvailabilityAsync
   Skus_ListBySubscription: GetDevCenterSkusBySubscriptionAsync
   NetworkConnections_ListOutboundNetworkDependenciesEndpoints: GetOutboundEnvironmentEndpoints
 

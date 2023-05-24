@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="environmentTypeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProjectEnvironmentTypeData>> GetAsync(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName, CancellationToken cancellationToken = default)
+        public async Task<Response<DevCenterProjectEnvironmentData>> GetAsync(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -165,13 +165,13 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ProjectEnvironmentTypeData value = default;
+                        DevCenterProjectEnvironmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProjectEnvironmentTypeData.DeserializeProjectEnvironmentTypeData(document.RootElement);
+                        value = DevCenterProjectEnvironmentData.DeserializeDevCenterProjectEnvironmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProjectEnvironmentTypeData)null, message.Response);
+                    return Response.FromValue((DevCenterProjectEnvironmentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="environmentTypeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProjectEnvironmentTypeData> Get(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName, CancellationToken cancellationToken = default)
+        public Response<DevCenterProjectEnvironmentData> Get(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -198,19 +198,19 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ProjectEnvironmentTypeData value = default;
+                        DevCenterProjectEnvironmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProjectEnvironmentTypeData.DeserializeProjectEnvironmentTypeData(document.RootElement);
+                        value = DevCenterProjectEnvironmentData.DeserializeDevCenterProjectEnvironmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProjectEnvironmentTypeData)null, message.Response);
+                    return Response.FromValue((DevCenterProjectEnvironmentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName, ProjectEnvironmentTypeData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName, DevCenterProjectEnvironmentData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="environmentTypeName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProjectEnvironmentTypeData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName, ProjectEnvironmentTypeData data, CancellationToken cancellationToken = default)
+        public async Task<Response<DevCenterProjectEnvironmentData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName, DevCenterProjectEnvironmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -259,9 +259,9 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ProjectEnvironmentTypeData value = default;
+                        DevCenterProjectEnvironmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProjectEnvironmentTypeData.DeserializeProjectEnvironmentTypeData(document.RootElement);
+                        value = DevCenterProjectEnvironmentData.DeserializeDevCenterProjectEnvironmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="environmentTypeName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProjectEnvironmentTypeData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName, ProjectEnvironmentTypeData data, CancellationToken cancellationToken = default)
+        public Response<DevCenterProjectEnvironmentData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName, DevCenterProjectEnvironmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -292,9 +292,9 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ProjectEnvironmentTypeData value = default;
+                        DevCenterProjectEnvironmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProjectEnvironmentTypeData.DeserializeProjectEnvironmentTypeData(document.RootElement);
+                        value = DevCenterProjectEnvironmentData.DeserializeDevCenterProjectEnvironmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName, ProjectEnvironmentTypePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName, DevCenterProjectEnvironmentPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="environmentTypeName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProjectEnvironmentTypeData>> UpdateAsync(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName, ProjectEnvironmentTypePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<DevCenterProjectEnvironmentData>> UpdateAsync(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName, DevCenterProjectEnvironmentPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -351,9 +351,9 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ProjectEnvironmentTypeData value = default;
+                        DevCenterProjectEnvironmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProjectEnvironmentTypeData.DeserializeProjectEnvironmentTypeData(document.RootElement);
+                        value = DevCenterProjectEnvironmentData.DeserializeDevCenterProjectEnvironmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="environmentTypeName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProjectEnvironmentTypeData> Update(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName, ProjectEnvironmentTypePatch patch, CancellationToken cancellationToken = default)
+        public Response<DevCenterProjectEnvironmentData> Update(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName, DevCenterProjectEnvironmentPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -384,9 +384,9 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case 200:
                     {
-                        ProjectEnvironmentTypeData value = default;
+                        DevCenterProjectEnvironmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProjectEnvironmentTypeData.DeserializeProjectEnvironmentTypeData(document.RootElement);
+                        value = DevCenterProjectEnvironmentData.DeserializeDevCenterProjectEnvironmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

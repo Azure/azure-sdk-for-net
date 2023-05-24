@@ -19,46 +19,46 @@ using Azure.ResourceManager.DevCenter.Models;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A Class representing a ProjectEnvironmentType along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProjectEnvironmentTypeResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetProjectEnvironmentTypeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevCenterProjectResource" /> using the GetProjectEnvironmentType method.
+    /// A Class representing a DevCenterProjectEnvironment along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevCenterProjectEnvironmentResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetDevCenterProjectEnvironmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterProjectResource" /> using the GetDevCenterProjectEnvironment method.
     /// </summary>
-    public partial class ProjectEnvironmentTypeResource : ArmResource
+    public partial class DevCenterProjectEnvironmentResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ProjectEnvironmentTypeResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="DevCenterProjectEnvironmentResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/environmentTypes/{environmentTypeName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _projectEnvironmentTypeClientDiagnostics;
-        private readonly ProjectEnvironmentTypesRestOperations _projectEnvironmentTypeRestClient;
-        private readonly ProjectEnvironmentTypeData _data;
+        private readonly ClientDiagnostics _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics;
+        private readonly ProjectEnvironmentTypesRestOperations _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient;
+        private readonly DevCenterProjectEnvironmentData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ProjectEnvironmentTypeResource"/> class for mocking. </summary>
-        protected ProjectEnvironmentTypeResource()
+        /// <summary> Initializes a new instance of the <see cref="DevCenterProjectEnvironmentResource"/> class for mocking. </summary>
+        protected DevCenterProjectEnvironmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ProjectEnvironmentTypeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "DevCenterProjectEnvironmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ProjectEnvironmentTypeResource(ArmClient client, ProjectEnvironmentTypeData data) : this(client, data.Id)
+        internal DevCenterProjectEnvironmentResource(ArmClient client, DevCenterProjectEnvironmentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ProjectEnvironmentTypeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevCenterProjectEnvironmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ProjectEnvironmentTypeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DevCenterProjectEnvironmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _projectEnvironmentTypeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string projectEnvironmentTypeApiVersion);
-            _projectEnvironmentTypeRestClient = new ProjectEnvironmentTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, projectEnvironmentTypeApiVersion);
+            _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string devCenterProjectEnvironmentProjectEnvironmentTypesApiVersion);
+            _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient = new ProjectEnvironmentTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterProjectEnvironmentProjectEnvironmentTypesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ProjectEnvironmentTypeData Data
+        public virtual DevCenterProjectEnvironmentData Data
         {
             get
             {
@@ -102,16 +102,16 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ProjectEnvironmentTypeResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterProjectEnvironmentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _projectEnvironmentTypeClientDiagnostics.CreateScope("ProjectEnvironmentTypeResource.Get");
+            using var scope = _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics.CreateScope("DevCenterProjectEnvironmentResource.Get");
             scope.Start();
             try
             {
-                var response = await _projectEnvironmentTypeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProjectEnvironmentTypeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterProjectEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -134,16 +134,16 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ProjectEnvironmentTypeResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterProjectEnvironmentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _projectEnvironmentTypeClientDiagnostics.CreateScope("ProjectEnvironmentTypeResource.Get");
+            using var scope = _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics.CreateScope("DevCenterProjectEnvironmentResource.Get");
             scope.Start();
             try
             {
-                var response = _projectEnvironmentTypeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProjectEnvironmentTypeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterProjectEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _projectEnvironmentTypeClientDiagnostics.CreateScope("ProjectEnvironmentTypeResource.Delete");
+            using var scope = _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics.CreateScope("DevCenterProjectEnvironmentResource.Delete");
             scope.Start();
             try
             {
-                var response = await _projectEnvironmentTypeRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new DevCenterArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -203,11 +203,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _projectEnvironmentTypeClientDiagnostics.CreateScope("ProjectEnvironmentTypeResource.Delete");
+            using var scope = _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics.CreateScope("DevCenterProjectEnvironmentResource.Delete");
             scope.Start();
             try
             {
-                var response = _projectEnvironmentTypeRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new DevCenterArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -236,16 +236,16 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="patch"> Updatable project environment type properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ProjectEnvironmentTypeResource>> UpdateAsync(ProjectEnvironmentTypePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterProjectEnvironmentResource>> UpdateAsync(DevCenterProjectEnvironmentPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _projectEnvironmentTypeClientDiagnostics.CreateScope("ProjectEnvironmentTypeResource.Update");
+            using var scope = _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics.CreateScope("DevCenterProjectEnvironmentResource.Update");
             scope.Start();
             try
             {
-                var response = await _projectEnvironmentTypeRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ProjectEnvironmentTypeResource(Client, response.Value), response.GetRawResponse());
+                var response = await _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DevCenterProjectEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -270,16 +270,16 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="patch"> Updatable project environment type properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ProjectEnvironmentTypeResource> Update(ProjectEnvironmentTypePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterProjectEnvironmentResource> Update(DevCenterProjectEnvironmentPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _projectEnvironmentTypeClientDiagnostics.CreateScope("ProjectEnvironmentTypeResource.Update");
+            using var scope = _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics.CreateScope("DevCenterProjectEnvironmentResource.Update");
             scope.Start();
             try
             {
-                var response = _projectEnvironmentTypeRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new ProjectEnvironmentTypeResource(Client, response.Value), response.GetRawResponse());
+                var response = _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new DevCenterProjectEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -305,12 +305,12 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<ProjectEnvironmentTypeResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterProjectEnvironmentResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _projectEnvironmentTypeClientDiagnostics.CreateScope("ProjectEnvironmentTypeResource.AddTag");
+            using var scope = _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics.CreateScope("DevCenterProjectEnvironmentResource.AddTag");
             scope.Start();
             try
             {
@@ -319,13 +319,13 @@ namespace Azure.ResourceManager.DevCenter
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _projectEnvironmentTypeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ProjectEnvironmentTypeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new DevCenterProjectEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ProjectEnvironmentTypePatch();
+                    var patch = new DevCenterProjectEnvironmentPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -359,12 +359,12 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<ProjectEnvironmentTypeResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterProjectEnvironmentResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _projectEnvironmentTypeClientDiagnostics.CreateScope("ProjectEnvironmentTypeResource.AddTag");
+            using var scope = _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics.CreateScope("DevCenterProjectEnvironmentResource.AddTag");
             scope.Start();
             try
             {
@@ -373,13 +373,13 @@ namespace Azure.ResourceManager.DevCenter
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _projectEnvironmentTypeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new ProjectEnvironmentTypeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new DevCenterProjectEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ProjectEnvironmentTypePatch();
+                    var patch = new DevCenterProjectEnvironmentPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -412,11 +412,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<ProjectEnvironmentTypeResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterProjectEnvironmentResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _projectEnvironmentTypeClientDiagnostics.CreateScope("ProjectEnvironmentTypeResource.SetTags");
+            using var scope = _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics.CreateScope("DevCenterProjectEnvironmentResource.SetTags");
             scope.Start();
             try
             {
@@ -426,13 +426,13 @@ namespace Azure.ResourceManager.DevCenter
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _projectEnvironmentTypeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ProjectEnvironmentTypeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new DevCenterProjectEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ProjectEnvironmentTypePatch();
+                    var patch = new DevCenterProjectEnvironmentPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -461,11 +461,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<ProjectEnvironmentTypeResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterProjectEnvironmentResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _projectEnvironmentTypeClientDiagnostics.CreateScope("ProjectEnvironmentTypeResource.SetTags");
+            using var scope = _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics.CreateScope("DevCenterProjectEnvironmentResource.SetTags");
             scope.Start();
             try
             {
@@ -475,13 +475,13 @@ namespace Azure.ResourceManager.DevCenter
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _projectEnvironmentTypeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new ProjectEnvironmentTypeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new DevCenterProjectEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ProjectEnvironmentTypePatch();
+                    var patch = new DevCenterProjectEnvironmentPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -510,11 +510,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<ProjectEnvironmentTypeResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterProjectEnvironmentResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _projectEnvironmentTypeClientDiagnostics.CreateScope("ProjectEnvironmentTypeResource.RemoveTag");
+            using var scope = _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics.CreateScope("DevCenterProjectEnvironmentResource.RemoveTag");
             scope.Start();
             try
             {
@@ -523,13 +523,13 @@ namespace Azure.ResourceManager.DevCenter
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _projectEnvironmentTypeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ProjectEnvironmentTypeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new DevCenterProjectEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ProjectEnvironmentTypePatch();
+                    var patch = new DevCenterProjectEnvironmentPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -562,11 +562,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<ProjectEnvironmentTypeResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterProjectEnvironmentResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _projectEnvironmentTypeClientDiagnostics.CreateScope("ProjectEnvironmentTypeResource.RemoveTag");
+            using var scope = _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics.CreateScope("DevCenterProjectEnvironmentResource.RemoveTag");
             scope.Start();
             try
             {
@@ -575,13 +575,13 @@ namespace Azure.ResourceManager.DevCenter
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _projectEnvironmentTypeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new ProjectEnvironmentTypeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new DevCenterProjectEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ProjectEnvironmentTypePatch();
+                    var patch = new DevCenterProjectEnvironmentPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

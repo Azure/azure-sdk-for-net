@@ -12,13 +12,13 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> The project environment type for partial update. Properties not provided in the update request will not be changed. </summary>
-    public partial class ProjectEnvironmentTypePatch
+    public partial class DevCenterProjectEnvironmentPatch
     {
-        /// <summary> Initializes a new instance of ProjectEnvironmentTypePatch. </summary>
-        public ProjectEnvironmentTypePatch()
+        /// <summary> Initializes a new instance of DevCenterProjectEnvironmentPatch. </summary>
+        public DevCenterProjectEnvironmentPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            UserRoleAssignments = new ChangeTrackingDictionary<string, DevCenterUserRoleAssignmentValue>();
+            UserRoleAssignments = new ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>();
         }
 
         /// <summary> Resource tags. </summary>
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> Role Assignments created on environment backing resources. This is a mapping from a user object ID to an object of role definition IDs. </summary>
-        public IDictionary<string, DevCenterUserRoleAssignmentValue> UserRoleAssignments { get; }
+        public IDictionary<string, DevCenterUserRoleAssignments> UserRoleAssignments { get; }
     }
 }

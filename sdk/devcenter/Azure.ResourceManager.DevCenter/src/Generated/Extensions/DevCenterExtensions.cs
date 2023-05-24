@@ -240,20 +240,20 @@ namespace Azure.ResourceManager.DevCenter
         }
         #endregion
 
-        #region ProjectEnvironmentTypeResource
+        #region DevCenterProjectEnvironmentResource
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectEnvironmentTypeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectEnvironmentTypeResource.CreateResourceIdentifier" /> to create a <see cref="ProjectEnvironmentTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevCenterProjectEnvironmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevCenterProjectEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectEnvironmentTypeResource" /> object. </returns>
-        public static ProjectEnvironmentTypeResource GetProjectEnvironmentTypeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevCenterProjectEnvironmentResource" /> object. </returns>
+        public static DevCenterProjectEnvironmentResource GetDevCenterProjectEnvironmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ProjectEnvironmentTypeResource.ValidateResourceId(id);
-                return new ProjectEnvironmentTypeResource(client, id);
+                DevCenterProjectEnvironmentResource.ValidateResourceId(id);
+                return new DevCenterProjectEnvironmentResource(client, id);
             }
             );
         }
@@ -742,11 +742,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResponse>> ExecuteDevCenterCheckNameAvailabilityAsyncAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckDevCenterNameAvailabilityResult>> ExecuteCheckDevCenterNameAvailabilityAsyncAsync(this SubscriptionResource subscriptionResource, CheckDevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).ExecuteDevCenterCheckNameAvailabilityAsyncAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).ExecuteCheckDevCenterNameAvailabilityAsyncAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -766,11 +766,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResponse> ExecuteDevCenterCheckNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<CheckDevCenterNameAvailabilityResult> ExecuteCheckDevCenterNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckDevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).ExecuteDevCenterCheckNameAvailabilityAsync(content, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).ExecuteCheckDevCenterNameAvailabilityAsync(content, cancellationToken);
         }
 
         /// <summary>

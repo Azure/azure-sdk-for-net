@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class DevCenterUserRoleAssignmentValue : IUtf8JsonSerializable
+    public partial class DevCenterUserRoleAssignments : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static DevCenterUserRoleAssignmentValue DeserializeDevCenterUserRoleAssignmentValue(JsonElement element)
+        internal static DevCenterUserRoleAssignments DeserializeDevCenterUserRoleAssignments(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     continue;
                 }
             }
-            return new DevCenterUserRoleAssignmentValue(Optional.ToDictionary(roles));
+            return new DevCenterUserRoleAssignments(Optional.ToDictionary(roles));
         }
     }
 }

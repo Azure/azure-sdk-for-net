@@ -284,9 +284,9 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResponse>> ExecuteDevCenterCheckNameAvailabilityAsyncAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckDevCenterNameAvailabilityResult>> ExecuteCheckDevCenterNameAvailabilityAsyncAsync(CheckDevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteDevCenterCheckNameAvailabilityAsync");
+            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteCheckDevCenterNameAvailabilityAsync");
             scope.Start();
             try
             {
@@ -315,9 +315,9 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResponse> ExecuteDevCenterCheckNameAvailabilityAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CheckDevCenterNameAvailabilityResult> ExecuteCheckDevCenterNameAvailabilityAsync(CheckDevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteDevCenterCheckNameAvailabilityAsync");
+            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteCheckDevCenterNameAvailabilityAsync");
             scope.Start();
             try
             {

@@ -10,10 +10,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> The check availability request body. </summary>
-    public partial class CheckNameAvailabilityContent
+    public partial class CheckDevCenterNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityContent. </summary>
-        public CheckNameAvailabilityContent()
+        /// <summary> Initializes a new instance of CheckDevCenterNameAvailabilityContent. </summary>
+        public CheckDevCenterNameAvailabilityContent()
         {
         }
 

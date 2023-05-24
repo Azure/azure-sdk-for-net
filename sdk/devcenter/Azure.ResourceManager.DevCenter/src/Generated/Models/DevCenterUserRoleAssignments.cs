@@ -11,17 +11,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> Mapping of user object ID to role assignments. </summary>
-    public partial class DevCenterUserRoleAssignmentValue
+    public partial class DevCenterUserRoleAssignments
     {
-        /// <summary> Initializes a new instance of DevCenterUserRoleAssignmentValue. </summary>
-        public DevCenterUserRoleAssignmentValue()
+        /// <summary> Initializes a new instance of DevCenterUserRoleAssignments. </summary>
+        public DevCenterUserRoleAssignments()
         {
             Roles = new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>();
         }
 
-        /// <summary> Initializes a new instance of DevCenterUserRoleAssignmentValue. </summary>
+        /// <summary> Initializes a new instance of DevCenterUserRoleAssignments. </summary>
         /// <param name="roles"> A map of roles to assign to the parent user. </param>
-        internal DevCenterUserRoleAssignmentValue(IDictionary<string, DevCenterEnvironmentRole> roles)
+        internal DevCenterUserRoleAssignments(IDictionary<string, DevCenterEnvironmentRole> roles)
         {
             Roles = roles;
         }

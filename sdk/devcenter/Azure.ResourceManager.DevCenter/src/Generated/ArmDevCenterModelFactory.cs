@@ -128,13 +128,13 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="namePropertiesName"> The semantic version string. </param>
         /// <param name="publishedOn"> The datetime that the backing image version was published. </param>
-        /// <param name="excludeFromLatest"> If the version should be excluded from being treated as the latest version. </param>
-        /// <param name="osDiskImageSizeInGb"> The size of the OS disk image, in GB. </param>
+        /// <param name="isExcludedFromLatest"> If the version should be excluded from being treated as the latest version. </param>
+        /// <param name="osDiskImageSizeInGB"> The size of the OS disk image, in GB. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <returns> A new <see cref="DevCenter.ImageVersionData"/> instance for mocking. </returns>
-        public static ImageVersionData ImageVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string namePropertiesName = null, DateTimeOffset? publishedOn = null, bool? excludeFromLatest = null, int? osDiskImageSizeInGb = null, DevCenterProvisioningState? provisioningState = null)
+        public static ImageVersionData ImageVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string namePropertiesName = null, DateTimeOffset? publishedOn = null, bool? isExcludedFromLatest = null, int? osDiskImageSizeInGB = null, DevCenterProvisioningState? provisioningState = null)
         {
-            return new ImageVersionData(id, name, resourceType, systemData, namePropertiesName, publishedOn, excludeFromLatest, osDiskImageSizeInGb, provisioningState);
+            return new ImageVersionData(id, name, resourceType, systemData, namePropertiesName, publishedOn, isExcludedFromLatest, osDiskImageSizeInGB, provisioningState);
         }
 
         /// <summary> Initializes a new instance of DevCenterCatalogData. </summary>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="syncState"> The synchronization state of the catalog. </param>
         /// <param name="lastSyncOn"> When the catalog was last synced. </param>
         /// <returns> A new <see cref="DevCenter.DevCenterCatalogData"/> instance for mocking. </returns>
-        public static DevCenterCatalogData DevCenterCatalogData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DevCenterGitCatalog gitHub = null, DevCenterGitCatalog adoGit = null, DevCenterProvisioningState? provisioningState = null, CatalogSyncState? syncState = null, DateTimeOffset? lastSyncOn = null)
+        public static DevCenterCatalogData DevCenterCatalogData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DevCenterGitCatalog gitHub = null, DevCenterGitCatalog adoGit = null, DevCenterProvisioningState? provisioningState = null, DevCenterCatalogSyncState? syncState = null, DateTimeOffset? lastSyncOn = null)
         {
             return new DevCenterCatalogData(id, name, resourceType, systemData, gitHub, adoGit, provisioningState, syncState, lastSyncOn);
         }
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new AllowedEnvironmentTypeData(id, name, resourceType, systemData, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of ProjectEnvironmentTypeData. </summary>
+        /// <summary> Initializes a new instance of DevCenterProjectEnvironmentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -193,14 +193,14 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="roles"> The role definition assigned to the environment creator on backing resources. </param>
         /// <param name="userRoleAssignments"> Role Assignments created on environment backing resources. This is a mapping from a user object ID to an object of role definition IDs. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <returns> A new <see cref="DevCenter.ProjectEnvironmentTypeData"/> instance for mocking. </returns>
-        public static ProjectEnvironmentTypeData ProjectEnvironmentTypeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ResourceIdentifier deploymentTargetId = null, EnvironmentTypeEnableStatus? status = null, IDictionary<string, DevCenterEnvironmentRole> roles = null, IDictionary<string, DevCenterUserRoleAssignmentValue> userRoleAssignments = null, DevCenterProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="DevCenter.DevCenterProjectEnvironmentData"/> instance for mocking. </returns>
+        public static DevCenterProjectEnvironmentData DevCenterProjectEnvironmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ResourceIdentifier deploymentTargetId = null, EnvironmentTypeEnableStatus? status = null, IDictionary<string, DevCenterEnvironmentRole> roles = null, IDictionary<string, DevCenterUserRoleAssignments> userRoleAssignments = null, DevCenterProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
             roles ??= new Dictionary<string, DevCenterEnvironmentRole>();
-            userRoleAssignments ??= new Dictionary<string, DevCenterUserRoleAssignmentValue>();
+            userRoleAssignments ??= new Dictionary<string, DevCenterUserRoleAssignments>();
 
-            return new ProjectEnvironmentTypeData(id, name, resourceType, systemData, tags, location, identity, deploymentTargetId, status, roles != null ? new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(roles) : null, userRoleAssignments, provisioningState);
+            return new DevCenterProjectEnvironmentData(id, name, resourceType, systemData, tags, location, identity, deploymentTargetId, status, roles != null ? new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(roles) : null, userRoleAssignments, provisioningState);
         }
 
         /// <summary> Initializes a new instance of DevCenterEnvironmentRole. </summary>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="resourceId"> The id of the resource. </param>
         /// <param name="properties"> Custom operation properties, populated only for a successful operation. </param>
         /// <returns> A new <see cref="Models.DevCenterOperationStatus"/> instance for mocking. </returns>
-        public static DevCenterOperationStatus DevCenterOperationStatus(ResourceIdentifier id = null, string name = null, string status = null, float? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, string resourceId = null, BinaryData properties = null)
+        public static DevCenterOperationStatus DevCenterOperationStatus(ResourceIdentifier id = null, string name = null, string status = null, float? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, ResourceIdentifier resourceId = null, BinaryData properties = null)
         {
             operations ??= new List<OperationStatusResult>();
 
@@ -292,14 +292,14 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterUsageName(localizedValue, value);
         }
 
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
-        /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
+        /// <summary> Initializes a new instance of CheckDevCenterNameAvailabilityResult. </summary>
+        /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityResponse"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityResponse CheckNameAvailabilityResponse(bool? nameAvailable = null, CheckNameAvailabilityReason? reason = null, string message = null)
+        /// <returns> A new <see cref="Models.CheckDevCenterNameAvailabilityResult"/> instance for mocking. </returns>
+        public static CheckDevCenterNameAvailabilityResult CheckDevCenterNameAvailabilityResult(bool? isNameAvailable = null, CheckDevCenterUnavailableReason? reason = null, string message = null)
         {
-            return new CheckNameAvailabilityResponse(nameAvailable, reason, message);
+            return new CheckDevCenterNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
         /// <summary> Initializes a new instance of DevCenterSkuDetails. </summary>

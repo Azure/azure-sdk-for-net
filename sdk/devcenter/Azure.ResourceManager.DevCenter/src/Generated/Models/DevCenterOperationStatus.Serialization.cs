@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             Optional<BinaryData> properties = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
@@ -36,7 +36,11 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 if (property.NameEquals("resourceId"u8))
                 {
-                    resourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

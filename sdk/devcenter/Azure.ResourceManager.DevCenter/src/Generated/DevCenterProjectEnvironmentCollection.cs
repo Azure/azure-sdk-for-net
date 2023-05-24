@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ProjectEnvironmentTypeResource" /> and their operations.
-    /// Each <see cref="ProjectEnvironmentTypeResource" /> in the collection will belong to the same instance of <see cref="DevCenterProjectResource" />.
-    /// To get a <see cref="ProjectEnvironmentTypeCollection" /> instance call the GetProjectEnvironmentTypes method from an instance of <see cref="DevCenterProjectResource" />.
+    /// A class representing a collection of <see cref="DevCenterProjectEnvironmentResource" /> and their operations.
+    /// Each <see cref="DevCenterProjectEnvironmentResource" /> in the collection will belong to the same instance of <see cref="DevCenterProjectResource" />.
+    /// To get a <see cref="DevCenterProjectEnvironmentCollection" /> instance call the GetDevCenterProjectEnvironments method from an instance of <see cref="DevCenterProjectResource" />.
     /// </summary>
-    public partial class ProjectEnvironmentTypeCollection : ArmCollection, IEnumerable<ProjectEnvironmentTypeResource>, IAsyncEnumerable<ProjectEnvironmentTypeResource>
+    public partial class DevCenterProjectEnvironmentCollection : ArmCollection, IEnumerable<DevCenterProjectEnvironmentResource>, IAsyncEnumerable<DevCenterProjectEnvironmentResource>
     {
-        private readonly ClientDiagnostics _projectEnvironmentTypeClientDiagnostics;
-        private readonly ProjectEnvironmentTypesRestOperations _projectEnvironmentTypeRestClient;
+        private readonly ClientDiagnostics _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics;
+        private readonly ProjectEnvironmentTypesRestOperations _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ProjectEnvironmentTypeCollection"/> class for mocking. </summary>
-        protected ProjectEnvironmentTypeCollection()
+        /// <summary> Initializes a new instance of the <see cref="DevCenterProjectEnvironmentCollection"/> class for mocking. </summary>
+        protected DevCenterProjectEnvironmentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ProjectEnvironmentTypeCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevCenterProjectEnvironmentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ProjectEnvironmentTypeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DevCenterProjectEnvironmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _projectEnvironmentTypeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProjectEnvironmentTypeResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ProjectEnvironmentTypeResource.ResourceType, out string projectEnvironmentTypeApiVersion);
-            _projectEnvironmentTypeRestClient = new ProjectEnvironmentTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, projectEnvironmentTypeApiVersion);
+            _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterProjectEnvironmentResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DevCenterProjectEnvironmentResource.ResourceType, out string devCenterProjectEnvironmentProjectEnvironmentTypesApiVersion);
+            _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient = new ProjectEnvironmentTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterProjectEnvironmentProjectEnvironmentTypesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ProjectEnvironmentTypeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string environmentTypeName, ProjectEnvironmentTypeData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DevCenterProjectEnvironmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string environmentTypeName, DevCenterProjectEnvironmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _projectEnvironmentTypeClientDiagnostics.CreateScope("ProjectEnvironmentTypeCollection.CreateOrUpdate");
+            using var scope = _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics.CreateScope("DevCenterProjectEnvironmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _projectEnvironmentTypeRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<ProjectEnvironmentTypeResource>(Response.FromValue(new ProjectEnvironmentTypeResource(Client, response), response.GetRawResponse()));
+                var response = await _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new DevCenterArmOperation<DevCenterProjectEnvironmentResource>(Response.FromValue(new DevCenterProjectEnvironmentResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -112,17 +112,17 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ProjectEnvironmentTypeResource> CreateOrUpdate(WaitUntil waitUntil, string environmentTypeName, ProjectEnvironmentTypeData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DevCenterProjectEnvironmentResource> CreateOrUpdate(WaitUntil waitUntil, string environmentTypeName, DevCenterProjectEnvironmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _projectEnvironmentTypeClientDiagnostics.CreateScope("ProjectEnvironmentTypeCollection.CreateOrUpdate");
+            using var scope = _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics.CreateScope("DevCenterProjectEnvironmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _projectEnvironmentTypeRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, data, cancellationToken);
-                var operation = new DevCenterArmOperation<ProjectEnvironmentTypeResource>(Response.FromValue(new ProjectEnvironmentTypeResource(Client, response), response.GetRawResponse()));
+                var response = _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, data, cancellationToken);
+                var operation = new DevCenterArmOperation<DevCenterProjectEnvironmentResource>(Response.FromValue(new DevCenterProjectEnvironmentResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -151,18 +151,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
-        public virtual async Task<Response<ProjectEnvironmentTypeResource>> GetAsync(string environmentTypeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterProjectEnvironmentResource>> GetAsync(string environmentTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
 
-            using var scope = _projectEnvironmentTypeClientDiagnostics.CreateScope("ProjectEnvironmentTypeCollection.Get");
+            using var scope = _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics.CreateScope("DevCenterProjectEnvironmentCollection.Get");
             scope.Start();
             try
             {
-                var response = await _projectEnvironmentTypeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, cancellationToken).ConfigureAwait(false);
+                var response = await _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProjectEnvironmentTypeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterProjectEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,18 +188,18 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
-        public virtual Response<ProjectEnvironmentTypeResource> Get(string environmentTypeName, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterProjectEnvironmentResource> Get(string environmentTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
 
-            using var scope = _projectEnvironmentTypeClientDiagnostics.CreateScope("ProjectEnvironmentTypeCollection.Get");
+            using var scope = _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics.CreateScope("DevCenterProjectEnvironmentCollection.Get");
             scope.Start();
             try
             {
-                var response = _projectEnvironmentTypeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, cancellationToken);
+                var response = _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProjectEnvironmentTypeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DevCenterProjectEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -223,12 +223,12 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProjectEnvironmentTypeResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProjectEnvironmentTypeResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DevCenterProjectEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevCenterProjectEnvironmentResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _projectEnvironmentTypeRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _projectEnvironmentTypeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProjectEnvironmentTypeResource(Client, ProjectEnvironmentTypeData.DeserializeProjectEnvironmentTypeData(e)), _projectEnvironmentTypeClientDiagnostics, Pipeline, "ProjectEnvironmentTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterProjectEnvironmentResource(Client, DevCenterProjectEnvironmentData.DeserializeDevCenterProjectEnvironmentData(e)), _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics, Pipeline, "DevCenterProjectEnvironmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -246,12 +246,12 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProjectEnvironmentTypeResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProjectEnvironmentTypeResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevCenterProjectEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevCenterProjectEnvironmentResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _projectEnvironmentTypeRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _projectEnvironmentTypeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProjectEnvironmentTypeResource(Client, ProjectEnvironmentTypeData.DeserializeProjectEnvironmentTypeData(e)), _projectEnvironmentTypeClientDiagnostics, Pipeline, "ProjectEnvironmentTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterProjectEnvironmentResource(Client, DevCenterProjectEnvironmentData.DeserializeDevCenterProjectEnvironmentData(e)), _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics, Pipeline, "DevCenterProjectEnvironmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -275,11 +275,11 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
 
-            using var scope = _projectEnvironmentTypeClientDiagnostics.CreateScope("ProjectEnvironmentTypeCollection.Exists");
+            using var scope = _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics.CreateScope("DevCenterProjectEnvironmentCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _projectEnvironmentTypeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -310,11 +310,11 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
 
-            using var scope = _projectEnvironmentTypeClientDiagnostics.CreateScope("ProjectEnvironmentTypeCollection.Exists");
+            using var scope = _devCenterProjectEnvironmentProjectEnvironmentTypesClientDiagnostics.CreateScope("DevCenterProjectEnvironmentCollection.Exists");
             scope.Start();
             try
             {
-                var response = _projectEnvironmentTypeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, cancellationToken: cancellationToken);
+                var response = _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
-        IEnumerator<ProjectEnvironmentTypeResource> IEnumerable<ProjectEnvironmentTypeResource>.GetEnumerator()
+        IEnumerator<DevCenterProjectEnvironmentResource> IEnumerable<DevCenterProjectEnvironmentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.DevCenter
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ProjectEnvironmentTypeResource> IAsyncEnumerable<ProjectEnvironmentTypeResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DevCenterProjectEnvironmentResource> IAsyncEnumerable<DevCenterProjectEnvironmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

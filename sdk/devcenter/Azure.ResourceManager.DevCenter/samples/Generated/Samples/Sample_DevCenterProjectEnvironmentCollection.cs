@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter.Samples
 {
-    public partial class Sample_ProjectEnvironmentTypeCollection
+    public partial class Sample_DevCenterProjectEnvironmentCollection
     {
         // ProjectEnvironmentTypes_List
         [NUnit.Framework.Test]
@@ -40,15 +40,15 @@ namespace Azure.ResourceManager.DevCenter.Samples
             ResourceIdentifier devCenterProjectResourceId = DevCenterProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
             DevCenterProjectResource devCenterProject = client.GetDevCenterProjectResource(devCenterProjectResourceId);
 
-            // get the collection of this ProjectEnvironmentTypeResource
-            ProjectEnvironmentTypeCollection collection = devCenterProject.GetProjectEnvironmentTypes();
+            // get the collection of this DevCenterProjectEnvironmentResource
+            DevCenterProjectEnvironmentCollection collection = devCenterProject.GetDevCenterProjectEnvironments();
 
             // invoke the operation and iterate over the result
-            await foreach (ProjectEnvironmentTypeResource item in collection.GetAllAsync())
+            await foreach (DevCenterProjectEnvironmentResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ProjectEnvironmentTypeData resourceData = item.Data;
+                DevCenterProjectEnvironmentData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -77,16 +77,16 @@ namespace Azure.ResourceManager.DevCenter.Samples
             ResourceIdentifier devCenterProjectResourceId = DevCenterProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
             DevCenterProjectResource devCenterProject = client.GetDevCenterProjectResource(devCenterProjectResourceId);
 
-            // get the collection of this ProjectEnvironmentTypeResource
-            ProjectEnvironmentTypeCollection collection = devCenterProject.GetProjectEnvironmentTypes();
+            // get the collection of this DevCenterProjectEnvironmentResource
+            DevCenterProjectEnvironmentCollection collection = devCenterProject.GetDevCenterProjectEnvironments();
 
             // invoke the operation
             string environmentTypeName = "DevTest";
-            ProjectEnvironmentTypeResource result = await collection.GetAsync(environmentTypeName);
+            DevCenterProjectEnvironmentResource result = await collection.GetAsync(environmentTypeName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ProjectEnvironmentTypeData resourceData = result.Data;
+            DevCenterProjectEnvironmentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.DevCenter.Samples
             ResourceIdentifier devCenterProjectResourceId = DevCenterProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
             DevCenterProjectResource devCenterProject = client.GetDevCenterProjectResource(devCenterProjectResourceId);
 
-            // get the collection of this ProjectEnvironmentTypeResource
-            ProjectEnvironmentTypeCollection collection = devCenterProject.GetProjectEnvironmentTypes();
+            // get the collection of this DevCenterProjectEnvironmentResource
+            DevCenterProjectEnvironmentCollection collection = devCenterProject.GetDevCenterProjectEnvironments();
 
             // invoke the operation
             string environmentTypeName = "DevTest";
@@ -143,12 +143,12 @@ namespace Azure.ResourceManager.DevCenter.Samples
             ResourceIdentifier devCenterProjectResourceId = DevCenterProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
             DevCenterProjectResource devCenterProject = client.GetDevCenterProjectResource(devCenterProjectResourceId);
 
-            // get the collection of this ProjectEnvironmentTypeResource
-            ProjectEnvironmentTypeCollection collection = devCenterProject.GetProjectEnvironmentTypes();
+            // get the collection of this DevCenterProjectEnvironmentResource
+            DevCenterProjectEnvironmentCollection collection = devCenterProject.GetDevCenterProjectEnvironments();
 
             // invoke the operation
             string environmentTypeName = "DevTest";
-            ProjectEnvironmentTypeData data = new ProjectEnvironmentTypeData(new AzureLocation("placeholder"))
+            DevCenterProjectEnvironmentData data = new DevCenterProjectEnvironmentData(new AzureLocation("placeholder"))
             {
                 Identity = new ManagedServiceIdentity("UserAssigned")
                 {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 },
                 UserRoleAssignments =
 {
-["e45e3m7c-176e-416a-b466-0c5ec8298f8a"] = new DevCenterUserRoleAssignmentValue()
+["e45e3m7c-176e-416a-b466-0c5ec8298f8a"] = new DevCenterUserRoleAssignments()
 {
 Roles =
 {
@@ -178,12 +178,12 @@ Roles =
 ["CostCenter"] = "RnD",
 },
             };
-            ArmOperation<ProjectEnvironmentTypeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, environmentTypeName, data);
-            ProjectEnvironmentTypeResource result = lro.Value;
+            ArmOperation<DevCenterProjectEnvironmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, environmentTypeName, data);
+            DevCenterProjectEnvironmentResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ProjectEnvironmentTypeData resourceData = result.Data;
+            DevCenterProjectEnvironmentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

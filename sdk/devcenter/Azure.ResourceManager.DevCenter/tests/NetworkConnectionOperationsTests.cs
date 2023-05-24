@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
 
             var networkConnectionData = new DevCenterNetworkConnectionData(TestEnvironment.Location)
             {
-                DomainJoinType = DomainJoinType.AzureADJoin,
+                DomainJoinType = DomainJoinType.AadJoin,
                 SubnetId = new Core.ResourceIdentifier($"{rg.Id}/providers/Microsoft.Network/virtualNetworks/sdk-vnet1/subnets/default"),
             };
             DevCenterNetworkConnectionResource createdResource =

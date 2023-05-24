@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
                 DomainUsername = "testuser@mydomaincontroller.local",
                 DomainPassword = "Password value for user",
                 NetworkingResourceGroupName = "NetworkInterfaces",
-                DomainJoinType = DomainJoinType.HybridAzureADJoin,
+                DomainJoinType = DomainJoinType.HybridAadJoin,
             };
             ArmOperation<DevCenterNetworkConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkConnectionName, data);
             DevCenterNetworkConnectionResource result = lro.Value;

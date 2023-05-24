@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    public partial class ProjectEnvironmentTypeData : IUtf8JsonSerializable
+    public partial class DevCenterProjectEnvironmentData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DevCenter
             writer.WriteEndObject();
         }
 
-        internal static ProjectEnvironmentTypeData DeserializeProjectEnvironmentTypeData(JsonElement element)
+        internal static DevCenterProjectEnvironmentData DeserializeDevCenterProjectEnvironmentData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DevCenter
             Optional<ResourceIdentifier> deploymentTargetId = default;
             Optional<EnvironmentTypeEnableStatus> status = default;
             Optional<ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment> creatorRoleAssignment = default;
-            Optional<IDictionary<string, DevCenterUserRoleAssignmentValue>> userRoleAssignments = default;
+            Optional<IDictionary<string, DevCenterUserRoleAssignments>> userRoleAssignments = default;
             Optional<DevCenterProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -182,10 +182,10 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            Dictionary<string, DevCenterUserRoleAssignmentValue> dictionary = new Dictionary<string, DevCenterUserRoleAssignmentValue>();
+                            Dictionary<string, DevCenterUserRoleAssignments> dictionary = new Dictionary<string, DevCenterUserRoleAssignments>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, DevCenterUserRoleAssignmentValue.DeserializeDevCenterUserRoleAssignmentValue(property1.Value));
+                                dictionary.Add(property1.Name, DevCenterUserRoleAssignments.DeserializeDevCenterUserRoleAssignments(property1.Value));
                             }
                             userRoleAssignments = dictionary;
                             continue;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DevCenter
                     continue;
                 }
             }
-            return new ProjectEnvironmentTypeData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, deploymentTargetId.Value, Optional.ToNullable(status), creatorRoleAssignment.Value, Optional.ToDictionary(userRoleAssignments), Optional.ToNullable(provisioningState));
+            return new DevCenterProjectEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, deploymentTargetId.Value, Optional.ToNullable(status), creatorRoleAssignment.Value, Optional.ToDictionary(userRoleAssignments), Optional.ToNullable(provisioningState));
         }
     }
 }

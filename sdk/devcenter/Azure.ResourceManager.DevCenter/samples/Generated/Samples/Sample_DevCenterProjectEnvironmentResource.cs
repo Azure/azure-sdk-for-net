@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter.Samples
 {
-    public partial class Sample_ProjectEnvironmentTypeResource
+    public partial class Sample_DevCenterProjectEnvironmentResource
     {
         // ProjectEnvironmentTypes_Get
         [NUnit.Framework.Test]
@@ -32,21 +32,21 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ProjectEnvironmentTypeResource created on azure
-            // for more information of creating ProjectEnvironmentTypeResource, please refer to the document of ProjectEnvironmentTypeResource
+            // this example assumes you already have this DevCenterProjectEnvironmentResource created on azure
+            // for more information of creating DevCenterProjectEnvironmentResource, please refer to the document of DevCenterProjectEnvironmentResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string projectName = "ContosoProj";
             string environmentTypeName = "DevTest";
-            ResourceIdentifier projectEnvironmentTypeResourceId = ProjectEnvironmentTypeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, environmentTypeName);
-            ProjectEnvironmentTypeResource projectEnvironmentType = client.GetProjectEnvironmentTypeResource(projectEnvironmentTypeResourceId);
+            ResourceIdentifier devCenterProjectEnvironmentResourceId = DevCenterProjectEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, environmentTypeName);
+            DevCenterProjectEnvironmentResource devCenterProjectEnvironment = client.GetDevCenterProjectEnvironmentResource(devCenterProjectEnvironmentResourceId);
 
             // invoke the operation
-            ProjectEnvironmentTypeResource result = await projectEnvironmentType.GetAsync();
+            DevCenterProjectEnvironmentResource result = await devCenterProjectEnvironment.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ProjectEnvironmentTypeData resourceData = result.Data;
+            DevCenterProjectEnvironmentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.DevCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ProjectEnvironmentTypeResource created on azure
-            // for more information of creating ProjectEnvironmentTypeResource, please refer to the document of ProjectEnvironmentTypeResource
+            // this example assumes you already have this DevCenterProjectEnvironmentResource created on azure
+            // for more information of creating DevCenterProjectEnvironmentResource, please refer to the document of DevCenterProjectEnvironmentResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string projectName = "ContosoProj";
             string environmentTypeName = "DevTest";
-            ResourceIdentifier projectEnvironmentTypeResourceId = ProjectEnvironmentTypeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, environmentTypeName);
-            ProjectEnvironmentTypeResource projectEnvironmentType = client.GetProjectEnvironmentTypeResource(projectEnvironmentTypeResourceId);
+            ResourceIdentifier devCenterProjectEnvironmentResourceId = DevCenterProjectEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, environmentTypeName);
+            DevCenterProjectEnvironmentResource devCenterProjectEnvironment = client.GetDevCenterProjectEnvironmentResource(devCenterProjectEnvironmentResourceId);
 
             // invoke the operation
-            ProjectEnvironmentTypePatch patch = new ProjectEnvironmentTypePatch()
+            DevCenterProjectEnvironmentPatch patch = new DevCenterProjectEnvironmentPatch()
             {
                 Tags =
 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
                 Status = EnvironmentTypeEnableStatus.IsEnabled,
                 UserRoleAssignments =
 {
-["e45e3m7c-176e-416a-b466-0c5ec8298f8a"] = new DevCenterUserRoleAssignmentValue()
+["e45e3m7c-176e-416a-b466-0c5ec8298f8a"] = new DevCenterUserRoleAssignments()
 {
 Roles =
 {
@@ -100,11 +100,11 @@ Roles =
 },
 },
             };
-            ProjectEnvironmentTypeResource result = await projectEnvironmentType.UpdateAsync(patch);
+            DevCenterProjectEnvironmentResource result = await devCenterProjectEnvironment.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ProjectEnvironmentTypeData resourceData = result.Data;
+            DevCenterProjectEnvironmentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -122,17 +122,17 @@ Roles =
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ProjectEnvironmentTypeResource created on azure
-            // for more information of creating ProjectEnvironmentTypeResource, please refer to the document of ProjectEnvironmentTypeResource
+            // this example assumes you already have this DevCenterProjectEnvironmentResource created on azure
+            // for more information of creating DevCenterProjectEnvironmentResource, please refer to the document of DevCenterProjectEnvironmentResource
             string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
             string resourceGroupName = "rg1";
             string projectName = "ContosoProj";
             string environmentTypeName = "DevTest";
-            ResourceIdentifier projectEnvironmentTypeResourceId = ProjectEnvironmentTypeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, environmentTypeName);
-            ProjectEnvironmentTypeResource projectEnvironmentType = client.GetProjectEnvironmentTypeResource(projectEnvironmentTypeResourceId);
+            ResourceIdentifier devCenterProjectEnvironmentResourceId = DevCenterProjectEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, environmentTypeName);
+            DevCenterProjectEnvironmentResource devCenterProjectEnvironment = client.GetDevCenterProjectEnvironmentResource(devCenterProjectEnvironmentResourceId);
 
             // invoke the operation
-            await projectEnvironmentType.DeleteAsync(WaitUntil.Completed);
+            await devCenterProjectEnvironment.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }

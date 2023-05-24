@@ -195,11 +195,11 @@ namespace Azure.ResourceManager.DevCenter
             return GetAllowedEnvironmentTypes().Get(environmentTypeName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ProjectEnvironmentTypeResources in the DevCenterProject. </summary>
-        /// <returns> An object representing collection of ProjectEnvironmentTypeResources and their operations over a ProjectEnvironmentTypeResource. </returns>
-        public virtual ProjectEnvironmentTypeCollection GetProjectEnvironmentTypes()
+        /// <summary> Gets a collection of DevCenterProjectEnvironmentResources in the DevCenterProject. </summary>
+        /// <returns> An object representing collection of DevCenterProjectEnvironmentResources and their operations over a DevCenterProjectEnvironmentResource. </returns>
+        public virtual DevCenterProjectEnvironmentCollection GetDevCenterProjectEnvironments()
         {
-            return GetCachedClient(Client => new ProjectEnvironmentTypeCollection(Client, Id));
+            return GetCachedClient(Client => new DevCenterProjectEnvironmentCollection(Client, Id));
         }
 
         /// <summary>
@@ -220,9 +220,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ProjectEnvironmentTypeResource>> GetProjectEnvironmentTypeAsync(string environmentTypeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterProjectEnvironmentResource>> GetDevCenterProjectEnvironmentAsync(string environmentTypeName, CancellationToken cancellationToken = default)
         {
-            return await GetProjectEnvironmentTypes().GetAsync(environmentTypeName, cancellationToken).ConfigureAwait(false);
+            return await GetDevCenterProjectEnvironments().GetAsync(environmentTypeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -243,9 +243,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ProjectEnvironmentTypeResource> GetProjectEnvironmentType(string environmentTypeName, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterProjectEnvironmentResource> GetDevCenterProjectEnvironment(string environmentTypeName, CancellationToken cancellationToken = default)
         {
-            return GetProjectEnvironmentTypes().Get(environmentTypeName, cancellationToken);
+            return GetDevCenterProjectEnvironments().Get(environmentTypeName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ProjectDevBoxDefinitionResources in the DevCenterProject. </summary>

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DevCenter
             Optional<DevCenterGitCatalog> gitHub = default;
             Optional<DevCenterGitCatalog> adoGit = default;
             Optional<DevCenterProvisioningState> provisioningState = default;
-            Optional<CatalogSyncState> syncState = default;
+            Optional<DevCenterCatalogSyncState> syncState = default;
             Optional<DateTimeOffset> lastSyncTime = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            syncState = new CatalogSyncState(property0.Value.GetString());
+                            syncState = new DevCenterCatalogSyncState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("lastSyncTime"u8))

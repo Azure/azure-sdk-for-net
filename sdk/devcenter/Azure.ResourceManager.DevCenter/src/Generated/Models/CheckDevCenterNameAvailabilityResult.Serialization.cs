@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class CheckNameAvailabilityResponse
+    public partial class CheckDevCenterNameAvailabilityResult
     {
-        internal static CheckNameAvailabilityResponse DeserializeCheckNameAvailabilityResponse(JsonElement element)
+        internal static CheckDevCenterNameAvailabilityResult DeserializeCheckDevCenterNameAvailabilityResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> nameAvailable = default;
-            Optional<CheckNameAvailabilityReason> reason = default;
+            Optional<CheckDevCenterUnavailableReason> reason = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    reason = new CheckNameAvailabilityReason(property.Value.GetString());
+                    reason = new CheckDevCenterUnavailableReason(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     continue;
                 }
             }
-            return new CheckNameAvailabilityResponse(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
+            return new CheckDevCenterNameAvailabilityResult(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
         }
     }
 }

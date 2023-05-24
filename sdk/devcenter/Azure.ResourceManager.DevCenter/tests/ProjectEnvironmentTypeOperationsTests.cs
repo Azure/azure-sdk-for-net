@@ -26,33 +26,33 @@ namespace Azure.ResourceManager.DevCenter.Tests
             var projectResponse = await Client.GetDevCenterProjectResource(projectId).GetAsync();
             var projectResource = projectResponse.Value;
 
-            ProjectEnvironmentTypeCollection resourceCollection = projectResource.GetProjectEnvironmentTypes();
+            DevCenterProjectEnvironmentCollection resourceCollection = projectResource.GetDevCenterProjectEnvironments();
 
             string ProjectEnvironmentTypeName = TestEnvironment.DefaultEnvironmentTypeName;
 
             // Create a ProjectEnvironmentType resource
 
-            var data = new ProjectEnvironmentTypeData(TestEnvironment.Location)
+            var data = new DevCenterProjectEnvironmentData(TestEnvironment.Location)
             {
                 DeploymentTargetId = new ResourceIdentifier($"/subscriptions/{projectResource.Id.SubscriptionId}"),
                 Status = EnvironmentTypeEnableStatus.IsEnabled,
             };
 
-            data.UserRoleAssignments[TestEnvironment.TestUserOid] = new DevCenterUserRoleAssignmentValue(new Dictionary<string, DevCenterEnvironmentRole> { { "4cbf0b6c-e750-441c-98a7-10da8387e4d6", new DevCenterEnvironmentRole() } });
+            data.UserRoleAssignments[TestEnvironment.TestUserOid] = new DevCenterUserRoleAssignments(new Dictionary<string, DevCenterEnvironmentRole> { { "4cbf0b6c-e750-441c-98a7-10da8387e4d6", new DevCenterEnvironmentRole() } });
             data.CreatorRoleAssignment = new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(new Dictionary<string, DevCenterEnvironmentRole> { { "4cbf0b6c-e750-441c-98a7-10da8387e4d6", new DevCenterEnvironmentRole() } });
 
-            ProjectEnvironmentTypeResource createdResource
+            DevCenterProjectEnvironmentResource createdResource
                 = (await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, ProjectEnvironmentTypeName, data)).Value;
 
             Assert.NotNull(createdResource);
             Assert.NotNull(createdResource.Data);
 
             // List ProjectEnvironmentTypes
-            List<ProjectEnvironmentTypeResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
+            List<DevCenterProjectEnvironmentResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(resources.Any(r => r.Id == createdResource.Id));
 
             // Get
-            Response<ProjectEnvironmentTypeResource> retrievedProjectEnvironmentType = await resourceCollection.GetAsync(ProjectEnvironmentTypeName);
+            Response<DevCenterProjectEnvironmentResource> retrievedProjectEnvironmentType = await resourceCollection.GetAsync(ProjectEnvironmentTypeName);
             Assert.NotNull(retrievedProjectEnvironmentType.Value);
             Assert.NotNull(retrievedProjectEnvironmentType.Value.Data);
 
