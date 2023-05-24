@@ -46,7 +46,7 @@ To utilize this methodology, the user must set input argument `TestProxyExe` to 
 
 Other requirements:
 
-- [x] Install [docker](https://docs.docker.com/engine/install/) or [podman](https://podman.io/getting-started/installation.html)
+- [x] Install [docker](https://docs.docker.com/engine/install/) or [podman](https://podman.io/)
 - [x] Set the environment variable `GIT_TOKEN` a valid token representing YOUR user
 
 ## Permissions

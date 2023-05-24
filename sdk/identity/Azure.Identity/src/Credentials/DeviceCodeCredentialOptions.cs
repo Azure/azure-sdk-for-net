@@ -58,6 +58,6 @@ namespace Azure.Identity
         public Func<DeviceCodeInfo, CancellationToken, Task> DeviceCodeCallback { get; set; }
 
         /// <inheritdoc/>
-        public bool DisableAuthorityValidationAndInstanceDiscovery { get; set; }
+        public bool DisableInstanceDiscovery { get; set; }
     }
 }

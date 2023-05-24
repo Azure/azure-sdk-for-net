@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -476,6 +477,158 @@ namespace Azure.Health.Insights.ClinicalMatching.Samples
             Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("category").ToString());
             Console.WriteLine(result.GetProperty("results").GetProperty("modelVersion").ToString());
             Console.WriteLine(result.GetProperty("results").GetProperty("knowledgeGraphLastUpdateDate").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_MatchTrials_Convenience_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ClinicalMatchingClient(endpoint, credential);
+
+            var trialMatcherData = new TrialMatcherData(new PatientRecord[]
+            {
+    new PatientRecord("<id>")
+{
+        Info = new PatientInfo()
+{
+            Sex = PatientInfoSex.Female,
+            BirthDate = DateTimeOffset.UtcNow,
+            ClinicalInfo =
+{
+                new ClinicalCodedElement("<system>", "<code>")
+{
+                    Name = "<Name>",
+                    Value = "<Value>",
+                }
+            },
+        },
+        Data =
+{
+            new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(DocumentContentSourceType.Inline, "<value>"))
+{
+                ClinicalType = ClinicalDocumentType.Consultation,
+                Language = "<Language>",
+                CreatedDateTime = DateTimeOffset.UtcNow,
+            }
+        },
+    }
+            })
+            {
+                Configuration = new TrialMatcherModelConfiguration(new ClinicalTrials()
+                {
+                    CustomTrials =
+{
+            new ClinicalTrialDetails("<id>", new ClinicalTrialMetadata(new string[]
+{
+                "<null>"
+            })
+{
+                Phases =
+{
+                    ClinicalTrialPhase.NotApplicable
+                },
+                StudyType = ClinicalTrialStudyType.Interventional,
+                RecruitmentStatus = ClinicalTrialRecruitmentStatus.UnknownStatus,
+                Sponsors =
+{
+                    "<null>"
+                },
+                Contacts =
+{
+                    new ContactDetails()
+{
+                        Name = "<Name>",
+                        Email = "<Email>",
+                        Phone = "<Phone>",
+                    }
+                },
+                Facilities =
+{
+                    new ClinicalTrialResearchFacility("<name>", "<countryOrRegion>")
+{
+                        City = "<City>",
+                        State = "<State>",
+                    }
+                },
+            })
+{
+                EligibilityCriteriaText = "<EligibilityCriteriaText>",
+                Demographics = new ClinicalTrialDemographics()
+{
+                    AcceptedSex = ClinicalTrialAcceptedSex.All,
+                    AcceptedAgeRange = new AcceptedAgeRange()
+{
+                        MinimumAge = new AcceptedAge(AgeUnit.Years, 3.14f),
+                    },
+                },
+            }
+        },
+                    RegistryFilters =
+{
+            new ClinicalTrialRegistryFilter()
+{
+                Conditions =
+{
+                    "<null>"
+                },
+                StudyTypes =
+{
+                    ClinicalTrialStudyType.Interventional
+                },
+                RecruitmentStatuses =
+{
+                    ClinicalTrialRecruitmentStatus.UnknownStatus
+                },
+                Sponsors =
+{
+                    "<null>"
+                },
+                Phases =
+{
+                    ClinicalTrialPhase.NotApplicable
+                },
+                Purposes =
+{
+                    ClinicalTrialPurpose.NotApplicable
+                },
+                Ids =
+{
+                    "<null>"
+                },
+                Sources =
+{
+                    ClinicalTrialSource.Custom
+                },
+                FacilityNames =
+{
+                    "<null>"
+                },
+                FacilityLocations =
+{
+                    new GeographicLocation("<countryOrRegion>")
+{
+                        City = "<City>",
+                        State = "<State>",
+                    }
+                },
+                FacilityAreas =
+{
+                    new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJsonGeometryType.Point, new float[]
+{
+                        3.14f
+                    }), new AreaProperties(GeoJsonPropertiesSubType.Circle, 3.14))
+                },
+            }
+        },
+                })
+                {
+                    Verbose = true,
+                    IncludeEvidence = true,
+                },
+            };
+            var operation = await client.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData, "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
         }
     }
 }

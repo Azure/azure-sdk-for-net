@@ -152,6 +152,12 @@ namespace Azure.Communication.JobRouter
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => Value?.GetHashCode() ?? 0;
 
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
+
         /// <summary> Determines if two <see cref="LabelValue"/> values are the same. </summary>
         public static bool operator ==(LabelValue left, LabelValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LabelValue"/> values are not the same. </summary>

@@ -7,20 +7,30 @@ namespace Azure.Core.Json
 {
     internal struct MutableJsonChange
     {
-        public string Path { get; set; }
+        private readonly JsonSerializerOptions _serializerOptions;
+        private JsonElement? _serializedValue;
 
-        public int Index { get; set; }
+        public MutableJsonChange(string path, int index, object? value, bool replacesJsonElement, JsonSerializerOptions options)
+        {
+            Path = path;
+            Index = index;
+            Value = value;
+            ReplacesJsonElement = replacesJsonElement;
+            _serializerOptions = options;
+        }
 
-        public object? Value { get; set; }
+        public string Path { get; }
+
+        public int Index { get; }
+
+        public object? Value { get; }
 
         /// <summary>
         /// The change invalidates the existing node's JsonElement
         /// due to changes in JsonValueKind or path structure.
         /// If this is true, Value holds a new JsonElement.
         /// </summary>
-        public bool ReplacesJsonElement { get; set; }
-
-        private JsonElement? _serializedValue;
+        public bool ReplacesJsonElement { get; }
 
         internal JsonElement AsJsonElement()
         {
@@ -35,7 +45,7 @@ namespace Azure.Core.Json
                 return element;
             }
 
-            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(Value);
+            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(Value, _serializerOptions);
             _serializedValue = JsonDocument.Parse(bytes).RootElement;
             return _serializedValue.Value;
         }

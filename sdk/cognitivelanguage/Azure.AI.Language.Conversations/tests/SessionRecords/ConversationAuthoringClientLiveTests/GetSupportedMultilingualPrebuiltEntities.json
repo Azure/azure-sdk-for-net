@@ -1,28 +1,28 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/global/prebuilt-entities?multilingual=true\u0026api-version=2022-10-01-preview",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/global/prebuilt-entities?multilingual=true\u0026api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-7d55f2cdb6525f99b5c0bd77ed24e0d3-4d534f8f78ad7628-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "8d6020f6f8e1c2320bc5fa6f90914b41",
+        "traceparent": "00-5a0fa38c6f5266ce71eb215e503ac9a1-5ca8f37abf036449-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20230508.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "78a210f1eb43ede94d686be8ec0554fd",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "e558ed3f-6fc3-4b31-826c-22faefdc6a69",
-        "Content-Length": "2071",
+        "apim-request-id": "8cde6344-5239-4afb-bbc4-4809c879803a",
+        "Content-Length": "2258",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 20 Oct 2022 00:18:32 GMT",
-        "request-id": "e558ed3f-6fc3-4b31-826c-22faefdc6a69",
+        "Date": "Mon, 08 May 2023 23:49:00 GMT",
+        "request-id": "8cde6344-5239-4afb-bbc4-4809c879803a",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "30",
+        "x-envoy-upstream-service-time": "24",
         "x-ms-region": "UK South"
       },
       "ResponseBody": {
@@ -59,7 +59,7 @@
           },
           {
             "category": "Quantity.NumberRange",
-            "description": "a numeric interval",
+            "description": "A numeric interval",
             "examples": "between 25 and 35, 25-35"
           },
           {
@@ -94,7 +94,7 @@
           },
           {
             "category": "DateTime",
-            "description": "exact date values",
+            "description": "Date time expressions",
             "examples": "May 11th"
           },
           {
@@ -111,6 +111,16 @@
             "category": "URL",
             "description": "Websites URLs and links",
             "examples": "www.example.com, http://example.net?name=my_name\u0026age=10"
+          },
+          {
+            "category": "IPAddress",
+            "description": "An IP Address",
+            "examples": "192.168.0.4"
+          },
+          {
+            "category": "Geography.Address",
+            "description": "Full addresses",
+            "examples": "123 main street, TX 75080"
           }
         ],
         "nextLink": null
@@ -120,6 +130,6 @@
   "Variables": {
     "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
     "CONVERSATIONS_KEY": "Sanitized",
-    "RandomSeed": "1463614075"
+    "RandomSeed": "1085961968"
   }
 }

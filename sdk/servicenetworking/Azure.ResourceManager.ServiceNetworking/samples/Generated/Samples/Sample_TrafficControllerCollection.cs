@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             TrafficControllerCollection collection = resourceGroupResource.GetTrafficControllers();
 
             // invoke the operation
-            string trafficControllerName = "TC1";
+            string trafficControllerName = "tc1";
             TrafficControllerResource result = await collection.GetAsync(trafficControllerName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             TrafficControllerCollection collection = resourceGroupResource.GetTrafficControllers();
 
             // invoke the operation
-            string trafficControllerName = "TC1";
+            string trafficControllerName = "tc1";
             bool result = await collection.ExistsAsync(trafficControllerName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             TrafficControllerCollection collection = resourceGroupResource.GetTrafficControllers();
 
             // invoke the operation
-            string trafficControllerName = "TC1";
-            TrafficControllerData data = new TrafficControllerData(new AzureLocation("West US"))
+            string trafficControllerName = "tc1";
+            TrafficControllerData data = new TrafficControllerData(new AzureLocation("NorthCentralUS"))
             {
                 Tags =
 {

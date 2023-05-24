@@ -22,7 +22,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             Optional<string> eligibilityCriteriaEvidence = default;
             Optional<ClinicalNoteEvidence> patientDataEvidence = default;
             Optional<ClinicalCodedElement> patientInfoEvidence = default;
-            Optional<float?> importance = default;
+            Optional<float> importance = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eligibilityCriteriaEvidence"u8))
@@ -52,7 +52,6 @@ namespace Azure.Health.Insights.ClinicalMatching
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        importance = null;
                         continue;
                     }
                     importance = property.Value.GetSingle();

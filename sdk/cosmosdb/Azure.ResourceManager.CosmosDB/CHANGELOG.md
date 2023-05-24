@@ -2,13 +2,8 @@
 
 ## 1.4.0-beta.2 (Unreleased)
 
-### Features Added
-
-### Breaking Changes
-
 ### Bugs Fixed
-
-### Other Changes
+- Fixed an issue that `System.UriFormatException` is thrown when `Uri` type field is empty during serialization of `CosmosDBAccountData`.
 
 ## 1.4.0-beta.1 (2023-04-28)
 

@@ -223,12 +223,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are applicationGroupType. </param>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualApplicationGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualApplicationGroupResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualApplicationGroupResource> GetAllAsync(string filter = null, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualApplicationGroupApplicationGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualApplicationGroupApplicationGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualApplicationGroupApplicationGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, pageSizeHint, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualApplicationGroupApplicationGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, pageSizeHint, isDescending, initialSkip);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualApplicationGroupResource(Client, VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(e)), _virtualApplicationGroupApplicationGroupsClientDiagnostics, Pipeline, "VirtualApplicationGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -246,12 +249,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are applicationGroupType. </param>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualApplicationGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualApplicationGroupResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualApplicationGroupResource> GetAll(string filter = null, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualApplicationGroupApplicationGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualApplicationGroupApplicationGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualApplicationGroupApplicationGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, pageSizeHint, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualApplicationGroupApplicationGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, pageSizeHint, isDescending, initialSkip);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualApplicationGroupResource(Client, VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(e)), _virtualApplicationGroupApplicationGroupsClientDiagnostics, Pipeline, "VirtualApplicationGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
