@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Azure;
 using Azure.Core.Pipeline;
+using Azure.Identity;
 using Azure.Messaging;
 using Azure.Messaging.EventGrid;
 using Microsoft.Azure.WebJobs.Description;
@@ -57,7 +58,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
         // default constructor
         public EventGridExtensionConfigProvider(HttpRequestProcessor httpRequestProcessor, ILoggerFactory loggerFactory)
         {
-            _converter = (attr => new EventGridAsyncCollector(new EventGridPublisherClient(new Uri(attr.TopicEndpointUri), new AzureKeyCredential(attr.TopicKeySetting))));
+            _converter = (attr =>
+            {
+                if (attr.UseDefaultAzureCredential)
+                    return new EventGridAsyncCollector(new EventGridPublisherClient(new Uri(attr.TopicEndpointUri), new DefaultAzureCredential()));
+
+                return new EventGridAsyncCollector(new EventGridPublisherClient(new Uri(attr.TopicEndpointUri), new AzureKeyCredential(attr.TopicKeySetting)));
+            });
             _httpRequestProcessor = httpRequestProcessor;
             _loggerFactory = loggerFactory;
             _diagnosticScopeFactory = new DiagnosticScopeFactory(DiagnosticScopeNamespace, ResourceProviderNamespace, true, false);
@@ -103,7 +110,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             {
                 // if app setting is missing, it will be caught by runtime
                 // this logic tries to validate the practicality of attribute properties
-                if (string.IsNullOrWhiteSpace(a.TopicKeySetting))
+                if (!a.UseDefaultAzureCredential && string.IsNullOrWhiteSpace(a.TopicKeySetting))
                 {
                     throw new InvalidOperationException($"The '{nameof(EventGridAttribute.TopicKeySetting)}' property must be the name of an application setting containing the Topic Key");
                 }
