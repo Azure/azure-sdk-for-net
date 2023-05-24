@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.GraphServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Get</description>
+        /// <description>Accounts_Get</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.GraphServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Get</description>
+        /// <description>Accounts_Get</description>
         /// </item>
         /// </list>
         /// </summary>

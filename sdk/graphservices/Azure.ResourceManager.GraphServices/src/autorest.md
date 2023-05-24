@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: GraphServices
 namespace: Azure.ResourceManager.GraphServices
-require: https://github.com/Azure/azure-rest-api-specs/blob/844b06b77ca841a151a6aa2a459f126e277f3c77/specification/graphservicesprod/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/7b9aa4cc7456fd7ef2bc3166dba1a77bec6bd52e/specification/graphservicesprod/resource-manager/readme.md
 # tag: package-2022-09-22-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
