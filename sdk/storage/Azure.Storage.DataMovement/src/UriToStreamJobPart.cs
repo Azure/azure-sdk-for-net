@@ -273,7 +273,7 @@ namespace Azure.Storage.DataMovement
                 // This should not occur but add a check just in case
                 if (downloadLength != totalLength)
                 {
-                    throw new Exception("Download length did not match expected length.");
+                    throw Errors.SingleDownloadLengthMismatch(totalLength, downloadLength);
                 }
 
                 bool successfulCopy = await CopyToStreamInternal(
