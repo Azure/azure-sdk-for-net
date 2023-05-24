@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Dns
         /// <summary> Initializes a new instance of DnssecConfigData. </summary>
         internal DnssecConfigData()
         {
-            SigningKeys = new ChangeTrackingList<SigningKey>();
+            SigningKeys = new ChangeTrackingList<DnsSigningKey>();
         }
 
         /// <summary> Initializes a new instance of DnssecConfigData. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="etag"> The etag of the DNSSEC configuration. </param>
         /// <param name="provisioningState"> Provisioning State of the DNSSEC configuration. </param>
         /// <param name="signingKeys"> The list of signing keys. </param>
-        internal DnssecConfigData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, ETag? etag, string provisioningState, IReadOnlyList<SigningKey> signingKeys) : base(id, name, resourceType, systemData)
+        internal DnssecConfigData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, ETag? etag, string provisioningState, IReadOnlyList<DnsSigningKey> signingKeys) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             ProvisioningState = provisioningState;
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.Dns
         /// <summary> Provisioning State of the DNSSEC configuration. </summary>
         public string ProvisioningState { get; }
         /// <summary> The list of signing keys. </summary>
-        public IReadOnlyList<SigningKey> SigningKeys { get; }
+        public IReadOnlyList<DnsSigningKey> SigningKeys { get; }
     }
 }

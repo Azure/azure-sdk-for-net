@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class DsRecord : IUtf8JsonSerializable
+    public partial class DnsDSRecordInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Dns.Models
             writer.WriteEndObject();
         }
 
-        internal static DsRecord DeserializeDsRecord(JsonElement element)
+        internal static DnsDSRecordInfo DeserializeDnsDSRecordInfo(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Dns.Models
             }
             Optional<int> keyTag = default;
             Optional<int> algorithm = default;
-            Optional<Digest> digest = default;
+            Optional<DSRecordDigest> digest = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyTag"u8))
@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.Dns.Models
                     {
                         continue;
                     }
-                    digest = Digest.DeserializeDigest(property.Value);
+                    digest = DSRecordDigest.DeserializeDSRecordDigest(property.Value);
                     continue;
                 }
             }
-            return new DsRecord(Optional.ToNullable(keyTag), Optional.ToNullable(algorithm), digest.Value);
+            return new DnsDSRecordInfo(Optional.ToNullable(keyTag), Optional.ToNullable(algorithm), digest.Value);
         }
     }
 }

@@ -259,20 +259,20 @@ namespace Azure.ResourceManager.Dns
         }
         #endregion
 
-        #region DnsTLSARecordResource
+        #region DnsTlsaRecordResource
         /// <summary>
-        /// Gets an object representing a <see cref="DnsTLSARecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsTLSARecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsTLSARecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsTlsaRecordResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsTlsaRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsTlsaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsTLSARecordResource" /> object. </returns>
-        public static DnsTLSARecordResource GetDnsTLSARecordResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DnsTlsaRecordResource" /> object. </returns>
+        public static DnsTlsaRecordResource GetDnsTlsaRecordResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DnsTLSARecordResource.ValidateResourceId(id);
-                return new DnsTLSARecordResource(client, id);
+                DnsTlsaRecordResource.ValidateResourceId(id);
+                return new DnsTlsaRecordResource(client, id);
             }
             );
         }
@@ -297,20 +297,20 @@ namespace Azure.ResourceManager.Dns
         }
         #endregion
 
-        #region DnsNAPTRRecordResource
+        #region DnsNaptrRecordResource
         /// <summary>
-        /// Gets an object representing a <see cref="DnsNAPTRRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsNAPTRRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsNAPTRRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DnsNaptrRecordResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsNaptrRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsNaptrRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsNAPTRRecordResource" /> object. </returns>
-        public static DnsNAPTRRecordResource GetDnsNAPTRRecordResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DnsNaptrRecordResource" /> object. </returns>
+        public static DnsNaptrRecordResource GetDnsNaptrRecordResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DnsNAPTRRecordResource.ValidateResourceId(id);
-                return new DnsNAPTRRecordResource(client, id);
+                DnsNaptrRecordResource.ValidateResourceId(id);
+                return new DnsNaptrRecordResource(client, id);
             }
             );
         }

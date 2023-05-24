@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class Digest : IUtf8JsonSerializable
+    public partial class DSRecordDigest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Dns.Models
             writer.WriteEndObject();
         }
 
-        internal static Digest DeserializeDigest(JsonElement element)
+        internal static DSRecordDigest DeserializeDSRecordDigest(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Dns.Models
                     continue;
                 }
             }
-            return new Digest(Optional.ToNullable(algorithmType), value.Value);
+            return new DSRecordDigest(Optional.ToNullable(algorithmType), value.Value);
         }
     }
 }

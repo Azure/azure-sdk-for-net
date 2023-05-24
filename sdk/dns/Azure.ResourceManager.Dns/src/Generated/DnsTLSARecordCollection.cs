@@ -20,28 +20,28 @@ using Azure.ResourceManager.Dns.Models;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DnsTLSARecordResource" /> and their operations.
-    /// Each <see cref="DnsTLSARecordResource" /> in the collection will belong to the same instance of <see cref="DnsZoneResource" />.
-    /// To get a <see cref="DnsTLSARecordCollection" /> instance call the GetDnsTLSARecords method from an instance of <see cref="DnsZoneResource" />.
+    /// A class representing a collection of <see cref="DnsTlsaRecordResource" /> and their operations.
+    /// Each <see cref="DnsTlsaRecordResource" /> in the collection will belong to the same instance of <see cref="DnsZoneResource" />.
+    /// To get a <see cref="DnsTlsaRecordCollection" /> instance call the GetDnsTlsaRecords method from an instance of <see cref="DnsZoneResource" />.
     /// </summary>
-    public partial class DnsTLSARecordCollection : ArmCollection, IEnumerable<DnsTLSARecordResource>, IAsyncEnumerable<DnsTLSARecordResource>
+    public partial class DnsTlsaRecordCollection : ArmCollection, IEnumerable<DnsTlsaRecordResource>, IAsyncEnumerable<DnsTlsaRecordResource>
     {
-        private readonly ClientDiagnostics _dnsTlsARecordRecordSetsClientDiagnostics;
-        private readonly RecordSetsRestOperations _dnsTlsARecordRecordSetsRestClient;
+        private readonly ClientDiagnostics _dnsTlsaRecordRecordSetsClientDiagnostics;
+        private readonly RecordSetsRestOperations _dnsTlsaRecordRecordSetsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DnsTLSARecordCollection"/> class for mocking. </summary>
-        protected DnsTLSARecordCollection()
+        /// <summary> Initializes a new instance of the <see cref="DnsTlsaRecordCollection"/> class for mocking. </summary>
+        protected DnsTlsaRecordCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DnsTLSARecordCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DnsTlsaRecordCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal DnsTLSARecordCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DnsTlsaRecordCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dnsTlsARecordRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", DnsTLSARecordResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DnsTLSARecordResource.ResourceType, out string dnsTlsARecordRecordSetsApiVersion);
-            _dnsTlsARecordRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dnsTlsARecordRecordSetsApiVersion);
+            _dnsTlsaRecordRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", DnsTlsaRecordResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DnsTlsaRecordResource.ResourceType, out string dnsTlsaRecordRecordSetsApiVersion);
+            _dnsTlsaRecordRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dnsTlsaRecordRecordSetsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DnsTLSARecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relativeRecordSetName, DnsRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DnsTlsaRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relativeRecordSetName, DnsRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dnsTlsARecordRecordSetsClientDiagnostics.CreateScope("DnsTLSARecordCollection.CreateOrUpdate");
+            using var scope = _dnsTlsaRecordRecordSetsClientDiagnostics.CreateScope("DnsTlsaRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _dnsTlsARecordRecordSetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TLSA".ToDnsRecordType(), relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsArmOperation<DnsTLSARecordResource>(Response.FromValue(new DnsTLSARecordResource(Client, response), response.GetRawResponse()));
+                var response = await _dnsTlsaRecordRecordSetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TLSA".ToDnsRecordType(), relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new DnsArmOperation<DnsTlsaRecordResource>(Response.FromValue(new DnsTlsaRecordResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -115,17 +115,17 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DnsTLSARecordResource> CreateOrUpdate(WaitUntil waitUntil, string relativeRecordSetName, DnsRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DnsTlsaRecordResource> CreateOrUpdate(WaitUntil waitUntil, string relativeRecordSetName, DnsRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dnsTlsARecordRecordSetsClientDiagnostics.CreateScope("DnsTLSARecordCollection.CreateOrUpdate");
+            using var scope = _dnsTlsaRecordRecordSetsClientDiagnostics.CreateScope("DnsTlsaRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _dnsTlsARecordRecordSetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TLSA".ToDnsRecordType(), relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new DnsArmOperation<DnsTLSARecordResource>(Response.FromValue(new DnsTLSARecordResource(Client, response), response.GetRawResponse()));
+                var response = _dnsTlsaRecordRecordSetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TLSA".ToDnsRecordType(), relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken);
+                var operation = new DnsArmOperation<DnsTlsaRecordResource>(Response.FromValue(new DnsTlsaRecordResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -153,18 +153,18 @@ namespace Azure.ResourceManager.Dns
         /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        public virtual async Task<Response<DnsTLSARecordResource>> GetAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DnsTlsaRecordResource>> GetAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
 
-            using var scope = _dnsTlsARecordRecordSetsClientDiagnostics.CreateScope("DnsTLSARecordCollection.Get");
+            using var scope = _dnsTlsaRecordRecordSetsClientDiagnostics.CreateScope("DnsTlsaRecordCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dnsTlsARecordRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TLSA".ToDnsRecordType(), relativeRecordSetName, cancellationToken).ConfigureAwait(false);
+                var response = await _dnsTlsaRecordRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TLSA".ToDnsRecordType(), relativeRecordSetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DnsTLSARecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsTlsaRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,18 +189,18 @@ namespace Azure.ResourceManager.Dns
         /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        public virtual Response<DnsTLSARecordResource> Get(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        public virtual Response<DnsTlsaRecordResource> Get(string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
 
-            using var scope = _dnsTlsARecordRecordSetsClientDiagnostics.CreateScope("DnsTLSARecordCollection.Get");
+            using var scope = _dnsTlsaRecordRecordSetsClientDiagnostics.CreateScope("DnsTlsaRecordCollection.Get");
             scope.Start();
             try
             {
-                var response = _dnsTlsARecordRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TLSA".ToDnsRecordType(), relativeRecordSetName, cancellationToken);
+                var response = _dnsTlsaRecordRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TLSA".ToDnsRecordType(), relativeRecordSetName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DnsTLSARecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsTlsaRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -225,12 +225,12 @@ namespace Azure.ResourceManager.Dns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DnsTLSARecordResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DnsTLSARecordResource> GetAllAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DnsTlsaRecordResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DnsTlsaRecordResource> GetAllAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsTlsARecordRecordSetsRestClient.CreateListByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TLSA".ToDnsRecordType(), top, recordsetnamesuffix);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsTlsARecordRecordSetsRestClient.CreateListByTypeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TLSA".ToDnsRecordType(), top, recordsetnamesuffix);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsTLSARecordResource(Client, DnsRecordData.DeserializeDnsRecordData(e)), _dnsTlsARecordRecordSetsClientDiagnostics, Pipeline, "DnsTLSARecordCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsTlsaRecordRecordSetsRestClient.CreateListByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TLSA".ToDnsRecordType(), top, recordsetnamesuffix);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsTlsaRecordRecordSetsRestClient.CreateListByTypeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TLSA".ToDnsRecordType(), top, recordsetnamesuffix);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsTlsaRecordResource(Client, DnsRecordData.DeserializeDnsRecordData(e)), _dnsTlsaRecordRecordSetsClientDiagnostics, Pipeline, "DnsTlsaRecordCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,12 +249,12 @@ namespace Azure.ResourceManager.Dns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DnsTLSARecordResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DnsTLSARecordResource> GetAll(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DnsTlsaRecordResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DnsTlsaRecordResource> GetAll(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsTlsARecordRecordSetsRestClient.CreateListByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TLSA".ToDnsRecordType(), top, recordsetnamesuffix);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsTlsARecordRecordSetsRestClient.CreateListByTypeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TLSA".ToDnsRecordType(), top, recordsetnamesuffix);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsTLSARecordResource(Client, DnsRecordData.DeserializeDnsRecordData(e)), _dnsTlsARecordRecordSetsClientDiagnostics, Pipeline, "DnsTLSARecordCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsTlsaRecordRecordSetsRestClient.CreateListByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TLSA".ToDnsRecordType(), top, recordsetnamesuffix);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsTlsaRecordRecordSetsRestClient.CreateListByTypeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TLSA".ToDnsRecordType(), top, recordsetnamesuffix);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsTlsaRecordResource(Client, DnsRecordData.DeserializeDnsRecordData(e)), _dnsTlsaRecordRecordSetsClientDiagnostics, Pipeline, "DnsTlsaRecordCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -277,11 +277,11 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
 
-            using var scope = _dnsTlsARecordRecordSetsClientDiagnostics.CreateScope("DnsTLSARecordCollection.Exists");
+            using var scope = _dnsTlsaRecordRecordSetsClientDiagnostics.CreateScope("DnsTlsaRecordCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dnsTlsARecordRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TLSA".ToDnsRecordType(), relativeRecordSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _dnsTlsaRecordRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TLSA".ToDnsRecordType(), relativeRecordSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -311,11 +311,11 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
 
-            using var scope = _dnsTlsARecordRecordSetsClientDiagnostics.CreateScope("DnsTLSARecordCollection.Exists");
+            using var scope = _dnsTlsaRecordRecordSetsClientDiagnostics.CreateScope("DnsTlsaRecordCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dnsTlsARecordRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TLSA".ToDnsRecordType(), relativeRecordSetName, cancellationToken: cancellationToken);
+                var response = _dnsTlsaRecordRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "TLSA".ToDnsRecordType(), relativeRecordSetName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        IEnumerator<DnsTLSARecordResource> IEnumerable<DnsTLSARecordResource>.GetEnumerator()
+        IEnumerator<DnsTlsaRecordResource> IEnumerable<DnsTlsaRecordResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Dns
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<DnsTLSARecordResource> IAsyncEnumerable<DnsTLSARecordResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DnsTlsaRecordResource> IAsyncEnumerable<DnsTlsaRecordResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

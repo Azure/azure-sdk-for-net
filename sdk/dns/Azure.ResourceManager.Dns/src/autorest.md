@@ -60,6 +60,7 @@ rename-rules:
   GET: Get
   PUT: Put
   RecordType: DnsRecordType
+  Ds: DS
 
 
 override-operation-name:
@@ -79,8 +80,8 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/SRV: DnsSrvRecord
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/TXT: DnsTxtRecord
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/DS: DnsDSRecord
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/TLSA: DnsTLSARecord
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/NAPTR: DnsNAPTRRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/TLSA: DnsTlsaRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/NAPTR: DnsNaptrRecord
 
 rename-mapping:
   ARecord: DnsARecordInfo
@@ -93,15 +94,20 @@ rename-mapping:
   CnameRecord: DnsCnameRecordInfo
   SoaRecord: DnsSoaRecordInfo
   CaaRecord: DnsCaaRecordInfo
+  DsRecord: DnsDSRecordInfo
+  TlsaRecord: DnsTlsaRecordInfo
+  NaptrRecord: DnsNaptrRecordInfo
   SoaRecord.expireTime: expireTimeInSeconds
   SoaRecord.retryTime: retryTimeInSeconds
   SoaRecord.minimumTTL: minimumTtlInSeconds
   SoaRecord.refreshTime: refreshTimeInSeconds
-
+  Digest: DSRecordDigest
+  
 prepend-rp-prefix:
   - Zone
   - ZoneType
   - ZoneListResult
+  - SigningKey
 
 directive:
   - remove-operation: RecordSets_ListAllByDnsZone

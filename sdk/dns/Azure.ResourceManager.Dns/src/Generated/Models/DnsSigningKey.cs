@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> Represents the signing key. </summary>
-    public partial class SigningKey
+    public partial class DnsSigningKey
     {
-        /// <summary> Initializes a new instance of SigningKey. </summary>
-        internal SigningKey()
+        /// <summary> Initializes a new instance of DnsSigningKey. </summary>
+        internal DnsSigningKey()
         {
             DelegationSignerInfo = new ChangeTrackingList<DelegationSignerInfo>();
         }
 
-        /// <summary> Initializes a new instance of SigningKey. </summary>
+        /// <summary> Initializes a new instance of DnsSigningKey. </summary>
         /// <param name="delegationSignerInfo"> The delegation signer information. </param>
         /// <param name="flags"> The flags specifies how the key is used. </param>
         /// <param name="keyTag"> The key tag value of the DNSKEY Resource Record. </param>
         /// <param name="protocol"> The protocol value. The value is always 3. </param>
         /// <param name="publicKey"> The public key, represented as a Base64 encoding. </param>
         /// <param name="securityAlgorithmType"> The security algorithm type represents the standard security algorithm number of the DNSKEY Resource Record. See: https://www.iana.org/assignments/dns-sec-alg-numbers/dns-sec-alg-numbers.xhtml. </param>
-        internal SigningKey(IReadOnlyList<DelegationSignerInfo> delegationSignerInfo, int? flags, int? keyTag, int? protocol, string publicKey, int? securityAlgorithmType)
+        internal DnsSigningKey(IReadOnlyList<DelegationSignerInfo> delegationSignerInfo, int? flags, int? keyTag, int? protocol, string publicKey, int? securityAlgorithmType)
         {
             DelegationSignerInfo = delegationSignerInfo;
             Flags = flags;

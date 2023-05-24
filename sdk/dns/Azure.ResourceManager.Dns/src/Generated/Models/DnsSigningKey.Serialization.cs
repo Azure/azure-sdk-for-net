@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class SigningKey
+    public partial class DnsSigningKey
     {
-        internal static SigningKey DeserializeSigningKey(JsonElement element)
+        internal static DnsSigningKey DeserializeDnsSigningKey(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Dns.Models
                     continue;
                 }
             }
-            return new SigningKey(Optional.ToList(delegationSignerInfo), Optional.ToNullable(flags), Optional.ToNullable(keyTag), Optional.ToNullable(protocol), publicKey.Value, Optional.ToNullable(securityAlgorithmType));
+            return new DnsSigningKey(Optional.ToList(delegationSignerInfo), Optional.ToNullable(flags), Optional.ToNullable(keyTag), Optional.ToNullable(protocol), publicKey.Value, Optional.ToNullable(securityAlgorithmType));
         }
     }
 }

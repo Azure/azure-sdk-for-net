@@ -18,46 +18,46 @@ using Azure.ResourceManager.Dns.Models;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>
-    /// A Class representing a DnsTLSARecord along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DnsTLSARecordResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDnsTLSARecordResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetDnsTLSARecord method.
+    /// A Class representing a DnsTlsaRecord along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DnsTlsaRecordResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetDnsTlsaRecordResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetDnsTlsaRecord method.
     /// </summary>
-    public partial class DnsTLSARecordResource : ArmResource
+    public partial class DnsTlsaRecordResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DnsTLSARecordResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="DnsTlsaRecordResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/TLSA/{relativeRecordSetName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _dnsTlsARecordRecordSetsClientDiagnostics;
-        private readonly RecordSetsRestOperations _dnsTlsARecordRecordSetsRestClient;
+        private readonly ClientDiagnostics _dnsTlsaRecordRecordSetsClientDiagnostics;
+        private readonly RecordSetsRestOperations _dnsTlsaRecordRecordSetsRestClient;
         private readonly DnsRecordData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="DnsTLSARecordResource"/> class for mocking. </summary>
-        protected DnsTLSARecordResource()
+        /// <summary> Initializes a new instance of the <see cref="DnsTlsaRecordResource"/> class for mocking. </summary>
+        protected DnsTlsaRecordResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DnsTLSARecordResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "DnsTlsaRecordResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DnsTLSARecordResource(ArmClient client, DnsRecordData data) : this(client, data.Id)
+        internal DnsTlsaRecordResource(ArmClient client, DnsRecordData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DnsTLSARecordResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DnsTlsaRecordResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DnsTLSARecordResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DnsTlsaRecordResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dnsTlsARecordRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string dnsTlsARecordRecordSetsApiVersion);
-            _dnsTlsARecordRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dnsTlsARecordRecordSetsApiVersion);
+            _dnsTlsaRecordRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string dnsTlsaRecordRecordSetsApiVersion);
+            _dnsTlsaRecordRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dnsTlsaRecordRecordSetsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -101,16 +101,16 @@ namespace Azure.ResourceManager.Dns
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DnsTLSARecordResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DnsTlsaRecordResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _dnsTlsARecordRecordSetsClientDiagnostics.CreateScope("DnsTLSARecordResource.Get");
+            using var scope = _dnsTlsaRecordRecordSetsClientDiagnostics.CreateScope("DnsTlsaRecordResource.Get");
             scope.Start();
             try
             {
-                var response = await _dnsTlsARecordRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "TLSA".ToDnsRecordType(), Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _dnsTlsaRecordRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "TLSA".ToDnsRecordType(), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DnsTLSARecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsTlsaRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -133,16 +133,16 @@ namespace Azure.ResourceManager.Dns
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DnsTLSARecordResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DnsTlsaRecordResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _dnsTlsARecordRecordSetsClientDiagnostics.CreateScope("DnsTLSARecordResource.Get");
+            using var scope = _dnsTlsaRecordRecordSetsClientDiagnostics.CreateScope("DnsTlsaRecordResource.Get");
             scope.Start();
             try
             {
-                var response = _dnsTlsARecordRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "TLSA".ToDnsRecordType(), Id.Name, cancellationToken);
+                var response = _dnsTlsaRecordRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "TLSA".ToDnsRecordType(), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DnsTLSARecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DnsTlsaRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _dnsTlsARecordRecordSetsClientDiagnostics.CreateScope("DnsTLSARecordResource.Delete");
+            using var scope = _dnsTlsaRecordRecordSetsClientDiagnostics.CreateScope("DnsTlsaRecordResource.Delete");
             scope.Start();
             try
             {
-                var response = await _dnsTlsARecordRecordSetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "TLSA".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _dnsTlsaRecordRecordSetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "TLSA".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -204,11 +204,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _dnsTlsARecordRecordSetsClientDiagnostics.CreateScope("DnsTLSARecordResource.Delete");
+            using var scope = _dnsTlsaRecordRecordSetsClientDiagnostics.CreateScope("DnsTlsaRecordResource.Delete");
             scope.Start();
             try
             {
-                var response = _dnsTlsARecordRecordSetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "TLSA".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken);
+                var response = _dnsTlsaRecordRecordSetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "TLSA".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -238,16 +238,16 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<DnsTLSARecordResource>> UpdateAsync(DnsRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DnsTlsaRecordResource>> UpdateAsync(DnsRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dnsTlsARecordRecordSetsClientDiagnostics.CreateScope("DnsTLSARecordResource.Update");
+            using var scope = _dnsTlsaRecordRecordSetsClientDiagnostics.CreateScope("DnsTlsaRecordResource.Update");
             scope.Start();
             try
             {
-                var response = await _dnsTlsARecordRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "TLSA".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DnsTLSARecordResource(Client, response.Value), response.GetRawResponse());
+                var response = await _dnsTlsaRecordRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "TLSA".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DnsTlsaRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -273,16 +273,16 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<DnsTLSARecordResource> Update(DnsRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<DnsTlsaRecordResource> Update(DnsRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dnsTlsARecordRecordSetsClientDiagnostics.CreateScope("DnsTLSARecordResource.Update");
+            using var scope = _dnsTlsaRecordRecordSetsClientDiagnostics.CreateScope("DnsTlsaRecordResource.Update");
             scope.Start();
             try
             {
-                var response = _dnsTlsARecordRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "TLSA".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken);
-                return Response.FromValue(new DnsTLSARecordResource(Client, response.Value), response.GetRawResponse());
+                var response = _dnsTlsaRecordRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "TLSA".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken);
+                return Response.FromValue(new DnsTlsaRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -8,19 +8,19 @@
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> A TLSA record. For more information about the TLSA record format, see RFC 6698: https://www.rfc-editor.org/rfc/rfc6698. </summary>
-    public partial class TlsaRecord
+    public partial class DnsTlsaRecordInfo
     {
-        /// <summary> Initializes a new instance of TlsaRecord. </summary>
-        public TlsaRecord()
+        /// <summary> Initializes a new instance of DnsTlsaRecordInfo. </summary>
+        public DnsTlsaRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of TlsaRecord. </summary>
+        /// <summary> Initializes a new instance of DnsTlsaRecordInfo. </summary>
         /// <param name="usage"> The usage specifies the provided association that will be used to match the certificate presented in the TLS handshake. </param>
         /// <param name="selector"> The selector specifies which part of the TLS certificate presented by the server will be matched against the association data. </param>
         /// <param name="matchingType"> The matching type specifies how the certificate association is presented. </param>
         /// <param name="certAssociationData"> This specifies the certificate association data to be matched. </param>
-        internal TlsaRecord(int? usage, int? selector, int? matchingType, string certAssociationData)
+        internal DnsTlsaRecordInfo(int? usage, int? selector, int? matchingType, string certAssociationData)
         {
             Usage = usage;
             Selector = selector;

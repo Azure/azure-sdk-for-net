@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class TlsaRecord : IUtf8JsonSerializable
+    public partial class DnsTlsaRecordInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Dns.Models
             writer.WriteEndObject();
         }
 
-        internal static TlsaRecord DeserializeTlsaRecord(JsonElement element)
+        internal static DnsTlsaRecordInfo DeserializeDnsTlsaRecordInfo(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Dns.Models
                     continue;
                 }
             }
-            return new TlsaRecord(Optional.ToNullable(usage), Optional.ToNullable(selector), Optional.ToNullable(matchingType), certAssociationData.Value);
+            return new DnsTlsaRecordInfo(Optional.ToNullable(usage), Optional.ToNullable(selector), Optional.ToNullable(matchingType), certAssociationData.Value);
         }
     }
 }

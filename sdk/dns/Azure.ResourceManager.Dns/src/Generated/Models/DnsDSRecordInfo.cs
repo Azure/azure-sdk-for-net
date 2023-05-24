@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> A DS record. For more information about the DS record format, see RFC 4034: https://www.rfc-editor.org/rfc/rfc4034. </summary>
-    public partial class DsRecord
+    public partial class DnsDSRecordInfo
     {
-        /// <summary> Initializes a new instance of DsRecord. </summary>
-        public DsRecord()
+        /// <summary> Initializes a new instance of DnsDSRecordInfo. </summary>
+        public DnsDSRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DsRecord. </summary>
+        /// <summary> Initializes a new instance of DnsDSRecordInfo. </summary>
         /// <param name="keyTag"> The key tag value is used to determine which DNSKEY Resource Record is used for signature verification. </param>
         /// <param name="algorithm"> The security algorithm type represents the standard security algorithm number of the DNSKEY Resource Record. See: https://www.iana.org/assignments/dns-sec-alg-numbers/dns-sec-alg-numbers.xhtml. </param>
         /// <param name="digest"> The digest entity. </param>
-        internal DsRecord(int? keyTag, int? algorithm, Digest digest)
+        internal DnsDSRecordInfo(int? keyTag, int? algorithm, DSRecordDigest digest)
         {
             KeyTag = keyTag;
             Algorithm = algorithm;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.Dns.Models
         /// <summary> The security algorithm type represents the standard security algorithm number of the DNSKEY Resource Record. See: https://www.iana.org/assignments/dns-sec-alg-numbers/dns-sec-alg-numbers.xhtml. </summary>
         public int? Algorithm { get; set; }
         /// <summary> The digest entity. </summary>
-        public Digest Digest { get; set; }
+        public DSRecordDigest Digest { get; set; }
     }
 }

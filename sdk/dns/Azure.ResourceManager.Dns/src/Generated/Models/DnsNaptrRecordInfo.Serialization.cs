@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class NaptrRecord : IUtf8JsonSerializable
+    public partial class DnsNaptrRecordInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Dns.Models
             writer.WriteEndObject();
         }
 
-        internal static NaptrRecord DeserializeNaptrRecord(JsonElement element)
+        internal static DnsNaptrRecordInfo DeserializeDnsNaptrRecordInfo(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Dns.Models
                     continue;
                 }
             }
-            return new NaptrRecord(Optional.ToNullable(order), Optional.ToNullable(preference), flags.Value, services.Value, regexp.Value, replacement.Value);
+            return new DnsNaptrRecordInfo(Optional.ToNullable(order), Optional.ToNullable(preference), flags.Value, services.Value, regexp.Value, replacement.Value);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Dns
             ResourceType type = default;
             Optional<ResourceManager.Models.SystemData> systemData = default;
             Optional<string> provisioningState = default;
-            Optional<IReadOnlyList<SigningKey>> signingKeys = default;
+            Optional<IReadOnlyList<DnsSigningKey>> signingKeys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Dns
                             {
                                 continue;
                             }
-                            List<SigningKey> array = new List<SigningKey>();
+                            List<DnsSigningKey> array = new List<DnsSigningKey>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SigningKey.DeserializeSigningKey(item));
+                                array.Add(DnsSigningKey.DeserializeDnsSigningKey(item));
                             }
                             signingKeys = array;
                             continue;
