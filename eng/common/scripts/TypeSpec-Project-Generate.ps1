@@ -45,6 +45,14 @@ function NpmInstallForProject([string]$workingDirectory) {
 
         Write-Host("Copying package.json from $replacementPackageJson")
         Copy-Item -Path $replacementPackageJson -Destination "package.json" -Force
+
+        $useAlphaNpmFeed = (Get-Content $replacementPackageJson -Raw).Contains("-alpha.")
+
+        if($useAlphaNpmFeed) {
+            Write-Host "Package.json contains -alpha. in the version, Creating .npmrc using azure-sdk-for-js-test-autorest feed."
+            "registry=https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest/npm/registry/ `n`nalways-auth=true" | Out-File '.npmrc'
+        }
+
         npm install --no-lock-file
         if ($LASTEXITCODE) { exit $LASTEXITCODE }
     }
