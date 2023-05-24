@@ -70,6 +70,7 @@ namespace Azure.AI.OpenAI
         public int? Created { get { throw null; } }
         public string Id { get { throw null; } }
         public string Model { get { throw null; } }
+        public Azure.AI.OpenAI.CompletionsObject Object { get { throw null; } }
         public Azure.AI.OpenAI.CompletionsUsage Usage { get { throw null; } }
     }
     public partial class CompletionsLogProbability
@@ -79,6 +80,23 @@ namespace Azure.AI.OpenAI
         public System.Collections.Generic.IReadOnlyList<float?> TokenLogProbability { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Tokens { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IDictionary<string, float>> TopLogProbability { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CompletionsObject : System.IEquatable<Azure.AI.OpenAI.CompletionsObject>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CompletionsObject(string value) { throw null; }
+        public static Azure.AI.OpenAI.CompletionsObject TextCompletion { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.CompletionsObject other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.CompletionsObject left, Azure.AI.OpenAI.CompletionsObject right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.CompletionsObject (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.CompletionsObject left, Azure.AI.OpenAI.CompletionsObject right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class CompletionsOptions
     {
@@ -109,13 +127,49 @@ namespace Azure.AI.OpenAI
         internal EmbeddingItem() { }
         public System.Collections.Generic.IReadOnlyList<float> Embedding { get { throw null; } }
         public int Index { get { throw null; } }
+        public Azure.AI.OpenAI.EmbeddingItemObject Object { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EmbeddingItemObject : System.IEquatable<Azure.AI.OpenAI.EmbeddingItemObject>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EmbeddingItemObject(string value) { throw null; }
+        public static Azure.AI.OpenAI.EmbeddingItemObject Embedding { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.EmbeddingItemObject other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.EmbeddingItemObject left, Azure.AI.OpenAI.EmbeddingItemObject right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.EmbeddingItemObject (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.EmbeddingItemObject left, Azure.AI.OpenAI.EmbeddingItemObject right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class Embeddings
     {
         internal Embeddings() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.EmbeddingItem> Data { get { throw null; } }
         public string Model { get { throw null; } }
+        public Azure.AI.OpenAI.EmbeddingsObject Object { get { throw null; } }
         public Azure.AI.OpenAI.EmbeddingsUsage Usage { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EmbeddingsObject : System.IEquatable<Azure.AI.OpenAI.EmbeddingsObject>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EmbeddingsObject(string value) { throw null; }
+        public static Azure.AI.OpenAI.EmbeddingsObject List { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.EmbeddingsObject other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.EmbeddingsObject left, Azure.AI.OpenAI.EmbeddingsObject right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.EmbeddingsObject (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.EmbeddingsObject left, Azure.AI.OpenAI.EmbeddingsObject right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class EmbeddingsOptions
     {
