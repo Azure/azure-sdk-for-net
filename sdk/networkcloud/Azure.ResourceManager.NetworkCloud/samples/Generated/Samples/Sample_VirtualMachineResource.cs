@@ -138,7 +138,10 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 ["key1"] = "myvalue1",
 ["key2"] = "myvalue2",
 },
-                VmImageRepositoryCredentials = new ImageRepositoryCredentials("{password}", "myacr.azurecr.io", "myuser"),
+                VmImageRepositoryCredentials = new ImageRepositoryCredentials("myacr.azurecr.io", "myuser")
+                {
+                    Password = "{password}",
+                },
             };
             ArmOperation<VirtualMachineResource> lro = await virtualMachine.UpdateAsync(WaitUntil.Completed, patch);
             VirtualMachineResource result = lro.Value;

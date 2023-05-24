@@ -148,11 +148,17 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             {
                 BareMetalMachineConfigurationData =
 {
-new BareMetalMachineConfigurationData(new AdministrativeCredentials("{password}","username"),"AA:BB:CC:DD:EE:FF","00:BB:CC:DD:EE:FF",1,"BM1219XXX")
+new BareMetalMachineConfigurationData(new AdministrativeCredentials("username")
+{
+Password = "{password}",
+},"AA:BB:CC:DD:EE:FF","00:BB:CC:DD:EE:FF",1,"BM1219XXX")
 {
 MachineDetails = "extraDetails",
 MachineName = "bmmName1",
-},new BareMetalMachineConfigurationData(new AdministrativeCredentials("{password}","username"),"AA:BB:CC:DD:EE:00","00:BB:CC:DD:EE:00",2,"BM1219YYY")
+},new BareMetalMachineConfigurationData(new AdministrativeCredentials("username")
+{
+Password = "{password}",
+},"AA:BB:CC:DD:EE:00","00:BB:CC:DD:EE:00",2,"BM1219YYY")
 {
 MachineDetails = "extraDetails",
 MachineName = "bmmName2",
@@ -161,7 +167,10 @@ MachineName = "bmmName2",
                 RackLocation = "Foo Datacenter, Floor 3, Aisle 9, Rack 2",
                 StorageApplianceConfigurationData =
 {
-new StorageApplianceConfigurationData(new AdministrativeCredentials("{password}","username"),1,"BM1219XXX")
+new StorageApplianceConfigurationData(new AdministrativeCredentials("username")
+{
+Password = "{password}",
+},1,"BM1219XXX")
 {
 StorageApplianceName = "vmName",
 }
@@ -169,7 +178,10 @@ StorageApplianceName = "vmName",
             }, "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/microsoft.operationalInsights/workspaces/logAnalyticsWorkspaceName", ClusterType.SingleRack, "1.0.0", "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/networkFabrics/fabricName")
             {
                 ClusterLocation = "Foo Street, 3rd Floor, row 9",
-                ClusterServicePrincipal = new ServicePrincipalInformation("12345678-1234-1234-1234-123456789012", "{password}", "00000008-0004-0004-0004-000000000012", Guid.Parse("80000000-4000-4000-4000-120000000000")),
+                ClusterServicePrincipal = new ServicePrincipalInformation("12345678-1234-1234-1234-123456789012", "00000008-0004-0004-0004-000000000012", Guid.Parse("80000000-4000-4000-4000-120000000000"))
+                {
+                    Password = "{password}",
+                },
                 ComputeDeploymentThreshold = new ValidationThreshold(ValidationThresholdGrouping.PerCluster, ValidationThresholdType.PercentSuccess, 90),
                 ComputeRackDefinitions =
 {
@@ -177,11 +189,17 @@ new RackDefinition("/subscriptions/subscriptionId/resourceGroups/resourceGroupNa
 {
 BareMetalMachineConfigurationData =
 {
-new BareMetalMachineConfigurationData(new AdministrativeCredentials("{password}","username"),"AA:BB:CC:DD:EE:FF","00:BB:CC:DD:EE:FF",1,"BM1219XXX")
+new BareMetalMachineConfigurationData(new AdministrativeCredentials("username")
+{
+Password = "{password}",
+},"AA:BB:CC:DD:EE:FF","00:BB:CC:DD:EE:FF",1,"BM1219XXX")
 {
 MachineDetails = "extraDetails",
 MachineName = "bmmName1",
-},new BareMetalMachineConfigurationData(new AdministrativeCredentials("{password}","username"),"AA:BB:CC:DD:EE:00","00:BB:CC:DD:EE:00",2,"BM1219YYY")
+},new BareMetalMachineConfigurationData(new AdministrativeCredentials("username")
+{
+Password = "{password}",
+},"AA:BB:CC:DD:EE:00","00:BB:CC:DD:EE:00",2,"BM1219YYY")
 {
 MachineDetails = "extraDetails",
 MachineName = "bmmName2",
@@ -190,7 +208,10 @@ MachineName = "bmmName2",
 RackLocation = "Foo Datacenter, Floor 3, Aisle 9, Rack 2",
 StorageApplianceConfigurationData =
 {
-new StorageApplianceConfigurationData(new AdministrativeCredentials("{password}","username"),1,"BM1219XXX")
+new StorageApplianceConfigurationData(new AdministrativeCredentials("username")
+{
+Password = "{password}",
+},1,"BM1219XXX")
 {
 StorageApplianceName = "vmName",
 }

@@ -178,7 +178,10 @@ new SshPublicKey("ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQU
 },
                 UserData = "dXNlckRhdGVTYW1wbGU=",
                 VmDeviceModel = VirtualMachineDeviceModelType.T2,
-                VmImageRepositoryCredentials = new ImageRepositoryCredentials("{password}", "myacr.azurecr.io", "myuser"),
+                VmImageRepositoryCredentials = new ImageRepositoryCredentials("myacr.azurecr.io", "myuser")
+                {
+                    Password = "{password}",
+                },
                 Tags =
 {
 ["key1"] = "myvalue1",

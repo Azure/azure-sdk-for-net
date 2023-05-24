@@ -142,11 +142,17 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
                 {
                     BareMetalMachineConfigurationData =
 {
-new BareMetalMachineConfigurationData(new AdministrativeCredentials("{password}","username"),"AA:BB:CC:DD:EE:FF","00:BB:CC:DD:EE:FF",1,"BM1219XXX")
+new BareMetalMachineConfigurationData(new AdministrativeCredentials("username")
+{
+Password = "{password}",
+},"AA:BB:CC:DD:EE:FF","00:BB:CC:DD:EE:FF",1,"BM1219XXX")
 {
 MachineDetails = "extraDetails",
 MachineName = "bmmName1",
-},new BareMetalMachineConfigurationData(new AdministrativeCredentials("{password}","username"),"AA:BB:CC:DD:EE:00","00:BB:CC:DD:EE:00",2,"BM1219YYY")
+},new BareMetalMachineConfigurationData(new AdministrativeCredentials("username")
+{
+Password = "{password}",
+},"AA:BB:CC:DD:EE:00","00:BB:CC:DD:EE:00",2,"BM1219YYY")
 {
 MachineDetails = "extraDetails",
 MachineName = "bmmName2",
@@ -155,7 +161,10 @@ MachineName = "bmmName2",
                     RackLocation = "Foo Datacenter, Floor 3, Aisle 9, Rack 2",
                     StorageApplianceConfigurationData =
 {
-new StorageApplianceConfigurationData(new AdministrativeCredentials("{password}","username"),1,"BM1219XXX")
+new StorageApplianceConfigurationData(new AdministrativeCredentials("username")
+{
+Password = "{password}",
+},1,"BM1219XXX")
 {
 StorageApplianceName = "vmName",
 }

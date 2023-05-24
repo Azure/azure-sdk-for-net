@@ -236,7 +236,10 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             // invoke the operation
             BareMetalMachineReplaceContent content = new BareMetalMachineReplaceContent()
             {
-                BmcCredentials = new AdministrativeCredentials("{password}", "bmcuser"),
+                BmcCredentials = new AdministrativeCredentials("bmcuser")
+                {
+                    Password = "{password}",
+                },
                 BmcMacAddress = "00:00:4f:00:57:ad",
                 BootMacAddress = "00:00:4e:00:58:af",
                 MachineName = "name",
