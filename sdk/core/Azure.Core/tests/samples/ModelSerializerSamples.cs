@@ -18,6 +18,24 @@ namespace Azure.Core.Tests.samples
     {
         [Test]
         [Ignore("Only verifying that the sample builds")]
+        public void NewtonSoftSerialize()
+        {
+            #region Snippet:NewtonSoft_Serialize
+            DogListProperty dog = new DogListProperty
+            {
+                Name = "Doggo",
+                IsHungry = true,
+                Weight = 1.1,
+                FoodConsumed = { "kibble", "egg", "peanut butter" },
+            };
+
+            //modelSerializer example
+            Stream stream = ModelSerializer.Serialize(dog);
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
         public void NewtonSoftDeserialize()
         {
             #region Snippet:NewtonSoft_Deserialize

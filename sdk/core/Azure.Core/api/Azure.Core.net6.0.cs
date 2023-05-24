@@ -1090,8 +1090,8 @@ namespace Azure.Core.Serialization
     }
     public static partial class ModelSerializer
     {
-        public static T Deserialize<T>(System.IO.Stream stream, Azure.Core.Serialization.SerializableOptions? options = null) where T : Azure.Core.Serialization.IJsonSerializable, new() { throw null; }
-        public static T Deserialize<T>(string json, Azure.Core.Serialization.SerializableOptions? options = null) where T : Azure.Core.Serialization.IJsonSerializable, new() { throw null; }
+        public static T? Deserialize<T>(System.IO.Stream stream, Azure.Core.Serialization.SerializableOptions? options = null) where T : Azure.Core.Serialization.IJsonSerializable, new() { throw null; }
+        public static T? Deserialize<T>(string json, Azure.Core.Serialization.SerializableOptions? options = null) where T : Azure.Core.Serialization.IJsonSerializable, new() { throw null; }
         public static System.IO.Stream Serialize<T>(T model, Azure.Core.Serialization.SerializableOptions? options = null) where T : Azure.Core.Serialization.IJsonSerializable, new() { throw null; }
     }
     public abstract partial class ObjectSerializer

@@ -130,6 +130,22 @@ Animal model = Animal.StaticDeserialize(new MemoryStream(Encoding.UTF8.GetBytes(
 ## Using ModelSerializer for NewtonSoftJson
 By using the ModelSerializer class, a new instance of Dog does not need to be created before calling Deserialize. Also added ObjectSerializer to Options class so different kinds of Serializers can be used.
 
+Serialization
+```C# Snippet:NewtonSoft_Serialize
+DogListProperty dog = new DogListProperty
+{
+    Name = "Doggo",
+    IsHungry = true,
+    Weight = 1.1,
+    FoodConsumed = { "kibble", "egg", "peanut butter" },
+};
+
+//modelSerializer example
+Stream stream = ModelSerializer.Serialize(dog);
+```
+
+Deserialization
+
 ```C# Snippet:NewtonSoft_Deserialize
 //modelSerializer example
 SerializableOptions options = new SerializableOptions();
