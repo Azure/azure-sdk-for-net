@@ -15,6 +15,7 @@ using Azure.Messaging.EventHubs.Producer;
 using System.Collections.Generic;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging;
+using Newtonsoft.Json.Schema;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.Samples
 {
