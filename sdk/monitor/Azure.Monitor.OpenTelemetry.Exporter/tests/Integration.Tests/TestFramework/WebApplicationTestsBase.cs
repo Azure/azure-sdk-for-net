@@ -8,22 +8,19 @@ using System.Threading;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
-using Microsoft.AspNetCore.Mvc.Testing;
 
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework
 {
-    public abstract class WebApplicationTestsBase : IClassFixture<WebApplicationFactory<AspNetCoreWebApp.Startup>>
+    public abstract class WebApplicationTestsBase
     {
-        protected readonly WebApplicationFactory<AspNetCoreWebApp.Startup> factory;
         protected readonly ITestOutputHelper output;
         internal readonly TelemetryItemOutputHelper telemetryOutput;
 
-        public WebApplicationTestsBase(WebApplicationFactory<AspNetCoreWebApp.Startup> factory, ITestOutputHelper output)
+        public WebApplicationTestsBase(ITestOutputHelper output)
         {
-            this.factory = factory;
             this.output = output;
             this.telemetryOutput = new TelemetryItemOutputHelper(output);
         }
