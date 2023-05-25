@@ -23,11 +23,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.Samples
     {
 #pragma warning disable IDE1006 // Naming Styles
         private SchemaRegistryClient schemaRegistryClient;
-        private static readonly string _schema = "{\r\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r\n  \"title\": \"Employee\",\r\n  \"type\": \"object\",\r\n  \"additionalProperties\": false,\r\n  \"properties\": {\r\n    \"Age\": {\r\n      \"type\": \"integer\",\r\n      \"format\": \"int32\"\r\n    },\r\n    \"Name\": {\r\n      \"type\": [\r\n        \"null\",\r\n        \"string\"\r\n      ]\r\n    }\r\n  }\r\n}";
 
 #pragma warning restore IDE1006 // Naming Styles
 
-        [Test]
+        [Test, Order(0)]
         public void CreateSchemaRegistryClient()
         {
             string fullyQualifiedNamespace = TestEnvironment.SchemaRegistryEndpoint;
@@ -44,7 +43,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.Samples
         [Test]
         public async Task SerializeDeserialize()
         {
-            var client = this.schemaRegistryClient;
+            var client = schemaRegistryClient;
             var groupName = TestEnvironment.SchemaRegistryGroup;
 
             #region Snippet:SchemaRegistryJsonSerializeEventData
@@ -68,7 +67,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.Samples
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var credential = new DefaultAzureCredential();
 #else
-            var fullyQualifiedNamespace = TestEnvironment.SchemaRegistryEndpoint;
+            var fullyQualifiedNamespace = TestEnvironment.SchemaRegistryEventHubEndpoint;
             var eventHubName = TestEnvironment.SchemaRegistryEventHubName;
             var credential = TestEnvironment.Credential;
 #endif
@@ -115,7 +114,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.Samples
             Assert.IsFalse(eventData.IsReadOnly);
             string[] contentType = eventData.ContentType.Split('+');
             Assert.AreEqual(2, contentType.Length);
-            Assert.AreEqual("avro/binary", contentType[0]);
+            Assert.AreEqual("application/json", contentType[0]);
             Assert.IsNotEmpty(contentType[1]);
 
             #region Snippet:SchemaRegistryJsonDeserializeEventDataGenerics
@@ -148,18 +147,19 @@ namespace Microsoft.Azure.Data.SchemaRegistry.JsonSchema.Tests.Samples
         {
             public override bool ValidateAgainstSchema(Object data, Type dataType, string schemaDefinition)
             {
-#if SNIPPET
-                // TODO
-#else
+                // Your implementation using the third-party library of your choice goes here.
+                // This method is optional. If it is not overridden, the default always returns true.
+
                 return true;
-#endif
             }
             public override string GenerateSchemaFromObject(Type dataType)
             {
 #if SNIPPET
-                // TODO
+                // Your implementation using the third-party library of your choice goes here.
+
+                return "<< SCHEMA GENERATED FROM DATATYPE PARAMETER >>";
 #else
-                return _schema;
+                return "{\r\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r\n  \"title\": \"Employee\",\r\n  \"type\": \"object\",\r\n  \"additionalProperties\": false,\r\n  \"properties\": {\r\n    \"Age\": {\r\n      \"type\": \"integer\",\r\n      \"format\": \"int32\"\r\n    },\r\n    \"Name\": {\r\n      \"type\": [\r\n        \"null\",\r\n        \"string\"\r\n      ]\r\n    }\r\n  }\r\n}";
 #endif
             }
         }

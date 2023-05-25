@@ -66,11 +66,16 @@ internal class SampleJsonGenerator : SchemaRegistryJsonSchemaGenerator
 {
     public override bool ValidateAgainstSchema(Object data, Type dataType, string schemaDefinition)
     {
-        // TODO
+        // Your implementation using the third-party library of your choice goes here.
+        // This method is optional. If it is not overridden, the default always returns true.
+
+        return true;
     }
     public override string GenerateSchemaFromObject(Type dataType)
     {
-        // TODO
+        // Your implementation using the third-party library of your choice goes here.
+
+        return "<< SCHEMA GENERATED FROM DATATYPE PARAMETER >>";
     }
 }
 ```
