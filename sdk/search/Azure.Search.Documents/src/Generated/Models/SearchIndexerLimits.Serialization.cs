@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SearchIndexerLimits
     {
-        internal static SearchIndexerLimits DeserializeSearchIndexerLimits(JsonElement element)
+        internal static SearchIndexerLimits DeserializeSearchIndexerLimits(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

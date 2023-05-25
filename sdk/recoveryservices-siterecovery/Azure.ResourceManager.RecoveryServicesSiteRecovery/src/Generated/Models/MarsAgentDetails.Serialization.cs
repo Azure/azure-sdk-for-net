@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class MarsAgentDetails
     {
-        internal static MarsAgentDetails DeserializeMarsAgentDetails(JsonElement element)
+        internal static MarsAgentDetails DeserializeMarsAgentDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

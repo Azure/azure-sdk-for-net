@@ -8,12 +8,13 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     internal partial class MoveResourceError
     {
-        internal static MoveResourceError DeserializeMoveResourceError(JsonElement element)
+        internal static MoveResourceError DeserializeMoveResourceError(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

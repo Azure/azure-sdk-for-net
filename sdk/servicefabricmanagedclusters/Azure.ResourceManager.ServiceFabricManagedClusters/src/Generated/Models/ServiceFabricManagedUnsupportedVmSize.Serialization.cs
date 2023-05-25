@@ -7,13 +7,14 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     public partial class ServiceFabricManagedUnsupportedVmSize
     {
-        internal static ServiceFabricManagedUnsupportedVmSize DeserializeServiceFabricManagedUnsupportedVmSize(JsonElement element)
+        internal static ServiceFabricManagedUnsupportedVmSize DeserializeServiceFabricManagedUnsupportedVmSize(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

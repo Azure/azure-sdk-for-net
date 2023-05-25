@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customAssessmentAutomationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customAssessmentAutomationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomAssessmentAutomationResource(Client, CustomAssessmentAutomationData.DeserializeCustomAssessmentAutomationData(e)), _customAssessmentAutomationClientDiagnostics, Pipeline, "CustomAssessmentAutomationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new CustomAssessmentAutomationResource(Client, CustomAssessmentAutomationData.DeserializeCustomAssessmentAutomationData(e)), _customAssessmentAutomationClientDiagnostics, Pipeline, "CustomAssessmentAutomationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customAssessmentAutomationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customAssessmentAutomationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomAssessmentAutomationResource(Client, CustomAssessmentAutomationData.DeserializeCustomAssessmentAutomationData(e)), _customAssessmentAutomationClientDiagnostics, Pipeline, "CustomAssessmentAutomationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new CustomAssessmentAutomationResource(Client, CustomAssessmentAutomationData.DeserializeCustomAssessmentAutomationData(e)), _customAssessmentAutomationClientDiagnostics, Pipeline, "CustomAssessmentAutomationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

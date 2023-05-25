@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     internal partial class AvailabilityGroupListenerListResult
     {
-        internal static AvailabilityGroupListenerListResult DeserializeAvailabilityGroupListenerListResult(JsonElement element)
+        internal static AvailabilityGroupListenerListResult DeserializeAvailabilityGroupListenerListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

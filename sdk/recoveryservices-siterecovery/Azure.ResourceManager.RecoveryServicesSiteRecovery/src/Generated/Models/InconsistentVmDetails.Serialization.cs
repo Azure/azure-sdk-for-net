@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class InconsistentVmDetails
     {
-        internal static InconsistentVmDetails DeserializeInconsistentVmDetails(JsonElement element)
+        internal static InconsistentVmDetails DeserializeInconsistentVmDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     internal partial class ImportExportExtensionsOperationListResult
     {
-        internal static ImportExportExtensionsOperationListResult DeserializeImportExportExtensionsOperationListResult(JsonElement element)
+        internal static ImportExportExtensionsOperationListResult DeserializeImportExportExtensionsOperationListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

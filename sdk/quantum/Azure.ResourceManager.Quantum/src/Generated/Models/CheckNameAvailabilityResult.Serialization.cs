@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
     public partial class CheckNameAvailabilityResult
     {
-        internal static CheckNameAvailabilityResult DeserializeCheckNameAvailabilityResult(JsonElement element)
+        internal static CheckNameAvailabilityResult DeserializeCheckNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

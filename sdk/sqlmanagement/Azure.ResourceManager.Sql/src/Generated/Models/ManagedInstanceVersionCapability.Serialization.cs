@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class ManagedInstanceVersionCapability
     {
-        internal static ManagedInstanceVersionCapability DeserializeManagedInstanceVersionCapability(JsonElement element)
+        internal static ManagedInstanceVersionCapability DeserializeManagedInstanceVersionCapability(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class EncryptionDetails
     {
-        internal static EncryptionDetails DeserializeEncryptionDetails(JsonElement element)
+        internal static EncryptionDetails DeserializeEncryptionDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

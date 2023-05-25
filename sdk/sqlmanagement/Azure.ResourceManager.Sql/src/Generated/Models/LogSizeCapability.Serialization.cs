@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class LogSizeCapability
     {
-        internal static LogSizeCapability DeserializeLogSizeCapability(JsonElement element)
+        internal static LogSizeCapability DeserializeLogSizeCapability(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

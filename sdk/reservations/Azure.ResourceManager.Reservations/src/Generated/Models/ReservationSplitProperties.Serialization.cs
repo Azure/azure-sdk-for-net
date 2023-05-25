@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class ReservationSplitProperties
     {
-        internal static ReservationSplitProperties DeserializeReservationSplitProperties(JsonElement element)
+        internal static ReservationSplitProperties DeserializeReservationSplitProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

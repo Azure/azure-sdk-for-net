@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     public partial class ServiceBusNameAvailabilityResult
     {
-        internal static ServiceBusNameAvailabilityResult DeserializeServiceBusNameAvailabilityResult(JsonElement element)
+        internal static ServiceBusNameAvailabilityResult DeserializeServiceBusNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

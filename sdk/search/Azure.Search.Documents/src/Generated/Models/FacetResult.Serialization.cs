@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Models
 {
     public partial class FacetResult
     {
-        internal static FacetResult DeserializeFacetResult(JsonElement element)
+        internal static FacetResult DeserializeFacetResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

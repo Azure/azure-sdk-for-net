@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class RunAsAccount
     {
-        internal static RunAsAccount DeserializeRunAsAccount(JsonElement element)
+        internal static RunAsAccount DeserializeRunAsAccount(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

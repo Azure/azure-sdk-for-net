@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Relay;
 
 namespace Azure.ResourceManager.Relay.Models
 {
     internal partial class HybridConnectionListResult
     {
-        internal static HybridConnectionListResult DeserializeHybridConnectionListResult(JsonElement element)
+        internal static HybridConnectionListResult DeserializeHybridConnectionListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

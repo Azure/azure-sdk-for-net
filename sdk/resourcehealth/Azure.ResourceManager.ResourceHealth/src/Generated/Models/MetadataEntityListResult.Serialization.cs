@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     internal partial class MetadataEntityListResult
     {
-        internal static MetadataEntityListResult DeserializeMetadataEntityListResult(JsonElement element)
+        internal static MetadataEntityListResult DeserializeMetadataEntityListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

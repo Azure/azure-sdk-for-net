@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
     internal partial class RedisPatchScheduleListResult
     {
-        internal static RedisPatchScheduleListResult DeserializeRedisPatchScheduleListResult(JsonElement element)
+        internal static RedisPatchScheduleListResult DeserializeRedisPatchScheduleListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

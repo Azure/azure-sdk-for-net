@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     internal partial class SyncDatabaseIdListResult
     {
-        internal static SyncDatabaseIdListResult DeserializeSyncDatabaseIdListResult(JsonElement element)
+        internal static SyncDatabaseIdListResult DeserializeSyncDatabaseIdListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

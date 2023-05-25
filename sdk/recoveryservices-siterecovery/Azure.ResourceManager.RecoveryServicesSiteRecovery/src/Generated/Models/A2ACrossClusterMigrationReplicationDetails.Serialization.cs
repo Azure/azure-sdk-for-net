@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class A2ACrossClusterMigrationReplicationDetails
     {
-        internal static A2ACrossClusterMigrationReplicationDetails DeserializeA2ACrossClusterMigrationReplicationDetails(JsonElement element)
+        internal static A2ACrossClusterMigrationReplicationDetails DeserializeA2ACrossClusterMigrationReplicationDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,6 +8,7 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
 
@@ -15,7 +16,9 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityMLAnalyticsSettingData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.SecurityInsights
             writer.WriteEndObject();
         }
 
-        internal static SecurityMLAnalyticsSettingData DeserializeSecurityMLAnalyticsSettingData(JsonElement element)
+        internal static SecurityMLAnalyticsSettingData DeserializeSecurityMLAnalyticsSettingData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

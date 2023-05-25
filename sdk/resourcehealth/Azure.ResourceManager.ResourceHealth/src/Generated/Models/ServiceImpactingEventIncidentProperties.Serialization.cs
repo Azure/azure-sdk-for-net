@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     public partial class ServiceImpactingEventIncidentProperties
     {
-        internal static ServiceImpactingEventIncidentProperties DeserializeServiceImpactingEventIncidentProperties(JsonElement element)
+        internal static ServiceImpactingEventIncidentProperties DeserializeServiceImpactingEventIncidentProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

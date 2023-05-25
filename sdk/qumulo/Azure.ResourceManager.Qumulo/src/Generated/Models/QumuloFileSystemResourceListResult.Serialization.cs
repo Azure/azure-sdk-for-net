@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Qumulo;
 
 namespace Azure.ResourceManager.Qumulo.Models
 {
     internal partial class QumuloFileSystemResourceListResult
     {
-        internal static QumuloFileSystemResourceListResult DeserializeQumuloFileSystemResourceListResult(JsonElement element)
+        internal static QumuloFileSystemResourceListResult DeserializeQumuloFileSystemResourceListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

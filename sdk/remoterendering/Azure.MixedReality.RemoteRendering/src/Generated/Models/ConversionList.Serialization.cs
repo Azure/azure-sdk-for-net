@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.MixedReality.RemoteRendering
 {
     internal partial class ConversionList
     {
-        internal static ConversionList DeserializeConversionList(JsonElement element)
+        internal static ConversionList DeserializeConversionList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Search.Models
 {
     public partial class SearchServiceNameAvailabilityResult
     {
-        internal static SearchServiceNameAvailabilityResult DeserializeSearchServiceNameAvailabilityResult(JsonElement element)
+        internal static SearchServiceNameAvailabilityResult DeserializeSearchServiceNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

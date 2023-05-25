@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceNetworking.Models;
@@ -16,7 +17,9 @@ namespace Azure.ResourceManager.ServiceNetworking
 {
     public partial class TrafficControllerData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
@@ -38,7 +41,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             writer.WriteEndObject();
         }
 
-        internal static TrafficControllerData DeserializeTrafficControllerData(JsonElement element)
+        internal static TrafficControllerData DeserializeTrafficControllerData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

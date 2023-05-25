@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
     public partial class ProviderPropertiesManagedApplication
     {
-        internal static ProviderPropertiesManagedApplication DeserializeProviderPropertiesManagedApplication(JsonElement element)
+        internal static ProviderPropertiesManagedApplication DeserializeProviderPropertiesManagedApplication(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

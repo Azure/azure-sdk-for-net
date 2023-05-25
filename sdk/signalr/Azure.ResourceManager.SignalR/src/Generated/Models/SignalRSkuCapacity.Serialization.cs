@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
     public partial class SignalRSkuCapacity
     {
-        internal static SignalRSkuCapacity DeserializeSignalRSkuCapacity(JsonElement element)
+        internal static SignalRSkuCapacity DeserializeSignalRSkuCapacity(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

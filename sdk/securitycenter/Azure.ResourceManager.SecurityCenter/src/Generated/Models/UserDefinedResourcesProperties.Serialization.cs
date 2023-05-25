@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class UserDefinedResourcesProperties : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Query != null)
@@ -42,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static UserDefinedResourcesProperties DeserializeUserDefinedResourcesProperties(JsonElement element)
+        internal static UserDefinedResourcesProperties DeserializeUserDefinedResourcesProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

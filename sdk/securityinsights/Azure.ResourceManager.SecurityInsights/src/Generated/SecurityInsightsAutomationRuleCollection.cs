@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsAutomationRuleAutomationRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsAutomationRuleAutomationRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsAutomationRuleResource(Client, SecurityInsightsAutomationRuleData.DeserializeSecurityInsightsAutomationRuleData(e)), _securityInsightsAutomationRuleAutomationRulesClientDiagnostics, Pipeline, "SecurityInsightsAutomationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityInsightsAutomationRuleResource(Client, SecurityInsightsAutomationRuleData.DeserializeSecurityInsightsAutomationRuleData(e)), _securityInsightsAutomationRuleAutomationRulesClientDiagnostics, Pipeline, "SecurityInsightsAutomationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsAutomationRuleAutomationRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsAutomationRuleAutomationRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsAutomationRuleResource(Client, SecurityInsightsAutomationRuleData.DeserializeSecurityInsightsAutomationRuleData(e)), _securityInsightsAutomationRuleAutomationRulesClientDiagnostics, Pipeline, "SecurityInsightsAutomationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityInsightsAutomationRuleResource(Client, SecurityInsightsAutomationRuleData.DeserializeSecurityInsightsAutomationRuleData(e)), _securityInsightsAutomationRuleAutomationRulesClientDiagnostics, Pipeline, "SecurityInsightsAutomationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

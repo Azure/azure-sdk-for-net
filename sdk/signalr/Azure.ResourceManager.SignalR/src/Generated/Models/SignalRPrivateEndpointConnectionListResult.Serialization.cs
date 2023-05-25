@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
     internal partial class SignalRPrivateEndpointConnectionListResult
     {
-        internal static SignalRPrivateEndpointConnectionListResult DeserializeSignalRPrivateEndpointConnectionListResult(JsonElement element)
+        internal static SignalRPrivateEndpointConnectionListResult DeserializeSignalRPrivateEndpointConnectionListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

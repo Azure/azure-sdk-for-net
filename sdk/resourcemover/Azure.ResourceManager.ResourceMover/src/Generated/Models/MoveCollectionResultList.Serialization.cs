@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     internal partial class MoveCollectionResultList
     {
-        internal static MoveCollectionResultList DeserializeMoveCollectionResultList(JsonElement element)
+        internal static MoveCollectionResultList DeserializeMoveCollectionResultList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

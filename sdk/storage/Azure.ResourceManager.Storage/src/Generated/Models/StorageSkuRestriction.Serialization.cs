@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     public partial class StorageSkuRestriction
     {
-        internal static StorageSkuRestriction DeserializeStorageSkuRestriction(JsonElement element)
+        internal static StorageSkuRestriction DeserializeStorageSkuRestriction(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

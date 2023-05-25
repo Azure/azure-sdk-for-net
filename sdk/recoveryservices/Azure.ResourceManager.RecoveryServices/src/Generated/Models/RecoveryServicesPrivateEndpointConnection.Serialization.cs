@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     public partial class RecoveryServicesPrivateEndpointConnection
     {
-        internal static RecoveryServicesPrivateEndpointConnection DeserializeRecoveryServicesPrivateEndpointConnection(JsonElement element)
+        internal static RecoveryServicesPrivateEndpointConnection DeserializeRecoveryServicesPrivateEndpointConnection(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

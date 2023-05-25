@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     internal partial class DeviceSecurityGroupList
     {
-        internal static DeviceSecurityGroupList DeserializeDeviceSecurityGroupList(JsonElement element)
+        internal static DeviceSecurityGroupList DeserializeDeviceSecurityGroupList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

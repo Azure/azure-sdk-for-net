@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class VmmToVmmNetworkMappingSettings
     {
-        internal static VmmToVmmNetworkMappingSettings DeserializeVmmToVmmNetworkMappingSettings(JsonElement element)
+        internal static VmmToVmmNetworkMappingSettings DeserializeVmmToVmmNetworkMappingSettings(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

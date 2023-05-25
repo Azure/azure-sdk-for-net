@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     public partial class ServiceBusPrivateLinkServiceConnectionState : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             writer.WriteEndObject();
         }
 
-        internal static ServiceBusPrivateLinkServiceConnectionState DeserializeServiceBusPrivateLinkServiceConnectionState(JsonElement element)
+        internal static ServiceBusPrivateLinkServiceConnectionState DeserializeServiceBusPrivateLinkServiceConnectionState(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

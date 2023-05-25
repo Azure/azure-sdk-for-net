@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customEntityStoreAssignmentRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customEntityStoreAssignmentRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomEntityStoreAssignmentResource(Client, CustomEntityStoreAssignmentData.DeserializeCustomEntityStoreAssignmentData(e)), _customEntityStoreAssignmentClientDiagnostics, Pipeline, "CustomEntityStoreAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new CustomEntityStoreAssignmentResource(Client, CustomEntityStoreAssignmentData.DeserializeCustomEntityStoreAssignmentData(e)), _customEntityStoreAssignmentClientDiagnostics, Pipeline, "CustomEntityStoreAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customEntityStoreAssignmentRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customEntityStoreAssignmentRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomEntityStoreAssignmentResource(Client, CustomEntityStoreAssignmentData.DeserializeCustomEntityStoreAssignmentData(e)), _customEntityStoreAssignmentClientDiagnostics, Pipeline, "CustomEntityStoreAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new CustomEntityStoreAssignmentResource(Client, CustomEntityStoreAssignmentData.DeserializeCustomEntityStoreAssignmentData(e)), _customEntityStoreAssignmentClientDiagnostics, Pipeline, "CustomEntityStoreAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

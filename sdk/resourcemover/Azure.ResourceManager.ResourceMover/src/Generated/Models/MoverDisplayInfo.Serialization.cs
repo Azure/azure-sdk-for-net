@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     public partial class MoverDisplayInfo
     {
-        internal static MoverDisplayInfo DeserializeMoverDisplayInfo(JsonElement element)
+        internal static MoverDisplayInfo DeserializeMoverDisplayInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class LogAnalyticsIdentifier
     {
-        internal static LogAnalyticsIdentifier DeserializeLogAnalyticsIdentifier(JsonElement element)
+        internal static LogAnalyticsIdentifier DeserializeLogAnalyticsIdentifier(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class InMageAzureV2ReplicationDetails
     {
-        internal static InMageAzureV2ReplicationDetails DeserializeInMageAzureV2ReplicationDetails(JsonElement element)
+        internal static InMageAzureV2ReplicationDetails DeserializeInMageAzureV2ReplicationDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

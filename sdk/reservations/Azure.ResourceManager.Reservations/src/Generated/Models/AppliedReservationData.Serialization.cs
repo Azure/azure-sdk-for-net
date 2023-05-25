@@ -7,13 +7,14 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class AppliedReservationData
     {
-        internal static AppliedReservationData DeserializeAppliedReservationData(JsonElement element)
+        internal static AppliedReservationData DeserializeAppliedReservationData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

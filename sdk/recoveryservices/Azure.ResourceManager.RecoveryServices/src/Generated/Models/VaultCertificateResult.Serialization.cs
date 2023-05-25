@@ -7,13 +7,14 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     public partial class VaultCertificateResult
     {
-        internal static VaultCertificateResult DeserializeVaultCertificateResult(JsonElement element)
+        internal static VaultCertificateResult DeserializeVaultCertificateResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

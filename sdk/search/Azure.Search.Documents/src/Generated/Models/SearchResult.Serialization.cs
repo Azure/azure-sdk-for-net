@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Models
 {
     internal partial class SearchResult
     {
-        internal static SearchResult DeserializeSearchResult(JsonElement element)
+        internal static SearchResult DeserializeSearchResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

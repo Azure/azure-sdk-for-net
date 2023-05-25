@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     public partial class RedisEnterpriseRegionSkuDetail
     {
-        internal static RedisEnterpriseRegionSkuDetail DeserializeRedisEnterpriseRegionSkuDetail(JsonElement element)
+        internal static RedisEnterpriseRegionSkuDetail DeserializeRedisEnterpriseRegionSkuDetail(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

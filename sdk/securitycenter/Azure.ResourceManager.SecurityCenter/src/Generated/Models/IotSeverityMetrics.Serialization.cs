@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class IotSeverityMetrics
     {
-        internal static IotSeverityMetrics DeserializeIotSeverityMetrics(JsonElement element)
+        internal static IotSeverityMetrics DeserializeIotSeverityMetrics(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class ReservationCatalog
     {
-        internal static ReservationCatalog DeserializeReservationCatalog(JsonElement element)
+        internal static ReservationCatalog DeserializeReservationCatalog(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

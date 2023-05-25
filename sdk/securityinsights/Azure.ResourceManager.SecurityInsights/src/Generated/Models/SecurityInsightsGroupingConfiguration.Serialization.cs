@@ -9,12 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class SecurityInsightsGroupingConfiguration : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
@@ -58,7 +61,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsGroupingConfiguration DeserializeSecurityInsightsGroupingConfiguration(JsonElement element)
+        internal static SecurityInsightsGroupingConfiguration DeserializeSecurityInsightsGroupingConfiguration(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

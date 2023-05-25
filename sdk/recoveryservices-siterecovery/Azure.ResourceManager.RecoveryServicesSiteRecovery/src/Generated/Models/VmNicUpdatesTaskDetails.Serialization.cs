@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class VmNicUpdatesTaskDetails
     {
-        internal static VmNicUpdatesTaskDetails DeserializeVmNicUpdatesTaskDetails(JsonElement element)
+        internal static VmNicUpdatesTaskDetails DeserializeVmNicUpdatesTaskDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Quota.Models;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.Quota
 {
     public partial class CurrentUsagesBaseData
     {
-        internal static CurrentUsagesBaseData DeserializeCurrentUsagesBaseData(JsonElement element)
+        internal static CurrentUsagesBaseData DeserializeCurrentUsagesBaseData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class InMageRcmPolicyDetails
     {
-        internal static InMageRcmPolicyDetails DeserializeInMageRcmPolicyDetails(JsonElement element)
+        internal static InMageRcmPolicyDetails DeserializeInMageRcmPolicyDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

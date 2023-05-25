@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Relay.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -15,7 +16,9 @@ namespace Azure.ResourceManager.Relay
 {
     public partial class RelayPrivateEndpointConnectionData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -39,7 +42,7 @@ namespace Azure.ResourceManager.Relay
             writer.WriteEndObject();
         }
 
-        internal static RelayPrivateEndpointConnectionData DeserializeRelayPrivateEndpointConnectionData(JsonElement element)
+        internal static RelayPrivateEndpointConnectionData DeserializeRelayPrivateEndpointConnectionData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

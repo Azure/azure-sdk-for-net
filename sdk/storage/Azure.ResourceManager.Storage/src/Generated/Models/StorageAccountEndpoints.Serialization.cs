@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     public partial class StorageAccountEndpoints
     {
-        internal static StorageAccountEndpoints DeserializeStorageAccountEndpoints(JsonElement element)
+        internal static StorageAccountEndpoints DeserializeStorageAccountEndpoints(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

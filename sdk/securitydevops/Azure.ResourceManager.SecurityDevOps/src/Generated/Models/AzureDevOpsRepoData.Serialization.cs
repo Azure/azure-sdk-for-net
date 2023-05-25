@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityDevOps.Models;
 
@@ -14,7 +15,9 @@ namespace Azure.ResourceManager.SecurityDevOps
 {
     public partial class AzureDevOpsRepoData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
@@ -25,7 +28,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             writer.WriteEndObject();
         }
 
-        internal static AzureDevOpsRepoData DeserializeAzureDevOpsRepoData(JsonElement element)
+        internal static AzureDevOpsRepoData DeserializeAzureDevOpsRepoData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

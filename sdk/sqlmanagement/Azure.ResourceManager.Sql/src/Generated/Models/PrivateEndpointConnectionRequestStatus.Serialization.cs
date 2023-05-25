@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class PrivateEndpointConnectionRequestStatus
     {
-        internal static PrivateEndpointConnectionRequestStatus DeserializePrivateEndpointConnectionRequestStatus(JsonElement element)
+        internal static PrivateEndpointConnectionRequestStatus DeserializePrivateEndpointConnectionRequestStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

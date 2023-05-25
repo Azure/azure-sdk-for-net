@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     public partial class RecoveryServicesNameAvailabilityResult
     {
-        internal static RecoveryServicesNameAvailabilityResult DeserializeRecoveryServicesNameAvailabilityResult(JsonElement element)
+        internal static RecoveryServicesNameAvailabilityResult DeserializeRecoveryServicesNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

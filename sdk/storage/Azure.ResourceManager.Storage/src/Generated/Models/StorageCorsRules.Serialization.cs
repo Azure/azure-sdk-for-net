@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     internal partial class StorageCorsRules : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(CorsRules))
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteEndObject();
         }
 
-        internal static StorageCorsRules DeserializeStorageCorsRules(JsonElement element)
+        internal static StorageCorsRules DeserializeStorageCorsRules(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

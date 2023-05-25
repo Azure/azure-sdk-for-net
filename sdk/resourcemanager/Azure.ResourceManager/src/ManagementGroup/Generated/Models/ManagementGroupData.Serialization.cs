@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ManagementGroups.Models;
 using Azure.ResourceManager.Models;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.ManagementGroups
 {
     public partial class ManagementGroupData
     {
-        internal static ManagementGroupData DeserializeManagementGroupData(JsonElement element)
+        internal static ManagementGroupData DeserializeManagementGroupData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

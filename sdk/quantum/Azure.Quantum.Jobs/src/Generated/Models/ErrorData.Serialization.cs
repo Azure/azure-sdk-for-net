@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Quantum.Jobs.Models
 {
     public partial class ErrorData
     {
-        internal static ErrorData DeserializeErrorData(JsonElement element)
+        internal static ErrorData DeserializeErrorData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

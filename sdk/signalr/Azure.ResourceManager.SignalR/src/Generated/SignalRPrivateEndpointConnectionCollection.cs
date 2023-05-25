@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.SignalR
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRPrivateEndpointConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _signalRPrivateEndpointConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SignalRPrivateEndpointConnectionResource(Client, SignalRPrivateEndpointConnectionData.DeserializeSignalRPrivateEndpointConnectionData(e)), _signalRPrivateEndpointConnectionClientDiagnostics, Pipeline, "SignalRPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SignalRPrivateEndpointConnectionResource(Client, SignalRPrivateEndpointConnectionData.DeserializeSignalRPrivateEndpointConnectionData(e)), _signalRPrivateEndpointConnectionClientDiagnostics, Pipeline, "SignalRPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.SignalR
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRPrivateEndpointConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _signalRPrivateEndpointConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SignalRPrivateEndpointConnectionResource(Client, SignalRPrivateEndpointConnectionData.DeserializeSignalRPrivateEndpointConnectionData(e)), _signalRPrivateEndpointConnectionClientDiagnostics, Pipeline, "SignalRPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SignalRPrivateEndpointConnectionResource(Client, SignalRPrivateEndpointConnectionData.DeserializeSignalRPrivateEndpointConnectionData(e)), _signalRPrivateEndpointConnectionClientDiagnostics, Pipeline, "SignalRPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

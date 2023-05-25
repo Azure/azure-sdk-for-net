@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class SecurityAutomationValidationStatus
     {
-        internal static SecurityAutomationValidationStatus DeserializeSecurityAutomationValidationStatus(JsonElement element)
+        internal static SecurityAutomationValidationStatus DeserializeSecurityAutomationValidationStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

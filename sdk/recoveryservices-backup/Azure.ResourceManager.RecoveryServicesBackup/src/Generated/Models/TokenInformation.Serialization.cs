@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class TokenInformation
     {
-        internal static TokenInformation DeserializeTokenInformation(JsonElement element)
+        internal static TokenInformation DeserializeTokenInformation(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

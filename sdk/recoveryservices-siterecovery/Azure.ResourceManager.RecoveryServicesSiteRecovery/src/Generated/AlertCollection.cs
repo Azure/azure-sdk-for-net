@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _alertReplicationAlertSettingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _alertReplicationAlertSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AlertResource(Client, AlertData.DeserializeAlertData(e)), _alertReplicationAlertSettingsClientDiagnostics, Pipeline, "AlertCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AlertResource(Client, AlertData.DeserializeAlertData(e)), _alertReplicationAlertSettingsClientDiagnostics, Pipeline, "AlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _alertReplicationAlertSettingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _alertReplicationAlertSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AlertResource(Client, AlertData.DeserializeAlertData(e)), _alertReplicationAlertSettingsClientDiagnostics, Pipeline, "AlertCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AlertResource(Client, AlertData.DeserializeAlertData(e)), _alertReplicationAlertSettingsClientDiagnostics, Pipeline, "AlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

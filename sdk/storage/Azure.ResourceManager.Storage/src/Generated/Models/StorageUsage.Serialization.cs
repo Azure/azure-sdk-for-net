@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     public partial class StorageUsage
     {
-        internal static StorageUsage DeserializeStorageUsage(JsonElement element)
+        internal static StorageUsage DeserializeStorageUsage(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

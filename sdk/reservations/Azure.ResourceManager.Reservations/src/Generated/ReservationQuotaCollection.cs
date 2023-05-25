@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Reservations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationQuotaQuotaRestClient.CreateListRequest(Id.SubscriptionId, _providerId, new AzureLocation(_location));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationQuotaQuotaRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, _providerId, new AzureLocation(_location));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReservationQuotaResource(Client, ReservationQuotaData.DeserializeReservationQuotaData(e)), _reservationQuotaQuotaClientDiagnostics, Pipeline, "ReservationQuotaCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ReservationQuotaResource(Client, ReservationQuotaData.DeserializeReservationQuotaData(e)), _reservationQuotaQuotaClientDiagnostics, Pipeline, "ReservationQuotaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Reservations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationQuotaQuotaRestClient.CreateListRequest(Id.SubscriptionId, _providerId, new AzureLocation(_location));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationQuotaQuotaRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, _providerId, new AzureLocation(_location));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReservationQuotaResource(Client, ReservationQuotaData.DeserializeReservationQuotaData(e)), _reservationQuotaQuotaClientDiagnostics, Pipeline, "ReservationQuotaCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ReservationQuotaResource(Client, ReservationQuotaData.DeserializeReservationQuotaData(e)), _reservationQuotaQuotaClientDiagnostics, Pipeline, "ReservationQuotaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

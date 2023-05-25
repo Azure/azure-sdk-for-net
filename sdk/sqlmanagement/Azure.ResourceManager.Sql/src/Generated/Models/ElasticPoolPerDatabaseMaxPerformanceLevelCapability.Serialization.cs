@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class ElasticPoolPerDatabaseMaxPerformanceLevelCapability
     {
-        internal static ElasticPoolPerDatabaseMaxPerformanceLevelCapability DeserializeElasticPoolPerDatabaseMaxPerformanceLevelCapability(JsonElement element)
+        internal static ElasticPoolPerDatabaseMaxPerformanceLevelCapability DeserializeElasticPoolPerDatabaseMaxPerformanceLevelCapability(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

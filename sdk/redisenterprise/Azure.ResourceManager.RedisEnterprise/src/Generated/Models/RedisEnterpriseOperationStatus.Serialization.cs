@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     public partial class RedisEnterpriseOperationStatus
     {
-        internal static RedisEnterpriseOperationStatus DeserializeRedisEnterpriseOperationStatus(JsonElement element)
+        internal static RedisEnterpriseOperationStatus DeserializeRedisEnterpriseOperationStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

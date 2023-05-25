@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     internal partial class NetworkRuleSetListResult
     {
-        internal static NetworkRuleSetListResult DeserializeNetworkRuleSetListResult(JsonElement element)
+        internal static NetworkRuleSetListResult DeserializeNetworkRuleSetListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class InMageDiskDetails
     {
-        internal static InMageDiskDetails DeserializeInMageDiskDetails(JsonElement element)
+        internal static InMageDiskDetails DeserializeInMageDiskDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     public partial class AffectedMoverResourceInfo
     {
-        internal static AffectedMoverResourceInfo DeserializeAffectedMoverResourceInfo(JsonElement element)
+        internal static AffectedMoverResourceInfo DeserializeAffectedMoverResourceInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

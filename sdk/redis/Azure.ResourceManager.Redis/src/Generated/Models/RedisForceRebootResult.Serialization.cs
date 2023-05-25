@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Redis.Models
 {
     public partial class RedisForceRebootResult
     {
-        internal static RedisForceRebootResult DeserializeRedisForceRebootResult(JsonElement element)
+        internal static RedisForceRebootResult DeserializeRedisForceRebootResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

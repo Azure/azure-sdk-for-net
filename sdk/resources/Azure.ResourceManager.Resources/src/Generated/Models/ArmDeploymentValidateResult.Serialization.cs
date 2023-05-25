@@ -8,12 +8,13 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ArmDeploymentValidateResult
     {
-        internal static ArmDeploymentValidateResult DeserializeArmDeploymentValidateResult(JsonElement element)
+        internal static ArmDeploymentValidateResult DeserializeArmDeploymentValidateResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

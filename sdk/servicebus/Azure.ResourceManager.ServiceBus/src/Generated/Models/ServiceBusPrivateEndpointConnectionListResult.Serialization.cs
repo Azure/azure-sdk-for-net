@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     internal partial class ServiceBusPrivateEndpointConnectionListResult
     {
-        internal static ServiceBusPrivateEndpointConnectionListResult DeserializeServiceBusPrivateEndpointConnectionListResult(JsonElement element)
+        internal static ServiceBusPrivateEndpointConnectionListResult DeserializeServiceBusPrivateEndpointConnectionListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

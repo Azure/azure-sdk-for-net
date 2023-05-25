@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
     public partial class ManagementGroupPathElement
     {
-        internal static ManagementGroupPathElement DeserializeManagementGroupPathElement(JsonElement element)
+        internal static ManagementGroupPathElement DeserializeManagementGroupPathElement(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

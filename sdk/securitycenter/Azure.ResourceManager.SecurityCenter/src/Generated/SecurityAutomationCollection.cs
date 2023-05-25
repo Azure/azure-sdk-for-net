@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAutomationAutomationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityAutomationAutomationsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityAutomationResource(Client, SecurityAutomationData.DeserializeSecurityAutomationData(e)), _securityAutomationAutomationsClientDiagnostics, Pipeline, "SecurityAutomationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityAutomationResource(Client, SecurityAutomationData.DeserializeSecurityAutomationData(e)), _securityAutomationAutomationsClientDiagnostics, Pipeline, "SecurityAutomationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAutomationAutomationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityAutomationAutomationsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityAutomationResource(Client, SecurityAutomationData.DeserializeSecurityAutomationData(e)), _securityAutomationAutomationsClientDiagnostics, Pipeline, "SecurityAutomationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityAutomationResource(Client, SecurityAutomationData.DeserializeSecurityAutomationData(e)), _securityAutomationAutomationsClientDiagnostics, Pipeline, "SecurityAutomationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

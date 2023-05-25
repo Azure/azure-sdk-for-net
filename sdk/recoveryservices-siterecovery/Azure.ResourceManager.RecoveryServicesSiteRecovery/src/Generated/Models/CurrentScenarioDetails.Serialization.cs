@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class CurrentScenarioDetails
     {
-        internal static CurrentScenarioDetails DeserializeCurrentScenarioDetails(JsonElement element)
+        internal static CurrentScenarioDetails DeserializeCurrentScenarioDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     public partial class MigrationRecoveryPointData
     {
-        internal static MigrationRecoveryPointData DeserializeMigrationRecoveryPointData(JsonElement element)
+        internal static MigrationRecoveryPointData DeserializeMigrationRecoveryPointData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

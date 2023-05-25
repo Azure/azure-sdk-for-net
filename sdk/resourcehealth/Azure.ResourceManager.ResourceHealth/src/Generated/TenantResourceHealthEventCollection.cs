@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantResourceHealthEventEventsRestClient.CreateListByTenantIdRequest(filter, queryStartTime);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantResourceHealthEventEventsRestClient.CreateListByTenantIdNextPageRequest(nextLink, filter, queryStartTime);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TenantResourceHealthEventResource(Client, ResourceHealthEventData.DeserializeResourceHealthEventData(e)), _tenantResourceHealthEventEventsClientDiagnostics, Pipeline, "TenantResourceHealthEventCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new TenantResourceHealthEventResource(Client, ResourceHealthEventData.DeserializeResourceHealthEventData(e)), _tenantResourceHealthEventEventsClientDiagnostics, Pipeline, "TenantResourceHealthEventCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantResourceHealthEventEventsRestClient.CreateListByTenantIdRequest(filter, queryStartTime);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantResourceHealthEventEventsRestClient.CreateListByTenantIdNextPageRequest(nextLink, filter, queryStartTime);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TenantResourceHealthEventResource(Client, ResourceHealthEventData.DeserializeResourceHealthEventData(e)), _tenantResourceHealthEventEventsClientDiagnostics, Pipeline, "TenantResourceHealthEventCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new TenantResourceHealthEventResource(Client, ResourceHealthEventData.DeserializeResourceHealthEventData(e)), _tenantResourceHealthEventEventsClientDiagnostics, Pipeline, "TenantResourceHealthEventCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

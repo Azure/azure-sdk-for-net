@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class InMageRcmFabricSpecificDetails
     {
-        internal static InMageRcmFabricSpecificDetails DeserializeInMageRcmFabricSpecificDetails(JsonElement element)
+        internal static InMageRcmFabricSpecificDetails DeserializeInMageRcmFabricSpecificDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

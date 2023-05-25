@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     internal partial class TemplateSpecsListResult
     {
-        internal static TemplateSpecsListResult DeserializeTemplateSpecsListResult(JsonElement element)
+        internal static TemplateSpecsListResult DeserializeTemplateSpecsListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sql
         public virtual AsyncPageable<SqlDatabaseAdvisorResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseAdvisorDatabaseAdvisorsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SqlDatabaseAdvisorResource(Client, SqlAdvisorData.DeserializeSqlAdvisorData(e)), _sqlDatabaseAdvisorDatabaseAdvisorsClientDiagnostics, Pipeline, "SqlDatabaseAdvisorCollection.GetAll", "", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new SqlDatabaseAdvisorResource(Client, SqlAdvisorData.DeserializeSqlAdvisorData(e)), _sqlDatabaseAdvisorDatabaseAdvisorsClientDiagnostics, Pipeline, "SqlDatabaseAdvisorCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Pageable<SqlDatabaseAdvisorResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseAdvisorDatabaseAdvisorsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SqlDatabaseAdvisorResource(Client, SqlAdvisorData.DeserializeSqlAdvisorData(e)), _sqlDatabaseAdvisorDatabaseAdvisorsClientDiagnostics, Pipeline, "SqlDatabaseAdvisorCollection.GetAll", "", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new SqlDatabaseAdvisorResource(Client, SqlAdvisorData.DeserializeSqlAdvisorData(e)), _sqlDatabaseAdvisorDatabaseAdvisorsClientDiagnostics, Pipeline, "SqlDatabaseAdvisorCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>

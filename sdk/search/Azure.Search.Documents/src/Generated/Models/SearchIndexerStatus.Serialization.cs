@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SearchIndexerStatus
     {
-        internal static SearchIndexerStatus DeserializeSearchIndexerStatus(JsonElement element)
+        internal static SearchIndexerStatus DeserializeSearchIndexerStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     internal partial class UnknownReplicationProtectionIntentProviderSpecificSettings
     {
-        internal static UnknownReplicationProtectionIntentProviderSpecificSettings DeserializeUnknownReplicationProtectionIntentProviderSpecificSettings(JsonElement element)
+        internal static UnknownReplicationProtectionIntentProviderSpecificSettings DeserializeUnknownReplicationProtectionIntentProviderSpecificSettings(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

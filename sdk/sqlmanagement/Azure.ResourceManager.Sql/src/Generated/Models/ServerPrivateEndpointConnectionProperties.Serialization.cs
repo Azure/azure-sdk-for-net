@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class ServerPrivateEndpointConnectionProperties
     {
-        internal static ServerPrivateEndpointConnectionProperties DeserializeServerPrivateEndpointConnectionProperties(JsonElement element)
+        internal static ServerPrivateEndpointConnectionProperties DeserializeServerPrivateEndpointConnectionProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

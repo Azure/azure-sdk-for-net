@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
     public partial class ProviderProperties
     {
-        internal static ProviderProperties DeserializeProviderProperties(JsonElement element)
+        internal static ProviderProperties DeserializeProviderProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

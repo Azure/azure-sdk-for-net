@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SearchServiceStatistics
     {
-        internal static SearchServiceStatistics DeserializeSearchServiceStatistics(JsonElement element)
+        internal static SearchServiceStatistics DeserializeSearchServiceStatistics(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

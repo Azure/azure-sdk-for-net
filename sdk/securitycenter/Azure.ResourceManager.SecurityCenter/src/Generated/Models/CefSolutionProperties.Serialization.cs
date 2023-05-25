@@ -9,13 +9,16 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class CefSolutionProperties : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Hostname))
@@ -60,7 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static CefSolutionProperties DeserializeCefSolutionProperties(JsonElement element)
+        internal static CefSolutionProperties DeserializeCefSolutionProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class A2AProtectedDiskDetails
     {
-        internal static A2AProtectedDiskDetails DeserializeA2AProtectedDiskDetails(JsonElement element)
+        internal static A2AProtectedDiskDetails DeserializeA2AProtectedDiskDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

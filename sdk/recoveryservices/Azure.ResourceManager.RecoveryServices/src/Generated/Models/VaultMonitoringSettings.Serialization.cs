@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     public partial class VaultMonitoringSettings : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(AzureMonitorAlertSettings))
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             writer.WriteEndObject();
         }
 
-        internal static VaultMonitoringSettings DeserializeVaultMonitoringSettings(JsonElement element)
+        internal static VaultMonitoringSettings DeserializeVaultMonitoringSettings(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

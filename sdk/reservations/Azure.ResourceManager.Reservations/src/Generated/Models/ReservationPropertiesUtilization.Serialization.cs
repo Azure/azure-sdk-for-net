@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class ReservationPropertiesUtilization
     {
-        internal static ReservationPropertiesUtilization DeserializeReservationPropertiesUtilization(JsonElement element)
+        internal static ReservationPropertiesUtilization DeserializeReservationPropertiesUtilization(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

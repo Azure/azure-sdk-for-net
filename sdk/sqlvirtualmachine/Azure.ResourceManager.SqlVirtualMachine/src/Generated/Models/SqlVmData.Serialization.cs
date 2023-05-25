@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SqlVirtualMachine.Models;
 
@@ -16,7 +17,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 {
     public partial class SqlVmData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
@@ -113,7 +116,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             writer.WriteEndObject();
         }
 
-        internal static SqlVmData DeserializeSqlVmData(JsonElement element)
+        internal static SqlVmData DeserializeSqlVmData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

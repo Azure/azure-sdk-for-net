@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     public partial class AccountImmutabilityPolicy : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ImmutabilityPeriodSinceCreationInDays))
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteEndObject();
         }
 
-        internal static AccountImmutabilityPolicy DeserializeAccountImmutabilityPolicy(JsonElement element)
+        internal static AccountImmutabilityPolicy DeserializeAccountImmutabilityPolicy(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

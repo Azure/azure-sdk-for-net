@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class InitialReplicationDetails
     {
-        internal static InitialReplicationDetails DeserializeInitialReplicationDetails(JsonElement element)
+        internal static InitialReplicationDetails DeserializeInitialReplicationDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     internal partial class ListSkillsetsResult
     {
-        internal static ListSkillsetsResult DeserializeListSkillsetsResult(JsonElement element)
+        internal static ListSkillsetsResult DeserializeListSkillsetsResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

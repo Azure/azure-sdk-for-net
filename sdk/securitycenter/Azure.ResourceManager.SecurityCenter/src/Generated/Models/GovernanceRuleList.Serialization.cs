@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     internal partial class GovernanceRuleList
     {
-        internal static GovernanceRuleList DeserializeGovernanceRuleList(JsonElement element)
+        internal static GovernanceRuleList DeserializeGovernanceRuleList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

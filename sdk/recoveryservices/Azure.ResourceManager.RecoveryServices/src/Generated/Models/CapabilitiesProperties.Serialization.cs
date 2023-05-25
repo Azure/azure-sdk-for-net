@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     internal partial class CapabilitiesProperties : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DnsZones))
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             writer.WriteEndObject();
         }
 
-        internal static CapabilitiesProperties DeserializeCapabilitiesProperties(JsonElement element)
+        internal static CapabilitiesProperties DeserializeCapabilitiesProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

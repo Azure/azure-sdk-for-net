@@ -7,13 +7,14 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class SupportedOperatingSystems
     {
-        internal static SupportedOperatingSystems DeserializeSupportedOperatingSystems(JsonElement element)
+        internal static SupportedOperatingSystems DeserializeSupportedOperatingSystems(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

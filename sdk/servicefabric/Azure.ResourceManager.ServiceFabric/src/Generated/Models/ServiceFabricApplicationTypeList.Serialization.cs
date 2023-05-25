@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
     internal partial class ServiceFabricApplicationTypeList
     {
-        internal static ServiceFabricApplicationTypeList DeserializeServiceFabricApplicationTypeList(JsonElement element)
+        internal static ServiceFabricApplicationTypeList DeserializeServiceFabricApplicationTypeList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

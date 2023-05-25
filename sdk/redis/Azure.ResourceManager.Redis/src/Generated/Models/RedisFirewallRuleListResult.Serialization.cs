@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
     internal partial class RedisFirewallRuleListResult
     {
-        internal static RedisFirewallRuleListResult DeserializeRedisFirewallRuleListResult(JsonElement element)
+        internal static RedisFirewallRuleListResult DeserializeRedisFirewallRuleListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

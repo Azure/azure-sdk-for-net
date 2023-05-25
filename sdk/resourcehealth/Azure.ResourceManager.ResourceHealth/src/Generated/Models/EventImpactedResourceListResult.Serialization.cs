@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     internal partial class EventImpactedResourceListResult
     {
-        internal static EventImpactedResourceListResult DeserializeEventImpactedResourceListResult(JsonElement element)
+        internal static EventImpactedResourceListResult DeserializeEventImpactedResourceListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

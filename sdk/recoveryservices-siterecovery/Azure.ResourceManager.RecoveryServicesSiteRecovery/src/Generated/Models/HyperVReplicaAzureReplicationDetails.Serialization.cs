@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class HyperVReplicaAzureReplicationDetails
     {
-        internal static HyperVReplicaAzureReplicationDetails DeserializeHyperVReplicaAzureReplicationDetails(JsonElement element)
+        internal static HyperVReplicaAzureReplicationDetails DeserializeHyperVReplicaAzureReplicationDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

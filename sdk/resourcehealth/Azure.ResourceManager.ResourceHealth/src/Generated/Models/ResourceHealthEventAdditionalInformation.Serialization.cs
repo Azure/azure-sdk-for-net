@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     internal partial class ResourceHealthEventAdditionalInformation
     {
-        internal static ResourceHealthEventAdditionalInformation DeserializeResourceHealthEventAdditionalInformation(JsonElement element)
+        internal static ResourceHealthEventAdditionalInformation DeserializeResourceHealthEventAdditionalInformation(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

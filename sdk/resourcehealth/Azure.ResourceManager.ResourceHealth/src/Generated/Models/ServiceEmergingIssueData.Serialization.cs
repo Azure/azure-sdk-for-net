@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ResourceHealth.Models;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.ResourceHealth
 {
     public partial class ServiceEmergingIssueData
     {
-        internal static ServiceEmergingIssueData DeserializeServiceEmergingIssueData(JsonElement element)
+        internal static ServiceEmergingIssueData DeserializeServiceEmergingIssueData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

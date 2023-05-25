@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     public partial class FabricData
     {
-        internal static FabricData DeserializeFabricData(JsonElement element)
+        internal static FabricData DeserializeFabricData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

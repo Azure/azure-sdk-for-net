@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class InMageAzureV2SwitchProviderBlockingErrorDetails
     {
-        internal static InMageAzureV2SwitchProviderBlockingErrorDetails DeserializeInMageAzureV2SwitchProviderBlockingErrorDetails(JsonElement element)
+        internal static InMageAzureV2SwitchProviderBlockingErrorDetails DeserializeInMageAzureV2SwitchProviderBlockingErrorDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

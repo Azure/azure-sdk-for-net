@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ProviderPermission
     {
-        internal static ProviderPermission DeserializeProviderPermission(JsonElement element)
+        internal static ProviderPermission DeserializeProviderPermission(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

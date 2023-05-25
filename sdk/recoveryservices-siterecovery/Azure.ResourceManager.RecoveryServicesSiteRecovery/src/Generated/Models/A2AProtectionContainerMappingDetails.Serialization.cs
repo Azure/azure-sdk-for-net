@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class A2AProtectionContainerMappingDetails
     {
-        internal static A2AProtectionContainerMappingDetails DeserializeA2AProtectionContainerMappingDetails(JsonElement element)
+        internal static A2AProtectionContainerMappingDetails DeserializeA2AProtectionContainerMappingDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

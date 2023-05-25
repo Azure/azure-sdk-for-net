@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class SyncFullSchemaTable
     {
-        internal static SyncFullSchemaTable DeserializeSyncFullSchemaTable(JsonElement element)
+        internal static SyncFullSchemaTable DeserializeSyncFullSchemaTable(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

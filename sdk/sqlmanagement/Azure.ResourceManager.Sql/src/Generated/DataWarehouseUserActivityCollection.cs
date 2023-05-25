@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataWarehouseUserActivityRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataWarehouseUserActivityRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataWarehouseUserActivityResource(Client, DataWarehouseUserActivityData.DeserializeDataWarehouseUserActivityData(e)), _dataWarehouseUserActivityClientDiagnostics, Pipeline, "DataWarehouseUserActivityCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DataWarehouseUserActivityResource(Client, DataWarehouseUserActivityData.DeserializeDataWarehouseUserActivityData(e)), _dataWarehouseUserActivityClientDiagnostics, Pipeline, "DataWarehouseUserActivityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataWarehouseUserActivityRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataWarehouseUserActivityRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataWarehouseUserActivityResource(Client, DataWarehouseUserActivityData.DeserializeDataWarehouseUserActivityData(e)), _dataWarehouseUserActivityClientDiagnostics, Pipeline, "DataWarehouseUserActivityCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DataWarehouseUserActivityResource(Client, DataWarehouseUserActivityData.DeserializeDataWarehouseUserActivityData(e)), _dataWarehouseUserActivityClientDiagnostics, Pipeline, "DataWarehouseUserActivityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

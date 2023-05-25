@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Models
 {
     internal partial class UnknownTokenFilter : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
@@ -22,7 +25,7 @@ namespace Azure.Search.Documents.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownTokenFilter DeserializeUnknownTokenFilter(JsonElement element)
+        internal static UnknownTokenFilter DeserializeUnknownTokenFilter(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

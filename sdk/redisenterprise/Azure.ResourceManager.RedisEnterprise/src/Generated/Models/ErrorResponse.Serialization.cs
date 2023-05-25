@@ -8,12 +8,13 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     internal partial class ErrorResponse
     {
-        internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
+        internal static ErrorResponse DeserializeErrorResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

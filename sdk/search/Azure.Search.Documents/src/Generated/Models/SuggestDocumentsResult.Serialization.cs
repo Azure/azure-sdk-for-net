@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Models
 {
     internal partial class SuggestDocumentsResult
     {
-        internal static SuggestDocumentsResult DeserializeSuggestDocumentsResult(JsonElement element)
+        internal static SuggestDocumentsResult DeserializeSuggestDocumentsResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     public partial class WhatIfPropertyChange
     {
-        internal static WhatIfPropertyChange DeserializeWhatIfPropertyChange(JsonElement element)
+        internal static WhatIfPropertyChange DeserializeWhatIfPropertyChange(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

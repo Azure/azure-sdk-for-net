@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     internal partial class UnknownMigrationProviderSpecificSettings
     {
-        internal static UnknownMigrationProviderSpecificSettings DeserializeUnknownMigrationProviderSpecificSettings(JsonElement element)
+        internal static UnknownMigrationProviderSpecificSettings DeserializeUnknownMigrationProviderSpecificSettings(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

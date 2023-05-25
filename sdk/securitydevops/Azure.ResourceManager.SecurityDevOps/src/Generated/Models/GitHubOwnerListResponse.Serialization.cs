@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.SecurityDevOps;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
     internal partial class GitHubOwnerListResponse
     {
-        internal static GitHubOwnerListResponse DeserializeGitHubOwnerListResponse(JsonElement element)
+        internal static GitHubOwnerListResponse DeserializeGitHubOwnerListResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

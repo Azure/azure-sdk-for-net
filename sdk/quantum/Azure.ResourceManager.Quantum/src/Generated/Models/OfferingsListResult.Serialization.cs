@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
     internal partial class OfferingsListResult
     {
-        internal static OfferingsListResult DeserializeOfferingsListResult(JsonElement element)
+        internal static OfferingsListResult DeserializeOfferingsListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

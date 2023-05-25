@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     internal partial class UnknownAlertResourceIdentifier
     {
-        internal static UnknownAlertResourceIdentifier DeserializeUnknownAlertResourceIdentifier(JsonElement element)
+        internal static UnknownAlertResourceIdentifier DeserializeUnknownAlertResourceIdentifier(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

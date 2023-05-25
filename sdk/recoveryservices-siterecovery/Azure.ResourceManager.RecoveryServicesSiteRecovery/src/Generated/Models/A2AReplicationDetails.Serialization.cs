@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class A2AReplicationDetails
     {
-        internal static A2AReplicationDetails DeserializeA2AReplicationDetails(JsonElement element)
+        internal static A2AReplicationDetails DeserializeA2AReplicationDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

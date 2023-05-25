@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class VMwareCbtNicDetails
     {
-        internal static VMwareCbtNicDetails DeserializeVMwareCbtNicDetails(JsonElement element)
+        internal static VMwareCbtNicDetails DeserializeVMwareCbtNicDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

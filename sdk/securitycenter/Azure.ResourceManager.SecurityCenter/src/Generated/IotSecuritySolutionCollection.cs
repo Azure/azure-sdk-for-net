@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotSecuritySolutionRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotSecuritySolutionRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotSecuritySolutionResource(Client, IotSecuritySolutionData.DeserializeIotSecuritySolutionData(e)), _iotSecuritySolutionClientDiagnostics, Pipeline, "IotSecuritySolutionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new IotSecuritySolutionResource(Client, IotSecuritySolutionData.DeserializeIotSecuritySolutionData(e)), _iotSecuritySolutionClientDiagnostics, Pipeline, "IotSecuritySolutionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotSecuritySolutionRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotSecuritySolutionRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotSecuritySolutionResource(Client, IotSecuritySolutionData.DeserializeIotSecuritySolutionData(e)), _iotSecuritySolutionClientDiagnostics, Pipeline, "IotSecuritySolutionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new IotSecuritySolutionResource(Client, IotSecuritySolutionData.DeserializeIotSecuritySolutionData(e)), _iotSecuritySolutionClientDiagnostics, Pipeline, "IotSecuritySolutionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class ReplicationEligibilityResultsProperties
     {
-        internal static ReplicationEligibilityResultsProperties DeserializeReplicationEligibilityResultsProperties(JsonElement element)
+        internal static ReplicationEligibilityResultsProperties DeserializeReplicationEligibilityResultsProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

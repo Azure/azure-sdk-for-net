@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceBus.Models;
 
@@ -16,7 +17,9 @@ namespace Azure.ResourceManager.ServiceBus
 {
     public partial class ServiceBusNamespaceData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.ServiceBus
             writer.WriteEndObject();
         }
 
-        internal static ServiceBusNamespaceData DeserializeServiceBusNamespaceData(JsonElement element)
+        internal static ServiceBusNamespaceData DeserializeServiceBusNamespaceData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

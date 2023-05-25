@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Data.SchemaRegistry.Models
 {
     internal partial class SchemaGroups
     {
-        internal static SchemaGroups DeserializeSchemaGroups(JsonElement element)
+        internal static SchemaGroups DeserializeSchemaGroups(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

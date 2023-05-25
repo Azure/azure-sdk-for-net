@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     public partial class ServiceBusPrivateLinkResource
     {
-        internal static ServiceBusPrivateLinkResource DeserializeServiceBusPrivateLinkResource(JsonElement element)
+        internal static ServiceBusPrivateLinkResource DeserializeServiceBusPrivateLinkResource(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

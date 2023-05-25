@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class LogicalNetworkProperties
     {
-        internal static LogicalNetworkProperties DeserializeLogicalNetworkProperties(JsonElement element)
+        internal static LogicalNetworkProperties DeserializeLogicalNetworkProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

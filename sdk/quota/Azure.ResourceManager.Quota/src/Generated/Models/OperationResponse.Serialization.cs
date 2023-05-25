@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Quota.Models
 {
     public partial class OperationResponse
     {
-        internal static OperationResponse DeserializeOperationResponse(JsonElement element)
+        internal static OperationResponse DeserializeOperationResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     internal partial class SyncAgentLinkedDatabaseListResult
     {
-        internal static SyncAgentLinkedDatabaseListResult DeserializeSyncAgentLinkedDatabaseListResult(JsonElement element)
+        internal static SyncAgentLinkedDatabaseListResult DeserializeSyncAgentLinkedDatabaseListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     internal partial class ProviderResourceTypeListResult
     {
-        internal static ProviderResourceTypeListResult DeserializeProviderResourceTypeListResult(JsonElement element)
+        internal static ProviderResourceTypeListResult DeserializeProviderResourceTypeListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

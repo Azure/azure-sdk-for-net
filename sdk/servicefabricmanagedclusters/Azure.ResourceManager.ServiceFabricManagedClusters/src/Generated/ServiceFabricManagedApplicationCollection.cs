@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedApplicationApplicationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricManagedApplicationApplicationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricManagedApplicationResource(Client, ServiceFabricManagedApplicationData.DeserializeServiceFabricManagedApplicationData(e)), _serviceFabricManagedApplicationApplicationsClientDiagnostics, Pipeline, "ServiceFabricManagedApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ServiceFabricManagedApplicationResource(Client, ServiceFabricManagedApplicationData.DeserializeServiceFabricManagedApplicationData(e)), _serviceFabricManagedApplicationApplicationsClientDiagnostics, Pipeline, "ServiceFabricManagedApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedApplicationApplicationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricManagedApplicationApplicationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricManagedApplicationResource(Client, ServiceFabricManagedApplicationData.DeserializeServiceFabricManagedApplicationData(e)), _serviceFabricManagedApplicationApplicationsClientDiagnostics, Pipeline, "ServiceFabricManagedApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ServiceFabricManagedApplicationResource(Client, ServiceFabricManagedApplicationData.DeserializeServiceFabricManagedApplicationData(e)), _serviceFabricManagedApplicationApplicationsClientDiagnostics, Pipeline, "ServiceFabricManagedApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

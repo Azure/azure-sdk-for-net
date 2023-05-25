@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
     public partial class UpgradableVersionPathResult
     {
-        internal static UpgradableVersionPathResult DeserializeUpgradableVersionPathResult(JsonElement element)
+        internal static UpgradableVersionPathResult DeserializeUpgradableVersionPathResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

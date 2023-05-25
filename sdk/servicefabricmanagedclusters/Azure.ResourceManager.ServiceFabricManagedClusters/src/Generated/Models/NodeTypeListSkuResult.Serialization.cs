@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     internal partial class NodeTypeListSkuResult
     {
-        internal static NodeTypeListSkuResult DeserializeNodeTypeListSkuResult(JsonElement element)
+        internal static NodeTypeListSkuResult DeserializeNodeTypeListSkuResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

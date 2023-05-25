@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     internal partial class RecoveryServicesVaultListResult
     {
-        internal static RecoveryServicesVaultListResult DeserializeRecoveryServicesVaultListResult(JsonElement element)
+        internal static RecoveryServicesVaultListResult DeserializeRecoveryServicesVaultListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

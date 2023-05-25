@@ -9,12 +9,13 @@ using System;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ScriptStatus
     {
-        internal static ScriptStatus DeserializeScriptStatus(JsonElement element)
+        internal static ScriptStatus DeserializeScriptStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

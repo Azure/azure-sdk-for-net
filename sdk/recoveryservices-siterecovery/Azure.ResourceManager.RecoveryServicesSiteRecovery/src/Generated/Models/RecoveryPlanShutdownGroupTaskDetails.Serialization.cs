@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class RecoveryPlanShutdownGroupTaskDetails
     {
-        internal static RecoveryPlanShutdownGroupTaskDetails DeserializeRecoveryPlanShutdownGroupTaskDetails(JsonElement element)
+        internal static RecoveryPlanShutdownGroupTaskDetails DeserializeRecoveryPlanShutdownGroupTaskDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

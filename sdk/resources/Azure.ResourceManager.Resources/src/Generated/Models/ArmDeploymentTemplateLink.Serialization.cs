@@ -8,12 +8,15 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ArmDeploymentTemplateLink : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Uri))
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        internal static ArmDeploymentTemplateLink DeserializeArmDeploymentTemplateLink(JsonElement element)
+        internal static ArmDeploymentTemplateLink DeserializeArmDeploymentTemplateLink(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

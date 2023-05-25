@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sql
         public virtual AsyncPageable<SqlServerAdvisorResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerAdvisorServerAdvisorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SqlServerAdvisorResource(Client, SqlAdvisorData.DeserializeSqlAdvisorData(e)), _sqlServerAdvisorServerAdvisorsClientDiagnostics, Pipeline, "SqlServerAdvisorCollection.GetAll", "", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new SqlServerAdvisorResource(Client, SqlAdvisorData.DeserializeSqlAdvisorData(e)), _sqlServerAdvisorServerAdvisorsClientDiagnostics, Pipeline, "SqlServerAdvisorCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Pageable<SqlServerAdvisorResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerAdvisorServerAdvisorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SqlServerAdvisorResource(Client, SqlAdvisorData.DeserializeSqlAdvisorData(e)), _sqlServerAdvisorServerAdvisorsClientDiagnostics, Pipeline, "SqlServerAdvisorCollection.GetAll", "", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new SqlServerAdvisorResource(Client, SqlAdvisorData.DeserializeSqlAdvisorData(e)), _sqlServerAdvisorServerAdvisorsClientDiagnostics, Pipeline, "SqlServerAdvisorCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>

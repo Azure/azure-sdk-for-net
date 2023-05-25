@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class A2APolicyDetails
     {
-        internal static A2APolicyDetails DeserializeA2APolicyDetails(JsonElement element)
+        internal static A2APolicyDetails DeserializeA2APolicyDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

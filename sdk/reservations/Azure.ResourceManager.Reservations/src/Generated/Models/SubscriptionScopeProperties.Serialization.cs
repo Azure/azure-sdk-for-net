@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     internal partial class SubscriptionScopeProperties
     {
-        internal static SubscriptionScopeProperties DeserializeSubscriptionScopeProperties(JsonElement element)
+        internal static SubscriptionScopeProperties DeserializeSubscriptionScopeProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

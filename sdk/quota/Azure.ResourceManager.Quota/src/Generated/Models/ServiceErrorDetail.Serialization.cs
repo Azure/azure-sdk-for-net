@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Quota.Models
 {
     public partial class ServiceErrorDetail
     {
-        internal static ServiceErrorDetail DeserializeServiceErrorDetail(JsonElement element)
+        internal static ServiceErrorDetail DeserializeServiceErrorDetail(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

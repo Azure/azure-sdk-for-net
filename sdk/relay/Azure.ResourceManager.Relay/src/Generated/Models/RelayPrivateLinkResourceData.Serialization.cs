@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Relay
 {
     public partial class RelayPrivateLinkResourceData
     {
-        internal static RelayPrivateLinkResourceData DeserializeRelayPrivateLinkResourceData(JsonElement element)
+        internal static RelayPrivateLinkResourceData DeserializeRelayPrivateLinkResourceData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

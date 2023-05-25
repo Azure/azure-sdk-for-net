@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class MobilityServiceUpdate
     {
-        internal static MobilityServiceUpdate DeserializeMobilityServiceUpdate(JsonElement element)
+        internal static MobilityServiceUpdate DeserializeMobilityServiceUpdate(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

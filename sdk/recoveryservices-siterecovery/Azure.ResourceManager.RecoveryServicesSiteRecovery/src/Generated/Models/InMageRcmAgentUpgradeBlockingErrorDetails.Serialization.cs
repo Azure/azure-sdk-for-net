@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class InMageRcmAgentUpgradeBlockingErrorDetails
     {
-        internal static InMageRcmAgentUpgradeBlockingErrorDetails DeserializeInMageRcmAgentUpgradeBlockingErrorDetails(JsonElement element)
+        internal static InMageRcmAgentUpgradeBlockingErrorDetails DeserializeInMageRcmAgentUpgradeBlockingErrorDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

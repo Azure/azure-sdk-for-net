@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     public partial class RedisEnterpriseDataAccessKeys
     {
-        internal static RedisEnterpriseDataAccessKeys DeserializeRedisEnterpriseDataAccessKeys(JsonElement element)
+        internal static RedisEnterpriseDataAccessKeys DeserializeRedisEnterpriseDataAccessKeys(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

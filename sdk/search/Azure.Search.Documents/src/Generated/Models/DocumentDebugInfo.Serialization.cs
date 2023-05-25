@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Models
 {
     public partial class DocumentDebugInfo
     {
-        internal static DocumentDebugInfo DeserializeDocumentDebugInfo(JsonElement element)
+        internal static DocumentDebugInfo DeserializeDocumentDebugInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

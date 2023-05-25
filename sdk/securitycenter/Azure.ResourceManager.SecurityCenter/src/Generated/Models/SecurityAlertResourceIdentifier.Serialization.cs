@@ -6,12 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class SecurityAlertResourceIdentifier
     {
-        internal static SecurityAlertResourceIdentifier DeserializeSecurityAlertResourceIdentifier(JsonElement element)
+        internal static SecurityAlertResourceIdentifier DeserializeSecurityAlertResourceIdentifier(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

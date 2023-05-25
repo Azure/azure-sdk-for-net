@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class SyncFullSchemaTableColumn
     {
-        internal static SyncFullSchemaTableColumn DeserializeSyncFullSchemaTableColumn(JsonElement element)
+        internal static SyncFullSchemaTableColumn DeserializeSyncFullSchemaTableColumn(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

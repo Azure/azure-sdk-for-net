@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
     internal partial class SignalRCustomCertificateListResult
     {
-        internal static SignalRCustomCertificateListResult DeserializeSignalRCustomCertificateListResult(JsonElement element)
+        internal static SignalRCustomCertificateListResult DeserializeSignalRCustomCertificateListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

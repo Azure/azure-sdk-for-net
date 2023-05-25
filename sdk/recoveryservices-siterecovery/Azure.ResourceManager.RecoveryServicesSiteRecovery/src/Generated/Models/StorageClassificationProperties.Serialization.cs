@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     internal partial class StorageClassificationProperties
     {
-        internal static StorageClassificationProperties DeserializeStorageClassificationProperties(JsonElement element)
+        internal static StorageClassificationProperties DeserializeStorageClassificationProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

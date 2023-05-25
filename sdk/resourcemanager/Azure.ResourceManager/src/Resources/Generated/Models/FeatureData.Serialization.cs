@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class FeatureData
     {
-        internal static FeatureData DeserializeFeatureData(JsonElement element)
+        internal static FeatureData DeserializeFeatureData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Search.Models
 {
     public partial class SearchEncryptionWithCmk : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Enforcement))
@@ -23,7 +26,7 @@ namespace Azure.ResourceManager.Search.Models
             writer.WriteEndObject();
         }
 
-        internal static SearchEncryptionWithCmk DeserializeSearchEncryptionWithCmk(JsonElement element)
+        internal static SearchEncryptionWithCmk DeserializeSearchEncryptionWithCmk(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

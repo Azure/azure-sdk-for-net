@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
     internal partial class SearchServiceListResult
     {
-        internal static SearchServiceListResult DeserializeSearchServiceListResult(JsonElement element)
+        internal static SearchServiceListResult DeserializeSearchServiceListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

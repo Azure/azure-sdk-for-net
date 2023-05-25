@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class KnowledgeStoreStorageProjectionSelector : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("storageContainer"u8);
@@ -49,6 +52,63 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+        }
+
+        internal static KnowledgeStoreStorageProjectionSelector DeserializeKnowledgeStoreStorageProjectionSelector(JsonElement element, SerializableOptions options = default)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string storageContainer = default;
+            Optional<string> referenceKeyName = default;
+            Optional<string> generatedKeyName = default;
+            Optional<string> source = default;
+            Optional<string> sourceContext = default;
+            Optional<IList<InputFieldMappingEntry>> inputs = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("storageContainer"u8))
+                {
+                    storageContainer = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("referenceKeyName"u8))
+                {
+                    referenceKeyName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("generatedKeyName"u8))
+                {
+                    generatedKeyName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("source"u8))
+                {
+                    source = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("sourceContext"u8))
+                {
+                    sourceContext = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("inputs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item));
+                    }
+                    inputs = array;
+                    continue;
+                }
+            }
+            return new Models.KnowledgeStoreStorageProjectionSelector(referenceKeyName.Value, generatedKeyName.Value, source.Value, sourceContext.Value, Optional.ToList(inputs), storageContainer);
         }
     }
 }

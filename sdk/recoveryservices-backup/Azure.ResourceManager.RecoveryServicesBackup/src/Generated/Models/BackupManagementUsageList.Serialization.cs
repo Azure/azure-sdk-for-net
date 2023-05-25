@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     internal partial class BackupManagementUsageList
     {
-        internal static BackupManagementUsageList DeserializeBackupManagementUsageList(JsonElement element)
+        internal static BackupManagementUsageList DeserializeBackupManagementUsageList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

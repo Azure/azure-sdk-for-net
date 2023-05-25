@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     internal partial class SkuDetail
     {
-        internal static SkuDetail DeserializeSkuDetail(JsonElement element)
+        internal static SkuDetail DeserializeSkuDetail(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

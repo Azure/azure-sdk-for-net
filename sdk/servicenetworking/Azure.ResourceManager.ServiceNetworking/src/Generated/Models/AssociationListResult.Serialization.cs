@@ -9,13 +9,14 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ServiceNetworking;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
     internal partial class AssociationListResult
     {
-        internal static AssociationListResult DeserializeAssociationListResult(JsonElement element)
+        internal static AssociationListResult DeserializeAssociationListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

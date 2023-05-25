@@ -8,12 +8,15 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.MixedReality.RemoteRendering
 {
     public partial class AssetConversionInputOptions : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("storageContainerUri"u8);
@@ -33,7 +36,7 @@ namespace Azure.MixedReality.RemoteRendering
             writer.WriteEndObject();
         }
 
-        internal static AssetConversionInputOptions DeserializeAssetConversionInputOptions(JsonElement element)
+        internal static AssetConversionInputOptions DeserializeAssetConversionInputOptions(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

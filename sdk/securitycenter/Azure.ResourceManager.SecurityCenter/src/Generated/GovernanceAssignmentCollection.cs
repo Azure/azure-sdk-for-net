@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _governanceAssignmentRestClient.CreateListRequest(Id.Parent, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _governanceAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GovernanceAssignmentResource(Client, GovernanceAssignmentData.DeserializeGovernanceAssignmentData(e)), _governanceAssignmentClientDiagnostics, Pipeline, "GovernanceAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new GovernanceAssignmentResource(Client, GovernanceAssignmentData.DeserializeGovernanceAssignmentData(e)), _governanceAssignmentClientDiagnostics, Pipeline, "GovernanceAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _governanceAssignmentRestClient.CreateListRequest(Id.Parent, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _governanceAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GovernanceAssignmentResource(Client, GovernanceAssignmentData.DeserializeGovernanceAssignmentData(e)), _governanceAssignmentClientDiagnostics, Pipeline, "GovernanceAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new GovernanceAssignmentResource(Client, GovernanceAssignmentData.DeserializeGovernanceAssignmentData(e)), _governanceAssignmentClientDiagnostics, Pipeline, "GovernanceAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

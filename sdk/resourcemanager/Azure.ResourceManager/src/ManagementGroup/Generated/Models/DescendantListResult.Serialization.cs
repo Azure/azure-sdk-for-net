@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
     internal partial class DescendantListResult
     {
-        internal static DescendantListResult DeserializeDescendantListResult(JsonElement element)
+        internal static DescendantListResult DeserializeDescendantListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

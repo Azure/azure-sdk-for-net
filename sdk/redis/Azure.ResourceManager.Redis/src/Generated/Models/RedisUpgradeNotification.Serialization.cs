@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Redis.Models
 {
     public partial class RedisUpgradeNotification
     {
-        internal static RedisUpgradeNotification DeserializeRedisUpgradeNotification(JsonElement element)
+        internal static RedisUpgradeNotification DeserializeRedisUpgradeNotification(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

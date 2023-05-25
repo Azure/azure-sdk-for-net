@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     public partial class PredefinedTagCount
     {
-        internal static PredefinedTagCount DeserializePredefinedTagCount(JsonElement element)
+        internal static PredefinedTagCount DeserializePredefinedTagCount(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

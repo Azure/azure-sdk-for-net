@@ -9,13 +9,14 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     public partial class TenantData
     {
-        internal static TenantData DeserializeTenantData(JsonElement element)
+        internal static TenantData DeserializeTenantData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

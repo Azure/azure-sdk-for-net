@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServices
 {
     public partial class RecoveryServicesPrivateLinkResourceData
     {
-        internal static RecoveryServicesPrivateLinkResourceData DeserializeRecoveryServicesPrivateLinkResourceData(JsonElement element)
+        internal static RecoveryServicesPrivateLinkResourceData DeserializeRecoveryServicesPrivateLinkResourceData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

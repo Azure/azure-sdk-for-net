@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
     public partial class ClusterVersionDetails
     {
-        internal static ClusterVersionDetails DeserializeClusterVersionDetails(JsonElement element)
+        internal static ClusterVersionDetails DeserializeClusterVersionDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

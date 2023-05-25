@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class RecommendedActionMetricInfo
     {
-        internal static RecommendedActionMetricInfo DeserializeRecommendedActionMetricInfo(JsonElement element)
+        internal static RecommendedActionMetricInfo DeserializeRecommendedActionMetricInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

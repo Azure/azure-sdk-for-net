@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
     public partial class SignalRNameAvailabilityResult
     {
-        internal static SignalRNameAvailabilityResult DeserializeSignalRNameAvailabilityResult(JsonElement element)
+        internal static SignalRNameAvailabilityResult DeserializeSignalRNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

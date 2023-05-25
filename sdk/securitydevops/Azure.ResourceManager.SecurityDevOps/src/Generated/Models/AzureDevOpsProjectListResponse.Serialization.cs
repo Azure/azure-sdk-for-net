@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.SecurityDevOps;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
     internal partial class AzureDevOpsProjectListResponse
     {
-        internal static AzureDevOpsProjectListResponse DeserializeAzureDevOpsProjectListResponse(JsonElement element)
+        internal static AzureDevOpsProjectListResponse DeserializeAzureDevOpsProjectListResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

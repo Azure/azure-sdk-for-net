@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
     internal partial class GitHubConnectorStatsListResponse
     {
-        internal static GitHubConnectorStatsListResponse DeserializeGitHubConnectorStatsListResponse(JsonElement element)
+        internal static GitHubConnectorStatsListResponse DeserializeGitHubConnectorStatsListResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

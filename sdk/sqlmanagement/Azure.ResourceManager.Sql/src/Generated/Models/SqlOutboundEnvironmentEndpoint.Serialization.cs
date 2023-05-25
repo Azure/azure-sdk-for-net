@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class SqlOutboundEnvironmentEndpoint
     {
-        internal static SqlOutboundEnvironmentEndpoint DeserializeSqlOutboundEnvironmentEndpoint(JsonElement element)
+        internal static SqlOutboundEnvironmentEndpoint DeserializeSqlOutboundEnvironmentEndpoint(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

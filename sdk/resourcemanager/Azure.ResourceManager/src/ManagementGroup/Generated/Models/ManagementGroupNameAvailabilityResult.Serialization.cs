@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
     public partial class ManagementGroupNameAvailabilityResult
     {
-        internal static ManagementGroupNameAvailabilityResult DeserializeManagementGroupNameAvailabilityResult(JsonElement element)
+        internal static ManagementGroupNameAvailabilityResult DeserializeManagementGroupNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

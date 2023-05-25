@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class AutoPauseDelayTimeRange
     {
-        internal static AutoPauseDelayTimeRange DeserializeAutoPauseDelayTimeRange(JsonElement element)
+        internal static AutoPauseDelayTimeRange DeserializeAutoPauseDelayTimeRange(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

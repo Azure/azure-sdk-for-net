@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class ReplicationEligibilityResultsErrorInfo
     {
-        internal static ReplicationEligibilityResultsErrorInfo DeserializeReplicationEligibilityResultsErrorInfo(JsonElement element)
+        internal static ReplicationEligibilityResultsErrorInfo DeserializeReplicationEligibilityResultsErrorInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

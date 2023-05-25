@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Quantum.Jobs.Models
 {
     public partial class UsageEvent
     {
-        internal static UsageEvent DeserializeUsageEvent(JsonElement element)
+        internal static UsageEvent DeserializeUsageEvent(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

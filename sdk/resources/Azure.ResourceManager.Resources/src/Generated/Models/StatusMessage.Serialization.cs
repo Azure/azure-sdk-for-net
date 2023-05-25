@@ -8,12 +8,13 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     public partial class StatusMessage
     {
-        internal static StatusMessage DeserializeStatusMessage(JsonElement element)
+        internal static StatusMessage DeserializeStatusMessage(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

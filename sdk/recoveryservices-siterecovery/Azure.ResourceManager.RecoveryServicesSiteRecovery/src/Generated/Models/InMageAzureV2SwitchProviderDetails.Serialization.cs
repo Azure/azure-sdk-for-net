@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class InMageAzureV2SwitchProviderDetails
     {
-        internal static InMageAzureV2SwitchProviderDetails DeserializeInMageAzureV2SwitchProviderDetails(JsonElement element)
+        internal static InMageAzureV2SwitchProviderDetails DeserializeInMageAzureV2SwitchProviderDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

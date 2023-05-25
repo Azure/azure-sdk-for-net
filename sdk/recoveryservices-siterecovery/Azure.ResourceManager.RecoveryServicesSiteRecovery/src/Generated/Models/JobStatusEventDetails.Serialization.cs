@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class JobStatusEventDetails
     {
-        internal static JobStatusEventDetails DeserializeJobStatusEventDetails(JsonElement element)
+        internal static JobStatusEventDetails DeserializeJobStatusEventDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

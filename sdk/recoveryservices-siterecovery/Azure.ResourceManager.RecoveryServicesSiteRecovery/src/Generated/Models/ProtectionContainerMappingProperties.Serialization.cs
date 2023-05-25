@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class ProtectionContainerMappingProperties
     {
-        internal static ProtectionContainerMappingProperties DeserializeProtectionContainerMappingProperties(JsonElement element)
+        internal static ProtectionContainerMappingProperties DeserializeProtectionContainerMappingProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

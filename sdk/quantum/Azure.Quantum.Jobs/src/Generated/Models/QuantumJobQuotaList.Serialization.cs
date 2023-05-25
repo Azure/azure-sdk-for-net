@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Quantum.Jobs.Models
 {
     public partial class QuantumJobQuotaList
     {
-        internal static QuantumJobQuotaList DeserializeQuantumJobQuotaList(JsonElement element)
+        internal static QuantumJobQuotaList DeserializeQuantumJobQuotaList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     internal partial class FeatureProperties
     {
-        internal static FeatureProperties DeserializeFeatureProperties(JsonElement element)
+        internal static FeatureProperties DeserializeFeatureProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

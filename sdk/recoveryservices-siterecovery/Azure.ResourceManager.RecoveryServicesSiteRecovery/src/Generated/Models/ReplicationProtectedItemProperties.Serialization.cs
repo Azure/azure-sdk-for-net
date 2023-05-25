@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class ReplicationProtectedItemProperties
     {
-        internal static ReplicationProtectedItemProperties DeserializeReplicationProtectedItemProperties(JsonElement element)
+        internal static ReplicationProtectedItemProperties DeserializeReplicationProtectedItemProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

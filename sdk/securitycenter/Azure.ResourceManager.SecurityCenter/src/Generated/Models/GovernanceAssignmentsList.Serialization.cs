@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     internal partial class GovernanceAssignmentsList
     {
-        internal static GovernanceAssignmentsList DeserializeGovernanceAssignmentsList(JsonElement element)
+        internal static GovernanceAssignmentsList DeserializeGovernanceAssignmentsList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

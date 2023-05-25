@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class ExchangeResultProperties
     {
-        internal static ExchangeResultProperties DeserializeExchangeResultProperties(JsonElement element)
+        internal static ExchangeResultProperties DeserializeExchangeResultProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

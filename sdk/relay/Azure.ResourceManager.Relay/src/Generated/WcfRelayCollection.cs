@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Relay
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _wcfRelayWCFRelaysRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _wcfRelayWCFRelaysRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WcfRelayResource(Client, WcfRelayData.DeserializeWcfRelayData(e)), _wcfRelayWCFRelaysClientDiagnostics, Pipeline, "WcfRelayCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new WcfRelayResource(Client, WcfRelayData.DeserializeWcfRelayData(e)), _wcfRelayWCFRelaysClientDiagnostics, Pipeline, "WcfRelayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Relay
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _wcfRelayWCFRelaysRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _wcfRelayWCFRelaysRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WcfRelayResource(Client, WcfRelayData.DeserializeWcfRelayData(e)), _wcfRelayWCFRelaysClientDiagnostics, Pipeline, "WcfRelayCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new WcfRelayResource(Client, WcfRelayData.DeserializeWcfRelayData(e)), _wcfRelayWCFRelaysClientDiagnostics, Pipeline, "WcfRelayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

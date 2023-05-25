@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class MaintenanceConfigurationCapability
     {
-        internal static MaintenanceConfigurationCapability DeserializeMaintenanceConfigurationCapability(JsonElement element)
+        internal static MaintenanceConfigurationCapability DeserializeMaintenanceConfigurationCapability(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

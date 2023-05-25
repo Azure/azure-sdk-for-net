@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareInventoryRestClient.CreateListByExtendedResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _softwareInventoryRestClient.CreateListByExtendedResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SoftwareInventoryResource(Client, SoftwareInventoryData.DeserializeSoftwareInventoryData(e)), _softwareInventoryClientDiagnostics, Pipeline, "SoftwareInventoryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SoftwareInventoryResource(Client, SoftwareInventoryData.DeserializeSoftwareInventoryData(e)), _softwareInventoryClientDiagnostics, Pipeline, "SoftwareInventoryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareInventoryRestClient.CreateListByExtendedResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _softwareInventoryRestClient.CreateListByExtendedResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SoftwareInventoryResource(Client, SoftwareInventoryData.DeserializeSoftwareInventoryData(e)), _softwareInventoryClientDiagnostics, Pipeline, "SoftwareInventoryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SoftwareInventoryResource(Client, SoftwareInventoryData.DeserializeSoftwareInventoryData(e)), _softwareInventoryClientDiagnostics, Pipeline, "SoftwareInventoryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class SecurityInsightsIPEntityGeoLocation
     {
-        internal static SecurityInsightsIPEntityGeoLocation DeserializeSecurityInsightsIPEntityGeoLocation(JsonElement element)
+        internal static SecurityInsightsIPEntityGeoLocation DeserializeSecurityInsightsIPEntityGeoLocation(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

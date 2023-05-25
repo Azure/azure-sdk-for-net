@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class ReservationToPurchaseCalculateExchange
     {
-        internal static ReservationToPurchaseCalculateExchange DeserializeReservationToPurchaseCalculateExchange(JsonElement element)
+        internal static ReservationToPurchaseCalculateExchange DeserializeReservationToPurchaseCalculateExchange(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

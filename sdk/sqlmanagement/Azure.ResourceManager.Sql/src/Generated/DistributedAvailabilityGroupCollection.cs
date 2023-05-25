@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _distributedAvailabilityGroupRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _distributedAvailabilityGroupRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DistributedAvailabilityGroupResource(Client, DistributedAvailabilityGroupData.DeserializeDistributedAvailabilityGroupData(e)), _distributedAvailabilityGroupClientDiagnostics, Pipeline, "DistributedAvailabilityGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DistributedAvailabilityGroupResource(Client, DistributedAvailabilityGroupData.DeserializeDistributedAvailabilityGroupData(e)), _distributedAvailabilityGroupClientDiagnostics, Pipeline, "DistributedAvailabilityGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _distributedAvailabilityGroupRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _distributedAvailabilityGroupRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DistributedAvailabilityGroupResource(Client, DistributedAvailabilityGroupData.DeserializeDistributedAvailabilityGroupData(e)), _distributedAvailabilityGroupClientDiagnostics, Pipeline, "DistributedAvailabilityGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DistributedAvailabilityGroupResource(Client, DistributedAvailabilityGroupData.DeserializeDistributedAvailabilityGroupData(e)), _distributedAvailabilityGroupClientDiagnostics, Pipeline, "DistributedAvailabilityGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

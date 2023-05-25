@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     public partial class ResourceHealthEventUpdate
     {
-        internal static ResourceHealthEventUpdate DeserializeResourceHealthEventUpdate(JsonElement element)
+        internal static ResourceHealthEventUpdate DeserializeResourceHealthEventUpdate(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

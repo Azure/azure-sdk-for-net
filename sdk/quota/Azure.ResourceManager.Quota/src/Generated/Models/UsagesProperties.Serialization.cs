@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Quota.Models
 {
     public partial class UsagesProperties
     {
-        internal static UsagesProperties DeserializeUsagesProperties(JsonElement element)
+        internal static UsagesProperties DeserializeUsagesProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

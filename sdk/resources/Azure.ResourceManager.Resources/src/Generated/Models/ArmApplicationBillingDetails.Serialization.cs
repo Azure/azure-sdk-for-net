@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     internal partial class ArmApplicationBillingDetails
     {
-        internal static ArmApplicationBillingDetails DeserializeArmApplicationBillingDetails(JsonElement element)
+        internal static ArmApplicationBillingDetails DeserializeArmApplicationBillingDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

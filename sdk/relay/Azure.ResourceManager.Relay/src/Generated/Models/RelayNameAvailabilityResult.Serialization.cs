@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Relay.Models
 {
     public partial class RelayNameAvailabilityResult
     {
-        internal static RelayNameAvailabilityResult DeserializeRelayNameAvailabilityResult(JsonElement element)
+        internal static RelayNameAvailabilityResult DeserializeRelayNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

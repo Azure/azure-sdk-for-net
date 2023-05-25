@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     public partial class StorageAccountKeyCreationTime
     {
-        internal static StorageAccountKeyCreationTime DeserializeStorageAccountKeyCreationTime(JsonElement element)
+        internal static StorageAccountKeyCreationTime DeserializeStorageAccountKeyCreationTime(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -11,19 +11,22 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Models
 {
     [JsonConverter(typeof(OperationStatusResultConverter))]
     public partial class OperationStatusResult : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
         }
 
-        internal static OperationStatusResult DeserializeOperationStatusResult(JsonElement element)
+        internal static OperationStatusResult DeserializeOperationStatusResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

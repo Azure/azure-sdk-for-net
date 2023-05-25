@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
     internal partial class UnknownFacet
     {
-        internal static UnknownFacet DeserializeUnknownFacet(JsonElement element)
+        internal static UnknownFacet DeserializeUnknownFacet(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class PreValidateEnableBackupResult
     {
-        internal static PreValidateEnableBackupResult DeserializePreValidateEnableBackupResult(JsonElement element)
+        internal static PreValidateEnableBackupResult DeserializePreValidateEnableBackupResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     internal partial class ManagedVmSizesResult
     {
-        internal static ManagedVmSizesResult DeserializeManagedVmSizesResult(JsonElement element)
+        internal static ManagedVmSizesResult DeserializeManagedVmSizesResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

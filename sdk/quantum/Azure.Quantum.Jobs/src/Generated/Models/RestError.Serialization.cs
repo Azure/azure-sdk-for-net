@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Quantum.Jobs.Models
 {
     internal partial class RestError
     {
-        internal static RestError DeserializeRestError(JsonElement element)
+        internal static RestError DeserializeRestError(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     internal partial class MoverOperationsDiscoveryList
     {
-        internal static MoverOperationsDiscoveryList DeserializeMoverOperationsDiscoveryList(JsonElement element)
+        internal static MoverOperationsDiscoveryList DeserializeMoverOperationsDiscoveryList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

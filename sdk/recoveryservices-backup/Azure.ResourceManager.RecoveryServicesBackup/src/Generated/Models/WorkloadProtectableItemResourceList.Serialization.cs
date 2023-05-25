@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     internal partial class WorkloadProtectableItemResourceList
     {
-        internal static WorkloadProtectableItemResourceList DeserializeWorkloadProtectableItemResourceList(JsonElement element)
+        internal static WorkloadProtectableItemResourceList DeserializeWorkloadProtectableItemResourceList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

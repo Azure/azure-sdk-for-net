@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     public partial class TemplateHashResult
     {
-        internal static TemplateHashResult DeserializeTemplateHashResult(JsonElement element)
+        internal static TemplateHashResult DeserializeTemplateHashResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

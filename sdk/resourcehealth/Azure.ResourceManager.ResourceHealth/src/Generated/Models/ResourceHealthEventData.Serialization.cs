@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ResourceHealth.Models;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.ResourceHealth
 {
     public partial class ResourceHealthEventData
     {
-        internal static ResourceHealthEventData DeserializeResourceHealthEventData(JsonElement element)
+        internal static ResourceHealthEventData DeserializeResourceHealthEventData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

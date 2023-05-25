@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Relay.Models;
 
@@ -15,7 +16,9 @@ namespace Azure.ResourceManager.Relay
 {
     public partial class RelayNetworkRuleSetData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.Relay
             writer.WriteEndObject();
         }
 
-        internal static RelayNetworkRuleSetData DeserializeRelayNetworkRuleSetData(JsonElement element)
+        internal static RelayNetworkRuleSetData DeserializeRelayNetworkRuleSetData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

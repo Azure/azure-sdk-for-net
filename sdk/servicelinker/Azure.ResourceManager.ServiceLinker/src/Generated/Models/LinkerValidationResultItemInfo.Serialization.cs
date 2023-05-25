@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     public partial class LinkerValidationResultItemInfo
     {
-        internal static LinkerValidationResultItemInfo DeserializeLinkerValidationResultItemInfo(JsonElement element)
+        internal static LinkerValidationResultItemInfo DeserializeLinkerValidationResultItemInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

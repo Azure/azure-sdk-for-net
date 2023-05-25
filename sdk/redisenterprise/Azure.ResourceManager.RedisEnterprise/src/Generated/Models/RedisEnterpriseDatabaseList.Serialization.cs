@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     internal partial class RedisEnterpriseDatabaseList
     {
-        internal static RedisEnterpriseDatabaseList DeserializeRedisEnterpriseDatabaseList(JsonElement element)
+        internal static RedisEnterpriseDatabaseList DeserializeRedisEnterpriseDatabaseList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

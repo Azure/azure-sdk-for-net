@@ -7,13 +7,14 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.MixedReality.RemoteRendering;
 
 namespace Azure.MixedReality.RemoteRendering.Models
 {
     internal partial class ErrorResponse
     {
-        internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
+        internal static ErrorResponse DeserializeErrorResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

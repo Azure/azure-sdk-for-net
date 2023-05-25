@@ -8,12 +8,15 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class ServerExternalAdministrator : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(AdministratorType))
@@ -49,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteEndObject();
         }
 
-        internal static ServerExternalAdministrator DeserializeServerExternalAdministrator(JsonElement element)
+        internal static ServerExternalAdministrator DeserializeServerExternalAdministrator(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

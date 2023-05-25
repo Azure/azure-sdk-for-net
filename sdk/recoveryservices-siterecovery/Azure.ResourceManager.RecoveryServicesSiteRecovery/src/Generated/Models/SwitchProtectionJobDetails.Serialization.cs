@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class SwitchProtectionJobDetails
     {
-        internal static SwitchProtectionJobDetails DeserializeSwitchProtectionJobDetails(JsonElement element)
+        internal static SwitchProtectionJobDetails DeserializeSwitchProtectionJobDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

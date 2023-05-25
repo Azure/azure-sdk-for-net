@@ -9,13 +9,16 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class ImportExportOperationResult : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -24,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteEndObject();
         }
 
-        internal static ImportExportOperationResult DeserializeImportExportOperationResult(JsonElement element)
+        internal static ImportExportOperationResult DeserializeImportExportOperationResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

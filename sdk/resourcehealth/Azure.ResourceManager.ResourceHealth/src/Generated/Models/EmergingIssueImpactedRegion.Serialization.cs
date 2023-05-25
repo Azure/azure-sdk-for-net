@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     public partial class EmergingIssueImpactedRegion
     {
-        internal static EmergingIssueImpactedRegion DeserializeEmergingIssueImpactedRegion(JsonElement element)
+        internal static EmergingIssueImpactedRegion DeserializeEmergingIssueImpactedRegion(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

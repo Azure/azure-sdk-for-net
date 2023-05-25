@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Reservations.Models;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Reservations
 {
     public partial class QuotaRequestDetailData
     {
-        internal static QuotaRequestDetailData DeserializeQuotaRequestDetailData(JsonElement element)
+        internal static QuotaRequestDetailData DeserializeQuotaRequestDetailData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

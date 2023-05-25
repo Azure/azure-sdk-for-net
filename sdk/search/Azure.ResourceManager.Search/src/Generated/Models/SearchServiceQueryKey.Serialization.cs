@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Search.Models
 {
     public partial class SearchServiceQueryKey
     {
-        internal static SearchServiceQueryKey DeserializeSearchServiceQueryKey(JsonElement element)
+        internal static SearchServiceQueryKey DeserializeSearchServiceQueryKey(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

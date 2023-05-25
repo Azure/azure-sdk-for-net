@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageClassificationReplicationStorageClassificationsRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageClassificationReplicationStorageClassificationsRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationResource(Client, StorageClassificationData.DeserializeStorageClassificationData(e)), _storageClassificationReplicationStorageClassificationsClientDiagnostics, Pipeline, "StorageClassificationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new StorageClassificationResource(Client, StorageClassificationData.DeserializeStorageClassificationData(e)), _storageClassificationReplicationStorageClassificationsClientDiagnostics, Pipeline, "StorageClassificationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageClassificationReplicationStorageClassificationsRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageClassificationReplicationStorageClassificationsRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationResource(Client, StorageClassificationData.DeserializeStorageClassificationData(e)), _storageClassificationReplicationStorageClassificationsClientDiagnostics, Pipeline, "StorageClassificationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new StorageClassificationResource(Client, StorageClassificationData.DeserializeStorageClassificationData(e)), _storageClassificationReplicationStorageClassificationsClientDiagnostics, Pipeline, "StorageClassificationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

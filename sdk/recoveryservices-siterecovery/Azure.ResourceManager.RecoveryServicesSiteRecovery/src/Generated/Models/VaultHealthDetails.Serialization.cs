@@ -7,13 +7,14 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class VaultHealthDetails
     {
-        internal static VaultHealthDetails DeserializeVaultHealthDetails(JsonElement element)
+        internal static VaultHealthDetails DeserializeVaultHealthDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

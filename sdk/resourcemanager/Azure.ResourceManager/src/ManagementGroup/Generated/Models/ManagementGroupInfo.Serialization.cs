@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
     public partial class ManagementGroupInfo
     {
-        internal static ManagementGroupInfo DeserializeManagementGroupInfo(JsonElement element)
+        internal static ManagementGroupInfo DeserializeManagementGroupInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

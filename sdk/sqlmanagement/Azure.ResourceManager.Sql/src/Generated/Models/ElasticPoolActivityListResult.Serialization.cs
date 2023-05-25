@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     internal partial class ElasticPoolActivityListResult
     {
-        internal static ElasticPoolActivityListResult DeserializeElasticPoolActivityListResult(JsonElement element)
+        internal static ElasticPoolActivityListResult DeserializeElasticPoolActivityListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

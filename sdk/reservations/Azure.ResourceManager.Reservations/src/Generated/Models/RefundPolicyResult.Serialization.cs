@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     internal partial class RefundPolicyResult
     {
-        internal static RefundPolicyResult DeserializeRefundPolicyResult(JsonElement element)
+        internal static RefundPolicyResult DeserializeRefundPolicyResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

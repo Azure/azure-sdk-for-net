@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class IPConfigDetails
     {
-        internal static IPConfigDetails DeserializeIPConfigDetails(JsonElement element)
+        internal static IPConfigDetails DeserializeIPConfigDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

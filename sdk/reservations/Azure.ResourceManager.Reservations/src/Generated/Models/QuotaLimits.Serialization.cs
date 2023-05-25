@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     internal partial class QuotaLimits
     {
-        internal static QuotaLimits DeserializeQuotaLimits(JsonElement element)
+        internal static QuotaLimits DeserializeQuotaLimits(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

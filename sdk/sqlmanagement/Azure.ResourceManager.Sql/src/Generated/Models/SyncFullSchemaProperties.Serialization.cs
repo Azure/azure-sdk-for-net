@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class SyncFullSchemaProperties
     {
-        internal static SyncFullSchemaProperties DeserializeSyncFullSchemaProperties(JsonElement element)
+        internal static SyncFullSchemaProperties DeserializeSyncFullSchemaProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

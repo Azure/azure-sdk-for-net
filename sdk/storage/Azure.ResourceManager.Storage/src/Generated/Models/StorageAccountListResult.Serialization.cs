@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     internal partial class StorageAccountListResult
     {
-        internal static StorageAccountListResult DeserializeStorageAccountListResult(JsonElement element)
+        internal static StorageAccountListResult DeserializeStorageAccountListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

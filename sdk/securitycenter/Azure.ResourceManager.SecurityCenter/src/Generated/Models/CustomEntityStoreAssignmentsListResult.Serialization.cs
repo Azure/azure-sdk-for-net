@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     internal partial class CustomEntityStoreAssignmentsListResult
     {
-        internal static CustomEntityStoreAssignmentsListResult DeserializeCustomEntityStoreAssignmentsListResult(JsonElement element)
+        internal static CustomEntityStoreAssignmentsListResult DeserializeCustomEntityStoreAssignmentsListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

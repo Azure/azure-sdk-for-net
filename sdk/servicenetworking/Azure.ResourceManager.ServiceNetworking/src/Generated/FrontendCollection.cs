@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontendFrontendsInterfaceRestClient.CreateListByTrafficControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontendFrontendsInterfaceRestClient.CreateListByTrafficControllerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontendResource(Client, FrontendData.DeserializeFrontendData(e)), _frontendFrontendsInterfaceClientDiagnostics, Pipeline, "FrontendCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new FrontendResource(Client, FrontendData.DeserializeFrontendData(e)), _frontendFrontendsInterfaceClientDiagnostics, Pipeline, "FrontendCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontendFrontendsInterfaceRestClient.CreateListByTrafficControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontendFrontendsInterfaceRestClient.CreateListByTrafficControllerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontendResource(Client, FrontendData.DeserializeFrontendData(e)), _frontendFrontendsInterfaceClientDiagnostics, Pipeline, "FrontendCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new FrontendResource(Client, FrontendData.DeserializeFrontendData(e)), _frontendFrontendsInterfaceClientDiagnostics, Pipeline, "FrontendCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

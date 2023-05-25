@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
     internal partial class RedisLinkedServerWithPropertiesList
     {
-        internal static RedisLinkedServerWithPropertiesList DeserializeRedisLinkedServerWithPropertiesList(JsonElement element)
+        internal static RedisLinkedServerWithPropertiesList DeserializeRedisLinkedServerWithPropertiesList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

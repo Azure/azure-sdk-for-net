@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class ProtectionContainerProperties
     {
-        internal static ProtectionContainerProperties DeserializeProtectionContainerProperties(JsonElement element)
+        internal static ProtectionContainerProperties DeserializeProtectionContainerProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

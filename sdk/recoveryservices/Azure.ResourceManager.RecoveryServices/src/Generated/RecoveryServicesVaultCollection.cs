@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryServicesVaultVaultsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryServicesVaultVaultsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesVaultResource(Client, RecoveryServicesVaultData.DeserializeRecoveryServicesVaultData(e)), _recoveryServicesVaultVaultsClientDiagnostics, Pipeline, "RecoveryServicesVaultCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new RecoveryServicesVaultResource(Client, RecoveryServicesVaultData.DeserializeRecoveryServicesVaultData(e)), _recoveryServicesVaultVaultsClientDiagnostics, Pipeline, "RecoveryServicesVaultCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryServicesVaultVaultsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryServicesVaultVaultsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesVaultResource(Client, RecoveryServicesVaultData.DeserializeRecoveryServicesVaultData(e)), _recoveryServicesVaultVaultsClientDiagnostics, Pipeline, "RecoveryServicesVaultCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new RecoveryServicesVaultResource(Client, RecoveryServicesVaultData.DeserializeRecoveryServicesVaultData(e)), _recoveryServicesVaultVaultsClientDiagnostics, Pipeline, "RecoveryServicesVaultCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

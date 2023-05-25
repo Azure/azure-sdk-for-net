@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     internal partial class ResourceHealthAvailabilityStatusListResult
     {
-        internal static ResourceHealthAvailabilityStatusListResult DeserializeResourceHealthAvailabilityStatusListResult(JsonElement element)
+        internal static ResourceHealthAvailabilityStatusListResult DeserializeResourceHealthAvailabilityStatusListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

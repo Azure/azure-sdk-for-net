@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class SecurityCvss
     {
-        internal static SecurityCvss DeserializeSecurityCvss(JsonElement element)
+        internal static SecurityCvss DeserializeSecurityCvss(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     public partial class BlobRestoreStatus
     {
-        internal static BlobRestoreStatus DeserializeBlobRestoreStatus(JsonElement element)
+        internal static BlobRestoreStatus DeserializeBlobRestoreStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

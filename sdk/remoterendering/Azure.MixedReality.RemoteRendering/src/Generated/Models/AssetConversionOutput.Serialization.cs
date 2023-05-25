@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.MixedReality.RemoteRendering
 {
     public partial class AssetConversionOutput
     {
-        internal static AssetConversionOutput DeserializeAssetConversionOutput(JsonElement element)
+        internal static AssetConversionOutput DeserializeAssetConversionOutput(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

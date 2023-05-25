@@ -8,13 +8,16 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     public partial class TemplateSpecPatch : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
@@ -31,7 +34,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        internal static TemplateSpecPatch DeserializeTemplateSpecPatch(JsonElement element)
+        internal static TemplateSpecPatch DeserializeTemplateSpecPatch(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

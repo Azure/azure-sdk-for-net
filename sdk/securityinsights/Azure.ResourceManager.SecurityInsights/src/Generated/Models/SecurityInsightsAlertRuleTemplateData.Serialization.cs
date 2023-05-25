@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
 
@@ -14,7 +15,9 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsAlertRuleTemplateData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -22,7 +25,7 @@ namespace Azure.ResourceManager.SecurityInsights
             writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsAlertRuleTemplateData DeserializeSecurityInsightsAlertRuleTemplateData(JsonElement element)
+        internal static SecurityInsightsAlertRuleTemplateData DeserializeSecurityInsightsAlertRuleTemplateData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

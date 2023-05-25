@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusTopicTopicsRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusTopicTopicsRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceBusTopicResource(Client, ServiceBusTopicData.DeserializeServiceBusTopicData(e)), _serviceBusTopicTopicsClientDiagnostics, Pipeline, "ServiceBusTopicCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ServiceBusTopicResource(Client, ServiceBusTopicData.DeserializeServiceBusTopicData(e)), _serviceBusTopicTopicsClientDiagnostics, Pipeline, "ServiceBusTopicCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusTopicTopicsRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusTopicTopicsRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceBusTopicResource(Client, ServiceBusTopicData.DeserializeServiceBusTopicData(e)), _serviceBusTopicTopicsClientDiagnostics, Pipeline, "ServiceBusTopicCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ServiceBusTopicResource(Client, ServiceBusTopicData.DeserializeServiceBusTopicData(e)), _serviceBusTopicTopicsClientDiagnostics, Pipeline, "ServiceBusTopicCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

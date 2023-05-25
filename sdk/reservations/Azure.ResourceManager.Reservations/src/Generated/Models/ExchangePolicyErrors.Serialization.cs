@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     internal partial class ExchangePolicyErrors
     {
-        internal static ExchangePolicyErrors DeserializeExchangePolicyErrors(JsonElement element)
+        internal static ExchangePolicyErrors DeserializeExchangePolicyErrors(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

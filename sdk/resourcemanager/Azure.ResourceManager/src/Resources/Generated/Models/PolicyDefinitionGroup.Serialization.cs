@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     public partial class PolicyDefinitionGroup : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        internal static PolicyDefinitionGroup DeserializePolicyDefinitionGroup(JsonElement element)
+        internal static PolicyDefinitionGroup DeserializePolicyDefinitionGroup(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

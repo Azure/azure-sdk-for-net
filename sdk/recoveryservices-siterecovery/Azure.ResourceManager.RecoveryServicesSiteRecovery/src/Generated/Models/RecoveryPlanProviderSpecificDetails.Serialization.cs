@@ -6,12 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class RecoveryPlanProviderSpecificDetails
     {
-        internal static RecoveryPlanProviderSpecificDetails DeserializeRecoveryPlanProviderSpecificDetails(JsonElement element)
+        internal static RecoveryPlanProviderSpecificDetails DeserializeRecoveryPlanProviderSpecificDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

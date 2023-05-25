@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class VaultSettingProperties
     {
-        internal static VaultSettingProperties DeserializeVaultSettingProperties(JsonElement element)
+        internal static VaultSettingProperties DeserializeVaultSettingProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

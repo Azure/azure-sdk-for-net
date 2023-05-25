@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsRepoRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureDevOpsRepoRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsRepoResource(Client, AzureDevOpsRepoData.DeserializeAzureDevOpsRepoData(e)), _azureDevOpsRepoClientDiagnostics, Pipeline, "AzureDevOpsRepoCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AzureDevOpsRepoResource(Client, AzureDevOpsRepoData.DeserializeAzureDevOpsRepoData(e)), _azureDevOpsRepoClientDiagnostics, Pipeline, "AzureDevOpsRepoCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsRepoRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureDevOpsRepoRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsRepoResource(Client, AzureDevOpsRepoData.DeserializeAzureDevOpsRepoData(e)), _azureDevOpsRepoClientDiagnostics, Pipeline, "AzureDevOpsRepoCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AzureDevOpsRepoResource(Client, AzureDevOpsRepoData.DeserializeAzureDevOpsRepoData(e)), _azureDevOpsRepoClientDiagnostics, Pipeline, "AzureDevOpsRepoCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

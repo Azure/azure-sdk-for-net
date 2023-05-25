@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     internal partial class SecuritySolutionList
     {
-        internal static SecuritySolutionList DeserializeSecuritySolutionList(JsonElement element)
+        internal static SecuritySolutionList DeserializeSecuritySolutionList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

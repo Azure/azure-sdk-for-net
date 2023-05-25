@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class RecoveryPointProperties
     {
-        internal static RecoveryPointProperties DeserializeRecoveryPointProperties(JsonElement element)
+        internal static RecoveryPointProperties DeserializeRecoveryPointProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

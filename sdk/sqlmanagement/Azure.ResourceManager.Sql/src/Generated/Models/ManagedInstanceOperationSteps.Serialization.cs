@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class ManagedInstanceOperationSteps
     {
-        internal static ManagedInstanceOperationSteps DeserializeManagedInstanceOperationSteps(JsonElement element)
+        internal static ManagedInstanceOperationSteps DeserializeManagedInstanceOperationSteps(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class VMwareV2FabricSpecificDetails
     {
-        internal static VMwareV2FabricSpecificDetails DeserializeVMwareV2FabricSpecificDetails(JsonElement element)
+        internal static VMwareV2FabricSpecificDetails DeserializeVMwareV2FabricSpecificDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

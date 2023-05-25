@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     internal partial class DataMaskingRuleListResult
     {
-        internal static DataMaskingRuleListResult DeserializeDataMaskingRuleListResult(JsonElement element)
+        internal static DataMaskingRuleListResult DeserializeDataMaskingRuleListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

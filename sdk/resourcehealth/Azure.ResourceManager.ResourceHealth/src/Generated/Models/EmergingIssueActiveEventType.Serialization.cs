@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     public partial class EmergingIssueActiveEventType
     {
-        internal static EmergingIssueActiveEventType DeserializeEmergingIssueActiveEventType(JsonElement element)
+        internal static EmergingIssueActiveEventType DeserializeEmergingIssueActiveEventType(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

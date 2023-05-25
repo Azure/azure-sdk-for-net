@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     public partial class GetServiceSasResult
     {
-        internal static GetServiceSasResult DeserializeGetServiceSasResult(JsonElement element)
+        internal static GetServiceSasResult DeserializeGetServiceSasResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

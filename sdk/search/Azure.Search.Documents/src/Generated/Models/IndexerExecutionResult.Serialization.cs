@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class IndexerExecutionResult
     {
-        internal static IndexerExecutionResult DeserializeIndexerExecutionResult(JsonElement element)
+        internal static IndexerExecutionResult DeserializeIndexerExecutionResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

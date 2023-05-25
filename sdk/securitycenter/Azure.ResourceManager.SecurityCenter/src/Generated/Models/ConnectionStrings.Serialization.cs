@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     internal partial class ConnectionStrings
     {
-        internal static ConnectionStrings DeserializeConnectionStrings(JsonElement element)
+        internal static ConnectionStrings DeserializeConnectionStrings(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

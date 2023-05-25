@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jitNetworkAccessPolicyRestClient.CreateListByResourceGroupAndRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jitNetworkAccessPolicyRestClient.CreateListByResourceGroupAndRegionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), _jitNetworkAccessPolicyClientDiagnostics, Pipeline, "JitNetworkAccessPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), _jitNetworkAccessPolicyClientDiagnostics, Pipeline, "JitNetworkAccessPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jitNetworkAccessPolicyRestClient.CreateListByResourceGroupAndRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jitNetworkAccessPolicyRestClient.CreateListByResourceGroupAndRegionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), _jitNetworkAccessPolicyClientDiagnostics, Pipeline, "JitNetworkAccessPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), _jitNetworkAccessPolicyClientDiagnostics, Pipeline, "JitNetworkAccessPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

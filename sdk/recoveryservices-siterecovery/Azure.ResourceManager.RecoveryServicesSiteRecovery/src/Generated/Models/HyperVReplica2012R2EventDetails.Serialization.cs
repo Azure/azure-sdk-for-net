@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class HyperVReplica2012R2EventDetails
     {
-        internal static HyperVReplica2012R2EventDetails DeserializeHyperVReplica2012R2EventDetails(JsonElement element)
+        internal static HyperVReplica2012R2EventDetails DeserializeHyperVReplica2012R2EventDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

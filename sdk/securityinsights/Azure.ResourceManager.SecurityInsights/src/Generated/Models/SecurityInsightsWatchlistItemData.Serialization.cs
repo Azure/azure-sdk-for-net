@@ -9,6 +9,7 @@ using System;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
 
@@ -16,7 +17,9 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsWatchlistItemData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
@@ -88,7 +91,7 @@ namespace Azure.ResourceManager.SecurityInsights
             writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsWatchlistItemData DeserializeSecurityInsightsWatchlistItemData(JsonElement element)
+        internal static SecurityInsightsWatchlistItemData DeserializeSecurityInsightsWatchlistItemData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

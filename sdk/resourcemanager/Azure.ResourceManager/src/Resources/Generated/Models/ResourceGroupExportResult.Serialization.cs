@@ -9,12 +9,13 @@ using System;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ResourceGroupExportResult
     {
-        internal static ResourceGroupExportResult DeserializeResourceGroupExportResult(JsonElement element)
+        internal static ResourceGroupExportResult DeserializeResourceGroupExportResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

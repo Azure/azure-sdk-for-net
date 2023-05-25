@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     internal partial class PredefinedTagsListResult
     {
-        internal static PredefinedTagsListResult DeserializePredefinedTagsListResult(JsonElement element)
+        internal static PredefinedTagsListResult DeserializePredefinedTagsListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class VMwareCbtProtectedDiskDetails
     {
-        internal static VMwareCbtProtectedDiskDetails DeserializeVMwareCbtProtectedDiskDetails(JsonElement element)
+        internal static VMwareCbtProtectedDiskDetails DeserializeVMwareCbtProtectedDiskDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

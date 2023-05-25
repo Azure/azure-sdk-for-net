@@ -7,13 +7,14 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
     public partial class DescendantData
     {
-        internal static DescendantData DeserializeDescendantData(JsonElement element)
+        internal static DescendantData DeserializeDescendantData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     public partial class NodeTypeAvailableSku
     {
-        internal static NodeTypeAvailableSku DeserializeNodeTypeAvailableSku(JsonElement element)
+        internal static NodeTypeAvailableSku DeserializeNodeTypeAvailableSku(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

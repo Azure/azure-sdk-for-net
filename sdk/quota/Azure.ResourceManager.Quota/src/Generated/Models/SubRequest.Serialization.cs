@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Quota.Models
 {
     public partial class SubRequest
     {
-        internal static SubRequest DeserializeSubRequest(JsonElement element)
+        internal static SubRequest DeserializeSubRequest(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

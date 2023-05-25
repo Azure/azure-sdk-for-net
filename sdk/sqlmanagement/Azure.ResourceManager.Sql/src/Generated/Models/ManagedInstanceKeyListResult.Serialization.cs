@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     internal partial class ManagedInstanceKeyListResult
     {
-        internal static ManagedInstanceKeyListResult DeserializeManagedInstanceKeyListResult(JsonElement element)
+        internal static ManagedInstanceKeyListResult DeserializeManagedInstanceKeyListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

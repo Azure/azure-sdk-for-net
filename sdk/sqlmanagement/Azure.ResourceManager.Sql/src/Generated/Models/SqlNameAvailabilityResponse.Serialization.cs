@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class SqlNameAvailabilityResponse
     {
-        internal static SqlNameAvailabilityResponse DeserializeSqlNameAvailabilityResponse(JsonElement element)
+        internal static SqlNameAvailabilityResponse DeserializeSqlNameAvailabilityResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class RecommendedActionErrorInfo
     {
-        internal static RecommendedActionErrorInfo DeserializeRecommendedActionErrorInfo(JsonElement element)
+        internal static RecommendedActionErrorInfo DeserializeRecommendedActionErrorInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

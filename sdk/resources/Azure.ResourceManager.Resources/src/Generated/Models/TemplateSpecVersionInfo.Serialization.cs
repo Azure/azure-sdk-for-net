@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     public partial class TemplateSpecVersionInfo
     {
-        internal static TemplateSpecVersionInfo DeserializeTemplateSpecVersionInfo(JsonElement element)
+        internal static TemplateSpecVersionInfo DeserializeTemplateSpecVersionInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

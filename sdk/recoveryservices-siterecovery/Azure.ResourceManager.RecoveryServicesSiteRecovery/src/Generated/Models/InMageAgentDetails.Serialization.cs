@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class InMageAgentDetails
     {
-        internal static InMageAgentDetails DeserializeInMageAgentDetails(JsonElement element)
+        internal static InMageAgentDetails DeserializeInMageAgentDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

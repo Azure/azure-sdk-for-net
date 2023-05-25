@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _instanceFailoverGroupRestClient.CreateListByLocationRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _instanceFailoverGroupRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new InstanceFailoverGroupResource(Client, InstanceFailoverGroupData.DeserializeInstanceFailoverGroupData(e)), _instanceFailoverGroupClientDiagnostics, Pipeline, "InstanceFailoverGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new InstanceFailoverGroupResource(Client, InstanceFailoverGroupData.DeserializeInstanceFailoverGroupData(e)), _instanceFailoverGroupClientDiagnostics, Pipeline, "InstanceFailoverGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _instanceFailoverGroupRestClient.CreateListByLocationRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _instanceFailoverGroupRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new InstanceFailoverGroupResource(Client, InstanceFailoverGroupData.DeserializeInstanceFailoverGroupData(e)), _instanceFailoverGroupClientDiagnostics, Pipeline, "InstanceFailoverGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new InstanceFailoverGroupResource(Client, InstanceFailoverGroupData.DeserializeInstanceFailoverGroupData(e)), _instanceFailoverGroupClientDiagnostics, Pipeline, "InstanceFailoverGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class A2AEventDetails
     {
-        internal static A2AEventDetails DeserializeA2AEventDetails(JsonElement element)
+        internal static A2AEventDetails DeserializeA2AEventDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

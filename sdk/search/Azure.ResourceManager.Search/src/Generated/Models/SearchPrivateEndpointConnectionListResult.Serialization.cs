@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
     internal partial class SearchPrivateEndpointConnectionListResult
     {
-        internal static SearchPrivateEndpointConnectionListResult DeserializeSearchPrivateEndpointConnectionListResult(JsonElement element)
+        internal static SearchPrivateEndpointConnectionListResult DeserializeSearchPrivateEndpointConnectionListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

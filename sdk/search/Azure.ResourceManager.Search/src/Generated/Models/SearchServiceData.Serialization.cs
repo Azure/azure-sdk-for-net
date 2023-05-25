@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Search.Models;
 
@@ -15,7 +16,9 @@ namespace Azure.ResourceManager.Search
 {
     public partial class SearchServiceData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
@@ -94,7 +97,7 @@ namespace Azure.ResourceManager.Search
             writer.WriteEndObject();
         }
 
-        internal static SearchServiceData DeserializeSearchServiceData(JsonElement element)
+        internal static SearchServiceData DeserializeSearchServiceData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

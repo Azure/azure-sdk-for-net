@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByLocationRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerTrustGroupResource(Client, SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(e)), _sqlServerTrustGroupServerTrustGroupsClientDiagnostics, Pipeline, "SqlServerTrustGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SqlServerTrustGroupResource(Client, SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(e)), _sqlServerTrustGroupServerTrustGroupsClientDiagnostics, Pipeline, "SqlServerTrustGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByLocationRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerTrustGroupResource(Client, SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(e)), _sqlServerTrustGroupServerTrustGroupsClientDiagnostics, Pipeline, "SqlServerTrustGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SqlServerTrustGroupResource(Client, SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(e)), _sqlServerTrustGroupServerTrustGroupsClientDiagnostics, Pipeline, "SqlServerTrustGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

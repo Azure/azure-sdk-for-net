@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class HyperVReplicaAzureManagedDiskDetails
     {
-        internal static HyperVReplicaAzureManagedDiskDetails DeserializeHyperVReplicaAzureManagedDiskDetails(JsonElement element)
+        internal static HyperVReplicaAzureManagedDiskDetails DeserializeHyperVReplicaAzureManagedDiskDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

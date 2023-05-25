@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.MixedReality.RemoteRendering
 {
     public partial class RenderingSession
     {
-        internal static RenderingSession DeserializeRenderingSession(JsonElement element)
+        internal static RenderingSession DeserializeRenderingSession(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     internal partial class StoragePrivateEndpointConnectionListResult
     {
-        internal static StoragePrivateEndpointConnectionListResult DeserializeStoragePrivateEndpointConnectionListResult(JsonElement element)
+        internal static StoragePrivateEndpointConnectionListResult DeserializeStoragePrivateEndpointConnectionListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

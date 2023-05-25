@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     internal partial class JitRequestListResult
     {
-        internal static JitRequestListResult DeserializeJitRequestListResult(JsonElement element)
+        internal static JitRequestListResult DeserializeJitRequestListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

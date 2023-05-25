@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
     public partial class SignalRKeys
     {
-        internal static SignalRKeys DeserializeSignalRKeys(JsonElement element)
+        internal static SignalRKeys DeserializeSignalRKeys(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

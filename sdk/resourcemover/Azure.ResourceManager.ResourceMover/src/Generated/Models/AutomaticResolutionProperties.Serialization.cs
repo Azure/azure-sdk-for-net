@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     internal partial class AutomaticResolutionProperties
     {
-        internal static AutomaticResolutionProperties DeserializeAutomaticResolutionProperties(JsonElement element)
+        internal static AutomaticResolutionProperties DeserializeAutomaticResolutionProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

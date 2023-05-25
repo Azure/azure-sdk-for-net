@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class ManualActionTaskDetails
     {
-        internal static ManualActionTaskDetails DeserializeManualActionTaskDetails(JsonElement element)
+        internal static ManualActionTaskDetails DeserializeManualActionTaskDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

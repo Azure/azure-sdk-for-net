@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Search
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _searchServiceServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, searchManagementRequestOptions);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _searchServiceServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, searchManagementRequestOptions);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SearchServiceResource(Client, SearchServiceData.DeserializeSearchServiceData(e)), _searchServiceServicesClientDiagnostics, Pipeline, "SearchServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SearchServiceResource(Client, SearchServiceData.DeserializeSearchServiceData(e)), _searchServiceServicesClientDiagnostics, Pipeline, "SearchServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Search
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _searchServiceServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, searchManagementRequestOptions);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _searchServiceServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, searchManagementRequestOptions);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SearchServiceResource(Client, SearchServiceData.DeserializeSearchServiceData(e)), _searchServiceServicesClientDiagnostics, Pipeline, "SearchServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SearchServiceResource(Client, SearchServiceData.DeserializeSearchServiceData(e)), _searchServiceServicesClientDiagnostics, Pipeline, "SearchServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

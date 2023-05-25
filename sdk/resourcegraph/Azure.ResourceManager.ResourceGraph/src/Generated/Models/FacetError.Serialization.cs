@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
     public partial class FacetError
     {
-        internal static FacetError DeserializeFacetError(JsonElement element)
+        internal static FacetError DeserializeFacetError(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

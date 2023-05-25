@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Search.Models
 {
     public partial class ShareableSearchServicePrivateLinkResourceType
     {
-        internal static ShareableSearchServicePrivateLinkResourceType DeserializeShareableSearchServicePrivateLinkResourceType(JsonElement element)
+        internal static ShareableSearchServicePrivateLinkResourceType DeserializeShareableSearchServicePrivateLinkResourceType(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

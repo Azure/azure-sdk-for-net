@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     public partial class ReplicationUsage
     {
-        internal static ReplicationUsage DeserializeReplicationUsage(JsonElement element)
+        internal static ReplicationUsage DeserializeReplicationUsage(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

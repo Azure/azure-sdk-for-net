@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     internal partial class SecureScoreControlDefinitionSource
     {
-        internal static SecureScoreControlDefinitionSource DeserializeSecureScoreControlDefinitionSource(JsonElement element)
+        internal static SecureScoreControlDefinitionSource DeserializeSecureScoreControlDefinitionSource(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

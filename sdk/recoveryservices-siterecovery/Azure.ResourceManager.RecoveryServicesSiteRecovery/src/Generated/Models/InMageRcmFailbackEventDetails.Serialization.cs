@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class InMageRcmFailbackEventDetails
     {
-        internal static InMageRcmFailbackEventDetails DeserializeInMageRcmFailbackEventDetails(JsonElement element)
+        internal static InMageRcmFailbackEventDetails DeserializeInMageRcmFailbackEventDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

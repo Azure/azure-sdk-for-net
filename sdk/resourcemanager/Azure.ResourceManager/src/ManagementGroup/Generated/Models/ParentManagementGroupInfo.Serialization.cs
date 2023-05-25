@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
     public partial class ParentManagementGroupInfo
     {
-        internal static ParentManagementGroupInfo DeserializeParentManagementGroupInfo(JsonElement element)
+        internal static ParentManagementGroupInfo DeserializeParentManagementGroupInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

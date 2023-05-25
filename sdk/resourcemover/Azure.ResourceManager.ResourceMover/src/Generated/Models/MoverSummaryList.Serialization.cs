@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     internal partial class MoverSummaryList
     {
-        internal static MoverSummaryList DeserializeMoverSummaryList(JsonElement element)
+        internal static MoverSummaryList DeserializeMoverSummaryList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

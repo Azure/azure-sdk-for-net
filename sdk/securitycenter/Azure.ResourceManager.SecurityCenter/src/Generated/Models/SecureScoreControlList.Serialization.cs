@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     internal partial class SecureScoreControlList
     {
-        internal static SecureScoreControlList DeserializeSecureScoreControlList(JsonElement element)
+        internal static SecureScoreControlList DeserializeSecureScoreControlList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

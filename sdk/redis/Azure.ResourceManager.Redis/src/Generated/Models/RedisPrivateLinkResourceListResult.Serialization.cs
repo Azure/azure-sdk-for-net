@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Redis.Models
 {
     internal partial class RedisPrivateLinkResourceListResult
     {
-        internal static RedisPrivateLinkResourceListResult DeserializeRedisPrivateLinkResourceListResult(JsonElement element)
+        internal static RedisPrivateLinkResourceListResult DeserializeRedisPrivateLinkResourceListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

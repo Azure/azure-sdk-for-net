@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
     internal partial class RedisPrivateEndpointConnectionListResult
     {
-        internal static RedisPrivateEndpointConnectionListResult DeserializeRedisPrivateEndpointConnectionListResult(JsonElement element)
+        internal static RedisPrivateEndpointConnectionListResult DeserializeRedisPrivateEndpointConnectionListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class SkuCapability
     {
-        internal static SkuCapability DeserializeSkuCapability(JsonElement element)
+        internal static SkuCapability DeserializeSkuCapability(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

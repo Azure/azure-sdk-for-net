@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Quota.Models
 {
     public partial class OperationDisplay
     {
-        internal static OperationDisplay DeserializeOperationDisplay(JsonElement element)
+        internal static OperationDisplay DeserializeOperationDisplay(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

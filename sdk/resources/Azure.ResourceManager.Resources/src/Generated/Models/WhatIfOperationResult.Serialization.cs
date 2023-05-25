@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     public partial class WhatIfOperationResult
     {
-        internal static WhatIfOperationResult DeserializeWhatIfOperationResult(JsonElement element)
+        internal static WhatIfOperationResult DeserializeWhatIfOperationResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

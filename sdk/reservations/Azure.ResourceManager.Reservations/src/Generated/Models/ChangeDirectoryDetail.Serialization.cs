@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class ChangeDirectoryDetail
     {
-        internal static ChangeDirectoryDetail DeserializeChangeDirectoryDetail(JsonElement element)
+        internal static ChangeDirectoryDetail DeserializeChangeDirectoryDetail(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

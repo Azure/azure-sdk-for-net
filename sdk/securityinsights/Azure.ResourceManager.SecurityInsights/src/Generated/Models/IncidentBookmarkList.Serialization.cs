@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     internal partial class IncidentBookmarkList
     {
-        internal static IncidentBookmarkList DeserializeIncidentBookmarkList(JsonElement element)
+        internal static IncidentBookmarkList DeserializeIncidentBookmarkList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

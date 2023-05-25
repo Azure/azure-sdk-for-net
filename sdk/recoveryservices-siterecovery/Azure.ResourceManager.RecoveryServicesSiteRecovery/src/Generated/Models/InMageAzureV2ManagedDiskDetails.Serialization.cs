@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class InMageAzureV2ManagedDiskDetails
     {
-        internal static InMageAzureV2ManagedDiskDetails DeserializeInMageAzureV2ManagedDiskDetails(JsonElement element)
+        internal static InMageAzureV2ManagedDiskDetails DeserializeInMageAzureV2ManagedDiskDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

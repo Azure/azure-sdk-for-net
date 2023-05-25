@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     internal partial class ReservationSummary
     {
-        internal static ReservationSummary DeserializeReservationSummary(JsonElement element)
+        internal static ReservationSummary DeserializeReservationSummary(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     public partial class ResourceCertificateAndAadDetails
     {
-        internal static ResourceCertificateAndAadDetails DeserializeResourceCertificateAndAadDetails(JsonElement element)
+        internal static ResourceCertificateAndAadDetails DeserializeResourceCertificateAndAadDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

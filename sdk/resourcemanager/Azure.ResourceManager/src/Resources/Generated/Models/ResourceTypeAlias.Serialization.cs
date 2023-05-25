@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ResourceTypeAlias
     {
-        internal static ResourceTypeAlias DeserializeResourceTypeAlias(JsonElement element)
+        internal static ResourceTypeAlias DeserializeResourceTypeAlias(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

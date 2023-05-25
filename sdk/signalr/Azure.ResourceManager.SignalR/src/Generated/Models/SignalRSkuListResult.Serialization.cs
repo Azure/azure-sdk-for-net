@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
     internal partial class SignalRSkuListResult
     {
-        internal static SignalRSkuListResult DeserializeSignalRSkuListResult(JsonElement element)
+        internal static SignalRSkuListResult DeserializeSignalRSkuListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

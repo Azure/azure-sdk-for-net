@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     public partial class LinkerValidateOperationResult
     {
-        internal static LinkerValidateOperationResult DeserializeLinkerValidateOperationResult(JsonElement element)
+        internal static LinkerValidateOperationResult DeserializeLinkerValidateOperationResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     internal partial class SqlVmListResult
     {
-        internal static SqlVmListResult DeserializeSqlVmListResult(JsonElement element)
+        internal static SqlVmListResult DeserializeSqlVmListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

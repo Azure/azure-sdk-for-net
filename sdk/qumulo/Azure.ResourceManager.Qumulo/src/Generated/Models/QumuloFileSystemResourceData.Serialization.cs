@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Qumulo.Models;
 
@@ -17,7 +18,9 @@ namespace Azure.ResourceManager.Qumulo
 {
     public partial class QumuloFileSystemResourceData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
@@ -81,7 +84,7 @@ namespace Azure.ResourceManager.Qumulo
             writer.WriteEndObject();
         }
 
-        internal static QumuloFileSystemResourceData DeserializeQumuloFileSystemResourceData(JsonElement element)
+        internal static QumuloFileSystemResourceData DeserializeQumuloFileSystemResourceData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class TopologySingleResourceChild
     {
-        internal static TopologySingleResourceChild DeserializeTopologySingleResourceChild(JsonElement element)
+        internal static TopologySingleResourceChild DeserializeTopologySingleResourceChild(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

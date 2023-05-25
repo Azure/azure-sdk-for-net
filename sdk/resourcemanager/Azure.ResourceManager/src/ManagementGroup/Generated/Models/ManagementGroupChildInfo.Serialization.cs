@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
     public partial class ManagementGroupChildInfo
     {
-        internal static ManagementGroupChildInfo DeserializeManagementGroupChildInfo(JsonElement element)
+        internal static ManagementGroupChildInfo DeserializeManagementGroupChildInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

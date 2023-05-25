@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     internal partial class ResourceGuardProxyBaseResourceList
     {
-        internal static ResourceGuardProxyBaseResourceList DeserializeResourceGuardProxyBaseResourceList(JsonElement element)
+        internal static ResourceGuardProxyBaseResourceList DeserializeResourceGuardProxyBaseResourceList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     public partial class DiagnosticInsight
     {
-        internal static DiagnosticInsight DeserializeDiagnosticInsight(JsonElement element)
+        internal static DiagnosticInsight DeserializeDiagnosticInsight(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     internal partial class SyncGroupLogListResult
     {
-        internal static SyncGroupLogListResult DeserializeSyncGroupLogListResult(JsonElement element)
+        internal static SyncGroupLogListResult DeserializeSyncGroupLogListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

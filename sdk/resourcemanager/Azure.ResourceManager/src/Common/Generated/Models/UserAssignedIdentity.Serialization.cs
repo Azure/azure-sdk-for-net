@@ -9,19 +9,22 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Models
 {
     [JsonConverter(typeof(UserAssignedIdentityConverter))]
     public partial class UserAssignedIdentity : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
         }
 
-        internal static UserAssignedIdentity DeserializeUserAssignedIdentity(JsonElement element)
+        internal static UserAssignedIdentity DeserializeUserAssignedIdentity(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

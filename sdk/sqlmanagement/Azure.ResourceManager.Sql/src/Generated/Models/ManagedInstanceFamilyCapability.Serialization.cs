@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class ManagedInstanceFamilyCapability
     {
-        internal static ManagedInstanceFamilyCapability DeserializeManagedInstanceFamilyCapability(JsonElement element)
+        internal static ManagedInstanceFamilyCapability DeserializeManagedInstanceFamilyCapability(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

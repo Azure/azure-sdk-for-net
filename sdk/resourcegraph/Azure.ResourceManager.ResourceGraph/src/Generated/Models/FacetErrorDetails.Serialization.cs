@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
     public partial class FacetErrorDetails
     {
-        internal static FacetErrorDetails DeserializeFacetErrorDetails(JsonElement element)
+        internal static FacetErrorDetails DeserializeFacetErrorDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

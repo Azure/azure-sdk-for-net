@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     public partial class LeaseContainerResponse
     {
-        internal static LeaseContainerResponse DeserializeLeaseContainerResponse(JsonElement element)
+        internal static LeaseContainerResponse DeserializeLeaseContainerResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

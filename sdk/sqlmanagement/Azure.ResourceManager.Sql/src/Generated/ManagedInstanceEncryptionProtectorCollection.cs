@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceEncryptionProtectorRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceEncryptionProtectorRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceEncryptionProtectorResource(Client, ManagedInstanceEncryptionProtectorData.DeserializeManagedInstanceEncryptionProtectorData(e)), _managedInstanceEncryptionProtectorClientDiagnostics, Pipeline, "ManagedInstanceEncryptionProtectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedInstanceEncryptionProtectorResource(Client, ManagedInstanceEncryptionProtectorData.DeserializeManagedInstanceEncryptionProtectorData(e)), _managedInstanceEncryptionProtectorClientDiagnostics, Pipeline, "ManagedInstanceEncryptionProtectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceEncryptionProtectorRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceEncryptionProtectorRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceEncryptionProtectorResource(Client, ManagedInstanceEncryptionProtectorData.DeserializeManagedInstanceEncryptionProtectorData(e)), _managedInstanceEncryptionProtectorClientDiagnostics, Pipeline, "ManagedInstanceEncryptionProtectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedInstanceEncryptionProtectorResource(Client, ManagedInstanceEncryptionProtectorData.DeserializeManagedInstanceEncryptionProtectorData(e)), _managedInstanceEncryptionProtectorClientDiagnostics, Pipeline, "ManagedInstanceEncryptionProtectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

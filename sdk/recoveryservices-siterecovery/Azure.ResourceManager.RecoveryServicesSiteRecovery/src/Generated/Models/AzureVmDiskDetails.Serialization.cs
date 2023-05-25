@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class AzureVmDiskDetails
     {
-        internal static AzureVmDiskDetails DeserializeAzureVmDiskDetails(JsonElement element)
+        internal static AzureVmDiskDetails DeserializeAzureVmDiskDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

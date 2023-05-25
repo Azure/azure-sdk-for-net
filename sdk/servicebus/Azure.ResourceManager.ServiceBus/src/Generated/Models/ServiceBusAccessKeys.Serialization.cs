@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     public partial class ServiceBusAccessKeys
     {
-        internal static ServiceBusAccessKeys DeserializeServiceBusAccessKeys(JsonElement element)
+        internal static ServiceBusAccessKeys DeserializeServiceBusAccessKeys(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

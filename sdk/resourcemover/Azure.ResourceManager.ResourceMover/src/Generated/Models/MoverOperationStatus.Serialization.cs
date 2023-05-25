@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     public partial class MoverOperationStatus
     {
-        internal static MoverOperationStatus DeserializeMoverOperationStatus(JsonElement element)
+        internal static MoverOperationStatus DeserializeMoverOperationStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

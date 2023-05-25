@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
@@ -15,7 +16,9 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SyncGroupData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
@@ -74,7 +77,7 @@ namespace Azure.ResourceManager.Sql
             writer.WriteEndObject();
         }
 
-        internal static SyncGroupData DeserializeSyncGroupData(JsonElement element)
+        internal static SyncGroupData DeserializeSyncGroupData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

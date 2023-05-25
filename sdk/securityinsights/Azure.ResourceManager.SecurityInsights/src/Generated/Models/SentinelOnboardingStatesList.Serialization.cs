@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     internal partial class SentinelOnboardingStatesList
     {
-        internal static SentinelOnboardingStatesList DeserializeSentinelOnboardingStatesList(JsonElement element)
+        internal static SentinelOnboardingStatesList DeserializeSentinelOnboardingStatesList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

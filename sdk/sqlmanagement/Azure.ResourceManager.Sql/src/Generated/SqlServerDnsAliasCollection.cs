@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDnsAliasServerDnsAliasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDnsAliasServerDnsAliasesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerDnsAliasResource(Client, SqlServerDnsAliasData.DeserializeSqlServerDnsAliasData(e)), _sqlServerDnsAliasServerDnsAliasesClientDiagnostics, Pipeline, "SqlServerDnsAliasCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SqlServerDnsAliasResource(Client, SqlServerDnsAliasData.DeserializeSqlServerDnsAliasData(e)), _sqlServerDnsAliasServerDnsAliasesClientDiagnostics, Pipeline, "SqlServerDnsAliasCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDnsAliasServerDnsAliasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDnsAliasServerDnsAliasesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerDnsAliasResource(Client, SqlServerDnsAliasData.DeserializeSqlServerDnsAliasData(e)), _sqlServerDnsAliasServerDnsAliasesClientDiagnostics, Pipeline, "SqlServerDnsAliasCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SqlServerDnsAliasResource(Client, SqlServerDnsAliasData.DeserializeSqlServerDnsAliasData(e)), _sqlServerDnsAliasServerDnsAliasesClientDiagnostics, Pipeline, "SqlServerDnsAliasCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

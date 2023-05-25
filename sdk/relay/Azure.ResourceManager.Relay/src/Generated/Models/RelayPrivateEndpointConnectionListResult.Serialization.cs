@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Relay;
 
 namespace Azure.ResourceManager.Relay.Models
 {
     internal partial class RelayPrivateEndpointConnectionListResult
     {
-        internal static RelayPrivateEndpointConnectionListResult DeserializeRelayPrivateEndpointConnectionListResult(JsonElement element)
+        internal static RelayPrivateEndpointConnectionListResult DeserializeRelayPrivateEndpointConnectionListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

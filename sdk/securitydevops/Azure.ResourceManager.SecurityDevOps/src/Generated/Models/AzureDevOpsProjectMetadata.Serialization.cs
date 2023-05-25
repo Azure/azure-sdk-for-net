@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
     public partial class AzureDevOpsProjectMetadata : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
@@ -39,7 +42,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureDevOpsProjectMetadata DeserializeAzureDevOpsProjectMetadata(JsonElement element)
+        internal static AzureDevOpsProjectMetadata DeserializeAzureDevOpsProjectMetadata(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

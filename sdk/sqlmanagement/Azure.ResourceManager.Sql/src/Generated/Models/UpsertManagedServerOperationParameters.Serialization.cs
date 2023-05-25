@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class UpsertManagedServerOperationParameters
     {
-        internal static UpsertManagedServerOperationParameters DeserializeUpsertManagedServerOperationParameters(JsonElement element)
+        internal static UpsertManagedServerOperationParameters DeserializeUpsertManagedServerOperationParameters(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

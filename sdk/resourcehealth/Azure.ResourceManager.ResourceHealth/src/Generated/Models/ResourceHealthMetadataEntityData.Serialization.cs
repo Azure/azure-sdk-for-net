@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ResourceHealth.Models;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.ResourceHealth
 {
     public partial class ResourceHealthMetadataEntityData
     {
-        internal static ResourceHealthMetadataEntityData DeserializeResourceHealthMetadataEntityData(JsonElement element)
+        internal static ResourceHealthMetadataEntityData DeserializeResourceHealthMetadataEntityData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

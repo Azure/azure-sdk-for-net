@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesProviderResource(Client, RecoveryServicesProviderData.DeserializeRecoveryServicesProviderData(e)), _recoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, "RecoveryServicesProviderCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new RecoveryServicesProviderResource(Client, RecoveryServicesProviderData.DeserializeRecoveryServicesProviderData(e)), _recoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, "RecoveryServicesProviderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesProviderResource(Client, RecoveryServicesProviderData.DeserializeRecoveryServicesProviderData(e)), _recoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, "RecoveryServicesProviderCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new RecoveryServicesProviderResource(Client, RecoveryServicesProviderData.DeserializeRecoveryServicesProviderData(e)), _recoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, "RecoveryServicesProviderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

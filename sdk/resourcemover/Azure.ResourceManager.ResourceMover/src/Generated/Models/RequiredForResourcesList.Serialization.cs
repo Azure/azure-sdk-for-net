@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     public partial class RequiredForResourcesList
     {
-        internal static RequiredForResourcesList DeserializeRequiredForResourcesList(JsonElement element)
+        internal static RequiredForResourcesList DeserializeRequiredForResourcesList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

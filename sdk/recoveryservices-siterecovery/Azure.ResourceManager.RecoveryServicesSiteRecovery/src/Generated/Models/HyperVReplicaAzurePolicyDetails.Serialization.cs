@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class HyperVReplicaAzurePolicyDetails
     {
-        internal static HyperVReplicaAzurePolicyDetails DeserializeHyperVReplicaAzurePolicyDetails(JsonElement element)
+        internal static HyperVReplicaAzurePolicyDetails DeserializeHyperVReplicaAzurePolicyDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

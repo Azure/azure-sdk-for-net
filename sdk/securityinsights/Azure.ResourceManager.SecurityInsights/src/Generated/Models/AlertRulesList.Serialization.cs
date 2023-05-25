@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     internal partial class AlertRulesList
     {
-        internal static AlertRulesList DeserializeAlertRulesList(JsonElement element)
+        internal static AlertRulesList DeserializeAlertRulesList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _migrationItemReplicationMigrationItemsRestClient.CreateListByReplicationProtectionContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skipToken, takeToken, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _migrationItemReplicationMigrationItemsRestClient.CreateListByReplicationProtectionContainersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skipToken, takeToken, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MigrationItemResource(Client, MigrationItemData.DeserializeMigrationItemData(e)), _migrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, "MigrationItemCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MigrationItemResource(Client, MigrationItemData.DeserializeMigrationItemData(e)), _migrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, "MigrationItemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _migrationItemReplicationMigrationItemsRestClient.CreateListByReplicationProtectionContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skipToken, takeToken, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _migrationItemReplicationMigrationItemsRestClient.CreateListByReplicationProtectionContainersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skipToken, takeToken, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MigrationItemResource(Client, MigrationItemData.DeserializeMigrationItemData(e)), _migrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, "MigrationItemCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MigrationItemResource(Client, MigrationItemData.DeserializeMigrationItemData(e)), _migrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, "MigrationItemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

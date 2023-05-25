@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsIncidentCommentIncidentCommentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsIncidentCommentIncidentCommentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsIncidentCommentResource(Client, SecurityInsightsIncidentCommentData.DeserializeSecurityInsightsIncidentCommentData(e)), _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics, Pipeline, "SecurityInsightsIncidentCommentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityInsightsIncidentCommentResource(Client, SecurityInsightsIncidentCommentData.DeserializeSecurityInsightsIncidentCommentData(e)), _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics, Pipeline, "SecurityInsightsIncidentCommentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsIncidentCommentIncidentCommentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsIncidentCommentIncidentCommentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsIncidentCommentResource(Client, SecurityInsightsIncidentCommentData.DeserializeSecurityInsightsIncidentCommentData(e)), _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics, Pipeline, "SecurityInsightsIncidentCommentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityInsightsIncidentCommentResource(Client, SecurityInsightsIncidentCommentData.DeserializeSecurityInsightsIncidentCommentData(e)), _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics, Pipeline, "SecurityInsightsIncidentCommentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

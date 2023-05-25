@@ -6,12 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class NetworkMappingFabricSpecificSettings
     {
-        internal static NetworkMappingFabricSpecificSettings DeserializeNetworkMappingFabricSpecificSettings(JsonElement element)
+        internal static NetworkMappingFabricSpecificSettings DeserializeNetworkMappingFabricSpecificSettings(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

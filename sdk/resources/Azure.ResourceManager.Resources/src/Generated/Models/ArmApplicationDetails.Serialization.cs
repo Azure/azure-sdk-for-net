@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ArmApplicationDetails
     {
-        internal static ArmApplicationDetails DeserializeArmApplicationDetails(JsonElement element)
+        internal static ArmApplicationDetails DeserializeArmApplicationDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

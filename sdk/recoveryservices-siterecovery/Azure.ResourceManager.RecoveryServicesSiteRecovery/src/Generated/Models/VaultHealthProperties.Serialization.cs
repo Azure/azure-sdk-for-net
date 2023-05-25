@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class VaultHealthProperties
     {
-        internal static VaultHealthProperties DeserializeVaultHealthProperties(JsonElement element)
+        internal static VaultHealthProperties DeserializeVaultHealthProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

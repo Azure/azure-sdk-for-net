@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     public partial class MoverResourceDependency
     {
-        internal static MoverResourceDependency DeserializeMoverResourceDependency(JsonElement element)
+        internal static MoverResourceDependency DeserializeMoverResourceDependency(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

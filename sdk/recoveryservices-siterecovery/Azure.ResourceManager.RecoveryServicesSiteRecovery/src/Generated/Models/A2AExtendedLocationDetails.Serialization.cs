@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class A2AExtendedLocationDetails
     {
-        internal static A2AExtendedLocationDetails DeserializeA2AExtendedLocationDetails(JsonElement element)
+        internal static A2AExtendedLocationDetails DeserializeA2AExtendedLocationDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

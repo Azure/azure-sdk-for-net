@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class A2AReplicationIntentDetails
     {
-        internal static A2AReplicationIntentDetails DeserializeA2AReplicationIntentDetails(JsonElement element)
+        internal static A2AReplicationIntentDetails DeserializeA2AReplicationIntentDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

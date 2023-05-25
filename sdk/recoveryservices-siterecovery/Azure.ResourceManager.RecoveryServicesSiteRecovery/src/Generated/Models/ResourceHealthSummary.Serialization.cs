@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class ResourceHealthSummary
     {
-        internal static ResourceHealthSummary DeserializeResourceHealthSummary(JsonElement element)
+        internal static ResourceHealthSummary DeserializeResourceHealthSummary(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

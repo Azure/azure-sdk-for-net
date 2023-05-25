@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class ManagedInstancePecProperty
     {
-        internal static ManagedInstancePecProperty DeserializeManagedInstancePecProperty(JsonElement element)
+        internal static ManagedInstancePecProperty DeserializeManagedInstancePecProperty(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

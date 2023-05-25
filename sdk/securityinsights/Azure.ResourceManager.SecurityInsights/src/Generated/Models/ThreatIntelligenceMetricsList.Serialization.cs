@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     internal partial class ThreatIntelligenceMetricsList
     {
-        internal static ThreatIntelligenceMetricsList DeserializeThreatIntelligenceMetricsList(JsonElement element)
+        internal static ThreatIntelligenceMetricsList DeserializeThreatIntelligenceMetricsList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

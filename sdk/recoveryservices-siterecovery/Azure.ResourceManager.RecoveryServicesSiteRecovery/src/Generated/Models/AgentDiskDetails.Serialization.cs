@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class AgentDiskDetails
     {
-        internal static AgentDiskDetails DeserializeAgentDiskDetails(JsonElement element)
+        internal static AgentDiskDetails DeserializeAgentDiskDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

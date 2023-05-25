@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     public partial class VaultUsageNameInfo
     {
-        internal static VaultUsageNameInfo DeserializeVaultUsageNameInfo(JsonElement element)
+        internal static VaultUsageNameInfo DeserializeVaultUsageNameInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

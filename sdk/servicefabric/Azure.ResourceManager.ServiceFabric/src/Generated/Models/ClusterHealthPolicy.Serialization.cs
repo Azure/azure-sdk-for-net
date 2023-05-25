@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
     public partial class ClusterHealthPolicy : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxPercentUnhealthyNodes))
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteEndObject();
         }
 
-        internal static ClusterHealthPolicy DeserializeClusterHealthPolicy(JsonElement element)
+        internal static ClusterHealthPolicy DeserializeClusterHealthPolicy(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

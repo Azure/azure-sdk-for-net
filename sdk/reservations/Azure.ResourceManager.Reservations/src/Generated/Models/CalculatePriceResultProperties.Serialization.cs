@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class CalculatePriceResultProperties
     {
-        internal static CalculatePriceResultProperties DeserializeCalculatePriceResultProperties(JsonElement element)
+        internal static CalculatePriceResultProperties DeserializeCalculatePriceResultProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

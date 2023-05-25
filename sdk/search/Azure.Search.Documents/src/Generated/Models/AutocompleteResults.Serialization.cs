@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Models
 {
     public partial class AutocompleteResults
     {
-        internal static AutocompleteResults DeserializeAutocompleteResults(JsonElement element)
+        internal static AutocompleteResults DeserializeAutocompleteResults(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

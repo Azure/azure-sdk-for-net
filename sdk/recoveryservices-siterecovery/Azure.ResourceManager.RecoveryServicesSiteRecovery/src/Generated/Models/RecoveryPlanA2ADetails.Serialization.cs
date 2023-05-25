@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class RecoveryPlanA2ADetails
     {
-        internal static RecoveryPlanA2ADetails DeserializeRecoveryPlanA2ADetails(JsonElement element)
+        internal static RecoveryPlanA2ADetails DeserializeRecoveryPlanA2ADetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Relay.Models
 {
     public partial class RelayAccessKeys
     {
-        internal static RelayAccessKeys DeserializeRelayAccessKeys(JsonElement element)
+        internal static RelayAccessKeys DeserializeRelayAccessKeys(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

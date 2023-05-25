@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     internal partial class AdaptiveApplicationControlGroups
     {
-        internal static AdaptiveApplicationControlGroups DeserializeAdaptiveApplicationControlGroups(JsonElement element)
+        internal static AdaptiveApplicationControlGroups DeserializeAdaptiveApplicationControlGroups(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

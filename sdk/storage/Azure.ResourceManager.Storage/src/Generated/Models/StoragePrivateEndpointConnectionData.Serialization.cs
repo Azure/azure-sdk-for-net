@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -15,7 +16,9 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class StoragePrivateEndpointConnectionData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -34,7 +37,7 @@ namespace Azure.ResourceManager.Storage
             writer.WriteEndObject();
         }
 
-        internal static StoragePrivateEndpointConnectionData DeserializeStoragePrivateEndpointConnectionData(JsonElement element)
+        internal static StoragePrivateEndpointConnectionData DeserializeStoragePrivateEndpointConnectionData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

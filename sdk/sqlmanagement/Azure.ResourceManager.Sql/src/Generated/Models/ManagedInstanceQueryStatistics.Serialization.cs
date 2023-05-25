@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     internal partial class ManagedInstanceQueryStatistics
     {
-        internal static ManagedInstanceQueryStatistics DeserializeManagedInstanceQueryStatistics(JsonElement element)
+        internal static ManagedInstanceQueryStatistics DeserializeManagedInstanceQueryStatistics(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,10 +7,60 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class LuceneStandardTokenizer : IUtf8JsonSerializable
     {
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(MaxTokenLength))
+            {
+                writer.WritePropertyName("maxTokenLength"u8);
+                writer.WriteNumberValue(MaxTokenLength.Value);
+            }
+            writer.WritePropertyName("@odata.type"u8);
+            writer.WriteStringValue(ODataType);
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            writer.WriteEndObject();
+        }
+
+        internal static LuceneStandardTokenizer DeserializeLuceneStandardTokenizer(JsonElement element, SerializableOptions options = default)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<int> maxTokenLength = default;
+            string odataType = default;
+            string name = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("maxTokenLength"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxTokenLength = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("@odata.type"u8))
+                {
+                    odataType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new LuceneStandardTokenizer(odataType, name, Optional.ToNullable(maxTokenLength));
+        }
     }
 }

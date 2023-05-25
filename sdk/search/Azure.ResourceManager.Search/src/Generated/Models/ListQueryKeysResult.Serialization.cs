@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Search.Models
 {
     internal partial class ListQueryKeysResult
     {
-        internal static ListQueryKeysResult DeserializeListQueryKeysResult(JsonElement element)
+        internal static ListQueryKeysResult DeserializeListQueryKeysResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
