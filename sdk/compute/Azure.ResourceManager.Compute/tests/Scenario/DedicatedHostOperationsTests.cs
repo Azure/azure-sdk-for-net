@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.AreEqual(updatedAutoReplaceOnFailure, updatedHost.Data.AutoReplaceOnFailure);
         }
 
+        [RecordedTest]
         [TestCase(null)]
         [TestCase(true)]
         [TestCase(false)]

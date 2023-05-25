@@ -44,6 +44,7 @@ namespace Azure.ResourceManager.Compute.Tests
             ResourceDataHelper.AssertDiskAccess(access1.Data, access2.Data);
         }
 
+        [RecordedTest]
         [TestCase(null)]
         [TestCase(true)]
         [TestCase(false)]

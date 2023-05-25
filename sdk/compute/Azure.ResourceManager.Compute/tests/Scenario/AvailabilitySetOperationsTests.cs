@@ -125,6 +125,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.AreEqual(removeIdResult, newRemoveOuterIdResult);
         }
 
+        [RecordedTest]
         [TestCase(null)]
         [TestCase(true)]
         [TestCase(false)]

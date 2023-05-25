@@ -44,6 +44,7 @@ namespace Azure.ResourceManager.Compute.Tests
             ResourceDataHelper.AssertGroup(group1.Data, group2.Data);
         }
 
+        [RecordedTest]
         [TestCase(null)]
         [TestCase(true)]
         [TestCase(false)]

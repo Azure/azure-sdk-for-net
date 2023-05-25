@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.AreEqual(newDiskSize, updatedDisk.Data.DiskSizeGB);
         }
 
+        [RecordedTest]
         [TestCase(null)]
         [TestCase(true)]
         [TestCase(false)]
