@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class EdgeProfileSubscription
     {
-        internal static EdgeProfileSubscription DeserializeEdgeProfileSubscription(JsonElement element)
+        internal static EdgeProfileSubscription DeserializeEdgeProfileSubscription(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

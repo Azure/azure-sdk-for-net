@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ContainerServiceTrustedAccessRoleRule
     {
-        internal static ContainerServiceTrustedAccessRoleRule DeserializeContainerServiceTrustedAccessRoleRule(JsonElement element)
+        internal static ContainerServiceTrustedAccessRoleRule DeserializeContainerServiceTrustedAccessRoleRule(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

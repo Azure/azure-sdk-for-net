@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
     public partial class DataLakeStoreAccountNameAvailabilityResult
     {
-        internal static DataLakeStoreAccountNameAvailabilityResult DeserializeDataLakeStoreAccountNameAvailabilityResult(JsonElement element)
+        internal static DataLakeStoreAccountNameAvailabilityResult DeserializeDataLakeStoreAccountNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

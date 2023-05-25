@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     internal partial class ServiceSkuList
     {
-        internal static ServiceSkuList DeserializeServiceSkuList(JsonElement element)
+        internal static ServiceSkuList DeserializeServiceSkuList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.Chat
 {
     internal partial class CreateChatThreadResultInternal
     {
-        internal static CreateChatThreadResultInternal DeserializeCreateChatThreadResultInternal(JsonElement element)
+        internal static CreateChatThreadResultInternal DeserializeCreateChatThreadResultInternal(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

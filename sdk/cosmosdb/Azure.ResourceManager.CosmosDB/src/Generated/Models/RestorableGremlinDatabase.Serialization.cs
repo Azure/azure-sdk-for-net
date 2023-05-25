@@ -7,13 +7,14 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class RestorableGremlinDatabase
     {
-        internal static RestorableGremlinDatabase DeserializeRestorableGremlinDatabase(JsonElement element)
+        internal static RestorableGremlinDatabase DeserializeRestorableGremlinDatabase(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataBoxCustomerDiskCopyLogDetails
     {
-        internal static DataBoxCustomerDiskCopyLogDetails DeserializeDataBoxCustomerDiskCopyLogDetails(JsonElement element)
+        internal static DataBoxCustomerDiskCopyLogDetails DeserializeDataBoxCustomerDiskCopyLogDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

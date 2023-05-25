@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     internal partial class ContainerRegistryWebhookEventActor
     {
-        internal static ContainerRegistryWebhookEventActor DeserializeContainerRegistryWebhookEventActor(JsonElement element)
+        internal static ContainerRegistryWebhookEventActor DeserializeContainerRegistryWebhookEventActor(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

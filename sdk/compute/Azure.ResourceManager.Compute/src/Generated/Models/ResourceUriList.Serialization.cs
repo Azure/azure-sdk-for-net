@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class ResourceUriList
     {
-        internal static ResourceUriList DeserializeResourceUriList(JsonElement element)
+        internal static ResourceUriList DeserializeResourceUriList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

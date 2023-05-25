@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Communication.Sms;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.Sms.Models
 {
     internal partial class SmsSendResponse
     {
-        internal static SmsSendResponse DeserializeSmsSendResponse(JsonElement element)
+        internal static SmsSendResponse DeserializeSmsSendResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

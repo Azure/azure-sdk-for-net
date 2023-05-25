@@ -7,13 +7,14 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeStore
 {
     public partial class DataLakeStoreVirtualNetworkRuleData
     {
-        internal static DataLakeStoreVirtualNetworkRuleData DeserializeDataLakeStoreVirtualNetworkRuleData(JsonElement element)
+        internal static DataLakeStoreVirtualNetworkRuleData DeserializeDataLakeStoreVirtualNetworkRuleData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

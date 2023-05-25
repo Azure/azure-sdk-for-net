@@ -8,12 +8,13 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataTransferDetailsValidationResult
     {
-        internal static DataTransferDetailsValidationResult DeserializeDataTransferDetailsValidationResult(JsonElement element)
+        internal static DataTransferDetailsValidationResult DeserializeDataTransferDetailsValidationResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

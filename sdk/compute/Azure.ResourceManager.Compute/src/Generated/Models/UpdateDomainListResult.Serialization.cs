@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class UpdateDomainListResult
     {
-        internal static UpdateDomainListResult DeserializeUpdateDomainListResult(JsonElement element)
+        internal static UpdateDomainListResult DeserializeUpdateDomainListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

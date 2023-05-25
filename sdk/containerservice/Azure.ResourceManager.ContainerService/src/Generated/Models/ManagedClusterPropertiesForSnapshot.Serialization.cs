@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ManagedClusterPropertiesForSnapshot
     {
-        internal static ManagedClusterPropertiesForSnapshot DeserializeManagedClusterPropertiesForSnapshot(JsonElement element)
+        internal static ManagedClusterPropertiesForSnapshot DeserializeManagedClusterPropertiesForSnapshot(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

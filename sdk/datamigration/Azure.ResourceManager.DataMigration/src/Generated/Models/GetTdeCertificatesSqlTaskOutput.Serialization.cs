@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class GetTdeCertificatesSqlTaskOutput
     {
-        internal static GetTdeCertificatesSqlTaskOutput DeserializeGetTdeCertificatesSqlTaskOutput(JsonElement element)
+        internal static GetTdeCertificatesSqlTaskOutput DeserializeGetTdeCertificatesSqlTaskOutput(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     internal partial class UnknownCopyLogDetails
     {
-        internal static UnknownCopyLogDetails DeserializeUnknownCopyLogDetails(JsonElement element)
+        internal static UnknownCopyLogDetails DeserializeUnknownCopyLogDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

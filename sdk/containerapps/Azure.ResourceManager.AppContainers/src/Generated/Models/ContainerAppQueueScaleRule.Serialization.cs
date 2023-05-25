@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppQueueScaleRule : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(QueueName))
@@ -39,7 +42,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppQueueScaleRule DeserializeContainerAppQueueScaleRule(JsonElement element)
+        internal static ContainerAppQueueScaleRule DeserializeContainerAppQueueScaleRule(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

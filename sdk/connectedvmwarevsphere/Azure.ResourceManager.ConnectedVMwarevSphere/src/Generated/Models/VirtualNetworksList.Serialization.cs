@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ConnectedVMwarevSphere;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     internal partial class VirtualNetworksList
     {
-        internal static VirtualNetworksList DeserializeVirtualNetworksList(JsonElement element)
+        internal static VirtualNetworksList DeserializeVirtualNetworksList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

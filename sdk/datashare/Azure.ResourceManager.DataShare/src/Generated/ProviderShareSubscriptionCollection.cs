@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _providerShareSubscriptionRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _providerShareSubscriptionRestClient.CreateListByShareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProviderShareSubscriptionResource(Client, ProviderShareSubscriptionData.DeserializeProviderShareSubscriptionData(e)), _providerShareSubscriptionClientDiagnostics, Pipeline, "ProviderShareSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ProviderShareSubscriptionResource(Client, ProviderShareSubscriptionData.DeserializeProviderShareSubscriptionData(e)), _providerShareSubscriptionClientDiagnostics, Pipeline, "ProviderShareSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _providerShareSubscriptionRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _providerShareSubscriptionRestClient.CreateListByShareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProviderShareSubscriptionResource(Client, ProviderShareSubscriptionData.DeserializeProviderShareSubscriptionData(e)), _providerShareSubscriptionClientDiagnostics, Pipeline, "ProviderShareSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ProviderShareSubscriptionResource(Client, ProviderShareSubscriptionData.DeserializeProviderShareSubscriptionData(e)), _providerShareSubscriptionClientDiagnostics, Pipeline, "ProviderShareSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

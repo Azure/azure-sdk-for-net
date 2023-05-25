@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter.Models
 {
     public partial class JobRouterError
     {
-        internal static JobRouterError DeserializeJobRouterError(JsonElement element)
+        internal static JobRouterError DeserializeJobRouterError(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

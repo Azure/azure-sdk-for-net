@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     public partial class ComputeResourceSkuRestrictionInfo
     {
-        internal static ComputeResourceSkuRestrictionInfo DeserializeComputeResourceSkuRestrictionInfo(JsonElement element)
+        internal static ComputeResourceSkuRestrictionInfo DeserializeComputeResourceSkuRestrictionInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

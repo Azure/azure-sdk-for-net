@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionBudgetFilter : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(And))
@@ -39,7 +42,7 @@ namespace Azure.ResourceManager.Consumption.Models
             writer.WriteEndObject();
         }
 
-        internal static ConsumptionBudgetFilter DeserializeConsumptionBudgetFilter(JsonElement element)
+        internal static ConsumptionBudgetFilter DeserializeConsumptionBudgetFilter(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

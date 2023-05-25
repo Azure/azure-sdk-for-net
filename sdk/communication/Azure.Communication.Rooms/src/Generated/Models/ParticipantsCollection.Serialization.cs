@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.Rooms
 {
     internal partial class ParticipantsCollection
     {
-        internal static ParticipantsCollection DeserializeParticipantsCollection(JsonElement element)
+        internal static ParticipantsCollection DeserializeParticipantsCollection(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

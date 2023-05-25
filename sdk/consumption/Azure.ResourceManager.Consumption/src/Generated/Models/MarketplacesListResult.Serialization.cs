@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
     internal partial class MarketplacesListResult
     {
-        internal static MarketplacesListResult DeserializeMarketplacesListResult(JsonElement element)
+        internal static MarketplacesListResult DeserializeMarketplacesListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

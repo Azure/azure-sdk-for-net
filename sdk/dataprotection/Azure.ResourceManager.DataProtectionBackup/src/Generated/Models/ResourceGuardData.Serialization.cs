@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DataProtectionBackup.Models;
 using Azure.ResourceManager.Models;
 
@@ -16,7 +17,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
 {
     public partial class ResourceGuardData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
@@ -45,7 +48,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             writer.WriteEndObject();
         }
 
-        internal static ResourceGuardData DeserializeResourceGuardData(JsonElement element)
+        internal static ResourceGuardData DeserializeResourceGuardData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

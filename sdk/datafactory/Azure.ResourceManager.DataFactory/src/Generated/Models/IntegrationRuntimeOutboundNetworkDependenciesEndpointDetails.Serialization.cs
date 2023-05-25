@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails
     {
-        internal static IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails DeserializeIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(JsonElement element)
+        internal static IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails DeserializeIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

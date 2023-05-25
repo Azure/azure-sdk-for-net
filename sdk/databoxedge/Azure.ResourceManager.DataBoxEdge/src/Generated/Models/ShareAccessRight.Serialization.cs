@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class ShareAccessRight
     {
-        internal static ShareAccessRight DeserializeShareAccessRight(JsonElement element)
+        internal static ShareAccessRight DeserializeShareAccessRight(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

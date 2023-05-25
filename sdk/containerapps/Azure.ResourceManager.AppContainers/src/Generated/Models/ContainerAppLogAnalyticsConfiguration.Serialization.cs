@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppLogAnalyticsConfiguration : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomerId))
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppLogAnalyticsConfiguration DeserializeContainerAppLogAnalyticsConfiguration(JsonElement element)
+        internal static ContainerAppLogAnalyticsConfiguration DeserializeContainerAppLogAnalyticsConfiguration(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

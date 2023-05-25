@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.Chat
 {
     internal partial class ChatErrorResponse
     {
-        internal static ChatErrorResponse DeserializeChatErrorResponse(JsonElement element)
+        internal static ChatErrorResponse DeserializeChatErrorResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionUsageProperties
     {
-        internal static ConsumptionUsageProperties DeserializeConsumptionUsageProperties(JsonElement element)
+        internal static ConsumptionUsageProperties DeserializeConsumptionUsageProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

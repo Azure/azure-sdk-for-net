@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class BackupSupportedFeature
     {
-        internal static BackupSupportedFeature DeserializeBackupSupportedFeature(JsonElement element)
+        internal static BackupSupportedFeature DeserializeBackupSupportedFeature(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

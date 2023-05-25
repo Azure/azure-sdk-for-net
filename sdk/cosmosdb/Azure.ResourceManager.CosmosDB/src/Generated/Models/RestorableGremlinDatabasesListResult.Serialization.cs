@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     internal partial class RestorableGremlinDatabasesListResult
     {
-        internal static RestorableGremlinDatabasesListResult DeserializeRestorableGremlinDatabasesListResult(JsonElement element)
+        internal static RestorableGremlinDatabasesListResult DeserializeRestorableGremlinDatabasesListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     internal partial class UnknownConnectToSourceSqlServerTaskOutput
     {
-        internal static UnknownConnectToSourceSqlServerTaskOutput DeserializeUnknownConnectToSourceSqlServerTaskOutput(JsonElement element)
+        internal static UnknownConnectToSourceSqlServerTaskOutput DeserializeUnknownConnectToSourceSqlServerTaskOutput(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

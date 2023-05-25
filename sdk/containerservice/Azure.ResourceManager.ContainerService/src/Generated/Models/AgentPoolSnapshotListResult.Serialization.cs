@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     internal partial class AgentPoolSnapshotListResult
     {
-        internal static AgentPoolSnapshotListResult DeserializeAgentPoolSnapshotListResult(JsonElement element)
+        internal static AgentPoolSnapshotListResult DeserializeAgentPoolSnapshotListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

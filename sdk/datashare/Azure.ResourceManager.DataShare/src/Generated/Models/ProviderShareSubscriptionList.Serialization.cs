@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DataShare;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
     internal partial class ProviderShareSubscriptionList
     {
-        internal static ProviderShareSubscriptionList DeserializeProviderShareSubscriptionList(JsonElement element)
+        internal static ProviderShareSubscriptionList DeserializeProviderShareSubscriptionList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

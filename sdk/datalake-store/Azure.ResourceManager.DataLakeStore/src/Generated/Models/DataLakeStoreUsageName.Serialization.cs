@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
     public partial class DataLakeStoreUsageName
     {
-        internal static DataLakeStoreUsageName DeserializeDataLakeStoreUsageName(JsonElement element)
+        internal static DataLakeStoreUsageName DeserializeDataLakeStoreUsageName(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

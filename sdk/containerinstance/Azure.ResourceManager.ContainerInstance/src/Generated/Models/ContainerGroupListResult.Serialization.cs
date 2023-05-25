@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     internal partial class ContainerGroupListResult
     {
-        internal static ContainerGroupListResult DeserializeContainerGroupListResult(JsonElement element)
+        internal static ContainerGroupListResult DeserializeContainerGroupListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

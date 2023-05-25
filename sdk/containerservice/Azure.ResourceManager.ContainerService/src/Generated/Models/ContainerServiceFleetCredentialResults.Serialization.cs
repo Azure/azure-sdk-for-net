@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ContainerServiceFleetCredentialResults
     {
-        internal static ContainerServiceFleetCredentialResults DeserializeContainerServiceFleetCredentialResults(JsonElement element)
+        internal static ContainerServiceFleetCredentialResults DeserializeContainerServiceFleetCredentialResults(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

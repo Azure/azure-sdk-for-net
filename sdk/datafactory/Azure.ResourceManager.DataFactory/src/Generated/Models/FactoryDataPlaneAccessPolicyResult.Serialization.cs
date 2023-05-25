@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class FactoryDataPlaneAccessPolicyResult
     {
-        internal static FactoryDataPlaneAccessPolicyResult DeserializeFactoryDataPlaneAccessPolicyResult(JsonElement element)
+        internal static FactoryDataPlaneAccessPolicyResult DeserializeFactoryDataPlaneAccessPolicyResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

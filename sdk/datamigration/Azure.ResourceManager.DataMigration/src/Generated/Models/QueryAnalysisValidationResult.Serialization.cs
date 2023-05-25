@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class QueryAnalysisValidationResult
     {
-        internal static QueryAnalysisValidationResult DeserializeQueryAnalysisValidationResult(JsonElement element)
+        internal static QueryAnalysisValidationResult DeserializeQueryAnalysisValidationResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

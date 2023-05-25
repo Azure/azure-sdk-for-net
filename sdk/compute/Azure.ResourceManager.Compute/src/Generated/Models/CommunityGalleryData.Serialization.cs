@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute
 {
     public partial class CommunityGalleryData
     {
-        internal static CommunityGalleryData DeserializeCommunityGalleryData(JsonElement element)
+        internal static CommunityGalleryData DeserializeCommunityGalleryData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataTransferJobGetResultDataTransferJobsRestClient.CreateListByDatabaseAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataTransferJobGetResultDataTransferJobsRestClient.CreateListByDatabaseAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataTransferJobGetResultResource(Client, DataTransferJobGetResultData.DeserializeDataTransferJobGetResultData(e)), _dataTransferJobGetResultDataTransferJobsClientDiagnostics, Pipeline, "DataTransferJobGetResultCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DataTransferJobGetResultResource(Client, DataTransferJobGetResultData.DeserializeDataTransferJobGetResultData(e)), _dataTransferJobGetResultDataTransferJobsClientDiagnostics, Pipeline, "DataTransferJobGetResultCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataTransferJobGetResultDataTransferJobsRestClient.CreateListByDatabaseAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataTransferJobGetResultDataTransferJobsRestClient.CreateListByDatabaseAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataTransferJobGetResultResource(Client, DataTransferJobGetResultData.DeserializeDataTransferJobGetResultData(e)), _dataTransferJobGetResultDataTransferJobsClientDiagnostics, Pipeline, "DataTransferJobGetResultCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DataTransferJobGetResultResource(Client, DataTransferJobGetResultData.DeserializeDataTransferJobGetResultData(e)), _dataTransferJobGetResultDataTransferJobsClientDiagnostics, Pipeline, "DataTransferJobGetResultCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

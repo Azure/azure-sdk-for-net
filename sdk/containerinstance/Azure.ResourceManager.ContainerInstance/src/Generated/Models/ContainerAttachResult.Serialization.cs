@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     public partial class ContainerAttachResult
     {
-        internal static ContainerAttachResult DeserializeContainerAttachResult(JsonElement element)
+        internal static ContainerAttachResult DeserializeContainerAttachResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

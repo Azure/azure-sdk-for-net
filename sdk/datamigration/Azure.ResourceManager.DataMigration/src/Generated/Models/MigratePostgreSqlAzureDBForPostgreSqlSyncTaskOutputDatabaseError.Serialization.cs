@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError
     {
-        internal static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError(JsonElement element)
+        internal static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

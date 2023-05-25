@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DataLakeStore;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
     internal partial class DataLakeStoreVirtualNetworkRuleListResult
     {
-        internal static DataLakeStoreVirtualNetworkRuleListResult DeserializeDataLakeStoreVirtualNetworkRuleListResult(JsonElement element)
+        internal static DataLakeStoreVirtualNetworkRuleListResult DeserializeDataLakeStoreVirtualNetworkRuleListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

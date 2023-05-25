@@ -9,12 +9,13 @@ using System;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
     public partial class DataShareOperationResult
     {
-        internal static DataShareOperationResult DeserializeDataShareOperationResult(JsonElement element)
+        internal static DataShareOperationResult DeserializeDataShareOperationResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

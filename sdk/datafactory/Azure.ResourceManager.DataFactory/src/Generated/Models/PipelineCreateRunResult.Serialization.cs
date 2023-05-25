@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class PipelineCreateRunResult
     {
-        internal static PipelineCreateRunResult DeserializePipelineCreateRunResult(JsonElement element)
+        internal static PipelineCreateRunResult DeserializePipelineCreateRunResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

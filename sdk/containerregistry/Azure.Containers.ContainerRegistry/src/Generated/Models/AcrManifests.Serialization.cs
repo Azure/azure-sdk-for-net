@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Containers.ContainerRegistry
 {
     internal partial class AcrManifests
     {
-        internal static AcrManifests DeserializeAcrManifests(JsonElement element)
+        internal static AcrManifests DeserializeAcrManifests(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

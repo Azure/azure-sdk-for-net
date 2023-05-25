@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataBoxAccountCopyLogDetails
     {
-        internal static DataBoxAccountCopyLogDetails DeserializeDataBoxAccountCopyLogDetails(JsonElement element)
+        internal static DataBoxAccountCopyLogDetails DeserializeDataBoxAccountCopyLogDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

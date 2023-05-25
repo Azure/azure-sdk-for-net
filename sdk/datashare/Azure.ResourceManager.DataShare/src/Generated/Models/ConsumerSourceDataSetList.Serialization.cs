@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
     internal partial class ConsumerSourceDataSetList
     {
-        internal static ConsumerSourceDataSetList DeserializeConsumerSourceDataSetList(JsonElement element)
+        internal static ConsumerSourceDataSetList DeserializeConsumerSourceDataSetList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

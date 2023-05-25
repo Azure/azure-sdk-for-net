@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class UploadCertificateResponse
     {
-        internal static UploadCertificateResponse DeserializeUploadCertificateResponse(JsonElement element)
+        internal static UploadCertificateResponse DeserializeUploadCertificateResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

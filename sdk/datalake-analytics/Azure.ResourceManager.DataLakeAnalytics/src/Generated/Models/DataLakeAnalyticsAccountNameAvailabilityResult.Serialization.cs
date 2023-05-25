@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
     public partial class DataLakeAnalyticsAccountNameAvailabilityResult
     {
-        internal static DataLakeAnalyticsAccountNameAvailabilityResult DeserializeDataLakeAnalyticsAccountNameAvailabilityResult(JsonElement element)
+        internal static DataLakeAnalyticsAccountNameAvailabilityResult DeserializeDataLakeAnalyticsAccountNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

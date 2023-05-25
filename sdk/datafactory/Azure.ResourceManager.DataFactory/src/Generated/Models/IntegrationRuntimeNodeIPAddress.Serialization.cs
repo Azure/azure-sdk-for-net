@@ -8,12 +8,13 @@
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class IntegrationRuntimeNodeIPAddress
     {
-        internal static IntegrationRuntimeNodeIPAddress DeserializeIntegrationRuntimeNodeIPAddress(JsonElement element)
+        internal static IntegrationRuntimeNodeIPAddress DeserializeIntegrationRuntimeNodeIPAddress(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

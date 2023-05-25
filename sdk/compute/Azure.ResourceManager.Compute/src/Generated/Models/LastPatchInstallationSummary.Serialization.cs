@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     public partial class LastPatchInstallationSummary
     {
-        internal static LastPatchInstallationSummary DeserializeLastPatchInstallationSummary(JsonElement element)
+        internal static LastPatchInstallationSummary DeserializeLastPatchInstallationSummary(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

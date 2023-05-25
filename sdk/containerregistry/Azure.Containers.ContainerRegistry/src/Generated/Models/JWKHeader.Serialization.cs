@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Containers.ContainerRegistry
 {
     internal partial class JWKHeader
     {
-        internal static JWKHeader DeserializeJWKHeader(JsonElement element)
+        internal static JWKHeader DeserializeJWKHeader(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

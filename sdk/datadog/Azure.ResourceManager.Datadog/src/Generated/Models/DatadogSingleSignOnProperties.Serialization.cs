@@ -8,12 +8,15 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
     public partial class DatadogSingleSignOnProperties : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(SingleSignOnState))
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.Datadog.Models
             writer.WriteEndObject();
         }
 
-        internal static DatadogSingleSignOnProperties DeserializeDatadogSingleSignOnProperties(JsonElement element)
+        internal static DatadogSingleSignOnProperties DeserializeDatadogSingleSignOnProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

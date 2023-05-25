@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppJwtClaimChecks : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AllowedGroups))
@@ -39,7 +42,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppJwtClaimChecks DeserializeContainerAppJwtClaimChecks(JsonElement element)
+        internal static ContainerAppJwtClaimChecks DeserializeContainerAppJwtClaimChecks(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

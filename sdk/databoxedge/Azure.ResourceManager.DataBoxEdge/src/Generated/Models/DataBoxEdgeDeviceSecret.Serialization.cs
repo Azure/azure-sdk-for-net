@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class DataBoxEdgeDeviceSecret
     {
-        internal static DataBoxEdgeDeviceSecret DeserializeDataBoxEdgeDeviceSecret(JsonElement element)
+        internal static DataBoxEdgeDeviceSecret DeserializeDataBoxEdgeDeviceSecret(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Confluent.Models;
 using Azure.ResourceManager.Models;
 
@@ -16,7 +17,9 @@ namespace Azure.ResourceManager.Confluent
 {
     public partial class ConfluentOrganizationData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
@@ -42,7 +45,7 @@ namespace Azure.ResourceManager.Confluent
             writer.WriteEndObject();
         }
 
-        internal static ConfluentOrganizationData DeserializeConfluentOrganizationData(JsonElement element)
+        internal static ConfluentOrganizationData DeserializeConfluentOrganizationData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

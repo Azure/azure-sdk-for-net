@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     internal partial class CassandraKeyspaceListResult
     {
-        internal static CassandraKeyspaceListResult DeserializeCassandraKeyspaceListResult(JsonElement element)
+        internal static CassandraKeyspaceListResult DeserializeCassandraKeyspaceListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

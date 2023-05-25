@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class RestoreJobRecoveryPointDetails
     {
-        internal static RestoreJobRecoveryPointDetails DeserializeRestoreJobRecoveryPointDetails(JsonElement element)
+        internal static RestoreJobRecoveryPointDetails DeserializeRestoreJobRecoveryPointDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

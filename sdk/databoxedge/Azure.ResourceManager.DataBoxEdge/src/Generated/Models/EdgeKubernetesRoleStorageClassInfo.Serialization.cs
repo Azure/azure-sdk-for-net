@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class EdgeKubernetesRoleStorageClassInfo
     {
-        internal static EdgeKubernetesRoleStorageClassInfo DeserializeEdgeKubernetesRoleStorageClassInfo(JsonElement element)
+        internal static EdgeKubernetesRoleStorageClassInfo DeserializeEdgeKubernetesRoleStorageClassInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

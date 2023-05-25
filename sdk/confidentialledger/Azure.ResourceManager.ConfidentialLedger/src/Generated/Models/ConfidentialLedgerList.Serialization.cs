@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ConfidentialLedger;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     internal partial class ConfidentialLedgerList
     {
-        internal static ConfidentialLedgerList DeserializeConfidentialLedgerList(JsonElement element)
+        internal static ConfidentialLedgerList DeserializeConfidentialLedgerList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

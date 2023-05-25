@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     internal partial class DataBoxJobListResult
     {
-        internal static DataBoxJobListResult DeserializeDataBoxJobListResult(JsonElement element)
+        internal static DataBoxJobListResult DeserializeDataBoxJobListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

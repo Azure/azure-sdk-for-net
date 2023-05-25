@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     internal partial class DppResourceList
     {
-        internal static DppResourceList DeserializeDppResourceList(JsonElement element)
+        internal static DppResourceList DeserializeDppResourceList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

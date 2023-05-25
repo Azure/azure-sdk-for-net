@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DeviceErasureDetails
     {
-        internal static DeviceErasureDetails DeserializeDeviceErasureDetails(JsonElement element)
+        internal static DeviceErasureDetails DeserializeDeviceErasureDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

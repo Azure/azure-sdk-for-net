@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     internal partial class CassandraTableListResult
     {
-        internal static CassandraTableListResult DeserializeCassandraTableListResult(JsonElement element)
+        internal static CassandraTableListResult DeserializeCassandraTableListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

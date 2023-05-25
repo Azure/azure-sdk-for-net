@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DataShare.Models;
 using Azure.ResourceManager.Models;
 
@@ -15,7 +16,9 @@ namespace Azure.ResourceManager.DataShare
 {
     public partial class ShareSubscriptionData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.DataShare
             writer.WriteEndObject();
         }
 
-        internal static ShareSubscriptionData DeserializeShareSubscriptionData(JsonElement element)
+        internal static ShareSubscriptionData DeserializeShareSubscriptionData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

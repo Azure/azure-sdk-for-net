@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
     internal partial class ConnectorMappingListResult
     {
-        internal static ConnectorMappingListResult DeserializeConnectorMappingListResult(JsonElement element)
+        internal static ConnectorMappingListResult DeserializeConnectorMappingListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

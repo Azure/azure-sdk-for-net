@@ -8,12 +8,13 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     internal partial class UnknownValidationInputResponse
     {
-        internal static UnknownValidationInputResponse DeserializeUnknownValidationInputResponse(JsonElement element)
+        internal static UnknownValidationInputResponse DeserializeUnknownValidationInputResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

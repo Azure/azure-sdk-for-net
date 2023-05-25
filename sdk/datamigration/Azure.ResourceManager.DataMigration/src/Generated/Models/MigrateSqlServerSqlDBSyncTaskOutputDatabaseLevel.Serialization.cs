@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel
     {
-        internal static MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(JsonElement element)
+        internal static MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter.Models
 {
     internal partial class ExceptionPolicyCollection
     {
-        internal static ExceptionPolicyCollection DeserializeExceptionPolicyCollection(JsonElement element)
+        internal static ExceptionPolicyCollection DeserializeExceptionPolicyCollection(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -6,12 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
     public partial class SourceShareSynchronizationSetting
     {
-        internal static SourceShareSynchronizationSetting DeserializeSourceShareSynchronizationSetting(JsonElement element)
+        internal static SourceShareSynchronizationSetting DeserializeSourceShareSynchronizationSetting(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

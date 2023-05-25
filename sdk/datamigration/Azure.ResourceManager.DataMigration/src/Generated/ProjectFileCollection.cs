@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _projectFileFilesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _projectFileFilesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProjectFileResource(Client, ProjectFileData.DeserializeProjectFileData(e)), _projectFileFilesClientDiagnostics, Pipeline, "ProjectFileCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ProjectFileResource(Client, ProjectFileData.DeserializeProjectFileData(e)), _projectFileFilesClientDiagnostics, Pipeline, "ProjectFileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _projectFileFilesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _projectFileFilesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProjectFileResource(Client, ProjectFileData.DeserializeProjectFileData(e)), _projectFileFilesClientDiagnostics, Pipeline, "ProjectFileCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ProjectFileResource(Client, ProjectFileData.DeserializeProjectFileData(e)), _projectFileFilesClientDiagnostics, Pipeline, "ProjectFileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

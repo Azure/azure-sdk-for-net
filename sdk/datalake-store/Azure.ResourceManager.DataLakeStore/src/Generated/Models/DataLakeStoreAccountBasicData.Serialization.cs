@@ -9,13 +9,14 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
     public partial class DataLakeStoreAccountBasicData
     {
-        internal static DataLakeStoreAccountBasicData DeserializeDataLakeStoreAccountBasicData(JsonElement element)
+        internal static DataLakeStoreAccountBasicData DeserializeDataLakeStoreAccountBasicData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

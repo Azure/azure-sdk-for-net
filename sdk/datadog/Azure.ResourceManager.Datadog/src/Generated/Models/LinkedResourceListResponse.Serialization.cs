@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
     internal partial class LinkedResourceListResponse
     {
-        internal static LinkedResourceListResponse DeserializeLinkedResourceListResponse(JsonElement element)
+        internal static LinkedResourceListResponse DeserializeLinkedResourceListResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

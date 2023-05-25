@@ -8,13 +8,16 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionCreditSummary : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.Consumption.Models
             writer.WriteEndObject();
         }
 
-        internal static ConsumptionCreditSummary DeserializeConsumptionCreditSummary(JsonElement element)
+        internal static ConsumptionCreditSummary DeserializeConsumptionCreditSummary(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

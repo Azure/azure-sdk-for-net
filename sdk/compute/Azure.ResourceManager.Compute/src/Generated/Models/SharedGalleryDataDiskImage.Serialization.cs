@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     public partial class SharedGalleryDataDiskImage
     {
-        internal static SharedGalleryDataDiskImage DeserializeSharedGalleryDataDiskImage(JsonElement element)
+        internal static SharedGalleryDataDiskImage DeserializeSharedGalleryDataDiskImage(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

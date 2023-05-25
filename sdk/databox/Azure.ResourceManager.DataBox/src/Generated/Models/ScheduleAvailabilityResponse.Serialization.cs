@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     internal partial class ScheduleAvailabilityResponse
     {
-        internal static ScheduleAvailabilityResponse DeserializeScheduleAvailabilityResponse(JsonElement element)
+        internal static ScheduleAvailabilityResponse DeserializeScheduleAvailabilityResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

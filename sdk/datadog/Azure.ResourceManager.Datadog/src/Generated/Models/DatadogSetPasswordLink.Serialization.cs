@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
     public partial class DatadogSetPasswordLink
     {
-        internal static DatadogSetPasswordLink DeserializeDatadogSetPasswordLink(JsonElement element)
+        internal static DatadogSetPasswordLink DeserializeDatadogSetPasswordLink(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

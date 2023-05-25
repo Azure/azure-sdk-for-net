@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     internal partial class DataMigrationServiceList
     {
-        internal static DataMigrationServiceList DeserializeDataMigrationServiceList(JsonElement element)
+        internal static DataMigrationServiceList DeserializeDataMigrationServiceList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

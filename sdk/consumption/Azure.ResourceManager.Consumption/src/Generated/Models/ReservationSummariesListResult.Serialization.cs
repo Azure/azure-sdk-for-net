@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
     internal partial class ReservationSummariesListResult
     {
-        internal static ReservationSummariesListResult DeserializeReservationSummariesListResult(JsonElement element)
+        internal static ReservationSummariesListResult DeserializeReservationSummariesListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

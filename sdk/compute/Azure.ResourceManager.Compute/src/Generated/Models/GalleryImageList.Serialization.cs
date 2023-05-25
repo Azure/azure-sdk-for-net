@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class GalleryImageList
     {
-        internal static GalleryImageList DeserializeGalleryImageList(JsonElement element)
+        internal static GalleryImageList DeserializeGalleryImageList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

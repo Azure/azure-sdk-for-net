@@ -6,12 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class IntegrationRuntimeStatus
     {
-        internal static IntegrationRuntimeStatus DeserializeIntegrationRuntimeStatus(JsonElement element)
+        internal static IntegrationRuntimeStatus DeserializeIntegrationRuntimeStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

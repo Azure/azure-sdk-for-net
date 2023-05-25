@@ -10,13 +10,16 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Containers.ContainerRegistry
 {
     [JsonConverter(typeof(OciImageManifestConverter))]
     public partial class OciImageManifest : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Configuration))
@@ -51,7 +54,7 @@ namespace Azure.Containers.ContainerRegistry
             writer.WriteEndObject();
         }
 
-        internal static OciImageManifest DeserializeOciImageManifest(JsonElement element)
+        internal static OciImageManifest DeserializeOciImageManifest(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

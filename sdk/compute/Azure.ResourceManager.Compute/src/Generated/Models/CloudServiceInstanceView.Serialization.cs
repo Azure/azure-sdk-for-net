@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     public partial class CloudServiceInstanceView
     {
-        internal static CloudServiceInstanceView DeserializeCloudServiceInstanceView(JsonElement element)
+        internal static CloudServiceInstanceView DeserializeCloudServiceInstanceView(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

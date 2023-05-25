@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
     public partial class CanonicalProfileDefinition
     {
-        internal static CanonicalProfileDefinition DeserializeCanonicalProfileDefinition(JsonElement element)
+        internal static CanonicalProfileDefinition DeserializeCanonicalProfileDefinition(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

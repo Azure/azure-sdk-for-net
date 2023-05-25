@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataBoxOrderPreferences : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PreferredDataCenterRegion))
@@ -54,7 +57,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteEndObject();
         }
 
-        internal static DataBoxOrderPreferences DeserializeDataBoxOrderPreferences(JsonElement element)
+        internal static DataBoxOrderPreferences DeserializeDataBoxOrderPreferences(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

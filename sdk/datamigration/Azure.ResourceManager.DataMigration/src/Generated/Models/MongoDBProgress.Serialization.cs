@@ -6,12 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MongoDBProgress
     {
-        internal static MongoDBProgress DeserializeMongoDBProgress(JsonElement element)
+        internal static MongoDBProgress DeserializeMongoDBProgress(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

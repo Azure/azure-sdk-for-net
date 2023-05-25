@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter.Models
 {
     public partial class DistributionPolicyItem
     {
-        internal static DistributionPolicyItem DeserializeDistributionPolicyItem(JsonElement element)
+        internal static DistributionPolicyItem DeserializeDistributionPolicyItem(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class ContainerRegistryResourceStatus
     {
-        internal static ContainerRegistryResourceStatus DeserializeContainerRegistryResourceStatus(JsonElement element)
+        internal static ContainerRegistryResourceStatus DeserializeContainerRegistryResourceStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

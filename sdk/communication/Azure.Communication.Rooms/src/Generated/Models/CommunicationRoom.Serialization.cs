@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.Rooms
 {
     public partial class CommunicationRoom
     {
-        internal static CommunicationRoom DeserializeCommunicationRoom(JsonElement element)
+        internal static CommunicationRoom DeserializeCommunicationRoom(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

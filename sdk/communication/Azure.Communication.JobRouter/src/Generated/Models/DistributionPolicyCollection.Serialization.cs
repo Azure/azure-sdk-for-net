@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter.Models
 {
     internal partial class DistributionPolicyCollection
     {
-        internal static DistributionPolicyCollection DeserializeDistributionPolicyCollection(JsonElement element)
+        internal static DistributionPolicyCollection DeserializeDistributionPolicyCollection(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

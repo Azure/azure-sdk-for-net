@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     public partial class CommunityGalleryImageIdentifier
     {
-        internal static CommunityGalleryImageIdentifier DeserializeCommunityGalleryImageIdentifier(JsonElement element)
+        internal static CommunityGalleryImageIdentifier DeserializeCommunityGalleryImageIdentifier(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

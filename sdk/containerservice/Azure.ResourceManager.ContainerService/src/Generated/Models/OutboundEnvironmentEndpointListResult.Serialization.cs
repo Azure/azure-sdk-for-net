@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     internal partial class OutboundEnvironmentEndpointListResult
     {
-        internal static OutboundEnvironmentEndpointListResult DeserializeOutboundEnvironmentEndpointListResult(JsonElement element)
+        internal static OutboundEnvironmentEndpointListResult DeserializeOutboundEnvironmentEndpointListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

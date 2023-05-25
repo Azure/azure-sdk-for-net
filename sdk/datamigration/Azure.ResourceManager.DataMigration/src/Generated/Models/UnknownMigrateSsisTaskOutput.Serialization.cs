@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     internal partial class UnknownMigrateSsisTaskOutput
     {
-        internal static UnknownMigrateSsisTaskOutput DeserializeUnknownMigrateSsisTaskOutput(JsonElement element)
+        internal static UnknownMigrateSsisTaskOutput DeserializeUnknownMigrateSsisTaskOutput(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

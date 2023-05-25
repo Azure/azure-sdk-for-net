@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
     internal partial class RoleListResult
     {
-        internal static RoleListResult DeserializeRoleListResult(JsonElement element)
+        internal static RoleListResult DeserializeRoleListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

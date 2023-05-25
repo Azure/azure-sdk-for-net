@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataBoxDiskSecret
     {
-        internal static DataBoxDiskSecret DeserializeDataBoxDiskSecret(JsonElement element)
+        internal static DataBoxDiskSecret DeserializeDataBoxDiskSecret(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

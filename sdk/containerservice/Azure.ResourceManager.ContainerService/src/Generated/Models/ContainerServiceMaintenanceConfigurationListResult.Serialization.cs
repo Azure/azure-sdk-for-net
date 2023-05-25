@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     internal partial class ContainerServiceMaintenanceConfigurationListResult
     {
-        internal static ContainerServiceMaintenanceConfigurationListResult DeserializeContainerServiceMaintenanceConfigurationListResult(JsonElement element)
+        internal static ContainerServiceMaintenanceConfigurationListResult DeserializeContainerServiceMaintenanceConfigurationListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

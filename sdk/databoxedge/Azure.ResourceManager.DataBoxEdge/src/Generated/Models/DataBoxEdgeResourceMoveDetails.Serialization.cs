@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class DataBoxEdgeResourceMoveDetails
     {
-        internal static DataBoxEdgeResourceMoveDetails DeserializeDataBoxEdgeResourceMoveDetails(JsonElement element)
+        internal static DataBoxEdgeResourceMoveDetails DeserializeDataBoxEdgeResourceMoveDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

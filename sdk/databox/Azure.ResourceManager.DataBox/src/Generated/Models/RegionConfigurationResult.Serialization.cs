@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class RegionConfigurationResult
     {
-        internal static RegionConfigurationResult DeserializeRegionConfigurationResult(JsonElement element)
+        internal static RegionConfigurationResult DeserializeRegionConfigurationResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

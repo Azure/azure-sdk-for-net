@@ -8,13 +8,14 @@
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeStore
 {
     public partial class DataLakeStoreFirewallRuleData
     {
-        internal static DataLakeStoreFirewallRuleData DeserializeDataLakeStoreFirewallRuleData(JsonElement element)
+        internal static DataLakeStoreFirewallRuleData DeserializeDataLakeStoreFirewallRuleData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

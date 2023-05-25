@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
     public partial class PredictionTrainingResults
     {
-        internal static PredictionTrainingResults DeserializePredictionTrainingResults(JsonElement element)
+        internal static PredictionTrainingResults DeserializePredictionTrainingResults(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

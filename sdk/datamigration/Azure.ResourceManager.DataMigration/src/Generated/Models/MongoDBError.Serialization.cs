@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MongoDBError
     {
-        internal static MongoDBError DeserializeMongoDBError(JsonElement element)
+        internal static MongoDBError DeserializeMongoDBError(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

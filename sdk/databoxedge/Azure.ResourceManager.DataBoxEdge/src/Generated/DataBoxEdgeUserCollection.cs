@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeUserUsersRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeUserUsersRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeUserResource(Client, DataBoxEdgeUserData.DeserializeDataBoxEdgeUserData(e)), _dataBoxEdgeUserUsersClientDiagnostics, Pipeline, "DataBoxEdgeUserCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DataBoxEdgeUserResource(Client, DataBoxEdgeUserData.DeserializeDataBoxEdgeUserData(e)), _dataBoxEdgeUserUsersClientDiagnostics, Pipeline, "DataBoxEdgeUserCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeUserUsersRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeUserUsersRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeUserResource(Client, DataBoxEdgeUserData.DeserializeDataBoxEdgeUserData(e)), _dataBoxEdgeUserUsersClientDiagnostics, Pipeline, "DataBoxEdgeUserCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DataBoxEdgeUserResource(Client, DataBoxEdgeUserData.DeserializeDataBoxEdgeUserData(e)), _dataBoxEdgeUserUsersClientDiagnostics, Pipeline, "DataBoxEdgeUserCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

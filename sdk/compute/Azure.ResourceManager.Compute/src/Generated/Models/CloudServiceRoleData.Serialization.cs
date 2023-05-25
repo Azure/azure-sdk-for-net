@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class CloudServiceRoleData
     {
-        internal static CloudServiceRoleData DeserializeCloudServiceRoleData(JsonElement element)
+        internal static CloudServiceRoleData DeserializeCloudServiceRoleData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

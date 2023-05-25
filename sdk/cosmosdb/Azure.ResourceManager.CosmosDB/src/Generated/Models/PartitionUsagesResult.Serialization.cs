@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     internal partial class PartitionUsagesResult
     {
-        internal static PartitionUsagesResult DeserializePartitionUsagesResult(JsonElement element)
+        internal static PartitionUsagesResult DeserializePartitionUsagesResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

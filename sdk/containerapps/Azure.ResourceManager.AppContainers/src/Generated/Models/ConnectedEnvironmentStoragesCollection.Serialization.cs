@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     internal partial class ConnectedEnvironmentStoragesCollection
     {
-        internal static ConnectedEnvironmentStoragesCollection DeserializeConnectedEnvironmentStoragesCollection(JsonElement element)
+        internal static ConnectedEnvironmentStoragesCollection DeserializeConnectedEnvironmentStoragesCollection(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

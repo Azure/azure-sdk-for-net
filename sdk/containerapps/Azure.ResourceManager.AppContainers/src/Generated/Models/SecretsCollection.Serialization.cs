@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     internal partial class SecretsCollection
     {
-        internal static SecretsCollection DeserializeSecretsCollection(JsonElement element)
+        internal static SecretsCollection DeserializeSecretsCollection(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

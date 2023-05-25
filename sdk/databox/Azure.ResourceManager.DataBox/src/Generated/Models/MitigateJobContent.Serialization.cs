@@ -7,10 +7,30 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class MitigateJobContent : IUtf8JsonSerializable
     {
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("customerResolutionCode"u8);
+            writer.WriteStringValue(CustomerResolutionCode.ToSerialString());
+            if (Optional.IsCollectionDefined(SerialNumberCustomerResolutionMap))
+            {
+                writer.WritePropertyName("serialNumberCustomerResolutionMap"u8);
+                writer.WriteStartObject();
+                foreach (var item in SerialNumberCustomerResolutionMap)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value.ToSerialString());
+                }
+                writer.WriteEndObject();
+            }
+            writer.WriteEndObject();
+        }
     }
 }

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CosmosDBBackupInformation
     {
-        internal static CosmosDBBackupInformation DeserializeCosmosDBBackupInformation(JsonElement element)
+        internal static CosmosDBBackupInformation DeserializeCosmosDBBackupInformation(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

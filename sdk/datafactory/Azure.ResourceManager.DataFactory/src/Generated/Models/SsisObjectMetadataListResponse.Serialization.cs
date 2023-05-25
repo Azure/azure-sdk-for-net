@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     internal partial class SsisObjectMetadataListResponse
     {
-        internal static SsisObjectMetadataListResponse DeserializeSsisObjectMetadataListResponse(JsonElement element)
+        internal static SsisObjectMetadataListResponse DeserializeSsisObjectMetadataListResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class DiskRestorePointList
     {
-        internal static DiskRestorePointList DeserializeDiskRestorePointList(JsonElement element)
+        internal static DiskRestorePointList DeserializeDiskRestorePointList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

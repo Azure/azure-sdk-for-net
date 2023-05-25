@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     internal partial class RestorableTablesListResult
     {
-        internal static RestorableTablesListResult DeserializeRestorableTablesListResult(JsonElement element)
+        internal static RestorableTablesListResult DeserializeRestorableTablesListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

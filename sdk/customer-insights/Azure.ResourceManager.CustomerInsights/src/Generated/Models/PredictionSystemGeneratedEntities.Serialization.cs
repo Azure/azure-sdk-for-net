@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
     public partial class PredictionSystemGeneratedEntities
     {
-        internal static PredictionSystemGeneratedEntities DeserializePredictionSystemGeneratedEntities(JsonElement element)
+        internal static PredictionSystemGeneratedEntities DeserializePredictionSystemGeneratedEntities(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

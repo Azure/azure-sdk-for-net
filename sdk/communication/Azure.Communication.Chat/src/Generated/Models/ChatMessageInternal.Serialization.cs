@@ -10,12 +10,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Communication;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.Chat
 {
     internal partial class ChatMessageInternal
     {
-        internal static ChatMessageInternal DeserializeChatMessageInternal(JsonElement element)
+        internal static ChatMessageInternal DeserializeChatMessageInternal(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

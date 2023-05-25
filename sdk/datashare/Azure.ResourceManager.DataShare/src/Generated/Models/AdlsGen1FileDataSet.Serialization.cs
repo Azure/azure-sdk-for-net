@@ -8,13 +8,16 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
     public partial class AdlsGen1FileDataSet : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -35,7 +38,7 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WriteEndObject();
         }
 
-        internal static AdlsGen1FileDataSet DeserializeAdlsGen1FileDataSet(JsonElement element)
+        internal static AdlsGen1FileDataSet DeserializeAdlsGen1FileDataSet(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

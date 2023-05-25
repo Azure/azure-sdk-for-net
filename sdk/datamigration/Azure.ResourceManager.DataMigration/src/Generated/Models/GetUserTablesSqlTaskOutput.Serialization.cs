@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class GetUserTablesSqlTaskOutput
     {
-        internal static GetUserTablesSqlTaskOutput DeserializeGetUserTablesSqlTaskOutput(JsonElement element)
+        internal static GetUserTablesSqlTaskOutput DeserializeGetUserTablesSqlTaskOutput(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     internal partial class DaprSecretsCollection
     {
-        internal static DaprSecretsCollection DeserializeDaprSecretsCollection(JsonElement element)
+        internal static DaprSecretsCollection DeserializeDaprSecretsCollection(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.MediaComposition.Models
 {
     public partial class LayoutResolution : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("width"u8);
@@ -22,7 +25,7 @@ namespace Azure.Communication.MediaComposition.Models
             writer.WriteEndObject();
         }
 
-        internal static LayoutResolution DeserializeLayoutResolution(JsonElement element)
+        internal static LayoutResolution DeserializeLayoutResolution(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

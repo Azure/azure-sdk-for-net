@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.PhoneNumbers
 {
     internal partial class PhoneNumberOperation
     {
-        internal static PhoneNumberOperation DeserializePhoneNumberOperation(JsonElement element)
+        internal static PhoneNumberOperation DeserializePhoneNumberOperation(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

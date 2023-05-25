@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class PropertyUpdatesInProgress
     {
-        internal static PropertyUpdatesInProgress DeserializePropertyUpdatesInProgress(JsonElement element)
+        internal static PropertyUpdatesInProgress DeserializePropertyUpdatesInProgress(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

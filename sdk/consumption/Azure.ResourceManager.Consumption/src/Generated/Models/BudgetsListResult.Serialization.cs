@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
     internal partial class BudgetsListResult
     {
-        internal static BudgetsListResult DeserializeBudgetsListResult(JsonElement element)
+        internal static BudgetsListResult DeserializeBudgetsListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

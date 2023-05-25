@@ -8,13 +8,14 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
     public partial class CommunityGalleryImageVersionData
     {
-        internal static CommunityGalleryImageVersionData DeserializeCommunityGalleryImageVersionData(JsonElement element)
+        internal static CommunityGalleryImageVersionData DeserializeCommunityGalleryImageVersionData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

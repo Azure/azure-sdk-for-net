@@ -8,13 +8,14 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppJobExecution
     {
-        internal static ContainerAppJobExecution DeserializeContainerAppJobExecution(JsonElement element)
+        internal static ContainerAppJobExecution DeserializeContainerAppJobExecution(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

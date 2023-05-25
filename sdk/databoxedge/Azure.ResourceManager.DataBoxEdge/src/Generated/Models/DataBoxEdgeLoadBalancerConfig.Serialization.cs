@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class DataBoxEdgeLoadBalancerConfig
     {
-        internal static DataBoxEdgeLoadBalancerConfig DeserializeDataBoxEdgeLoadBalancerConfig(JsonElement element)
+        internal static DataBoxEdgeLoadBalancerConfig DeserializeDataBoxEdgeLoadBalancerConfig(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

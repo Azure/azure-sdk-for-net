@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.PhoneNumbers
 {
     public partial class PhoneNumberCountry
     {
-        internal static PhoneNumberCountry DeserializePhoneNumberCountry(JsonElement element)
+        internal static PhoneNumberCountry DeserializePhoneNumberCountry(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

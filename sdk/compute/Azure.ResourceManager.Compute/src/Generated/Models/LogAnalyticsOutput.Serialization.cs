@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class LogAnalyticsOutput
     {
-        internal static LogAnalyticsOutput DeserializeLogAnalyticsOutput(JsonElement element)
+        internal static LogAnalyticsOutput DeserializeLogAnalyticsOutput(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

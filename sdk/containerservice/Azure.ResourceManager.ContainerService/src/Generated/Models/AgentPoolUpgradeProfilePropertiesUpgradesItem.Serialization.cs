@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class AgentPoolUpgradeProfilePropertiesUpgradesItem
     {
-        internal static AgentPoolUpgradeProfilePropertiesUpgradesItem DeserializeAgentPoolUpgradeProfilePropertiesUpgradesItem(JsonElement element)
+        internal static AgentPoolUpgradeProfilePropertiesUpgradesItem DeserializeAgentPoolUpgradeProfilePropertiesUpgradesItem(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     public partial class ConfidentialLedgerNameAvailabilityResult
     {
-        internal static ConfidentialLedgerNameAvailabilityResult DeserializeConfidentialLedgerNameAvailabilityResult(JsonElement element)
+        internal static ConfidentialLedgerNameAvailabilityResult DeserializeConfidentialLedgerNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

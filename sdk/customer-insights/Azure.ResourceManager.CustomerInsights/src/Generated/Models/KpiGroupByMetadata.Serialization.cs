@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
     public partial class KpiGroupByMetadata
     {
-        internal static KpiGroupByMetadata DeserializeKpiGroupByMetadata(JsonElement element)
+        internal static KpiGroupByMetadata DeserializeKpiGroupByMetadata(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Containers.ContainerRegistry
 {
     public partial class ArtifactManifestPlatform
     {
-        internal static ArtifactManifestPlatform DeserializeArtifactManifestPlatform(JsonElement element)
+        internal static ArtifactManifestPlatform DeserializeArtifactManifestPlatform(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

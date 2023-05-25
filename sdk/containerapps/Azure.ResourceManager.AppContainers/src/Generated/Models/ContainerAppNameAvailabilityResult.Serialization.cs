@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppNameAvailabilityResult
     {
-        internal static ContainerAppNameAvailabilityResult DeserializeContainerAppNameAvailabilityResult(JsonElement element)
+        internal static ContainerAppNameAvailabilityResult DeserializeContainerAppNameAvailabilityResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

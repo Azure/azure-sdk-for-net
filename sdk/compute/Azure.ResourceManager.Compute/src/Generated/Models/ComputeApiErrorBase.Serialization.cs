@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     public partial class ComputeApiErrorBase
     {
-        internal static ComputeApiErrorBase DeserializeComputeApiErrorBase(JsonElement element)
+        internal static ComputeApiErrorBase DeserializeComputeApiErrorBase(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

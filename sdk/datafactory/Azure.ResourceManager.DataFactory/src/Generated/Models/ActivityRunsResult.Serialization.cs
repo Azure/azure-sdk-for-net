@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     internal partial class ActivityRunsResult
     {
-        internal static ActivityRunsResult DeserializeActivityRunsResult(JsonElement element)
+        internal static ActivityRunsResult DeserializeActivityRunsResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

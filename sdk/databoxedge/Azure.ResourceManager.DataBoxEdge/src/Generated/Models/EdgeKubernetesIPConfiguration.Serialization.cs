@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class EdgeKubernetesIPConfiguration
     {
-        internal static EdgeKubernetesIPConfiguration DeserializeEdgeKubernetesIPConfiguration(JsonElement element)
+        internal static EdgeKubernetesIPConfiguration DeserializeEdgeKubernetesIPConfiguration(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

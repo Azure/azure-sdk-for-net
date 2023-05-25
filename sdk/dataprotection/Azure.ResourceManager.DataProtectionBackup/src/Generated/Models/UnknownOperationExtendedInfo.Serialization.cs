@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     internal partial class UnknownOperationExtendedInfo
     {
-        internal static UnknownOperationExtendedInfo DeserializeUnknownOperationExtendedInfo(JsonElement element)
+        internal static UnknownOperationExtendedInfo DeserializeUnknownOperationExtendedInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
     internal partial class DataLakeStoreAccountListResult
     {
-        internal static DataLakeStoreAccountListResult DeserializeDataLakeStoreAccountListResult(JsonElement element)
+        internal static DataLakeStoreAccountListResult DeserializeDataLakeStoreAccountListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

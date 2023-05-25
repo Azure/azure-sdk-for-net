@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class RestorableLocationResourceInfo
     {
-        internal static RestorableLocationResourceInfo DeserializeRestorableLocationResourceInfo(JsonElement element)
+        internal static RestorableLocationResourceInfo DeserializeRestorableLocationResourceInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

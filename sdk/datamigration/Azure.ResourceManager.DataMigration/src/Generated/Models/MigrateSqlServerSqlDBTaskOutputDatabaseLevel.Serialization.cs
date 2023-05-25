@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MigrateSqlServerSqlDBTaskOutputDatabaseLevel
     {
-        internal static MigrateSqlServerSqlDBTaskOutputDatabaseLevel DeserializeMigrateSqlServerSqlDBTaskOutputDatabaseLevel(JsonElement element)
+        internal static MigrateSqlServerSqlDBTaskOutputDatabaseLevel DeserializeMigrateSqlServerSqlDBTaskOutputDatabaseLevel(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

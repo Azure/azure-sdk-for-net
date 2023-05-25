@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SsisFolder
     {
-        internal static SsisFolder DeserializeSsisFolder(JsonElement element)
+        internal static SsisFolder DeserializeSsisFolder(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

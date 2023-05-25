@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataCenterAddressInstructionResult
     {
-        internal static DataCenterAddressInstructionResult DeserializeDataCenterAddressInstructionResult(JsonElement element)
+        internal static DataCenterAddressInstructionResult DeserializeDataCenterAddressInstructionResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

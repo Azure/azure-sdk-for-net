@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.Sms
 {
     public partial class SmsSendResult
     {
-        internal static SmsSendResult DeserializeSmsSendResult(JsonElement element)
+        internal static SmsSendResult DeserializeSmsSendResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

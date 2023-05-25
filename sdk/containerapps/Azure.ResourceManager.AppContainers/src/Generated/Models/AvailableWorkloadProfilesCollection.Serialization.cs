@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     internal partial class AvailableWorkloadProfilesCollection
     {
-        internal static AvailableWorkloadProfilesCollection DeserializeAvailableWorkloadProfilesCollection(JsonElement element)
+        internal static AvailableWorkloadProfilesCollection DeserializeAvailableWorkloadProfilesCollection(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class IntegrationRuntimeStatusResult
     {
-        internal static IntegrationRuntimeStatusResult DeserializeIntegrationRuntimeStatusResult(JsonElement element)
+        internal static IntegrationRuntimeStatusResult DeserializeIntegrationRuntimeStatusResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

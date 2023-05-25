@@ -8,12 +8,15 @@
 using System.Text.Json;
 using Azure.Communication.MediaComposition;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.MediaComposition.Models
 {
     public partial class ImageInput : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("uri"u8);
@@ -28,7 +31,7 @@ namespace Azure.Communication.MediaComposition.Models
             writer.WriteEndObject();
         }
 
-        internal static ImageInput DeserializeImageInput(JsonElement element)
+        internal static ImageInput DeserializeImageInput(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     internal partial class DataBoxEdgeDeviceList
     {
-        internal static DataBoxEdgeDeviceList DeserializeDataBoxEdgeDeviceList(JsonElement element)
+        internal static DataBoxEdgeDeviceList DeserializeDataBoxEdgeDeviceList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

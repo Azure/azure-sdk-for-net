@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MigrateSqlServerSqlDBTaskOutputError
     {
-        internal static MigrateSqlServerSqlDBTaskOutputError DeserializeMigrateSqlServerSqlDBTaskOutputError(JsonElement element)
+        internal static MigrateSqlServerSqlDBTaskOutputError DeserializeMigrateSqlServerSqlDBTaskOutputError(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

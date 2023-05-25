@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class UpdateInstallProgress
     {
-        internal static UpdateInstallProgress DeserializeUpdateInstallProgress(JsonElement element)
+        internal static UpdateInstallProgress DeserializeUpdateInstallProgress(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     internal partial class CosmosDBSqlStoredProcedureListResult
     {
-        internal static CosmosDBSqlStoredProcedureListResult DeserializeCosmosDBSqlStoredProcedureListResult(JsonElement element)
+        internal static CosmosDBSqlStoredProcedureListResult DeserializeCosmosDBSqlStoredProcedureListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

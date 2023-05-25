@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Communication.Models
 {
     public partial class VerificationDnsRecord
     {
-        internal static VerificationDnsRecord DeserializeVerificationDnsRecord(JsonElement element)
+        internal static VerificationDnsRecord DeserializeVerificationDnsRecord(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

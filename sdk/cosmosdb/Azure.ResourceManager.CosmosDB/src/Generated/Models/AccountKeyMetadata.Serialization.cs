@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     internal partial class AccountKeyMetadata
     {
-        internal static AccountKeyMetadata DeserializeAccountKeyMetadata(JsonElement element)
+        internal static AccountKeyMetadata DeserializeAccountKeyMetadata(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

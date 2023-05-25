@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DataShare;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
     internal partial class DataSetMappingList
     {
-        internal static DataSetMappingList DeserializeDataSetMappingList(JsonElement element)
+        internal static DataSetMappingList DeserializeDataSetMappingList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

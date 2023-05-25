@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
     public partial class ContainerRegistryPrivateLinkResourceData
     {
-        internal static ContainerRegistryPrivateLinkResourceData DeserializeContainerRegistryPrivateLinkResourceData(JsonElement element)
+        internal static ContainerRegistryPrivateLinkResourceData DeserializeContainerRegistryPrivateLinkResourceData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

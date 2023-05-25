@@ -8,12 +8,13 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     internal partial class UnknownJobSecrets
     {
-        internal static UnknownJobSecrets DeserializeUnknownJobSecrets(JsonElement element)
+        internal static UnknownJobSecrets DeserializeUnknownJobSecrets(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

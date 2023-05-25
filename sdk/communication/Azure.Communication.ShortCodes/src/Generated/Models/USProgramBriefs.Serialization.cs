@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.ShortCodes.Models
 {
     internal partial class USProgramBriefs
     {
-        internal static USProgramBriefs DeserializeUSProgramBriefs(JsonElement element)
+        internal static USProgramBriefs DeserializeUSProgramBriefs(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

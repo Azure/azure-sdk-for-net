@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter.Models
 {
     public partial class JobPositionDetails
     {
-        internal static JobPositionDetails DeserializeJobPositionDetails(JsonElement element)
+        internal static JobPositionDetails DeserializeJobPositionDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

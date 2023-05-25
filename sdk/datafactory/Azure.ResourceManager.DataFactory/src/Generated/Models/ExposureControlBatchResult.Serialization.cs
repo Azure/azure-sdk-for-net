@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class ExposureControlBatchResult
     {
-        internal static ExposureControlBatchResult DeserializeExposureControlBatchResult(JsonElement element)
+        internal static ExposureControlBatchResult DeserializeExposureControlBatchResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

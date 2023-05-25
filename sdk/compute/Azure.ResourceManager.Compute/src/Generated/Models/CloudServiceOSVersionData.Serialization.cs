@@ -7,13 +7,14 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
     public partial class CloudServiceOSVersionData
     {
-        internal static CloudServiceOSVersionData DeserializeCloudServiceOSVersionData(JsonElement element)
+        internal static CloudServiceOSVersionData DeserializeCloudServiceOSVersionData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

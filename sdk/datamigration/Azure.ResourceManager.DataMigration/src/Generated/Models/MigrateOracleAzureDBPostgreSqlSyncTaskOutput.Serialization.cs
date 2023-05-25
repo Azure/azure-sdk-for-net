@@ -6,12 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutput
     {
-        internal static MigrateOracleAzureDBPostgreSqlSyncTaskOutput DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutput(JsonElement element)
+        internal static MigrateOracleAzureDBPostgreSqlSyncTaskOutput DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutput(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

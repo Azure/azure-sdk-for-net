@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     internal partial class CosmosDBSqlRoleAssignmentList
     {
-        internal static CosmosDBSqlRoleAssignmentList DeserializeCosmosDBSqlRoleAssignmentList(JsonElement element)
+        internal static CosmosDBSqlRoleAssignmentList DeserializeCosmosDBSqlRoleAssignmentList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

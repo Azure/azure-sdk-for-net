@@ -9,12 +9,13 @@ using System;
 using System.Text.Json;
 using Azure.Communication;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.Chat
 {
     internal partial class ChatMessageReadReceiptInternal
     {
-        internal static ChatMessageReadReceiptInternal DeserializeChatMessageReadReceiptInternal(JsonElement element)
+        internal static ChatMessageReadReceiptInternal DeserializeChatMessageReadReceiptInternal(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

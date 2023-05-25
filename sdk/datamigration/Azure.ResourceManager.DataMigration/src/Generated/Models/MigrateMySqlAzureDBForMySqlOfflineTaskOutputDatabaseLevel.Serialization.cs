@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel
     {
-        internal static MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(JsonElement element)
+        internal static MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
     public partial class DataLakeAnalyticsCapabilityInformation
     {
-        internal static DataLakeAnalyticsCapabilityInformation DeserializeDataLakeAnalyticsCapabilityInformation(JsonElement element)
+        internal static DataLakeAnalyticsCapabilityInformation DeserializeDataLakeAnalyticsCapabilityInformation(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class DataBoxEdgeUpdateDetails
     {
-        internal static DataBoxEdgeUpdateDetails DeserializeDataBoxEdgeUpdateDetails(JsonElement element)
+        internal static DataBoxEdgeUpdateDetails DeserializeDataBoxEdgeUpdateDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

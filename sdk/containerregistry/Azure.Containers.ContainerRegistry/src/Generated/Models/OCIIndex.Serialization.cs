@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Containers.ContainerRegistry
 {
     internal partial class OCIIndex
     {
-        internal static OCIIndex DeserializeOCIIndex(JsonElement element)
+        internal static OCIIndex DeserializeOCIIndex(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

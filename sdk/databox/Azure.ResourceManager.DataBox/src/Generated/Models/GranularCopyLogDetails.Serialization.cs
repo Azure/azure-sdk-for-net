@@ -6,12 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class GranularCopyLogDetails
     {
-        internal static GranularCopyLogDetails DeserializeGranularCopyLogDetails(JsonElement element)
+        internal static GranularCopyLogDetails DeserializeGranularCopyLogDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

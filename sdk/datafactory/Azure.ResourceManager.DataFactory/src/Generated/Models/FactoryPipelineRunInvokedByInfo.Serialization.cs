@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class FactoryPipelineRunInvokedByInfo
     {
-        internal static FactoryPipelineRunInvokedByInfo DeserializeFactoryPipelineRunInvokedByInfo(JsonElement element)
+        internal static FactoryPipelineRunInvokedByInfo DeserializeFactoryPipelineRunInvokedByInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter.Models
 {
     public partial class RouterJobItem
     {
-        internal static RouterJobItem DeserializeRouterJobItem(JsonElement element)
+        internal static RouterJobItem DeserializeRouterJobItem(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

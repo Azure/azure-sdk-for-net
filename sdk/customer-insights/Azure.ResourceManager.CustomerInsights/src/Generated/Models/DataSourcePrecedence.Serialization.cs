@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
     public partial class DataSourcePrecedence
     {
-        internal static DataSourcePrecedence DeserializeDataSourcePrecedence(JsonElement element)
+        internal static DataSourcePrecedence DeserializeDataSourcePrecedence(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

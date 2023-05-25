@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
     public partial class TableLevelSharingProperties : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ExternalTablesToExclude))
@@ -79,7 +82,7 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WriteEndObject();
         }
 
-        internal static TableLevelSharingProperties DeserializeTableLevelSharingProperties(JsonElement element)
+        internal static TableLevelSharingProperties DeserializeTableLevelSharingProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

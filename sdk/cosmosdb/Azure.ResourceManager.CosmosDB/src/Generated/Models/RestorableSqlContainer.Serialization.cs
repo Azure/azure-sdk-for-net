@@ -7,13 +7,14 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class RestorableSqlContainer
     {
-        internal static RestorableSqlContainer DeserializeRestorableSqlContainer(JsonElement element)
+        internal static RestorableSqlContainer DeserializeRestorableSqlContainer(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

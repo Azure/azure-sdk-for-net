@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Communication;
 
 namespace Azure.ResourceManager.Communication.Models
 {
     internal partial class EmailServiceResourceList
     {
-        internal static EmailServiceResourceList DeserializeEmailServiceResourceList(JsonElement element)
+        internal static EmailServiceResourceList DeserializeEmailServiceResourceList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

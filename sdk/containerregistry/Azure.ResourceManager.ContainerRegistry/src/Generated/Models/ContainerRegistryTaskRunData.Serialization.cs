@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ContainerRegistry.Models;
 using Azure.ResourceManager.Models;
 
@@ -14,7 +15,9 @@ namespace Azure.ResourceManager.ContainerRegistry
 {
     public partial class ContainerRegistryTaskRunData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             writer.WriteEndObject();
         }
 
-        internal static ContainerRegistryTaskRunData DeserializeContainerRegistryTaskRunData(JsonElement element)
+        internal static ContainerRegistryTaskRunData DeserializeContainerRegistryTaskRunData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

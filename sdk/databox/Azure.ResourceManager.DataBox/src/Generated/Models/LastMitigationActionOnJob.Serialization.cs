@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class LastMitigationActionOnJob
     {
-        internal static LastMitigationActionOnJob DeserializeLastMitigationActionOnJob(JsonElement element)
+        internal static LastMitigationActionOnJob DeserializeLastMitigationActionOnJob(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class BackupFeatureValidationResult
     {
-        internal static BackupFeatureValidationResult DeserializeBackupFeatureValidationResult(JsonElement element)
+        internal static BackupFeatureValidationResult DeserializeBackupFeatureValidationResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

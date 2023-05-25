@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectorMappingResourceFormatConnectorMappingsRestClient.CreateListByConnectorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectorMappingResourceFormatConnectorMappingsRestClient.CreateListByConnectorNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConnectorMappingResourceFormatResource(Client, ConnectorMappingResourceFormatData.DeserializeConnectorMappingResourceFormatData(e)), _connectorMappingResourceFormatConnectorMappingsClientDiagnostics, Pipeline, "ConnectorMappingResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ConnectorMappingResourceFormatResource(Client, ConnectorMappingResourceFormatData.DeserializeConnectorMappingResourceFormatData(e)), _connectorMappingResourceFormatConnectorMappingsClientDiagnostics, Pipeline, "ConnectorMappingResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectorMappingResourceFormatConnectorMappingsRestClient.CreateListByConnectorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectorMappingResourceFormatConnectorMappingsRestClient.CreateListByConnectorNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConnectorMappingResourceFormatResource(Client, ConnectorMappingResourceFormatData.DeserializeConnectorMappingResourceFormatData(e)), _connectorMappingResourceFormatConnectorMappingsClientDiagnostics, Pipeline, "ConnectorMappingResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ConnectorMappingResourceFormatResource(Client, ConnectorMappingResourceFormatData.DeserializeConnectorMappingResourceFormatData(e)), _connectorMappingResourceFormatConnectorMappingsClientDiagnostics, Pipeline, "ConnectorMappingResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

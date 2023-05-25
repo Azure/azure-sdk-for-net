@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SsisObjectMetadataStatusResult
     {
-        internal static SsisObjectMetadataStatusResult DeserializeSsisObjectMetadataStatusResult(JsonElement element)
+        internal static SsisObjectMetadataStatusResult DeserializeSsisObjectMetadataStatusResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

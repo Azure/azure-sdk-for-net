@@ -8,12 +8,13 @@
 using System.Text.Json;
 using Azure.Communication.JobRouter.Models;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter
 {
     internal partial class CommunicationErrorResponse
     {
-        internal static CommunicationErrorResponse DeserializeCommunicationErrorResponse(JsonElement element)
+        internal static CommunicationErrorResponse DeserializeCommunicationErrorResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

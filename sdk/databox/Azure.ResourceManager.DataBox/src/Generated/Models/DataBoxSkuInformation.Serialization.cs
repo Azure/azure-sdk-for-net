@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataBoxSkuInformation
     {
-        internal static DataBoxSkuInformation DeserializeDataBoxSkuInformation(JsonElement element)
+        internal static DataBoxSkuInformation DeserializeDataBoxSkuInformation(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

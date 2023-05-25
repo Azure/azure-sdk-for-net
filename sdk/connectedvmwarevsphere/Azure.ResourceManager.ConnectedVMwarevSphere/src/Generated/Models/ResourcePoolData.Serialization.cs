@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -16,7 +17,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     public partial class ResourcePoolData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocation))
@@ -63,7 +66,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             writer.WriteEndObject();
         }
 
-        internal static ResourcePoolData DeserializeResourcePoolData(JsonElement element)
+        internal static ResourcePoolData DeserializeResourcePoolData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

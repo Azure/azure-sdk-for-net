@@ -8,13 +8,14 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeStore
 {
     public partial class DataLakeStoreTrustedIdProviderData
     {
-        internal static DataLakeStoreTrustedIdProviderData DeserializeDataLakeStoreTrustedIdProviderData(JsonElement element)
+        internal static DataLakeStoreTrustedIdProviderData DeserializeDataLakeStoreTrustedIdProviderData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

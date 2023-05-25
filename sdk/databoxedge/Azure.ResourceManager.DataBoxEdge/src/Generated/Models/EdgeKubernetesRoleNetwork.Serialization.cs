@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class EdgeKubernetesRoleNetwork
     {
-        internal static EdgeKubernetesRoleNetwork DeserializeEdgeKubernetesRoleNetwork(JsonElement element)
+        internal static EdgeKubernetesRoleNetwork DeserializeEdgeKubernetesRoleNetwork(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

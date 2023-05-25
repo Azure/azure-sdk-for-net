@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class ResourceSkuCapabilities
     {
-        internal static ResourceSkuCapabilities DeserializeResourceSkuCapabilities(JsonElement element)
+        internal static ResourceSkuCapabilities DeserializeResourceSkuCapabilities(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

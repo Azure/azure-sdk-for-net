@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     internal partial class UnknownFeatureValidationResponseBase
     {
-        internal static UnknownFeatureValidationResponseBase DeserializeUnknownFeatureValidationResponseBase(JsonElement element)
+        internal static UnknownFeatureValidationResponseBase DeserializeUnknownFeatureValidationResponseBase(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class FactoryDataFlowCreateDebugSessionResult
     {
-        internal static FactoryDataFlowCreateDebugSessionResult DeserializeFactoryDataFlowCreateDebugSessionResult(JsonElement element)
+        internal static FactoryDataFlowCreateDebugSessionResult DeserializeFactoryDataFlowCreateDebugSessionResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

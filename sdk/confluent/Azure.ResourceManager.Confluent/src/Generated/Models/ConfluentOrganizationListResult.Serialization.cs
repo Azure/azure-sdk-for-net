@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
     internal partial class ConfluentOrganizationListResult
     {
-        internal static ConfluentOrganizationListResult DeserializeConfluentOrganizationListResult(JsonElement element)
+        internal static ConfluentOrganizationListResult DeserializeConfluentOrganizationListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

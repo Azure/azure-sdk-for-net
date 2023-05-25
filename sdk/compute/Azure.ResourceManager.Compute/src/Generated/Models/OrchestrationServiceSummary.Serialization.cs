@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     public partial class OrchestrationServiceSummary
     {
-        internal static OrchestrationServiceSummary DeserializeOrchestrationServiceSummary(JsonElement element)
+        internal static OrchestrationServiceSummary DeserializeOrchestrationServiceSummary(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

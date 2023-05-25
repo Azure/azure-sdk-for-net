@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionSkuProperty
     {
-        internal static ConsumptionSkuProperty DeserializeConsumptionSkuProperty(JsonElement element)
+        internal static ConsumptionSkuProperty DeserializeConsumptionSkuProperty(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ContainerServiceEndpointDependency
     {
-        internal static ContainerServiceEndpointDependency DeserializeContainerServiceEndpointDependency(JsonElement element)
+        internal static ContainerServiceEndpointDependency DeserializeContainerServiceEndpointDependency(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

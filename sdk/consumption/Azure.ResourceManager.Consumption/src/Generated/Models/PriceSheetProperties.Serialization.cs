@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class PriceSheetProperties
     {
-        internal static PriceSheetProperties DeserializePriceSheetProperties(JsonElement element)
+        internal static PriceSheetProperties DeserializePriceSheetProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

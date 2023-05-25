@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class ContainerRegistryListCredentialsResult
     {
-        internal static ContainerRegistryListCredentialsResult DeserializeContainerRegistryListCredentialsResult(JsonElement element)
+        internal static ContainerRegistryListCredentialsResult DeserializeContainerRegistryListCredentialsResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

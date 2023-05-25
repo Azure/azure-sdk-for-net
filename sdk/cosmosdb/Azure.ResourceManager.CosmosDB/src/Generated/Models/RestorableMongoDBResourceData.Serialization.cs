@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class RestorableMongoDBResourceData
     {
-        internal static RestorableMongoDBResourceData DeserializeRestorableMongoDBResourceData(JsonElement element)
+        internal static RestorableMongoDBResourceData DeserializeRestorableMongoDBResourceData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

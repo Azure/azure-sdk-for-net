@@ -8,12 +8,15 @@
 using System.Text.Json;
 using Azure.Communication.JobRouter;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter.Models
 {
     public partial class DistributionPolicy : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
@@ -34,7 +37,7 @@ namespace Azure.Communication.JobRouter.Models
             writer.WriteEndObject();
         }
 
-        internal static DistributionPolicy DeserializeDistributionPolicy(JsonElement element)
+        internal static DistributionPolicy DeserializeDistributionPolicy(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

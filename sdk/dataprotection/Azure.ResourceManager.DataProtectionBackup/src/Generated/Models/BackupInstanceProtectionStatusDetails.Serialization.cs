@@ -8,12 +8,13 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class BackupInstanceProtectionStatusDetails
     {
-        internal static BackupInstanceProtectionStatusDetails DeserializeBackupInstanceProtectionStatusDetails(JsonElement element)
+        internal static BackupInstanceProtectionStatusDetails DeserializeBackupInstanceProtectionStatusDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

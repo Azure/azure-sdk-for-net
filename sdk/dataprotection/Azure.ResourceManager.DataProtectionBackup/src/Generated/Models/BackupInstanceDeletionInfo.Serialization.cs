@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class BackupInstanceDeletionInfo
     {
-        internal static BackupInstanceDeletionInfo DeserializeBackupInstanceDeletionInfo(JsonElement element)
+        internal static BackupInstanceDeletionInfo DeserializeBackupInstanceDeletionInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

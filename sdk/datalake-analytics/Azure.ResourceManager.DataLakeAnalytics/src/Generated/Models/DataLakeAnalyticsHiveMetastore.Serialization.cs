@@ -8,13 +8,14 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
     public partial class DataLakeAnalyticsHiveMetastore
     {
-        internal static DataLakeAnalyticsHiveMetastore DeserializeDataLakeAnalyticsHiveMetastore(JsonElement element)
+        internal static DataLakeAnalyticsHiveMetastore DeserializeDataLakeAnalyticsHiveMetastore(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

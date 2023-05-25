@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     public partial class RunCommandDocument
     {
-        internal static RunCommandDocument DeserializeRunCommandDocument(JsonElement element)
+        internal static RunCommandDocument DeserializeRunCommandDocument(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

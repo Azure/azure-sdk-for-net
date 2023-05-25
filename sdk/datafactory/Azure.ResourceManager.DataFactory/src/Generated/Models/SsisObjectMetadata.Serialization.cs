@@ -6,12 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SsisObjectMetadata
     {
-        internal static SsisObjectMetadata DeserializeSsisObjectMetadata(JsonElement element)
+        internal static SsisObjectMetadata DeserializeSsisObjectMetadata(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

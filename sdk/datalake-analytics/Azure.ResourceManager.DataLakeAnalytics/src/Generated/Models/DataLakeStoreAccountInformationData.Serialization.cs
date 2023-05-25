@@ -7,13 +7,14 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeAnalytics
 {
     public partial class DataLakeStoreAccountInformationData
     {
-        internal static DataLakeStoreAccountInformationData DeserializeDataLakeStoreAccountInformationData(JsonElement element)
+        internal static DataLakeStoreAccountInformationData DeserializeDataLakeStoreAccountInformationData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

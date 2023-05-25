@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class UnencryptedCredentials
     {
-        internal static UnencryptedCredentials DeserializeUnencryptedCredentials(JsonElement element)
+        internal static UnencryptedCredentials DeserializeUnencryptedCredentials(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

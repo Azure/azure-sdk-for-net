@@ -7,12 +7,15 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataBoxEncryptionPreferences : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(DoubleEncryption))
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteEndObject();
         }
 
-        internal static DataBoxEncryptionPreferences DeserializeDataBoxEncryptionPreferences(JsonElement element)
+        internal static DataBoxEncryptionPreferences DeserializeDataBoxEncryptionPreferences(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

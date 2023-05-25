@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class FactoryPipelineRunInfo
     {
-        internal static FactoryPipelineRunInfo DeserializeFactoryPipelineRunInfo(JsonElement element)
+        internal static FactoryPipelineRunInfo DeserializeFactoryPipelineRunInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

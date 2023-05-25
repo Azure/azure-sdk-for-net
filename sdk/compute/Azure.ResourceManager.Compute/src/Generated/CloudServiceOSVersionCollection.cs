@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceOSVersionCloudServiceOperatingSystemsRestClient.CreateListOSVersionsRequest(Id.SubscriptionId, new AzureLocation(_location));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudServiceOSVersionCloudServiceOperatingSystemsRestClient.CreateListOSVersionsNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudServiceOSVersionResource(Client, CloudServiceOSVersionData.DeserializeCloudServiceOSVersionData(e)), _cloudServiceOSVersionCloudServiceOperatingSystemsClientDiagnostics, Pipeline, "CloudServiceOSVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new CloudServiceOSVersionResource(Client, CloudServiceOSVersionData.DeserializeCloudServiceOSVersionData(e)), _cloudServiceOSVersionCloudServiceOperatingSystemsClientDiagnostics, Pipeline, "CloudServiceOSVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceOSVersionCloudServiceOperatingSystemsRestClient.CreateListOSVersionsRequest(Id.SubscriptionId, new AzureLocation(_location));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudServiceOSVersionCloudServiceOperatingSystemsRestClient.CreateListOSVersionsNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudServiceOSVersionResource(Client, CloudServiceOSVersionData.DeserializeCloudServiceOSVersionData(e)), _cloudServiceOSVersionCloudServiceOperatingSystemsClientDiagnostics, Pipeline, "CloudServiceOSVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new CloudServiceOSVersionResource(Client, CloudServiceOSVersionData.DeserializeCloudServiceOSVersionData(e)), _cloudServiceOSVersionCloudServiceOperatingSystemsClientDiagnostics, Pipeline, "CloudServiceOSVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

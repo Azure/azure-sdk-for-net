@@ -9,12 +9,15 @@ using System;
 using System.Text.Json;
 using Azure.Communication;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.Chat
 {
     internal partial class ChatParticipantInternal : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("communicationIdentifier"u8);
@@ -32,7 +35,7 @@ namespace Azure.Communication.Chat
             writer.WriteEndObject();
         }
 
-        internal static ChatParticipantInternal DeserializeChatParticipantInternal(JsonElement element)
+        internal static ChatParticipantInternal DeserializeChatParticipantInternal(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

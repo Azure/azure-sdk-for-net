@@ -9,13 +9,14 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionModernReservationTransaction
     {
-        internal static ConsumptionModernReservationTransaction DeserializeConsumptionModernReservationTransaction(JsonElement element)
+        internal static ConsumptionModernReservationTransaction DeserializeConsumptionModernReservationTransaction(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

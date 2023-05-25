@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Containers.ContainerRegistry
 {
     internal partial class AcrAccessToken
     {
-        internal static AcrAccessToken DeserializeAcrAccessToken(JsonElement element)
+        internal static AcrAccessToken DeserializeAcrAccessToken(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

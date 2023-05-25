@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppDaprSecret
     {
-        internal static ContainerAppDaprSecret DeserializeContainerAppDaprSecret(JsonElement element)
+        internal static ContainerAppDaprSecret DeserializeContainerAppDaprSecret(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

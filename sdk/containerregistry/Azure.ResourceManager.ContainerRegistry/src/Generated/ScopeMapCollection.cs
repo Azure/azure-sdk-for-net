@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scopeMapRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scopeMapRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScopeMapResource(Client, ScopeMapData.DeserializeScopeMapData(e)), _scopeMapClientDiagnostics, Pipeline, "ScopeMapCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ScopeMapResource(Client, ScopeMapData.DeserializeScopeMapData(e)), _scopeMapClientDiagnostics, Pipeline, "ScopeMapCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scopeMapRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scopeMapRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScopeMapResource(Client, ScopeMapData.DeserializeScopeMapData(e)), _scopeMapClientDiagnostics, Pipeline, "ScopeMapCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ScopeMapResource(Client, ScopeMapData.DeserializeScopeMapData(e)), _scopeMapClientDiagnostics, Pipeline, "ScopeMapCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

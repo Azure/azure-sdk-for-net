@@ -6,12 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MigrateSqlServerSqlMISyncTaskOutput
     {
-        internal static MigrateSqlServerSqlMISyncTaskOutput DeserializeMigrateSqlServerSqlMISyncTaskOutput(JsonElement element)
+        internal static MigrateSqlServerSqlMISyncTaskOutput DeserializeMigrateSqlServerSqlMISyncTaskOutput(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

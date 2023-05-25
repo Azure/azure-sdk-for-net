@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     internal partial class AvailableDataBoxEdgeSkuList
     {
-        internal static AvailableDataBoxEdgeSkuList DeserializeAvailableDataBoxEdgeSkuList(JsonElement element)
+        internal static AvailableDataBoxEdgeSkuList DeserializeAvailableDataBoxEdgeSkuList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

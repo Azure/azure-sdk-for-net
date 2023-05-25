@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Containers.ContainerRegistry
 {
     internal partial class V1Manifest
     {
-        internal static V1Manifest DeserializeV1Manifest(JsonElement element)
+        internal static V1Manifest DeserializeV1Manifest(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

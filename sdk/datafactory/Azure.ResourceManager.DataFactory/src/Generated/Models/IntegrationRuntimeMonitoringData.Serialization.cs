@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class IntegrationRuntimeMonitoringData
     {
-        internal static IntegrationRuntimeMonitoringData DeserializeIntegrationRuntimeMonitoringData(JsonElement element)
+        internal static IntegrationRuntimeMonitoringData DeserializeIntegrationRuntimeMonitoringData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

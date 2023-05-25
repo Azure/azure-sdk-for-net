@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CosmosDBAccountKeyList
     {
-        internal static CosmosDBAccountKeyList DeserializeCosmosDBAccountKeyList(JsonElement element)
+        internal static CosmosDBAccountKeyList DeserializeCosmosDBAccountKeyList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

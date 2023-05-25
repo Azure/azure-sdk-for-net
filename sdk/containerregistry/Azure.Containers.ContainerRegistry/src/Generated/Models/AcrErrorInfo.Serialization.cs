@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Containers.ContainerRegistry
 {
     internal partial class AcrErrorInfo
     {
-        internal static AcrErrorInfo DeserializeAcrErrorInfo(JsonElement element)
+        internal static AcrErrorInfo DeserializeAcrErrorInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

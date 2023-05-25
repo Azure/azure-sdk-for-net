@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DataLakeAnalytics;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
     internal partial class DataLakeAnalyticsFirewallRuleListResult
     {
-        internal static DataLakeAnalyticsFirewallRuleListResult DeserializeDataLakeAnalyticsFirewallRuleListResult(JsonElement element)
+        internal static DataLakeAnalyticsFirewallRuleListResult DeserializeDataLakeAnalyticsFirewallRuleListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

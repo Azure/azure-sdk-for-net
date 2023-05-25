@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataCenterAccessSecurityCode
     {
-        internal static DataCenterAccessSecurityCode DeserializeDataCenterAccessSecurityCode(JsonElement element)
+        internal static DataCenterAccessSecurityCode DeserializeDataCenterAccessSecurityCode(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

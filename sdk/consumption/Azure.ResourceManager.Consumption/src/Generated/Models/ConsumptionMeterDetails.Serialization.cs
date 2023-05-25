@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionMeterDetails
     {
-        internal static ConsumptionMeterDetails DeserializeConsumptionMeterDetails(JsonElement element)
+        internal static ConsumptionMeterDetails DeserializeConsumptionMeterDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionCalculatedSavingsProperties
     {
-        internal static ConsumptionCalculatedSavingsProperties DeserializeConsumptionCalculatedSavingsProperties(JsonElement element)
+        internal static ConsumptionCalculatedSavingsProperties DeserializeConsumptionCalculatedSavingsProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

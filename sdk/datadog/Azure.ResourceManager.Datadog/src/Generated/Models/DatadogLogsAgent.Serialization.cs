@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
     internal partial class DatadogLogsAgent
     {
-        internal static DatadogLogsAgent DeserializeDatadogLogsAgent(JsonElement element)
+        internal static DatadogLogsAgent DeserializeDatadogLogsAgent(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

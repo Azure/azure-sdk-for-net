@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.PhoneNumbers
 {
     internal partial class PhoneNumberAreaCodes
     {
-        internal static PhoneNumberAreaCodes DeserializePhoneNumberAreaCodes(JsonElement element)
+        internal static PhoneNumberAreaCodes DeserializePhoneNumberAreaCodes(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     public partial class ResourceStatus
     {
-        internal static ResourceStatus DeserializeResourceStatus(JsonElement element)
+        internal static ResourceStatus DeserializeResourceStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

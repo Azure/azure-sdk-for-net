@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class SchemaComparisonValidationResultType
     {
-        internal static SchemaComparisonValidationResultType DeserializeSchemaComparisonValidationResultType(JsonElement element)
+        internal static SchemaComparisonValidationResultType DeserializeSchemaComparisonValidationResultType(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

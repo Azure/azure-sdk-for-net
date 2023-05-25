@@ -8,12 +8,13 @@
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class DataBoxEdgeIPv4Config
     {
-        internal static DataBoxEdgeIPv4Config DeserializeDataBoxEdgeIPv4Config(JsonElement element)
+        internal static DataBoxEdgeIPv4Config DeserializeDataBoxEdgeIPv4Config(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     internal partial class FactoryPipelineRunsQueryResult
     {
-        internal static FactoryPipelineRunsQueryResult DeserializeFactoryPipelineRunsQueryResult(JsonElement element)
+        internal static FactoryPipelineRunsQueryResult DeserializeFactoryPipelineRunsQueryResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.Chat
 {
     internal partial class SendChatMessageResultInternal
     {
-        internal static SendChatMessageResultInternal DeserializeSendChatMessageResultInternal(JsonElement element)
+        internal static SendChatMessageResultInternal DeserializeSendChatMessageResultInternal(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

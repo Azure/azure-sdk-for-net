@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Containers.ContainerRegistry
 {
     public partial class ArtifactTagProperties
     {
-        internal static ArtifactTagProperties DeserializeArtifactTagProperties(JsonElement element)
+        internal static ArtifactTagProperties DeserializeArtifactTagProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

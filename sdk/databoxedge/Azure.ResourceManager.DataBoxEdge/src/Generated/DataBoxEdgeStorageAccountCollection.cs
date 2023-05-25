@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeStorageAccountStorageAccountsRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeStorageAccountStorageAccountsRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeStorageAccountResource(Client, DataBoxEdgeStorageAccountData.DeserializeDataBoxEdgeStorageAccountData(e)), _dataBoxEdgeStorageAccountStorageAccountsClientDiagnostics, Pipeline, "DataBoxEdgeStorageAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DataBoxEdgeStorageAccountResource(Client, DataBoxEdgeStorageAccountData.DeserializeDataBoxEdgeStorageAccountData(e)), _dataBoxEdgeStorageAccountStorageAccountsClientDiagnostics, Pipeline, "DataBoxEdgeStorageAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeStorageAccountStorageAccountsRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeStorageAccountStorageAccountsRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeStorageAccountResource(Client, DataBoxEdgeStorageAccountData.DeserializeDataBoxEdgeStorageAccountData(e)), _dataBoxEdgeStorageAccountStorageAccountsClientDiagnostics, Pipeline, "DataBoxEdgeStorageAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DataBoxEdgeStorageAccountResource(Client, DataBoxEdgeStorageAccountData.DeserializeDataBoxEdgeStorageAccountData(e)), _dataBoxEdgeStorageAccountStorageAccountsClientDiagnostics, Pipeline, "DataBoxEdgeStorageAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

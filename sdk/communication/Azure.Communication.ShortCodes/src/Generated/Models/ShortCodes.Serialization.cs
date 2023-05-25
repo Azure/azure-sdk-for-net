@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.ShortCodes.Models
 {
     internal partial class ShortCodes
     {
-        internal static ShortCodes DeserializeShortCodes(JsonElement element)
+        internal static ShortCodes DeserializeShortCodes(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

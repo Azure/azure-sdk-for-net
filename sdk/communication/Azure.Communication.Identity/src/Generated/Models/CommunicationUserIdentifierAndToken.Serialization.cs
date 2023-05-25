@@ -8,12 +8,13 @@
 using System.Text.Json;
 using Azure.Communication.Identity.Models;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.Identity
 {
     public partial class CommunicationUserIdentifierAndToken
     {
-        internal static CommunicationUserIdentifierAndToken DeserializeCommunicationUserIdentifierAndToken(JsonElement element)
+        internal static CommunicationUserIdentifierAndToken DeserializeCommunicationUserIdentifierAndToken(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

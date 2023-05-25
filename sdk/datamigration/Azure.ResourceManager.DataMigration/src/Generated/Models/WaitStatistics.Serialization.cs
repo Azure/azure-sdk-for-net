@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class WaitStatistics
     {
-        internal static WaitStatistics DeserializeWaitStatistics(JsonElement element)
+        internal static WaitStatistics DeserializeWaitStatistics(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SsisEnvironmentReference
     {
-        internal static SsisEnvironmentReference DeserializeSsisEnvironmentReference(JsonElement element)
+        internal static SsisEnvironmentReference DeserializeSsisEnvironmentReference(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

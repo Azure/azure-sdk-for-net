@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ManagedClusterCredentials
     {
-        internal static ManagedClusterCredentials DeserializeManagedClusterCredentials(JsonElement element)
+        internal static ManagedClusterCredentials DeserializeManagedClusterCredentials(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

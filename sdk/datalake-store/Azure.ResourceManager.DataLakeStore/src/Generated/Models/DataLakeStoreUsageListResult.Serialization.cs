@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
     internal partial class DataLakeStoreUsageListResult
     {
-        internal static DataLakeStoreUsageListResult DeserializeDataLakeStoreUsageListResult(JsonElement element)
+        internal static DataLakeStoreUsageListResult DeserializeDataLakeStoreUsageListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

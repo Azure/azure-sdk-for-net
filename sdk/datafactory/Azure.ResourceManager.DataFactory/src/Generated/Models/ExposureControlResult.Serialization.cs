@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class ExposureControlResult
     {
-        internal static ExposureControlResult DeserializeExposureControlResult(JsonElement element)
+        internal static ExposureControlResult DeserializeExposureControlResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

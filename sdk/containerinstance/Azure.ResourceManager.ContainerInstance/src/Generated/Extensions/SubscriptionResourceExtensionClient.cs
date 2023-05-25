@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerGroupRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerGroupResource(Client, ContainerGroupData.DeserializeContainerGroupData(e)), ContainerGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerGroups", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ContainerGroupResource(Client, ContainerGroupData.DeserializeContainerGroupData(e)), ContainerGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerGroupRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerGroupResource(Client, ContainerGroupData.DeserializeContainerGroupData(e)), ContainerGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerGroups", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ContainerGroupResource(Client, ContainerGroupData.DeserializeContainerGroupData(e)), ContainerGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute
 {
     public partial class SharedGalleryData
     {
-        internal static SharedGalleryData DeserializeSharedGalleryData(JsonElement element)
+        internal static SharedGalleryData DeserializeSharedGalleryData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

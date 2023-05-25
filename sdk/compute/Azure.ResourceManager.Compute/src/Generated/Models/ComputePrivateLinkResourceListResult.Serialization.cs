@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class ComputePrivateLinkResourceListResult
     {
-        internal static ComputePrivateLinkResourceListResult DeserializeComputePrivateLinkResourceListResult(JsonElement element)
+        internal static ComputePrivateLinkResourceListResult DeserializeComputePrivateLinkResourceListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

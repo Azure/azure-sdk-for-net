@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     public partial class ContainerGroupInstanceView
     {
-        internal static ContainerGroupInstanceView DeserializeContainerGroupInstanceView(JsonElement element)
+        internal static ContainerGroupInstanceView DeserializeContainerGroupInstanceView(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

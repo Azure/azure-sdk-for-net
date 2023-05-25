@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class ContainerRegistryWebhookEventInfo
     {
-        internal static ContainerRegistryWebhookEventInfo DeserializeContainerRegistryWebhookEventInfo(JsonElement element)
+        internal static ContainerRegistryWebhookEventInfo DeserializeContainerRegistryWebhookEventInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

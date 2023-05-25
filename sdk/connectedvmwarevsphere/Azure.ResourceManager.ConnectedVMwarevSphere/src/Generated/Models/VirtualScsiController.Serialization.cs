@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     public partial class VirtualScsiController
     {
-        internal static VirtualScsiController DeserializeVirtualScsiController(JsonElement element)
+        internal static VirtualScsiController DeserializeVirtualScsiController(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

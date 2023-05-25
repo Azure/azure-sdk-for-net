@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
     public partial class DatadogHost
     {
-        internal static DatadogHost DeserializeDatadogHost(JsonElement element)
+        internal static DatadogHost DeserializeDatadogHost(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

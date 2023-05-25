@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     internal partial class JobSecretsCollection
     {
-        internal static JobSecretsCollection DeserializeJobSecretsCollection(JsonElement element)
+        internal static JobSecretsCollection DeserializeJobSecretsCollection(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

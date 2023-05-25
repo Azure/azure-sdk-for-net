@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Containers.ContainerRegistry
 {
     internal partial class TagAttributesBase
     {
-        internal static TagAttributesBase DeserializeTagAttributesBase(JsonElement element)
+        internal static TagAttributesBase DeserializeTagAttributesBase(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

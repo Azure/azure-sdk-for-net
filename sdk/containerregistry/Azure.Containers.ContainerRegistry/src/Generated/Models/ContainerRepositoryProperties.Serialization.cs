@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Containers.ContainerRegistry
 {
     public partial class ContainerRepositoryProperties
     {
-        internal static ContainerRepositoryProperties DeserializeContainerRepositoryProperties(JsonElement element)
+        internal static ContainerRepositoryProperties DeserializeContainerRepositoryProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

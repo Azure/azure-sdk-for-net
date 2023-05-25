@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter.Models
 {
     internal partial class ClassificationPolicyCollection
     {
-        internal static ClassificationPolicyCollection DeserializeClassificationPolicyCollection(JsonElement element)
+        internal static ClassificationPolicyCollection DeserializeClassificationPolicyCollection(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

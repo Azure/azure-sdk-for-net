@@ -6,12 +6,13 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class BackupFeatureValidationResultBase
     {
-        internal static BackupFeatureValidationResultBase DeserializeBackupFeatureValidationResultBase(JsonElement element)
+        internal static BackupFeatureValidationResultBase DeserializeBackupFeatureValidationResultBase(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

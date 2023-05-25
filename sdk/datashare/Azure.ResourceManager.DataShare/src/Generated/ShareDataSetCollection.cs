@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareDataSetDataSetsRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareDataSetDataSetsRestClient.CreateListByShareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ShareDataSetResource(Client, ShareDataSetData.DeserializeShareDataSetData(e)), _shareDataSetDataSetsClientDiagnostics, Pipeline, "ShareDataSetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ShareDataSetResource(Client, ShareDataSetData.DeserializeShareDataSetData(e)), _shareDataSetDataSetsClientDiagnostics, Pipeline, "ShareDataSetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareDataSetDataSetsRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareDataSetDataSetsRestClient.CreateListByShareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ShareDataSetResource(Client, ShareDataSetData.DeserializeShareDataSetData(e)), _shareDataSetDataSetsClientDiagnostics, Pipeline, "ShareDataSetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ShareDataSetResource(Client, ShareDataSetData.DeserializeShareDataSetData(e)), _shareDataSetDataSetsClientDiagnostics, Pipeline, "ShareDataSetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

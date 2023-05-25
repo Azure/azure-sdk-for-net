@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
     internal partial class DataLakeAnalyticsSasTokenInformationListResult
     {
-        internal static DataLakeAnalyticsSasTokenInformationListResult DeserializeDataLakeAnalyticsSasTokenInformationListResult(JsonElement element)
+        internal static DataLakeAnalyticsSasTokenInformationListResult DeserializeDataLakeAnalyticsSasTokenInformationListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class DataBoxEdgeMetricCounterSet : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("counters"u8);
@@ -26,7 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteEndObject();
         }
 
-        internal static DataBoxEdgeMetricCounterSet DeserializeDataBoxEdgeMetricCounterSet(JsonElement element)
+        internal static DataBoxEdgeMetricCounterSet DeserializeDataBoxEdgeMetricCounterSet(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

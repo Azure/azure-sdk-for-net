@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
     internal partial class DatadogAgreementResourceListResponse
     {
-        internal static DatadogAgreementResourceListResponse DeserializeDatadogAgreementResourceListResponse(JsonElement element)
+        internal static DatadogAgreementResourceListResponse DeserializeDatadogAgreementResourceListResponse(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

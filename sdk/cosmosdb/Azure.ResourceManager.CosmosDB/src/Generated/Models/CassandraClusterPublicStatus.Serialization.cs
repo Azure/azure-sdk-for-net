@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CassandraClusterPublicStatus
     {
-        internal static CassandraClusterPublicStatus DeserializeCassandraClusterPublicStatus(JsonElement element)
+        internal static CassandraClusterPublicStatus DeserializeCassandraClusterPublicStatus(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

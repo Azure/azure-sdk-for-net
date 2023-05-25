@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 
@@ -17,7 +18,84 @@ namespace Azure.ResourceManager.Compute
     public partial class VirtualMachineScaleSetExtensionData : IUtf8JsonSerializable
     {
 
-        internal static VirtualMachineScaleSetExtensionData DeserializeVirtualMachineScaleSetExtensionData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ForceUpdateTag))
+            {
+                writer.WritePropertyName("forceUpdateTag"u8);
+                writer.WriteStringValue(ForceUpdateTag);
+            }
+            if (Optional.IsDefined(Publisher))
+            {
+                writer.WritePropertyName("publisher"u8);
+                writer.WriteStringValue(Publisher);
+            }
+            if (Optional.IsDefined(ExtensionType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ExtensionType);
+            }
+            if (Optional.IsDefined(TypeHandlerVersion))
+            {
+                writer.WritePropertyName("typeHandlerVersion"u8);
+                writer.WriteStringValue(TypeHandlerVersion);
+            }
+            if (Optional.IsDefined(AutoUpgradeMinorVersion))
+            {
+                writer.WritePropertyName("autoUpgradeMinorVersion"u8);
+                writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
+            }
+            if (Optional.IsDefined(EnableAutomaticUpgrade))
+            {
+                writer.WritePropertyName("enableAutomaticUpgrade"u8);
+                writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
+            }
+            if (Optional.IsDefined(Settings))
+            {
+                writer.WritePropertyName("settings"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Settings);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Settings.ToString()).RootElement);
+#endif
+            }
+            if (Optional.IsDefined(ProtectedSettings))
+            {
+                writer.WritePropertyName("protectedSettings"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ProtectedSettings);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ProtectedSettings.ToString()).RootElement);
+#endif
+            }
+            if (Optional.IsCollectionDefined(ProvisionAfterExtensions))
+            {
+                writer.WritePropertyName("provisionAfterExtensions"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProvisionAfterExtensions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SuppressFailures))
+            {
+                writer.WritePropertyName("suppressFailures"u8);
+                writer.WriteBooleanValue(SuppressFailures.Value);
+            }
+            if (Optional.IsDefined(KeyVaultProtectedSettings))
+            {
+                writer.WritePropertyName("protectedSettingsFromKeyVault"u8);
+                writer.WriteObjectValue(KeyVaultProtectedSettings);
+            }
+            writer.WriteEndObject();
+            writer.WriteEndObject();
+        }
+
+        internal static VirtualMachineScaleSetExtensionData DeserializeVirtualMachineScaleSetExtensionData(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

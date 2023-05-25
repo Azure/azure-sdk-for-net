@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class PercentileMetricValue
     {
-        internal static PercentileMetricValue DeserializePercentileMetricValue(JsonElement element)
+        internal static PercentileMetricValue DeserializePercentileMetricValue(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

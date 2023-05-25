@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.Rooms
 {
     public partial class RoomParticipant
     {
-        internal static RoomParticipant DeserializeRoomParticipant(JsonElement element)
+        internal static RoomParticipant DeserializeRoomParticipant(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

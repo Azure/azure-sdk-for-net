@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class DataBoxEdgeJobErrorItem
     {
-        internal static DataBoxEdgeJobErrorItem DeserializeDataBoxEdgeJobErrorItem(JsonElement element)
+        internal static DataBoxEdgeJobErrorItem DeserializeDataBoxEdgeJobErrorItem(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.Chat
 {
     public partial class AddChatParticipantsResult
     {
-        internal static AddChatParticipantsResult DeserializeAddChatParticipantsResult(JsonElement element)
+        internal static AddChatParticipantsResult DeserializeAddChatParticipantsResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

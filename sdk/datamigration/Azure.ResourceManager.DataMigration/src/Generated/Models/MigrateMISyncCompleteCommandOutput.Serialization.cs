@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     internal partial class MigrateMISyncCompleteCommandOutput
     {
-        internal static MigrateMISyncCompleteCommandOutput DeserializeMigrateMISyncCompleteCommandOutput(JsonElement element)
+        internal static MigrateMISyncCompleteCommandOutput DeserializeMigrateMISyncCompleteCommandOutput(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

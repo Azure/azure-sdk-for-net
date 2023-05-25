@@ -9,6 +9,7 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -16,7 +17,9 @@ namespace Azure.ResourceManager.Compute.Models
     [JsonConverter(typeof(KeyVaultSecretReferenceConverter))]
     public partial class KeyVaultSecretReference : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer, new SerializableOptions());
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer, SerializableOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("secretUrl"u8);
@@ -25,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             JsonSerializer.Serialize(writer, SourceVault); writer.WriteEndObject();
         }
 
-        internal static KeyVaultSecretReference DeserializeKeyVaultSecretReference(JsonElement element)
+        internal static KeyVaultSecretReference DeserializeKeyVaultSecretReference(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

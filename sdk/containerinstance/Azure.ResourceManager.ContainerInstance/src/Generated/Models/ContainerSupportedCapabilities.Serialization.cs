@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     public partial class ContainerSupportedCapabilities
     {
-        internal static ContainerSupportedCapabilities DeserializeContainerSupportedCapabilities(JsonElement element)
+        internal static ContainerSupportedCapabilities DeserializeContainerSupportedCapabilities(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

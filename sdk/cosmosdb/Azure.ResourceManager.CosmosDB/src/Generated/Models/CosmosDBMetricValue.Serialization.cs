@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CosmosDBMetricValue
     {
-        internal static CosmosDBMetricValue DeserializeCosmosDBMetricValue(JsonElement element)
+        internal static CosmosDBMetricValue DeserializeCosmosDBMetricValue(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

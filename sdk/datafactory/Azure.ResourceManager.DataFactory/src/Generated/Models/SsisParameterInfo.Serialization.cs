@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SsisParameterInfo
     {
-        internal static SsisParameterInfo DeserializeSsisParameterInfo(JsonElement element)
+        internal static SsisParameterInfo DeserializeSsisParameterInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

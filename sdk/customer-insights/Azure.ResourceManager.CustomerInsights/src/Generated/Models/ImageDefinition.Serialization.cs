@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
     public partial class ImageDefinition
     {
-        internal static ImageDefinition DeserializeImageDefinition(JsonElement element)
+        internal static ImageDefinition DeserializeImageDefinition(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

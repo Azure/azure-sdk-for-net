@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MongoDBObjectInfo
     {
-        internal static MongoDBObjectInfo DeserializeMongoDBObjectInfo(JsonElement element)
+        internal static MongoDBObjectInfo DeserializeMongoDBObjectInfo(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

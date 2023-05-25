@@ -8,12 +8,13 @@
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     internal partial class ManagedClusterPodIdentityProvisioningError
     {
-        internal static ManagedClusterPodIdentityProvisioningError DeserializeManagedClusterPodIdentityProvisioningError(JsonElement element)
+        internal static ManagedClusterPodIdentityProvisioningError DeserializeManagedClusterPodIdentityProvisioningError(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

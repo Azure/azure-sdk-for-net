@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     public partial class DedicatedHostInstanceView
     {
-        internal static DedicatedHostInstanceView DeserializeDedicatedHostInstanceView(JsonElement element)
+        internal static DedicatedHostInstanceView DeserializeDedicatedHostInstanceView(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

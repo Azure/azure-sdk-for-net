@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppSecret
     {
-        internal static ContainerAppSecret DeserializeContainerAppSecret(JsonElement element)
+        internal static ContainerAppSecret DeserializeContainerAppSecret(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

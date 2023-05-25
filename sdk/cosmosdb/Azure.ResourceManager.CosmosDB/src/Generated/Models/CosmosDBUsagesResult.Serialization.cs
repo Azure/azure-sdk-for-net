@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     internal partial class CosmosDBUsagesResult
     {
-        internal static CosmosDBUsagesResult DeserializeCosmosDBUsagesResult(JsonElement element)
+        internal static CosmosDBUsagesResult DeserializeCosmosDBUsagesResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

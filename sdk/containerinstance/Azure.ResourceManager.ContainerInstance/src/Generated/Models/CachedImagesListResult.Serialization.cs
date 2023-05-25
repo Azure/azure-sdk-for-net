@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     internal partial class CachedImagesListResult
     {
-        internal static CachedImagesListResult DeserializeCachedImagesListResult(JsonElement element)
+        internal static CachedImagesListResult DeserializeCachedImagesListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

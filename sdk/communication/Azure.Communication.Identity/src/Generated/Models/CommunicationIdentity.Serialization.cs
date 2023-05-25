@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.Identity.Models
 {
     internal partial class CommunicationIdentity
     {
-        internal static CommunicationIdentity DeserializeCommunicationIdentity(JsonElement element)
+        internal static CommunicationIdentity DeserializeCommunicationIdentity(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

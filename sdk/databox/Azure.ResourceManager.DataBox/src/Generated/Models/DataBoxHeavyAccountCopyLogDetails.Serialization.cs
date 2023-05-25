@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataBoxHeavyAccountCopyLogDetails
     {
-        internal static DataBoxHeavyAccountCopyLogDetails DeserializeDataBoxHeavyAccountCopyLogDetails(JsonElement element)
+        internal static DataBoxHeavyAccountCopyLogDetails DeserializeDataBoxHeavyAccountCopyLogDetails(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

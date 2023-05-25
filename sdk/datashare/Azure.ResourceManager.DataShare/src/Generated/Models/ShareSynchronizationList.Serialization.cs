@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
     internal partial class ShareSynchronizationList
     {
-        internal static ShareSynchronizationList DeserializeShareSynchronizationList(JsonElement element)
+        internal static ShareSynchronizationList DeserializeShareSynchronizationList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

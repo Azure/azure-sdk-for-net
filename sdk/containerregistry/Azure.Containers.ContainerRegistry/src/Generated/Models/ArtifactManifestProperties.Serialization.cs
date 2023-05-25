@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Containers.ContainerRegistry
 {
     public partial class ArtifactManifestProperties
     {
-        internal static ArtifactManifestProperties DeserializeArtifactManifestProperties(JsonElement element)
+        internal static ArtifactManifestProperties DeserializeArtifactManifestProperties(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

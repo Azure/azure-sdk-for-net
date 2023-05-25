@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
     internal partial class ConfluentAgreementListResult
     {
-        internal static ConfluentAgreementListResult DeserializeConfluentAgreementListResult(JsonElement element)
+        internal static ConfluentAgreementListResult DeserializeConfluentAgreementListResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

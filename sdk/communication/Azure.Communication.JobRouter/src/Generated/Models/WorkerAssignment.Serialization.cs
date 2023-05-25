@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter.Models
 {
     public partial class WorkerAssignment
     {
-        internal static WorkerAssignment DeserializeWorkerAssignment(JsonElement element)
+        internal static WorkerAssignment DeserializeWorkerAssignment(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

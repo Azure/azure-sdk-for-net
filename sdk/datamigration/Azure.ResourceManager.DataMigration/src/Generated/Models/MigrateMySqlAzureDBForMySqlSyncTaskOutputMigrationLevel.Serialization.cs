@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel
     {
-        internal static MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel(JsonElement element)
+        internal static MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

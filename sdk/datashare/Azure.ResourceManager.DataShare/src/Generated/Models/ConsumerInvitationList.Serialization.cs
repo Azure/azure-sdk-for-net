@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DataShare;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
     internal partial class ConsumerInvitationList
     {
-        internal static ConsumerInvitationList DeserializeConsumerInvitationList(JsonElement element)
+        internal static ConsumerInvitationList DeserializeConsumerInvitationList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

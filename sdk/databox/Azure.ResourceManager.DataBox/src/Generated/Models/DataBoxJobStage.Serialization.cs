@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataBoxJobStage
     {
-        internal static DataBoxJobStage DeserializeDataBoxJobStage(JsonElement element)
+        internal static DataBoxJobStage DeserializeDataBoxJobStage(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

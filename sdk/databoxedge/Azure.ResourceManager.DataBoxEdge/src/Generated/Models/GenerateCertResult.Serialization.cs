@@ -8,12 +8,13 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class GenerateCertResult
     {
-        internal static GenerateCertResult DeserializeGenerateCertResult(JsonElement element)
+        internal static GenerateCertResult DeserializeGenerateCertResult(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

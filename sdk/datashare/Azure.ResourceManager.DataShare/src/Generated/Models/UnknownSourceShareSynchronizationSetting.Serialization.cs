@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
     internal partial class UnknownSourceShareSynchronizationSetting
     {
-        internal static UnknownSourceShareSynchronizationSetting DeserializeUnknownSourceShareSynchronizationSetting(JsonElement element)
+        internal static UnknownSourceShareSynchronizationSetting DeserializeUnknownSourceShareSynchronizationSetting(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

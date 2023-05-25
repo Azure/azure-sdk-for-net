@@ -8,12 +8,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     public partial class InitContainerPropertiesDefinitionInstanceView
     {
-        internal static InitContainerPropertiesDefinitionInstanceView DeserializeInitContainerPropertiesDefinitionInstanceView(JsonElement element)
+        internal static InitContainerPropertiesDefinitionInstanceView DeserializeInitContainerPropertiesDefinitionInstanceView(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

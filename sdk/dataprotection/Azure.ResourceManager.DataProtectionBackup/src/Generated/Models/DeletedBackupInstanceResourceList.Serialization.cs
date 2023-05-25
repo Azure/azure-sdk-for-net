@@ -8,13 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     internal partial class DeletedBackupInstanceResourceList
     {
-        internal static DeletedBackupInstanceResourceList DeserializeDeletedBackupInstanceResourceList(JsonElement element)
+        internal static DeletedBackupInstanceResourceList DeserializeDeletedBackupInstanceResourceList(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

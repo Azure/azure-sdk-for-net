@@ -7,12 +7,13 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     internal partial class EdgeProfile
     {
-        internal static EdgeProfile DeserializeEdgeProfile(JsonElement element)
+        internal static EdgeProfile DeserializeEdgeProfile(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

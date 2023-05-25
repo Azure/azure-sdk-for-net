@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataBoxDiskGranularCopyProgress
     {
-        internal static DataBoxDiskGranularCopyProgress DeserializeDataBoxDiskGranularCopyProgress(JsonElement element)
+        internal static DataBoxDiskGranularCopyProgress DeserializeDataBoxDiskGranularCopyProgress(JsonElement element, SerializableOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
