@@ -1,18 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-using Azure.Monitor.OpenTelemetry.Exporter.Models;
-using OpenTelemetry.Metrics;
-using OpenTelemetry;
-using Xunit;
-using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
-using OpenTelemetry.Trace;
-using System.Collections.Concurrent;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System;
 using System.Threading;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
+using OpenTelemetry;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Trace;
+using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
@@ -22,8 +22,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void ValidateRequestDurationMetric()
         {
             var activitySource = new ActivitySource(nameof(StandardMetricTests.ValidateRequestDurationMetric));
-            var traceTelemetryItems = new ConcurrentBag<TelemetryItem>();
-            var metricTelemetryItems = new ConcurrentBag<TelemetryItem>();
+            var traceTelemetryItems = new List<TelemetryItem>();
+            var metricTelemetryItems = new List<TelemetryItem>();
 
             var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor();
 
@@ -52,7 +52,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             meterProvider?.ForceFlush();
 
             // Standard Metrics + Resource Metrics.
-            Assert.Equal(2, metricTelemetryItems.Count);
+            Assert.Single(metricTelemetryItems);
 
             var metricTelemetry = metricTelemetryItems.Last()!;
             Assert.Equal("MetricData", metricTelemetry.Data.BaseType);
@@ -73,8 +73,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void ValidateDependencyDurationMetric()
         {
             var activitySource = new ActivitySource(nameof(StandardMetricTests.ValidateDependencyDurationMetric));
-            var traceTelemetryItems = new ConcurrentBag<TelemetryItem>();
-            var metricTelemetryItems = new ConcurrentBag<TelemetryItem>();
+            var traceTelemetryItems = new List<TelemetryItem>();
+            var metricTelemetryItems = new List<TelemetryItem>();
 
             var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor();
 
@@ -105,7 +105,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             meterProvider?.ForceFlush();
 
             // Standard Metrics + Resource Metrics.
-            Assert.Equal(2, metricTelemetryItems.Count);
+            Assert.Single(metricTelemetryItems);
 
             var metricTelemetry = metricTelemetryItems.Last()!;
             Assert.Equal("MetricData", metricTelemetry.Data.BaseType);
@@ -126,7 +126,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("www.foo.com", dependencyTarget);
         }
 
-        private void WaitForActivityExport(ConcurrentBag<TelemetryItem> traceTelemetryItems)
+        private void WaitForActivityExport(List<TelemetryItem> traceTelemetryItems)
         {
             var result = SpinWait.SpinUntil(
                 condition: () =>

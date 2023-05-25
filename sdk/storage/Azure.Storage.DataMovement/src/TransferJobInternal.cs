@@ -228,6 +228,8 @@ namespace Azure.Storage.DataMovement
             _sourceResourceContainer = sourceResource;
             _destinationResourceContainer = destinationResource;
             _isSingleResource = false;
+            _initialTransferSize = transferOptions?.InitialTransferSize;
+            _maximumTransferChunkSize = transferOptions?.MaximumTransferChunkSize;
             _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandler, transferOptions?.ProgressHandlerOptions);
         }
 
@@ -322,6 +324,7 @@ namespace Azure.Storage.DataMovement
             // Cancel the entire job if one job part fails and StopOnFailure is set
             if (_errorHandling == ErrorHandlingOptions.StopOnAllFailures &&
                 jobPartStatus == StorageTransferStatus.CompletedWithFailedTransfers &&
+                jobStatus != StorageTransferStatus.CancellationInProgress &&
                 jobStatus != StorageTransferStatus.CompletedWithFailedTransfers &&
                 jobStatus != StorageTransferStatus.CompletedWithSkippedTransfers &&
                 jobStatus != StorageTransferStatus.Completed)

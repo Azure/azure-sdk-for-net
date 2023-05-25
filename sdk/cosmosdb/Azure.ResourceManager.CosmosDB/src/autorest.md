@@ -337,6 +337,9 @@ prepend-rp-prefix:
 - SpatialType
 - ContainerPartitionKey
 
+models-to-treat-empty-string-as-null:
+  - CosmosDBAccountData
+
 directive:
 # The notebook is offline due to security issues
 - from: notebook.json

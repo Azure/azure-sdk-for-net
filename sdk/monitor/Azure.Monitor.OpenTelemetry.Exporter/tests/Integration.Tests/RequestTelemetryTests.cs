@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -36,7 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
         {
             string testValue = Guid.NewGuid().ToString();
 
-            ConcurrentBag<TelemetryItem>? telemetryItems = null;
+            List<TelemetryItem>? telemetryItems = null;
 
             // Arrange
             var client = this.factory

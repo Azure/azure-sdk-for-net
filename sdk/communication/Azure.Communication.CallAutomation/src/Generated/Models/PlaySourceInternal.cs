@@ -20,7 +20,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Defines the type of the play source. </summary>
         public PlaySourceTypeInternal SourceType { get; }
         /// <summary> Defines the identifier to be used for caching related media. </summary>
-        public string PlaySourceId { get; set; }
+        public string PlaySourceCacheId { get; set; }
         /// <summary> Defines the file source info to be used for play. </summary>
         public FileSourceInternal FileSource { get; set; }
         /// <summary> Defines the text source info to be used for play. </summary>
